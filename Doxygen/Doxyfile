@@ -419,7 +419,7 @@ WARN_LOGFILE           =
 # with spaces.
 
 
-INPUT                  = "../../OTB/Code" "../../OTB/Utilities/ITK/Code" "../Doxygen"
+INPUT                  = "../../OTB/Code" "../Doxygen" "../../OTB/Utilities/ITK/Code" 
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
@@ -428,7 +428,7 @@ INPUT                  = "../../OTB/Code" "../../OTB/Utilities/ITK/Code" "../Dox
 # *.c *.cc *.cxx *.cpp *.c++ *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp 
 # *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm
 
-FILE_PATTERNS          = *.cxx *.h *.txx
+FILE_PATTERNS          = *.cxx *.h *.txx *.dox
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories 
 # should be searched for input files as well. Possible values are YES and NO. 
@@ -440,7 +440,15 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = 
+EXCLUDE                = "../../OTB/Utilities/ITK/Code/Code/Common/itkPixelTraits.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraits.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsRGB.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsVectorPixel.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsTensorPixel.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsCovariantVectorPixel.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/IO/itkPixelData.h" \
+                         "../../OTB/Utilities/ITK/Code/Code/IO/itkAnalyzeDbh.h" 
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or directories 
 # that are symbolic links (a Unix filesystem feature) are excluded from the input.
@@ -451,7 +459,9 @@ EXCLUDE_SYMLINKS       = NO
 # EXCLUDE_PATTERNS tag to specify one or more wildcard patterns to exclude 
 # certain files from those directories.
 
-EXCLUDE_PATTERNS       = 
+EXCLUDE_PATTERNS       = "*/vxl_copyright.h" "*/vcl/*" "*/dll.h" \
+                         "*/test*" "*/example*" "*config*" "*/contrib/*" \
+                         "*/Templates/*" "*_mocced.cxx" # "*impl*"
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or 
 # directories that contain example code fragments that are included (see 
