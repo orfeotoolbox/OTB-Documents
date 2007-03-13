@@ -103,7 +103,7 @@ The following optimization methods are available:
 
 The evaluation of a metric can be very expensive in computing time. An approach often used to improve performance is to register first reduced resolution versions of the target and reference objects. The resulting transform is used as the starting point for a second registration process performed in progresively higher resolution objects.
 
-It is usual to create first a sequence of reduced resolution version of the objects, this set of objects is called a <em> pryramid representation </em>. A Multiresolution method is basically a set of consecutive registration process, each one performed at a particular level of the pyramid, and using as initial transform the resulting transform of the previous process.
+It is usual to create first a sequence of reduced resolution version of the objects, this set of objects is called a <em>pyramid representation</em>. A Multiresolution method is basically a set of consecutive registration process, each one performed at a particular level of the pyramid, and using as initial transform the resulting transform of the previous process.
 
 Multiresolution offers the double advantage of increasing performance and at the same time improving the stability of the optimization by smoothing out local minima and increasing the capture region of the process. 
 
