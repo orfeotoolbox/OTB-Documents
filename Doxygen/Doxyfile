@@ -30,7 +30,6 @@ PROJECT_NUMBER         = "ORFEO ToolBox 1.2"
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-#OUTPUT_DIRECTORY       = /ORFEO/thomas/ORFEO-TOOLBOX/OTB-Documents/Doxygen
 OUTPUT_DIRECTORY       = ./
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
@@ -417,7 +416,6 @@ WARN_LOGFILE           =
 # documented source files. You may enter file names like "myfile.cpp" or 
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
-
 
 INPUT                  = "../../OTB/Code" "../Doxygen" "../../OTB/Utilities/ITK/Code" 
 
