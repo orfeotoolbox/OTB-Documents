@@ -4,6 +4,7 @@ BODY,H1,H2,H3,H4,H5,H6,P,CENTER,TD,TH,UL,DL,DIV {
 H1 {
 	text-align: center;
 }
+IMG.logo { margin-bottom: 10px; margin-top: 3px; }
 CAPTION { font-weight: bold }
 DIV.qindex {
 	width: 100%;
