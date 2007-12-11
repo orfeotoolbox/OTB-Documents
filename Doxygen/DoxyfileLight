@@ -78,7 +78,8 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 INPUT                  = ../../OTB/Code \
                          ../Doxygen \
-                         ../../OTB/Utilities/ITK/Code
+                         ../../OTB/Utilities/ITK/Code \
+                         ../../OTB/Utilities/otbsvm
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.cxx \
                          *.h \
