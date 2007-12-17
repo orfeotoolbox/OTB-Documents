@@ -373,3 +373,10 @@ DIV.nav
    border           : none;
    border-bottom    : 1px solid #84B0C7;
 }
+
+DIV.searchresults
+{
+  float            : left;
+  width            : 100%;
+  margin-bottom    : 4px;
+}
