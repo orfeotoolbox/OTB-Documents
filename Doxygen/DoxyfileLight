@@ -114,7 +114,7 @@ EXCLUDE_PATTERNS       = */vxl_copyright.h \
                          *_mocced.cxx \
                          */.svn/*
 EXCLUDE_SYMBOLS        = 
-EXAMPLE_PATH           = 
+EXAMPLE_PATH           = ../../OTB/Examples
 EXAMPLE_PATTERNS       = 
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = 
