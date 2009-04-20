@@ -16,6 +16,12 @@
 */
 
 /**
+ \defgroup Visualization Visualization modules
+ Classes related to the visualization framework of OTB to enable an easy building of new simple applications with
+ a plugin system
+*/
+
+/**
  \defgroup DataRepresentation Data Representation Objects
  The Insight Toolkit includes several data representation objects such as
  Image, Mesh, Pixel, Points, etc.
