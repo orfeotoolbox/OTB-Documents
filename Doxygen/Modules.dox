@@ -16,6 +16,18 @@
 */
 
 /**
+  \defgroup FeatureExtraction  FeatureExtraction modules
+  \ingroup Thematic
+  This category includes the elements related to feature extraction: texture indexes, etc.
+*/
+
+/**
+  \defgroup Textures  Textures modules
+  \ingroup FeatureExtraction
+  This category includes the elements related to texture indexes.
+*/
+
+/**
  \defgroup Visualization Visualization modules
  Classes related to the visualization framework of OTB to enable an easy building of new simple applications with
  a plugin system
