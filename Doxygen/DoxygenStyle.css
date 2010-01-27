@@ -4,6 +4,7 @@ BODY,H1,H2,H3,H4,H5,H6,P,CENTER,TD,TH,UL,DL,DIV {
 H1 {
 	text-align: center;
 }
+IMG.logo { margin-bottom: 10px; margin-top: 3px; }
 CAPTION { font-weight: bold }
 DIV.qindex {
 	width: 100%;
@@ -371,4 +372,11 @@ DIV.nav
    background       : none;
    border           : none;
    border-bottom    : 1px solid #84B0C7;
+}
+
+DIV.searchresults
+{
+  float            : left;
+  width            : 100%;
+  margin-bottom    : 4px;
 }

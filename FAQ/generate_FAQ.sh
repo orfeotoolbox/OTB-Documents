@@ -1,6 +1,8 @@
 #/bin/sh
 
-TEXINPUTS=$TEXINPUTS:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide/../Latex:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide/Latex:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide/Art:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide/Examples:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide/Art:/usr/local/stok/OTB/trunk/OTB-Documents/SoftwareGuide/Latex
+OTBDOCUMENTS='/opt/stok/src/OTB-Documents'
+# OTBDOCUMENTS='/home/christop/OTB/trunk/OTB-Documents'
+TEXINPUTS=$TEXINPUTS:$OTBDOCUMENTS/SoftwareGuide/../Latex:$OTBDOCUMENTS/SoftwareGuide:$OTBDOCUMENTS/SoftwareGuide/Latex:$OTBDOCUMENTS/SoftwareGuide/Art:$OTBDOCUMENTS/SoftwareGuide:$OTBDOCUMENTS/SoftwareGuide/Examples:$OTBDOCUMENTS/SoftwareGuide/Art:$OTBDOCUMENTS/SoftwareGuide/Latex
 export TEXINPUTS
 
 latex2rtf OTB-FAQ.tex
