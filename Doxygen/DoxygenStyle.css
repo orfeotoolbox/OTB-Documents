@@ -250,6 +250,22 @@ SPAN.charliteral   { color: #008080 }
 	background-color: #FAFAFA;
 	font-size: 12px;
 }
+div.memitem{
+ border: 1px solid black;
+ padding:5px;
+}
+
+div.memitem td.memname{
+ font-weight:bold;
+}
+
+div.memitem div.memdoc{
+ font-style:italic;
+}
+
+div.memitem div.memdoc div.fragment{
+ font-style:normal;
+}
 .search     { color: #003399;
               font-weight: bold;
 }
