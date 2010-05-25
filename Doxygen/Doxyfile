@@ -601,16 +601,16 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = ../../OTB/Utilities/ITK/Code/Code/Common/itkPixelTraits.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraits.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsRGB.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsVectorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsTensorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsCovariantVectorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkMathDetail.h \
-                         ../../OTB/Utilities/ITK/Code/Code/IO/itkPixelData.h \
-                         ../../OTB/Utilities/ITK/Code/Code/IO/itkAnalyzeDbh.h
+EXCLUDE                = ../../OTB/Utilities/ITK/Code/Common/itkPixelTraits.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraits.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsRGB.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsVectorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsTensorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsCovariantVectorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkMathDetail.h \
+                         ../../OTB/Utilities/ITK/Code/IO/itkPixelData.h \
+                         ../../OTB/Utilities/ITK/Code/IO/itkAnalyzeDbh.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded
@@ -660,7 +660,7 @@ EXAMPLE_PATTERNS       =
 # commands irrespective of the value of the RECURSIVE tag.
 # Possible values are YES and NO. If left blank NO is used.
 
-EXAMPLE_RECURSIVE      = NO
+EXAMPLE_RECURSIVE      = YES
 
 # The IMAGE_PATH tag can be used to specify one or more files or
 # directories that contain image that are included in the documentation (see

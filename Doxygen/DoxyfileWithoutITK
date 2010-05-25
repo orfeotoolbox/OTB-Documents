@@ -93,15 +93,15 @@ FILE_PATTERNS          = *.cxx \
                          *.txx \
                          *.dox
 RECURSIVE              = YES
-EXCLUDE                = ../../OTB/Utilities/ITK/Code/Code/Common/itkPixelTraits.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraits.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsRGB.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsVectorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsTensorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsCovariantVectorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h \
-                         ../../OTB/Utilities/ITK/Code/Code/IO/itkPixelData.h \
-                         ../../OTB/Utilities/ITK/Code/Code/IO/itkAnalyzeDbh.h
+EXCLUDE                = ../../OTB/Utilities/ITK/Code/Common/itkPixelTraits.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraits.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsRGB.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsVectorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsTensorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsCovariantVectorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h \
+                         ../../OTB/Utilities/ITK/Code/IO/itkPixelData.h \
+                         ../../OTB/Utilities/ITK/Code/IO/itkAnalyzeDbh.h
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */vxl_copyright.h \
                          */vcl/* \
