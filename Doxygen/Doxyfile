@@ -610,7 +610,8 @@ EXCLUDE                = ../../OTB/Utilities/ITK/Code/Common/itkPixelTraits.h \
                          ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h \
                          ../../OTB/Utilities/ITK/Code/Common/itkMathDetail.h \
                          ../../OTB/Utilities/ITK/Code/IO/itkPixelData.h \
-                         ../../OTB/Utilities/ITK/Code/IO/itkAnalyzeDbh.h
+                         ../../OTB/Utilities/ITK/Code/IO/itkAnalyzeDbh.h \
+                         ../../OTB/Utilities/ITK/Code/Review/Statistics
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded

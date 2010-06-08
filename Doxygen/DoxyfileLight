@@ -102,7 +102,9 @@ EXCLUDE                = ../../OTB/Utilities/ITK/Code/Common/itkPixelTraits.h \
                          ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsCovariantVectorPixel.h \
                          ../../OTB/Utilities/ITK/Code/Common/itkNumericTraitsVariableLengthVectorPixel.h \
                          ../../OTB/Utilities/ITK/Code/IO/itkPixelData.h \
-                         ../../OTB/Utilities/ITK/Code/IO/itkAnalyzeDbh.h
+                         ../../OTB/Utilities/ITK/Code/IO/itkAnalyzeDbh.h \
+                         ../../OTB/Utilities/ITK/Code/Review/Statistics
+
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */vxl_copyright.h \
                          */vcl/* \
