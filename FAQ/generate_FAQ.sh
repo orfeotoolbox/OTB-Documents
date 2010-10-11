@@ -1,7 +1,7 @@
 #/bin/sh
 
-OTBDOCUMENTS='/opt/stok/src/OTB-Documents'
-# OTBDOCUMENTS='/home/christop/OTB/trunk/OTB-Documents'
+#OTBDOCUMENTS='/opt/stok/src/OTB-Documents'
+OTBDOCUMENTS='$HOME/OTB/trunk/OTB-Documents'
 TEXINPUTS=$TEXINPUTS:$OTBDOCUMENTS/SoftwareGuide/../Latex:$OTBDOCUMENTS/SoftwareGuide:$OTBDOCUMENTS/SoftwareGuide/Latex:$OTBDOCUMENTS/SoftwareGuide/Art:$OTBDOCUMENTS/SoftwareGuide:$OTBDOCUMENTS/SoftwareGuide/Examples:$OTBDOCUMENTS/SoftwareGuide/Art:$OTBDOCUMENTS/SoftwareGuide/Latex
 export TEXINPUTS
 
