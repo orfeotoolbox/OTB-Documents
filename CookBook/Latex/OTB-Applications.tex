@@ -14,18 +14,32 @@ from the \otb, and providing a higher level interface to
 handle parameters, input and output data and communication with the
 user nicely.
 
-The \app package was originally designed to provide
-applications performing simple remote sensing tasks, more complex than
-simple examples from the Software Guide, and with a more user-friendly
+The \app package was originally designed to provide applications
+performing simple remote sensing tasks, more complex than simple
+examples from the Software Guide, and with a more user-friendly
 interface (either graphical or command-line), to demonstrate the use
-of the \otb functions. The most popular applications are
-maybe the \application{otbImageViewerManager}, which
-allows to open a collection of images and navigate in them, and the
+of the \otb functions. The most popular applications are maybe the
+\application{otbImageViewerManager}, which allows to open a collection
+of images and navigate in them, and the
 \application{otbSupervisedClassificationApplication}, which allows to
 delineate training regions of interest on the image and classify the
 image with a SVM classifier trained with these regions. During the
-first 3 years of the \otb development, many more applications
-have been added to this package, to perform various tasks.
+first 3 years of the \otb development, many more applications have
+been added to this package, to perform various tasks. Most of them
+come with a graphical user interface, apart from some small utilities
+that are command-line.  For a complete list of these applications,
+please refer to section~\ref{sec:appstruct}.
+
+The development and release of the \mont software (see
+chapter~\ref{chap:monteverdi} at the end of year 2009 changed a lot of
+things for the \app package: most of non-developer users were looking
+for quite a long time for an applications providing \otb
+functionalities under a unified graphical interface. Many applications
+from the \app package were integrated to \mont as modules, and the
+\app package lost.
 
 
 \section{Installation}\label{sec:appinstall}
+
+
+\section{Structure of the package}\label{sec:appstruct}
