@@ -1,7 +1,8 @@
 \section{Optical pre-processing}\label{sec:optpreproc}
 
 This section present various pre-processing tasks that can be done
-using \app or \mont.
+using \app or \mont. The tasks are presented in their classical order
+in which they can be chained to obtain a calibrated, pan-sharpened 
 
 \subsection{Optical radiometric calibration}\label{ssec:optcal}
 
@@ -83,7 +84,100 @@ otbOpticalCalibration-cli -in  input_image -out output_image -level TOC
 
 \subsection{Pan-sharpening}\label{ssec:pxs}
 
-todo.
+Because of physical constrains on the sensor design, it is difficult
+to achieve high spatial and spectral resolution at the same time : a
+better spatial resolution means a smaller detector, which in turns
+means lesser optical flow on the detector surface. On the contrary,
+spectral bands are obtained through filters applied on the detector
+surface, that lowers the optical flow, so that it is necessary to
+increase the detector size to achieve an acceptable signal to noise
+ratio.
+
+For these reasons, many high resolution satellite payload are composed
+of two sets of detectors, which in turns delivers two different kind
+of images :
+
+\begin{itemize}
+\item The multi-spectral (XS) image, composed of 3 to 8 spectral bands
+  containing usually blue, green, red and near infra-red bands at a
+  given resolution (usually from 2.8 meters to 2 meters).
+\item The panchromatic (PAN) image, which is a grayscale image acquired by a
+  detector covering a wider part of the light spectrum, which allows
+  to increase the optical flow and thus to reduce pixel
+  size. Therefore, resolution of the panchromatic image is usually
+  around 4 times lower than the resolution of the multi-spectral image
+  (from 46 centimeters to 70 centimeters).
+\end{itemize}
+
+It is very frequent that those two images are delivered side by side
+by data provider. Such a dataset is called a bundle. A very common
+remote sensing processing is to fuse the panchromatic image with the
+multi-spectral one so as to get an image combining the spatial
+resolution of the panchromatic image with the spectral richness of the
+multi-spectral image. This operation is called pan-sharpening.
+
+This fusion operation requires two different steps :
+\begin{enumerate}
+\item The multi-spectral (XS) image is zoomed and registered to the
+  panchromatic image,
+\item A pixel-by-pixel fusion operator is applied to the co(-registered
+  pixels of the multi-spectral and panchromatic image to obtain the
+  fused pixels.
+\end{enumerate}
+
+Using either an application from \app or modules from \mont, it is
+possible to perform both steps in a raw, or step-by-step fusion, as
+described in the above sections.
+
+\subsubsection{Pan-sharpening with \app}
+
+The \application{otbBundleToPerfectSensor-cli} application allows to
+perform both steps in a raw. Seamless sensor modelling is used to
+perform zooming and registration of the multi-spectral image on the
+panchromatic image. Then, a simple pan-sharpening is applied,
+according to the following formula:
+
+\begin{equation}
+PXS(i,j) = \frac{PAN(i,j)}{PAN_{smooth}(i,j)} \cdot XS(i,j)
+\end{equation}
+
+Where $i$ and $j$ are pixels indices, $PAN$ is the panchromatic image,
+$XS$ is the multi-spectral image and $PAN_{smooth}$ is the
+panchromatic image smoothed with a kernel to fit the multi-spectral
+image scale.
+
+Here is a simple example of how to use the
+\application{otbBundleToPerfectSensor-cli} application:
+
+\begin{verbatim}
+otbBundleToPerfectSensor-cli -inP pan_image -inXS xs_image -out output_image
+\end{verbatim}
+
+There are two more optional parameters that can be useful for this
+tool:
+\begin{itemize}
+\item The $-dem$ option allows to specify a directory containing DEM
+  formatted for OTB (see section~\ref{ssec:dem}). Since registration
+  and zooming of the multi-spectral image is performed using
+  sensor-models, it may happen that the registration is not perfect in
+  case of landscape with high elevation variation. Using a DEM in this
+  case allows to get better registration (see \ref{ssec:registration}
+  to learn about how to lower registration error).
+\item The $-lmSpacing$ option allows to specify the step of the
+  registration grid between the multi-spectral image and panchromatic
+  image. This is expressed in amount of panchromatic pixels. A lower
+  value gives a more precise registration but implies more computation
+  with the sensor models, and thus increase the computation
+  time. Default value is 10 pixels, which gives sufficient precision
+  in most of the cases.
+\end{itemize}
+
+Pan-sharpening is a quite heavy processing requiring a lot of system
+resource. The $-ram$ option allows you to limit the amount of memory
+available for the computation, and to avoid overloading your
+computer. Increasing the available amount of RAM may also result in
+better computation time, seems it optimises the use of the system
+resources. Default value is 256 Mb.
 
 \subsection{Digital Elevation Model management}\label{ssec:dem}
 
