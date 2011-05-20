@@ -1,0 +1,224 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Complete documentation on the extended LaTeX markup used for Insight
+% documentation is available in ``Documenting Insight'', that is part
+% of the standard documentation for Insight.  It may be found online
+% at:
+%
+%                    http://www.itk.org
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{InsightSoftwareGuide}
+
+\usepackage[dvips]{graphicx}
+\usepackage{times,lscape,url}
+
+\usepackage[latin1]{inputenc}
+
+\usepackage{tikz}
+
+\usepackage{color}
+
+\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+\definecolor{listnumbers}{gray}{0.65}
+\definecolor{listlightgray}{gray}{0.955}
+\definecolor{listwhite}{gray}{1.0}
+
+\usepackage{listings}
+\newcommand{\lstsetcpp}
+{
+\lstset{frame = tb,
+       framerule = 0.25pt,
+       float,
+       fontadjust,
+       backgroundcolor={\color{listlightgray}},
+       basicstyle = {\ttfamily\footnotesize},
+       keywordstyle = {\ttfamily\color{listkeyword}\textbf},
+       identifierstyle = {\ttfamily},
+       commentstyle = {\ttfamily\color{listcomment}\textit},
+       stringstyle = {\ttfamily},
+       showstringspaces = false,
+       showtabs = false,
+       numbers = none,
+       numbersep = 6pt,
+       numberstyle={\ttfamily\color{listnumbers}},
+       tabsize = 2,
+       language=[ANSI]C++,
+       floatplacement=!h
+       }
+}
+\newcommand{\lstsetpython}
+{
+\lstset{language=Python
+        }
+}
+\newcommand{\lstsetjava}
+{
+\lstset{language=Java
+        }
+}
+
+
+\newif\ifitkFullVersion
+\itkFullVersiontrue
+%\itkFullVersionfalse
+
+\newif\ifitkPrintedVersion
+\itkPrintedVersiontrue
+%\itkPrintedVersionfalse
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  hyperref should be the last package to be loaded.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifitkPrintedVersion
+\usepackage[dvips,
+pdftitle={The Orfeo ToolBox CookBook, a guide for non-developpers},
+pdfauthor={CNES},
+pdfsubject={Remote Sensing, Orfeo, Pleiades, Cosmo Skymed},
+pdfkeywords={image processing, Remote sensing, Guide},
+pdfpagemode={UseOutlines},
+bookmarks,bookmarksopen,
+pdfstartview={FitH},
+backref,
+colorlinks,linkcolor={black},citecolor={black},urlcolor={black},
+]{hyperref}
+\else
+\usepackage[dvips,
+pdftitle={The Orfeo ToolBox CookBook, a guide for non-developpers},
+pdfauthor={CNES},
+pdfsubject={Remote Sensing, Orfeo, Pleiades, Cosmo Skymed},
+pdfkeywords={image processing, Remote sensing, Guide},
+pdfpagemode={UseOutlines},
+bookmarks,bookmarksopen,
+pdfstartview={FitH},
+backref,
+colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
+]{hyperref}
+\fi
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bbm}
+
+\def\logoCNES{../Art/logoVectoriel.pdf}
+
+\newtheorem{algo}{Algorithm}
+\newtheorem{defin}{Definition}
+
+\title{The Orfeo ToolBox CookBook, a guide for non-developpers\\ Updated
+  for OTB-3.2}
+
+\author{OTB Development Team}
+
+\authoraddress{
+  \url{http://www.orfeo-toolbox.org}\\
+  e-mail: \email{otb@cnes.fr}
+}
+
+\date{\today}
+
+
+% actually write the .idx file
+\makeindex
+
+\setcounter{tocdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%           Begin Document
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\ifitkPrintedVersion
+\fi
+
+\maketitle
+
+\frontmatter
+
+\hyperbaseurl{http://www.orfeo-toolbox.org}
+
+\lstsetcpp
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Page with OTB logo
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+
+\begin{minipage}[t][10cm][b]{\textwidth}
+\center
+\includegraphics[width=0.5\textwidth]{../Art/logoVectoriel.pdf}
+\large
+\begin{center}
+\emph{The ORFEO Toolbox is not a black box.}\\
+\end{center}
+\hspace{8cm} Ch.D.
+\normalsize
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% remove headings from the following material
+\pagestyle{plain}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\ifitkPrintedVersion
+%% \input{Cover.tex}
+%%\fi
+
+%\input{Abstract.tex}
+\chapter*{Foreword}
+\noindent
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Insert Table of Contents; List of Figures and Tables
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% enable headings from the following material
+\pagestyle{normal}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\tableofcontents
+\listoffigures
+\listoftables
+\normalsize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Begin technical content
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+\chapter{Introduction}
+
+\chapter{Installation}
+
+\chapter{OTB-Applications}
+
+\chapter{Monteverdi}
+
+\chapter{Recipes}
+
+\section{Optical radiometric calibration}
+
+\end{document}
+
+
+

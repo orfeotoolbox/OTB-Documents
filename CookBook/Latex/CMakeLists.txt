@@ -1,0 +1,8 @@
+
+# Find part files
+FILE(GLOB  RELATED_SRCS RELATIVE "${CookBook_SOURCE_DIR}/Latex" "*")
+
+MESSAGE("${RELATED_SRCS}")
+
+# Add the main latex doc
+ADD_LATEX_DOCUMENT(CookBook.tex INPUTS ${RELATED_SRCS} MANGLE_TARGET_NAMES DEFAULT_PDF IMAGE_DIRS ../Art)
