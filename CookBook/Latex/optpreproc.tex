@@ -110,7 +110,7 @@ of images :
 \end{itemize}
 
 It is very frequent that those two images are delivered side by side
-by data provider. Such a dataset is called a bundle. A very common
+by data providers. Such a dataset is called a bundle. A very common
 remote sensing processing is to fuse the panchromatic image with the
 multi-spectral one so as to get an image combining the spatial
 resolution of the panchromatic image with the spectral richness of the
@@ -178,6 +178,13 @@ available for the computation, and to avoid overloading your
 computer. Increasing the available amount of RAM may also result in
 better computation time, seems it optimises the use of the system
 resources. Default value is 256 Mb.
+
+Please also note that since registration and zooming of the
+multi-spectral image with the panchromatic image relies on sensor
+modelling, this tool will work only for images whose sensor models is
+available in \otb (see section~\ref{ssec:ortho} for a detailed
+list). It will also work with ortho-ready products in cartographic
+projection.
 
 \subsection{Digital Elevation Model management}\label{ssec:dem}
 
