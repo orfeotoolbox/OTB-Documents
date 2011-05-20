@@ -31,7 +31,7 @@ that are command-line.  For a complete list of these applications,
 please refer to section~\ref{sec:appstruct}.
 
 The development and release of the \mont software (see
-chapter~\ref{chap:monteverdi} at the end of year 2009 changed a lot of
+chapter~\ref{chap:Monteverdi} at the end of year 2009 changed a lot of
 things for the \app package: most of non-developer users were looking
 for quite a long time for an applications providing \otb
 functionalities under a unified graphical interface. Many applications
@@ -40,7 +40,7 @@ from the \app package were integrated to \mont as modules, and the
 added to the package and it was barely maintained, as new graphical
 tools were directly embedded within \mont.
 
-Then, some people started to regain interest in the \app package. \mon
+Then, some people started to regain interest in the \app package. \mont
 is a great tool to perform numerous remote sensing and image
 processing task in a minute, but it is not well adapted to heavier
 (and longer) processing, scripting and batch processing. Therefore, in
@@ -58,7 +58,115 @@ IDL or Matlab (and with \mont).
 \section{Installation}\label{sec:appinstall}
 
 Detailed instruction on how to install the whole \otb suite either
-from binary packages or from source are available in the \sg.
+from binary packages or from source are available in the \sg. Here, we
+will focus only on the installation of the \app package from binary
+package.
 
+\subsection{Windows 2000/XP/Vista/Seven}
+\label{ssec:app_windows_binaries}
+
+For Windows 2000/XP/Vista/Seven users, an installation program exists
+for OTB-Applications. This installers depends on dependencies that can
+be installed through \osgeow. The packages that need to be installed
+are \emph{gdal, curl, libtiff, libgeotiff, libjpeg, zlib and libpng}.
+
+Remember that the corresponding dlls are to be accessible in the
+system path. To ensure so, add the \osgeow bin directory to your
+system path.
+
+ Once the dependencies have been properly installed, please go the the
+ \download, to get the installer. Double-click on the installer and
+ let it guide you through the installation process.
+
+\subsection{MacOS X}
+\label{ssec:mac_binaries}
+
+For now, no binary package is available for \app on MacOS X. You can
+build the \app from sources by following instruction in the \sg.
+
+\subsection{Linux}
+
+\subsubsection{Ubuntu 10.04, 10.10 and 11.04}
+\label{ssec:ubuntu_binaries}
+For Unbuntu 10.04 (Lucid Lynx), 10.10 (Maverick Meerkat) and 11.04
+(Natty Narwhal), the whole \otb suite is available through APT repositories.
+
+If you are using apt command-line tools, use these command-lines to
+add the otb repository to apt sources:
+\begin{verbatim}
+sudo aptitude install add-apt-repository 
+sudo add-apt-repository ppa:otb/orfeotoolbox-stable
+\end{verbatim}
+Now run:
+\begin{verbatim}
+sudo aptitude update
+sudo aptitude install otbapp
+\end{verbatim}
+
+If you are using \emph{Synaptic}, you can add the repositories, update
+and install the packages through the graphical interface.
+
+If you want to use OTB with bleeding edge versions of gdal and qgis,
+there is an alternate UbuntuGIS repository.  You can add it by using
+these command-lines:
+\begin{verbatim}
+sudo aptitude install add-apt-repository 
+sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+sudo add-apt-repository ppa:otb/orfeotoolbox-stable-ubuntugis
+\end{verbatim}
+Now run:
+\begin{verbatim}
+sudo aptitude update
+sudo aptitude install otbapp
+\end{verbatim}
+
+Be careful not to add the two repositories, since they may cause
+incompatibilities.
+
+For further informations about ubuntu packages go to
+href{https://launchpad.net/~otb/+archive/orfeotoolbox-stable}{orfeotoolbox-stable
+  launchpad page} and click on \textbf{Read about installing}.
+
+\textbf{apt-add-repository} will try to retrieve the GPG keys of the
+repositories to certify the origin of the packages. If you are behind
+a http proxy, this step won't work and apt-add-repository will stall
+and eventually quit. You can temporarily ignore this error and proceed
+with the update step. Following this, aptitude update will issue a
+warning about a signature problem. This warning won't prevent you from
+installing the packages.
+
+\subsubsection{OpenSuse 11.2 and higher}
+\label{ssec:opensuse_binaries}
+
+For OpenSuse 11.2 and higher, the whole \otb suite is available
+through \emph{zypper}.
+
+First, you need to add the appropriate repositories with these
+command-lines (please replace $11.4$ by your OpenSuse version):
+\begin{verbatim}
+sudo zypper ar 
+http://download.opensuse.org/repositories/games/openSUSE_11.4/ Games
+sudo zypper ar 
+http://download.opensuse.org/repositories/Application:/Geo/openSUSE_11.4/ GEO
+sudo zypper ar 
+http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_11.4/ tzotsos
+\end{verbatim}
+
+Now run:
+\begin{verbatim}
+sudo zypper refresh
+sudo zypper install Orfeo-Applications
+\end{verbatim}
+
+Alternatively you can use the One-Click Installer from the
+\href{http://software.opensuse.org/search?q=Orfeo&baseproject=openSUSE\%3A11.4&lang=en&include_home=true&exclude_debug=true}{openSUSE
+  Download page} or add the above repositories and install through
+Yast Package Management.
+
+In case you wish to test the latest version of the packages, you can run:
+\begin{verbatim}
+sudo zypper refresh
+sudo zypper install Orfeo-Applications-beta
+\end{verbatim}
 
 \section{Structure of the package}\label{sec:appstruct}
