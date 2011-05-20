@@ -102,8 +102,8 @@ colorlinks,linkcolor={red},citecolor={blue},urlcolor={blue},
 \newcommand{\otb}{\textbf{Orfeo ToolBox}\xspace}
 \newcommand{\app}{\textbf{OTB-Applications}\xspace}
 \newcommand{\mont}{\textbf{Monteverdi}\xspace}
-\newcommand{\mmod}[1]{\emph{#1}\xspace}
-\newcommand{\application}[1]{\emph{#1}\xspace}
+\newcommand{\mmod}[1]{\emph{#1}\index{#1}\xspace}
+\newcommand{\application}[1]{\emph{#1}\index{#1}\xspace}
 \newcommand{\sg}{\href{http://orfeo-toolbox.org/SoftwareGuide/}{OTB Software Guide}\space}
 \newcommand{\dox}{\href{http://orfeo-toolbox.org/doxygen/}{Doxygen}\xspace}
 \newcommand{\website}{\href{http://orfeo-toolbox.org}{Orfeo ToolBox website}\xspace}
@@ -248,7 +248,7 @@ For more information on the \otb, please feel free to visit the \website.
 
 \include{recipes}
 
-\chapter*{Index}
+\input{CookBook.ind}
 
 \end{document}
 
