@@ -21,6 +21,9 @@
 
 \usepackage{color}
 
+\usepackage{xspace}
+
+
 \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
 \definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
 \definecolor{listnumbers}{gray}{0.65}
@@ -76,8 +79,7 @@
 %  hyperref should be the last package to be loaded.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifitkPrintedVersion
-\usepackage[dvips,
+\usepackage[pdftex,
 pdftitle={The Orfeo ToolBox CookBook, a guide for non-developpers},
 pdfauthor={CNES},
 pdfsubject={Remote Sensing, Orfeo, Pleiades, Cosmo Skymed},
@@ -86,26 +88,25 @@ pdfpagemode={UseOutlines},
 bookmarks,bookmarksopen,
 pdfstartview={FitH},
 backref,
-colorlinks,linkcolor={black},citecolor={black},urlcolor={black},
+colorlinks,linkcolor={red},citecolor={blue},urlcolor={blue},
 ]{hyperref}
-\else
-\usepackage[dvips,
-pdftitle={The Orfeo ToolBox CookBook, a guide for non-developpers},
-pdfauthor={CNES},
-pdfsubject={Remote Sensing, Orfeo, Pleiades, Cosmo Skymed},
-pdfkeywords={image processing, Remote sensing, Guide},
-pdfpagemode={UseOutlines},
-bookmarks,bookmarksopen,
-pdfstartview={FitH},
-backref,
-colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
-]{hyperref}
-\fi
 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{bbm}
 
 \def\logoCNES{../Art/logoVectoriel.pdf}
+
+
+
+% Useful macros
+\newcommand{\otb}{\textbf{Orfeo ToolBox}\xspace}
+\newcommand{\app}{\textbf{OTB-Applications}\xspace}
+\newcommand{\mont}{\textbf{Monteverdi}\xspace}
+\newcommand{\mmod}[1]{\emph{#1}\xspace}
+\newcommand{\application}[1]{\emph{#1}\xspace}
+\newcommand{\sg}{\textbf{OTB Software Guide}\xspace}
+\newcommand{\dox}{\textbf{Doyxgen}\xspace}
+\newcommand{\website}{\href{http://orfeo-toolbox.org}{Orfeo ToolBox website}}
 
 \newtheorem{algo}{Algorithm}
 \newtheorem{defin}{Definition}
@@ -179,25 +180,25 @@ colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
 %\input{Abstract.tex}
 \chapter*{Foreword}
 \noindent
-After almost 5 years of development, the Orfeo ToolBox has become a
+After almost 5 years of development, the \otb has become a
 rich library used in many remote sensing context, from research work
 to operational systems. The OTB-Applications and more recently the
 Monteverdi tool has helped to broaden the audience of the library,
 giving access to its functionalities to non-developpers.
 
-Meanwhile, the \textbf{Orfeo ToolBox Software Guide} has grown to more
+Meanwhile, the \sg has grown to more
 than 700 pages of documented code examples, which, combined with the
-class documentation with doxygen, allows to developer users to find
-their way through the Orfeo ToolBox so as to write code suiting their
+class documentation with the \dox, allows to developer users to find
+their way through the \otb so as to write code suiting their
 needs.
 
 Yet, the documentation available for non-developpers users, using
-Monteverdi and OTB-Applications to perform everyday remote sensing
-tasks, has been almost inexistent for all these years, and these users
-had to learn the software by themselves or ask for help from more
-experienced users. This cookbook aims at fulfilling the need for an
-appropriate documentation of the applications built upon the Orfeo
-ToolBox: Monteverdi, and the OTB-Applications. 
+Monteverdi and \app to perform everyday remote sensing tasks, has been
+almost inexistent for all these years, and these users had to learn
+the software by themselves or ask for help from more experienced
+users. This cookbook aims at fulfilling the need for an appropriate
+documentation of the applications built upon the \otb: \mont, and
+the \app.
 
 
 
@@ -205,7 +206,9 @@ A general introduction of these two software is first presented, along
 with installation instructions. Rather than describing all modules and
 applications in an exhaustive way, we then decided to focus on very
 common remote sensing tasks, detailing how they can be achieved with
-either Monteverdi, OTB-Applications or both.
+either \mont, \app or both.
+
+For more information on the \otb, please feel free to visit the \website.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -239,6 +242,8 @@ either Monteverdi, OTB-Applications or both.
 \include{Monteverdi}
 
 \include{recipes}
+
+\chapter*{Index}
 
 \end{document}
 
