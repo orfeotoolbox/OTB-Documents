@@ -1,8 +1,85 @@
 \section{Optical pre-processing}\label{sec:optpreproc}
 
+This section present various pre-processing tasks that can be done
+using \app or \mont.
+
 \subsection{Optical radiometric calibration}\label{ssec:optcal}
 
-todo.
+In remote sensing imagery, pixel values are called DN (for Digital
+Numbers) and can not be physically interpreted and compared: they are
+influenced by various factors such as the amount of light flowing
+trough the sensor, the gain of the detectors and the analogic to
+numeric converter.
+
+Depending on the season, the light and atmospheric conditions, to
+position of the sun or the sensor internal parameters, these DN can
+drastically change for a given pixel (apart from any ground change
+effects). Moreover, these effect are not uniform over the spectrum:
+for instance aerosol amount and type has usually more impact on the
+blue channel.
+
+Therefore, it is necessary to calibrate the pixel values before any
+physical interpretation is made out of them. In particular, this
+processing is mandatory before any comparison of pixel spectrum
+between several images (from the same sensor), and to train a
+classifier without dependence to the atmospheric conditions at the
+acquisition time.
+
+Calibrated values are called surface reflectivity, which is a ratio
+denoting the fraction of light that is reflected by the underlying
+surface in the given spectral range. As such, its values lie in the
+range $[0,1]$. For convenience, images are often stored in thousandth
+of reflectivity, so that they can be encoded with an integer type.
+Two levels of calibration are usually distinguished:
+
+\begin{itemize}
+\item The first level is called \emph{Top Of Atmosphere (TOA)}
+  reflectivity. It takes into account the sensor gain, sensor spectral
+  response and the solar illumination.
+\item The second level is called \emph{Top Of Canopy (TOC)}
+  reflectivity. In addition to sensor gain and solar illumination, it
+  takes into account the optical thickness of the atmosphere, the
+  atmospheric pressure, the water vapor amount, the ozone amount, as
+  well as the composition and amount of aerosol gasses.
+\end{itemize}
+
+This transformation can be done either with \app or with
+\mont. Sensor-related parameters such as gain, date, spectral
+sensitivity and sensor position are seamlessly read from the image
+metadata. Atmospheric parameters can be tuned by the user. Supported
+sensors are :
+\begin{itemize}
+\item SPOT5,
+\item QuickBird,
+\item Ikonos,
+\item WorldView1,
+\item WorldView2,
+\item Formosat.
+\end{itemize}
+
+\subsubsection{Optical calibration with \app}
+
+The \application{otbOpticalCalibration-cli} application from \app
+allows to perform command-line optical calibration. The mandatory
+parameters are the input and output images and the level of
+calibration (either TOA or TOC). All other parameters are
+optional. The output images are expressed in thousandth of
+reflectivity using a 16 bits unsigned integer type.
+
+A basic TOA calibration task can be performed with the following command :
+
+\begin{verbatim}
+otbOpticalCalibration-cli -in  input_image -out output_image -level TOA
+\end{verbatim}
+
+A basic TOC calibration task can be performed with the following command :
+
+\begin{verbatim}
+otbOpticalCalibration-cli -in  input_image -out output_image -level TOC
+\end{verbatim}
+
+\subsubsection{Optical calibration with \mont}
+
 
 \subsection{Pan-sharpening}\label{ssec:pxs}
 
