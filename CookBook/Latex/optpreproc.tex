@@ -308,7 +308,38 @@ files.
 
 \subsection{Ortho-rectification and map projections}\label{ssec:ortho}
 
-todo.
+There are several level of products available on the remote sensing
+imagery market. The most basic level often provide the geometry of
+acquisition (sometimes called the raw geometry). In this case, pixel
+coordinates can not be directly used as geographical positions. For
+most sensors (but not for all), the different lines corresponds to
+different acquisition times and thus different sensor positions, and
+different rows correspond to different cells of the detector.
+
+The mapping of a raw image so as to be registered to a cartographic
+grid is called ortho-rectification, and consist in inverting the
+following effects (at least):
+\begin{itemize}
+\item In most cases, lines are orthogonal to the sensor trajectory,
+ which is not exactly (and in some case not at all) following a
+ north-south axis,
+\item Depending on the sensor, the line of sight may be different from
+  a Nadir (ground position of the sensor), and thus a projective
+  warping may appear,
+\item The variation of height in the landscape may result in severe
+  warping of the image.
+\end{itemize}
+
+Moreover, depending on the area of the world the image has been
+acquired on, different map projections should be used.
+
+The ortho-rectification process is as follows: once an appropriate map
+projection has been defined, a localisation grid is computed to map
+pixels from the raw image to the ortho-rectified one. Pixels from the
+raw image are then interpolated according to this grid in order to
+fill the ortho-rectified pixels.
+
+
 
 \subsection{Residual registration}\label{ssec:registration}
 
