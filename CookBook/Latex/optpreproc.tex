@@ -193,14 +193,14 @@ otbBundleToPerfectSensor-cli -inP pan_image -inXS xs_image -out output_image
 There are two more optional parameters that can be useful for this
 tool:
 \begin{itemize}
-\item The $-dem$ option allows to specify a directory containing DEM
+\item The \verb?-dem? option allows to specify a directory containing DEM
   formatted for OTB (see section~\ref{ssec:dem}). Since registration
   and zooming of the multi-spectral image is performed using
   sensor-models, it may happen that the registration is not perfect in
   case of landscape with high elevation variation. Using a DEM in this
   case allows to get better registration (see \ref{ssec:registration}
   to learn about how to lower registration error).
-\item The $-lmSpacing$ option allows to specify the step of the
+\item The \verb?-lmSpacing? option allows to specify the step of the
   registration grid between the multi-spectral image and panchromatic
   image. This is expressed in amount of panchromatic pixels. A lower
   value gives a more precise registration but implies more computation
@@ -210,7 +210,7 @@ tool:
 \end{itemize}
 
 Pan-sharpening is a quite heavy processing requiring a lot of system
-resource. The $-ram$ option allows you to limit the amount of memory
+resource. The \verb?-ram? option allows you to limit the amount of memory
 available for the computation, and to avoid overloading your
 computer. Increasing the available amount of RAM may also result in
 better computation time, seems it optimises the use of the system
@@ -222,7 +222,7 @@ resources. Default value is 256 Mb.
 \mont allows to perform step-by-step fusion. The followings screenshots highlight operations needed to perform Pan-Sharpening.
 
 \begin{itemize}
-\item Open panchromatic and multispectral images in monteverdi using the \mmod{Open Dataset} module or using the  $-iml$ option of the \mont executable.
+\item Open panchromatic and multispectral images in monteverdi using the \mmod{Open Dataset} module or using the  \verb?-iml? option of the \mont executable.
 
 \item The \mmod{Superimpose} module is used to zoomed and registered
   the multispectral on the panchromatic image. As a result, we get a
@@ -339,7 +339,123 @@ pixels from the raw image to the ortho-rectified one. Pixels from the
 raw image are then interpolated according to this grid in order to
 fill the ortho-rectified pixels.
 
+Ortho-rectification can be performed either with \app or \mont. Sensor
+parameters and image meta-data are seamlessly read from the image
+files without needing any user interaction, provided that all
+auxiliary files are available. The sensor for which \otb
+supports ortho-rectification of raw products are the following:
+\begin{itemize}
+\item SPOT5,
+\item Ikonos,
+\item Quickbird,
+\item GeoEye,
+\item WorldView.
+\end{itemize}
 
+In addition, GeoTiff and other file format with geographical
+information are seamlessly read by OTB, and the ortho-rectification
+tools can be used to re-sample these images in another map projection.
+
+\subsubsection{Ortho-rectification with \app}
+
+The \application{otbOrthoRectification-cli} application allows to
+perform ortho-recification and map re-projection. The simplest way to
+use it is the following:
+\begin{verbatim}
+otbOrthoRectification-cli -in input_image -out output_image
+\end{verbatim}
+
+In this case, the tool will automatically estimates all the necessary
+parameters:
+\begin{itemize}
+\item The map projection is set to UTM (a worldwide map projection)
+  and the UTM zone is automatically estimated,
+\item The ground sampling distance of the output image is computed to
+  fit the image resolution,
+\item The region of interest (upper-left corner and size of the image)
+  is estimated so as to contain the whole input image extent.
+\end{itemize}
+
+In order to use a Digital Elevation Model (see section~\ref{ssec:dem})
+for better localisation performances, one can pass the directory
+containing the DEM tiles to the application:
+
+\begin{verbatim}
+otbOrthoRectification-cli -in input_image -out output_image -dem dem_dir
+\end{verbatim}
+
+If one wants to use a different map projection, the \emph{-mapProj}
+option may be used (example with \emph{Lambert93} map projection):
+
+\begin{verbatim}
+
+otbOrthoRectification-cli -in input_image -out output_image -dem
+dem_dir -mapProj projection parameters
+
+\end{verbatim}
+
+Map projections handled by the application are the following
+(parameters should be passed as demonstrated, please note that the
+ellipsoid is always WGS84):
+\begin{itemize}
+\item UTM, emisphere is either north (N) or south (S): \begin{verbatim} -mapProj UTM zone emisphere \end{verbatim}
+\item Lambert Conformal Conic: \begin{verbatim}-mapProj LAMBERT std_parallel1 std_parallel2 false_easting false_northing \end{verbatim}
+\item Lambert 2 etendu: \begin{verbatim}-mapProj LAMBERT2 \end{verbatim}
+\item Lambert 93: \begin{verbatim}-mapProj LAMBERT93 \end{verbatim}
+\item Sinusoidal : \begin{verbatim}-mapProj SINUS false_easting false_northing \end{verbatim}
+\item Eckert 4: \begin{verbatim}-mapProj ECKERT4 false_easting false_northing\end{verbatim}
+\item TransMercator: \begin{verbatim}-mapProj TRANSMERCATOR false_easting false_northing scale \end{verbatim}
+\item Mollweid: \begin{verbatim}-mapProj MOLLWEID false_easting false_northing scale \end{verbatim}
+\end{itemize}
+
+The ground spacing of the output image can be specified as follows:
+
+\begin{verbatim}
+
+otbOrthoRectification-cli -in input_image -out output_image -dem
+dem_dir -mapProj projection parameters -spacing xspacing yspacing
+
+\end{verbatim}
+
+Please note that since the y axis of the image is bottom oriented, the
+y spacing should be negative to avoid switching north and south direction.
+
+A user-defined region of interest to ortho-rectify can be specified as
+follows:
+
+\begin{verbatim}
+
+otbOrthoRectification-cli -in input_image -out output_image -dem
+dem_dir -mapProj projection parameters -spacing xspacing yspacing -ul
+ul_x_coord ul_y_coord -size x_size y_size
+
+\end{verbatim}
+
+Where the \verb?-ul? option allows to specify the coordinate of the
+upper-left corner coordinates of the output image, and the
+\verb?-size? option allows to specify the size of the output image.
+
+A few more interesting options are available:
+\begin{itemize}
+\item The \verb?-rpc? option allows to use an estimated RPC model
+  instead of the rigorous SPOT5 model, which speeds-up the processing,
+\item The \verb?-lmSpacing? option allows to define the spacing of the
+  localisation grid used for ortho-rectification. A coarser grid
+  results in speeding-up the processing, but with potential loss of
+  accuracy. Default value is 10 times the ground spacing of the output
+  image.
+\item The \verb?-interp? option allows to change the interpolation
+  algorithm. Default is bi-cubic interpolation, which should be the
+  best option for most of the cases.
+\item The \verb?-ram? option allows to specify the amount of memory
+  available for the processing (in Mb). Default is 256 Mb. Increasing
+  this value to fit the available memory on your computer might
+  speed-up the processing.
+\end{itemize}
+
+\subsubsection{Ortho-rectification with \mont}
+
+todo
 
 \subsection{Residual registration}\label{ssec:registration}
 
