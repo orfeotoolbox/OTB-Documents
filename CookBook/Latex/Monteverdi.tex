@@ -459,18 +459,45 @@ classify each pixel of the input image in one of the defined class.
 The non supervised classification module is based on the Kmeans
 algorithm.  The GUI allows to modify parameters of the algorithm and
 produce a label image.
+
 \subsection{Specific SAR functionnalities}
 This section give access to specific treatments related to the SAR
-functionnalities
+(Synthetic Aperture Radar) functionnalities.
 
-\begin{itemize}
-\item Synthetic aperture radar images are generally corrupted by
-  speckle noise.  To suppress speckle and improve the radar image
-  interpretability lots of filtering techniques have been proposed.
-  The module implements to well-known despeckle methods: Frost and
-  Lee.
-\item Derived intensity and log-intensity from the input SAR imagery.
-\item Polarization Synthesis : Allow to construct an image that would
-  be received from a polarimetric radar having selected transmit and
-  receive polarizations.
-\end{itemize}
+\subsubsection{Despeckle}
+SAR images are generally corrupted by speckle noise. To suppress 
+speckle and improve the radar image interpretability lots of filtering 
+techniques have been proposed.  The module implements to well-known 
+despeckle methods: Frost and Lee.
+
+\subsubsection{Compute intensity and log-intensity}
+Compute the derived intensity and log-intensity from the input SAR imagery.
+
+\subsubsection{Polarimetry}
+This section is specific to polarimetric datas.
+In conventional imaging radar the measurement is a scalar which is 
+proportional to the received backscattered power at a particular combination 
+of linear polarization (HH, HV, VH or VV). In polarimetry the basic 
+measurement is a 2×2 complex scattering matrix yielding an eight dimensional 
+measurement space. For reciprocal targets where HV = VH, this space is 
+compressed to five dimensions: three amplitudes (|HH|, |HV|, and |VV|); 
+and two phase measurements, (co-pol: HH-VV, and cross-pol: HH-HV).
+\todo ref to http://www.grss-ieee.org/technical-briefs/imaging-radar-polarimetry
+
+
+
+
+\subsubsubsection{Synthesis}
+Allow to construct an image that would be received from a polarimetric radar 
+having selected transmit and receive polarizations.
+The module waits for real and imaginary part (real images) of the HH, VV, VH and HV images.
+The reciprocal case where case VH = HV, is not properly handled yet, the user
+has to set the same input for the two HV and VH.
+
+\subsubsubsection{Conversion}
+As we saw in the previsou main section,  polarimetry the basic 
+measurement is a 2×2 complex scattering matrix yielding an eight dimensional 
+measurement space. Two other measurements, which are also important in polarimetry, 
+are the covariance matrix and the Mueller matrix. These are the basis for most analyses. 
+This part of \mont allows to change a measurement to another.
+
