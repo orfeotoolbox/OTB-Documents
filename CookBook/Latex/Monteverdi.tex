@@ -479,13 +479,10 @@ In conventional imaging radar the measurement is a scalar which is
 proportional to the received backscattered power at a particular combination 
 of linear polarization (HH, HV, VH or VV). In polarimetry the basic 
 measurement is a 2×2 complex scattering matrix yielding an eight dimensional 
-measurement space. For reciprocal targets where HV = VH, this space is 
+measurement space (Sinclair matrix). For reciprocal targets where HV = VH, this space is 
 compressed to five dimensions: three amplitudes (|HH|, |HV|, and |VV|); 
-and two phase measurements, (co-pol: HH-VV, and cross-pol: HH-HV).
-\todo ref to http://www.grss-ieee.org/technical-briefs/imaging-radar-polarimetry
-
-
-
+and two phase measurements, (co-pol: HH-VV, and cross-pol: HH-HV). (Explanation extracted from 
+\href{ http://www.grss-ieee.org/technical-briefs/imaging-radar-polarimetry}{grss-ieee}).
 
 \subsubsubsection{Synthesis}
 Allow to construct an image that would be received from a polarimetric radar 
@@ -497,7 +494,36 @@ has to set the same input for the two HV and VH.
 \subsubsubsection{Conversion}
 As we saw in the previsou main section,  polarimetry the basic 
 measurement is a 2×2 complex scattering matrix yielding an eight dimensional 
-measurement space. Two other measurements, which are also important in polarimetry, 
-are the covariance matrix and the Mueller matrix. These are the basis for most analyses. 
-This part of \mont allows to change a measurement to another.
+measurement space. But other measurements exist:
+\begin{itemize}
+\item covariance matrix and with its reciprocal specific case
+\item coherency matrix and with its reciprocal specific case
+\item circular coherency matrix and with its reciprocal specific case
+\item Mueller matrix and with its reciprocal specific case
+\item etc
+\end{itemize}
+The modules of the Conversion menu allows to proceed conversions between matrix representation.
+The allowed conversion and their images types are described in the following figure ~\ref{fig:sarpolconv}.
 
+\begin{figure}
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_sarpol_conversion_schema.png}
+  \itkcaption[SAR polarimetry conversion]{SAR polarimetry conversio module.}
+  \label{fig:sarpolconv}
+\end{figure}
+
+\subsubsubsection{Analysis}
+This module computes:
+\begin{itemize}
+\item The polarimetric synthesis:
+\begin{itemize}
+\item input: 4 bands complex image.
+\item output: mono channel real image. 
+\item parameters: the synthesis parameters (incident and reflected \psy and \khi angles)
+\end{itemize}
+\item The reciprocal H alpha image:
+\begin{itemize}
+\item input: 6 bands complex image.
+\item output: 3 bands real image. 
+\end{itemize}
+\end{itemize}
