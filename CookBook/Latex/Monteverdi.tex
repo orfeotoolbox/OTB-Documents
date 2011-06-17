@@ -2,7 +2,7 @@
 
 \section{Introduction}\label{sec:montintro}
 The \app package makes available a set of simple software
-tools which were designed to demonstrates what can be done with
+tools, which were designed to demonstrate what can be done with
 \otb. Many users started using these applications for real processing
 tasks, so we tried to make them more generic, more robust and easy to
 use. \otb users have been asking for an integrated application for a
@@ -16,9 +16,9 @@ processing modules.
 
 \section{Installation}\label{sec:montinstall} 
 The application is called \mont, since this is the name of the Orfeo
-composer.The application allows you to build interactivelly remote
+composer. The application allows you to build interactivelly remote
 sensing processes based on the \otb. This is also in
-rembering of the great (and once open source) Khoros/Cantata
+remembering of the great (and once open source) Khoros/Cantata
 software.  Installation of \mont is very simple. Standard
 installer packages are available on MS Windows and MacOS X.  For many
 flavors of GNU/Linux binary packages (rpm and deb) or software
@@ -36,8 +36,8 @@ Get the latest information on binary packages on the \website.
   \label{fig:mainwindow}
 \end{figure}
 
-This is Monteverdi's main window (figure ~\ref{fig:mainwindow} )where the
-menus are available and where you can see the different modules which
+This is Monteverdi's main window (figure ~\ref{fig:mainwindow}) where the
+menus are available and where you can see the different modules, which
 have been set up for the processing. Input data are obtained by
 readers. When you choose to use a new module, you select its input
 data, and therefore, you build a processing pipeline sequentially.
@@ -68,19 +68,19 @@ by browsing your computer. Monteverdi takes advantage of the automatic
 detection of images' extensions to indicate the dataset type (optical,
 SAR or vector data).
 
-The input dataset is added to the "Data and Process" tree whcich
+The input dataset is added to the "Data and Process" tree, which
 describes the dataset content and each node corresponds to a layer.
 
 \subsection{Visualize an image with \mont}
 This module allows to visualize raster or vector data. It allows to
-create RGB composition from the imput rasters. It is also possible to
-add vector dataset which are automatically reproject in the same
+create RGB composition from the input rasters. It is also possible to
+add vector dataset which are automatically reprojected in the same
 projection of the input image or Digital Elevation informations.
 
 The viewer offers three types of data visualisation: 
 
 \begin{itemize}
-\item The scroll Window : to navigate quickly inside the entire scene
+\item The Scroll window : to navigate quickly inside the entire scene
 \item The Full resolution window: the view of the region of interest
   selected in the scroll window
 \item The Zoom window
@@ -89,8 +89,8 @@ The viewer offers three types of data visualisation:
   \begin{itemize}
   \item The current index
   \item The pixel value 
-  \item The computed value (the dynamic of hte input image is modify
-    to get a proper visualisation
+  \item The computed value (the dynamic of hte input image is modified
+    to get a proper visualization
   \item The coordinates of the current pixel (longitude and latitude)
   \item In case where there is a Internet connection available,
     Monteverdi displays the estimate location of the current pixel
@@ -117,7 +117,7 @@ superpose vector dataset to the input image (see figure
   \label{fig:viewervectordata}
 \end{figure}
 
-The "Setup Tab" allow to modify the RGB composition or use the
+The "Setup Tab" allows to modify the RGB composition or use the
 grayscale mode to display only one layer.
 
 \begin{figure}
@@ -130,7 +130,7 @@ grayscale mode to display only one layer.
 The "Histogram Tab" get access to the dynamic of the displayed
 layers. The basic idea is to convert the output of the pixel
 representation to a RGB pixel for rendering on conventional displays.
-Values are contrained to 0-255 with a transfer function and a clamping
+Values are constrained to 0-255 with a transfer function and a clamping
 operation.  By default, the dynamic of each layer is modified by
 clamping the histogram at $min + 2\%$ and $max - 2\%$.
 
@@ -141,7 +141,7 @@ clamping the histogram at $min + 2\%$ and $max - 2\%$.
   \label{fig:histogram}
 \end{figure}
 
-There is also possible to select pixel coordinates and get access to all the informations abvailable in the ``Pixel description 
+There is also possible to select pixel coordinates and get access to all the informations available in the ``Pixel description 
 Box''.
 
 \begin{figure}
@@ -153,7 +153,7 @@ Box''.
 
 \subsection{Cache dataset}
 The "cache data set" (see figure ~\ref{fig:cachingmodule}) is a very
-interesting functionality. As you know, OTB implements processing on
+interesting functionality. As you know, \otb implements processing on
 demand, so when you build a processing pipeline, no processing takes
 place unless you ask for it explicitly. That means that you can plug
 together the opening of a data set, an orthorectification and a
