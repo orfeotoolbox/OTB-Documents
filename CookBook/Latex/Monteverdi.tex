@@ -188,8 +188,7 @@ allow you to cache their input data sets.
 
 \subsection{Dynamic GUI definition}
 The aim of \mont is to provide a generic interface which is based on
-the definition of the internal processes.  In this frame, the way that
-that you have to manage modules are identical during the definition of
+the definition of the internal processes.  In this frame, the way that you have to manage modules are identical during the definition of
 a new process.  Selecting a module on the upper main window, open
 automatically the "Inputs definition Window" wich allows to select
 data which are inputs of the current module. \mont module can manage
@@ -240,9 +239,9 @@ composition with the inputs layer.
 \mont allows to export raster or vector dataset to a file to your
 system.  In the case of raster images, it is possible to cast output
 pixel type. In \mont all the processes are done in floating point
-precision.  On large remote sensing dateset, saving your result in
+precision.  On large remote sensing dataset, saving your result in
 float data type could lead to file too large(more than 25 Go for
-pas-sharpened 8 bands WorldView2 with a resolution of $46$
+pan-sharpened 8 bands WorldView2 with a resolution of $46$
 centimeters). Since the module allows to cast pixels in other types :
 
 \begin{itemize}
@@ -250,7 +249,7 @@ centimeters). Since the module allows to cast pixels in other types :
 \item short (16 bits)
 \item int (32 bits)
 \item float (32 bits)
-\item double(64 bits)
+\item double (64 bits)
 \item unsigned short (16 bits)
 \item unsigned int (32 bits)
 \end{itemize}
@@ -282,12 +281,12 @@ tabs:
   of the orthorectified image (the longitude and latitude coordinates
   are calculated through meta-data informations. It is also possible
   to specify the map projection of the output.
-\item Output image: The module allow to only orthorectified a Region
-  Of interest inside the input dataset. This tab allow to set the size
-  of the ReOI around the center pixel coordinate or from the upper
-  left index. The orthorectified imagery can also be resample at any
+\item Output image: The module allows to only orthorectified a Region
+  Of interest inside the input dataset. This tab allows to set the size
+  of the ROI around the center pixel coordinate or from the upper
+  left index. The orthorectified imagery can also be resampled at any
   resolution in the line or column directions by setting the "Spacing
-  X" and the "Spacing Y" and choosing the method of interpolation.
+  X" and the "Spacing Y" respectively, and choosing interpolation method.
 \item DEM: Indicate path to a directory containing SRTM elevation
   file. The application is able to detect inside the direcory which
   DEM files are relevant in the process. You can find detailed
@@ -301,7 +300,7 @@ tabs:
 \begin{figure}
   \center
   \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_ortho_extent.png}
-  \itkcaption[Preview of the orthorectified imagery]{Reprojection module.}
+  \itkcaption[Preview of the orthorectified imagery]{Reprojection module. Quick Look tab.}
   \label{fig:ortho}
 \end{figure}
 
@@ -311,15 +310,15 @@ This module allows to take ground control points on a raster image
 where no geographic informations are available.  This GCPs list is
 making correspondence between pixel coordinate in the input image and
 physical coordinates. The list allows to derive a general function
-which to translate any pixel coordinates in physical positions. This
+which convert any pixel coordinates in physical positions. This
 function is based on a RPC transformation (Rational Polynomial
 Coefficients). As a consequence, the module enriches the output image
 with metadata informations defining a RPC sensor model associated with
-the input raster.  There is several ways to generate the GCPs:
+the input raster.  There are several ways to generate the GCPs:
 
 \begin{itemize}
 \item With Internet access: dynamically generate the correspondance on
-  the input image and Open Street Map layers
+  the input image and Open Street Map layers.
 \item Without Internet access: Set manually Ground control points :
   indicate index position and cartographic coordinates in the input
   image.
@@ -328,8 +327,8 @@ the input raster.  There is several ways to generate the GCPs:
 It is also possible to import/export the list of Ground Control points
 from/to an XML file.
 
-Moreover, if the input image have already GCPs in its metadata, the
-module allows to add or remove points from the existing list which is
+Moreover, if the input image has GCPs in its metadata, the
+module allows to add or remove points from the existing list, which is
 automatically loaded.
 
 \subsection{Calibration}
@@ -339,20 +338,18 @@ illuminated by the sun. This signal depends on the surface
 reflectance, but it is also perturbed by two atmospheric processes,
 the gaseous absorption and the scattering by molecules and aerosols.
 
-
 \subsubsection{Optical calibration}
 In the case of the Optical calibration, the basic idea is to be able
-to retrieve reflectance of the observed physical object.  The input
-image contains only numerical which The process can be split in 3 main
-operations:
+to retrieve reflectance of the observed physical objects. The process can be split in 3 main steps:
+
 \begin{itemize}
 \item Derived luminance from the raw value in the input image. 
-\item Convert the Luminance to Reflectance to produce the TOA
+\item Convert the luminance to reflectance to produce the TOA
   image(Top Of Atmosphere).
-\item Inverse a radiative transfer code which simulate the reflection
+\item Inverse a radiative transfer code, which simulates the reflection
   of solar radiation by a coupled atmosphere-surface system. This step
-  produce the TOC (Top of Canopy) imagery which is the final result of
-  the Optical calibration module.
+  produce the TOC (Top of Canopy) imagery, which is the final result of
+  the optical calibration module.
 \end{itemize}
 
 
@@ -360,10 +357,10 @@ operations:
 
 The calibration and validation of the measurement systems are
 important to maintain the reliability and reproducibility of the SAR
-measurements but the establishment of correspondence between
-quantities measured by SAR and physical measure which requires
-scientific background. The SAR calibration module allow to estimate
-quantitative accuracy For now only calibration of TerraSARX data is
+measurements, but the establishment of correspondence between
+quantities measured by SAR and physical measure requires
+scientific background. The SAR calibration module allows to estimate
+quantitative accuracy. For now only calibration of TerraSARX data is
 available.
 %//TODO add description of outputs
 
