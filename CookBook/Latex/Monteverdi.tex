@@ -366,8 +366,9 @@ available.
 
 \subsection{Filtering Operations}
 \subsubsection{Band Math}
+\label{Band_math module}
 The Band Math module allows to perform complex mathematical operations
-over images.It is based on the mathematical parser library muParser
+over images. It is based on the mathematical parser library muParser
 and comes with a bunch of build-in functions and operators (listed
 \href{http://muparser.sourceforge.net/mup_features.html#idDef2}{here}). This
 homebrewed digital calculator is also bundled with custom functions
@@ -378,7 +379,7 @@ the easy way. The module also prevents error in the mathematical
 command by checking the expression as the user types it, and notifying
 information on the detected error:
 
-Figure ~ref{fig:bandmathndvi} presents an example on how the band math
+Figure ~\ref{fig:bandmathndvi} presents an example on how the band math
 can produce a threshold image on the NDVI value computed in one pass
 using built-in conditional operator ``if'' available in the parser.
 
@@ -408,6 +409,64 @@ module and allow to get a reliable estimation of the flood events.
   \itkcaption[Difference of NDWI2 on 2 images]{Subtraction of NDWI2.}
   \label{fig:ndwi2}
 \end{figure}
+
+
+\subsubsection{Connected Component Segmentation module}
+
+The Connected Component Segmentation module allows segmentation and object analysis using user defined criteria at each step. This module uses \href{http://muparser.sourceforge.net/}{muParser} library using the the same scheme as it is done in Band math module (see \ref{Band_math module} for a detailled explanation). It relies on three main steps process :
+
+\begin{description}
+\item[Mask definition :] This mask is used as support of Connected components segmentation (CC) . i.e zeros pixels are not taken into account by CC algorithm. Binarization criteria is defined by user, via muparser. This step is optional, if no Mask is given, entire image is processed.  
+\item[Segmentation :] Connected Component Segmentation driven by user defined criteria. Segmentation process can be followed by a small object rejection step. 
+\item[Object analysis post processing :] This step consists in post processing on each detected area using shape and statistical object characterization.
+\end{description}
+
+Results are exported in shape file format. Graphical user interface is presented on Figure \ref{fig:connected_component_module}. At each step intemerdiate output can be seen using \emph{Display} item list. Viewing windows are updated by clicking on \emph{Update} button. Available display outputs are :
+
+\begin{description}
+\item[Input image :] input image.
+\item[Mask Output :] mask image created using formula.
+\item[Masked Image :] input image multiplied by mask image.
+\item[Segmentation Output :] output of Connected component segmentation filter.
+\item[Segmentation after small object rejection :] output of connected component segmentation after relabeling and small object rejection.
+\item[Filter Output :] final output after object based analysis opening post processing. 
+\end{description}
+
+\begin{figure}
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_connected_component_segmentation.png}
+  \itkcaption[Connected Component Segmentation]{connected component segmentation module.}
+  \label{fig:connected_component_module}
+\end{figure}
+
+Available variables for each expression can be found using item list \emph{variables names}. available functions can  be found in help windows by clicking on \emph{Help} button. The module also prevents error in the mathematical command by checking the expression as the user types it. Background value is set to green if formula is right, in red otherwise. If mask expression is left blank entire image is processed. If \emph{Object Analysis} expression is left blank the whole set of label objects is considered.
+
+After segmentation step, too small objects can be rejected using \emph{Object min area} input. Eliminating too small objects at this step is needed to lighten further computation. min area is the pixel size of the label object. 
+
+When a first pass have been done, Specific label object properties can be displayed. Select the "Filter Output" visualization mode, Update the visualization. Then use right click on selected object in image to display object properties.
+
+Clicking on \emph{Save and Quit} button export output to Monteverdi in vector data format.
+ 
+A detailled presentation of this module, and examples can be found on the \href{http://wiki.orfeo-toolbox.org/index.php/Connected_component_segmentation_module}{wiki}.
+
+A boat detection example is presented on Figure \ref{fig:boat detection}. Results can be seen on Figure \ref{fig:boat detection result}. 
+
+\begin{figure}
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_Capture_Boats.png}
+  \itkcaption[Example Boats]{Connected Component Segmentation module example : boat detection.}
+  \label{fig:boat detection}
+\end{figure}
+
+\begin{figure}
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_Capture_Boats_CC.png}
+  \itkcaption[Example Boats result]{Boat detection example results.}
+  \label{fig:boat detection result}
+\end{figure}
+
+
+
 
 \subsubsection{Feature extraction}
 
@@ -530,3 +589,4 @@ This module allows to perform some of classical polarimetric analysis methods. I
 \item output: 3 bands real image 
 \end{itemize}
 \end{itemize}
+
