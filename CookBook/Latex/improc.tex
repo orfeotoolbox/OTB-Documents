@@ -10,20 +10,20 @@ The aim of the new SVM classification framework is to provide a supervised pixel
 The classification chain will perform a SVM training step based on the intensities of each pixel as features. Please note that the images will have the same number of bands to be comparable.
 
 \subsubsection{Statistics estimation}
-In order to make these features comparable between each images, the first step is to estimate the statistic of the group of input images. These statistics will be used to center and reduce the intensities (mean of 0, std dev of 1) of samples based on the vector data produced by the user. To do so, the \textbf{otbEstimateImagesStatistics} tool can be used :
+In order to make these features comparable between each images, the first step is to estimate the statistic of the group of input images. These statistics will be used to center and reduce the intensities (mean of 0, standard deviation of 1) of samples based on the vector data produced by the user. To do so, the \textbf{otbEstimateImagesStatistics} tool can be used :
 
 \begin{verbatim}
 otbEstimateImagesStatistics-cli -in  list_of_input_images 
                                 -out statistics.xml
 \end{verbatim}
 
-This tool will compute the mean of each band, compute the standard deviation based on pooled variance of each band and finally exporting them to an XML file.
+This tool will compute the mean of each band, compute the standard deviation based on pooled variance of each band and finally export them to an XML file.
 
 The features statistics XML file will be an input of the following tools. 
 
 \subsubsection{Building a training data set}
 
-The chain is supervised : one has to build a training set with positive examples of different objects of interest. This can be done with the Vectorization Monteverdi module (Fig.\ref{fig:vectoModuleDataSetCreation}), by building a VectorData containing polygons centered on occurrences of the different objects of interest. This operation will be reproduce on each images used as input of the training function.
+The chain is supervised : one has to build a training set with positive examples of different objects of interest. This can be done with the Vectorization Monteverdi module (Fig.\ref{fig:vectoModuleDataSetCreation}), by building a VectorData containing polygons centered on occurrences of the different objects of interest. This operation will be reproduced on each image used as input of the training function.
 
 Please note that the positive examples in the vector data should have a Class field with a label higher than 1 and coherent in each different images. 
 
@@ -34,7 +34,7 @@ Please note that the positive examples in the vector data should have a Class fi
   \label{fig:vectoModuleDataSetCreation}
 \end{figure}
 
-You can generate the vector data set with QGIS software for example. The OTB-applications should be able to transform the vectordata into the corrdinate system of the image. 
+You can generate the vector data set with QGIS software for example. The \app should be able to transform the vectordata into the coordinate system of the image. 
 
 \subsubsection{Training data set}
 
@@ -47,11 +47,11 @@ Once images statistics have been estimated, the learning scheme is the following
     \item Add the vectors respectively to the training samples set and the validation samples set.
   \end{enumerate}
   \item Increase the size of the training samples set and balance it by generating new noisy samples from the previous ones,
-  \item SVM learn with this training set
-  \item Estimate performances of the SVM classifier on the validation samples set (confusion matrix, precision, recall).
+  \item SVM learning with this training set
+  \item Performances estimation of the SVM classifier on the validation samples set (confusion matrix, precision, recall).
 \end{enumerate}
 
-These steps can be performed by the \textbf{otbTrainImagesClassifier} program using the following:
+These steps can be performed by the \textbf{otbTrainImagesClassifier} command-line using the following:
 
 \begin{verbatim}
 otbTrainImagesClassifier-cli -is  images_statistics.xml 
@@ -73,7 +73,7 @@ Some options are available:
 \end{itemize}
 
 \subsubsection{Validate the classification model}
-It is also possible to estimate the performance of the svm model with a new set of validation samples and another image with the following application.
+It is also possible to estimate the performance of the SVM model with a new set of validation samples and another image with the following application.
 It will compute the global confusion matrix and precision, recall and F-score of each class based on the \href{http://www.orfeo-toolbox.org/doxygen-current/classotb_1_1ConfusionMatrixCalculator.html}{ConfusionMatrixCalculator} class.
 It is done by \textbf{otbValidateImagesClassifier}:
 
@@ -96,7 +96,7 @@ Once the classifier has been trained, one can apply the model to classify pixel 
                            -out labeled_image
 \end{verbatim}
 
-You can set an input mask to restricted the classification to the mask area with value \textgreater 0.
+You can set an input mask to limit the classification to the mask area with value \textgreater 0.
 
 \subsubsection{Fancy classification results}
 

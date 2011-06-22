@@ -1,8 +1,8 @@
 \section{Optical pre-processing}\label{sec:optpreproc}
 
-This section present various pre-processing tasks that can be done
+This section presents various pre-processing tasks that can be done
 using \app or \mont. The tasks are presented in their classical order
-in which they can be chained to obtain a calibrated, pan-sharpened 
+in which they can be chained to obtain a calibrated, pan-sharpened image. 
 
 \subsection{Optical radiometric calibration}\label{ssec:optcal}
 
@@ -12,10 +12,10 @@ influenced by various factors such as the amount of light flowing
 trough the sensor, the gain of the detectors and the analogic to
 numeric converter.
 
-Depending on the season, the light and atmospheric conditions, to
+Depending on the season, the light and atmospheric conditions, the
 position of the sun or the sensor internal parameters, these DN can
 drastically change for a given pixel (apart from any ground change
-effects). Moreover, these effect are not uniform over the spectrum:
+effects). Moreover, these effects are not uniform over the spectrum:
 for instance aerosol amount and type has usually more impact on the
 blue channel.
 
@@ -84,7 +84,7 @@ otbOpticalCalibration-cli -in  input_image -out output_image -level TOC
 These transformations can also be done in \mont.
 
 The 6S model needs atmospheric parameters to be able to compute
-radiative terms to estimate the atmoshperic contributions on the input
+radiative terms to estimate the atmospheric contributions on the input
 signal. Default parameters are available in the module.  For
 atmospheric parameters, it is possible to indicate AERONET file. The
 AERONET (AErosol RObotic NETwork) program is a federation of
@@ -95,13 +95,13 @@ universities, individual scientists, and partners. The program
 provides accessible public domain database of aerosol optical,
 mircrophysical and radiative properties.
 
-The module produce four outputs:
+The module produces four outputs:
 
 \begin{itemize}
-\item Luminance image
-\item TOA reflectance image
-\item TOC reflectance image
-\item Difference TOA-TOC image which allows to get the estimation of atmospheric contribution
+\item Luminance image.
+\item TOA reflectance image.
+\item TOC reflectance image.
+\item Difference TOA-TOC image, which allows to get the estimation of atmospheric contribution.
 \end{itemize}
 
 \begin{figure}
@@ -222,7 +222,7 @@ resources. Default value is 256 Mb.
 \mont allows to perform step-by-step fusion. The followings screenshots highlight operations needed to perform Pan-Sharpening.
 
 \begin{itemize}
-\item Open panchromatic and multispectral images in monteverdi using the \mmod{Open Dataset} module or using the  \verb?-iml? option of the \mont executable.
+\item Open panchromatic and multispectral images in monteverdi using the \mmod{Open Dataset} module or using the  \verb?-il? option of the \mont executable.
 
 \item The \mmod{Superimpose} module is used to zoomed and registered
   the multispectral on the panchromatic image. As a result, we get a
@@ -233,7 +233,7 @@ resources. Default value is 256 Mb.
   \center
   \includegraphics[width=0.45\textwidth]{../Art/MonteverdiImages/monteverdi_QB_PAN_ROI.png}
   \includegraphics[width=0.45\textwidth]{../Art/MonteverdiImages/monteverdi_QB_MUL_Superimpose.png}
-  \itkcaption[Input panchromatic and zoomed and registered multispectral image over it]{Panchromatic and Zoomed and registered Multispectral image.}
+  \itkcaption[Input panchromatic and zoomed and registered multispectral image over it]{Panchromatic, Zoomed, and registered multispectral image.}
   \label{fig:qbmulsuper}
 \end{figure}
 
@@ -274,7 +274,7 @@ cover, which are both delivered as 1-by-1 tiles:
 \item \href{http://www2.jpl.nasa.gov/srtm/}{The Shuttle Radar
   topographic Mission (SRTM)} is a 90 meters resolution DEM, obtained
   by radar interferometry during a campaign of the Endeavour space
-  shuttle from NASA in 2000. The 
+  shuttle from NASA in 2000.
 \item The \href{http://www.ersdac.or.jp/GDEM/E/2.html}{Advanced
   Spaceborne Thermal Emission and Reflection Radiometer (ASTER)} is a
   30 meters resolution DEM obtained by stereoscopic processing of the
@@ -283,8 +283,8 @@ cover, which are both delivered as 1-by-1 tiles:
 
 The \otb suite relies on \ossim capabilities for sensor modelling and
 DEM handling. Tiles of a given DEM are supposed to be located within a
-single directory. Whenever some application from \app or module from
-\mont requires a DEM, there is an option or a field to set the DEM
+single directory. Whenever some applications from \app or modules from
+\mont require a DEM, there is an option or a field to set the DEM
 directory.
 
 \subsubsection{Making DEM files usable in \otb suite using \app}
@@ -353,14 +353,14 @@ supports ortho-rectification of raw products are the following:
 \end{itemize}
 
 In addition, GeoTiff and other file format with geographical
-information are seamlessly read by OTB, and the ortho-rectification
+information are seamlessly read by \OTB, and the ortho-rectification
 tools can be used to re-sample these images in another map projection.
 
 \subsubsection{Ortho-rectification with \app}
 
 The \application{otbOrthoRectification-cli} application allows to
-perform ortho-recification and map re-projection. The simplest way to
-use it is the following:
+perform ortho-rectification and map re-projection. The simplest way to
+use it is the following command:
 \begin{verbatim}
 otbOrthoRectification-cli -in input_image -out output_image
 \end{verbatim}
