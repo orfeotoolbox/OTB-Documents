@@ -178,12 +178,12 @@ Output:
 Usage:
 
 \begin{verbatim}
- otbDSFuzzyModelEstimation-cli -psin PosSamples.shp 
-                               -nsin NegSamples.shp 
-                               -BelSup "ROADSA" 
-                               -PlaSup "NONDVI" "ROADSA" "NOBUIL" 
+ otbDSFuzzyModelEstimation-cli -psin     PosSamples.shp 
+                               -nsin     NegSamples.shp 
+                               -BelSup   "ROADSA" 
+                               -PlaSup   "NONDVI" "ROADSA" "NOBUIL" 
                                -DescList "NONDVI" "ROADSA" "NOBUIL" 
-                               -out FuzzyModel.xml
+                               -out      FuzzyModel.xml
 \end{verbatim}
 
 FuzzyModel.xml contains the optimal model to perform the classifier fusion.
@@ -205,41 +205,41 @@ Output:
 Usage: To add the "NONDVI" descriptor to an input VectorData ("inVD.shp") corresponding to the percentage of pixel along a polyline that verifies the formula that have a NDVI > 0.4 :
 
 \begin{verbatim}
- otbComputePolylineFeatureFromImage-cli -img NDVI.TIF 
-                                        -vdin inVD.shp 
-                                        -expr "b1 > 0.4" 
+ otbComputePolylineFeatureFromImage-cli -img   NDVI.TIF 
+                                        -vdin  inVD.shp 
+                                        -expr  "b1 > 0.4" 
                                         -field "NONDVI" 
-                                        -out VD_NONDVI.shp
+                                        -out   VD_NONDVI.shp
 \end{verbatim}
 
 where NDVI.TIF is the ndvi mono band image of the studied scene.
 This step must be repeated for each choosen descriptor
 
 \begin{verbatim}
- otbComputePolylineFeatureFromImage-cli -img roadSpectralAngle.TIF  
-					-vdin VD_NONDVI.shp 
-					-expr "b1 > 0.24" 
-					-field "ROADSA" 
-					-out VD_NONDVI_ROADSA.shp
+ otbComputePolylineFeatureFromImage-cli -img   roadSpectralAngle.TIF  
+                                        -vdin  VD_NONDVI.shp 
+                                        -expr  "b1 > 0.24"
+                                        -field "ROADSA" 
+					-out   VD_NONDVI_ROADSA.shp
 \end{verbatim}
 
 \begin{verbatim}
- otbComputePolylineFeatureFromImage-cli -img Buildings.TIF 
-                                        -vdin VD_NONDVI_ROADSA.shp 
-                                        -expr "b1 == 0" 
+ otbComputePolylineFeatureFromImage-cli -img   Buildings.TIF 
+                                        -vdin  VD_NONDVI_ROADSA.shp 
+                                        -expr  "b1 == 0" 
                                         -field "NOBUILDING" 
-                                        -out VD_NONDVI_ROADSA_NOBUIL.shp
+                                        -out   VD_NONDVI_ROADSA_NOBUIL.shp
 \end{verbatim}
 
 Both NDVI.TIF and roadSpectralAngle.TIF can be produced using Monteverdi Feature Extraction capabilites, and Buildings.TIF can be generated using Monteverdi Rasterization module.
-From now on, VD_NONDVI_ROADSA_NOBUIL.shp contains three descriptor fields. It will be used in the following parts.
+From now on, VD\_NONDVI\_ROADSA\_NOBUIL.shp contains three descriptor fields. It will be used in the following parts.
 
 \subsubsection{Second Step: Feature Validation}
 
 The final application which, using the Dempster-Shafer theory, will validate or unvalidate the studied samples
 Inputs:
 \begin{itemize}
-\item an enriched vector data VD_NONDVI_ROADSA_NOBUIL.shp
+\item an enriched vector data VD\_NONDVI\_ROADSA\_NOBUIL.shp
 \item a support for the Belief computation
 \item a support for the Plausibility computation
 \item a fuzzy model FuzzyModel.xml
@@ -249,8 +249,8 @@ Output:
 \item a vector data containing only the validated samples
 \end{itemize}
 \begin{verbatim}
- otbVectorDataDSValidation-cli -in extractedRoads_enriched.shp 
+ otbVectorDataDSValidation-cli -in      extractedRoads_enriched.shp 
                                -descMod FuzzyModel.xml 
-                               -out validatedSamples.shp
+                               -out     validatedSamples.shp
 \end{verbatim}
 
