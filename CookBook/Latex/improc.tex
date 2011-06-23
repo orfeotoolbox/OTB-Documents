@@ -156,11 +156,11 @@ todo.
 
 This framework is dedicated to, starting from the result of a detection (for example a road extraction), enhance the results fiability by using a classifier fusion based validation algorithm. Using a set of descriptor, the processing chain validates or invalidates the input geometrical features.
 
-\subsection{Prequel: Road Extraction}
+\subsubsection{Prequel: Road Extraction}
 
 todo.
 
-\subsection{Fuzzy Model (requisite)}
+\subsubsection{Fuzzy Model (requisite)}
 
 Perform the fuzzy model estimation (once by use case: descriptor set / Belief support / Plausibility support)
 Inputs:
@@ -188,7 +188,7 @@ Usage:
 
 FuzzyModel.xml contains the optimal model to perform the classifier fusion.
 
-\subsection{First Step: Compute Descriptors}
+\subsubsection{First Step: Compute Descriptors}
 
 The First step in the classifier fusion based validation is to compute, for every studied polyline, the choosen descriptors. In this context, the otbComputePolylineFeatureFromImage application can be used for a large panel of descriptors.
 Inputs:
@@ -234,7 +234,7 @@ This step must be repeated for each choosen descriptor
 Both NDVI.TIF and roadSpectralAngle.TIF can be produced using Monteverdi Feature Extraction capabilites, and Buildings.TIF can be generated using Monteverdi Rasterization module.
 From now on, VD_NONDVI_ROADSA_NOBUIL.shp contains three descriptor fields. It will be used in the following parts.
 
-\subsection{Second Step: Feature Validation}
+\subsubsection{Second Step: Feature Validation}
 
 The final application which, using the Dempster-Shafer theory, will validate or unvalidate the studied samples
 Inputs:
