@@ -2,7 +2,17 @@
 
 \subsection{Simple calculus with channels}\label{ssec:calculus}
 
-todo.
+The Band Math application (otbBandMath-cli) provides a simple and efficient way to perform band operations. The command line application and the corresponding Monteverdi module (shown in the section \ref{Band_math module}) are based on the same standards. It computes a band wise operation according to a user defined mathematical expression. The following code compute the absolute difference between first bands of two images:
+
+\begin{verbatim}
+otbBandMath-cli -ims input_image_1 input_image_2 
+                -exp "abs(im1b1 - im2b1)"
+                -out output_image
+\end{verbatim}
+
+The naming convention "im[x]b[y]" designates the yth band of the xth input image.
+
+The Band Math application embeds built-in operators and functions (listed \href{http://muparser.sourceforge.net/mup_features.html#idDef2}{here}), allowing a vast choice of possible operations. 
 
 \subsection{Classification}\label{ssec:classification}
 
@@ -139,6 +149,10 @@ todo.
 todo.
 
 \subsection{Object-based image analysis}\label{ssec:obia}
+
+todo.
+
+\subsection{Dempster Shafer based Classifier Fusion}\label{ssec:classifierfusion}
 
 todo.
 
