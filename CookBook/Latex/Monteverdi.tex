@@ -371,23 +371,33 @@ The Band Math module allows to perform complex mathematical operations
 over images. It is based on the mathematical parser library muParser
 and comes with a bunch of build-in functions and operators (listed
 \href{http://muparser.sourceforge.net/mup_features.html#idDef2}{here}). This
-homebrewed digital calculator is also bundled with custom functions
-allowing to compute a full expression result simply and really fast,
+home-brewed digital calculator is also bundled with custom functions
+allowing to compute a full expression result simply and really quickly,
 since the filter supports streaming and multi-threading.  The \mont
-module provides a intuitive way to perform complex band computation
-the easy way. The module also prevents error in the mathematical
+module provides an intuitive way to easily perform complex band computation. 
+The module also prevents error in the mathematical
 command by checking the expression as the user types it, and notifying
 information on the detected error:
 
-Figure ~\ref{fig:bandmathndvi} presents an example on how the band math
+Figure ~\ref{fig:bandmathndviwithres} presents an example on how the band math
 can produce a threshold image on the NDVI value computed in one pass
 using built-in conditional operator ``if'' available in the parser.
 
 An other operational example, on how this simple module can produce
 reliable information.  Figure ~\ref{fig:ndwi2} shows the result of the
 subtraction of the Water indice on 2 images which was taken before and
-during the crisis event.  The difference was produce by the band math
-module and allow to get a reliable estimation of the flood events.
+during the crisis event.  The difference was produced by the band math
+module and allows to get a reliable estimation of the flood events.
+
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/monteverdi_band_math_ndvi_threshold.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/monteverdi_band_math_result.png}
+  \itkcaption[Band math module]{Conditional operators using the band math module to process a NDVI image threshold (on the left) and the result of the operation (on the right).}
+  \label{fig:bandmathndviwithres}
+\end{figure}
+
 
 \begin{figure}
   \center
