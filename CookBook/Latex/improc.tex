@@ -162,7 +162,7 @@ todo.
 
 \subsubsection{Fuzzy Model (requisite)}
 
-Perform the fuzzy model estimation (once by use case: descriptor set / Belief support / Plausibility support)
+Perform the fuzzy model estimation (once by use case: descriptor set / Belief support / Plausibility support).
 Inputs:
 \begin{itemize}
 \item a vector data of positive samples enriched according to the "Compute Descriptors" part
@@ -195,14 +195,14 @@ Inputs:
 \begin{itemize}
 \item an image (of the sudied scene) corresponding to the choosen descriptor (NDVI, building Mask...)
 \item a vector data containing polyline of interest
-\item a formula ("b1 > 0.4", "b1 == 0") where b1 is the standard name of input image first band
+\item a formula ("b1 \textgreater 0.4", "b1 == 0") where b1 is the standard name of input image first band
 \item a field name corresponding to the descriptor codename (NONDVI, ROADSA...)
 \end{itemize}
 Output:
 \begin{itemize}
 \item a vector data containing polylines with a new field containing the descriptor value
 \end{itemize}
-Usage: To add the "NONDVI" descriptor to an input VectorData ("inVD.shp") corresponding to the percentage of pixel along a polyline that verifies the formula that have a NDVI > 0.4 :
+Usage: To add the "NONDVI" descriptor to an input VectorData ("inVD.shp") corresponding to the percentage of pixel along a polyline that verifies the formula that have a NDVI \textgreater 0.4 :
 
 \begin{verbatim}
  otbComputePolylineFeatureFromImage-cli -img   NDVI.TIF 
