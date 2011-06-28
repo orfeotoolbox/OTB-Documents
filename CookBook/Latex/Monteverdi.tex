@@ -411,19 +411,36 @@ module and allows to get a reliable estimation of the flood events.
 The Connected Component Segmentation module allows segmentation and object analysis using user defined criteria at each step. This module uses \href{http://muparser.sourceforge.net/}{muParser} library using the the same scheme as it is done in Band math module (see \ref{Band_math module} for a detailled explanation). It relies on three main steps process :
 
 \begin{description}
-\item[Mask definition :] This mask is used as support of Connected components segmentation (CC) . i.e zeros pixels are not taken into account by CC algorithm. Binarization criteria is defined by user, via muparser. This step is optional, if no Mask is given, entire image is processed.  
-\item[Segmentation :] Connected Component Segmentation driven by user defined criteria. Segmentation process can be followed by a small object rejection step. 
-\item[Object analysis post processing :] This step consists in post processing on each detected area using shape and statistical object characterization.
+\item[Mask definition :] This mask is used as support of Connected Component segmentation (CC) . i.e zeros pixels are not taken into account by CC algorithm. Binarization criteria is defined by user, via muparser. This step is optional, if no Mask is given, entire image is processed. The following example creates a mask using \emph{intensity} (mean of pixel values) parameter :
+
+\begin{verbatim}
+intensity > 200
+\end{verbatim}
+  
+\item[Segmentation :] Connected Component Segmentation driven by user defined criteria. Segmentation process can be followed by a small object rejection step. The following example use \emph{distance} (pixel intensity value difference ) parameter to define acception/rejection criteria between two adjacents pixels :
+
+\begin{verbatim}
+distance < 10
+\end{verbatim}
+  
+\item[Object analysis post processing :] This step consists in post processing on each detected area using shape and statistical object characterization. The following example use \emph{elongation} parameter to test labeled objects :
+
+\begin{verbatim}
+SHAPE_elongation > 2
+\end{verbatim}
+ 
 \end{description}
 
-Results are exported in shape file format. Graphical user interface is presented on Figure \ref{fig:connected_component_module}. At each step intemerdiate output can be seen using \emph{Display} item list. Viewing windows are updated by clicking on \emph{Update} button. Available display outputs are :
+ A detailled presentation of parameters and variables, can be found on the \href{http://wiki.orfeo-toolbox.org/index.php/Connected_component_segmentation_module}{wiki}. 
+
+Results are then exported in shape file format. Graphical user interface is presented on Figure \ref{fig:connected_component_module}. At each step intemerdiate output can be seen using \emph{Display} item list. Viewing windows are updated by clicking on \emph{Update} button. Available display outputs are :
 
 \begin{description}
 \item[Input image :] input image.
 \item[Mask Output :] mask image created using formula.
 \item[Masked Image :] input image multiplied by mask image.
-\item[Segmentation Output :] output of Connected component segmentation filter.
-\item[Segmentation after small object rejection :] output of connected component segmentation after relabeling and small object rejection.
+\item[Segmentation Output :] output of Connected Component segmentation filter.
+\item[Segmentation after small object rejection :] output of Connected Component segmentation after relabeling and small object rejection.
 \item[Filter Output :] final output after object based analysis opening post processing. 
 \end{description}
 
