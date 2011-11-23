@@ -1,0 +1,234 @@
+\documentclass[compress]{beamer}
+\mode<presentation>
+{
+ \usetheme{Vilanova}
+}
+
+\usepackage[english]{babel}
+
+\usepackage[latin1]{inputenc}
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+%\usepackage{url}
+
+
+\title{Pragmatic Remote Sensing}
+
+\subtitle
+{Change Detection} % (optional)
+
+\author
+{J. Inglada\inst{1} , E. Christophe\inst{2}}
+\normalsize
+
+\institute[Cnes, Crisp] % (optional, but mostly needed)
+{\inst{1}\textsc{Centre d'Études Spatiales de la Biosphère, Toulouse, France}
+\and
+\inst{2}\textsc{Centre for Remote Imaging, Sensing and Processing,\\ National University of Singapore}
+}
+
+\date{}
+
+\pgfdeclareimage[height=96mm,width=128mm]{background}{fondsClairSansLogo}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{logoIncrust}
+\pgfdeclareimage[height=0.5cm]{logo_cesbio}{logo_cesbio}
+\pgfdeclareimage[height=0.35cm]{logo_crisp}{logo_crisp}
+\logo{
+\begin{tabular}{lp{0.10\textwidth}lp{0.25\textwidth}r}
+\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}\href{http://www.crisp.nus.edu.sg/}{\pgfuseimage{logo_crisp}}
+&&\footnotesize{IGARSS 2010, Honolulu}&&
+\href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+
+\subject{Change detection in ORFEO Toolbox}
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+{\tiny This content is provided under a Creative Commons
+  Attribution 3.0 Unported License} \href{http://creativecommons.org/licenses/by/3.0/}{\includegraphics[width=0.05\textwidth]{../Ressources/CC-licence.png}}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Outline of the presentation}
+  \tableofcontents[pausesections]
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+\section[Strategies]{Classical strategies for change detection}
+
+\begin{frame}
+  \frametitle{Possible approaches}
+\begin{itemize}
+
+\item{Strategy $1$: Simple detectors}
+
+Produce an image of change likelihood
+(by differences, ratios or any other approach) and thresholding it in
+order to produce the change map.
+
+\item{Strategy $2$: Post Classification Comparison}
+
+Obtain two
+land-use maps independently for each date and comparing them. 
+
+
+\item{Strategy $3$: Joint classification}
+
+Produce the change map directly from a joint
+classification of both images.
+
+
+\end{itemize}
+\end{frame}
+
+
+\section[Detectors]{Available detectors in OTB}
+\begin{frame}
+  \frametitle{Available detectors}
+  \small
+  \begin{itemize}
+    \item Pixel-wise differencing of mean image values: 
+      \begin{equation}
+	I_{D}(i,j)=I_{2}(i,j)-I_{1}(i,j).
+      \end{equation}
+    \item Pixel-wise ratio of means:
+      \begin{equation}
+\displaystyle I_{R}(i,j) = 1 - min \left(\frac{\displaystyle I_{2}(i,j)}{\displaystyle I_{1}(i,j)},\frac{\displaystyle I_{1}(i,j)}{\displaystyle I_{2}(i,j)}\right).
+\end{equation}
+      \item Local correlation coefficient:
+\begin{equation}
+  I_\rho(i,j) = \frac{1}{N}\frac{\sum_{i,j}(I_1(i,j)-m_{I_1})(I_2(i,j)-m_{I_2})}{\sigma_{I_1}
+\sigma_{I_2}}
+\end{equation}
+\item Kullback-Leibler distance between local distributions (mono and
+  multi-scale)
+  \item Mutual information (several implementations)
+  \end{itemize}
+  \normalsize
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hands On}
+  \framesubtitle{Displaying differences}
+  \begin{enumerate}
+  \item Monteverdi: File $\rightarrow$ Concatenate Images
+  \item Select the amplitudes of the 2 images to compare and build a 2
+    band image
+  \item Monteverdi: Visualization $\rightarrow$ Viewer
+  \item Select the 2 band image just created
+  \item In the {\em Setup} tab, select {\em RGB composition mode} and
+    select, for instance, 1,2,2.
+  \item Interpret the colors you observe
+  \item The same thing could be done using feature images
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hands On}
+  \framesubtitle{Thresholding differences}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Band Math
+  \item Select the amplitudes of the 2 images to compare and compute a subtraction
+  \item Monteverdi: Filtering $\rightarrow$ Threshold
+  \item Select the difference image just created and play with the
+    threshold value
+  \item The same thing could be done using image ratios
+  \item The same thing could be done using feature images
+  \end{enumerate}
+\end{frame}
+
+
+\section[Application]{Interactive Change Detection}
+
+\begin{frame}
+  \frametitle{Interactive Change Detection}
+  \begin{itemize}
+    \item Generation of binary change maps using a GUI
+    \item Uses simple change detectors as input
+    \item The operator gives examples of the {\em change} and {\em no
+    change} classes
+    \item SVM learning and classification are applied
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Hands On}
+  \framesubtitle{Joint Classification}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Change Detection
+  \item Select the 2 images to process
+    \begin{itemize}
+    \item Raw images at 2 different dates
+    \end{itemize}
+  \item Uncheck {\em Use Change Detectors}
+  \item Use the {\em Changed/Unchanged Class} buttons to select one of
+    the classes
+  \item Draw polygons on the images in order to give training samples
+    to the algorithm
+  \item {\em End Polygon} button is used to close the current polygon
+  \item After selecting several polygons per class push {\em Learn}
+  \item The {\em Display Results} button will show the result change detection
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hands On}
+  \framesubtitle{Joint Classification with Change Detectors}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Change Detection
+  \item Select the 2 images to process
+    \begin{itemize}
+    \item Raw images at 2 different dates
+    \end{itemize}
+  \item Make sure the {\em Use Change Detectors} check-box is activated
+  \item Proceed as in the previous case
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hands On}
+  \framesubtitle{Joint Classification with Features}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Change Detection
+  \item Select the 2 images to process
+    \begin{itemize}
+    \item Feature images at 2 different dates
+    \end{itemize}
+  \item Proceed as in the previous cases
+  \end{enumerate}
+\end{frame}
+
+\end{document}
