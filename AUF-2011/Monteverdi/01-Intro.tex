@@ -89,16 +89,17 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \end{frame}
 
 \begin{frame}
-\frametitle{Why?}
-\begin{block}{Common problems}
+\frametitle{Objectifs}
+\begin{block}{Obstacles au traitement des images}
 \begin{itemize}
- \item Reading images
- \item Accessing metadata
- \item Implementing state of the art algorithms
+ \item Lecture des images
+ \item Accès au méta-données
+ \item Mise en oeuvre d'algorithmes de l'état de l'art
 \end{itemize}
 \end{block}
-$\Rightarrow$ to be able to \alert{extract the most information}, we
- need to \alert{use the best} of what is available: data, algorithms,\ldots
+$\Rightarrow$ pour être capable \alert{d'extraire un maximum
+  d'informations}, nous avons besoin \alert{d'accéder} aux données et
+aux algorithmes,\ldots
 \end{frame}
 
 
@@ -106,75 +107,81 @@ $\Rightarrow$ to be able to \alert{extract the most information}, we
 
 
 
-\subsection[What]{What is it?}
+\subsection{L'OTB}
 \begin{frame}
-\frametitle{What is Orfeo Toolbox (OTB)?}
+\frametitle{Qu'est-ce que l'ORFEO Toolbox (OTB)}
 
-\textbf{In the frame of CNES ORFEO Program}
-\begin{alertblock}{Goal}
-Make the development of new algorithms and their validation easier
+\textbf{Dans le cadre du programme ORFEO du CNES}
+\begin{alertblock}{Objectif}
+Faciliter le développement et la validation d'algorithmes
 \end{alertblock}
 \begin{block}{}
 \begin{itemize}
- \item C++ library: provide many algorithms (pre-processing, image analysis) with a common interface
- \item Open-source: free to use, to modify, you can make your own software based on OTB and sell it
- \item Multiplatform: Windows, Linux, Unix, Mac
+ \item Bibliothèque C++ : fournir beaucoup d'algorithmes
+   (pre-traitements, extraction d'informations) avec une interface commune.
+ \item Logiciel libre : liberté d'utiliser, de modifier, de développer
+   son propre logiciel et le revendre!
+ \item Multi plate-forme : Windows, Linux, Unix, Mac
 \end{itemize}
 \end{block}
 \end{frame}
 
 
-\subsection[When]{A bit of history}
-% start
-% applications apparition
-% current value
+\subsection{Un peu d'histoire}
 \begin{frame}
-\frametitle{A bit of History}
-\begin{block}{Everything begins (2006)}
+\frametitle{Un peu d'histoire}
+\begin{block}{Le début (2006)}
 \scriptsize
 \begin{itemize}
- \item Started in 2006 by CNES (French Space Agency), funding \alert{several full-time developers}
- \item Targeted at high resolution images (Pleiades to be launched in 2010) but with application to other sensors
- \item 4 year budget, over 1,000,000\euro~recently renewed for 1 additional
-       year (500,000\euro)
+ \item Le CNES finance le développement de la bibliothèque.
+ \item Orienté vers la THR (Pléiades), mais utilisation sur d'autres
+   capteurs aussi.
+ \item Environ 1,000,000\euro~ sur les 4 premières années; budget
+   équivalent renouvelé.
 \end{itemize}
 \end{block}
-\begin{block}{Moving to user friendly applications (2008)}
+\begin{block}{Vers des applications faciles à utiliser (2008)}
 \scriptsize
 \begin{itemize}
-  \item Strong interactions with the end-user community highlighted that \alert{applications for non-programmers} are important
-  \item Several applications for non programmers (with GUI) since early 2008
-  \item Several training courses (3/5-day courses) given in France, Belgium,
-        Madagascar, UNESCO and now Hawaii
+  \item Les interactions avec les utilisateurs ont montré le besoin
+    d'outils pour les non informaticiens.
+  \item Quelques applications avec IHM graphique disponibles.
+  \item Plusieurs séances de formation (3-5 jours) en France,
+    Belgique, Madagascar, UNESCO, Hawaii, ... et Marrakech!
 \end{itemize}
 \end{block}
 \end{frame}
 
 
-\subsection[Why]{Why doing that?}
-%make sure satellite images are used
+\subsection{Motivations}
 \begin{frame}
-\frametitle{Why doing that?}
+\frametitle{Motivations}
 \begin{overprint}
 \onslide<1->{
-\begin{block}{Is it successful so far?}
+\begin{block}{L'OTB, un succès?}
 \scriptsize
 \begin{itemize}
-  \item OTB user community \alert{growing steadily} (programmers and application users)
-  \item Presented at IGARSS and ISPRS in 2008, special session in IGARSS in 2009
-  \item CNES is planning to extend the budget for several more years
-  \item Value analysis is very positive (cf. \href{http://www.ohloh.net/p/otb}{Ohloh}): \alert{re-using is powerful}
+  \item La communauté d'utilisateurs \alert{croit en permanence}
+    (développeurs et utilisateurs)
+  \item Présentations régulières dans les conférences internationales
+    de télédétection
+  \item Le CNES continue à soutenir le développement.
+  \item L'analyse de la valeur du logiciel est très encourageante
+    (cf. \href{http://www.ohloh.net/p/otb}{Ohloh}): \alert{le
+    recyclage est puissant!}
 \end{itemize}
 \end{block}
 }
 \onslide<2->{
-\begin{block}{Why make a multi-million dollar software and give it for free?}
+\begin{block}{Pourquoi faire un logiciel à 1 M\euro~et le
+    distribuer gratuitement?}
 \scriptsize
 \begin{itemize}
- \item CNES is not a software company
- \item One goal is to \alert{encourage research}: it is critical for researchers to know what is in the box
- \item CNES makes satellites and wants to make sure the \alert{images are used}
- \item if more people have the tools to use satellite images, it is good for CNES
+ \item Le CNES n'est pas un éditeur de logiciels
+ \item Un des objectifs est \alert{le soutien de la recherche} : les
+   scientifiques ont besoin de comprendre comment ça marche. 
+ \item Le CNES fait des satellites et doit s'assurer que \alert{les
+   images sont utilisées}
 \end{itemize}
 \end{block}
 }
@@ -182,10 +189,10 @@ Make the development of new algorithms and their validation easier
 \end{frame}
 
 
-\subsection[How]{How?}
+\subsection[How]{Comment?}
 % Using other library
 \begin{frame}
-\frametitle{How?}
+\frametitle{Comment?}
 \begin{overprint}
 \onslide<1->{
 \begin{block}{How to reach this goal?}
@@ -368,4 +375,10 @@ Using the best work of others: do not reinvent the wheel
 \end{block}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Contenu de la formation}
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{frame}
 \end{document}
