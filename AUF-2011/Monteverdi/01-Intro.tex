@@ -195,79 +195,56 @@ Faciliter le développement et la validation d'algorithmes
 \frametitle{Comment?}
 \begin{overprint}
 \onslide<1->{
-\begin{block}{How to reach this goal?}
-Using the best work of others: do not reinvent the wheel
+\begin{block}{Comment y arriver?}
+En utilisant ce qui existe déjà!
 \end{block}
 }
 \onslide<2->{
-\begin{block}{Many open-source libraries of good quality}
+\begin{block}{Beaucoup de bibliothèques libres de bonne qualité}
 \scriptsize
 \begin{itemize}
-  \item ITK: software architecture (streaming, multithreading), many image processing algorithms
- \item Gdal/Ogr: reading data format (geotiff, raw, png, jpeg, shapefile, \ldots)
- \item Ossim: sensor models (Spot, RPC, SAR, \ldots) and map projections
- \item 6S: radiometric corrections
- \item and many other: libLAS (lidar data), Edison (Mean Shift clustering), libSiftFast (SIFT), Boost (graph), libSVM (Support Vector Machines)
+  \item ITK : architecture du logiciel (streaming, multithreading),
+    beaucoup d'algorithmes de traitement d'images
+ \item Gdal/Ogr: lécture et écriture de différents formats de données (geotiff, raw, png, jpeg, shapefile, \ldots)
+ \item Ossim: modèles géométriques de capteur (Spot, RPC, SAR, \ldots)
+   et projections cartigraphiques
+ \item 6S: corrections radiométriques
+ \item et beaucoup d'autres : libLAS (lidar), Edison (clustering Mean Shift), libSiftFast (SIFT), Boost (graphes), libSVM (Support Vector Machines)
 \end{itemize}
 \normalsize
-\alert{$\Rightarrow$ all behind a common interface}
+\alert{$\Rightarrow$ accessibles via une interface commune}
 \end{block}
 }
 \end{overprint}
 \end{frame}
 
 
-\section{Applications and librairy}
-\begin{frame}
-\frametitle{Application}
-\begin{block}{Currently}
-\scriptsize
-\begin{itemize}
- \item Image viewer
- \item Image Segmentation
- \item Image Classification (by SVM)
- \item Land Cover
- \item Feature Extraction
- \item Road Extraction
- \item Orthorectification (with Pan Sharpening)
- \item Fine registration
- \item Image to database registration
- \item Object counting
- \item Urban area detection
- \item more to come
-\end{itemize}
-\end{block}
-\end{frame}
+\section{Fonctionnalités}
 
-
-
-% - functionalities
-% - some technical details
-% - doc
-% - binding
-
-\subsection{Components}
+\subsection{Composants}
 
 \begin{frame}
-\frametitle{Components available}
- \begin{block}{Currently}
+\frametitle{Composants disponibles}
+ \begin{block}{}
 \scriptsize
 \begin{itemize}
-\item Most satellite image formats
-\item Geometric corrections
-\item Radiometric corrections
-\item Change detection
-\item Feature extraction
+\item La plupart de formats d'images
+\item Corrections géométriques
+\item Corrections rediométriques
+\item Détection de channgements
+\item Extraction de primitives
 \item Classification
 \end{itemize}
 \end{block}
 
 
- \begin{block}{Huge documentation available}
+ \begin{block}{Documentation}
 \scriptsize
 \begin{itemize}
-\item Software Guide (+600 pages pdf), also the \href{http://www.orfeo-toolbox.org/SoftwareGuide/}{online version}
-\item \href{http://www.orfeo-toolbox.org/doxygen}{Doxygen}: documentation for developers
+\item Software Guide (+600 pages pdf), et aussi
+  \href{http://www.orfeo-toolbox.org/SoftwareGuide/}{version en ligne}
+\item \href{http://www.orfeo-toolbox.org/doxygen}{Doxygen}:
+  documentation pour développeurs
 \end{itemize}
 \end{block}
 \end{frame}
@@ -275,71 +252,56 @@ Using the best work of others: do not reinvent the wheel
 \subsection{Architecture}
 
 \begin{frame}
- \frametitle{A powerful architecture}
-  \begin{block}{Modular}
+ \frametitle{Une architecture puissante}
+  \begin{block}{Modulaire}
 \scriptsize
 \begin{itemize}
-\item Easy to combine different blocks to do new processing
+\item Combinaison aisée de différents blocs pour créer de nouvelles fonctionnalités
 \end{itemize}
 \end{block}
-  \begin{block}{Scalable}
+  \begin{block}{Passage à l'échelle}
 \scriptsize
 \begin{itemize}
-\item Streaming (processing huge images on the flow) transparent for the user of the library
-\item Multithreading (using multicore CPUs) also
+\item Streaming (traitement au fil de l'eau) transparent pour
+  l'utilisateur de la bibliothèque
+\item Multithreading (utilisation de plusieurs coeurs de calcul) 
 \end{itemize}
 \end{block}
 \end{frame}
 
-\subsection[But]{But steep learning}
+\subsection[But]{Mais apprentissage raide}
 
 \begin{frame}
 \setbeamercovered{invisible} 
-\frametitle{But a steep learning curve for the programmer}
+\frametitle{Courbe d'apprentissage raide}
 \begin{overprint}
 \onslide<1->{
-\begin{block}{Advanced programming concepts}
+\begin{block}{Concepts de programmation avancée}
 \scriptsize
 \begin{itemize}
-\item Template metaprogramming (generic programming)
+\item Méta-prgrammation par templates (programmation générique)
 \item Design patterns (Factory, Functors, Smart Pointers, ...)
 \end{itemize}
 \end{block}
 }
 \onslide<2->{
-\centering Steep learning curve
+\centering Courbe d'apprentissage
 \input{LearningCurve.tikz}
 }
   \end{overprint}
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Ask questions}
-\begin{block}{As for everything: easier when you're not alone}
-\scriptsize
-\begin{itemize}
-\item Much easier if you have somebody around to help!
-\item We didn't know anything not so long ago...
-\item Not surprising that most software companies now focus their offer on support: help is important
-\end{itemize}
-\end{block}
-\end{frame}
-     
-
-
 \subsection{Monteverdi}
 \begin{frame}
-\frametitle{Making it easier for the users: Monteverdi}
+\frametitle{Accès facile pour les utilisateurs: Monteverdi}
 \begin{columns}
 \begin{column}{0.5\textwidth}
-\begin{block}{Module architecture}
+\begin{block}{Architecture modulaire}
 \scriptsize
 \begin{itemize}
-\item Standard input/output
-\item Easy to customize for a specific purpose
-\item Full streaming or caching the data
-\item Each module follows a MVC pattern
+\item Entrées et sorties standard
+\item Facile à personnaliser pour des besoins particuliers
+\item Traitement au fil de l'eau et cache de résultats intermédiaires
 \end{itemize}
 \end{block}
 \end{column}
@@ -352,7 +314,7 @@ Using the best work of others: do not reinvent the wheel
 \end{frame}
 
 \begin{frame}
-\frametitle{Making it easier for the users: Monteverdi}
+\frametitle{Accès facile pour les utilisateurs: Monteverdi}
 \begin{figure}[]
   \includegraphics[width=0.8\textwidth]{monteverdi2.jpg}
 \end{figure}
@@ -360,25 +322,35 @@ Using the best work of others: do not reinvent the wheel
 
 \subsection{Bindings}
 \begin{frame}
-\frametitle{Bindings: access through other languages}
-\begin{block}{Not everybody uses C++!}
+\frametitle{Bindings: accès depuis d'autres languages}
+\begin{block}{Tout le monde ne programme pas en C++!}
 \scriptsize
 \begin{itemize}
-\item Bindings provide an access to the library through other languages
-\item \alert{Python}: available
-\item \alert{Java}: available
-\item \alert{IDL/Envi}: cooperation with ITT VIS to provide a method
-  to access OTB through idl/envi (working but no automatic generation)
-  \item \alert{Matlab}: recent user contribution (R. Bellens from TU Delft)
-\item Other languages supported by Cable Swig might be possible (Tcl, Ruby?)
+\item Les bindings offrent un accès depuis d'autres languages deprogrammation
+\item \alert{Python}: disponible
+\item \alert{Java}: disponible, y compris pour d'autres languages pour
+  la JVM (Clojure, Scala, etc.)
+\item \alert{IDL/Envi}: coopération avec ITT VIS pour développer une
+  méthode d'accès à OTB depuis IDL/ENVI (fonctionne mais difficile à
+  mettre en oeuvre)
 \end{itemize}
 \end{block}
 \end{frame}
 
+06-Changements.tex
+Classification.tex
+Primitives.tex
+Geometrie.tex
+
+
 \begin{frame}
   \frametitle{Contenu de la formation}
   \begin{itemize}
-  \item 
+  \item Corrections géométriques
+  \item Corrections radiométriques
+  \item Extraction de primitives
+  \item Classification
+  \item Détection de changements
   \end{itemize}
 \end{frame}
 \end{document}
