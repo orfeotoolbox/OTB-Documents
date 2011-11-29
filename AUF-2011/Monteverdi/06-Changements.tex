@@ -54,7 +54,7 @@
 }
 
 
-\subject{Extraction de primitives}
+\subject{Détection de changements}
 
 
 
@@ -89,100 +89,96 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \end{frame}
 
 
-\section[Strategies]{Classical strategies for change detection}
+\section[Stratégies]{Stratégies classiques pour la détections de changements}
 
 \begin{frame}
-  \frametitle{Possible approaches}
+  \frametitle{Approches possibles}
 \begin{itemize}
 
-\item{Strategy $1$: Simple detectors}
+\item{Stratégie $1$ : détecteurs simples}
 
-Produce an image of change likelihood
-(by differences, ratios or any other approach) and thresholding it in
-order to produce the change map.
+  Production d'une image de vraisemblance de changement (différences,
+  ratios, etc.) et seuillage pour produire une carte binaire.
 
-\item{Strategy $2$: Post Classification Comparison}
+\item{Stratégie $2$ : Comparaison post-classification}
 
-Obtain two
-land-use maps independently for each date and comparing them. 
+Génération de 2 cartes d'occupation des sols (une pour chaque date) et
+comparaison des classes.
 
+\item{Stratégie $3$ : Classification conjointe}
 
-\item{Strategy $3$: Joint classification}
-
-Produce the change map directly from a joint
-classification of both images.
+  Génération de la carte de changements directement à partir de la
+  classification conjointe des 2 images.
 
 
 \end{itemize}
 \end{frame}
 
 
-\section[Detectors]{Available detectors in OTB}
+\section[Détecteurs]{Détecteurs disponibles dans l'OTB}
 \begin{frame}
-  \frametitle{Available detectors}
+  \frametitle{Détecteurs disponibles}
   \small
   \begin{itemize}
-    \item Pixel-wise differencing of mean image values: 
+    \item Différence pixel à pixel des valeurs moyennes dans les
+      voisinages :
       \begin{equation}
 	I_{D}(i,j)=I_{2}(i,j)-I_{1}(i,j).
       \end{equation}
-    \item Pixel-wise ratio of means:
+    \item Ratio de moyennes locales :
       \begin{equation}
 \displaystyle I_{R}(i,j) = 1 - min \left(\frac{\displaystyle I_{2}(i,j)}{\displaystyle I_{1}(i,j)},\frac{\displaystyle I_{1}(i,j)}{\displaystyle I_{2}(i,j)}\right).
 \end{equation}
-      \item Local correlation coefficient:
+      \item Corrélation locale :
 \begin{equation}
   I_\rho(i,j) = \frac{1}{N}\frac{\sum_{i,j}(I_1(i,j)-m_{I_1})(I_2(i,j)-m_{I_2})}{\sigma_{I_1}
 \sigma_{I_2}}
 \end{equation}
-\item Kullback-Leibler distance between local distributions (mono and
-  multi-scale)
-  \item Mutual information (several implementations)
+\item Distance de Kullback-Leibler entre les distributions locales
+  \item Plusieurs versions de l'information mutuelle
   \end{itemize}
   \normalsize
 \end{frame}
 
 \begin{frame}
-  \frametitle{Hands On}
-  \framesubtitle{Displaying differences}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Affichage des différences}
   \begin{enumerate}
   \item Monteverdi: File $\rightarrow$ Concatenate Images
-  \item Select the amplitudes of the 2 images to compare and build a 2
-    band image
+  \item Choisir les amplitudes des 2 images et construire 1 image à 2 bandes
   \item Monteverdi: Visualization $\rightarrow$ Viewer
-  \item Select the 2 band image just created
-  \item In the {\em Setup} tab, select {\em RGB composition mode} and
-    select, for instance, 1,2,2.
-  \item Interpret the colors you observe
-  \item The same thing could be done using feature images
+  \item Choisir l'image à 2 bandes
+  \item Dans l'onglet {\em Setup}, choisir {\em RGB composition mode}
+    et prendre 1,2,2.
+  \item Interpréter les couleurs observées
+  \item La même chose pourrait être faite en utilisant des images de primitives
   \end{enumerate}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Hands On}
-  \framesubtitle{Thresholding differences}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Seuillage des différences}
   \begin{enumerate}
   \item Monteverdi: Filtering $\rightarrow$ Band Math
-  \item Select the amplitudes of the 2 images to compare and compute a subtraction
+  \item Choisir les amplitudes des 2 images et calculer une différence
   \item Monteverdi: Filtering $\rightarrow$ Threshold
-  \item Select the difference image just created and play with the
-    threshold value
-  \item The same thing could be done using image ratios
-  \item The same thing could be done using feature images
+  \item Choisir l'image de différences et appliquer différents seuils
+  \item La même chose pourrait être faite avec des ratios
+  \item La même chose pourrait être faite en utilisant des images de primitives
   \end{enumerate}
 \end{frame}
 
 
-\section[Application]{Interactive Change Detection}
+\section[Application]{Détection de changements interactive}
 
 \begin{frame}
-  \frametitle{Interactive Change Detection}
+  \frametitle{Détection de changements interactive}
   \begin{itemize}
-    \item Generation of binary change maps using a GUI
-    \item Uses simple change detectors as input
-    \item The operator gives examples of the {\em change} and {\em no
-    change} classes
-    \item SVM learning and classification are applied
+    \item Génération de cartes de changements binaires en utilisant une
+      IHM
+    \item Utilise des détecteurs simples en entrée
+    \item L'opérateur donne des examples de {\em changement} et {\em non-changement}
+    \item Classification supervisée par SVM
   \end{itemize}
 \end{frame}
 
