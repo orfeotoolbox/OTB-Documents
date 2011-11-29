@@ -92,26 +92,26 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \begin{frame}
 
   \frametitle{Introduction}
-  \begin{block}{Purpose of radiometry}
+  \begin{block}{Objectifs}
    \begin{itemize}
-   \item Go back to the physics from the image
+   \item Obtenir des mesures physiques à partir des images
    \end{itemize}
   \end{block}
   \begin{block}{6S}
    \begin{itemize}
-    \item Using 6S library: http://6s.ltdri.org/
-    \item Library heavily tested and validated by the community
-    \item Translation from the Fortran code to C
-    \item Transparent integration to OTB for effortless (almost!) corrections by the user
+    \item Nour utilisons le code de transfert radiatif : http://6s.ltdri.org/
+    \item Code bien testé et validé
+    \item Traduit automatiquement de Fortran à C
+    \item Encapsulation transparente dans l'OTB
    \end{itemize}
   \end{block}
 
 \end{frame}
 
-\section{Atmospheric corrections}
+\section{Corrections radiométriques}
 \begin{frame}
 
-  \frametitle{Atmospheric corrections: in four steps}
+  \frametitle{Les corrections radiométriques en 4 étapes}
 
 
 
@@ -123,14 +123,14 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 %     \pause
 
     \draw[fill=black!30,rounded corners=2pt] (4,-2) rectangle +(6,4);
-    \node[text width= 0.7cm] (SensorModel) at (7,0) {DN to Lum};
+    \node[text width= 0.8cm] (SensorModel) at (7,0) {CN vers Lum};
 %     \pause
 
     \draw[->,thick] (11,0) --  +(3,0);
 %     \pause
 
     \draw[fill=black!30,rounded corners=2pt] (16,-2) rectangle +(6,4);
-    \node[text width= 0.7cm] (SensorModel) at (19,0) {Lum to Refl};
+    \node[text width= 0.85cm] (SensorModel) at (19,0) {Lum vers Réfl};
 %     \pause
 
 
@@ -138,14 +138,14 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 %     \pause
 
     \draw[fill=black!30,rounded corners=2pt] (27,-2) rectangle +(6,4);
-    \node[text width= 0.7cm] (SensorModel) at (30,0) {TOA to TOC};
+    \node[text width= 0.85cm] (SensorModel) at (30,0) {TOA vers TOC};
 %     \pause
 
     \draw[->,thick] (34,0) --  +(3,0);
 %     \pause
 
-    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6,4);
-    \node[text width= 0.7cm] (SensorModel) at (41,0) {Adjacency};
+    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6.5,4);
+    \node[text width= 0.85cm] (SensorModel) at (41,0) {Adjacence};
 %     \pause
 
     \draw[->,thick] (45,0) --  +(3,0);
@@ -153,8 +153,8 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
  \end{tikzpicture}
 \end{center}
 
-  \begin{block}{Look like a pipeline}
-  This is fully adapted to the pipeline architecture of OTB
+  \begin{block}{Enchainement de filtres}
+  Compatible avec la notion de {\em pipeline} de l'OTB
   \end{block}
 
 \end{frame}
