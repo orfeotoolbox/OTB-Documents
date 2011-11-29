@@ -201,31 +201,30 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
   \item Fixer le nombre d'itérations et le seuil de convergence
   \end{enumerate}    
 \end{frame}
-\section[Supervised]{Supervised classification}
+\section[Supervised]{Classification supervisée}
 \label{sec:supervised}
 \begin{frame}
-  \frametitle{Supervised classification}
+  \frametitle{Classification supervisée}
   \begin{itemize}
-  \item Needs examples/ground truth
-  \item Examples can have thematic labels
+  \item Nécessite des exemples ou une vérité terrain
+  \item Les exemples peuvent avoir des étiquettes thématiques
     \begin{itemize}
-    \item Land-Use vs Land-Cover
+    \item Différence entre occupation et utilisation des sols
     \end{itemize}
-  \item Examples: neural networks, Bayesian maximum likelihood,
-    Support Vector Machines
+  \item Exemples: réseaux de neurones, maximum de vraisembkance, Support Vector Machines
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: SVM}
+  \frametitle{Exemple : SVM}
 \setbeamercovered{invisible}
 {\tiny
 \begin{center}
   \begin{tabular}{cc}
-\onslide<2->{H3 (green) doesn't separate the 2 classes.} & \onslide<5->{Maximum-margin hyperplane and margins for a} \\
-\onslide<3->{H1 (blue) does, with a small margin.} &  \onslide<5->{SVM trained with samples from two classes.}\\
-\onslide<4->{H2 (red) with the maximum margin.} & \onslide<5->{Samples
-  on the margin are called the support vectors.}\\
+\onslide<2->{H3 (vert) ne sépare pas les 2 classes.} & \onslide<5->{Hyperplan à marge maximale} \\
+\onslide<3->{H1 (bleu) OK, mais petite marge.} &  \onslide<5->{SVM appris avec des échantillons de 2 classes.}\\
+\onslide<4->{H2 (rouge) marge maximale.} & \onslide<5->{Echantillons
+  dans la marge : vecteurs support.}\\
 & \\
 & \\
 \includegraphics[width=0.3\textwidth]{Svm_separating_hyperplanes.png}
