@@ -4,9 +4,9 @@
  \usetheme{Vilanova}
 }
 
-\usepackage[english]{babel}
+\usepackage[french]{babel}
 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 
 \usepackage{times}
 \usepackage[T1]{fontenc}
@@ -15,23 +15,29 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{eurosym}
 %\usepackage{url}
+\usepackage[normal]{subfigure}
+\newcommand{\goodgap}{%
+	\hspace{\subfigtopskip}%
+	\hspace{\subfigbottomskip}}
 
 
-\title{Pragmatic Remote Sensing}
 
-\subtitle
-{Change Detection} % (optional)
+%\newtheorem{definition}{Definition}
+
+\title{Traitement d'images de télédétection}
+\subtitle{Détection de changements}
+
+
+
 
 \author
-{J. Inglada\inst{1} , E. Christophe\inst{2}}
+{jordi.inglada@cesbio.cnes.fr}
 \normalsize
 
-\institute[Cnes, Crisp] % (optional, but mostly needed)
-{\inst{1}\textsc{Centre d'�tudes Spatiales de la Biosph�re, Toulouse, France}
-\and
-\inst{2}\textsc{Centre for Remote Imaging, Sensing and Processing,\\ National University of Singapore}
-}
+\institute[Cesbio] % (optional, but mostly needed)
+{\textsc{Centre d'Études Spatiales de la Biosphère, Toulouse, France}}
 
 \date{}
 
@@ -39,17 +45,18 @@
 \setbeamertemplate{background}{\pgfuseimage{background}}
 \pgfdeclareimage[height=0.6cm]{logoIncrust}{logoIncrust}
 \pgfdeclareimage[height=0.5cm]{logo_cesbio}{logo_cesbio}
-\pgfdeclareimage[height=0.35cm]{logo_crisp}{logo_crisp}
 \logo{
-\begin{tabular}{lp{0.10\textwidth}lp{0.25\textwidth}r}
-\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}\href{http://www.crisp.nus.edu.sg/}{\pgfuseimage{logo_crisp}}
-&&\footnotesize{IGARSS 2010, Honolulu}&&
+\begin{tabular}{lp{0.25\textwidth}lp{0.25\textwidth}r}
+\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}
+&&\footnotesize{AUF - Marrakech 2011}&&
 \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
 \end{tabular}
 }
 
 
-\subject{Change detection in ORFEO Toolbox}
+\subject{Extraction de primitives}
+
+
 
 
 % Delete this, if you do not want the table of contents to pop up at
@@ -68,21 +75,17 @@
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command: 
 
-\beamerdefaultoverlayspecification{<+->}
-
+%\beamerdefaultoverlayspecification{<+->}
 \begin{document}
 
 \begin{frame}
   \titlepage
-{\tiny This content is provided under a Creative Commons
-  Attribution 3.0 Unported License} \href{http://creativecommons.org/licenses/by/3.0/}{\includegraphics[width=0.05\textwidth]{../Ressources/CC-licence.png}}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Outline of the presentation}
-  \tableofcontents[pausesections]
-  % You might wish to add the option [pausesections]
+  \begin{center}
+{\tiny Ce contenu est dérivé de la formation \href{http://www.orfeo-toolbox.org/packages/PragmaticRemoteSensing-handout.pdf}{``Pragmatic Remote
+  Sensing''} dispensée par J. Inglada et E. Christophe en juillet 2010
+  dans le cadre du colloque IGARSS. Il est mis à disposition selon les termes de la licence :\\
+Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \href{http://creativecommons.org/licenses/by-sa/3.0/}{\includegraphics[width=0.05\textwidth]{/home/inglada/Dev/GH/IGARSS2010/Tutorial/Slides/Ressources/CC-licence.png}}    
+  \end{center}
 \end{frame}
 
 
