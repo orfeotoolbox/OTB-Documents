@@ -4,7 +4,7 @@
  \usetheme{Vilanova}
 }
 
-\usepackage[english]{babel}
+\usepackage[french]{babel}
 
 \usepackage[utf8]{inputenc}
 
@@ -26,20 +26,17 @@
 
 %\newtheorem{definition}{Definition}
 
-\title{Pragmatic Remote Sensing}
+\title{Extraction de primitives}
 
-\subtitle{Features} % (optional)
+
 
 
 \author
-{J. Inglada\inst{1} , E. Christophe\inst{2}}
+{jordi.inglada@cesbio.cnes.fr}
 \normalsize
 
-\institute[Cesbio, Crisp] % (optional, but mostly needed)
-{\inst{1}\textsc{Centre d'Études Spatiales de la Biosphère, Toulouse, France}
-\and
-\inst{2}\textsc{Centre for Remote Imaging, Sensing and Processing,\\ National University of Singapore}
-}
+\institute[Cesbio] % (optional, but mostly needed)
+{\textsc{Centre d'Études Spatiales de la Biosphère, Toulouse, France}}
 
 \date{}
 
@@ -47,27 +44,27 @@
 \setbeamertemplate{background}{\pgfuseimage{background}}
 \pgfdeclareimage[height=0.6cm]{logoIncrust}{logoIncrust}
 \pgfdeclareimage[height=0.5cm]{logo_cesbio}{logo_cesbio}
-\pgfdeclareimage[height=0.35cm]{logo_crisp}{logo_crisp}
 \logo{
-\begin{tabular}{lp{0.10\textwidth}lp{0.25\textwidth}r}
-\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}\href{http://www.crisp.nus.edu.sg/}{\pgfuseimage{logo_crisp}}
-&&\footnotesize{IGARSS 2010, Honolulu}&&
+\begin{tabular}{lp{0.25\textwidth}lp{0.25\textwidth}r}
+\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}
+&&\footnotesize{AUF - Marrakech 2011}&&
 \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
 \end{tabular}
 }
 
 
-\subject{Features}
+\subject{Extraction de primitives}
+
+
+
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-\AtBeginSection[]
+\AtBeginSubsection[]
 {
   \begin{frame}<beamer>
     \frametitle{Outline}
-%     \tableofcontents[currentsection,currentsubsection]
-\vspace*{-0.5cm}
-    \tableofcontents[currentsection]
+    \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
 
@@ -77,41 +74,40 @@
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command: 
 
-% \beamerdefaultoverlayspecification{<+->}
-
+%\beamerdefaultoverlayspecification{<+->}
 \begin{document}
 
 \begin{frame}
   \titlepage
-{\tiny This content is provided under a Creative Commons
-  Attribution 3.0 Unported License} \href{http://creativecommons.org/licenses/by/3.0/}{\includegraphics[width=0.05\textwidth]{../Ressources/CC-licence.png}}
+  \begin{center}
+{\tiny Ce contenu est dérivé de la formation \href{http://www.orfeo-toolbox.org/packages/PragmaticRemoteSensing-handout.pdf}{``Pragmatic Remote
+  Sensing''} dispensée par J. Inglada et E. Christophe en juillet 2010
+  dans le cadre du colloque IGARSS. Il est mis à disposition selon les termes de la licence :\\
+Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \href{http://creativecommons.org/licenses/by-sa/3.0/}{\includegraphics[width=0.05\textwidth]{/home/inglada/Dev/GH/IGARSS2010/Tutorial/Slides/Ressources/CC-licence.png}}    
+  \end{center}
 \end{frame}
 
 \section{Introduction}
 
 \begin{frame}
-\frametitle{Features}
+\frametitle{Primitives}
 
-\begin{block}{Expert knowledge}
+\begin{block}{Connaissance a priori}
 \begin{itemize}
-\item Features are a way to bring relevant expert knowledge to learning
- algorithms
-\item Different type of feature: radiometric indices, textures,\ldots
-\item Important to be able to design your own indices according to the
-      application
-    \item See poster TUP1.PD.9 {\em ``MANGROVE DETECTION FROM HIGH
-          RESOLUTION OPTICAL DATA''}, Tuesday, July 27, 09:40 - 10:45 by
-          Emmanuel Christophe, Choong Min Wong and Soo Chin Liew
+\item Les primitives constituent une façon simple d'intorduire de la
+  connaissance a priori sur le contenu des images
+\item Familles de primitives : radiométriques, textures,\ldots
+\item Construction de primitives sur mesure pour une application donnée
 \end{itemize}
 \end{block}
 
 \end{frame}
 
-\section{Radiometry}
+\section{Radiométrie}
 
 \begin{frame}
-\frametitle{Radiometric index}
-Most popular is the NDVI: Normalized Difference Vegetation Index \cite{Rouse1973-NDVI}
+\frametitle{Indices radiométriques}
+Indice de végétation NDVI: Normalized Difference Vegetation Index \cite{Rouse1973-NDVI}
 
 \begin{equation}
  \mathbf{NDVI} = \frac{L_{NIR}-L_{r}}{L_{NIR}+L_{r}}
@@ -126,7 +122,7 @@ J. W. Rouse. ``Monitoring the vernal advancement and retrogradation of natural v
 \end{frame}
 
 \begin{frame}
-\frametitle{Vegetation indices 1/3}
+\frametitle{Indices de végétation 1/3}
 \footnotesize  \centering
 \begin{tabular}{|c|l|}
 \hline
@@ -172,7 +168,7 @@ E.~Baret, G.~Guyot, and D.~J. Major.
 \end{frame}
 
 \begin{frame}
-\frametitle{Vegetation indices 2/3}
+\frametitle{Indices de végétation 2/3}
 \footnotesize \centering
 \begin{tabular}{|c|l|}
 \hline
@@ -216,7 +212,7 @@ S.~Plummer, P.~North, and S.~Briggs.
 \end{frame}
 
 \begin{frame}
-\frametitle{Vegetation indices 3/3}
+\frametitle{Indices de végétation 3/3}
 \footnotesize \centering
 \begin{tabular}{|c|l|}
 \hline
@@ -259,7 +255,7 @@ D.~W. Deering, J.~W. Rouse, R.~H. Haas, and H.~H. Schell.
 \end{frame}
 
 \begin{frame}
-\frametitle{Example: NDVI}
+\frametitle{Exemple: NDVI}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{figure}[]
@@ -276,7 +272,7 @@ D.~W. Deering, J.~W. Rouse, R.~H. Haas, and H.~H. Schell.
 
 
 \begin{frame}
-\frametitle{Soil indices}
+\frametitle{Indices de sol}
 \footnotesize \centering
 \begin{tabular}{|c|l|}
 \hline
@@ -306,7 +302,7 @@ E.~Nicoloyanni.
 \end{frame}
 
 \begin{frame}
-\frametitle{Example: IC}
+\frametitle{Exemple: IC}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{figure}[]
@@ -323,7 +319,7 @@ E.~Nicoloyanni.
 
 
 \begin{frame}
-\frametitle{Water indices}
+\frametitle{Indices d'eau}
 \footnotesize \centering
 \begin{tabular}{|c|l|}
 \hline
@@ -371,7 +367,7 @@ J.~Lacauxa, Y.~T. andC. Vignollesa, J.~Ndioneb, and M.~Lafayec.
 \end{frame}
 
 \begin{frame}
-\frametitle{Example: NDWI2}
+\frametitle{Exemple: NDWI2}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{figure}[]
@@ -388,12 +384,12 @@ J.~Lacauxa, Y.~T. andC. Vignollesa, J.~Ndioneb, and M.~Lafayec.
 
 
 \begin{frame}
-\frametitle{Built-up indices}
+\frametitle{Indices de bâti}
 \footnotesize \centering
 \begin{tabular}{|c|l|}
 \hline
 NDBI &  Normalized Difference Built Up Index \cite{Zha2003-NDBI} \\
-ISU &  Index Surfaces Built \cite{Abdellaoui1997-ISU} \\
+ISU &  Indice de Surfaces Bâties \cite{Abdellaoui1997-ISU} \\
 \hline
 \end{tabular}
 \begin{thebibliography}{noidea}
@@ -422,19 +418,19 @@ A.~Abdellaoui and A.~Rougab.
 \tiny \centering
 \begin{tabular}{cc}
 & \\
-Energy & $ f_1 = \sum_{i,j}g(i, j)^2 $ \\
+Energie & $ f_1 = \sum_{i,j}g(i, j)^2 $ \\
 & \\
 & \\
-Entropy & $ f_2 = -\sum_{i,j}g(i, j) \log_2 g(i, j)$, or 0 if $g(i, j) = 0$ \\
+Entropie & $ f_2 = -\sum_{i,j}g(i, j) \log_2 g(i, j)$, or 0 if $g(i, j) = 0$ \\
 & \\
 & \\
-Correlation & $ f_3 = \sum_{i,j}\frac{(i - \mu)(j - \mu)g(i, j)}{\sigma^2} $ \\
+Corrélation & $ f_3 = \sum_{i,j}\frac{(i - \mu)(j - \mu)g(i, j)}{\sigma^2} $ \\
 & \\
 & \\
-Difference Moment &  $f_4 = \sum_{i,j}\frac{1}{1 + (i - j)^2}g(i, j) $ \\
+Moment de Différence&  $f_4 = \sum_{i,j}\frac{1}{1 + (i - j)^2}g(i, j) $ \\
 & \\
 & \\
-Inertia (a.k.a. Contrast) & $ f_5 = \sum_{i,j}(i - j)^2g(i, j) $ \\
+Inertie (Contraste) & $ f_5 = \sum_{i,j}(i - j)^2g(i, j) $ \\
 & \\
 & \\
 Cluster Shade & $ f_6 = \sum_{i,j}((i - \mu) + (j - \mu))^3 g(i, j) $ \\
@@ -442,7 +438,7 @@ Cluster Shade & $ f_6 = \sum_{i,j}((i - \mu) + (j - \mu))^3 g(i, j) $ \\
 Cluster Prominence & $ f_7 = \sum_{i,j}((i - \mu) + (j - \mu))^4 g(i, j) $ \\
 & \\
 & \\
-Haralick's Correlation & $ f_8 = \frac{\sum_{i,j}(i, j) g(i, j) -\mu_t^2}{\sigma_t^2} $ \\
+Corrélation de Haralick& $ f_8 = \frac{\sum_{i,j}(i, j) g(i, j) -\mu_t^2}{\sigma_t^2} $ \\
 & \\
 \end{tabular}
 \begin{thebibliography}{noidea}
