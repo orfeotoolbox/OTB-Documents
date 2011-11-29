@@ -159,21 +159,21 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 
 \end{frame}
 
-\subsection[DN to lum]{Digital number to luminance}
+\subsection[CN vers Lum]{Du compte numérique vers la luminance}
 
 
 \begin{frame}
 
-  \frametitle{Digital number to luminance}
+  \frametitle{Du compte numérique vers la luminance}
      \begin{columns}
 
    \column{0.7\textwidth}
-  \begin{block}{Goal}
+  \begin{block}{Objectif}
    \begin{itemize}
-    \item Transform the digital number in the image into luminance
+    \item Transformation du comte numérique en luminance
    \end{itemize}
   \end{block}
-  Using the class otb::ImageToLuminanceImageFilter
+  Utilisation de otb::ImageToLuminanceImageFilter
 
   filterImageToLuminance->SetAlpha(alpha);
 
@@ -185,27 +185,26 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
    \mathbf{L_{TOA}^{k}} = \frac{ X^{k} } { \alpha_{k} } + \beta_{k}
   \end{equation*}
   \begin{itemize}
-  \item $\mathbf{L_{TOA}^{k}}$ is the incident luminance (in
+  \item $\mathbf{L_{TOA}^{k}}$ est la luminance incidente (en
   $W.m^{-2}.sr^{-1}.\mu m^{-1}$)
-  \item $\mathbf{X^{k}}$  digital number
-  \item $\alpha_{k}$ absolute calibration gain for channel k
-  \item $\beta_{k}$ absolute calibration bias for channel k
+  \item $\mathbf{X^{k}}$  comte numérique
+  \item $\alpha_{k}$ gain d'étalonnage pour la bande k
+  \item $\beta_{k}$ biais d'étalonnage pour la bande k
   \end{itemize}
 
   \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{How to get these parameters?}
-  \begin{block}{From metadata}
+  \frametitle{Comment obtenir ces paramètres?}
+  \begin{block}{Méta-données}
    \begin{itemize}
     \footnotesize
-    \item Sometimes, the information can be present in the metadata but\ldots
-    \item the specific format has to be supported (Spot, Quickbird,
-          Ikonos are and more on the way)
+    \item Ces informations accompagnent souvent les images\ldots
+    \item Mais le format des fichiers doit être connu!
    \end{itemize}
   \end{block}
-  \begin{block}{From an ASCII file}
+  \begin{block}{A partir d'un fichier ASCII, ou à la main}
   \footnotesize
   \begin{verbatim}
   VectorType alpha(nbOfComponent);
@@ -223,23 +222,21 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
   \end{block}
 \end{frame}
 
-\subsection[lum to ref]{Luminance to reflectance}
+\subsection[Lum vers Réf]{De la luminance vers la réflectance}
 
 \begin{frame}
 
-  \frametitle{Luminance to reflectance}
+  \frametitle{De la luminance vers la réflectance}
      \begin{columns}
 
    \column{0.6\textwidth}
-  \begin{block}{Goal}
+  \begin{block}{Objectif}
    \begin{itemize}
-    \item Transform the luminance into the reflectance
+    \item Transformer la luminance en réflectance
    \end{itemize}
   \end{block}
   \tiny
-  Using the class otb::LuminanceToReflectanceImageFilter
-
-  and setting parameters:
+  Utilisation de otb::LuminanceToReflectanceImageFilter
 
   \texttt{filterLumToRef-> SetZenithalSolarAngle(zenithSolar);}
 
@@ -256,30 +253,30 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
   \end{equation*}
   \begin{itemize}
 \tiny
-  \item $\mathbf{rho_{TOA}^{k}}$ reflectance
-  \item $\theta_{S}$ zenithal solar angle
-  \item $E_{S}^{k}$ solar illumination out of atmosphere at a distance 
-  $d_{0}$ from the Earth
-  \item $d/d_{0}$ ratio between Earth-Sun distance at 
-  the acquisition and average Earth-Sun distance
+  \item $\mathbf{rho_{TOA}^{k}}$ réflectance
+  \item $\theta_{S}$ angle solaire zénital
+  \item $E_{S}^{k}$ éclairement solaire au sommet de l'atmosphère à
+    une distance $d_{0}$ de la Terre
+  \item $d/d_{0}$ rapport entre la distance Terre-Soleil au moment de
+    l'acquisition par rapport à la moyenne
   \end{itemize}
 
   \end{columns}
 \end{frame}
 
 
-\subsection{ToA to ToC}
+\subsection{ToA vers ToC}
 
 
 
 
 \begin{frame}
 
-  \frametitle{Top of atmosphere to top of canopy}
+  \frametitle{Du sommet de l'atmosphère au sol}
 
-  \begin{block}{Goal}
+  \begin{block}{Objectif}
    \begin{itemize}
-    \item Compensate for the atmospheric effects
+    \item Corriger les effets atmosphériques
    \end{itemize}
   \end{block}
  
@@ -296,28 +293,26 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
   \end{equation*}
   \end{columns}
   \begin{itemize}
-  \item $\rho_{TOA}$ reflectance at the top of the atmosphere
-  \item $\rho_{S}^{unif}$ ground reflectance under assumption
-  of a lambertian surface and an uniform environment
-  \item $\rho_{atm}$ intrinsic atmospheric reflectance
-  \item $t_{g}^{all gas}$ spherical albedo of the atmosphere
-  \item $T(\mu_{S})$ downward transmittance
-  \item $T(\mu_{V})$ upward transmittance
+  \item $\rho_{TOA}$ réflectance au sommet de l'atmosphère
+  \item $\rho_{S}^{unif}$ réflectance au sol sous hypothèse de surface
+    lambertienne et environnement uniforme
+  \item $\rho_{atm}$ réflectance intrinsèque de l'atmosphère
+  \item $t_{g}^{all gas}$ albédo sphérique
+  \item $T(\mu_{S})$ transmittance vers le bas
+  \item $T(\mu_{V})$ transmittance vers le haut
   \end{itemize}
 \end{frame}
 
 \begin{frame}
 
-  \frametitle{Top of Atmosphere to top of canopy}
+  \frametitle{Du sommet de l'atmosphère au sol}
   \begin{itemize}
   \tiny
-  \item Using the class \texttt{otb::ReflectanceToSurfaceReflectanceImageFilter}
+  \item Utilisation de \texttt{otb::ReflectanceToSurfaceReflectanceImageFilter}
 
   \texttt{filterToAtoToC->SetAtmosphericRadiativeTerms(correctionParameters);}
 
-  \item These parameters are filtered by the \texttt{otb::AtmosphericCorrectionParametersTo6SAtmosphericRadiativeTerms} from the \texttt{otb::AtmosphericCorrectionParameter} class 
-
-\item this later class has the methods:
+  \item \texttt{otb::AtmosphericCorrectionParametersTo6SAtmosphericRadiativeTerms} 
 
 \texttt{parameters->SetSolarZenithalAngle();}
 
@@ -344,26 +339,26 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \end{frame}
 
 
-\subsection{Adjacency effects}
+\subsection{Effets d'adjacence}
 
 
 \begin{frame}
 
-  \frametitle{Adjacency effects}
+  \frametitle{Effets d'adjacence}
      \begin{columns}
 
    \column{0.6\textwidth}
-  \begin{block}{Goal}
+  \begin{block}{Objectif}
    \begin{itemize}
-    \item Correct the adjacency effect on the radiometry of pixels
+    \item Corriger les effets de voisinage
    \end{itemize}
   \end{block}
 
   \footnotesize
-  Using the class \tiny \texttt{otb::SurfaceAdjacencyEffect6SCorrectionSchemeFilter}
+  Utilisation de \tiny \texttt{otb::SurfaceAdjacencyEffect6SCorrectionSchemeFilter}
 
   \footnotesize
-  with the parameters
+
 
   \tiny 
   \texttt{filterAdjacency->SetAtmosphericRadiativeTerms();}
@@ -380,11 +375,13 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
   \rho{S} = \frac{ \rho_{S}^{unif}.T(\mu_{V}) - <\rho{S}>.t_{d}(\mu_{v}) }{ exp(-\delta/\mu_{v}) }
   \end{equation*}
   \begin{itemize}
-    \item $\rho_{S}^{unif}$ ground reflectance assuming homogeneous environment
-    \item $T(\mu_{V})$ upward transmittance
-    \item $t_{d}(\mu_{S})$ upward diffuse transmittance
-    \item $exp(-\delta/\mu_{v})$ upward direct transmittance
-    \item $\rho{S}$ environment contribution to the pixel target reflectance in the total observed signal
+    \item $\rho_{S}^{unif}$ réflectance au sol sous hypothèse
+      d'environnement uniforme
+    \item $T(\mu_{V})$ transmittance vers le haut
+    \item $t_{d}(\mu_{S})$ transmittance diffuse vers le haut
+    \item $exp(-\delta/\mu_{v})$ transmittance directe vers le haut
+    \item $\rho{S}$ proportion de la contribution de l'environnement à
+      la réflectance du pixel observé
   \end{itemize}
 
   \end{columns}
