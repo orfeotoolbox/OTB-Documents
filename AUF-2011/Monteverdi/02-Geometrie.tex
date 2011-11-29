@@ -240,85 +240,84 @@ L'élévation de chaque point (MNT) doit être connue.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Sensor models}
+  \frametitle{Modèles de capteur}
 
-  \framesubtitle{OTB's Approach}
+  \framesubtitle{L'approche OTB}
   \begin{itemize}
-    \item Use factories: models are automatically generated using
-    image meta-data.
-    \item Currently tested models:
+    \item Utilisation de {\em factories} : les modèles sont générés
+      automatiquement en utilisant les méta-données des images
+    \item Modèles disponibles
       \begin{itemize}
-	\item RPC models: Quickbird, Ikonos
-	\item Physical models: SPOT5
-	\item SAR models: ERS, ASAR, Radarsat, Cosmo, TerraSAR-X, Palsar
+	\item Fractions rationnelles : Quickbird, Ikonos, WorldView-2
+	\item Modèles physiques : SPOT5
+	\item Radar : ERS, ASAR, Radarsat, Cosmo, TerraSAR-X, Palsar
       \end{itemize}
-    \item Under development:
-      \begin{itemize}
-        \item Formosat, WorldView 2
-      \end{itemize}      
   \end{itemize}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Hands On}
+\frametitle{La main à la pâte}
 \begin{enumerate}
-\item Monteverdi: Open a Quickbird image in sensor geometry
-\item Display the image
-\item Observe how the geographic coordinates are computed when the cursor
-      moves around the image
+\item Monteverdi : Ouvrir une image Quickbird en géométrie capteur
+\item Afficher l'image
+\item Observer comment les coordonnées géographiques sont recalculées
+  quand le curseur se déplace
 \end{enumerate}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Sensor models}
+  \frametitle{Modèles de capteur}
 
-  \framesubtitle{How to use them: ortho-registration}
+  \framesubtitle{Utilisation : ortho-rectification}
   \begin{enumerate}
-    \item Read image meta-data and instantiate the model with the
-    given parameters.
-  \item Define the ROI in ground coordinates (this is your output
-  pixel array)
-  \item Iterate through the pixels of coordinates $(X,Y)$:
+    \item Lecture des méta-données image et création du modèle avec
+      les bons paramètres
+  \item Définition de la ROI en coordonnées sol (c'est la matrice de
+    pixels de sortie)
+  \item Balayer les pixels de coordonnées $(X,Y)$ :
     \begin{enumerate}
-      \item Get $h$ from the DEM
-      \item Compute $(c,l) = G(X,Y,h,\vec\theta)$
-      \item Interpolate pixel values if $(c,l)$ are not grid coordinates.
+      \item Obtenir $h$ à partir du MNT
+      \item Calculer $(c,l) = G(X,Y,h,\vec\theta)$
+      \item Interpoler les valeurs des pixels si $(c,l)$ ne sont pas
+        des valeurs entières
     \end{enumerate}
   \end{enumerate}
 \end{frame}
 
 \begin{frame}
-\frametitle{Hands On}
+\frametitle{La main à la pâte}
 \begin{enumerate}
 \item Monteverdi: Geometry $\rightarrow$ Orthorectification
-\item Select the image to orthorectify
-\item Set the parameters
-\item Save the result
-\item Repeat for the other image with the same parameters
-\item Display the two images together
+\item Choisir l'image à ortho-rectifier
+\item Choisir les paramètres
+\item Sauvegarder le résultat
+\item Répéter pour la 2ème image
+\item Afficher les 2 images ensemble
 \end{enumerate}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Sensor models}
-  \framesubtitle{Limits of the approach}
+  \frametitle{Modèles de capteur}
+  \framesubtitle{Limites de l'approche}
 
   \begin{itemize}
-    \item Accurate geo-referencing needs:
+    \item Un géo-référencement précis nécessite :
       \begin{itemize}
-	\item Accurate DEM
-	\item Accurate sensor parameters, $\vec\theta$
+	\item Un MNT précis
+	\item Des paramètres capteur sans erreur, $\vec\theta$
       \end{itemize}
-    \item For time image series we need \alert{accurate co-registration}:
+    \item Pour les séries multi-temporelles d'images on a besoin de
+      \alert{recalage fin} :
       \begin{itemize}
-      \item Sub-pixel accuracy
-      \item For every pixel in the scene
+      \item Précision sous-pixellique
+      \item Pour chaque pixel de la scène
       \end{itemize}
-    \item Current DEM's and sensor parameters can not give this
-    accuracy.
-    \item Solution: use redundant information in the image series!
+    \item Les MNT et les méta-données capteur ne fournissent pas cette
+      précision.
+    \item Solution : utilisation de l'information redondante entre les
+      images de la série.
   \end{itemize}
 \end{frame}
 
