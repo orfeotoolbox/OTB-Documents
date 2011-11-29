@@ -88,67 +88,68 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \end{frame}
 
 
-\section[Intro]{What is classification}
+\section[Intro]{La classification d'images}
 \begin{frame}
-\frametitle{What is classification}
+\frametitle{La classification d'images}
   \begin{itemize}
-  \item Classification is the procedure of assigning a class label to
-    objects (pixels in the image)
-  \item Supervised
-  \item Unsupervised
-  \item Pixel-based
-  \item Object oriented
+  \item Définition : procédure par laquelle on attibue une étiquette
+    aux objets (pixels de l'image)
+  \item Supervisée
+  \item Non-supervisée
+  \item Orientée pixel
+  \item Orientée objet
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{What can be used for classification}
+  \frametitle{Données pour la classification}
   \begin{itemize}
-  \item Raw images
-  \item Extracted features
+  \item Images (réflectances)
+  \item Primitives
     \begin{itemize}
-    \item Radiometric indices: NDVI, brightness, color, spectral
-      angle, etc.
-    \item Statistics, textures, etc.
-    \item Transforms: PCA, MNF, wavelets, etc.
+    \item Indices radiométriques: NDVI, brillance, couleur, angle
+      spectral, etc.
+    \item Statistiques, textures, etc.
+    \item Transformatiosn: ACP, MNF, ondelettes, etc.
     \end{itemize}
-  \item Ancillary data
+  \item Données exogènes
     \begin{itemize}
-    \item DEM, Maps, etc.
+    \item MNT, cartes, etc.
     \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Classification in a nutshell}
+  \frametitle{La classification en 4 étapes}
   \begin{itemize}
-  \item Select the pertinent attributes (features, etc.)
-  \item Stack them into a vector for each pixel
-  \item Select the appropriate label (in the supervised case)
-  \item Feed your classifier
+  \item Sélection des attributs pertinents (primitives, etc.)
+  \item Création d'un vecteur d'attributs par pixel
+  \item Choix de l'étiquette de la classe (dans le cas supervisé)
+  \item Apprentissage du classifieur
   \end{itemize}
 \end{frame}
-\section[Unsupervised]{Unsupervised classification}
+\section[Non-supervisé]{Classification non-supervisée}
 \label{sec:unsupervised}
 \begin{frame}
-\frametitle{Unsupervised classification}
+\frametitle{Classification non-supervisée}
   \begin{itemize}
-  \item Also called clustering
-  \item Needs interpretation (relabeling)
+  \item Aussi appelée {\em clustering}
+  \item Nécessite une interprétation des résultats (reconnaissance des
+    classes)
     \begin{itemize}
-    \item Class labels are just numbers
+    \item Les étiquettes des classes sont des nombres (1, 2, ...)
     \end{itemize}
-  \item No need for ground truth/examples
+  \item Pas besoin de vérité terrain ou d'exemples
     \begin{itemize}
-    \item But often, the number of classes has to be manually selected
-    \item Other parameters too
+    \item Le nombre de classes est souvent choisi à la main
+    \item Autres paramètres sont aussi nécessaires
     \end{itemize}
-  \item Examples: k-means, ISO-Data, Self Organizing Map
+  \item Exemples: k-moyennes, ISO-Data, carte de Kohonen
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: K-means clustering}
+  \frametitle{Exemple: K-moyenens}
 \setbeamercovered{invisible}
 
 {\tiny
