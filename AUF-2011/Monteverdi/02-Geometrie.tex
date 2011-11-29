@@ -411,105 +411,32 @@ L'élévation de chaque point (MNT) doit être connue.
 \end{frame}
 
 
-%% \begin{frame}
-%%   \frametitle{Map projections}
 
-%%   \framesubtitle{Types of map projections}
-%%   \begin{itemize}
-%%     \item OTB implements most of the OSSIM ones:
-%%       \begin{itemize}
-%% 	\item 30 map projections are available among which: UTM,
-%% 	  TransMercator, LambertConformalConic, etc.
-%% 	  %% Albers, AzimEquDist, Bng, Bonne, Cadrg, Cadrg, Cassini,
-%% %% 	  CylEquArea, Eckert4, Eckert6, Gnomonic,
-%% %% 	  LambertConformalConic, Llxy, EquDistCyl, Mercator, Miller,
-%% %% 	  Mollweid, NewZealandMapGrid, ObliqueMercator, OrthoGraphic,
-%% %% 	  PolarStereo, PolyconicInverseProjection, Sinusoidal,
-%% %% 	  SpaceObliqueMercator, Stereographic, TransCylEquArea,
-%% %% 	  TransMercator, Ups, Utm, VanDerGrinten.
-%%       \end{itemize}
-%%     \item For any Xyz projection the \texttt{otb::XyzForwardProjection} and
-%%       the \texttt{otb::XyzInverseProjection} are available.
-%%     \item Change of projections can be implemented by using one
-%%       forward, one inverse and the \texttt{otb::CompositeTransform} class.
-%%     \item One-step ortho-registration can be implemented by
-%%       combining a sensor model and a map projection.
-%%   \end{itemize}
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Changement de projection cartographique}
+  \begin{itemize}
+  \item Monteverdi: Geometry $\rightarrow$ Reproject Image
+  \item Choisir une image ortho-rectifiée
+  \item Choisir la projection de sortie
+  \item Save/Quit
+  \end{itemize}
+\end{frame}
 
-%% \end{frame}
-
-%% \begin{frame}
-%%   \frametitle{Hands On}
-%%   \framesubtitle{Changing image projections}
-%%   \begin{itemize}
-%%   \item Monteverdi: Geometry $\rightarrow$ Reproject Image
-%%   \item Select an orthorectified image as input image
-%%   \item Select the projection you want as output
-%%   \item Save/Quit
-%%   \end{itemize}
-%% \end{frame}
-
-%% \begin{frame}
-%%   \frametitle{Hands On}
-%%   \framesubtitle{Apply the geometry of one image to another}
-%%   \begin{itemize}
-%%   \item Monteverdi: Geometry $\rightarrow$ Superimpose 2 Images
-%%   \item Select any as image image to reproject
-%%   \item Select an orthorectified image as reference image
-%%     \begin{itemize}
-%%     \item Make sure the 2 images have a common region!
-%%     \end{itemize}
-%%   \item Use the same DEM (if any) as for the ortho-rectified image 
-%%   \item Save/Quit
-%%   \end{itemize}
-%% \end{frame}
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Projection sur une autre image}
+  \begin{itemize}
+  \item Monteverdi: Geometry $\rightarrow$ Superimpose 2 Images
+  \item Choisir une image quelconque comme image à reprojeter
+  \item Choisir une image ortho-rectifiée comme référence
+    \begin{itemize}
+    \item S'assurer que ls 2 images ont une zone commune!
+    \end{itemize}
+  \item Utiliser le même MNT que celui utilisé pour l'image ortho-rectifiée
+  \item Save/Quit
+  \end{itemize}
+\end{frame}
 
 
-%% \begin{frame}[c]
-%% \frametitle{As a conclusion}
-%% \begin{enumerate}
-%%   \item Use a good sensor model if it exists
-%%   \item Use a good DEM if you have it\label{demItem}
-%%   \item Improve you sensor parameters after a first geo-referencing
-%%   pass\label{bbaItem}
-%%   \item Fine-register your series
-%% %%     \begin{itemize}
-%% %%       \item Choose your reference
-%% %%       \item Choose a suited similarity measure
-%% %%       \item Use a good interpolator
-%% %%       \item Get your disparity map (series)
-%% %%       \item Re-sample your images
-%% %%       \item Improve your DEM and goto \ref{demItem}
-%% %%     \end{itemize}
-%%   \item Use a map projection
-%%     \end{enumerate}
-%% \begin{itemize}
-%%   \item All these steps can be performed
-%%   with OTB/Monteverdi.
-%%   \item Sensor model + map projection using a DEM are available as a
-%%   one-step filter in OTB.
-  
-%% \end{itemize}
-
-
-%% \end{frame}
-
-
-%% \begin{frame}[c]
-%% \frametitle{ORFEO Toolbox}
-%% \framesubtitle{... is not a black box!}
-%% \begin{center}
-%%   \includegraphics[width=0.2\textwidth]{logoVectoriel}
-%% \end{center}
-%% \begin{itemize}
-%%   \item CNES' free image analysis software
-%%    \begin{itemize}
-%%      \item Segmentation
-%%      \item Feature extraction
-%%      \item Registration
-%%      \item ...
-%%    \end{itemize}
-%%   \item Download here \href{http://smsc.cnes.fr/PLEIADES/A_prog_accomp.htm}{http://smsc.cnes.fr/PLEIADES/A\_prog\_accomp.htm}.%{\pgfuseimage{logoIncrust}}.
-%% \end{itemize}
-%% \end{frame}
 \end{document}
