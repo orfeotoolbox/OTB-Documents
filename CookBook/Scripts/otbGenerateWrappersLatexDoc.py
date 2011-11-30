@@ -272,6 +272,20 @@ def ApplicationToLatex(appname):
 
     output += ApplicationParametersToLatex(app,app.GetParametersKeys(),deep) + linesep
 
+    output += appdetailslevel + "{Examples}" + linesep
+
+    output+= paramlevel + "{Command-line example}" + linesep
+
+    output+= "\\begin{lstlisting}" + linesep
+
+    output+= ConvertString(app.GetCLExample()) + linesep
+
+    output+= "\\end{lstlisting}" + linesep
+
+    output+= paramlevel + "{Python snippet}" + linesep
+
+    output+= paramlevel + "{Example results}" + linesep
+
     if len(limitations)>=2:
         
         output += appdetailslevel + "{Limitations}" + linesep
@@ -311,6 +325,7 @@ if len(sys.argv) != 2:
     sys.exit()
 
 out = "\\documentclass{report}" + linesep
+out += "\\usepackage{listings}" + linesep
 out += "\\begin{document}" + linesep
 out += "\\tableofcontents" + linesep
 out += "\\listoftables" + linesep
