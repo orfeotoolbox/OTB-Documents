@@ -267,6 +267,41 @@ def GetApplicationExampleCommandLine(app,idx):
 
     return output
 
+
+def GetApplicationExamplePython(app,idx):
+
+    caption = "Python snippet example " + str(idx+1) + " for " + ConvertString(app.GetDocName()) + "."
+    label = ConvertString(app.GetName()) + "pyex" + str(idx+1)
+
+    output= "\\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb, framerule = 0.25pt,float,fontadjust,basicstyle = {\\ttfamily\\scriptsize},captionpos=b,caption=" + caption + ", label=" + label +"]" + linesep
+
+    output+= "#!/usr/bin/python" + linesep
+
+    output+= linesep
+    
+    output+= "# Import the otb applications package" + linesep
+    
+    output+= "import otbApplication" + linesep + linesep
+    
+    output+= "# The following line creates an instance of the " + ConvertString(app.GetName()) + " application " + linesep
+
+    output+= ConvertString(app.GetName()) + " = otbApplication.Registry.CreateApplication(" + ConvertString(app.GetName()) + ")" + linesep + linesep 
+
+    output+= "# The following lines set the application parameters" + linesep
+
+    for i in range(0, app.GetExampleNumberOfParameters(idx)):
+        output+= ConvertString(app.GetName()) + ".SetParameter(\"" + app.GetExampleParameterKey(idx,i)+ "\"," + app.GetExampleParameterValue(idx,i) +") " + linesep
+
+    output += linesep
+
+    output += "# The following line triggers the application execution" + linesep
+    
+    output += ConvertString(app.GetName()) + ".ExecuteAndWriteOutput()" + linesep
+
+    output+= "\\end{lstlisting}" + linesep
+
+    return output
+
 def ApplicationToLatex(appname):
 
     output = ""
@@ -304,9 +339,13 @@ def ApplicationToLatex(appname):
 
             label = ConvertString(app.GetName()) + "clex" + str(i+1)
 
-            output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}." + linesep
+            pylabel = ConvertString(app.GetName()) + "pyex" + str(i+1)
+
+            output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet example is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
 
             output += GetApplicationExampleCommandLine(app,i)
+
+            output += GetApplicationExamplePython(app,i)
 
     elif app.GetNumberOfExamples() == 1:
 
@@ -315,10 +354,14 @@ def ApplicationToLatex(appname):
         output += app.GetExampleComment(0) + linesep
 
         label = ConvertString(app.GetName()) + "clex1"
+ 
+        pylabel = ConvertString(app.GetName()) + "pyex1"
 
-        output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}." + linesep
+        output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet example is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
 
         output += GetApplicationExampleCommandLine(app,0)
+
+        output += GetApplicationExamplePython(app,0)
 
     if len(limitations)>=2:
         
