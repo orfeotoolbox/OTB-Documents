@@ -402,7 +402,7 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \item Regarder les paramètres extraits des méta-données
 \item Appliquer la correction
   \begin{itemize}
-  \item Utiliser ``Extract ROI'' pour sélectioner une petite région de
+  \item Utiliser ``Extract ROI'' pour sélectionner une petite région de
     l'image pour que ça aille plus vite
   \item Extraire de la même façon des ROI sur les différentes sorties
     du module d'étalonnage
@@ -436,7 +436,12 @@ Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \hr
 \frametitle{La main à la pâte}
 \begin{enumerate}
 \item Monteverdi: Ouvrir 2 images (Pan et XS) de même géométrie
-\item Monteverdi: Filtering $\rightarrow$ Pan Sharpening
+  \begin{itemize}
+  \item Ortho-rectification du Pan (zone 1000$\times$1000)
+  \item Superposition du XS sur l'ortho Pan
+  \end{itemize}
+\item Monteverdi: Filtering $\rightarrow$ Pan Sharpening $\rightarrow$
+  Simple RCS
 \end{enumerate}
 \end{frame}
 
