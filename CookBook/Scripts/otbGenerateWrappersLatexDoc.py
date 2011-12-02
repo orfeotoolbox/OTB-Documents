@@ -341,7 +341,7 @@ def ApplicationToLatex(appname):
 
             pylabel = ConvertString(app.GetName()) + "pyex" + str(i+1)
 
-            output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet example is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
+            output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
 
             output += GetApplicationExampleCommandLine(app,i)
 
@@ -357,7 +357,7 @@ def ApplicationToLatex(appname):
  
         pylabel = ConvertString(app.GetName()) + "pyex1"
 
-        output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet example is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
+        output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
 
         output += GetApplicationExampleCommandLine(app,0)
 
