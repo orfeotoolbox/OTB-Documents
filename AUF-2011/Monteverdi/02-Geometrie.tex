@@ -417,34 +417,33 @@ L'élévation de chaque point (MNT) doit être connue.
   \frametitle{La main à la pâte}
   \framesubtitle{Recalage manuel de 2 images}
 \vspace*{-0.6cm}
-\small
+{\scriptsize
   \begin{itemize}
   \item Monteverdi : Geometry $\rightarrow$ Homologous points extraction
   \item Choisir 2 images avec une zone commune
+    \begin{itemize}
+    \item /home/auf/OTB/data/Examples/QB\_Suburb.png et QB\_SuburbR10X13Y17.png
+    \end{itemize}
   \item L'IHM permet de choisir la transformation géométrique
+    \begin{itemize}
+    \item Choisir Affine
+    \end{itemize}
   \item On peut sélectionner des PH dans la zone de zoom et les
     ajouter à la liste
-  \item Quand on a choisi plusieurs PH, on peut calculer la transformation
+  \item Quand on a choisi plusieurs PH, on peut évaluer la transformation
   \item On peut ensuite utiliser le bouton {\em guess} afin de prédire
     la position des nouveaux points
   \item L'IHM affiche les paramètres de la transformation estimée,
     l'erreur commise sur chaque point et l'EQM
-  \item On peut éliminer de la liste les points qui ont le plus d'erreur
+  \item On peut éliminer de la liste les points qui ont le plus
+    d'erreur
   \end{itemize}
+  }
 \end{frame}
 
 
 
-\begin{frame}
-  \frametitle{La main à la pâte}
-  \framesubtitle{Changement de projection cartographique}
-  \begin{itemize}
-  \item Monteverdi: Geometry $\rightarrow$ Reproject Image
-  \item Choisir une image ortho-rectifiée
-  \item Choisir la projection de sortie
-  \item Save/Quit
-  \end{itemize}
-\end{frame}
+
 
 \begin{frame}
   \frametitle{La main à la pâte}
