@@ -15,11 +15,14 @@ applevel ="\\subsection"
 appdetailslevel = "\\subsubsection"
 paramlevel = "\\paragraph"
 
-appName = "OrthoRectification"
-
 def ConvertString(s):
     '''Convert a string for compatibility in txt dump'''
-    return s.replace('\n', '\\\\ ')
+
+    s = s.replace('\n', '\\\\ ')
+
+    s = s.replace('_', '\\_')
+
+    return s
 
 def GetParametersDepth(paramlist):
 
@@ -246,13 +249,31 @@ def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
 
     return output
 
+def GetApplicationExampleCommandLine(app,idx):
+
+    caption = "Command-line example " + str(idx+1) + " for " + ConvertString(app.GetDocName()) + "."
+    label = ConvertString(app.GetName()) + "clex" + str(idx+1)
+
+    output= "\\begin{lstlisting}[language=ksh,breaklines=true,breakatwhitespace=true,frame = tb, framerule = 0.25pt,float,fontadjust,basicstyle = {\\ttfamily\\footnotesize},captionpos=b,caption=" + caption + ", label=" + label +"]" + linesep
+
+    output+= "$ otbcli_" + ConvertString(app.GetName())
+
+    for i in range(0, app.GetExampleNumberOfParameters(idx)):
+        output+=" -" + app.GetExampleParameterKey(idx,i)+ " " + app.GetExampleParameterValue(idx,i)
+
+    output += linesep
+
+    output+= "\\end{lstlisting}" + linesep
+
+    return output
+
 def ApplicationToLatex(appname):
 
     output = ""
     
     app = otbApplication.Registry.CreateApplication(appname)
     
-    app.UpdateParameters()
+    app.Init()
     
     output += applevel + "{" + ConvertString(app.GetDocName()) + "}" + linesep
     
@@ -272,19 +293,32 @@ def ApplicationToLatex(appname):
 
     output += ApplicationParametersToLatex(app,app.GetParametersKeys(),deep) + linesep
 
-    output += appdetailslevel + "{Examples}" + linesep
+    if app.GetNumberOfExamples() > 1:
 
-    output+= paramlevel + "{Command-line example}" + linesep
+        output += appdetailslevel + "{Examples}" + linesep
 
-    output+= "\\begin{lstlisting}" + linesep
+        for i in range(0,app.GetNumberOfExamples()):
+            output += paramlevel + "{Example " + str(i+1) +"}" + linesep
 
-    output+= ConvertString(app.GetCLExample()) + linesep
+            output += app.GetExampleComment(i)
 
-    output+= "\\end{lstlisting}" + linesep
+            label = ConvertString(app.GetName()) + "clex" + str(i+1)
 
-    output+= paramlevel + "{Python snippet}" + linesep
+            output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}." + linesep
 
-    output+= paramlevel + "{Example results}" + linesep
+            output += GetApplicationExampleCommandLine(app,i)
+
+    elif app.GetNumberOfExamples() == 1:
+
+        output += appdetailslevel + "{Example}" + linesep
+
+        output += app.GetExampleComment(0) + linesep
+
+        label = ConvertString(app.GetName()) + "clex1"
+
+        output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}." + linesep
+
+        output += GetApplicationExampleCommandLine(app,0)
 
     if len(limitations)>=2:
         
@@ -316,7 +350,6 @@ def GetApplicationTags(appname):
      app = otbApplication.Registry.CreateApplication(appname)
 
      return app.GetDocTags()
-
 
 if len(sys.argv) != 2:
     
