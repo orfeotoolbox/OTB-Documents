@@ -260,9 +260,23 @@ L'élévation de chaque point (MNT) doit être connue.
 \frametitle{La main à la pâte}
 \begin{enumerate}
 \item Monteverdi : Ouvrir une image en géométrie capteur
+  \begin{itemize}
+  \item /home/auf/OTB/data/TOULOUSE (image Quickbird de Toulouse)
+  \item Choisir le fichier TIF dans l'un des 2 répertoires
+  \end{itemize}
 \item Afficher l'image
+  \begin{itemize}
+  \item Click droit sur le nom de l'image dans la fenêtre principale
+    de Monteverdi
+  \item ``Display in viewer''
+  \item Attendre la génération du quicklook
+  \end{itemize}
 \item Observer comment les coordonnées géographiques sont recalculées
   quand le curseur se déplace
+  \begin{itemize}
+  \item Elles sont mises à jour en appliquant le modèle de capteur
+    crée à partir des méta-données de l'image
+  \end{itemize}
 \end{enumerate}
 \end{frame}
 
@@ -288,12 +302,21 @@ L'élévation de chaque point (MNT) doit être connue.
 \begin{frame}
 \frametitle{La main à la pâte}
 \begin{enumerate}
-\item Monteverdi: Geometry $\rightarrow$ Orthorectification
-\item Choisir l'image à ortho-rectifier
+\item Monteverdi: Geometry $\rightarrow$ Reproject image
+\item Choisir l'image à ortho-rectifier (Panchromatique)
 \item Choisir les paramètres
+  \begin{itemize}
+  \item Onglet ``Output image''
+    \begin{itemize}
+    \item Par défaut, projection UTM.
+    \item Choisir une petite taille (size x, size y) pour que ça aille
+    vite!
+    \end{itemize}
+  \item Regarder l'onglet ``Input image'' : l'image en entrée est bien
+    en géométrie capteur.
+  \end{itemize}
 \item Sauvegarder le résultat
-\item Répéter pour la 2ème image
-\item Afficher les 2 images ensemble
+
 \end{enumerate}
 \end{frame}
 
