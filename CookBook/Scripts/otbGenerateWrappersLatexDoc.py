@@ -4,7 +4,6 @@ import otbApplication
 import os
 import sys
 
-
 ##############################################################################
 # Parameters
 
@@ -15,6 +14,8 @@ applevel ="\\subsection"
 appdetailslevel = "\\subsubsection"
 paramlevel = "\\paragraph"
 
+pixeltypes = {' int8' : 0, ' uint8' : 1, ' int16' : 2, ' uint16': 3, ' int32' : 4, ' uint32' : 5, ' float' : 6, ' double': 7}
+
 def ConvertString(s):
     '''Convert a string for compatibility in txt dump'''
 
@@ -23,6 +24,18 @@ def ConvertString(s):
     s = s.replace('_', '\\_')
 
     return s
+
+def EncloseString(s):
+
+    if not s.startswith("\"") :
+        s = "\"" + s
+
+    if not s.endswith("\""):
+        
+        s = s + "\""
+
+    return s
+
 
 def GetParametersDepth(paramlist):
 
@@ -251,10 +264,7 @@ def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
 
 def GetApplicationExampleCommandLine(app,idx):
 
-    caption = "Command-line example " + str(idx+1) + " for " + ConvertString(app.GetDocName()) + "."
-    label = ConvertString(app.GetName()) + "clex" + str(idx+1)
-
-    output= "\\begin{lstlisting}[language=ksh,breaklines=true,breakatwhitespace=true,frame = tb, framerule = 0.25pt,float,fontadjust,basicstyle = {\\ttfamily\\footnotesize},captionpos=b,caption=" + caption + ", label=" + label +"]" + linesep
+    output= "\\begin{lstlisting}[language=ksh,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\\color{listlightgray}},basicstyle = {\\ttfamily\\scriptsize},keywordstyle = {\\ttfamily\\color{listkeyword}\\textbf},identifierstyle = {\\ttfamily},commentstyle = {\\ttfamily\\color{listcomment}\\textit},stringstyle = {\\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\\ttfamily\\color{listnumbers}},tabsize = 2]" + linesep
 
     output+= "$ otbcli_" + ConvertString(app.GetName())
 
@@ -280,14 +290,69 @@ def GetApplicationExamplePythonSnippet(app,idx):
     
     output+= "# The following line creates an instance of the " + ConvertString(app.GetName()) + " application " + linesep
 
-    output+= ConvertString(app.GetName()) + " = otbApplication.Registry.CreateApplication(" + ConvertString(app.GetName()) + ")" + linesep + linesep 
+    output+= ConvertString(app.GetName()) + " = otbApplication.Registry.CreateApplication(\"" + ConvertString(app.GetName()) + "\")" + linesep + linesep 
 
     output+= "# The following lines set the application parameters" + linesep
 
     for i in range(0, app.GetExampleNumberOfParameters(idx)):
-        output+= ConvertString(app.GetName()) + ".SetParameter(\"" + app.GetExampleParameterKey(idx,i)+ "\"," + app.GetExampleParameterValue(idx,i) +") " + linesep
 
-    output += linesep
+        param = app.GetExampleParameterKey(idx,i)
+        value = app.GetExampleParameterValue(idx,i)
+        paramtype = app.GetParameterType(param)
+        
+        # Handle the int case
+        if(paramtype == otbApplication.ParameterType_Int \
+               or paramtype == otbApplication.ParameterType_Radius \
+               or paramtype == otbApplication.ParameterType_RAM):
+
+            output+= ConvertString(app.GetName()) + ".SetParameterInt(\"" + param + "\"," + value +") " + linesep
+
+        elif paramtype == otbApplication.ParameterType_Float:
+
+            output+= ConvertString(app.GetName()) + ".SetParameterFloat(\"" + param + "\"," + value +") " + linesep
+
+        elif paramtype == otbApplication.ParameterType_StringList \
+                or paramtype == otbApplication.ParameterType_InputImageList \
+                or paramtype == otbApplication.ParameterType_InputVectorDataList:
+
+            values = value.split(" ")
+
+            output+= ConvertString(app.GetName()) + ".SetParameterStringList(\"" + param + "\", {"
+
+            for val in values[:-1]:
+
+                output+= EncloseString(val) + ", "
+
+            output+= EncloseString(values[-1]) + "})" + linesep
+
+        else:
+            if paramtype == otbApplication.ParameterType_OutputImage:
+                
+                # look for type
+                foundcode = -1
+                foudname = ""
+                for ptypename, ptypecode in pixeltypes.iteritems():
+                
+                    if value.endswith(ptypename):
+                    
+                        foundcode = ptypecode
+                        
+                        foundname = ptypename
+                        
+                        break
+                
+                if foundcode != -1 :
+                    output+= ConvertString(app.GetName()) + ".SetParameterString(\"" + param + "\"," + EncloseString(value[:-len(foundname)]) +") " + linesep
+                    
+                    output+= "# The following line sets the output image type for parameter " + param + " to " + foundname + linesep
+                    
+                    output += ConvertString(app.GetName()) + ".SetParameterOutputImagePixelType(\"" + param + "\", " + str(foundcode) + ")" + linesep
+                    
+            else:
+
+                output+= ConvertString(app.GetName()) + ".SetParameterString(\"" + param + "\", " + EncloseString(value) +") " + linesep
+
+        output += linesep
 
     output += "# The following line triggers the application execution" + linesep
     
@@ -297,14 +362,10 @@ def GetApplicationExamplePythonSnippet(app,idx):
 
 def GetApplicationExamplePython(app,idx):
 
-    caption = "Python snippet example " + str(idx+1) + " for " + ConvertString(app.GetDocName()) + "."
-    label = ConvertString(app.GetName()) + "pyex" + str(idx+1)
-
-    output= "\\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb, framerule = 0.25pt,float,fontadjust,basicstyle = {\\ttfamily\\scriptsize},captionpos=b,caption=" + caption + ", label=" + label +"]" + linesep
+    output= "\\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\\color{listlightgray}},basicstyle = {\\ttfamily\\scriptsize},keywordstyle = {\\ttfamily\\color{listkeyword}\\textbf},identifierstyle = {\\ttfamily},commentstyle = {\\ttfamily\\color{listcomment}\\textit},stringstyle = {\\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\\ttfamily\\color{listnumbers}},tabsize = 2]" + linesep
     
     output += GetApplicationExamplePythonSnippet(app,idx)
     
-
     output+= "\\end{lstlisting}" + linesep
 
     return output
@@ -358,15 +419,15 @@ def ApplicationToLatex(appname):
 
         output += appdetailslevel + "{Example}" + linesep
 
-        output += app.GetExampleComment(0) + linesep
+        if( len(app.GetExampleComment(0)) > 1):
 
-        label = ConvertString(app.GetName()) + "clex1"
- 
-        pylabel = ConvertString(app.GetName()) + "pyex1"
+            output += app.GetExampleComment(0) + linesep
 
-        output += " Command-line example of using this application is shown in listing~\\ref{" + label + "}, page~\pageref{" + label +"}. Corresponding python snippet is shown in listing~\\ref{" + pylabel + "}, page~\\pageref{" + pylabel + "}." + linesep
+        output+= "To run this example in command-line, use the following: " + linesep
 
         output += GetApplicationExampleCommandLine(app,0)
+
+        output+= "To run this example from Python, use the following code snippet: " + linesep
 
         output += GetApplicationExamplePython(app,0)
 
@@ -408,11 +469,20 @@ if len(sys.argv) != 2:
     sys.exit()
 
 out = "\\documentclass{report}" + linesep
-out += "\\usepackage{listings}" + linesep
+out += "\\usepackage{listings,color}" + linesep
+
+out+="\\definecolor{listcomment}{rgb}{0.0,0.5,0.0}" + linesep
+out+="\\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}" + linesep
+out+="\\definecolor{listnumbers}{gray}{0.65}" + linesep
+out+="\\definecolor{listlightgray}{gray}{0.955}" + linesep
+out+="\\definecolor{listwhite}{gray}{1.0}" + linesep
 out += "\\begin{document}" + linesep
 out += "\\tableofcontents" + linesep
 out += "\\listoftables" + linesep
 out += "\\chapter{Applications delivered with OTB}" + linesep
+
+
+
 
 blackList = ["TestApplication"]
 
