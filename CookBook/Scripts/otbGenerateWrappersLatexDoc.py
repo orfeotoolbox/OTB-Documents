@@ -268,14 +268,9 @@ def GetApplicationExampleCommandLine(app,idx):
     return output
 
 
-def GetApplicationExamplePython(app,idx):
-
-    caption = "Python snippet example " + str(idx+1) + " for " + ConvertString(app.GetDocName()) + "."
-    label = ConvertString(app.GetName()) + "pyex" + str(idx+1)
-
-    output= "\\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb, framerule = 0.25pt,float,fontadjust,basicstyle = {\\ttfamily\\scriptsize},captionpos=b,caption=" + caption + ", label=" + label +"]" + linesep
-
-    output+= "#!/usr/bin/python" + linesep
+def GetApplicationExamplePythonSnippet(app,idx):
+    
+    output= "#!/usr/bin/python" + linesep
 
     output+= linesep
     
@@ -297,6 +292,18 @@ def GetApplicationExamplePython(app,idx):
     output += "# The following line triggers the application execution" + linesep
     
     output += ConvertString(app.GetName()) + ".ExecuteAndWriteOutput()" + linesep
+    
+    return output
+
+def GetApplicationExamplePython(app,idx):
+
+    caption = "Python snippet example " + str(idx+1) + " for " + ConvertString(app.GetDocName()) + "."
+    label = ConvertString(app.GetName()) + "pyex" + str(idx+1)
+
+    output= "\\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb, framerule = 0.25pt,float,fontadjust,basicstyle = {\\ttfamily\\scriptsize},captionpos=b,caption=" + caption + ", label=" + label +"]" + linesep
+    
+    output += GetApplicationExamplePythonSnippet(app,idx)
+    
 
     output+= "\\end{lstlisting}" + linesep
 
