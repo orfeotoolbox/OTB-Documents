@@ -44,7 +44,18 @@ def ExpandPath(filename,path,exp):
         return filename
     
     else:
-        
+
+        # Avoid chasing our tails
+        filename = os.pathname.split(filename)
+
+        for dir,dirs,files in os.walk(path):
+
+            for file in files:
+
+                if file == filename:
+                    
+                    return os.join(dir,file)
+
         return os.join(path,filename)
 
 
