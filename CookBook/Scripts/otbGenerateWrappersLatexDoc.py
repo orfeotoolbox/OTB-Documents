@@ -4,6 +4,8 @@ import otbApplication
 import os
 import sys
 import glob
+from optparse import OptionParser
+
 
 ##############################################################################
 # Parameters
@@ -46,7 +48,11 @@ def ExpandPath(filename,path,exp):
     else:
 
         # Avoid chasing our tails
-        filename = os.pathname.split(filename)
+        (head,tail) = os.path.split(filename)
+
+        if len(tail) > 0:
+            
+            filename = tail
 
         for dir,dirs,files in os.walk(path):
 
@@ -54,9 +60,9 @@ def ExpandPath(filename,path,exp):
 
                 if file == filename:
                     
-                    return os.join(dir,file)
+                    return os.path.join(dir,file)
 
-        return os.join(path,filename)
+        return os.path.join(path,filename)
 
 
 def GetPixelType(value):
@@ -322,6 +328,8 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
     
     appname = app.GetName()
 
+    printable = []
+
     output= "#!/usr/bin/python" + linesep
 
     output+= linesep
@@ -358,13 +366,13 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
             
             #app.SetParameterString(param,value)
 
-            output+= appname + ".SetParameterString(" + param + "," + EncloseString(value) + ")" + linesep
+            output+= appname + ".SetParameterString(" + EncloseString(param) + "," + EncloseString(value) + ")" + linesep
 
         if paramtype == otbApplication.ParameterType_Empty:
                 
             app.SetParameterString(param,"1")
 
-            output+= appname + ".SetParameterString("+param+",\"1\")" + linesep
+            output+= appname + ".SetParameterString("+EncloseString(param)+",\"1\")" + linesep
 
         if paramtype == otbApplication.ParameterType_Int \
                 or paramtype == otbApplication.ParameterType_Radius \
@@ -372,19 +380,19 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
 
             # app.SetParameterString(param,value)
 
-            output += appname + ".SetParameterInt("+param+", "+value+")" + linesep
+            output += appname + ".SetParameterInt("+EncloseString(param)+", "+value+")" + linesep
 
         if paramtype == otbApplication.ParameterType_Float:
         
             # app.SetParameterString(param,value)
 
-            output += appname + ".SetParameterFloat("+param+", "+value + ")" + linesep
+            output += appname + ".SetParameterFloat("+EncloseString(param)+", "+value + ")" + linesep
 
         if paramtype == otbApplication.ParameterType_String:
 
             # app.SetParameterString(param,value)
 
-            output+= appname + ".SetParameterString("+param+", "+EncloseString(value)+")" + linesep
+            output+= appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(value)+")" + linesep
 
         if paramtype == otbApplication.ParameterType_StringList:
 
@@ -392,7 +400,7 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
 
             # app.SetParameterStringList(param,values)
 
-            output += appname + ".SetParameterStringList("+param+", "+str(values)+")" + linesep
+            output += appname + ".SetParameterStringList("+EncloseString(param)+", "+str(values)+")" + linesep
 
         if paramtype == otbApplication.ParameterType_Filename \
             or paramtype == otbApplication.ParameterType_Directory:
@@ -401,32 +409,42 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
                 
                 # app.SetParameterString(param,EncloseString(ExpandPath(value,inputpath,expand)))
             
-                output += appname + ".SetParameterString("+param+", "+EncloseString(ExpandPath(value,inputpath,expand)) + ")" + linesep
+                output += appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(ExpandPath(value,inputpath,expand)) + ")" + linesep
+
+                printable.append(["in","file",ExpandPath(value,inputpath,expand)])
 
             elif paramrole == 1:
                 
                 # app.SetParameterString(param,EncloseString(ExpandPath(value,outputpath,expand)))
 
-                output += appname + ".SetParameterString("+param+", "+EncloseString(ExpandPath(value,outputpath,expand))+")" + linesep
+                output += appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(ExpandPath(value,outputpath,expand))+")" + linesep
+
+                printable.append(["out","file",ExpandPath(value,inputpath,expand)])
 
         if paramtype == otbApplication.ParameterType_InputImage :
 
             # app.SetParameterString(param,EncloseString(ExpandPath(value,inputpath,expand)))
 
-            output += appname + ".SetParameterString("+param+", "+EncloseString(ExpandPath(value,inputpath,expand))+")"+linesep
+            output += appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(ExpandPath(value,inputpath,expand))+")"+linesep
         
+            printable.append(["in","img",ExpandPath(value,inputpath,expand)])
+
         if paramtype == otbApplication.ParameterType_ComplexInputImage:
 
             # app.SetParameterString(param,EncloseString(ExpandPath(value,inputpath,expand)))
 
-            output += appname + ".SetParameterString("+param+", "+EncloseString(ExpandPath(value,inputpath,expand))+")" + linesep
+            output += appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(ExpandPath(value,inputpath,expand))+")" + linesep
+
+            printable.append(["in","cimg",ExpandPath(value,inputpath,expand)])
 
         if paramtype == otbApplication.ParameterType_InputVectorData:
 
             # app.SetParameterString(param,EncloseString(ExpandPath(value,inputpath,expand)))
         
-            output += appname + ".SetParameterString("+param+", "+EncloseString(ExpandPath(value,inputpath,expand))+")" + linesep
+            output += appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(ExpandPath(value,inputpath,expand))+")" + linesep
     
+            printable.append(["in","vdata",ExpandPath(value,inputpath,expand)])
+
         if paramtype == otbApplication.ParameterType_OutputImage :
 
             foundcode,foundname = GetPixelType(value)
@@ -434,30 +452,44 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
             if foundcode != -1:
 
                 # app.SetParameterString(param,EncloseString(ExpandPath(value[:-len(foundname),outputpath,expand))))
-                output += appname + ".SetParameterString("+param+", "+EncloseString(ExpandPath(value[:-len(foundname)],outputpath,expand))+")" + linesep
+                output += appname + ".SetParameterString("+EncloseString(param)+", "+EncloseString(ExpandPath(value[:-len(foundname)],outputpath,expand))+")" + linesep
 
            #app.SetParameterOutputImagePixelType(param,foundcode)
 
-                output += appname + ".SetParameterOutputImagePixelType("+param+", "+str(foundcode)+")" + linesep
+                if foundcode == 1:
+                    
+                    printable.append(["out","ucimg",ExpandPath(value[:len(foundname)],inputpath,expand)])
+
+                else:
+
+                    printable.append(["out","img",ExpandPath(value[:len(foundname)],inputpath,expand)])
+
+                output += appname + ".SetParameterOutputImagePixelType("+EncloseString(param)+", "+str(foundcode)+")" + linesep
 
             else:
 
                 # app.SetParameterString(param,EncloseString(ExpandPath(value,outputpath,expand)))
                 
-                output += appname +".SetParameterString("+param+", "+ EncloseString(ExpandPath(value,outputpath,expand)) + ")" + linesep
+                output += appname +".SetParameterString("+EncloseString(param)+", "+ EncloseString(ExpandPath(value,outputpath,expand)) + ")" + linesep
+
+                printable.append(["out","img",ExpandPath(value,outputpath,expand)])
 
         if paramtype == otbApplication.ParameterType_ComplexOutputImage :
     
             # TODO: handle complex type properly
             # app.SetParameterString(param,EncloseString(ExpandPath(value,outputpath,expand)))
 
-            output += appname +".SetParameterString("+param+", "+ EncloseString(ExpandPath(value,outputpath,expand)) + ")" + linesep
+            output += appname +".SetParameterString("+EncloseString(param)+", "+ EncloseString(ExpandPath(value,outputpath,expand)) + ")" + linesep
+
+            printable.append(["out","cimg",ExpandPath(value,outputpath,expand)])
 
         if paramtype == otbApplication.ParameterType_OutputVectorData:
 
             # app.SetParameterString(param,EncloseString(ExpandPath(value,outputpath,expand)))
     
-            output += appname +".SetParameterString("+param+", "+ EncloseString(ExpandPath(value,outputpath,expand)) + ")" + linesep
+            output += appname +".SetParameterString("+EncloseString(param)+", "+ EncloseString(ExpandPath(value,outputpath,expand)) + ")" + linesep
+
+            printable.append(["out","vdata",ExpandPath(value,outputpath,expand)])
 
         if paramtype == otbApplication.ParameterType_InputImageList:
 
@@ -467,7 +499,7 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
 
             # app.SetParameterStringList(param,values)
             
-            output += appname + ".SetParameterStringList("+param + ", " + str(values) + ")" + linesep 
+            output += appname + ".SetParameterStringList("+EncloseString(param) + ", " + str(values) + ")" + linesep 
 
         if paramtype == otbApplication.ParameterType_InputVectorDataList:
 
@@ -477,26 +509,49 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
 
 #app.SetParameterStringList(param,values)
 
-            output += appname + ".SetParameterStringList("+param + ", " + str(values) + ")" + linesep 
+            output += appname + ".SetParameterStringList("+EncloseString(param)+ ", " + str(values) + ")" + linesep 
 
         output+=linesep
 
     output += "# The following line execute the application" + linesep
     output+= appname + ".ExecuteAndWriteOutput()"+ linesep
 
-    return output
+    return output,printable
 
 def GetApplicationExamplePython(app,idx):
 
     output= "\\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\\color{listlightgray}},basicstyle = {\\ttfamily\\scriptsize},keywordstyle = {\\ttfamily\\color{listkeyword}\\textbf},identifierstyle = {\\ttfamily},commentstyle = {\\ttfamily\\color{listcomment}\\textit},stringstyle = {\\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\\ttfamily\\color{listnumbers}},tabsize = 2]" + linesep
     
-    output += GetApplicationExamplePythonSnippet(app,idx)
+    script,printable = GetApplicationExamplePythonSnippet(app,idx)
+
+    output += script
     
     output+= "\\end{lstlisting}" + linesep
 
     return output
 
+def GetApplicationExampleResults(app,idx):
 
+    pyscript,printable = GetApplicationExamplePythonSnippet(app,idx,True,"/home/jmichel/Projets/otb/src/OTB-Data","/home/jmichel/Temporary/wrappers-doc/outputs")
+
+    #scriptfilename = "pyscripts/"+ConvertString(app.GetName())+str(idx)+".py"
+    #scriptfile = open(scriptfilename,'w')
+    #scriptfile.write(pyscript)
+    #scriptfile.close()
+    
+    print "Generating outputs for example "+ str(idx+1) + " of application "+app.GetName() + "..."
+    
+    try:
+        exec pyscript
+
+        print "Printable results are : ", printable
+
+        print "Done."
+
+    except:
+        print "Failed."
+
+        pass
 
 def ApplicationToLatex(appname):
 
@@ -559,6 +614,8 @@ def ApplicationToLatex(appname):
 
         output += GetApplicationExamplePython(app,0)
 
+        GetApplicationExampleResults(app,0)
+
     if len(limitations)>=2:
         
         output += appdetailslevel + "{Limitations}" + linesep
@@ -590,87 +647,93 @@ def GetApplicationTags(appname):
 
      return app.GetDocTags()
 
-if len(sys.argv) != 2:
-    
-    print "Usage: " + sys.argv[0] + " target_dir\n"
 
-    sys.exit()
 
-out = "\\documentclass{report}" + linesep
-out += "\\usepackage{listings,color}" + linesep
+def Temporary():
 
-out+="\\definecolor{listcomment}{rgb}{0.0,0.5,0.0}" + linesep
-out+="\\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}" + linesep
-out+="\\definecolor{listnumbers}{gray}{0.65}" + linesep
-out+="\\definecolor{listlightgray}{gray}{0.955}" + linesep
-out+="\\definecolor{listwhite}{gray}{1.0}" + linesep
-out += "\\begin{document}" + linesep
-out += "\\tableofcontents" + linesep
-out += "\\listoftables" + linesep
-out += "\\chapter{Applications delivered with OTB}" + linesep
+    out = "\\documentclass{report}" + linesep
+    out += "\\usepackage{listings,color}" + linesep
+
+    out+="\\definecolor{listcomment}{rgb}{0.0,0.5,0.0}" + linesep
+    out+="\\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}" + linesep
+    out+="\\definecolor{listnumbers}{gray}{0.65}" + linesep
+    out+="\\definecolor{listlightgray}{gray}{0.955}" + linesep
+    out+="\\definecolor{listwhite}{gray}{1.0}" + linesep
+    out += "\\begin{document}" + linesep
+    out += "\\tableofcontents" + linesep
+    out += "\\listoftables" + linesep
+    out += "\\chapter{Applications delivered with OTB}" + linesep
 
 
 
 
-blackList = ["TestApplication"]
+    blackList = ["TestApplication"]
 
-appNames = [app for app in otbApplication.Registry.GetAvailableApplications() if app not in blackList]
+    appNames = [app for app in otbApplication.Registry.GetAvailableApplications() if app not in blackList]
 
-sectionTags = ["Image manipulation","Calibration","Geometry", "Image Filtering","Learning"]
+    sectionTags = ["Image manipulation","Calibration","Geometry", "Image Filtering","Learning"]
 
-outdir = sys.argv[1]
+    outdir = sys.argv[1]
 
-wrapperstexdir = outdir + "applications/"
+    wrapperstexdir = outdir + "applications/"
 
-picturesdir = wrapperstexdir + "Pictures/"
+    picturesdir = wrapperstexdir + "Pictures/"
 
-outfile = outdir + "Wrappers.tex"
+    outfile = outdir + "Wrappers.tex"
 
-for tag in sectionTags:
+    for tag in sectionTags:
 
-    out +="\\section{" + tag + "}" + linesep
+        out +="\\section{" + tag + "}" + linesep
+
+        for appName in appNames:
+
+            apptags = GetApplicationTags(appName)
+
+            if apptags.count(tag) > 0:
+
+                apptexfile = wrapperstexdir + appName + ".tex"
+
+                print "Generating " + appName + ".tex"
+
+                ifstream = open(apptexfile,'w')
+
+                ifstream.write(ApplicationToLatex(appName))
+
+                ifstream.close()
+
+                out += "\input{applications/"+appName + ".tex}" + linesep
+
+                appNames.remove(appName)
+
+    out+= "\\section{Miscellanous}" + linesep
 
     for appName in appNames:
 
-        apptags = GetApplicationTags(appName)
+        print "Generating " + appName + ".tex"
 
-        if apptags.count(tag) > 0:
+        apptexfile = wrapperstexdir + appName + ".tex"
 
-            apptexfile = wrapperstexdir + appName + ".tex"
+        ifstream = open(apptexfile,'w')
 
-            print "Generating " + appName + ".tex"
+        ifstream.write(ApplicationToLatex(appName))
 
-            ifstream = open(apptexfile,'w')
+        ifstream.close()
 
-            ifstream.write(ApplicationToLatex(appName))
+        out += "\input{applications/"+appName + "}" + linesep
 
-            ifstream.close()
+    out += "\\end{document}"
 
-            out += "\input{applications/"+appName + ".tex}" + linesep
-            
-            appNames.remove(appName)
 
-out+= "\\section{Miscellanous}" + linesep
+    ifstream = open(outfile,'w')
 
-for appName in appNames:
+    ifstream.write(out)
 
-    print "Generating " + appName + ".tex"
-
-    apptexfile = wrapperstexdir + appName + ".tex"
-
-    ifstream = open(apptexfile,'w')
-    
-    ifstream.write(ApplicationToLatex(appName))
-    
     ifstream.close()
-    
-    out += "\input{applications/"+appName + "}" + linesep
 
-out += "\\end{document}"
+# Start parsing options
 
+parser = OptionParser()
 
-ifstream = open(outfile,'w')
+parser.add_option("-o","--out",dest="filename",help="Output tex or pdf file",metavar="FILE")
 
-ifstream.write(out)
-
-ifstream.close()
+parser.add_option("-t","--type",help="Output type: pdf, tex or baretex (default: %default)",default="tex") 
