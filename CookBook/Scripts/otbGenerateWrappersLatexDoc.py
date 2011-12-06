@@ -6,7 +6,6 @@ import sys
 import glob
 from optparse import OptionParser
 
-
 ##############################################################################
 # Parameters
 
@@ -558,6 +557,9 @@ def ApplicationToLatex(appname):
     output = ""
     
     app = otbApplication.Registry.CreateApplication(appname)
+
+    # TODO: remove this when bug 440 is fixed
+    app.Init()
     
     output += applevel + "{" + ConvertString(app.GetDocName()) + "}" + linesep
     
@@ -614,8 +616,6 @@ def ApplicationToLatex(appname):
 
         output += GetApplicationExamplePython(app,0)
 
-        GetApplicationExampleResults(app,0)
-
     if len(limitations)>=2:
         
         output += appdetailslevel + "{Limitations}" + linesep
@@ -649,7 +649,7 @@ def GetApplicationTags(appname):
 
 
 
-def Temporary():
+def GetFullDocumentHeader():
 
     out = "\\documentclass{report}" + linesep
     out += "\\usepackage{listings,color}" + linesep
@@ -664,26 +664,35 @@ def Temporary():
     out += "\\listoftables" + linesep
     out += "\\chapter{Applications delivered with OTB}" + linesep
 
+    return out
 
+def GetSingleAppDocumentHeader():
 
+    out = "\\documentclass{article}" + linesep
+    out += "\\usepackage{listings,color}" + linesep
+    out+="\\definecolor{listcomment}{rgb}{0.0,0.5,0.0}" + linesep
+    out+="\\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}" + linesep
+    out+="\\definecolor{listnumbers}{gray}{0.65}" + linesep
+    out+="\\definecolor{listlightgray}{gray}{0.955}" + linesep
+    out+="\\definecolor{listwhite}{gray}{1.0}" + linesep
+    out += "\\begin{document}" + linesep
+
+    return out
+    
+
+def GetApplicationsSections():
+
+    out = ""
 
     blackList = ["TestApplication"]
 
     appNames = [app for app in otbApplication.Registry.GetAvailableApplications() if app not in blackList]
 
     sectionTags = ["Image manipulation","Calibration","Geometry", "Image Filtering","Learning"]
-
-    outdir = sys.argv[1]
-
-    wrapperstexdir = outdir + "applications/"
-
-    picturesdir = wrapperstexdir + "Pictures/"
-
-    outfile = outdir + "Wrappers.tex"
-
+    
     for tag in sectionTags:
 
-        out +="\\section{" + tag + "}" + linesep
+        out +=tagslevel + "{" + tag + "}" + linesep
 
         for appName in appNames:
 
@@ -691,49 +700,101 @@ def Temporary():
 
             if apptags.count(tag) > 0:
 
-                apptexfile = wrapperstexdir + appName + ".tex"
+                print "Generating " + appName + " section"
 
-                print "Generating " + appName + ".tex"
-
-                ifstream = open(apptexfile,'w')
-
-                ifstream.write(ApplicationToLatex(appName))
-
-                ifstream.close()
-
-                out += "\input{applications/"+appName + ".tex}" + linesep
+                out += ApplicationToLatex(appName)
 
                 appNames.remove(appName)
 
-    out+= "\\section{Miscellanous}" + linesep
+    out+= tagslevel+"{Miscellanous}" + linesep
 
     for appName in appNames:
 
-        print "Generating " + appName + ".tex"
-
-        apptexfile = wrapperstexdir + appName + ".tex"
-
-        ifstream = open(apptexfile,'w')
-
-        ifstream.write(ApplicationToLatex(appName))
-
-        ifstream.close()
-
-        out += "\input{applications/"+appName + "}" + linesep
-
-    out += "\\end{document}"
+        print "Generating " + appName + " section"
 
 
-    ifstream = open(outfile,'w')
+        out += ApplicationToLatex(appName)
 
-    ifstream.write(out)
-
-    ifstream.close()
+    return out
 
 # Start parsing options
 
-parser = OptionParser()
+parser = OptionParser(usage="Export application(s) to tex or pdf file.")
 
 parser.add_option("-o","--out",dest="filename",help="Output tex or pdf file",metavar="FILE")
+parser.add_option("-t","--type",dest="filetype",help="Output type: pdf, tex or baretex (default: %default)",default="tex",choices=["tex","baretex"]) 
+parser.add_option("-n","--name",dest="name",help="Name of the application to export. If empty, all available applications in path will be exported.",default="")
+parser.add_option("-l","--level",dest="level",help="Handle level of tag in documentation (default: %default)", default = "section", choices= ["section","subsection"])
 
-parser.add_option("-t","--type",help="Output type: pdf, tex or baretex (default: %default)",default="tex") 
+(options, args) = parser.parse_args()
+
+if len(sys.argv) == 1:
+    parser.print_help()
+    sys.exit()
+
+# Handle the level parameter
+if options.level == "section":
+    tagslevel = "\\section"
+    applevel ="\\subsection"
+    appdetailslevel = "\\subsubsection"
+    paramlevel = "\\paragraph"
+
+elif options.level == "subsection":
+    tagslevel = "\\subsection"
+    applevel ="\\susubsection"
+    appdetailslevel = "\\paragraph"
+    paramlevel = "\\subparagraph"
+
+# Handle the name parameter
+if options.name != "":
+    applevel ="\\section*"
+    appdetailslevel = "\\subsection*"
+    paramlevel = "\\subsubsection*"
+
+output = ""
+
+# If tex or pdf output
+if options.filetype == "tex":
+
+    if options.name == "":
+
+        print "Generating full document with header."
+        
+        output+=GetFullDocumentHeader()
+
+        output+=GetApplicationsSections()
+
+    else:
+        
+        print "Generating single application document with header."
+        
+        output+=GetSingleAppDocumentHeader()
+
+        output+=ApplicationToLatex(options.name)
+    
+    output+= "\\end{document}"
+
+    outfile = open(options.filename,'w')
+    
+    outfile.write(output)
+    
+    outfile.close()
+
+elif options.filetype == "baretex":
+
+    if options.name == "":
+
+        print "Generating full document without header."
+
+        output+=GetApplicationsSections()
+
+    else:
+        print "Generating single application document without header."
+
+        output+=ApplicationToLatex(options.name)
+
+    outfile = open(options.filename,'w')
+
+    outfile.write(output)
+
+    outfile.close()
