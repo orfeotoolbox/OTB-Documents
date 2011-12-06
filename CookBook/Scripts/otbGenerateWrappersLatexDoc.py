@@ -16,7 +16,7 @@ applevel ="\\subsection"
 appdetailslevel = "\\subsubsection"
 paramlevel = "\\paragraph"
 
-pixeltypes = {' int8' : 0, ' uint8' : 1, ' int16' : 2, ' uint16': 3, ' int32' : 4, ' uint32' : 5, ' float' : 6, ' double': 7}
+pixeltypes = {' uchar' : 1, ' int8' : 0, ' uint8' : 1, ' int16' : 2, ' uint16': 3, ' int32' : 4, ' uint32' : 5, ' float' : 6, ' double': 7}
 
 def ConvertString(s):
     '''Convert a string for compatibility in txt dump'''
@@ -722,7 +722,7 @@ def GetApplicationsSections():
 parser = OptionParser(usage="Export application(s) to tex or pdf file.")
 
 parser.add_option("-o","--out",dest="filename",help="Output tex or pdf file",metavar="FILE")
-parser.add_option("-t","--type",dest="filetype",help="Output type: pdf, tex or baretex (default: %default)",default="tex",choices=["tex","baretex"]) 
+parser.add_option("-t","--type",dest="filetype",help="Output type: tex or baretex (default: %default)",default="tex",choices=["tex","baretex"]) 
 parser.add_option("-n","--name",dest="name",help="Name of the application to export. If empty, all available applications in path will be exported.",default="")
 parser.add_option("-l","--level",dest="level",help="Handle level of tag in documentation (default: %default)", default = "section", choices= ["section","subsection"])
 
@@ -733,20 +733,31 @@ if len(sys.argv) == 1:
     sys.exit()
 
 # Handle the level parameter
-if options.level == "section":
-    tagslevel = "\\section"
-    applevel ="\\subsection"
-    appdetailslevel = "\\subsubsection"
-    paramlevel = "\\paragraph"
+if options.name == "":
 
-elif options.level == "subsection":
-    tagslevel = "\\subsection"
-    applevel ="\\susubsection"
-    appdetailslevel = "\\paragraph"
-    paramlevel = "\\subparagraph"
+    if options.level == "section":
+
+        print "Tags will start at section level, and application at subsection level"
+
+        tagslevel = "\\section"
+        applevel ="\\subsection"
+        appdetailslevel = "\\subsubsection"
+        paramlevel = "\\paragraph"
+
+    elif options.level == "subsection":
+
+        print "Tags will start at subsection level, and application at paragraph level"
+
+        tagslevel = "\\subsection"
+        applevel ="\\susubsection"
+        appdetailslevel = "\\paragraph"
+        paramlevel = "\\subparagraph"
 
 # Handle the name parameter
-if options.name != "":
+else:
+
+    print "Applications will start at section level, and sections will not be numbered."
+
     applevel ="\\section*"
     appdetailslevel = "\\subsection*"
     paramlevel = "\\subsubsection*"
@@ -767,7 +778,7 @@ if options.filetype == "tex":
     else:
         
         print "Generating single application document with header."
-        
+
         output+=GetSingleAppDocumentHeader()
 
         output+=ApplicationToLatex(options.name)
@@ -798,3 +809,5 @@ elif options.filetype == "baretex":
     outfile.write(output)
 
     outfile.close()
+
+print "Output written to " + options.filename 
