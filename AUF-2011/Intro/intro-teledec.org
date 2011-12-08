@@ -17,8 +17,7 @@
 
 #+startup: beamer
 #+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: 
-#[handout,a4paper]
+#+LaTeX_CLASS_OPTIONS: [handout,a4paper]
 # pdfnup --nup 1x2 --no-landscape --frame handouts.pdf
 #+latex_header: \usepackage[T1]{fontenc}
 #+latex_header: \usepackage[frenchb]{babel}
