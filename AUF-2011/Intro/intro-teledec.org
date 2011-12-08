@@ -1,0 +1,1162 @@
+#+TITLE: Imagerie de télédétection -- M1-SIA
+#+AUTHOR:    Jordi Inglada
+#+EMAIL:     jordi.inglada@cesbio.cnes.fr
+#+DATE:      Novembre 2011
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  fr
+#+OPTIONS:   H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:nil mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+#+startup: oddeven
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: 
+#[handout,a4paper]
+# pdfnup --nup 1x2 --no-landscape --frame handouts.pdf
+#+latex_header: \usepackage[T1]{fontenc}
+#+latex_header: \usepackage[frenchb]{babel}
+#+latex_header: \AtBeginSubsection[]{\begin{frame}<beamer>\frametitle{Sommaire}\tableofcontents[currentsection,currentsubsection,hideothersubsections]\end{frame}}
+#+latex_header: \useoutertheme{infolines} 
+#+latex_header: \mode<beamer>{\usetheme{Pittsburgh}}
+#+latex_header: \setbeamertemplate{navigation symbols}{} 
+#+latex_header: \setbeamerfont{structure}{series=\bfseries}
+#+latex_header: \setbeamertemplate{items}[triangle]
+#+latex_header: \setbeamercolor{block title}{fg=blue!40!black}
+#+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in head/foot}\insertshortinstitute~~\insertshortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\insertshorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
+#+latex_header: \institute{\includegraphics[width=0.9cm]{/home/inglada/rapports/articles/IGARSS10/Multi-t/logo_cesbio.png}}
+#+latex_header: \usepackage{fourier}
+#+latex_header: \usepackage{amsfonts,bm,amsmath,amssymb,ifsym,marvosym,tabularx,array}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usetikzlibrary{arrows,fit,backgrounds,positioning,shapes,shadows}
+#+latex_header: \newcommand{\vns}{Ven$\mu$s}
+#+latex_header: \def\G{\ensuremath{{\cal G}}}
+#+LATEX_HEADER: \newcommand{\vns}{Ven$\mu$s}
+#+BEAMER_HEADER_EXTRA: \title[Imagerie de télédétection -- M1-SIA]{Imagerie de télédétection \\ M1-SIA}
+#+BEAMER_FRAME_LEVEL: 3
+
+
+#+COLUMNS: %35ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Args) %4BEAMER_col(Col) %8BEAMER_extra(Ex)
+
+* La télédétection
+
+** Introduction
+
+*** Définition
+- La télédétection est l'acquisition d'informations sur des objets ou
+  des phénomènes sans contact physique avec eux. \pause
+- L'imagerie de télédétection utilise des capteurs de rayonnement
+  électromagnétiques embarqués sur des plate-formes aériennes ou
+  spatiales. \pause
+- Observation de la Terre, mais aussi d'autres planètes. \pause
+- Intérêts principaux :
+  - Observation de sites difficiles d'accès ou dangereux
+  - Observation systématique dans le temps et dans l'espace
+
+*** Première image spatiale
+
+- 24 octobre 1946
+- Fusée V-2 américaine
+- Altitude : 105 km.
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/First_photo_from_space.jpg]]
+#+Latex: \end{center}
+
+*** Mars Odyssey
+
+- Capteur THEMIS (Thermal Emission Imaging System) avec bandes
+  visibles et infra-rouge thermique.
+- En orbite autour de Mars (2001)
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/737px-2001_mars_odyssey_wizja.jpg]]
+#+Latex: \end{center}
+
+*** La Terre de nuit
+
+- Composition d'images dans l'infrarouge thermique (1994-1995)
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/1024px-Flat_earth_night.png]]
+#+Latex: \end{center}
+
+*** Observation des paysages
+
+- Image du satellite ASTER de la NASA
+- Champs de céréales circulaires au Kansas
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/801px-Crops_Kansas_AST_20010624.jpg]]
+#+Latex: \end{center} 
+
+** Aéroporté vs spatial
+
+*** Notion de porteur
+- Le capteur imageur est installé sur une plate-forme qui se déplace
+  pour adopter le point de vue souhaité
+- Exemples de porteurs
+  - *Avion*
+  - *Satellite*
+  - Drone
+  - Ballon
+
+*** Avantages et inconvénients
+
+**** Aéroporté
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: block
+:END:
+***** Avantages : 
+- le porteur est bon marché
+- peut être activé à la demande
+- les capteurs peuvent être modifiés \pause
+***** Inconvénients : 
+- la couverture d'une zone donnée n'est pas systématique dans le temps \pause
+**** Spatial
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: block
+:END:
+***** Avantages : 
+- grandes surfaces couvertes
+- revisite fréquente \pause
+***** Inconvénients
+- inaccessible après lancement
+- coût et temps de développement élevés
+*** La mission SRTM \\ Un cas particulier
+**** srtm1
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+- Shuttle Radar Topography Mission
+- Mission de 11 jours à bord d'Endeavour en février 2000 \pause
+**** srtm2
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.9\textwidth
+[[file:Figures/Srtm_1.jpg]]
+#+Latex: \end{center}
+\pause
+**** srtm3
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.9\textwidth
+[[file:Figures/Maps-for-free_Sierra_Nevada.png]]
+#+Latex: \end{center}
+
+** Types de capteurs
+
+*** Spectre électromagnétique
+Le capteur mesure le rayonnement électromagnétique
+# Diagramme montrant le spectre électromagnétique avec le type, la
+# longueur d'onde (avec des exemples de tailles), la fréquence, et la
+# température d'émission du corps noir. Image adaptée d'un document de
+# la NASA. 
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.9\textwidth
+[[file:Figures/EM_Spectrum_Properties_edit.pdf]]
+#+Latex: \end{center}
+*** Spectre électromagnétique
+Mais l'atmosphère présente des variations de transmittance (opacité)
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.95\textwidth
+[[file:Figures/Atmospheric_electromagnetic_opacity.pdf]]
+#+Latex: \end{center}
+
+*** Capteurs passifs
+- Ils détectent le rayonnement naturel émis ou réfléchi. \pause
+- La source de rayonnement la plus commune est la lumière du soleil \pause
+  - On mesure la fraction réfléchie par les objets \pause
+- Exemples
+  - photographie visible \pause
+  - infrarouge \pause
+  - radiomètres
+*** Capteurs actifs
+**** Exemple d'image Radar
+:PROPERTIES:
+:BEAMER_col: 0.4
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.7\textwidth
+[[file:Figures/368px-Death-valley-sar.jpg]]
+#+Latex: \end{center}
+**** b1
+:PROPERTIES:
+:BEAMER_col: 0.6
+:BEAMER_env: ignoreheading
+:END:
+#+Latex: \vspace*{-1cm}
+- On utilise une source artificielle de rayonnement pour émettre une
+  onde vers la surface observée \pause
+- RADAR : RAdio Detection And Ranging
+  - source micro-ondes \pause
+- LIDAR : LIght Detection And Ranging
+  - source laser
+
+** Caractéristiques d'un système d'acquisition
+
+*** Couverture
+- Surface imagée par le satellite en une seule acquisition \pause
+- Dépend de
+  - l'altitude de l'orbite (compromis avec la résolution spatiale) \pause
+  - l'ouverture angulaire (compromis avec les distorsions
+    géométriques) \pause
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.7\textwidth
+[[file:Figures/RSAT_NewBeamModes.jpg]]
+#+Latex: \end{center}
+*** Agilité
+- Capacité du satellite à changer l'angle de prise de vue
+- Permet d'augmenter la surface imagée
+#+Latex: \begin{center}
+[[file:Figures/pleiade.mpeg][Vidéo Pléaides]]
+#+Latex: \end{center}
+*** Revisite \\Résolution temporelle
+- Fréquence avec laquelle un point de la surface de la Terre est vu \pause
+- Liée à la couverture spatiale \pause
+- Possibilité de choisir des orbites très inclinées pour augmenter la
+  revisite \pause
+  - mais certains endroits ne seront jamais vus \pause
+- Revisite "vraie" : sans dépointage du capteur
+*** Résolution spatiale
+**** b1
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+- Taille minimale des objets visibles dans l'image \pause
+- Dépend du détecteur utilisé (méga-pixels!) \pause
+- Mais aussi de l'altitude de l'orbite \pause
+- Des techniques de traitement du signal permettent d'améliorer la
+  résolution spatiale \pause : Supermode SPOT5
+**** b2
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+[[file:Figures/3110_1.jpg]]
+
+[[file:Figures/3110_2b.jpg]]
+*** Résolution spectrale
+- Découpage des longueurs d'onde observées
+- Panchromatique : 1 seule bande "niveaux de gris"
+- Multispectral : plusieurs bandes "couleur"
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/bandes_spectrales.png]]
+#+Latex: \end{center}
+
+
+*** Résolution spectrale \\ Hyperspectral
+**** b1
+:PROPERTIES:
+:BEAMER_col: 0.2
+:BEAMER_env: ignoreheading
+:END:
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.95\textwidth
+[[file:Figures/HyperspectralCube.jpg]]
+#+Latex: \end{center}
+\pause
+**** b2
+:PROPERTIES:
+:BEAMER_col: 0.8
+:BEAMER_env: ignoreheading
+:END:
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.95\textwidth
+[[file:Figures/HSI_LWIR_stones.png]]
+#+Latex: \end{center}
+*** Résolution spectrale \\ Utilité des bandes
+  - Bleu, 450-515..520 nm, atmosphère et eaux profondes (jusqu'à 50 m) \pause
+  - Vert, 515..520-590..600 nm, végétation et eaux profondes (jusqu'à
+    30 m) \pause
+  - Rouge, 600..630-680..690 nm, objets manufacturés, sols, végétation
+    et eaux peu profondes (jusqu'à 9 m) \pause
+  - Proche infrarouge, 750-900 nm, végétation \pause
+  - Moyen infrarouge, 1550-1750 nm, végétation, humidité des sols et
+    feux de forêt \pause
+  - Moyen infrarouge, 2080-2350 nm, humidité des sols, géologie, feux \pause
+  - Infrarouge thermique, 10400-12500 nm, (rayonnement émis au lieu de
+    réfléchi) géologie, courants d'eau, feux, images nocturnes \pause
+*** Résolution radiométrique
+- Capacité à distinguer des niveaux de rayonnements proches \pause
+- Dépend de la sensibilité des capteurs et du niveau de bruit \pause
+- Se mesure en nombre de bits pour le codage des valeurs des pixels
+  (8, 10 ou 16 bits habituellement) 
+* Quelques programmes spatiaux
+
+** Passé et présent
+
+*** 
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/Nasa_earth_observatories.jpg]]
+#+Latex: \end{center}
+*** Landsat
+- Landsat 1 (nommé Earth Resources Technology Satellite 1) - lancé le
+  23/07/1972, fin de vie le 01/1978
+- Landsat 2 - 01/1975 - 01/1981
+- Landsat 3 - 03/1978 - 03/1983
+- Landsat 4 - 07/1982 - 1993
+- Landsat 5 - 03/1984, toujours en fonctionnement
+- Landsat 6 - 10/1993, lancement non réussi
+- Landsat 7 - 04/1999, en fonctionnement partiel depuis 03/2003
+
+*** Landsat 7 \\ Caractéristiques
+**** b1
+:PROPERTIES:
+:BEAMER_col: 0.7
+:BEAMER_env: ignoreheading
+:END:
+- Une bande panchromatique à 15 m. de résolution (bande 8)
+- Bandes visibles (bleu, vert, rouge, proche infrarouge, et moyen infrarouge à 30 m (bandes 1-5, 7)
+- Une bande infrarouge thermique à 60 m. (bande 6)
+- 180 km $\times$ 180 km de fauchée
+- Revisite de 16 jours
+**** b2
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_env: ignoreheading
+:END:
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.95\textwidth
+[[file:Figures/480px-Landsat7photo.jpg]]
+#+Latex: \end{center}
+*** Landsat
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/Large_Kolkata_Landsat.jpg]]
+#+Latex: \end{center}
+
+
+
+
+*** SPOT
+
+- SPOT 1 : lancé 02/1986, désorbité en 2003
+  - Panchromatique 10 m., multispectral 20 m. (V,R,PIR)
+  - Revisite de 24 jours, 60 $\times$ 60 km.
+- SPOT 2 : lancé 01/1990, désorbité en 2009
+- SPOT 3 : lancé 09/1993, "perdu" en 1997
+- SPOT 4 : lancé 03/1998, toujours en fonctionnement
+  - Ajout du MIR à 20 m.
+- SPOT 5 : lancé 05/2002
+  - Panchromatique 5 m.
+  - Supermode à 2.5 m
+  - Multispectral à 10 m. (V,R,PIR) + MIR à 20 m.
+  - Capteur stéréo
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.3\textwidth
+[[file:Figures/Spot-5.jpg]]
+#+Latex: \end{center}
+
+*** Athènes vue par Spot 5
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/Athens_SPOT_1012.jpg]]
+#+Latex: \end{center}
+
+*** ERS
+- European remote sensing satellite (ERS-1)
+  - premier satellite d'OT de l'ESA
+  - lancé en juillet 1991
+  - cycle de revisite de 35 jours
+- Ensemble d'instruments
+  - RA : altimètre radar an bande Ku
+  - ATSR-1 (Along-Track Scanning Radiometer) : radiomètre infrarouge
+    avec 4 bandes + sondeur à micro-ondes pour la mesure des
+    températures de la surface des océans et des nuages
+  - *SAR* : radar imageur avec une résolution de 20 m.
+  - Diffusiomètre pour la mesure de la vitesse et la direction des
+    vents sur les océans
+- ERS-2 lancé en avril 1995
+  - identique à ERS-1
+  - mission "tandem"
+*** ERS
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/620px-ERS_2.jpg]]
+#+Latex: \end{center}
+
+*** Envisat
+
+- Successeur d'ERS
+- Lancé en mars 2002
+- Nouveaux instruments
+  - *MERIS* (MEdium Resolution Imaging Spectrometer) 
+  - GOMOS (Global Ozone Monitoring by Occultation of Stars) 
+  - SCIAMACHY (SCanning Imaging Absorption spectroMeter for
+    Atmospheric CHartographY) 
+  - MIPAS (Michelson Interferometer for Passive Atmospheric Sounding)
+- *SAR* de nouvelle génération
+#+Latex: \tiny
+| Mode                     | Id | Polarisation        | Incidence | Résolution | Fauchée     |
+|--------------------------+----+---------------------+-----------+------------+-------------|
+| Alternating polarisation | AP | HH/VV, HH/HV, VV/VH | 15 – 45°  | 30 – 150 m | 58 – 110 km |
+| Image                    | IM | HH, VV              | 15 – 45°  | 30 – 150 m | 58 – 110 km |
+| Wave                     | WV | HH, VV              |           | 400 m      | 5 × 5 km    |
+| Suivi global (ScanSAR)   | GM | HH, VV              |           | 1 km       | 405 km      |
+| Wavescan (ScanSAR)       | WS | HH, VV              |           | 150 m      | 405 km      |
+#+Latex: \normalsize
+
+*** Envisat
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/Envisatmod.jpg]]
+#+Latex: \end{center}
+
+*** Ikonos
+- Premier satellite commercial à très haute résolution spatiale
+- Panchromatique à 1 m.
+- Multispectral à 4 m. (B,V,R,PIR)
+- Revisite
+  - Vraie : 144 jours
+  - Avec dépointage : entre 3 et 5 jours
+- Fauchée : 11 km.
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/iko_pan.png]]
+#+Latex: \end{center}
+*** Quickbird
+- Satellite commercial à très haute résolution spatiale
+- Panchromatique à 60 cm.
+- Multispectral à 2.4 m. (B,V,R,PIR)
+- Revisite
+  - Avec dépointage : entre 1 et 3.5 jours
+- Fauchée : 16.5 km.
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/qb-tls.png]]
+#+Latex: \end{center}
+*** Autres satellites
+**** GeoEye1
+- Panchromatique à 41 cm.
+- Multispectral à 1.65 m. (B,V,R,PIR)
+- Fauchée : 15.2 km.
+**** WorldView-1,2
+- Panchromatique à 50 cm.
+- Multispectral à 1.8 m. (8 bandes)
+
+** Futur
+*** Pléiades
+- 2 satellites
+- Panchromatique à 70 cm
+- Multispectral à 2.80 m (B,V,R,PIR)
+- Revisite "vraie" de 26 jours
+- Fauchée : 20 km
+  - Mosaïques en un seul passage : 120 km $\times$ 120 km
+
+*** \vns{} 
+- Vegetation and Environment monitoring on a New Micro-Satellite
+- Capteur superspectral (12 bandes)
+- Revisite "vraie" de 2 jours
+  - mais peu de sites imagés
+- Fauchée de 20 km
+- Résolution spatiale de 10 m.
+- Angle de prise de vue constant
+- Production de séries temporelles d'images
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/var_reflect.png]]
+#+Latex: \end{center}
+
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-11-28.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-11-28.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-11-20.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-11-16.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-12-08.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-12-04.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-12-16.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-12-12.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2006-01-18.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2006-01-10.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2005-12-29.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2006-01-22.png]]
+#+Latex: \end{center}
+*** \vns{}  \\ Séries temporelles
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/2006-02-16.png]]
+#+Latex: \end{center}
+
+*** Le programme Sentinel de l'ESA \\ Constellation de satellites pour les besoins de GMES
+**** Sentinel-1
+- SAR imageur suite d'ERS et ENVISAT
+- Applications
+  - Suivi des glaces et des océans
+  - Mouvements du sol (tremblements de terre, glissements de terrain)
+  - Occupation des sols : forêts, eaux, sols
+  - Catastrophes naturelles et humanitaires
+
+**** Sentinel-2
+- Capteurs superspectraux à haute résolution (suite de Landsat, SPOT)
+- Revisite globale de 5 jours
+- Applications
+  - Cartographie de l'occupation et l'utilisation des sols
+  - Catastrophes naturelles et humanitaires
+  - Cartographie des risques
+**** Les autres Sentinelles
+- Sentinel-3 : imageur optique moyenne résolution
+- Sentinel-4,5 : sondeurs atmosphérique
+- Sentinel-6 : altimétrie
+* Applications de la télédétection
+** 
+*** Liste à la Prévert ...
+- Aménagement du territoire : détection et identification de petits
+  objets (véhicules, routes, etc.)
+- Agriculture : gestion des parcelles, rendement des cultures,
+  comptage d'arbres
+- Sécurité, humanitaire : cartographie rapide en cas de catastrophe
+- Hydrologie : topographie, écoulements, érosion
+- Foresterie : déforestation, évolution de la végétation
+
+*** Aménagement du territoire \\ Urban heat island
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/buffalo_etm_2002215_lrg.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://eoimages.gsfc.nasa.gov/images/imagerecords/47000/47704/buffalo_etm_2002215_lrg.jpg
+\normalsize
+#+Latex: \end{center}
+
+*** Agriculture
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/managed-canopy.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://www.satimagingcorp.com/media/images/managed-canopy.jpg
+\normalsize
+#+Latex: \end{center}
+
+*** Agriculture
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.7\textwidth
+[[file:Figures/image_1.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://www.precision-crop-protection.uni-bonn.de/gk_research/project_2_01/image_1.jpg
+\normalsize
+#+Latex: \end{center}
+*** Inondations au Ghana \\ Images radar
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.7\textwidth
+[[file:Figures/floods-ghana.jpg]]
+#+Latex: \end{center}
+
+*** Inondations en France \\ Images optiques
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/floods.jpg]]
+#+Latex: \end{center}
+
+*** Tsunami \\ Fukushima
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/fukushima.jpg]]
+#+Latex: \end{center}
+
+
+*** Hydrologie \\ Neige
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/large_nsm_depth_2008012805_Northwest.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://blog.oregonlive.com/weather/2008/01/large_nsm_depth_2008012805_Northwest.jpg
+\normalsize
+#+Latex: \end{center}
+
+
+*** Hydrologie \\ Evapotranspiration
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/wp1_topics_evapotranspiration_catchment_scale_1.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://wess.info/img/Research/wp1_topics_evapotranspiration_catchment_scale_1.jpg
+\normalsize
+#+Latex: \end{center}
+
+
+
+*** Déforestation
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.5\textwidth
+[[file:Figures/bolivia_hires.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://rst.gsfc.nasa.gov/Sect3/bolivia_hires.jpg
+\normalsize
+#+Latex: \end{center}
+
+*** Déforestation
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.4\textwidth
+[[file:Figures/Deforestation_brazil.jpg]]
+#+Latex: \end{center}
+#+Latex: \begin{center}
+\scriptsize
+http://earthobservatory.nasa.gov/Features/Deforestation/Images/aster_deforestation_brazil.jpg
+\normalsize
+#+Latex: \end{center}
+
+
+* Chaînes de traitement
+
+** Les niveaux de traitements                                     :noexport:
+*** Déspatialisation des données
+- De la télémesure à la matrice de pixels
+- Des comptes numériques aux valeurs physiques
+- De l'image à la carte
+*** Les niveaux de traitements \\ Niveau 0
+- 0 : Reconstructed, unprocessed instrument and payload data at full
+  resolution, with any and all communications artifacts (e. g.,
+  synchronization frames, communications headers, duplicate data)
+  removed. 
+*** Les niveaux de traitements \\ Niveau 1a
+- 1a : Reconstructed, unprocessed instrument data at full resolution,
+  time-referenced, and annotated with ancillary information, including
+  radiometric and geometric calibration coefficients and
+  georeferencing parameters (e. g., platform ephemeris) computed and
+  appended but not applied to the Level 0 data (or if applied, in a
+  manner that level 0 is fully recoverable from level 1a data).
+*** Les niveaux de traitements \\ Niveau 1b
+- 1b : Level 1a data that have been processed to sensor units (e. g.,
+  radar backscatter cross section, brightness temperature, etc.); not
+  all instruments have Level 1b data; level 0 data is not recoverable
+  from level 1b data.
+*** Les niveaux de traitements \\ Niveau 2
+- 2 : Derived geophysical variables (e. g., ocean wave height, soil
+  moisture, ice concentration) at the same resolution and location as
+  Level 1 source data.
+*** Les niveaux de traitements \\ Niveau 3
+- 3 : Variables mapped on uniform spacetime grid scales, usually with
+  some completeness and consistency (e. g., missing points
+  interpolated, complete regions mosaicked together from multiple
+  orbits, etc).
+*** Les niveaux de traitements \\ Niveau 4
+- 4 : Model output or results from analyses of lower level data
+  (i. e., variables that were not measured by the instruments but
+  instead are derived from these measurements). 
+** Corrections géométriques
+
+*** Corrections géométriques \\ Donner une localisation à chaque pixel
+#+BEGIN_LaTeX
+  \hspace*{-1cm}
+\begin{center}
+  \begin{tikzpicture}[scale=0.165]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (InputSeries) at
+       (4,-1) {Input Series};
+     \pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     \pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.7cm] (SensorModel) at (15,5) {Sensor Model};
+     \pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     \pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     \pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     \pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 0.7cm] (HomPoExtr) at (25,14) {Homologous
+     Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block
+     Adjustment};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     \pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      \pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine
+     Registration};
+     \pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     \pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     \pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     \pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      \pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (58,4.9) {Map Projection};
+     \pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     \pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+  \end{tikzpicture}
+\end{center}
+#+END_LaTeX
+*** Modèle de capteur
+#+BEGIN_LaTeX
+Changement de coordonnées entre l'image $(l,c)$ et le sol $(X,Y)$ pour
+chaque pixel de l'image
+\pause
+\begin{displaymath}
+  \begin{array}{cc}
+    Direct & \\
+    X = f_x(l,c,h,\vec\theta) & Y = f_y(l,c,h,\vec\theta)\\
+     & \\ \pause
+    Inverse & \\
+    l = g_l(X,Y,h,\vec\theta) & c = g_c(X,Y,h,\vec\theta)
+  \end{array}
+\end{displaymath}
+\pause
+Où $\vec\theta$ est le vecteur de paramètres décrivant la géométrie d'acquisition.\\
+\pause
+L'élévation des points (MNT) doit être connue.
+
+#+END_LaTeX
+** Corrections radiométriques
+*** Corrections atmosphériques \\ Du compte numérique à la mesure physique
+#+BEGIN_LaTeX
+\begin{center}
+\begin{tikzpicture}[scale=0.18]
+   \tiny
+
+    \draw[->,thick] (0,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (4,-2) rectangle +(6,4);
+    \node[text width= 0.7cm] (SensorModel) at (7,0) {DN to Lum};
+%     \pause
+
+    \draw[->,thick] (11,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (16,-2) rectangle +(6,4);
+    \node[text width= 0.7cm] (SensorModel) at (19,0) {Lum to Refl};
+%     \pause
+
+
+    \draw[->,thick] (23,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (27,-2) rectangle +(6,4);
+    \node[text width= 0.7cm] (SensorModel) at (30,0) {TOA to TOC};
+%     \pause
+
+    \draw[->,thick] (34,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6.5,4);
+    \node[text width= 0.9cm] (SensorModel) at (41,0) {Adjacency};
+%     \pause
+
+    \draw[->,thick] (45,0) --  +(3,0);
+
+ \end{tikzpicture}
+\end{center}
+#+END_LaTeX
+*** Compte numérique vers luminance
+#+BEGIN_LaTeX
+  \begin{equation*}
+   \mathbf{L_{TOA}^{k}} = \frac{ X^{k} } { \alpha_{k} } + \beta_{k}
+  \end{equation*}
+  \begin{itemize}
+  \item $\mathbf{L_{TOA}^{k}}$ est la luminance incidente (in
+  $W.m^{-2}.sr^{-1}.\mu m^{-1}$)
+  \item $\mathbf{X^{k}}$ compte numérique
+  \item $\alpha_{k}$ gain d'étalonnage absolu pour la bande k
+  \item $\beta_{k}$ biais d'étalonnage absolu pour la bande k
+  \end{itemize}
+#+END_LaTeX
+*** Luminance vers réflectance
+#+BEGIN_LaTeX
+  \begin{equation*}
+   \rho_{TOA}^{k} = \frac{ \pi.\mathbf{L_{TOA}^{k}} } { E_{S}^{k}.cos(\theta_{S}).d/d_{0} }
+  \end{equation*}
+  \begin{itemize}
+  \item $\mathbf{rho_{TOA}^{k}}$ réflectance
+  \item $\theta_{S}$ angle solaire zénithal
+  \item $E_{S}^{k}$ illumination solaire au sommet de l'atmosphère à
+   distance $d_{0}$ de la Terre
+  \item $d/d_{0}$ ratio entre la distance Terre-Soleil pendant
+   l'acquisition et la distance moyenne Terre-Soleil
+  \end{itemize}
+
+#+END_LaTeX
+*** Sommet de l'atmosphère vers le sol
+#+BEGIN_LaTeX
+  \begin{equation*}
+   \rho_{S}^{unif} = \frac{ \mathbf{A} }{ 1 + Sx\mathbf{A} }
+  \end{equation*}
+  \begin{equation*}
+   \mathbf{A} = \frac{ \rho_{TOA} - \rho_{atm} }{ T(\mu_{S}).T(\mu_{V}).t_{g}^{all gas} }
+  \end{equation*}
+  \begin{itemize}
+  \item $\rho_{TOA}$ réflectance au sommet de l'atmosphère
+  \item $\rho_{S}^{unif}$ réflectance du sol sous hypothèse de surface
+   lambertienne et environnement uniforme
+  \item $\rho_{atm}$ réflectance intrinsèque de l'atmosphère
+  \item $t_{g}^{all gas}$ albédo sphérique de l'atmosphère
+  \item $T(\mu_{S})$ transmittance vers le bas
+  \item $T(\mu_{V})$ transmittance vers le haut
+  \end{itemize}
+#+END_LaTeX
+*** Effets d'adjacence
+#+BEGIN_LaTeX
+  \begin{equation*}
+  \rho{S} = \frac{ \rho_{S}^{unif}.T(\mu_{V}) - <\rho{S}>.t_{d}(\mu_{v}) }{ exp(-\delta/\mu_{v}) }
+  \end{equation*}
+  \begin{itemize}
+    \item $\rho_{S}^{unif}$ réflectance du sol pour un environnement uniforme
+    \item $T(\mu_{V})$ transmittance vers le haut
+    \item $t_{d}(\mu_{S})$ transmittance diffuse vers le haut
+    \item $exp(-\delta/\mu_{v})$ transmittance directe vers le haut
+    \item $\rho{S}$ contribution de l'environnement pour le pixel analysé
+  \end{itemize}
+#+END_LaTeX
+
+*** Débruitage
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/denoising.png]]
+#+Latex: \end{center}
+
+*** Débruitage \\ SAR
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/speckle.png]]
+#+Latex: \end{center}
+** Segmentation
+
+*** Croissance de régions
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:Figures/region-growing.png]]
+#+Latex: \end{center}
+
+
+*** Ligne de partage des eaux
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/watershed.png]]
+#+Latex: \end{center}
+
+** Extraction de primitives
+*** Indices de végétation
+- NDVI: Normalized Difference Vegetation Index
+#+BEGIN_LaTeX
+\begin{equation}
+ \mathbf{NDVI} = \frac{L_{NIR}-L_{r}}{L_{NIR}+L_{r}}
+ \end{equation}
+ #+END_LaTeX
+**** image
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=\textwidth
+[[file:~/Dev/GH/IGARSS2010/Tutorial/Slides/03-Features/radio2-extract-3b.jpg]]
+#+Latex: \end{center}
+**** ndvi
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=\textwidth
+[[file:~/Dev/GH/IGARSS2010/Tutorial/Slides/03-Features/Radiometry-NDVI.jpg]]
+#+Latex: \end{center}
+
+*** Indices d'eau
+**** image
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=\textwidth
+[[file:~/Dev/GH/IGARSS2010/Tutorial/Slides/03-Features/radio2-extract-3b.jpg]]
+#+Latex: \end{center}
+**** ndvi
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=\textwidth
+[[file:~/Dev/GH/IGARSS2010/Tutorial/Slides/03-Features/Radiometry-NDWI2.jpg]]
+#+Latex: \end{center}
+
+*** Textures
+#+BEGIN_LaTeX
+\tiny \centering
+\begin{tabular}{cc}
+& \\
+Energie & $ f_1 = \sum_{i,j}g(i, j)^2 $ \\
+& \\
+& \\
+Entropie & $ f_2 = -\sum_{i,j}g(i, j) \log_2 g(i, j)$, or 0 if $g(i, j) = 0$ \\
+& \\
+& \\
+Corrélation & $ f_3 = \sum_{i,j}\frac{(i - \mu)(j - \mu)g(i, j)}{\sigma^2} $ \\
+& \\
+& \\
+Moment différence &  $f_4 = \sum_{i,j}\frac{1}{1 + (i - j)^2}g(i, j) $ \\
+& \\
+& \\
+Inertie (ou contraste) & $ f_5 = \sum_{i,j}(i - j)^2g(i, j) $ \\
+& \\
+& \\
+Cluster Shade & $ f_6 = \sum_{i,j}((i - \mu) + (j - \mu))^3 g(i, j) $ \\
+& \\
+Cluster Prominence & $ f_7 = \sum_{i,j}((i - \mu) + (j - \mu))^4 g(i, j) $ \\
+& \\
+& \\
+Corrélation de Haralick& $ f_8 = \frac{\sum_{i,j}(i, j) g(i, j) -\mu_t^2}{\sigma_t^2} $ \\
+& \\
+\end{tabular}
+#+END_LaTeX
+*** Textures \\ Exemple
+**** image
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=\textwidth
+[[file:~/Dev/GH/IGARSS2010/Tutorial/Slides/03-Features/radio2-extract-3b.jpg]]
+#+Latex: \end{center}
+**** texture
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: ignoreheading
+:END:
+
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=\textwidth
+[[file:~/Dev/GH/IGARSS2010/Tutorial/Slides/03-Features/Texture-Inertia-R2-2-O1-1-C1.jpg]]
+#+Latex: \end{center}
+
+*** Points saillants
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/harris.png]]
+#+Latex: \end{center}
+
+** Classification
+*** Classification non supervisée
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/markov.png]]
+#+Latex: \end{center}
+*** Classification supervisée
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/svm-classif.png]]
+#+Latex: \end{center}
+
+
+** Détection de changements
+*** Comment détecter des changements?
+#+BEGIN_LaTeX
+\begin{center}
+  \begin{tikzpicture}[scale=0.35]
+    \draw[fill=green!20] (5,5) rectangle (15,15);
+    \draw[step=0.5, gray, very thin] (5,5) grid (15,15);
+    \node (Reference) at (10,3) {Image $t_1$};
+
+    \draw[fill=blue!20] (25,5) rectangle (35,15);
+    \draw[step=0.5, gray, very thin] (25,5) grid (35,15);
+    \node (Secondary) at (30,3) {Image $t_2$};
+    \uncover<2->{
+    \draw[fill=red!60] (6,14) circle (0.2);
+    \draw[fill=red!60] (26,14) circle (0.2);
+    \node (CPs) at (20,14) {\tiny Points homologues};}
+    \uncover<3->{
+    \draw[thick] (5.5,13.5) rectangle +(1,1);
+    \draw[thick] (25.5,13.5) rectangle +(1,1);
+    \node (EW) at (20,13) {\tiny Fenêtre d'estimation};}
+    \uncover<4->{
+
+    \draw[red,->] (26,14) --  ++(8.5,0) -- ++(0,-0.5) -- ++(-8.5,0) -- ++(0,-0.5) --++(8.5,0) -- ++(0,-0.5)  ;
+    \draw[red,->] (6,14) --  ++(8.5,0) -- ++(0,-0.5) -- ++(-8.5,0) -- ++(0,-0.5) --++(8.5,0) -- ++(0,-0.5)  ;
+    \node (bal) at (20,12) {\tiny Balayage};}
+    
+  \end{tikzpicture}
+\end{center}
+#+END_LaTeX
+
+*** Détection de changements
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/chdet-sar.png]]
+#+Latex: \end{center}
+
+** Reconnaissance d'objets
+*** Formes simples
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/circles.png]]
+#+Latex: \end{center}
+
+
+*** Template matching
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/planes1.png]]
+#+Latex: \end{center}
+
+*** Template matching
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/planes2.png]]
+#+Latex: \end{center}
+
+*** Template matching
+#+Latex: \begin{center}
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:Figures/planes3.png]]
+#+Latex: \end{center}
+
+** Démo
+*** Démo
+- Si on a le temps
+* 
+** 
+*** Divers
+
+**** Téléchargement des planches
+- http://www.jordiinglada.net/stok/m1-sia.pdf
+**** Contact
+- jordi.inglada@cesbio.cnes.fr
+**** Outils
+- Monteverdi : http://www.orfeo-toolbox.org/otb/monteverdi.html
+*** Licence
+La plupart des illustrations et données techniques utilisées dans
+ces planches sont issues de [[http://www.wikipedia.org][Wikipedia]] : fiable, ouvert et
+réutilisable.
+
+Ces planches peuvent être utilisées avec ce même esprit.
+
+#+BEGIN_CENTER
+\tiny Creative Commons Attribution-ShareAlike 3.0 Unported License
+\normalsize
+
+#+ATTR_LATEX: width=0.1\textwidth
+[[file:~/rapports/Styles/cc-by-sa.png]]
+#+END_CENTER
