@@ -174,7 +174,7 @@ def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
 
 def GetApplicationExampleCommandLine(app,idx):
     output= "\\begin{lstlisting}[language=ksh,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\\color{listlightgray}},basicstyle = {\\ttfamily\\scriptsize},keywordstyle = {\\ttfamily\\color{listkeyword}\\textbf},identifierstyle = {\\ttfamily},commentstyle = {\\ttfamily\\color{listcomment}\\textit},stringstyle = {\\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\\ttfamily\\color{listnumbers}},tabsize = 2]" + linesep
-    output+= "$ otbcli_" + ConvertString(app.GetName())
+    output+= "otbcli_" + ConvertString(app.GetName())
     for i in range(0, app.GetExampleNumberOfParameters(idx)):
         output+=" -" + app.GetExampleParameterKey(idx,i)+ " " + app.GetExampleParameterValue(idx,i)
     output += linesep
@@ -308,19 +308,19 @@ def ApplicationToLatex(appname):
     app = otbApplication.Registry.CreateApplication(appname)
     # TODO: remove this when bug 440 is fixed
     app.Init()
-    output += applevel + "{" + ConvertString(app.GetDocName()) + "}" + linesep
+    output += applevel + "{" + ConvertString(app.GetDocName()) + "}" + "\\label{app:" + appname + "}" + linesep
     output += ConvertString(app.GetDescription()) + linesep
-    output += appdetailslevel + "{Detailed description}" + linesep
+    output += appdetailslevel + "{Detailed description}" + "\\label{appdesc:" + appname + "}" + linesep
     output += ConvertString(app.GetDocLongDescription()) + linesep
     limitations = app.GetDocLimitations()
-    output += appdetailslevel + "{Parameters}" + linesep
+    output += appdetailslevel + "{Parameters}" + "\\label{appparam:" + appname + "}" + linesep
     depth = GetParametersDepth(app.GetParametersKeys())
     deep = depth > 0
     output += ApplicationParametersToLatex(app,app.GetParametersKeys(),deep) + linesep
     if app.GetNumberOfExamples() > 1:
-        output += appdetailslevel + "{Examples}" + linesep
+        output += appdetailslevel + "{Examples}" + "\\label{appexamples:" + appname + "}" + linesep
         for i in range(0,app.GetNumberOfExamples()):
-            output += paramlevel + "{Example " + str(i+1) +"}" + linesep
+            output += paramlevel + "{Example " + str(i+1) +"}" + "\\label{appexample:" + appname + "}" + linesep
             output += app.GetExampleComment(i)
             label = ConvertString(app.GetName()) + "clex" + str(i+1)
             pylabel = ConvertString(app.GetName()) + "pyex" + str(i+1)
@@ -329,7 +329,7 @@ def ApplicationToLatex(appname):
             output+= "To run this example from Python, use the following code snippet: " + linesep
             output += GetApplicationExamplePython(app,i)
     elif app.GetNumberOfExamples() == 1:
-        output += appdetailslevel + "{Example}" + linesep
+        output += appdetailslevel + "{Example}" + "\\label{appexample:" + appname + "}" + linesep
         if( len(app.GetExampleComment(0)) > 1):
             output += app.GetExampleComment(0) + linesep
         output+= "To run this example in command-line, use the following: " + linesep
@@ -337,13 +337,13 @@ def ApplicationToLatex(appname):
         output+= "To run this example from Python, use the following code snippet: " + linesep
         output += GetApplicationExamplePython(app,0)
     if len(limitations)>=2:
-        output += appdetailslevel + "{Limitations}" + linesep
+        output += appdetailslevel + "{Limitations}" + "\\label{applim:" + appname + "}" + linesep
         output += ConvertString(app.GetDocLimitations()) + linesep
-    output += appdetailslevel + "{Authors}" + linesep
+    output += appdetailslevel + "{Authors}" + "\\label{appauthors:" + appname + "}" + linesep
     output += "This application has been written by " + ConvertString(app.GetDocAuthors()) + "." + linesep
     seealso = app.GetDocSeeAlso()
     if len(seealso) >=2:
-        output += appdetailslevel + "{See also}" + linesep
+        output += appdetailslevel + "{See also}" + "\\label{appseealso:" + appname + "}" + linesep
         output += "These additional ressources can be useful for further information: " + linesep
         output += "\\begin{itemize}" + linesep
         output += "\\item " + ConvertString(app.GetDocSeeAlso()) + linesep
@@ -385,14 +385,14 @@ def GetApplicationsSections():
     appNames = [app for app in otbApplication.Registry.GetAvailableApplications() if app not in blackList]
     sectionTags = ["Image manipulation","Calibration","Geometry", "Image Filtering","Learning"]
     for tag in sectionTags:
-        out +=tagslevel + "{" + tag + "}" + linesep
+        out +=tagslevel + "{" + tag + "}" + "\\label{apptag:" + tag + "}" + linesep
         for appName in appNames:
             apptags = GetApplicationTags(appName)
             if apptags.count(tag) > 0:
                 print "Generating " + appName + " section"
                 out += ApplicationToLatex(appName)
                 appNames.remove(appName)
-    out+= tagslevel+"{Miscellanous}" + linesep
+    out+= tagslevel+"{Miscellanous}" + "\\label{apptag:Miscellanous" + "}"  + linesep
     for appName in appNames:
         print "Generating " + appName + " section"
         out += ApplicationToLatex(appName)
