@@ -17,9 +17,6 @@ configure_file(CMake/RunApplicationsDocGenerator.sh.cmake.in
                @ONLY
                )
 
-#add_custom_command(OUTPUT Applications.tex
-#                   COMMAND bash ${CMAKE_CURRENT_BINARY_DIR}/RunApplicationsDocGenerator.sh )
-
 add_custom_target(ApplicationsDoc
                   ALL
                   COMMAND bash ${CMAKE_CURRENT_BINARY_DIR}/RunApplicationsDocGenerator.sh

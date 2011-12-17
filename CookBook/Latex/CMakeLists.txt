@@ -7,6 +7,14 @@ MESSAGE("${RELATED_SRCS}")
 # Add the main latex doc
 ADD_LATEX_DOCUMENT(CookBook.tex INPUTS ${RELATED_SRCS} MANGLE_TARGET_NAMES DEFAULT_PDF IMAGE_DIRS ../Art ../Art/MonteverdiImages USE_INDEX)
 
+
+FIND_PROGRAM(TEX4HT_COMPILER
+  NAMES htlatex
+  PATHS ${MIKTEX_BINARY_PATH}
+        /usr/bin
+)
+MARK_AS_ADVANCED(TEX4HT_COMPILER)
+
 IF(NOT TEX4HT_COMPILER)
   MESSAGE("htlatex executable was not found. Please pass to advanced mode and provide its full path")
 ENDIF(NOT TEX4HT_COMPILER)
