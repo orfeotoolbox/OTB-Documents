@@ -10,20 +10,6 @@ INCLUDE(CMake/UseLATEX.cmake)
 FIND_PACKAGE(OTB REQUIRED)
 FIND_PACKAGE(PythonInterp REQUIRED)
 
-
-
-configure_file(CMake/RunApplicationsDocGenerator.sh.cmake.in
-               ${CMAKE_CURRENT_BINARY_DIR}/RunApplicationsDocGenerator.sh
-               @ONLY
-               )
-
-add_custom_target(ApplicationsDoc
-                  ALL
-                  COMMAND bash ${CMAKE_CURRENT_BINARY_DIR}/RunApplicationsDocGenerator.sh
-                  COMMENT "Running otbGenerateWrappersLatexDoc.py"
-                  )
-                  
-
 ADD_SUBDIRECTORY(Latex)
 
 
