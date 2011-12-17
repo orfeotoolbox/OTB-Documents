@@ -320,7 +320,7 @@ def ApplicationToLatex(appname):
     if app.GetNumberOfExamples() > 1:
         output += appdetailslevel + "{Examples}" + "\\label{appexamples:" + appname + "}" + linesep
         for i in range(0,app.GetNumberOfExamples()):
-            output += paramlevel + "{Example " + str(i+1) +"}" + "\\label{appexample:" + appname + "}" + linesep
+            output += paramlevel + "{Example " + str(i+1) +"}" + "\\label{appexample:" + appname + str(i+1) +"}" + linesep
             output += app.GetExampleComment(i)
             label = ConvertString(app.GetName()) + "clex" + str(i+1)
             pylabel = ConvertString(app.GetName()) + "pyex" + str(i+1)
