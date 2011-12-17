@@ -131,6 +131,14 @@ def GenerateParametersTable(app,paramlist,label):
     output += "\\end{table} " + linesep
     return output
 
+def unique(seq): 
+    # order preserving
+    checked = []
+    for e in seq:
+        if e not in checked:
+            checked.append(e)
+    return checked
+
 def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
     output = ""
     # First run
@@ -142,7 +150,7 @@ def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
         for param in paramlist:
             paramsplit = param.partition(".")
             firstlevelparams.append(paramsplit[0])
-        firstlevelparams = set(firstlevelparams)
+        firstlevelparams = unique(firstlevelparams)
         if deep:
             for param in firstlevelparams:
                 output += paramlevel + "{" + ConvertString(app.GetParameterName(param)) + "}" + linesep
@@ -288,6 +296,7 @@ def GetApplicationExamplePython(app,idx):
     output += script
     output+= "\\end{lstlisting}" + linesep
     return output
+
 def GetApplicationExampleResults(app,idx):
     pyscript,printable = GetApplicationExamplePythonSnippet(app,idx,True,"/home/jmichel/Projets/otb/src/OTB-Data","/home/jmichel/Temporary/wrappers-doc/outputs")
     #scriptfilename = "pyscripts/"+ConvertString(app.GetName())+str(idx)+".py"
