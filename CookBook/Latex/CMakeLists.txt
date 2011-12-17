@@ -21,12 +21,12 @@ ENDIF(NOT TEX4HT_COMPILER)
 
 
 # Option for html generation
-SET(TEX4HT_OPTIONS html,2,sections+)
+SET(TEX4HT_OPTIONS html,4,subsubsections+)
 SET (HTML_OUTPUT "Html")
 
 IF(LATEX_COMPILER)
   MESSAGE("Have latex compiler")
-  SET(ITK_TEXINPUTS ${CookBook_SOURCE_DIR}/../Latex:${CookBook_SOURCE_DIR}:${CookBook_SOURCE_DIR}/Latex:${CookBook_SOURCE_DIR}/Art:${CookBook_BINARY_DIR}:${CookBook_BINARY_DIR}/Examples:${CookBook_BINARY_DIR}/Art:${CookBook_BINARY_DIR}/Latex:${CookBook_BINARY_DIR}/Wrappings/Java:${CookBook_BINARY_DIR}/Wrappings/Python)
+  SET(ITK_TEXINPUTS ${CookBook_SOURCE_DIR}/../Latex:${CookBook_SOURCE_DIR}/Latex:${CookBook_SOURCE_DIR}/Art:${CookBook_BINARY_DIR}/Art:${CookBook_BINARY_DIR}/Latex)
   IF (TEX4HT_COMPILER)
     CONFIGURE_FILE(${CookBook_SOURCE_DIR}/Tex4htWrapper.sh.in
       ${CookBook_BINARY_DIR}/Tex4htWrapper.sh)
