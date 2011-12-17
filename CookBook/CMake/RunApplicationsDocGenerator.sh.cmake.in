@@ -5,4 +5,4 @@ export PYTHONPATH=@OTB_DIR@/Code/Wrappers/SWIG:$PYTHONPATH
 
 export ITK_AUTOLOAD_PATH=@OTB_DIR@/bin
 
-@PYTHON_EXECUTABLE@ @PROJECT_SOURCE_DIR@/Scripts/otbGenerateWrappersLatexDoc.py -o @PROJECT_BINARY_DIR@/Latex/Applications.tex -t baretex
+@PYTHON_EXECUTABLE@ @PROJECT_SOURCE_DIR@/Scripts/otbGenerateWrappersLatexDoc.py -o @PROJECT_BINARY_DIR@/Latex/ApplicationsReferenceAutoGen.tex -t baretex
