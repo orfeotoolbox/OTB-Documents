@@ -16,6 +16,8 @@ FILE(GLOB  RELATED_SRCS RELATIVE "${CookBook_SOURCE_DIR}/Latex" "*")
 # Add the main latex doc
 ADD_LATEX_DOCUMENT(CookBook.tex INPUTS ${RELATED_SRCS} MANGLE_TARGET_NAMES DEFAULT_PDF IMAGE_DIRS ../Art ../Art/MonteverdiImages USE_INDEX)
 
+ADD_DEPENDENCIES(CookBook_pdf AppRefDocTex)
+
 FIND_PROGRAM(TEX4HT_COMPILER
   NAMES htlatex
   PATHS ${MIKTEX_BINARY_PATH}
@@ -42,7 +44,9 @@ IF(LATEX_COMPILER)
     ADD_CUSTOM_TARGET(AppDocHTML
                       ALL
                       COMMAND sh ${CookBook_BINARY_DIR}/Tex4htWrapper.sh CookBook
+                      WORKING_DIRECTORY ${CookBook_BINARY_DIR}
                       COMMENT "Building HTML documentation"
                       )
+    ADD_DEPENDENCIES(AppDocHTML CookBook_pdf)
   ENDIF (TEX4HT_COMPILER)
 ENDIF(LATEX_COMPILER)
