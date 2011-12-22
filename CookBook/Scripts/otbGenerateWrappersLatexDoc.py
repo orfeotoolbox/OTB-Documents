@@ -392,15 +392,19 @@ def GetApplicationsSections():
     out = ""
     blackList = ["TestApplication"]
     appNames = [app for app in otbApplication.Registry.GetAvailableApplications() if app not in blackList]
-    sectionTags = ["Image manipulation","Calibration","Geometry", "Image Filtering","Learning"]
+    sectionTags = ["Image Manipulation","Calibration","Geometry", "Image Filtering","Learning"]
     for tag in sectionTags:
         out +=tagslevel + "{" + tag + "}" + "\\label{apptag:" + tag + "}" + linesep
+        appsRemoved = []
         for appName in appNames:
             apptags = GetApplicationTags(appName)
             if apptags.count(tag) > 0:
                 print "Generating " + appName + " section"
                 out += ApplicationToLatex(appName)
-                appNames.remove(appName)
+
+                appsRemoved.append(appName)
+        for appName in appsRemoved:
+            appNames.remove(appName)
     out+= tagslevel+"{Miscellanous}" + "\\label{apptag:Miscellanous" + "}"  + linesep
     for appName in appNames:
         print "Generating " + appName + " section"
