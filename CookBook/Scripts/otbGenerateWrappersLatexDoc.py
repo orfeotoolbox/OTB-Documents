@@ -392,7 +392,7 @@ def GetApplicationsSections():
     out = ""
     blackList = ["TestApplication"]
     appNames = [app for app in otbApplication.Registry.GetAvailableApplications() if app not in blackList]
-    sectionTags = ["Image Manipulation","Calibration","Geometry", "Image Filtering","Learning"]
+    sectionTags = ["Image Manipulation","Vector Data Manipulation", "Calibration","Geometry", "Image Filtering","Feature Extraction","Stereo","Learning","Segmentation"]
     for tag in sectionTags:
         out +=tagslevel + "{" + tag + "}" + "\\label{apptag:" + tag + "}" + linesep
         appsRemoved = []
