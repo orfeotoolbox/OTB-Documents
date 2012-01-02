@@ -40,12 +40,19 @@ otbApplicationLauncherCommandLine Rescale OTB_DIR/bin -in QB_Toulouse_Ortho_PAN.
 \end{verbatim}
 
 If the application has sub-parameters (i.e. parameters contained in other parameters), 
-their key must be prefixed by their full tree path. For instance, the application 
+their keys must be prefixed by their full tree path. For instance, the application 
 \code{OrthoRectification} has a paramater for bicubic interpolation radius whose key is \code{radius}.
 This parameter should be called with the path \code{-interpolator.bco.radius}.
 
 Note that some types of parameters allow you to give several values after the key (they must
 be separated with whitespaces).
+
+For example an \emph{InputImageList} key, which can be followed by one or several filenames :
+
+\begin{verbatim}
+otbApplicationLauncherCommandLine ConcatenateImages OTB_DIR/bin -il GomaAvant.png GomaApres.png -out otbConcatenateImages.tif
+\end{verbatim}
+
 
 \subsection{Other wrappers}\label{sec:wrappedAppliOtherWrap}
 If you want to use an other wrapper, you have to activate the corresponding CMake 
