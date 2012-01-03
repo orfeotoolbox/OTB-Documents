@@ -1,8 +1,7 @@
 \section{Optical pre-processing}\label{sec:optpreproc}
 
-This section presents various pre-processing tasks that can be done
-using \app or \mont. The tasks are presented in their classical order
-in which they can be chained to obtain a calibrated, pan-sharpened image. 
+This section presents various pre-processing tasks that are presented in 
+a classical order to obtain a calibrated, pan-sharpened image. 
 
 \subsection{Optical radiometric calibration}\label{ssec:optcal}
 
@@ -44,7 +43,7 @@ Two levels of calibration are usually distinguished:
   well as the composition and amount of aerosol gasses.
 \end{itemize}
 
-This transformation can be done either with \app or with
+This transformation can be done either with an application or with
 \mont. Sensor-related parameters such as gain, date, spectral
 sensitivity and sensor position are seamlessly read from the image
 metadata. Atmospheric parameters can be tuned by the user. Supported
@@ -58,25 +57,25 @@ sensors are :
 \item Formosat.
 \end{itemize}
 
-\subsubsection{Optical calibration with \app}
+\subsubsection{Optical calibration application}
 
-The \application{otbOpticalCalibration-cli} application from \app
-allows to perform command-line optical calibration. The mandatory
-parameters are the input and output images and the level of
-calibration (either TOA or TOC). All other parameters are
-optional. The output images are expressed in thousandth of
+The \application{OpticalCalibration} application
+allows to perform optical calibration. The mandatory
+parameters are the input and output images. All other parameters are
+optional. By default the level of calibration is set to TOA (Top Of 
+Atmosphere).  The output images are expressed in thousandth of 
 reflectivity using a 16 bits unsigned integer type.
 
 A basic TOA calibration task can be performed with the following command :
 
 \begin{verbatim}
-otbOpticalCalibration-cli -in  input_image -out output_image -level TOA
+otbcli_OpticalCalibration -in  input_image -out output_image
 \end{verbatim}
 
 A basic TOC calibration task can be performed with the following command :
 
 \begin{verbatim}
-otbOpticalCalibration-cli -in  input_image -out output_image -level TOC
+otbcli_OpticalCalibration -in  input_image -out output_image -level toc
 \end{verbatim}
 
 \subsubsection{Optical calibration with \mont}
@@ -162,14 +161,14 @@ This fusion operation requires two different steps :
   fused pixels.
 \end{enumerate}
 
-Using either an application from \app or modules from \mont, it is
-possible to perform both steps in a raw, or step-by-step fusion, as
+Using either an application or modules from \mont, it is
+possible to perform both steps in a row, or step-by-step fusion, as
 described in the above sections.
 
 \subsubsection{Pan-sharpening with \app}
 
-The \application{otbBundleToPerfectSensor-cli} application allows to
-perform both steps in a raw. Seamless sensor modelling is used to
+The \application{BundleToPerfectSensor} application allows to
+perform both steps in a row. Seamless sensor modelling is used to
 perform zooming and registration of the multi-spectral image on the
 panchromatic image. Then, a simple pan-sharpening is applied,
 according to the following formula:
@@ -184,17 +183,19 @@ panchromatic image smoothed with a kernel to fit the multi-spectral
 image scale.
 
 Here is a simple example of how to use the
-\application{otbBundleToPerfectSensor-cli} application:
+\application{BundleToPerfectSensor} application:
 
 \begin{verbatim}
-otbBundleToPerfectSensor-cli -inP pan_image -inXS xs_image -out output_image
+otbcli_BundleToPerfectSensor -inp pan_image -inxs xs_image -out output_image
 \end{verbatim}
 
 There are two more optional parameters that can be useful for this
 tool:
 \begin{itemize}
-\item The \verb?-dem? option allows to specify a directory containing DEM
-  formatted for OTB (see section~\ref{ssec:dem}). Since registration
+\item The \verb?-elev? option allows to specify the elevation, either with
+  a DEM formatted for OTB (\verb?-elev.dem.path? option, see 
+  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.average.value? 
+  option). Since registration
   and zooming of the multi-spectral image is performed using
   sensor-models, it may happen that the registration is not perfect in
   case of landscape with high elevation variation. Using a DEM in this
@@ -283,23 +284,23 @@ cover, which are both delivered as 1-by-1 tiles:
 
 The \otb suite relies on \ossim capabilities for sensor modelling and
 DEM handling. Tiles of a given DEM are supposed to be located within a
-single directory. Whenever some applications from \app or modules from
+single directory. Whenever some applications or modules from
 \mont require a DEM, there is an option or a field to set the DEM
 directory.
 
-\subsubsection{Making DEM files usable in \otb suite using \app}
+\subsubsection{Making DEM files usable in \otb suite using \application{DEMConvert}}
 
 Georeferenced files containing elevation data (including file from
 SRTM and ASTER) need to be converted to a specific file format before
 being compatible with \ossim and \otb. The
-\application{otbDEMConvert-cli} application allows to perform this
+\application{DEMConvert} application allows to perform this
 conversion with the following command:
 
 \begin{verbatim}
-otbDEMConvert-cli -in input_image -out output_image
+otbcli_DEMConvert -in input_image -out output_prefix
 \end{verbatim}
 
-The output image can then be placed in the directory containing DEM
+The output files can then be placed in the directory containing DEM
 files.
 
 \subsubsection{Extract the DEM image corresponding to your image using
@@ -356,13 +357,13 @@ In addition, GeoTiff and other file format with geographical
 information are seamlessly read by \otb, and the ortho-rectification
 tools can be used to re-sample these images in another map projection.
 
-\subsubsection{Ortho-rectification with \app}
+\subsubsection{Ortho-rectification with applications}
 
-The \application{otbOrthoRectification-cli} application allows to
+The \application{OrthoRectification} application allows to
 perform ortho-rectification and map re-projection. The simplest way to
 use it is the following command:
 \begin{verbatim}
-otbOrthoRectification-cli -in input_image -out output_image
+otbcli_OrthoRectification -io.in input_image -io.out output_image
 \end{verbatim}
 
 In this case, the tool will automatically estimates all the necessary

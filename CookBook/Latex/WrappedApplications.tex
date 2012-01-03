@@ -38,6 +38,12 @@ corresponding key followed by its value:
 \begin{verbatim}
 otbApplicationLauncherCommandLine Rescale OTB_DIR/bin -in QB_Toulouse_Ortho_PAN.tif -out QB_Toulouse_rescaled.tif -outmin 0 -outmax 255
 \end{verbatim}
+An other way to launch your application is to use the auto-generated scripts located in the 
+\code{OTB\_DIR/bin} directory. There is one for each application, their name is the same as 
+the application, prefixed with \code{otbcli\_}:
+\begin{verbatim}
+otbcli_Rescale -in QB_Toulouse_Ortho_PAN.tif -out QB_Toulouse_rescaled.tif -outmin 0 -outmax 255
+\end{verbatim}
 
 If the application has sub-parameters (i.e. parameters contained in other parameters), 
 their keys must be prefixed by their full tree path. For instance, the application 
@@ -63,6 +69,10 @@ options when building the library:
   the same two arguments as the command line:
   \begin{verbatim}
   otbApplicationLauncherQt Rescale OTB\_DIR/bin
+  \end{verbatim}
+  There are also auto-generated scripts, similar to command line ones:
+  \begin{verbatim}
+  otbgui_Rescale
   \end{verbatim}
   It displays a window with several tabs. \textbf{[Parameters]} is where you set the parameters and execute the application.
   \textbf{[Logs]} is where you see the informations given by the application during its execution. \textbf{[Progress]} is 
