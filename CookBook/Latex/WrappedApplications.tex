@@ -55,14 +55,14 @@ otbApplicationLauncherCommandLine ConcatenateImages OTB_DIR/bin -il GomaAvant.pn
 
 
 \subsection{Other wrappers}\label{sec:wrappedAppliOtherWrap}
-If you want to use an other wrapper, you have to activate the corresponding CMake 
+If you want to use the other available wrappers, you have to activate the corresponding CMake 
 options when building the library:
 \begin{itemize}
   \item Enable \code{WRAP\_QT} to build a Qt application launcher. It opens a GUI which 
   allows you to set the parameters and execute the application. This launcher only needs 
   the same two arguments as the command line:
   \begin{verbatim}
-  otbApplicationLauncherQt Rescale OTB_DIR/bin
+  otbApplicationLauncherQt Rescale OTB\_DIR/bin
   \end{verbatim}
   It displays a window with several tabs. \textbf{[Parameters]} is where you set the parameters and execute the application.
   \textbf{[Logs]} is where you see the informations given by the application during its execution. \textbf{[Progress]} is 
