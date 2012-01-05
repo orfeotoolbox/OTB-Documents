@@ -2,17 +2,16 @@
 
 \section{Introduction}\label{sec:appintro}
 
-OTB-Applications is perhaps the older package of the \otb
-suite after the OTB package itself. Since the \otb is a
-library providing remote sensing functionalities, the only
-applications that were distributed at the beginning were the examples
-from the Software Guide and the tests. These applications are very
-useful for the developer because their code is very short and only
-demonstrates one functionality at a time, but in many cases a real
-application would require combining together two or more functions
-from the \otb, and providing a higher level interface to
-handle parameters, input and output data and communication with the
-user nicely.
+\app was perhaps the older package of the \otb suite after the OTB
+package itself. Since the \otb is a library providing remote sensing
+functionalities, the only applications that were distributed at the
+beginning were the examples from the Software Guide and the
+tests. These applications are very useful for the developer because
+their code is very short and only demonstrates one functionality at a
+time, but in many cases a real application would require combining
+together two or more functions from the \otb, and providing a higher
+level interface to handle parameters, input and output data and
+communication with the user nicely.
 
 The \app package was originally designed to provide applications
 performing simple remote sensing tasks, more complex than simple
@@ -21,14 +20,15 @@ interface (either graphical or command-line), to demonstrate the use
 of the \otb functions. The most popular applications are maybe the
 \application{otbImageViewerManager}, which allows to open a collection
 of images and navigate in them, and the
-\application{otbSupervisedClassificationApplication}, which allows to
+\application{otbSupervisedClassificationApplication}, which allowed to
 delineate training regions of interest on the image and classify the
-image with a SVM classifier trained with these regions. During the
-first 3 years of the \otb development, many more applications have
-been added to this package, to perform various tasks. Most of them
-come with a graphical user interface, apart from some small utilities
-that are command-line.  For a complete list of these applications,
-please refer to section~\ref{sec:appstruct}.
+image with a SVM classifier trained with these regions (this
+application is no longer maintained since the same functionnality is
+available through the corresponding \mont module). During the first 3
+years of the \otb development, many more applications have been added
+to this package, to perform various tasks. Most of them came with a
+graphical user interface, apart from some small utilities that are
+command-line.
 
 The development and release of the \mont software (see
 chapter~\ref{chap:Monteverdi} at the end of year 2009 changed a lot of
@@ -40,20 +40,48 @@ from the \app package were integrated to \mont as modules, and the
 added to the package and it was barely maintained, as new graphical
 tools were directly embedded within \mont.
 
-Then, some people started to regain interest in the \app package. \mont
-is a great tool to perform numerous remote sensing and image
-processing task in a minute, but it is not well adapted to heavier
-(and longer) processing, scripting and batch processing. Therefore, in
-2010 the \app package has been revamped: old applications have been
-moved to a legacy folder for backward compatibility, and the
-development team started to populate the package with compact
-command-line tools to perform various heavy processing tasks. The
-package is now rich of more than 40 tools, though not very well known
-from the users for now. Although for now only the commmand-line
-interface is fully functional, a work in progress aims at wrapping these
-command-line tools to also offer QT graphical interfaces and integration
-with the \qgis software as well as with other environment such as python,
-IDL or Matlab (and with \mont).
+Then, some people started to regain interest in the \app
+package. \mont is a great tool to perform numerous remote sensing and
+image processing task in a minute, but it is not well adapted to
+heavier (and longer) processing, scripting and batch
+processing. Therefore, in 2010 the \app package has been revamped: old
+applications have been moved to a legacy folder for backward
+compatibility, and the development team started to populate the
+package with compact command-line tools to perform various heavy
+processing tasks. 
+
+Later on in 2011, the \app has been further revamped. Because of the
+increasing need to interface the \app into other software and to
+provide auto-generated interfaces, the \otb development team decided
+to develop a new applications framework. The main idea of this
+framework is the following: each application is written once for all
+in a shared library (also known as plugin). This plugin can be
+auto-loaded into appropriate tools wihtout recompiling, and is able to
+fully describe its parameters, behaviour and documentation.
+
+The tools to use the plugins can be extended, but \otb shipped the
+following:
+\begin{itemize}
+\item A command-line laucher, which is almost equivalent to the former
+  \app command-line interface,
+\item A graphical launcher, with an auto-generated QT interface,
+  providing ergonomic parameters setting, display of documentation,
+  and progress reporting,
+\item A C and SWIG interface, which means that any application can be
+  loaded set-up and executed into a high-level language such as python
+  for instance.
+\end{itemize}
+
+Additionally, QGis plugins built on top of the SWIG/Python interface
+are available with seamless integration within QGis.
+
+To facilitate the use of these tools and applications, they will now
+be shipped with the standard \otb package. It means that the former
+\textbf{OTB-Applications} package will no longer be maintained.
+
+The \app are now rich of more than 40 tools, which are listed in the
+the applications reference documentation, presented in
+chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 \section{Installation}\label{sec:appinstall}
 
@@ -169,5 +197,121 @@ sudo zypper refresh
 sudo zypper install Orfeo-Applications-beta
 \end{verbatim}
 
-\section{Structure of the package}\label{sec:appstruct}
-This section will provide the list of the applications available with details about command line arguments\dots
+
+\section{Using the applications}\label{sec:usingapps}
+
+Using the new \app framework is slightly more complex than launching a
+command-line tool. This section describes all the ways to access the
+new applications. Apart from the simplified access, which is similar
+to the former access to \app, to be able to launch an application, you
+will need to know the application id and optionally the path where the
+applications plugins are stored. For applications shipped with \otb,
+the application ids of each application can be found in
+chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
+
+\subsection{Simplified use}
+
+All standard applications delivered in with \otb comes with simplified
+scripts in the system path, allowing to launch the command-line and QT
+versions of the application the same simple way we used to launch the
+old applications. The command-line interface is prefixed by
+\verb?otbcli_?, while the QT interface is prefixed by
+\verb?otbgui_?. For instance, calling \verb?otbcli_Convert? will
+launch the command-line interface of the \textbf{Convert} application,
+while \verb?otbgui_convert? will launch the QT one.
+
+For windows users, the simplified QT interface launcher are also
+available from the Start Menu.
+
+Passing arguments to the command-line version (prefixed by
+\verb?otbcli_?) is explained in next sub-section.
+
+\subsection{Using the command-line laucher}
+
+The command-line application launcher allows to load an application
+plugin, to set its parameter and execute it using the command
+line. Lauching the \verb?tbApplicationLauncherCommandLine?
+without argument results in the following help to be displayed:
+
+\begin{verbatim}
+$ otbApplicationLauncherCommandLine 
+Usage : ./otbApplicationLauncherCommandLine module_name [MODULEPATH] [arguments]
+\end{verbatim} 
+
+The \verb?module_name? parameter corresponds to the application
+id. The \verb?[MODULEPATH]? argument is optional and allows to pass to
+the laucher a path where the shared library (or plugin) from
+application corresponding to \verb?module_name? is. If no
+\verb?[MODULEPATH]?, the launcher will look into standard \otb
+installation path. An error in the application id (i.e. in parameter
+\verb?module_name?) will make the
+\verb?otbApplicationLauncherCommandLine? lists the id of all
+applications found in \verb?[MODULEPATH]? or in the standard \otb
+installation path if \verb?[MODULEPATH]? is not provided.
+
+Launching the \verb?otbApplicationLauncherCommandLine? with a valid
+application id and no or incomplete parameters results will make the
+launcher display a summary of the parameters, indicating which ones
+are missing to allow for application execution. Here is an example
+with the \textbf{OrthoRectification} application:
+
+\begin{scriptsize}
+\begin{verbatim}
+./otbApplicationLauncherCommandLine OrthoRectification
+
+ERROR: Waiting for at least one parameter...
+
+====================== HELP CONTEXT ======================
+NAME: OrthoRectification
+DESCRIPTION: This application allows to ortho-rectify optical images from supported sensors.
+
+EXAMPLE OF USE: 
+otbcli_OrthoRectification -io.in QB_TOULOUSE_MUL_Extract_500_500.tif -io.out QB_Toulouse_ortho.tif
+
+DOCUMENTATION: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
+======================= PARAMETERS =======================
+        -progress                        <boolean>        Report progress 
+MISSING -io.in                           <string>         Input Image 
+MISSING -io.out                          <string> [pixel] Output Image  [pixel=uint8/int8/uint16/int16/uint32/int32/float/double]
+        -map                             <string>         Output Map Projection [utm/lambert2/lambert93/transmercator/wgs/epsg]
+MISSING -map.utm.zone                    <int32>          Zone number 
+        -map.utm.northhem                <boolean>        Northern Hemisphere 
+        -map.transmercator.falseeasting  <float>          False easting 
+        -map.transmercator.falsenorthing <float>          False northing 
+        -map.transmercator.scale         <float>          Scale factor 
+        -map.epsg.code                   <int32>          EPSG Code 
+        -outputs.mode                    <string>         Parameters estimation modes [auto/autosize/autospacing]
+MISSING -outputs.ulx                     <float>          Upper Left X 
+MISSING -outputs.uly                     <float>          Upper Left Y 
+MISSING -outputs.sizex                   <int32>          Size X 
+MISSING -outputs.sizey                   <int32>          Size Y 
+MISSING -outputs.spacingx                <float>          Pixel Size X 
+MISSING -outputs.spacingy                <float>          Pixel Size Y 
+        -outputs.isotropic               <boolean>        Force isotropic spacing by default 
+        -elev                            <string>         Elevation management [dem/average]
+MISSING -elev.dem.path                   <string>         DEM directory 
+        -elev.dem.geoid                  <string>         Geoid File 
+        -elev.average.value              <float>          Average Elevation 
+        -interpolator                    <string>         Interpolation [nn/linear/bco]
+        -interpolator.bco.radius         <int32>          Radius for bicubic interpolation 
+        -opt.rpc                         <int32>          RPC modeling (points per axis) 
+        -opt.ram                         <int32>          Available memory for processing (in MB) 
+        -opt.gridspacing                 <float>          Resampling grid spacing 
+\end{verbatim}
+\end{scriptsize}
+
+For a detailed description of the application behaviour and
+parameters, please look for the corresponding application in the
+application reference documentation presented
+chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc} or
+following the \verb?DOCUMENTATION? hyperlink provided in
+\verb?otbApplicationLauncherCommandLine? output. Parameters are passed
+to the application using the parameter key (which might include one or
+several \verb?.? character), prefixed by a \verb?-?. Command-line
+examples are provided in chapter~\ref{chap:apprefdoc},
+page~\pageref{chap:apprefdoc}.
+
+\subsection{Using the QT laucher}
+
+\subsection{Using the SWIG interface}
+
