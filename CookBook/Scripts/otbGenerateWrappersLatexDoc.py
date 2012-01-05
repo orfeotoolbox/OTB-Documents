@@ -18,6 +18,7 @@ def ConvertString(s):
     '''Convert a string for compatibility in txt dump'''
     s = s.replace('\n', '\\\\ ')
     s = s.replace('_', '\\_')
+    s = s.replace('#', '\\#')
     return s
 
 def EncloseString(s):
