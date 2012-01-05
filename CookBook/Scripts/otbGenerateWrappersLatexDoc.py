@@ -58,7 +58,7 @@ def GetParametersDepth(paramlist):
         depth = max(param.count("."),depth)
     return depth
 
-def GenerateChoice(app,param):
+def GenerateChoice(app,param,paramlist):
     output = "Available choices are: " + linesep
     output+= "\\begin{itemize}" + linesep
     for (choicekey,choicename) in zip(app.GetChoiceKeys(param),app.GetChoiceNames(param)):
@@ -66,6 +66,16 @@ def GenerateChoice(app,param):
         choicedesc = app.GetParameterDescription(param+"."+choicekey)
         if len(choicedesc) >= 2:
             output+= ": " + choicedesc + linesep
+        # List option associated to one choice
+        options = []
+        for p in paramlist:
+            if p.startswith(param+"."+choicekey+"."):
+                options.append(p)
+        if len(options) > 0:
+            output += "\\begin{itemize}" + linesep
+            for option in options:
+                output+= "\\item \\textbf{"+ ConvertString(app.GetParameterName(option))+ ": } " + ConvertString(app.GetParameterDescription(option)) + linesep
+            output+= "\\end{itemize}" + linesep
     output+= "\\end{itemize}" + linesep
     return output
 
@@ -156,14 +166,15 @@ def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
                 output += paramlevel + "{" + ConvertString(app.GetParameterName(param)) + "}" + linesep
                 output += ConvertString(app.GetParameterDescription(param)) + linesep
                 if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
-                    output += GenerateChoice(app,param)
-                output += ApplicationParametersToLatex(app,paramlist,deep,param)
+                    output += GenerateChoice(app,param,paramlist)
+                else:
+                    output += ApplicationParametersToLatex(app,paramlist,deep,param)
         else:
             output+= "\\begin{itemize}" + linesep
             for param in firstlevelparams:
                 output+= "\\item \\textbf{"+ ConvertString(app.GetParameterName(param))+ ": } " + ConvertString(app.GetParameterDescription(param)) + linesep
                 if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
-                    output += GenerateChoice(app,param)
+                    output += GenerateChoice(app,param,paramlist)
             output+= "\\end{itemize}" + linesep
     else:
         currentlevelparams = []
@@ -176,7 +187,7 @@ def ApplicationParametersToLatex(app,paramlist,deep = False,current=""):
                 output+= "\\item \\textbf{"+ ConvertString(app.GetParameterName(param))+ ": } " + ConvertString(app.GetParameterDescription(param)) + linesep
                 output+= ApplicationParametersToLatex(app,paramlist,deep,param) + linesep
                 if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
-                    output += GenerateChoice(app,param) 
+                    output += GenerateChoice(app,param,paramlist) 
             output+= "\\end{itemize}" + linesep
     return output
 
