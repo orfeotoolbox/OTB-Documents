@@ -43,7 +43,7 @@ Two levels of calibration are usually distinguished:
   well as the composition and amount of aerosol gasses.
 \end{itemize}
 
-This transformation can be done either with an application or with
+This transformation can be done either with \app or with
 \mont. Sensor-related parameters such as gain, date, spectral
 sensitivity and sensor position are seamlessly read from the image
 metadata. Atmospheric parameters can be tuned by the user. Supported
@@ -161,11 +161,11 @@ This fusion operation requires two different steps :
   fused pixels.
 \end{enumerate}
 
-Using either an application or modules from \mont, it is
+Using either \app or modules from \mont, it is
 possible to perform both steps in a row, or step-by-step fusion, as
 described in the above sections.
 
-\subsubsection{Pan-sharpening with \app}
+\subsubsection{Pan-sharpening with an application}
 
 The \application{BundleToPerfectSensor} application allows to
 perform both steps in a row. Seamless sensor modelling is used to
@@ -357,7 +357,7 @@ In addition, GeoTiff and other file format with geographical
 information are seamlessly read by \otb, and the ortho-rectification
 tools can be used to re-sample these images in another map projection.
 
-\subsubsection{Ortho-rectification with applications}
+\subsubsection{Ortho-rectification with \app}
 
 The \application{OrthoRectification} application allows to
 perform ortho-rectification and map re-projection. The simplest way to
@@ -382,39 +382,43 @@ for better localisation performances, one can pass the directory
 containing the DEM tiles to the application:
 
 \begin{verbatim}
-otbOrthoRectification-cli -in input_image -out output_image -dem dem_dir
+otbcli_OrthoRectification -io.in input_image -io.out output_image -elev dem
+-elev.dem.path dem_dir
 \end{verbatim}
 
-If one wants to use a different map projection, the \emph{-mapProj}
-option may be used (example with \emph{Lambert93} map projection):
+If one wants to use a different map projection, the \emph{-map}
+option may be used (example with \emph{lambert93} map projection):
 
 \begin{verbatim}
 
-otbOrthoRectification-cli -in input_image -out output_image -dem
-dem_dir -mapProj projection parameters
+otbcli_OrthoRectification -io.in input_image -io.out output_image -elev dem
+-elev.dem.path dem_dir -map lambert93
 
 \end{verbatim}
 
 Map projections handled by the application are the following
-(parameters should be passed as demonstrated, please note that the
-ellipsoid is always WGS84):
+(please note that the ellipsoid is always WGS84):
 \begin{itemize}
-\item UTM, emisphere is either north (N) or south (S): \begin{verbatim} -mapProj UTM zone emisphere \end{verbatim}
-\item Lambert Conformal Conic: \begin{verbatim}-mapProj LAMBERT std_parallel1 std_parallel2 false_easting false_northing \end{verbatim}
-\item Lambert 2 etendu: \begin{verbatim}-mapProj LAMBERT2 \end{verbatim}
-\item Lambert 93: \begin{verbatim}-mapProj LAMBERT93 \end{verbatim}
-\item Sinusoidal : \begin{verbatim}-mapProj SINUS false_easting false_northing \end{verbatim}
-\item Eckert 4: \begin{verbatim}-mapProj ECKERT4 false_easting false_northing\end{verbatim}
-\item TransMercator: \begin{verbatim}-mapProj TRANSMERCATOR false_easting false_northing scale \end{verbatim}
-\item Mollweid: \begin{verbatim}-mapProj MOLLWEID false_easting false_northing scale \end{verbatim}
+\item UTM : \begin{verbatim}-map utm\end{verbatim}
+The UTM zone and hemisphere can be set by the options \verb?-map.utm.zone? and \verb?-map.utm.northhem?.
+\item Lambert 2 etendu: \begin{verbatim}-map lambert2\end{verbatim}
+\item Lambert 93: \begin{verbatim}-map lambert93\end{verbatim}
+\item TransMercator: \begin{verbatim}-map transmercator\end{verbatim}
+The related parameters (false easting, false northing and scale factor) can be set by the 
+options \verb?-map.transmercator.falseeasting?, \verb?-map.transmercator.falsenorthing? and 
+\verb?-map.transmercator.scale?
+\item WGS : \begin{verbatim}-map wgs\end{verbatim}
+\item Any map projection system with an EPSG code : \begin{verbatim}-map epsg\end{verbatim}
+The EPSG code is set with the option \verb?-map.epsg.code?
 \end{itemize}
 
-The ground spacing of the output image can be specified as follows:
+The group \verb?outputs? contains parameters to set the origin, size and spacing of the output image.
+For instance, the ground spacing can be specified as follows:
 
 \begin{verbatim}
 
-otbOrthoRectification-cli -in input_image -out output_image -dem
-dem_dir -mapProj projection parameters -spacing xspacing yspacing
+otbcli_OrthoRectification -io.in input_image -io.out output_image -elev dem
+-elev.dem.path dem_dir -map lambert93 -outputs.spacingx spx -outputs.spacingy spy
 
 \end{verbatim}
 
@@ -426,29 +430,32 @@ follows:
 
 \begin{verbatim}
 
-otbOrthoRectification-cli -in input_image -out output_image -dem
-dem_dir -mapProj projection parameters -spacing xspacing yspacing -ul
-ul_x_coord ul_y_coord -size x_size y_size
+otbcli_OrthoRectification -io.in input_image -io.out output_image 
+-elev dem -elev.dem.path dem_dir -map lambert93 
+-outputs.spacingx spx -outputs.spacingy spy 
+-outputs.ulx ul_x_coord -outputs.uly ul_y_coord 
+-outputs.sizex x_size -outputs.sizey y_size
 
 \end{verbatim}
 
-Where the \verb?-ul? option allows to specify the coordinate of the
-upper-left corner coordinates of the output image, and the
-\verb?-size? option allows to specify the size of the output image.
+Where the \verb?-outputs.ulx? and \verb?-outputs.uly? options allow to 
+specify the coordinates of the upper-left corner of the output image.
+The \verb?-outputs.sizex? and \verb?-outputs.sizey? options allow to 
+specify the size of the output image.
 
 A few more interesting options are available:
 \begin{itemize}
-\item The \verb?-rpc? option allows to use an estimated RPC model
+\item The \verb?-opt.rpc? option allows to use an estimated RPC model
   instead of the rigorous SPOT5 model, which speeds-up the processing,
-\item The \verb?-lmSpacing? option allows to define the spacing of the
+\item The \verb?-opt.gridspacing? option allows to define the spacing of the
   localisation grid used for ortho-rectification. A coarser grid
   results in speeding-up the processing, but with potential loss of
-  accuracy. Default value is 10 times the ground spacing of the output
-  image.
-\item The \verb?-interp? option allows to change the interpolation
-  algorithm. Default is bi-cubic interpolation, which should be the
-  best option for most of the cases.
-\item The \verb?-ram? option allows to specify the amount of memory
+  accuracy. A standard value would be 10 times the ground spacing of 
+  the output image.
+\item The \verb?-interpolator? option allows to change the interpolation
+  algorithm between nearest neighbor, linear and bicubic. Default is nearest 
+  neighbor interpolation, but bicubic should be fine in most cases.
+\item The \verb?-opt.ram? option allows to specify the amount of memory
   available for the processing (in Mb). Default is 256 Mb. Increasing
   this value to fit the available memory on your computer might
   speed-up the processing.
