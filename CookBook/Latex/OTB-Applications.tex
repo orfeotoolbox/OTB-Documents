@@ -218,9 +218,9 @@ old applications. The command-line interface is prefixed by
 \verb?otbcli_?, while the QT interface is prefixed by
 \verb?otbgui_?. For instance, calling \verb?otbcli_Convert? will
 launch the command-line interface of the \textbf{Convert} application,
-while \verb?otbgui_convert? will launch the QT one.
+while \verb?otbgui_Convert? will launch the QT one.
 
-For windows users, the simplified QT interface launcher are also
+For windows users, the simplified QT interface launcher is also
 available from the Start Menu.
 
 Passing arguments to the command-line version (prefixed by
@@ -230,7 +230,7 @@ Passing arguments to the command-line version (prefixed by
 
 The command-line application launcher allows to load an application
 plugin, to set its parameter and execute it using the command
-line. Lauching the \verb?tbApplicationLauncherCommandLine?
+line. Launching the \verb?otbApplicationLauncherCommandLine?
 without argument results in the following help to be displayed:
 
 \begin{verbatim}
@@ -239,8 +239,8 @@ Usage : ./otbApplicationLauncherCommandLine module_name [MODULEPATH] [arguments]
 \end{verbatim} 
 
 The \verb?module_name? parameter corresponds to the application
-id. The \verb?[MODULEPATH]? argument is optional and allows to pass to
-the laucher a path where the shared library (or plugin) from
+identifier. The \verb?[MODULEPATH]? argument is optional and allows 
+to pass to the launcher a path where the shared library (or plugin) from
 application corresponding to \verb?module_name? is. If no
 \verb?[MODULEPATH]?, the launcher will look into standard \otb
 installation path. An error in the application id (i.e. in parameter
@@ -312,6 +312,30 @@ examples are provided in chapter~\ref{chap:apprefdoc},
 page~\pageref{chap:apprefdoc}.
 
 \subsection{Using the QT laucher}
+The QT interface for the applications provides a usefull graphical interface
+to set the parameters, choose files, and monitor the execution progress. 
+This interface can be activated through the CMake option \code{WRAP\_QT} 
+(it enables the build of the QT application launcher). This launcher 
+only needs the same two arguments as the command line:
+\begin{verbatim}
+$ otbApplicationLauncherQt module_name [MODULEPATH]
+\end{verbatim}
+
+It displays a window with several tabs:
+\begin{itemize}
+\item \textbf{[Parameters]} is where you set the parameters and 
+execute the application. 
+\item \textbf{[Logs]} is where you see the informations given by 
+the application during its execution. 
+\item \textbf{[Progress]} is where you see a progress bar of the 
+execution (not available for all applications). 
+\item \textbf{[Documentation]} is where you find a summary of the 
+application documentation.
+\end{itemize}
+
+In this interface, every optional parameter has a check box that
+you have to tick if you want to set a value and use this parameter.
+The mandatory parameters cannot be unchecked. 
 
 \subsection{Using the SWIG interface}
 
