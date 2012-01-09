@@ -57,7 +57,7 @@ sensors are :
 \item Formosat.
 \end{itemize}
 
-\subsubsection{Optical calibration application}
+\subsubsection{Optical calibration with \app}
 
 The \application{OpticalCalibration} application
 allows to perform optical calibration. The mandatory
@@ -165,7 +165,7 @@ Using either \app or modules from \mont, it is
 possible to perform both steps in a row, or step-by-step fusion, as
 described in the above sections.
 
-\subsubsection{Pan-sharpening with an application}
+\subsubsection{Pan-sharpening with \app}
 
 The \application{BundleToPerfectSensor} application allows to
 perform both steps in a row. Seamless sensor modelling is used to
@@ -382,8 +382,10 @@ for better localisation performances, one can pass the directory
 containing the DEM tiles to the application:
 
 \begin{verbatim}
-otbcli_OrthoRectification -io.in input_image -io.out output_image -elev dem
--elev.dem.path dem_dir
+otbcli_OrthoRectification -io.in input_image 
+                          -io.out output_image 
+                          -elev dem
+                          -elev.dem.path dem_dir
 \end{verbatim}
 
 If one wants to use a different map projection, the \emph{-map}
@@ -391,24 +393,27 @@ option may be used (example with \emph{lambert93} map projection):
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image -io.out output_image -elev dem
--elev.dem.path dem_dir -map lambert93
+otbcli_OrthoRectification -io.in input_image 
+                          -io.out output_image 
+                          -elev dem
+                          -elev.dem.path dem_dir 
+                          -map lambert93
 
 \end{verbatim}
 
 Map projections handled by the application are the following
 (please note that the ellipsoid is always WGS84):
 \begin{itemize}
-\item UTM : \begin{verbatim}-map utm\end{verbatim}
+\item UTM : \verb?-map utm? \\
 The UTM zone and hemisphere can be set by the options \verb?-map.utm.zone? and \verb?-map.utm.northhem?.
-\item Lambert 2 etendu: \begin{verbatim}-map lambert2\end{verbatim}
-\item Lambert 93: \begin{verbatim}-map lambert93\end{verbatim}
-\item TransMercator: \begin{verbatim}-map transmercator\end{verbatim}
+\item Lambert 2 etendu: \verb?-map lambert2?
+\item Lambert 93: \verb?-map lambert93?
+\item TransMercator: \verb?-map transmercator? \\
 The related parameters (false easting, false northing and scale factor) can be set by the 
 options \verb?-map.transmercator.falseeasting?, \verb?-map.transmercator.falsenorthing? and 
 \verb?-map.transmercator.scale?
-\item WGS : \begin{verbatim}-map wgs\end{verbatim}
-\item Any map projection system with an EPSG code : \begin{verbatim}-map epsg\end{verbatim}
+\item WGS : \verb?-map wgs?
+\item Any map projection system with an EPSG code : \verb?-map epsg? \\
 The EPSG code is set with the option \verb?-map.epsg.code?
 \end{itemize}
 
@@ -417,8 +422,13 @@ For instance, the ground spacing can be specified as follows:
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image -io.out output_image -elev dem
--elev.dem.path dem_dir -map lambert93 -outputs.spacingx spx -outputs.spacingy spy
+otbcli_OrthoRectification -io.in input_image 
+                          -io.out output_image 
+                          -elev dem
+                          -elev.dem.path dem_dir 
+                          -map lambert93 
+                          -outputs.spacingx spx 
+                          -outputs.spacingy spy
 
 \end{verbatim}
 
@@ -430,11 +440,17 @@ follows:
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image -io.out output_image 
--elev dem -elev.dem.path dem_dir -map lambert93 
--outputs.spacingx spx -outputs.spacingy spy 
--outputs.ulx ul_x_coord -outputs.uly ul_y_coord 
--outputs.sizex x_size -outputs.sizey y_size
+otbcli_OrthoRectification -io.in input_image 
+                          -io.out output_image 
+                          -elev dem 
+                          -elev.dem.path dem_dir 
+                          -map lambert93 
+                          -outputs.spacingx spx 
+                          -outputs.spacingy spy 
+                          -outputs.ulx ul_x_coord 
+                          -outputs.uly ul_y_coord 
+                          -outputs.sizex x_size 
+                          -outputs.sizey y_size
 
 \end{verbatim}
 
