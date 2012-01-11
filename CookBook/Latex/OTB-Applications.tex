@@ -85,16 +85,19 @@ chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 \section{Installation}\label{sec:appinstall}
 
-Detailed instruction on how to install the whole \otb suite either
-from binary packages or from source are available in the \sg. Here, we
-will focus only on the installation of the \app package from binary
-package.
+Since \app are now included within the standard \otb package, their 
+installation is made while installing the whole \otb. Detailed 
+instruction on how to install the whole \otb suite either from 
+binary packages or from source are available in the \sg. 
+
+Here, we will focus only on the installation of the old OTB-Applications 
+package, although this package is deprecated.
 
 \subsection{Windows 2000/XP/Vista/Seven}
 \label{ssec:app_windows_binaries}
 
 For Windows 2000/XP/Vista/Seven users, an installation program exists
-for \app. This installer depends on dependencies that can
+for OTB-Applications. This installer depends on dependencies that can
 be installed through \osgeow. The packages that need to be installed
 are \emph{gdal, curl, libtiff, libgeotiff, libjpeg, zlib and libpng}.
 
@@ -109,8 +112,9 @@ system path.
 \subsection{MacOS X}
 \label{ssec:mac_binaries}
 
-For now, no binary package is available for \app on MacOS X. You can
-build the \app from sources by following instruction in the \sg.
+For now, no binary package is available for OTB-Applications on 
+MacOS X. You can build the OTB-Applications from sources by 
+following instruction in the \sg.
 
 \subsection{Linux}
 
@@ -335,7 +339,38 @@ application documentation.
 
 In this interface, every optional parameter has a check box that
 you have to tick if you want to set a value and use this parameter.
-The mandatory parameters cannot be unchecked. 
+The mandatory parameters cannot be unchecked.
+ 
+The QT interface of the application \application{Rescale} is shown 
+here as an example.
+
+\begin{figure}[h]
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/QtImages/rescale_param.png}
+  \itkcaption[GUI of the application Rescale, parameters tab]{Parameters tab in \application{Rescale} application.}
+  \label{fig:rescaleParam}
+\end{figure}
+
+\begin{figure}[h]
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/QtImages/rescale_logs.png}
+  \itkcaption[GUI of the application Rescale, logs tab]{Logs tab in \application{Rescale} application.}
+  \label{fig:rescaleLogs}
+\end{figure}
+
+\begin{figure}[h]
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/QtImages/rescale_progress.png}
+  \itkcaption[GUI of the application Rescale, progress tab]{Progress tab in \application{Rescale} application.}
+  \label{fig:rescaleProgress}
+\end{figure}
+
+\begin{figure}[h]
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/QtImages/rescale_documentation.png}
+  \itkcaption[GUI of the application Rescale, parameters tab]{Parameters tab in \application{Rescale} application.}
+  \label{fig:rescaleDocumentation}
+\end{figure}
 
 \subsection{Using the SWIG interface}
 

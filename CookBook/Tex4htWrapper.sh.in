@@ -16,7 +16,9 @@ find ${HTML_OUTPUT} -name '*.html' | xargs sed -i "s/<\/body>/ <script type=\"te
 # copy image from the Art directory
 cp Art/logoVectoriel.pdf Html/
 cp Art/MonteverdiImages/* Html/
+cp Art/QtImages/* Html/
 
 # Change the ../Art into ""
 sed -i -e 's,\.\./Art/MonteverdiImages/,,' Html/*.html
+sed -i -e 's,\.\./Art/QtImages/,,' Html/*.html
 sed -i -e 's,\.\./Art/,,' Html/*.html
