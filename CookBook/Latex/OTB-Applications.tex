@@ -53,7 +53,7 @@ processing tasks.
 Later on in 2011, the \app has been further revamped. Because of the
 increasing need to interface the \app into other software and to
 provide auto-generated interfaces, the \otb development team decided
-to develop a new applications framework. The main idea of this
+to develop a new application framework. The main idea of this
 framework is the following: each application is written once for all
 in a shared library (also known as plugin). This plugin can be
 auto-loaded into appropriate tools wihtout recompiling, and is able to
@@ -68,11 +68,11 @@ following:
   providing ergonomic parameters setting, display of documentation,
   and progress reporting,
 \item A C and SWIG interface, which means that any application can be
-  loaded set-up and executed into a high-level language such as python
+  loaded set-up and executed into a high-level language such as Python
   for instance.
 \end{itemize}
 
-Additionally, QGis plugins built on top of the SWIG/Python interface
+Additionally, \href{http://www.qgis.org/}{QGis} plugins built on top of the SWIG/Python interface
 are available with seamless integration within QGis.
 
 To facilitate the use of these tools and applications, they will now
@@ -87,7 +87,7 @@ chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 Since \app are now included within the standard \otb package, their 
 installation is made while installing the whole \otb. Detailed 
-instruction on how to install the whole \otb suite either from 
+instructions on how to install the whole \otb suite either from 
 binary packages or from source are available in the \sg. 
 
 Here, we will focus only on the installation of the old OTB-Applications 
@@ -114,7 +114,7 @@ system path.
 
 For now, no binary package is available for OTB-Applications on 
 MacOS X. You can build the OTB-Applications from sources by 
-following instruction in the \sg.
+following instructions in the \sg.
 
 \subsection{Linux}
 
@@ -208,9 +208,9 @@ Using the new \app framework is slightly more complex than launching a
 command-line tool. This section describes all the ways to access the
 new applications. Apart from the simplified access, which is similar
 to the former access to \app, to be able to launch an application, you
-will need to know the application id and optionally the path where the
+will need to know the application name and optionally the path where the
 applications plugins are stored. For applications shipped with \otb,
-the application ids of each application can be found in
+the application name of each application can be found in
 chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 \subsection{Simplified use}
@@ -219,21 +219,21 @@ All standard applications delivered in with \otb comes with simplified
 scripts in the system path, allowing to launch the command-line and QT
 versions of the application the same simple way we used to launch the
 old applications. The command-line interface is prefixed by
-\verb?otbcli_?, while the QT interface is prefixed by
+\verb?otbcli_?, while the Qt interface is prefixed by
 \verb?otbgui_?. For instance, calling \verb?otbcli_Convert? will
 launch the command-line interface of the \textbf{Convert} application,
-while \verb?otbgui_Convert? will launch the QT one.
+while \verb?otbgui_Convert? will launch the Qt one.
 
-For windows users, the simplified QT interface launcher is also
+For windows users, the simplified Qt interface launcher is also
 available from the Start Menu.
 
 Passing arguments to the command-line version (prefixed by
 \verb?otbcli_?) is explained in next sub-section.
 
-\subsection{Using the command-line laucher}
+\subsection{Using the command-line launcher}
 
 The command-line application launcher allows to load an application
-plugin, to set its parameter and execute it using the command
+plugin, to set its parameters, and execute it using the command
 line. Launching the \verb?otbApplicationLauncherCommandLine?
 without argument results in the following help to be displayed:
 
@@ -247,10 +247,10 @@ identifier. The \verb?[MODULEPATH]? argument is optional and allows
 to pass to the launcher a path where the shared library (or plugin) from
 application corresponding to \verb?module_name? is. If no
 \verb?[MODULEPATH]?, the launcher will look into standard \otb
-installation path. An error in the application id (i.e. in parameter
+installation path. An error in the application name (i.e. in parameter
 \verb?module_name?) will make the
-\verb?otbApplicationLauncherCommandLine? lists the id of all
-applications found in \verb?[MODULEPATH]? or in the standard \otb
+\verb?otbApplicationLauncherCommandLine? lists the name of all
+applications found in \verb?[MODULEPATH]?, or in the standard \otb
 installation path if \verb?[MODULEPATH]? is not provided.
 
 Launching the \verb?otbApplicationLauncherCommandLine? with a valid
@@ -315,11 +315,11 @@ several \verb?.? character), prefixed by a \verb?-?. Command-line
 examples are provided in chapter~\ref{chap:apprefdoc},
 page~\pageref{chap:apprefdoc}.
 
-\subsection{Using the QT laucher}
-The QT interface for the applications provides a usefull graphical interface
+\subsection{Using the Qt launcher}
+The Qt interface for the applications provides a usefull graphical interface
 to set the parameters, choose files, and monitor the execution progress. 
 This interface can be activated through the CMake option \code{WRAP\_QT} 
-(it enables the build of the QT application launcher). This launcher 
+(it enables the build of the Qt application launcher). This launcher 
 only needs the same two arguments as the command line:
 \begin{verbatim}
 $ otbApplicationLauncherQt module_name [MODULEPATH]
@@ -341,7 +341,7 @@ In this interface, every optional parameter has a check box that
 you have to tick if you want to set a value and use this parameter.
 The mandatory parameters cannot be unchecked.
  
-The QT interface of the application \application{Rescale} is shown 
+The Qt interface of the application \application{Rescale} is shown 
 here as an example.
 
 \begin{figure}[h]
