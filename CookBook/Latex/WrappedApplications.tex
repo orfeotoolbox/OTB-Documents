@@ -2,7 +2,7 @@
 
 \section{Introduction}\label{sec:wrappedAppliIntro}
 The \app package (see \ref{chap:otb-applications}) has brought a nice set of 
-applications, along with several tools to launch them (command line, Qt,...).
+applications, along with several tools to launch them (command line, Qt,\dots).
 As for the future of these applications, it has been decided to integrate 
 them inside the \otb library. This migration has been an opportunity to 
 enhance all the framework around the applications: not only new features have
@@ -29,21 +29,26 @@ is built in your \code{OTB\_DIR/bin} directory. It needs at least two arguments:
 application name and the path to the \code{OTB\_DIR/bin} directory. Any additional argument
 will be given to the application itself. You can ask the application to print its help
 message:
-\begin{verbatim}
+
+\begin{lstlisting}[breaklines]
 otbApplicationLauncherCommandLine Rescale OTB_DIR/bin -help
-\end{verbatim}
+\end{lstlisting}
+
 The help message (but also the \href{http://orfeo-toolbox.org/Applications}{documentation})
 will give you the list of available parameters. Each parameter must be set by giving the 
 corresponding key followed by its value:
-\begin{verbatim}
+
+\begin{lstlisting}[breaklines]
 otbApplicationLauncherCommandLine Rescale OTB_DIR/bin -in QB_Toulouse_Ortho_PAN.tif -out QB_Toulouse_rescaled.tif -outmin 0 -outmax 255
-\end{verbatim}
+\end{lstlisting}
+
 An other way to launch your application is to use the auto-generated scripts located in the 
 \code{OTB\_DIR/bin} directory. There is one for each application, their name is the same as 
 the application, prefixed with \code{otbcli\_}:
-\begin{verbatim}
+
+\begin{lstlisting}[breaklines]
 otbcli_Rescale -in QB_Toulouse_Ortho_PAN.tif -out QB_Toulouse_rescaled.tif -outmin 0 -outmax 255
-\end{verbatim}
+\end{lstlisting}
 
 If the application has sub-parameters (i.e. parameters contained in other parameters), 
 their keys must be prefixed by their full tree path. For instance, the application 
@@ -55,9 +60,9 @@ be separated with whitespaces).
 
 For example an \emph{InputImageList} key, which can be followed by one or several filenames :
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
 otbApplicationLauncherCommandLine ConcatenateImages OTB_DIR/bin -il GomaAvant.png GomaApres.png -out otbConcatenateImages.tif
-\end{verbatim}
+\end{lstlisting}
 
 
 \subsection{Other wrappers}\label{sec:wrappedAppliOtherWrap}
@@ -67,13 +72,13 @@ options when building the library:
   \item Enable \code{WRAP\_QT} to build a Qt application launcher. It opens a GUI which 
   allows you to set the parameters and execute the application. This launcher only needs 
   the same two arguments as the command line:
-  \begin{verbatim}
-  otbApplicationLauncherQt Rescale OTB\_DIR/bin
-  \end{verbatim}
+  \begin{lstlisting}
+  otbApplicationLauncherQt Rescale OTB_DIR/bin
+  \end{lstlisting}
   There are also auto-generated scripts, similar to command line ones:
-  \begin{verbatim}
+  \begin{lstlisting}
   otbgui_Rescale
-  \end{verbatim}
+  \end{lstlisting}
   It displays a window with several tabs. \textbf{[Parameters]} is where you set the parameters and execute the application.
   \textbf{[Logs]} is where you see the informations given by the application during its execution. \textbf{[Progress]} is 
   where you see a progress bar of the execution (not available for all applications). \textbf{[Documentation]} is where you
