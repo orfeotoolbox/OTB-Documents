@@ -8,10 +8,12 @@ functionalities, the only applications that were distributed at the
 beginning were the examples from the Software Guide and the
 tests. These applications are very useful for the developer because
 their code is very short and only demonstrates one functionality at a
-time, but in many cases a real application would require combining
-together two or more functions from the \otb, and providing a higher
-level interface to handle parameters, input and output data and
-communication with the user nicely.
+time. In many cases, a real application would require :
+\begin{itemize}
+\item combining together two or more functions from the \otb
+\item providing a nice high level interface to handle : parameters, input data,
+output data and communication with the user
+\end{itemize}
 
 The \app package was originally designed to provide applications
 performing simple remote sensing tasks, more complex than simple
@@ -205,13 +207,13 @@ sudo zypper install Orfeo-Applications-beta
 \section{Using the applications}\label{sec:usingapps}
 
 Using the new \app framework is slightly more complex than launching a
-command-line tool. This section describes all the ways to access the
+command-line tool. This section describes all the ways to launch the
 new applications. Apart from the simplified access, which is similar
-to the former access to \app, to be able to launch an application, you
-will need to know the application name and optionally the path where the
-applications plugins are stored. For applications shipped with \otb,
-the application name of each application can be found in
-chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
+to the former access to \app, you will need to know the application 
+name and optionally the path where the applications plugins are stored.
+For applications shipped with \otb, the name of each 
+application can be found in chapter~\ref{chap:apprefdoc}, 
+page~\pageref{chap:apprefdoc}.
 
 \subsection{Simplified use}
 
@@ -243,18 +245,21 @@ Usage : ./otbApplicationLauncherCommandLine module_name [MODULEPATH] [arguments]
 \end{verbatim} 
 
 The \verb?module_name? parameter corresponds to the application
-identifier. The \verb?[MODULEPATH]? argument is optional and allows 
+name. The \verb?[MODULEPATH]? argument is optional and allows 
 to pass to the launcher a path where the shared library (or plugin) from
-application corresponding to \verb?module_name? is. If no
-\verb?[MODULEPATH]?, the launcher will look into standard \otb
-installation path. An error in the application name (i.e. in parameter
+application corresponding to \verb?module_name? is. It is also 
+possible to set this path with the environment variable 
+\verb?ITK_AUTOLOAD_PATH?. This variable is checked by default when 
+no \verb?[MODULEPATH]? argument is given (for instance, it can be
+usefull to add the standard \otb installation directory to this 
+variable). An error in the application name (i.e. in parameter
 \verb?module_name?) will make the
 \verb?otbApplicationLauncherCommandLine? lists the name of all
-applications found in \verb?[MODULEPATH]?, or in the standard \otb
-installation path if \verb?[MODULEPATH]? is not provided.
+applications found in the available path (either \verb?[MODULEPATH]? 
+or \verb?ITK_AUTOLOAD_PATH?). 
 
 Launching the \verb?otbApplicationLauncherCommandLine? with a valid
-application id and no or incomplete parameters results will make the
+application name and no or incomplete parameters results will make the
 launcher display a summary of the parameters, indicating which ones
 are missing to allow for application execution. Here is an example
 with the \textbf{OrthoRectification} application:
@@ -305,10 +310,9 @@ MISSING -elev.dem.path                   <string>         DEM directory
 \end{scriptsize}
 
 For a detailed description of the application behaviour and
-parameters, please look for the corresponding application in the
-application reference documentation presented
+parameters, please check the application reference documentation presented
 chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc} or
-following the \verb?DOCUMENTATION? hyperlink provided in
+follow the \verb?DOCUMENTATION? hyperlink provided in
 \verb?otbApplicationLauncherCommandLine? output. Parameters are passed
 to the application using the parameter key (which might include one or
 several \verb?.? character), prefixed by a \verb?-?. Command-line
