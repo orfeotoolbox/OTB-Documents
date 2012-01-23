@@ -288,20 +288,22 @@ single directory. Whenever some applications or modules from
 \mont require a DEM, there is an option or a field to set the DEM
 directory.
 
-\subsubsection{Making DEM files usable in \otb suite using \application{DEMConvert}}
-
-Georeferenced files containing elevation data (including file from
-SRTM and ASTER) need to be converted to a specific file format before
-being compatible with \ossim and \otb. The
-\application{DEMConvert} application allows to perform this
-conversion with the following command:
-
-\begin{verbatim}
-otbcli_DEMConvert -in input_image -out output_prefix
-\end{verbatim}
-
-The output files can then be placed in the directory containing DEM
-files.
+%
+%\subsubsection{Making DEM files usable in \otb suite using \application{DEMConvert}}
+%
+%Georeferenced files containing elevation data (including file from
+%SRTM and ASTER) need to be converted to a specific file format before
+%being compatible with \ossim and \otb. The
+%\application{DEMConvert} application allows to perform this
+%conversion with the following command:
+%
+%\begin{verbatim}
+%otbcli_DEMConvert -in input_image -out output_prefix
+%\end{verbatim}
+%
+%The output files can then be placed in the directory containing DEM
+%files.
+%
 
 %\subsubsection{Extract the DEM image corresponding to your image using
 %  \mont}
