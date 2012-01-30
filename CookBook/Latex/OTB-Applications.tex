@@ -69,9 +69,9 @@ following:
 \item A graphical launcher, with an auto-generated QT interface,
   providing ergonomic parameters setting, display of documentation,
   and progress reporting,
-\item A C and SWIG interface, which means that any application can be
+\item A SWIG interface, which means that any application can be
   loaded set-up and executed into a high-level language such as Python
-  for instance.
+  or Java for instance.
 \end{itemize}
 
 Additionally, \href{http://www.qgis.org/}{QGis} plugins built on top of the SWIG/Python interface
@@ -79,7 +79,9 @@ are available with seamless integration within QGis.
 
 To facilitate the use of these tools and applications, they will now
 be shipped with the standard \otb package. It means that the former
-\textbf{OTB-Applications} package will no longer be maintained.
+\textbf{OTB-Applications} package has entered its maintenance cycle :
+no new feature will be pushed there, and all development is done directly
+inside the \otb paackage.
 
 The \app are now rich of more than 40 tools, which are listed in the
 the applications reference documentation, presented in
@@ -218,16 +220,16 @@ page~\pageref{chap:apprefdoc}.
 \subsection{Simplified use}
 
 All standard applications delivered in with \otb comes with simplified
-scripts in the system path, allowing to launch the command-line and QT
-versions of the application the same simple way we used to launch the
-old applications. The command-line interface is prefixed by
+scripts in the system path, allowing to launch the command-line and
+ graphical user interface versions of the application in the same simple way
+ we used to launch the old applications. The command-line interface is prefixed by
 \verb?otbcli_?, while the Qt interface is prefixed by
 \verb?otbgui_?. For instance, calling \verb?otbcli_Convert? will
 launch the command-line interface of the \textbf{Convert} application,
-while \verb?otbgui_Convert? will launch the Qt one.
+while \verb?otbgui_Convert? will launch its GUI.
 
-For windows users, the simplified Qt interface launcher is also
-available from the Start Menu.
+%For Windows users, the simplified Qt interface launcher is also
+%available from the Start Menu.
 
 Passing arguments to the command-line version (prefixed by
 \verb?otbcli_?) is explained in next sub-section.
@@ -246,27 +248,41 @@ Usage : ./otbApplicationLauncherCommandLine module_name [MODULEPATH] [arguments]
 
 The \verb?module_name? parameter corresponds to the application
 name. The \verb?[MODULEPATH]? argument is optional and allows 
-to pass to the launcher a path where the shared library (or plugin) from
-application corresponding to \verb?module_name? is. It is also 
-possible to set this path with the environment variable 
-\verb?ITK_AUTOLOAD_PATH?. This variable is checked by default when 
-no \verb?[MODULEPATH]? argument is given (for instance, it can be
-usefull to add the standard \otb installation directory to this 
-variable). An error in the application name (i.e. in parameter
+to pass to the launcher a path where the shared library (or plugin) 
+corresponding to \verb?module_name? is.
+
+It is also possible to set this path with the environment variable 
+\verb?ITK_AUTOLOAD_PATH?, making the \verb?[MODULEPATH]? optional.
+This variable is checked by default when 
+no \verb?[MODULEPATH]? argument is given.
+When using multiple paths in \verb?ITK_AUTOLOAD_PATH?, one must make sure to use
+the standard path separator of the target system, which is \verb?:? on Unix, and \verb?;? on Windows.
+
+
+An error in the application name (i.e. in parameter
 \verb?module_name?) will make the
 \verb?otbApplicationLauncherCommandLine? lists the name of all
 applications found in the available path (either \verb?[MODULEPATH]? 
-or \verb?ITK_AUTOLOAD_PATH?). 
+and/or \verb?ITK_AUTOLOAD_PATH?).
 
-Launching the \verb?otbApplicationLauncherCommandLine? with a valid
-application name and no or incomplete parameters results will make the
-launcher display a summary of the parameters, indicating which ones
-are missing to allow for application execution. Here is an example
+To ease the use of the applications, and try avoiding extensive environment
+customization, ready-to-use scripts are provided by the OTB installation
+to launch each application, and takes care of adding the standard application
+installation path to the \verb?ITK_AUTOLOAD_PATH? environment variable.
+
+These scripts are named \verb?otbcli_<ApplicationName>? and do not need any path
+settings. For example you can start the Orthorectification application
+with the script called \verb?otbcli_Orthorectification?.
+
+
+Launching an application with no or incomplete parameters will make the
+launcher display a summary of the parameters, indicating the mandatory parameters
+missing to allow for application execution. Here is an example
 with the \textbf{OrthoRectification} application:
 
 \begin{scriptsize}
 \begin{verbatim}
-./otbApplicationLauncherCommandLine OrthoRectification
+$ otbcli_OrthoRectification
 
 ERROR: Waiting for at least one parameter...
 
@@ -309,6 +325,7 @@ MISSING -elev.dem.path                   <string>         DEM directory
 \end{verbatim}
 \end{scriptsize}
 
+
 For a detailed description of the application behaviour and
 parameters, please check the application reference documentation presented
 chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc} or
@@ -319,25 +336,34 @@ several \verb?.? character), prefixed by a \verb?-?. Command-line
 examples are provided in chapter~\ref{chap:apprefdoc},
 page~\pageref{chap:apprefdoc}.
 
-\subsection{Using the Qt launcher}
-The Qt interface for the applications provides a usefull graphical interface
-to set the parameters, choose files, and monitor the execution progress. 
-This interface can be activated through the CMake option \code{OTB\_WRAP\_QT} 
-(it enables the build of the Qt application launcher). This launcher 
-only needs the same two arguments as the command line:
+
+\subsection{Using the GUI launcher}
+
+The graphical interface for the applications provides a usefull interactive user interface
+to set the parameters, choose files, and monitor the execution progress.
+
+This interface can be activated through the CMake option \code{OTB\_WRAP\_QT}.
+
+This launcher needs the same two arguments as the command line launcher :
 \begin{verbatim}
 $ otbApplicationLauncherQt module_name [MODULEPATH]
 \end{verbatim}
 
-It displays a window with several tabs:
+The application paths can be set with the \verb?ITK_AUTOLOAD_PATH? environment variable,
+as for the command line launcher.
+Also, as for the command-line application, a more simple script is generated and installed by OTB
+to ease the configuration of the module path : to launch the \application{Rescale} graphical user interface,
+one will start the \verb?otbgui_Rescale? script.
+
+The resulting graphical application displays a window with several tabs:
 \begin{itemize}
-\item \textbf{[Parameters]} is where you set the parameters and 
+\item \textbf{Parameters} is where you set the parameters and 
 execute the application. 
-\item \textbf{[Logs]} is where you see the informations given by 
+\item \textbf{Logs} is where you see the informations given by 
 the application during its execution. 
-\item \textbf{[Progress]} is where you see a progress bar of the 
+\item \textbf{Progress} is where you see a progress bar of the 
 execution (not available for all applications). 
-\item \textbf{[Documentation]} is where you find a summary of the 
+\item \textbf{Documentation} is where you find a summary of the 
 application documentation.
 \end{itemize}
 
@@ -345,7 +371,7 @@ In this interface, every optional parameter has a check box that
 you have to tick if you want to set a value and use this parameter.
 The mandatory parameters cannot be unchecked.
  
-The Qt interface of the application \application{Rescale} is shown 
+The interface of the application \application{Rescale} is shown 
 here as an example.
 
 \begin{figure}[h]
@@ -376,5 +402,78 @@ here as an example.
   \label{fig:rescaleDocumentation}
 \end{figure}
 
-\subsection{Using the SWIG interface}
+\clearpage
+
+\subsection{Using the Python interface}
+
+The applications can also be accessed from Python, through a module named \verb?otbApplication?
+
+On Unix systems it is typically available in the \verb?/usr/lib/otb/python? directory.
+You may need to configure the environment variable \verb?PYTHONPATH? to include this directory
+so that the module becomes available from an Python shell.
+
+On Windows, you can install the \verb?otb-python? package, and the module will be available from
+an OSGeo4W shell automatically.
+
+In this module, two main classes can be manipulated :
+\begin{itemize}
+\item \verb?Registry?, which provides access to the list of available applications,
+      and can create applications
+\item \verb?Application?, the base class for all applications. This allows to interact with an application instance
+      created by the \verb?Registry?
+\end{itemize}
+
+As for the command line and GUI launchers, the path to the application modules needs to
+be properly set with the \verb?ITK_AUTOLOAD_PATH? environment variable.
+The standard location on Unix systems is \verb?/usr/lib/otb/applications?.
+On Windows, the applications are available in the \verb?otb-bin? OSGeo4W package, and
+the environment is configured automatically so you don't need to tweak \verb?ITK_AUTOLOAD_PATH?.
+
+Here is one example of how to use Python to run the \verb?Smoothing? application, changing the algorithm
+at each iteration.
+
+\begin{verbatim}
+#  Example on the use of the Smoothing application
+#
+
+# We will use sys.argv to retrieve arguments from the command line.
+# Here, the script will accept an image file as first argument,
+# and the basename of the output files, without extension.
+from sys import argv
+
+# The python module providing access to OTB applications is otbApplication
+import otbApplication
+
+# otbApplication.Registry can tell you what application are available
+print "Available applications : "
+print str( otbApplication.Registry.GetAvailableApplications() )
+
+# Let's create the application with codename "Smoothing"
+app = otbApplication.Registry.CreateApplication("Smoothing")
+
+# We print the keys of all its parameter
+print app.GetParametersKeys()
+
+# First, we set the input image filename
+app.SetParameterString("in", argv[1])
+
+# The smoothing algorithm can be set with the "type" parameter key
+# and can take 3 values : 'mean', 'gaussian', 'anidif'
+for type in ['mean', 'gaussian', 'anidif']:
+
+  print 'Running with ' + type + ' smoothing type'
+
+  # Here we configure the smoothing algorithm
+  app.SetParameterString("type", type)
+
+  # Set the output filename, using the algorithm to differenciate the outputs
+  app.SetParameterString("out", argv[2] + type + ".tif")
+
+  # This will execute the application and save the output file
+  app.ExecuteAndWriteOutput()
+
+\end{verbatim}
+
+
+
 
