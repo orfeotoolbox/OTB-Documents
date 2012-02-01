@@ -75,7 +75,7 @@ following:
 \end{itemize}
 
 Additionally, \href{http://www.qgis.org/}{QGis} plugins built on top of the SWIG/Python interface
-are available with seamless integration within QGis.
+are available with seamless integration within QGis. You can find a short guide about it \href{http://wiki.orfeo-toolbox.org/index.php/Quantum_GIS_access_to_OTB_applications}{here}.
 
 To facilitate the use of these tools and applications, they will now
 be shipped with the standard \otb package. It means that the former
@@ -94,41 +94,29 @@ installation is made while installing the whole \otb. Detailed
 instructions on how to install the whole \otb suite either from 
 binary packages or from source are available in the \sg. 
 
-Here, we will focus only on the installation of the old OTB-Applications 
-package, although this package is deprecated.
+Here, we will focus only on the installation of the new \app package.
 
 \subsection{Windows 2000/XP/Vista/Seven}
 \label{ssec:app_windows_binaries}
 
-For Windows 2000/XP/Vista/Seven users, an installation program exists
-for OTB-Applications. This installer depends on dependencies that can
-be installed through \osgeow. The packages that need to be installed
-are \emph{gdal, curl, libtiff, libgeotiff, libjpeg, zlib and libpng}.
-
-Remember that the corresponding dlls are to be accessible in the
-system path. To ensure so, add the \osgeow bin directory to your
-system path.
-
- Once the dependencies have been properly installed, please go the the
- \download, to get the installer. Double-click on the installer and
- let it guide you through the installation process.
+For Windows 2000/XP/Vista/Seven users, we recommend to use the package \textbf{otb-bin} available through \osgeow which will manage the dependencies. This package provide all the applications build with the command-line launcher and the Qt interface and they will be available directly in the OSGeo4W shell. For example after finishing the installation you can run in the OSGeo4W shell:
+\begin{verbatim}
+otbgui_Smoothing
+\end{verbatim}
+to check the install of the new \app.
 
 \subsection{MacOS X}
 \label{ssec:mac_binaries}
 
-For now, no binary package is available for OTB-Applications on 
-MacOS X. You can build the OTB-Applications from sources by 
-following instructions in the \sg.
+For now, no binary package is available for \app on MacOS X. You can build the \app from sources by following instructions in the \sg with the option \code{BUILD\_APPLICATIONS=ON} .
 
 \subsection{Linux}
 
-\subsubsection{Ubuntu 10.04, 10.10 and 11.04}
+\subsubsection{Ubuntu 10.04, 10.10, 11.04 and 11.10}
 \label{ssec:ubuntu_binaries}
-For Unbuntu 10.04 (Lucid Lynx), 10.10 (Maverick Meerkat) and 11.04
-(Natty Narwhal), the whole \otb suite is available through APT repositories.
+For Unbuntu 10.04 (Lucid Lynx), 10.10 (Maverick Meerkat), 11.04 (Natty Narwhal) and 11.10 (Oneiric Ocelot), the whole \otb suite and  specifically the \app are available through APT repositories.
 
-If you are using apt command-line tools, use these command-lines to
-add the otb repository to apt sources:
+If you are using apt command-line tools, use these command-lines to add the otb repository to apt sources:
 \begin{verbatim}
 sudo aptitude install add-apt-repository 
 sudo add-apt-repository ppa:otb/orfeotoolbox-stable
@@ -136,11 +124,10 @@ sudo add-apt-repository ppa:otb/orfeotoolbox-stable
 Now run:
 \begin{verbatim}
 sudo aptitude update
-sudo aptitude install otbapp
+sudo aptitude install otb-bin otb-bin-qt otb-python
 \end{verbatim}
 
-If you are using \emph{Synaptic}, you can add the repositories, update
-and install the packages through the graphical interface.
+If you are using \emph{Synaptic}, you can add the repositories, update and install the packages through the graphical interface.
 
 If you want to use OTB with bleeding edge versions of gdal and qgis,
 there is an alternate UbuntuGIS repository.  You can add it by using
@@ -153,11 +140,10 @@ sudo add-apt-repository ppa:otb/orfeotoolbox-stable-ubuntugis
 Now run:
 \begin{verbatim}
 sudo aptitude update
-sudo aptitude install otbapp
+sudo aptitude install otb-bin otb-bin-qt otb-python
 \end{verbatim}
 
-Be careful not to add the two repositories, since they may cause
-incompatibilities.
+Be careful not to add the two repositories, since they may cause incompatibilities.
 
 For further informations about ubuntu packages go to
 \href{https://launchpad.net/~otb/+archive/orfeotoolbox-stable}{orfeotoolbox-stable
@@ -432,7 +418,7 @@ the environment is configured automatically so you don't need to tweak \verb?ITK
 Here is one example of how to use Python to run the \verb?Smoothing? application, changing the algorithm
 at each iteration.
 
-\begin{verbatim}
+\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\scriptsize},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
 #  Example on the use of the Smoothing application
 #
 
@@ -472,7 +458,7 @@ for type in ['mean', 'gaussian', 'anidif']:
   # This will execute the application and save the output file
   app.ExecuteAndWriteOutput()
 
-\end{verbatim}
+\end{lstlisting}
 
 
 
