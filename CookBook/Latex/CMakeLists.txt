@@ -40,7 +40,6 @@ IF(LATEX_COMPILER)
       ${CookBook_BINARY_DIR}/Tex4htWrapper.sh)
     SET (TEX4HT_WRAPPER1 ${CookBook_BINARY_DIR}/Tex4htWrapper.sh)
     SET (TEX4HT_WRAPPER2 "")
-
     ADD_CUSTOM_TARGET(AppDocHTML
                       ALL
                       COMMAND sh ${CookBook_BINARY_DIR}/Tex4htWrapper.sh CookBook
@@ -50,3 +49,14 @@ IF(LATEX_COMPILER)
     ADD_DEPENDENCIES(AppDocHTML CookBook_pdf)
   ENDIF (TEX4HT_COMPILER)
 ENDIF(LATEX_COMPILER)
+
+# Rename the CookBook.pdf file into CookBook-version.pdf
+SET(FINAL_DOC_NAME "${LATEX_TARGET}-${OTB_VERSION_MAJOR}.${OTB_VERSION_MINOR}.${OTB_VERSION_PATCH}")
+ADD_CUSTOM_TARGET(CookBookRenamePdf
+                  ALL
+   		  ${CMAKE_COMMAND} -E rename ${LATEX_TARGET}.pdf ${FINAL_DOC_NAME}.pdf
+                  COMMENT "Renaming the pdf document" 
+       )
+ADD_DEPENDENCIES(CookBookRenamePdf CookBook_pdf)
+
+
