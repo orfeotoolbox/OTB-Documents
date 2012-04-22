@@ -85,12 +85,6 @@ def GenerateChoice(app,param,paramlist):
     return output
 
 def GenerateParameterType(app,param):
-    if app.GetParameterType(param) == otbApplication.ParameterType_ListView:
-        return "List"
-    if app.GetParameterType(param) == otbApplication.ParameterType_Group:
-        return "Group"
-    if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
-        return "Choices"
     if app.GetParameterType(param) == otbApplication.ParameterType_Empty:
         return "Boolean"
     if app.GetParameterType(param) == otbApplication.ParameterType_Int \
@@ -103,10 +97,14 @@ def GenerateParameterType(app,param):
         return "String"
     if app.GetParameterType(param) == otbApplication.ParameterType_StringList:
         return "String list"
-    if app.GetParameterType(param) == otbApplication.ParameterType_Filename :
-        return "File name"
+    if app.GetParameterType(param) == otbApplication.ParameterType_InputFilename :
+        return "Input File name"
+    if app.GetParameterType(param) == otbApplication.ParameterType_OutputFilename :
+        return "Output File name"
     if app.GetParameterType(param) == otbApplication.ParameterType_Directory :
         return "Directory"
+    if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
+        return "Choices"
     if app.GetParameterType(param) == otbApplication.ParameterType_InputImage \
             or app.GetParameterType(param) == otbApplication.ParameterType_ComplexInputImage:
         return "Input image"
@@ -121,6 +119,10 @@ def GenerateParameterType(app,param):
         return "Input image list"
     if app.GetParameterType(param) == otbApplication.ParameterType_InputVectorDataList:
         return "Input vector data list"
+    if app.GetParameterType(param) == otbApplication.ParameterType_ListView:
+        return "List"
+    if app.GetParameterType(param) == otbApplication.ParameterType_Group:
+        return "Group"
 
 def GenerateParametersTable(app,paramlist,label):
     output = "\\begin{table}[!htbp]" + linesep
@@ -245,7 +247,8 @@ def GetApplicationExamplePythonSnippet(app,idx,expand = False, inputpath="",outp
             values = value.split(" ")
             # app.SetParameterStringList(param,values)
             output += appname + ".SetParameterStringList("+EncloseString(param)+", "+str(values)+")" + linesep
-        if paramtype == otbApplication.ParameterType_Filename \
+        if paramtype == otbApplication.ParameterType_InputFilename \
+            or paramtype == otbApplication.ParameterType_OutputFilename \
             or paramtype == otbApplication.ParameterType_Directory:
             if paramrole == 0:
                 # app.SetParameterString(param,EncloseString(ExpandPath(value,inputpath,expand)))
