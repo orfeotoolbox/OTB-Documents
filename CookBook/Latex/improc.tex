@@ -322,12 +322,42 @@ otbcli_VectorDataDSValidation -in      extractedRoads_enriched.shp
 This section describes how to convert pair of images into elevation information.
 
 \subsubsection{Estimate epipolar geometry transformation from image pair}
-The aim of tyhis application is to Epipolar geometry is the geometry of stereo vision.
+The aim of this application is to Epipolar geometry is the geometry of stereo vision.
 to generate resampling grids from raw images to epipolar geometry
+
+Rectification determines a transformation of each image plane such that pairs of conjugate epipolar lines become collinear and parallel to one of the image axes.
+
+After applying this transformation, it reduces the problem of elevation  (or stereo coresspondences determinantion  to a 1-D problem)
+
 \href{http://en.wikipedia.org/wiki/Epipolar_geometry}
 
-More complicated
-\href{http://en.wikipedia.org/wiki/Epipolar_geometry#Epipolar_geometry_of_pushbroom_sensor}
+The  problem is a little bit more complicated in case of VHR optical images but (see \href{http://en.wikipedia.org/wiki/Epipolar_geometry#Epipolar_geometry_of_pushbroom_sensor})
+But the
+
+\begin{equation}
+   (long,lat) = {f_{image_left}}^{forward)(i,j,h)
+\end{equation}
+and
+\begin{equation}
+   (long,lat,h) = {f_{image_left}}^{inverse)(i,j)
+\end{equation}
+Using jointly the forward and inverse function from the image pair, we can construct a colocalization function between a pixel in the first and in the second image.
+
+
+\begin{equation}
+   (long,lat,h) = {f_{image_left}}^{inverse)(i,j)
+\end{equation}
+
+\begin{equation}
+(i_{right},j_{right}) = f_{left \rightarrow right} (i_{left} , j_{left} , h)
+\end{equation}
+\begin{equation}
+f_{left \rightarrow right} (i_{left} , j_{left} , h) =  {f_{right}}^{inverse} (f_{left}}^{forward}((i_{left} , j_{left} ), h)
+\end{equation}
+
+The value of this function is not really important, the thing to understand is that if you are able to determine for a point on the left image, the corresponding pixel  in the right image, as you know the expression of  colocalization
+function, you've got the information
+You've got now the mathematical basis to understand how  3D information can be extracted by examination of the relative positions of objects in the two 2D images.
 
 The application will not resample input images if epipolar geometry but produce two images which are \textgreater{deformation grid}
 \begin{verbatim}
@@ -335,11 +365,14 @@ otbcli_StereoRectificationGridGenerator -io.inleft left.tif
                                         -io.inright right.tif
                                         -epi.elevation.avg.value 400
                                         -epi.step 10
-                                        -io.outleft outleft_pyramid.tif
-                                        -io.outright outright_pyramid.tif
+                                        -io.outleft outleft_grid.tif
+                                        -io.outright outright_grid.tif
 \end{verbatim}
 
+The estimated transformation is not analitical in a sense that you estimate a displacment for each pixel in the two input images. Despite that, you can see that the application can accept a ``step'' parameter to estimate displacments on a coarser grid. Here we estimate the displcments every 10 pixels.
+ That's because in most cases with a pair of VHR and a small angle between the two images, this grid is almost regular. Moreover, in case of push-broom geometry, the algorithm use lots of memory. It is a good solution to
 The application provides the size of the output image in epipolar geometry. Note these values, we will use it at the next step to resample the two images in epipolar geometry
+
 
 \begin{verbatim}
 Output parameters value:
@@ -349,8 +382,47 @@ epi.baseline: 4.772260666
 \end{verbatim}
 
 \subsubsection{Resample images in epipolar geometry}
-Resample both images into epipolar geometry using those grids
+The prior application generate grids of displacment which allow to . These are intermediary result not really useful as it. The second step only consist in applying the trasnformation and resample both images into epipolar geometry using those grids. This is done by. This application can be useful in a other context
+
+\begin{verbatim}
+otbcli_GridBasedImageResampling -io.in left.tif
+                                -io.out left_epipolar.tif
+                                -grid.in outleft_grid.tif
+                                -out.sizex 4464
+                                -out.sizey 2958
+\end{verbatim}
+
+\begin{verbatim}
+otbcli_GridBasedImageResampling -io.in right.tif
+                                -io.out right_epipolar.tif
+                                -grid.in outright_grid.tif
+                                -out.sizex 4464
+                                -out.sizey 2958
+\end{verbatim}
+
+
 \subsubsection{Disparity estimation: Block matching on epipolar lines}
+
+Finnaly we can begin the stereo correspondences! And things become a little are more complicated
+Now we've got two images where for each point in the first image (the ``baseline''), we can search for the corresponding pixel in the second image.
+
+An almost complete spectrum of stereo correspondence algorithms has been published and it is still augmented at a significant rate!See for example \href{http://en.wikipedia.org/wiki/Block-matching_algorithm} for example. The \otb implements
+\begin{itemize}
+\item Sum of Square Distances block-matching (SSD)
+\item Normalized Cross-Correlation (NCC)
+\item Lp pseudo-norm (LP)
+\end{itemiz}e
+
+We need now to evaluate the range of disparities where the block . These parameters are mandatory for the application. And you need to estimate them manually. For the horizontal disparity, you need to estimate these paramaters and tuned them to your image to be able to have .
+
+In my case, I take one point on a flat area. The image coordinate in $image_{1}$ is $[1970,1525]$ and in $image_{2}$ is $[1970,1526]$
+I take after that second point on a region (in my case a point near the top of the Pyramid of Cheops!). The image coordinate in $image_{1}$ is $[1661,1299]$ and in $image_{2}$ is $[1633,1300]$.So you see for the vertical exploration, I must set the minimum value to (disparity range from left to right). Concerning the vertical disparity, in the first step we reduce the problem of 3D extraction to a 1D problem, taht's not completly true, in real case there are small disparities in the vertical direction which are paralax errors (this error). Exploration in the vertical direction of disparities are typically smaller than horizontal one. You can also estimate them on the epipolar couple (in my case I use
+
+Take care of the sign of this minimum and this maximum.
+
+The block matching application have also other interesting functionalities. \otb implements a strategy that can ve call after the SSD algorithm to estimate disparities with sub-pixel precision.
+
+
 Perform block matching with various parameters, including sub-pixel interpolation, masking and median filtering. This will output a disparity map
 \subsubsection{From disparity to elevation}
 Project your disparity map into a carto/geo DEM
