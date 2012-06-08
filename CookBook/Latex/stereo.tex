@@ -134,6 +134,15 @@ As you can see, we set sizex and sizey parameters using output values given by
 the \application{StereoRectificationGridGenerator} application to set the size
 of the output epipolar images.
 
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.45\textwidth]{../Art/MonteverdiImages/stereo_image1_epipolar.png}
+  \includegraphics[width=0.45\textwidth]{../Art/MonteverdiImages/stereo_image2_epipolar.png}
+  \itkcaption[ExampleEpipolar]{Extract of resample image1 and image2 in epipolar geometry over Pyramids of
+Cheops.}
+  \label{fig:MeanShiftVectorImageFilter}
+\end{figure}
+
 \subsubsection{Disparity estimation: Block matching on epipolar lines}
 
 Finally, we can begin the stereo correspondences! Things become a little are
@@ -256,22 +265,22 @@ This refinement can be easily done with \app.
 
 We use first the \application{BandMath} application to threshold disparity.
 \begin{verbatim}
-otbcli_BandMath -il disparity_map_ncc.tif 
-                -out thres_hdisparity.tif 
+otbcli_BandMath -il disparity_map_ncc.tif
+                -out thres_hdisparity.tif
                 -exp "if(im1b3>00.9,im1b1,0)"
 \end{verbatim}
 
 \begin{verbatim}
-otbcli_BandMath -il disparity_map_ncc.tif 
-                -out thres_vdisparity.tif 
+otbcli_BandMath -il disparity_map_ncc.tif
+                -out thres_vdisparity.tif
                 -exp "if(im1b3>00.9,im1b2,0)"
 \end{verbatim}
 
-And then, concatenate thresholded disparities using the \application{ConcatenateImages}: 
+And then, concatenate thresholded disparities using the \application{ConcatenateImages}:
 
 \begin{verbatim}
-otbcli_ConcatenateImages -il thres_hdisparity.tif  thres_vdisparity.tif  
-                -out thres_hvdisparity.tif 
+otbcli_ConcatenateImages -il thres_hdisparity.tif  thres_vdisparity.tif
+                -out thres_hvdisparity.tif
 \end{verbatim}
 
 \begin{verbatim}
