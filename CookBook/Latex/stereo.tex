@@ -218,8 +218,8 @@ otbcli_BlockMatching -io.inleft image1_epipolar.tif
                      -bm.metric ncc
 \end{verbatim}
 
-The application creates by default a two bands image : horizontal disparity and
-vertical disparity.
+The application creates by default a two bands image : the horizontal disparity
+and vertical disparity.
 
 The \application{BlockMatching} application gives access to a lot of other
 powerful functionalities to improve the quality of the disparity.
@@ -264,6 +264,7 @@ elevation information.
 This refinement can be easily done with \app.
 
 We use first the \application{BandMath} application to threshold disparity.
+
 \begin{verbatim}
 otbcli_BandMath -il disparity_map_ncc.tif
                 -out thres_hdisparity.tif
@@ -280,8 +281,11 @@ And then, concatenate thresholded disparities using the \application{Concatenate
 
 \begin{verbatim}
 otbcli_ConcatenateImages -il thres_hdisparity.tif  thres_vdisparity.tif
-                -out thres_hvdisparity.tif
+                         -out thres_hvdisparity.tif
 \end{verbatim}
+
+Now we can use the \application{DisparityMapToElevationMap} application to
+compute the elevation map from the refined disparity maps.
 
 \begin{verbatim}
 otbcli_DisparityMapToElevationMap -io.in thres_hvdisparity.tif
