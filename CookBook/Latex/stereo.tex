@@ -2,6 +2,19 @@
 
 This section describes how to convert pair of images into elevation information.
 
+The standard problem of terrain reconstruction with \app presented here contains
+has the following steps:
+
+\begin{itemize}
+\item Estimation of displacements grids for epipolar geometry transformation
+\item Epipolar resampling of the image pair using those grids
+\item Dense disparity map estimation
+\item Projection of the disparities on a Digital Elevation Map (DEM)
+\end{itemize}
+
+//tenez vous pret?
+Let's go now to the third dimensions!
+
 \subsubsection{First step: estimate epipolar geometry transformation}\label{ssec:epipolar}
 The aim of this application is to generate resampling grids to transform images
 in epipolar geometry.  Epipolar geometry is the geometry of stereo vision (see
@@ -169,7 +182,7 @@ published and it is still augmented at a significant rate!See for example
 \item Lp pseudo-norm (LP)
 \end{itemize}
 
-An other important mandatory parameter of the application is the range of
+An other important parameter (mandatory in the application) is the range of
 disparities. In theory, the block matching can perform a blind exploration and
 search for a infinite range of disparities between the stereo pair. We need now
 to evaluate the range of disparities where the block (from the deepest point on
