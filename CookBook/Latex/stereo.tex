@@ -32,7 +32,7 @@ For the second image:
 \end{equation}
 
 Using jointly the forward and inverse functions from the image pair, we can
-construct a co-localisation function $f_{image1 \rightarrow image2}$ between a
+construct a co-localization function $f_{image1 \rightarrow image2}$ between a
 the position of a pixel in the first and its position in the second one:
 
 \begin{equation}
@@ -47,7 +47,7 @@ f_{image1 \rightarrow image2} (i_{image1} , j_{image1} , h) =  f^{inverse}_{imag
 
 The expression is not really important, what we need to understand is that if we
 are now able to determine for a given pixel in image1 the corresponding pixel in
-image2.  As we know the expression of co-localisation function between images,
+image2.  As we know the expression of co-localization function between images,
 we've got the information about the elevation (variable h in the equation)!
 
 We've got now the mathematical basis to understand how 3-D information can be
@@ -80,7 +80,7 @@ input images to obtain epipolar geometry.You can see that the application can
 accept a `step' parameter to estimate displacements on a coarser grid. Here we
 estimate the displacements every 10 pixel. That's because in most cases with a
 pair of VHR and a small angle between the two images, this grid is almost
-regular.  Moreover, the implementation is not 'streamable' and use potentially a
+regular.  Moreover, the implementation is not \textit{streamable} and use potentially a
 lot of memory. So that, it is generally a good idea to estimate the displacement
 grid at a coarser resolution.
 
@@ -109,7 +109,7 @@ Let's move forward to the resampling in epipolar geometry.
 The prior application generates two grids of displacements. The
 \application{GridBasedImageResampling} allows to resample the two input images
 in the epipolar geometry using these grids.  These grids are intermediary result
-not really useful as it in most cases. This second step ``only'' consists in
+not really useful as it in most cases. This second step \textit{only} consists in
 applying the transformation and resample both images but this application can be
 useful in a lot of other cases.
 
@@ -154,8 +154,8 @@ line as opposed to the entire 2-dimensional image. Moreover, block matching is
 used, as opposed to single point matching, because of the obvious advantage that
 correlating blocks is much more likely to reflect a true match.
 
-For each point in the first image (the ``baseline''), we can search for the
-corresponding pixel in the second image and use the co-localisation function
+For each point in the first image (the \textit{baseline}), we can search for the
+corresponding pixel in the second image and use the co-localization function
 describes in \ref{ssec:epipolar}.
 
 An almost complete spectrum of stereo correspondence algorithms has been
@@ -189,15 +189,14 @@ must set the minimum value to a minimum -30 (the convention for the sign of the
 disparity range is from image1 to image2).
 
 Note that, this estimation can be facilitate using an external DEM in the
-\application{StereoRectificationGridGenerator} application.  opj devant toutes
-les fonctions Concerning the vertical disparity, in the first step we said that
-we reduce the problem of 3D extraction to a 1D problem, that's not completely
-true in general cases. In our case, there are small disparities in the vertical
-direction which are due to parallax errors (i.e. epipolar lines exhibit a small
-shift in the vertical direction, around 1 pixel). So that, exploration in the
-vertical direction of disparities are so typically smaller than horizontal
-one. You can also estimate them on the epipolar couple (in my case I use a range
-of -1 to 1).
+\application{StereoRectificationGridGenerator} application.Concerning the
+vertical disparity, in the first step we said that we reduce the problem of 3D
+extraction to a 1D problem, that's not completely true in general cases. In our
+case, there are small disparities in the vertical direction which are due to
+parallax errors (i.e. epipolar lines exhibit a small shift in the vertical
+direction, around 1 pixel). So that, exploration in the vertical direction of
+disparities are so typically smaller than horizontal one. You can also estimate
+them on the epipolar couple (in my case I use a range of -1 to 1).
 
 One more time take care of the sign of this minimum and this maximum for
 disparities (always from image1 to image2).
@@ -251,14 +250,14 @@ regular sampling. The elevation values is computed from the triangulation of the
 "left-right" pairs of pixels matched and when several elevations are possible on
 a DEM cell, the highest is kept.
 
-The first important point is that its often a good idea to refine your disparity
+Firstly important point is that its often a good idea to refine your disparity
 map given by the \application{BlockMatching} application to only keep relevant
-disparities. For this, we're goig theto use the output optimal metric image and
-threshold disparities among this value.
+disparities. For this, we use the output optimal metric image and threshold
+disparities among this value.
 
 For example, if you've used Normalized Cross-Correlation (NCC), you can only
 keep disparities where optimal metric is superior to $0.9$. Other evaluated
-disparities can be consider as innacurated and will not be used to compute
+disparities can be consider as inaccurate and will not be used to compute
 elevation information.
 
 This refinement can be easily done with \app.
@@ -277,7 +276,7 @@ otbcli_BandMath -il disparity_map_ncc.tif
                 -exp "if(im1b3>00.9,im1b2,0)"
 \end{verbatim}
 
-And then, concatenate thresholded disparities using the \application{ConcatenateImages}:
+And then, concatenate threshold disparities using the \application{ConcatenateImages}:
 
 \begin{verbatim}
 otbcli_ConcatenateImages -il thres_hdisparity.tif  thres_vdisparity.tif
