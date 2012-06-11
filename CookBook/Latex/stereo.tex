@@ -1,3 +1,4 @@
+\newpage
 \subsection{Stereo reconstruction from VHR optical image pair}\label{sec:stereoreconstruction}
 
 This section describes how to convert pair of images into elevation information.
@@ -286,8 +287,8 @@ disparities. For this, we use the output optimal metric image and threshold
 disparities among this value.
 
 For example, if you've used Normalized Cross-Correlation (NCC), you can only
-keep disparities where optimal metric is superior to $0.9$. Other evaluated
-disparities can be consider as inaccurate and will not be used to compute
+keep disparities where optimal metric is superior to $0.9$. Disparities below
+this value can be consider as inaccurate and will not be used to compute
 elevation information.
 
 This refinement can be easily done with \app.
