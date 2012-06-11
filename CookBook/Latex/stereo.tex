@@ -83,8 +83,8 @@ the two images.
 \begin{verbatim}
 otbcli_StereoRectificationGridGenerator -io.inleft image1.tif
                                         -io.inright image1.tif
-                                        -epi.elevation.avg.value 100
-                                        -epi.step 10
+                                        -epi.elevation.avg.value 50
+                                        -epi.step 5
                                         -io.outimage1 outimage1_grid.tif
                                         -io.outright outimage1_grid.tif
 \end{verbatim}
@@ -106,9 +106,9 @@ In my case, I've got:
 
 \begin{verbatim}
 Output parameters value:
-epi.rectsizex: 4464
-epi.rectsizey: 2958
-epi.baseline: 4.772260666
+epi.rectsizex: 4462
+epi.rectsizey: 2951
+epi.baseline: 4.7746
 \end{verbatim}
 
 The epi.baseline parameter provides the mean value(in meters) of the
@@ -132,16 +132,16 @@ The two commands to generate epipolar images are:
 otbcli_GridBasedImageResampling -io.in image1.tif
                                 -io.out image1_epipolar.tif
                                 -grid.in outimage1_grid.tif
-                                -out.sizex 4464
-                                -out.sizey 2958
+                                -out.sizex 4462
+                                -out.sizey 2951
 \end{verbatim}
 
 \begin{verbatim}
 otbcli_GridBasedImageResampling -io.in image2.tif
                                 -io.out image2_epipolar.tif
                                 -grid.in outimage2_grid.tif
-                                -out.sizex 4464
-                                -out.sizey 2958
+                                -out.sizex 4462
+                                -out.sizey 2951
 \end{verbatim}
 
 As you can see, we set \textit{sizex} and \textit{sizey} parameters using output values given by
@@ -224,15 +224,17 @@ The command line for the \application{BlockMatching} application is :
 otbcli_BlockMatching -io.inleft image1_epipolar.tif
                      -io.inright image2_epipolar.tif
                      -io.out disparity_map_ncc.tif
-                     -bm.minhd -50
-                     -bm.maxhd 20
+                     -bm.minhd -45
+                     -bm.maxhd 5
                      -bm.minvd 1
                      -bm.maxvd 1
                      -mask.nodata 0
                      -mask.variancet 10
-                     -ram 2048
                      -io.outmetric 1
                      -bm.metric ncc
+                     -bm.subpixel dichotomy
+                     -bm.medianfilter.radius 5
+                     -bm.medianfilter.incoherence 2.0
 \end{verbatim}
 
 The application creates by default a two bands image : the horizontal and
@@ -254,6 +256,16 @@ Let's describe now these functionalities:
 \item -mask.variancet : The block matching algorithm have difficulties to find
   matches on uniform zone. We can use the variance threshold to discard those
   regions and speed-up again computation time.
+\item -bm.medianfilter.radius 5 and -bm.medianfilter.incoherence 2.0 : Applies a
+  median filter to the disparity map. A median filter is one of the family of
+  nonlinear filters.It is used to smooth an image without being biased by
+  outliers or shot noise. The radius corresponds to the neighborhood where the
+  median value is computed.A detection of incoherences between the input
+  disparity map and the median is performed (a pixel corresponds to an
+  incoherence if the absolute value of the difference between the pixel value in
+  the disparity map and in the median image is higher than the incoherence
+  threshold (whose default value is 1).Both parameters must be defined in the
+  application to activated the filter.
 \end{itemize}
 
 Of course all these parameters can be combine to improve the disparity map.
@@ -285,7 +297,7 @@ We use first the \application{BandMath} application to threshold disparity.
 \begin{verbatim}
 otbcli_BandMath -il disparity_map_ncc.tif
                 -out thres_hdisparity.tif
-                -exp "if(im1b3>00.9,im1b1,0)"
+                -exp "if(im1b3>0.9,im1b1,0)"
 \end{verbatim}
 
 \begin{verbatim}
@@ -297,7 +309,7 @@ otbcli_BandMath -il disparity_map_ncc.tif
 And then, concatenate threshold disparities using the \application{ConcatenateImages}:
 
 \begin{verbatim}
-otbcli_ConcatenateImages -il thres_hdisparity.tif  thres_vdisparity.tif
+otbcli_ConcatenateImages -il thres_hdisparity.tif thres_vdisparity.tif
                          -out thres_hvdisparity.tif
 \end{verbatim}
 
@@ -311,10 +323,17 @@ otbcli_DisparityMapToElevationMap -io.in thres_hvdisparity.tif
                                   -io.lgrid outimage1_pyramid.tif
                                   -io.rgrid outimage2_pyramid.tif
                                   -io.out disparity_map_ssd_to_elevation.tif
-                                  -hmin 14
-                                  -hmax 230
-                                  -elev.average.value 100
-                                  -ram 2048
+                                  -hmin 10
+                                  -hmax 400
+                                  -elev.average.value 50
 \end{verbatim}
 
-It produces the elevation map on the ground area covered by the stereo pair.
+It produces the elevation map projected in WGS84 (EPSG code : $4326$) over the
+ground area covered by the stereo pair.
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.7\textwidth]{../Art/MonteverdiImages/stereo_dem_zoom.png}
+  \itkcaption[Example]{Extract of the elevation map over Pyramids of Cheops.}
+  \label{fig:MeanShiftVectorImageFilter}
+\end{figure}
