@@ -14,7 +14,7 @@ the following steps:
 \end{itemize}
 
 %tenez vous pret?
-Let's go now to the third dimensions!
+Let's go now to the third dimension!
 
 \subsubsection{First step: Estimate epipolar geometry transformation}\label{ssec:epipolar}
 The aim of this application is to generate resampling grids to transform images
@@ -174,7 +174,7 @@ reflect a true match.
 
 For each point in the first image (the \textit{baseline}), we can search for the
 corresponding pixel in the second image and use the co-localization function
-describes in \ref{ssec:epipolar}.
+described in \ref{ssec:epipolar}.
 
 An almost complete spectrum of stereo correspondence algorithms has been
 published and it is still augmented at a significant rate!See for example
@@ -194,27 +194,27 @@ to evaluate the range of disparities where the block (from the deepest point on
 Earth, \url{http://en.wikipedia.org/wiki/Challenger_Deep}{the Challenger Deep}.
 to the Everest summit!
 
-I deliberately exaggerated but you can imagine that with a smaller range you can
-imagine that the block matching algorithm can take a lot of time.  That's why
-these parameters are mandatory for the application and as consequence we need to
+I deliberately exaggerated but you can imagine that without a smaller range 
+the block matching algorithm can take a lot of time.  That's why
+these parameters are mandatory for the application and as a consequence we need to
 estimate them manually. That's pretty simple using the two epipolar images.
 
 In my case, I take one point on a flat area. The image coordinate in $image_{1}$
 is $[1970,1525]$ and in $image_{2}$ is $[1970,1526]$. I take after that a second
 point on a higher region (in my case a point near the top of the Pyramid of
 Cheops!). The image coordinate of this pixel in $image_{1}$ is $[1661,1299]$ and
-in $image_{2}$ is $[1633,1300]$.  So you see for the vertical exploration, I
-must set the minimum value to a minimum $-30$ (the convention for the sign of the
+in $image_{2}$ is $[1633,1300]$.  So you see for the horizontal exploration, I
+must set the minimum value inferior to $-30$ (the convention for the sign of the
 disparity range is from image1 to image2).
 
-Note that, this estimation can be facilitate using an external DEM in the
-\application{StereoRectificationGridGenerator} application.Concerning the
+Note that, this estimation can be simplified using an external DEM in the
+\application{StereoRectificationGridGenerator} application. Concerning the
 vertical disparity, in the first step we said that we reduce the problem of 3D
 extraction to a 1D problem, that's not completely true in general cases. In our
 case, there are small disparities in the vertical direction which are due to
 parallax errors (i.e. epipolar lines exhibit a small shift in the vertical
-direction, around 1 pixel). So that, exploration in the vertical direction of
-disparities are so typically smaller than horizontal one. You can also estimate
+direction, around 1 pixel). In fact, the exploration is typically smaller along 
+the vertical direction of disparities than along the horizontal one. You can also estimate
 them on the epipolar couple (in my case I use a range of $-1$ to $1$).
 
 One more time take care of the sign of this minimum and this maximum for
@@ -239,49 +239,49 @@ otbcli_BlockMatching -io.inleft image1_epipolar.tif
 \end{verbatim}
 
 The application creates by default a two bands image : the horizontal and
-vertical disparity.
+vertical disparities.
 
 The \application{BlockMatching} application gives access to a lot of other
-powerful functionalities to improve the quality of the disparity.
+powerful functionalities to improve the quality of the disparity maps.
 
 Let's describe now these functionalities:
 
 \begin{itemize}
-\item -io.outmetric : Output the metric:if the optimal metric values image is
+\item -io.outmetric : Output the metric: if the optimal metric values image is
   activated, it will be concatenated to the output image (which will then
   have three bands : horizontal disparity, vertical disparity and metric value)
 \item -bm.subpixel : Perform sub-pixel estimation of disparities
 \item -mask.nodata 0 : as a consequence, you can specify a no-data value which
   will discard pixels with this value (for example the epipolar geometry can
   generate large part of images with black pixels)
-\item -mask.variancet : The block matching algorithm have difficulties to find
-  matches on uniform zone. We can use the variance threshold to discard those
+\item -mask.variancet : The block matching algorithm has difficulties to find
+  matches on a uniform zone. We can use the variance threshold to discard those
   regions and speed-up again computation time.
 \item -bm.medianfilter.radius 5 and -bm.medianfilter.incoherence 2.0 : Applies a
   median filter to the disparity map. A median filter is one of the family of
-  nonlinear filters.It is used to smooth an image without being biased by
+  nonlinear filters. It is used to smooth an image without being biased by
   outliers or shot noise. The radius corresponds to the neighborhood where the
-  median value is computed.A detection of incoherence between the input
+  median value is computed. A detection of incoherence between the input
   disparity map and the median is performed (a pixel corresponds to an
   incoherence if the absolute value of the difference between the pixel value in
   the disparity map and in the median image is higher than the incoherence
-  threshold (whose default value is 1).Both parameters must be defined in the
-  application to activated the filter.
+  threshold, whose default value is 1). Both parameters must be defined in the
+  application to activate the filter.
 \end{itemize}
 
-Of course all these parameters can be combine to improve the disparity map.
+Of course all these parameters can be combined to improve the disparity map.
 
 \subsubsection{From disparity to Digital Elevation Model}
 
 With the previous application, we've evaluated disparities between images. The
-next (and last!) step is now to transform the disparity map in an elevation
-information and produce an elevation map.It uses as input the disparity map
+next (and last!) step is now to transform the disparity map into an elevation
+information and produce an elevation map. It uses as input the disparity maps
 (horizontal and vertical) to produce a Digital Elevation Model (DEM) with a
 regular sampling. The elevation values is computed from the triangulation of the
 "left-right" pairs of pixels matched and when several elevations are possible on
 a DEM cell, the highest is kept.
 
-Firstly, an important point is that its often a good idea to refine your disparity
+Firstly, an important point is that it's often a good idea to refine your disparity
 map given by the \application{BlockMatching} application to only keep relevant
 disparities. For this, we use the output optimal metric image and threshold
 disparities among this value.
