@@ -21,6 +21,28 @@ The \application{BandMath} application embeds built-in operators and functions
 (listed \href{http://muparser.sourceforge.net/mup_features.html#idDef2}{here}),
 allowing a vast choice of possible operations.
 
+\subsection{Segmentation}\label{ssec:segmentation}
+
+Segmenting objects across a large very high resolution
+scene and with a controlled quality is a difficult task for which no
+method has reached a sufficient level of performance to be considered
+as operational.
+
+Even if we leave aside the question of segmentation quality and
+consider that we have a method performing reasonably well on our data
+and objects of interest, the task of scaling up segmentation to real
+very high resolution data is itself challenging. First, we can not
+load the whole data into memory, and there is a need for on the flow
+processing which does not cope well with traditional segmentation
+algorithms. Second, the result of the segmentation process
+itself is difficult to represent and manipulate efficiently.
+
+The experience of segmenting large remote sensing images is packed into a single
+\application{Segmentation} in \app.
+
+You can find more information about this application
+\href{http://blog.orfeo-toolbox.org/preview/coming-next-large-scale-segmentation}{here}.
+
 \subsection{Classification}\label{ssec:classification}
 
 The SVM classification in application framework provides a supervised pixel-wise
