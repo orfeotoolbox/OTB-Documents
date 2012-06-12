@@ -260,7 +260,7 @@ Let's describe now these functionalities:
 \item -mask.inleft and -mask.inright : you can specify a no-data value which
   will discard pixels with this value (for example the epipolar geometry can
   generate large part of images with black pixels)
-  This mask can be easily generate usint the \application{BandMath} application:
+  This mask can be easily generate using the \application{BandMath} application:
 
 \begin{verbatim}
 otbcli_BandMath -il image1_epipolar.tif
@@ -318,7 +318,7 @@ disparities among this value.
 For example, if you've used Normalized Cross-Correlation (NCC), you can only
 keep disparities where optimal metric is superior to $0.9$. Disparities below
 this value can be consider as inaccurate and will not be used to compute
-elevation information.
+elevation information (use for this the \textit{-io.mask} parameter.
 
 This refinement can be easily done with \app.
 
@@ -326,14 +326,8 @@ We use first the \application{BandMath} application to threshold disparity.
 
 \begin{verbatim}
 otbcli_BandMath -il disparity_map_ncc.tif
-                -out thres_hdisparity.tif
-                -exp "if(im1b3>0.9,im1b1,0)"
-\end{verbatim}
-
-\begin{verbatim}
-otbcli_BandMath -il disparity_map_ncc.tif
-                -out thres_vdisparity.tif
-                -exp "if(im1b3>00.9,im1b2,0)"
+                -out thres_hdisparity.tif uint8
+                -exp "if(im1b3>0.9,255,0)"
 \end{verbatim}
 
 And then, concatenate threshold disparities using the \application{ConcatenateImages}:
@@ -347,11 +341,12 @@ Now we can use the \application{DisparityMapToElevationMap} application to
 compute the elevation map from the refined disparity maps.
 
 \begin{verbatim}
-otbcli_DisparityMapToElevationMap -io.in thres_hvdisparity.tif
+otbcli_DisparityMapToElevationMap -io.in disparity_map_ncc.tif
                                   -io.left image1.tif
                                   -io.right image2.tif
                                   -io.lgrid outimage1_pyramid.tif
                                   -io.rgrid outimage2_pyramid.tif
+                                  -io.mask thres_hdisparity.tif
                                   -io.out disparity_map_ssd_to_elevation.tif
                                   -hmin 10
                                   -hmax 400
