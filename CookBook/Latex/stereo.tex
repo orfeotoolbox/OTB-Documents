@@ -200,7 +200,7 @@ to evaluate a range of disparities where the block matching will be performed (i
 Earth, \url{http://en.wikipedia.org/wiki/Challenger_Deep}{the Challenger Deep}.
 to the Everest summit!)
 
-I deliberately exaggerated but you can imagine that without a smaller range 
+I deliberately exaggerated but you can imagine that without a smaller range
 the block matching algorithm can take a lot of time.  That's why
 these parameters are mandatory for the application and as a consequence we need to
 estimate them manually. That's pretty simple using the two epipolar images.
@@ -219,7 +219,7 @@ vertical disparity, in the first step we said that we reduce the problem of 3-D
 extraction to a 1-D problem, but that's not completely true in general cases. In our
 case, there are small disparities in the vertical direction which are due to
 parallax errors (i.e. epipolar lines exhibit a small shift in the vertical
-direction, around 1 pixel). In fact, the exploration is typically smaller along 
+direction, around 1 pixel). In fact, the exploration is typically smaller along
 the vertical direction of disparities than along the horizontal one. You can also estimate
 them on the epipolar couple (in my case I use a range of $-1$ to $1$).
 
@@ -235,8 +235,8 @@ otbcli_BlockMatching -io.inleft image1_epipolar.tif
                      -bm.maxhd 5
                      -bm.minvd 1
                      -bm.maxvd 1
-                     -mask.nodata 0
-                     -mask.variancet 10
+                     -mask.inleft image1_epipolar_mask.tif
+                     -mask.inleft image2_epipolar_mask.tif
                      -io.outmetric 1
                      -bm.metric ncc
                      -bm.subpixel dichotomy
@@ -257,9 +257,23 @@ Let's describe now these functionalities:
   activated, it will be concatenated to the output image (which will then
   have three bands : horizontal disparity, vertical disparity and metric value)
 \item -bm.subpixel : Perform sub-pixel estimation of disparities
-\item -mask.nodata 0 : as a consequence, you can specify a no-data value which
+\item -mask.inleft and -mask.inright : you can specify a no-data value which
   will discard pixels with this value (for example the epipolar geometry can
   generate large part of images with black pixels)
+  This mask can be easily generate usint the \application{BandMath} application:
+
+\begin{verbatim}
+otbcli_BandMath -il image1_epipolar.tif
+                -out image1_epipolar_mask.tif
+                -exp "if(im1b1<=0,0,255)"
+\end{verbatim}
+
+\begin{verbatim}
+otbcli_BandMath -il image2_epipolar.tif
+                -out image2_epipolar_mask.tif
+                -exp "if(im1b1<=0,0,255)"
+\end{verbatim}
+
 \item -mask.variancet : The block matching algorithm has difficulties to find
   matches on a uniform zone. We can use the variance threshold to discard those
   regions and speed-up again computation time.
