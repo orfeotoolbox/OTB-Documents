@@ -18,10 +18,12 @@ Let's go now to the third dimension!
 \subsubsection{First step: Estimate epipolar geometry transformation}\label{ssec:epipolar}
 
 The aim of this application is to generate resampled grids to transform images
-in epipolar geometry.Epipolar geometry is the geometry of stereo vision (see
-\href{http://en.wikipedia.org/wiki/Epipolar_geometry}{here}). The operation of stereo
-rectification determines transformations to apply of each image such that pairs of
-conjugate epipolar lines become collinear and parallel to one of the image axes.
+in epipolar geometry.Epipolar geometry is the geometry of stereo vision
+(see \href{http://en.wikipedia.org/wiki/Epipolar_geometry}{here}). The operation
+of stereo rectification determines transformations to apply of each image such
+that pairs of conjugate epipolar lines become collinear and parallel to one of
+the image axes.Which means that in this geometry, the objects present on a given
+row of the left image are also located on the same line in the right image.
 
 After applying this transformation, it reduces the problem of elevation (or
 stereo correspondences determination) to a 1-D problem.  We've got two images
@@ -124,7 +126,7 @@ Let's move forward to the resampling in epipolar geometry.
 The prior application generates two grids of
 displacements. The \application{GridBasedImageResampling} allows to resample the
 two input images in the epipolar geometry using these grids.These grids are
-intermediary result not really useful as it in most cases. This second
+intermediary result not really useful as it is in most cases. This second
 step \textit{only} consists in applying the transformation and resample both
 images.  This application can be obviously useful in lot of other contexts.
 
@@ -158,7 +160,9 @@ of the output epipolar image.
   \label{fig:EpipolarImages}
 \end{figure}
 
-We obtain two images in epipolar geometry\ref{fig:EpipolarImages}.
+We obtain two images in epipolar geometry\ref{fig:EpipolarImages}. Note that the
+application allows to resample only a part of the image using
+the \textit{-out.ulx} and \textit{-out.uly} parameters.
 
 \subsubsection{Disparity estimation: Block matching on epipolar lines}
 
