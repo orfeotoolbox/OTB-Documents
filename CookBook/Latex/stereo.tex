@@ -1,7 +1,7 @@
 \newpage
-\subsection{Stereo reconstruction from VHR optical image pair}\label{sec:stereoreconstruction}
+\subsection{Stereoscopic reconstruction from VHR optical images pair}\label{sec:stereoreconstruction}
 %add intro
-This section describes how to convert pair of images into elevation information.
+This section describes how to convert pair of stereo images into elevation information.
 
 The standard problem of terrain reconstruction with available \app contains
 the following steps:
@@ -13,23 +13,25 @@ the following steps:
 \item Projection of the disparities on a Digital Elevation Map (DEM)
 \end{itemize}
 
-Let's go now to the third dimension!
+Let's go to the third dimension!
 
 \subsubsection{First step: Estimate epipolar geometry transformation}\label{ssec:epipolar}
 
-The aim of this application is to generate resampled grids to transform images
-in epipolar geometry.Epipolar geometry is the geometry of stereo vision
-(see \href{http://en.wikipedia.org/wiki/Epipolar_geometry}{here}). The operation
-of stereo rectification determines transformations to apply of each image such
-that pairs of conjugate epipolar lines become collinear and parallel to one of
-the image axes.Which means that in this geometry, the objects present on a given
-row of the left image are also located on the same line in the right image.
+The aim of this application is to generate resampled grids to
+transform images in epipolar geometry. Epipolar geometry is the
+geometry of stereo vision
+(see \href{http://en.wikipedia.org/wiki/Epipolar_geometry}{here}). The
+operation of stereo rectification determines transformations to apply
+to each image such that pairs of conjugate epipolar lines become
+collinear, parallel to one of the image axes and aligned. In this
+geometry, the objects present on a given row of the left image are
+also located on the same line in the right image.
 
-After applying this transformation, it reduces the problem of elevation (or
-stereo correspondences determination) to a 1-D problem.  We've got two images
-image1 and image2 over the same area (the stereo pair) and we assume that we
-know the localization functions (forward and inverse) associated for each of
-these images.
+Applying this transformation reduces the problem of elevation (or
+stereo correspondences determination) to a 1-D problem. We have two
+images image1 and image2 over the same area (the stereo pair) and we
+assume that we know the localization functions (forward and inverse)
+associated for each of these images.
 
 The forward function allows to go from the image referential to the geographic
 referential:
@@ -62,26 +64,26 @@ f_{image1 \rightarrow image2} (i_{image1} , j_{image1} , h) =  f^{inverse}_{imag
 \end{equation}
 
 The expression is not really important, what we need to understand is that if we
-are now able to determine for a given pixel in image1 the corresponding pixel in
-image2.As we know the expression of the co-localization function between
-images,as a result we can determine by identification the information about the
+are able to determine for a given pixel in image1 the corresponding pixel in
+image2, as we know the expression of the co-localization function between
+both images, we can determine by identification the information about the
 elevation (variable h in the equation)!
 
-We've got now the mathematical basis to understand how 3-D information can be
+We now have the mathematical basis to understand how 3-D information can be
 extracted by examination of the relative positions of objects in the two 2-D
 epipolar images.
 
 The construction of the two epipolar grids is a little bit more complicated in
 the case of VHR optical images.That is because most of passive remote sensing from
 space use a push-broom sensor, which corresponds to a line of sensors arranged
-perpendicularly to the flight direction of the spacecraft.This acquisition
+perpendicularly to the flight direction of the spacecraft. This acquisition
 configuration implies a slightly different strategy for stereo-rectification
 (see
 \href{http://en.wikipedia.org/wiki/Epipolar_geometry#Epipolar_geometry_of_pushbroom_sensor}{here}).
 
-Let's examine now how to use the \application{StereoRectificationGridGenerator}
-application to produce two images which are \textbf{deformation grids} for
-the two images.
+We will now explain how to use the \application{StereoRectificationGridGenerator}
+application to produce two images which are \textbf{deformation grids} to resample
+the two images in epipolar geometry.
 
 \begin{verbatim}
 otbcli_StereoRectificationGridGenerator -io.inleft image1.tif
@@ -92,20 +94,21 @@ otbcli_StereoRectificationGridGenerator -io.inleft image1.tif
                                         -io.outright outimage1_grid.tif
 \end{verbatim}
 
-The application estimates the displacement to apply for each pixel in the two
-input images to obtain epipolar geometry.The application
-accept a `step' parameter to estimate displacements on a coarser grid. Here we
-estimate the displacements every 10 pixels. That's because in most cases with a
-pair of VHR and a small angle between the two images, this grid is almost
-regular.Moreover, the implementation is not \textit{streamable} and use potentially a
-lot of memory. So that, it is generally a good idea to estimate the displacement
-grid at a coarser resolution.
+The application estimates the displacement to apply to each pixel in
+both input images to obtain epipolar geometry.The application accept a
+`step' parameter to estimate displacements on a coarser grid. Here we
+estimate the displacements every 10 pixels. This is because in most
+cases with a pair of VHR and a small angle between the two images,
+this grid is very smooth. Moreover, the implementation is
+not \textit{streamable} and uses potentially a lot of
+memory. Therefore it is generally a good idea to estimate the
+displacement grid at a coarser resolution.
 
-The application outputs the size of the output image in epipolar
-geometry. \textbf{Note these values}, we will use it at the next step to
+The application outputs the size of the output images in epipolar
+geometry. \textbf{Note these values}, we will use them in the next step to
 resample the two images in epipolar geometry.
 
-In my case, I've got:
+In our case, we have:
 
 \begin{verbatim}
 Output parameters value:
@@ -114,21 +117,22 @@ epi.rectsizey: 2951
 epi.baseline: 4.7746
 \end{verbatim}
 
-The epi.baseline parameter provides the mean value(in meters) of the
+The epi.baseline parameter provides the mean value (in meters) of the
 baseline to sensor altitude ratio. It can be used to convert disparities to
 physical elevation, since a disparity of one pixel will correspond to an
 elevation offset of this value with respect to the mean elevation.
 
-Let's move forward to the resampling in epipolar geometry.
+we can now move forward to the resampling in epipolar geometry.
 
 \subsubsection{Resample images in epipolar geometry}
 
-The prior application generates two grids of
-displacements. The \application{GridBasedImageResampling} allows to resample the
-two input images in the epipolar geometry using these grids.These grids are
-intermediary result not really useful as it is in most cases. This second
-step \textit{only} consists in applying the transformation and resample both
-images.  This application can be obviously useful in lot of other contexts.
+The former application generates two grids of
+displacements. The \application{GridBasedImageResampling} allows to
+resample the two input images in the epipolar geometry using these
+grids. These grids are intermediary results not really useful on their
+own in most cases. This second step \textit{only} consists in applying
+the transformation and resample both images. This application can
+obviously be used in lot of other contexts.
 
 The two commands to generate epipolar images are:
 \begin{verbatim}
@@ -147,9 +151,10 @@ otbcli_GridBasedImageResampling -io.in image2.tif
                                 -out.sizey 2951
 \end{verbatim}
 
-As you can see, we set \textit{sizex} and \textit{sizey} parameters using output values given by
-the \application{StereoRectificationGridGenerator} application to set the size
-of the output epipolar image.
+As you can see, we set \textit{sizex} and \textit{sizey} parameters
+using output values given by
+the \application{StereoRectificationGridGenerator} application to set
+the size of the output epipolar images.
 
 \begin{figure}[!h]
   \center
@@ -160,31 +165,28 @@ of the output epipolar image.
   \label{fig:EpipolarImages}
 \end{figure}
 
-We obtain two images in epipolar geometry\ref{fig:EpipolarImages}. Note that the
-application allows to resample only a part of the image using
-the \textit{-out.ulx} and \textit{-out.uly} parameters.
+We obtain two images in epipolar geometry, as shown in
+figure~\ref{fig:EpipolarImages}. Note that the application allows to
+resample only a part of the image using the \textit{-out.ulx}
+and \textit{-out.uly} parameters.
 
-\subsubsection{Disparity estimation: Block matching on epipolar lines}
+\subsubsection{Disparity estimation: Block matching along epipolar lines}
 
-Finally, we can begin the stereo correspondences!
+Finally, we can begin the stereo correspondences lookup process! 
 
-Things become a little bit more complicated but don't worry. Let's describe
-now the powerfulness of the \application{BlockMatching} application.
+Things are becoming a little bit more complex but do not worry. First,
+we will describe the power of the \application{BlockMatching}
+application.
 
-To correlate block from the first image with a block in the second image, we've
-got two resampled image where epipolar lines allow us to constrain the
-search along a 1-dimensional line as opposed to the entire 2-D
-image. Moreover, block matching is used, as opposed to single point matching,
-because of the obvious advantage that correlating blocks is much more likely to
-reflect a true match.
-
-For each point in the first image (the \textit{baseline}), we can search for the
-corresponding pixel in the second image and use the co-localization function
-described in \ref{ssec:epipolar}.
+The resampling of our images in epipolar geometry allows us to
+constrain the search along a 1-dimensional line as opposed to both
+dimensions, but what is even more important is that the disparities
+along the lines, i.e. the offset along the lines measured by the
+block-matching process can be directly linked to the local elevation
 
 An almost complete spectrum of stereo correspondence algorithms has been
 published and it is still augmented at a significant rate!
-See for example \href{http://en.wikipedia.org/wiki/Block-matching_algorithm} for example. The
+See for example \href{http://en.wikipedia.org/wiki/Block-matching_algorithm}. The
 \otb implements different strategies for block matching:
 
 \begin{itemize}
@@ -193,37 +195,42 @@ See for example \href{http://en.wikipedia.org/wiki/Block-matching_algorithm} for
 \item Lp pseudo-norm (LP)
 \end{itemize}
 
-An other important parameter (mandatory in the application!) is the range of
-disparities. In theory, the block matching can perform a blind exploration and
-search for a infinite range of disparities between the stereo pair. We need now
-to evaluate a range of disparities where the block matching will be performed (in the general case from the deepest point on
-Earth, \url{http://en.wikipedia.org/wiki/Challenger_Deep}{the Challenger Deep}.
-to the Everest summit!)
+An other important parameter (mandatory in the application!) is the
+range of disparities. In theory, the block matching can perform a
+blind exploration and search for a infinite range of disparities
+between the stereo pair. We need now to evaluate a range of
+disparities where the block matching will be performed (in the general
+case from the deepest point on
+Earth, \href{http://en.wikipedia.org/wiki/Challenger_Deep}{the
+Challenger Deep}.  to the Everest summit!)
 
-I deliberately exaggerated but you can imagine that without a smaller range
-the block matching algorithm can take a lot of time.  That's why
-these parameters are mandatory for the application and as a consequence we need to
-estimate them manually. That's pretty simple using the two epipolar images.
+We deliberately exaggerated but you can imagine that without a smaller
+range the block matching algorithm can take a lot of time.  That is why
+these parameters are mandatory for the application and as a
+consequence we need to estimate them manually. This is pretty simple
+using the two epipolar images.
 
-In my case, I take one point on a \textit{flat} area. The image coordinate in $image_{1}$
-is $[1970,1525]$ and in $image_{2}$ is $[1970,1526]$. I select after that a second
-point on a higher region (in my case a point near the top of the Pyramid of
+In our case, we take one point on a \textit{flat} area. The image coordinate in $image_{1}$
+is $[1970,1525]$ and in $image_{2}$ is $[1970,1526]$. We then select a second
+point on a higher region (in our case a point near the top of the Pyramid of
 Cheops!). The image coordinate of this pixel in $image_{1}$ is $[1661,1299]$ and
-in $image_{2}$ is $[1633,1300]$.  So you see for the horizontal exploration, I
-must set the minimum value inferior to $-30$ (the convention for the sign of the
+in $image_{2}$ is $[1633,1300]$.  So you see for the horizontal exploration, we
+must set the minimum value lower than $-30$ (the convention for the sign of the
 disparity range is from image1 to image2).
 
-Note that, this estimation can be simplified using an external DEM in the
-\application{StereoRectificationGridGenerator} application. Concerning the
-vertical disparity, in the first step we said that we reduce the problem of 3-D
-extraction to a 1-D problem, but that's not completely true in general cases. In our
-case, there are small disparities in the vertical direction which are due to
-parallax errors (i.e. epipolar lines exhibit a small shift in the vertical
-direction, around 1 pixel). In fact, the exploration is typically smaller along
-the vertical direction of disparities than along the horizontal one. You can also estimate
-them on the epipolar couple (in my case I use a range of $-1$ to $1$).
+Note that this estimation can be simplified using an external DEM in the
+\application{StereoRectificationGridGenerator} application. Regarding the
+vertical disparity, in the first step we said that we reduced the
+problem of 3-D extraction to a 1-D problem, but this is not completely
+true in general cases. There might be small disparities in the
+vertical direction which are due to parallax errors (i.e. epipolar
+lines exhibit a small shift in the vertical direction, around 1
+pixel). In fact, the exploration is typically smaller along the
+vertical direction of disparities than along the horizontal one. You
+can also estimate them on the epipolar pair (in our case we use a
+range of $-1$ to $1$).
 
-One more time take care of the sign of this minimum and this maximum for
+One more time, take care of the sign of this minimum and this maximum for
 disparities (always from image1 to image2).
 
 The command line for the \application{BlockMatching} application is :
@@ -248,19 +255,19 @@ The application creates by default a two bands image : the horizontal and
 vertical disparities.
 
 The \application{BlockMatching} application gives access to a lot of other
-powerful functionalities to improve the quality of the disparity maps.
+powerful functionalities to improve the quality of the output disparity map.
 
-Let's describe now these functionalities:
+Here are a few of these functionalities:
 
 \begin{itemize}
-\item -io.outmetric : Output the metric: if the optimal metric values image is
+\item -io.outmetric: if the optimal metric values image is
   activated, it will be concatenated to the output image (which will then
-  have three bands : horizontal disparity, vertical disparity and metric value)
-\item -bm.subpixel : Perform sub-pixel estimation of disparities
-\item -mask.inleft and -mask.inright : you can specify a no-data value which
+  have three bands: horizontal disparity, vertical disparity and metric value)
+\item -bm.subpixel: Perform sub-pixel estimation of disparities
+\item -mask.inleft and -mask.inright: you can specify a no-data value which
   will discard pixels with this value (for example the epipolar geometry can
   generate large part of images with black pixels)
-  This mask can be easily generate using the \application{BandMath} application:
+  This mask can be easily generated using the \application{BandMath} application:
 
 \begin{verbatim}
 otbcli_BandMath -il image1_epipolar.tif
@@ -275,14 +282,14 @@ otbcli_BandMath -il image2_epipolar.tif
 \end{verbatim}
 
 \item -mask.variancet : The block matching algorithm has difficulties to find
-  matches on a uniform zone. We can use the variance threshold to discard those
-  regions and speed-up again computation time.
-\item -bm.medianfilter.radius 5 and -bm.medianfilter.incoherence 2.0 : Applies a
-  median filter to the disparity map. A median filter is one of the family of
+  matches on uniform areas. We can use the variance threshold to discard those
+  regions and speed-up computation time.
+\item -bm.medianfilter.radius 5 and -bm.medianfilter.incoherence 2.0: Applies a
+  median filter to the disparity map. The median filter belongs to the family of
   nonlinear filters. It is used to smooth an image without being biased by
-  outliers or shot noise. The radius corresponds to the neighborhood where the
+  outliers or shot noise. The radius corresponds to the neighbourhood where the
   median value is computed. A detection of incoherence between the input
-  disparity map and the median is performed (a pixel corresponds to an
+  disparity map and the median-filtered one is performed (a pixel corresponds to an
   incoherence if the absolute value of the difference between the pixel value in
   the disparity map and in the median image is higher than the incoherence
   threshold, whose default value is 1). Both parameters must be defined in the
@@ -302,27 +309,30 @@ Of course all these parameters can be combined to improve the disparity map.
 
 \subsubsection{From disparity to Digital Elevation Model}
 
-With the previous application, we've evaluated disparities between images. The
+Using the previous application, we evaluated disparities between images. The
 next (and last!) step is now to transform the disparity map into an elevation
-information and produce an elevation map. It uses as input the disparity maps
+information to produce an elevation map. It uses as input the disparity maps
 (horizontal and vertical) to produce a Digital Elevation Model (DEM) with a
 regular sampling. The elevation values is computed from the triangulation of the
-"left-right" pairs of pixels matched and when several elevations are possible on
-a DEM cell, the highest is kept.
+"left-right" pairs of matched pixels. When several elevations are available on
+a DEM cell, the highest one is kept.
 
-Firstly, an important point is that it's often a good idea to refine your disparity
-map given by the \application{BlockMatching} application to only keep relevant
-disparities. For this, we use the output optimal metric image and threshold
-disparities among this value.
+First, an important point is that it is often a good idea to rework
+the disparity map given by the \application{BlockMatching} application
+to only keep relevant disparities. For this purpose, we can use the
+output optimal metric image and filter disparities with respect to this
+value.
 
-For example, if you've used Normalized Cross-Correlation (NCC), you can only
-keep disparities where optimal metric is superior to $0.9$. Disparities below
-this value can be consider as inaccurate and will not be used to compute
-elevation information (use for this the \textit{-io.mask} parameter.
+For example, if we used Normalized Cross-Correlation (NCC), we can
+keep only disparities where optimal metric value is superior to
+$0.9$. Disparities below this value can be consider as inaccurate and
+will not be used to compute elevation information
+(the \textit{-io.mask} parameter can be used for this purpose).
 
-This refinement can be easily done with \app.
+This filtering can be easily done with \app.
 
-We use first the \application{BandMath} application to threshold disparity.
+We first use the \application{BandMath} application to filter
+disparities according to their optimal metric value:
 
 \begin{verbatim}
 otbcli_BandMath -il disparity_map_ncc.tif
@@ -330,15 +340,15 @@ otbcli_BandMath -il disparity_map_ncc.tif
                 -exp "if(im1b3>0.9,255,0)"
 \end{verbatim}
 
-And then, concatenate threshold disparities using the \application{ConcatenateImages}:
+Then, we concatenate thresholded disparities using the \application{ConcatenateImages}:
 
 \begin{verbatim}
 otbcli_ConcatenateImages -il thres_hdisparity.tif thres_vdisparity.tif
                          -out thres_hvdisparity.tif
 \end{verbatim}
 
-Now we can use the \application{DisparityMapToElevationMap} application to
-compute the elevation map from the refined disparity maps.
+Now, we can use the \application{DisparityMapToElevationMap} application to
+compute the elevation map from the filtered disparity maps.
 
 \begin{verbatim}
 otbcli_DisparityMapToElevationMap -io.in disparity_map_ncc.tif
@@ -354,11 +364,13 @@ otbcli_DisparityMapToElevationMap -io.in disparity_map_ncc.tif
 \end{verbatim}
 
 It produces the elevation map projected in WGS84 (EPSG code:$4326$) over the
-ground area covered by the stereo pair.
+ground area covered by the stereo pair. Pixels values are expressed in meters.
 
 \begin{figure}[!h]
   \center
   \includegraphics[width=0.7\textwidth]{../Art/MonteverdiImages/stereo_dem_zoom.png}
   \itkcaption[Example]{Extract of the elevation map over Pyramids of Cheops.}
-  \label{fig:MeanShiftVectorImageFilter}
+  \label{fig:stereo_out}
 \end{figure}
+
+This is it ! Figure~\ref{fig:stereo_out} shows the output DEM from the Cheops pair.
