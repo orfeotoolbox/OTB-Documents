@@ -1,13 +1,13 @@
 \newpage
-\section{Using Pleiades images in \app and \mont}\label{sec:pleiades}
+\section{Using \phr images in \app and \mont}\label{sec:pleiades}
 
-The typical Pleiades product is a pansharpened image of 40 000 by 40
+The typical \phr product is a pansharpened image of 40 000 by 40
 000 pixels large, with 4 spectral bands, but one can even order larger
 mosaics, whose size can be even larger, with hundreds of thousands of
 pixels in each dimension.
 
 To allow easier storage and transfer of such products, the standard
-image file format is JPEG2000, which allows to achieve high
+image file format is \jpg, which allows to achieve high
 compression rates. The counterpart of these better storage and
 transfer performances is that the performance of pixels accesses
 within those images may be poorer than with an image format without
@@ -15,8 +15,8 @@ compression, and even more important, the cost of accessing pixels is
 not uniform: it depends on where are the pixels you are trying to
 access, and how they are spatially arranged.
 
-To be more specific, Pleiades images are internally encoded into 2048
-per 2048 pixels tiles (within the JPEG2000 file). These tiles
+To be more specific, \phr images are internally encoded into 2048
+per 2048 pixels tiles (within the \jpg file). These tiles
 represent the atomic decompression unit: if you need a single pixel
 from a given tile, you still have to decode the whole tile to get
 it. As a result, if you plan to access a large amount of pixels within
@@ -24,35 +24,35 @@ the image, you should try to access them on a per tile basis, because
 anytime you ask for a given tile more than once, the performances of
 your processing chains drop.
 
-What does it mean ? In OTB, the streaming (on the flow) pipeline
+What does it mean? In \otb, the streaming (on the flow) pipeline
 execution will try to stay synchronised with the input image tiling
 scheme to avoid decoding the same tile several time. But you may know
-that in the OTB world, one can easily chain numerous processing, some
+that in the \otb world, one can easily chain numerous processing, some
 them enlarging the requested region to process the output - like
 neighbourhood based operators for instance - or even completely change
 the image geometry - like ortho-rectification for instance. And this
-chaining freedom is also at the heart of Monteverdi. In short, it is
-very easy to build a processing pipeline in OTB or chain of modules in
-Monteverdi that will get incredibly bad performances, even if the OTB
+chaining freedom is also at the heart of \mont. In short, it is
+very easy to build a processing pipeline in \otb or chain of modules in
+\mont that will get incredibly bad performances, even if the \otb
 back-end does its best to stay in tune with tiles. And here, we do not
 even speak of sub-sampling the whole dataset at some point in the
 pipeline, which will lead to even more incredibly poor performances,
 and is however done anytime a viewer is called on a module output in
-Monteverdi.
+\mont.
 
-So, can \mont or \app open and process Pleiades images ? Fortunately
-yes. \mont even takes advantage of JPEG2000 ability to generate
-coarser scale images for quick-look generation for visualisation
-purposes. But to ease the use of Pleiades images in \mont, we chose to
-open them in a separate data type, and to lock the use of most of
-modules for this data type. It can only be used in the Viewer module
-and a dedicated module allowing to uncompress a user-defined part of a
-Pleiades image to disk. One can still force the data type during the
+So, can \mont or \app open and process \phr images? Fortunately
+yes. \mont even takes advantage of \jpg ability to generate coarser
+scale images for quick-look generation for visualisation purposes. But
+to ease the use of \phr images in \mont, we chose to open them in a
+separate data type, and to lock the use of most of modules for this
+data type. It can only be used in the Viewer module and a dedicated
+module allowing to uncompress a user-defined part of a
+\phr image to disk. One can still force the data type during the
 opening of the image, but this is not advised: the advised way to use
-the other modules with Pleiades data is to first uncompress to disk
-your area of interest, and then open it again in Monteverdi (careful,
+the other modules with \phr data is to first uncompress to disk
+your area of interest, and then open it again in \mont (careful,
 you may need a lot of disk space to do this). As for the applications,
-they will work fine even on JPEG2000 Pleiades data, but keep in mind
+they will work fine even on \jpg \phr data, but keep in mind
 that a performance sink might show depending on the processing you are
 try to achieve. Again, the advised way of working would be to
 uncompress your area of interest first and then work with the
@@ -60,16 +60,17 @@ uncompressed file, as you used to with other data.
 
 A final word about metadata: \app and \mont can read the Dimap V2
 (note that we also read the less non-official Dimap V1.1 format)
-metadata file associated with the JPEG2000 file in the Pleiades
+metadata file associated with the \jpg file in the \phr
 product. It reads the RPC localisation model for geo-coding and the
 information needed to perform radiometric calibration. These metadata
-will be written in an associated geom file when uncompressing your
-area of interest to disk, so that both \mont and \app will be able to
-retrieve them, even for images extracts.
+will be written in an associated geometry file (with a \textit{.geom}
+extension) when uncompressing your area of interest to disk, so that
+both \mont and \app will be able to retrieve them, even for images
+extracts.
 
-\subsection{Opening a Pleiades image in \mont}
+\subsection{Opening a \phr image in \mont}
 
-Opening a Pleiades image in \mont is not different from opening other
+Opening a \phr image in \mont is not different from opening other
 kind of dataset: use the \textit{Open Dataset} item from the
 \textit{File} menu, and select the JP2 file corresponding to you image
 using the file browser.
@@ -77,19 +78,103 @@ using the file browser.
 \begin{figure}
   \center
   \includegraphics[width=0.4\textwidth]{../Art/MonteverdiImages/pleiades_open.png}
-  \itkcaption[Monteverdi Pleiades image opening]{Dialog window when opening a pleiades image in Monteverdi}
+  \itkcaption[\mont \phr image opening]{Dialog window when opening a \phr image in \mont}
   \label{fig:pleiades_open}
 \end{figure}
 
 Figure~\ref{fig:pleiades_open}, page~\pageref{fig:pleiades_open} shows
-the dialog box when opening a Pleiades image in \mont.
+the dialog box when opening a \phr image in \mont. One can see some
+changes with respect to the classical dialog box for images opening.
 
-\subsection{Viewing a Pleiades image in \mont}
+The first novelty is a combo box allowing to choose the resolution of
+the \jpg file one wants to decode. As said in the introduction of
+this section, \otb can take advantage of \jpg capability to access
+coarser resolution ver efficiently. If you select for instance
+the \textit{Resolution: 1} item, you will end with an image half the
+size of the original image with pixels twice as big. For instance, on
+a \phr panchromatic or pansharpened product,
+the \textit{Resolution: 0} image has a ground samping distance of
+0.5 meters while the \textit{Resolution: 1} image has a ground
+samping distance of one meter. For a multispectral product,
+the \textit{Resolution: 0} image has a ground samping distance of 2
+meters while the \textit{Resolution: 1} image has a ground samping
+distance of 4 meters.
+
+The second novelty is a check-box called \textit{Save quicklook for
+future re-use}. This option allows to speed-up the loading of a
+\phr image within \mont. In fact, when loading a \phr
+image, \mont generates a quicklook of this image to be used as a
+minimap in the \textit{Viewer Module} as well as in
+the \textit{Uncompress Jpeg2000 image} module. This quicklook is the
+coarser level of resolution from the \jpg file: it should decode
+easily, but can still take a while. This is why if the check-box is
+checked, \mont will write this quicklook in uncompressed \textit{Tiff}
+format next to the \jpg file. For instance, if the file name  is:
+\begin{verbatim}
+IMG_PHR1A_MS_201204011017343_SEN_IPU_20120529_1596-002_R1C1.JP2
+\end{verbatim}
+
+\mont will write, if it can, the following files in the same
+directory:
+\begin{verbatim}
+IMG_PHR1A_MS_201204011017343_SEN_IPU_20120529_1596-002_R1C1.JP2_ql_by_otb.tif
+IMG_PHR1A_MS_201204011017343_SEN_IPU_20120529_1596-002_R1C1.JP2_ql_by_otb.geom
+\end{verbatim}
+
+Next time one will try to open this image in \mont, the application
+will find these files and load directly the quicklook from them,
+instead of decoding it from the \jpg file, resulting in an instant
+loading of the image in \mont. Since the wheight of these extra files
+is ususally of a few megaoctets, it is recommended to keep this option
+checked unless one has a very good reason not to.
+
+\subsection{Viewing a \phr image in \mont}
+
+\begin{figure}
+  \center
+  \includegraphics[width=0.4\textwidth]{../Art/MonteverdiImages/pleiades_open.png}
+  \itkcaption[\mont \phr image opening]{Dialog window when opening a \phr image in \mont}
+  \label{fig:pleiades_monteverdi}
+\end{figure}
+
+Now that the \phr image is loaded in \mont, it appears in the
+main \mont window, as shown in figure~\ref{fig:pleiades_monteverdi},
+page~\pageref{fig:pleiades_monteverdi}. You can open the \phr image in
+the viewer, either by using the contextual menu or by opening
+the \textit{Viewer Module} through the menubar.
+
+You can notice that the viewer opens quickly without showing the
+traditional progress bar. This is because \mont already loaded the
+quick-look upon opening, and we do not need to re-compute it each time
+the image is opened in the \textit{Viewer Module}. 
+
+\begin{figure}
+  \center
+  \includegraphics[width=0.4\textwidth]{../Art/MonteverdiImages/pleiades_open.png}
+  \itkcaption[\mont \phr image opening]{Dialog window when opening a \phr image in \mont}
+  \label{fig:pleiades_viewer}
+\end{figure}
+
+Figure~\ref{fig:pleiades_viewer}, page~\pageref{fig:pleiades_viewer}
+shows a \phr image displayed in the \textit{Viewer Module}. One can
+notice that the navigation experience is rather smooth. If you
+navigate using arrows keys, you will notice that latency can occur now
+and then: this is due to the viewport switching to a new \jpg tile to
+decode. On can also observe that the latitude and longitude of the
+pixel under the mouse pointer is displayed, which means that the
+sensor modelling is handled (if you have an internet connection, you
+may even see the actual name of the place under mouse
+pointer). Last, as said in the foreword of this section, \phr image
+can be quite large, so it might be convenient to switch the viewer
+style from \textit{Packed} to \textit{Splitted}, in which case you
+will be able to maximize the \textit{Scroll Window} for better
+localisation of the viewed area. To do so, one can go to
+the \textit{Setup} tab of the \textit{Viewer Control Window}.
 
 \subsection{Handling mega-tiles in \mont}
 
-\subsection{Partial uncompressing of Pleiades images in \mont}
+\subsection{Partial uncompressing of \phr images in \mont}
 
-\subsection{Other processing of Pleiades images with \mont}
+\subsection{Other processing of \phr images with \mont}
 
-\subsection{Processing of Pleiades images with \app}
+\subsection{Processing of \phr images with \app}
