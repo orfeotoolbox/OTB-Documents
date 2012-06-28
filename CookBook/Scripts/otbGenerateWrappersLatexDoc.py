@@ -23,6 +23,7 @@ def ConvertString(s):
     s = s.replace('>', '\\textgreater')
     s = s.replace('<=', '\\le')
     s = s.replace('>=', '\\re')
+    s = s.replace('^-1','$^-1$')
     return s
 
 def EncloseString(s):
