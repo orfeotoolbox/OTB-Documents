@@ -31,7 +31,7 @@ ENDIF(NOT TEX4HT_COMPILER)
 
 # Option for html generation
 SET(TEX4HT_OPTIONS html,4,subsubsections+)
-SET (HTML_OUTPUT "Html")
+SET (HTML_OUTPUT "CookBook-${OTB_VERSION_MAJOR}.${OTB_VERSION_MINOR}")
 
 IF(LATEX_COMPILER)
   SET(ITK_TEXINPUTS ${CookBook_SOURCE_DIR}/../Latex:${CookBook_SOURCE_DIR}/Latex:${CookBook_SOURCE_DIR}/Art:${CookBook_BINARY_DIR}/Art:${CookBook_BINARY_DIR}/Latex)
