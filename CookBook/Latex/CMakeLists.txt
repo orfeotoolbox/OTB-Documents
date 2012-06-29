@@ -40,13 +40,13 @@ IF(LATEX_COMPILER)
       ${CookBook_BINARY_DIR}/Tex4htWrapper.sh)
     SET (TEX4HT_WRAPPER1 ${CookBook_BINARY_DIR}/Tex4htWrapper.sh)
     SET (TEX4HT_WRAPPER2 "")
-    ADD_CUSTOM_TARGET(AppDocHTML
+    ADD_CUSTOM_TARGET(CookBookHTML
                       ALL
                       COMMAND sh ${CookBook_BINARY_DIR}/Tex4htWrapper.sh CookBook
                       WORKING_DIRECTORY ${CookBook_BINARY_DIR}
                       COMMENT "Building HTML documentation"
                       )
-    ADD_DEPENDENCIES(AppDocHTML CookBook_pdf)
+    ADD_DEPENDENCIES(CookBookHTML CookBook_pdf)
   ENDIF (TEX4HT_COMPILER)
 ENDIF(LATEX_COMPILER)
 
