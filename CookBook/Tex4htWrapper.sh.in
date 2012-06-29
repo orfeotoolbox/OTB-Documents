@@ -14,11 +14,13 @@ cd ..
 find ${HTML_OUTPUT} -name '*.html' | xargs sed -i "s/<\/body>/ <script type=\"text\/javascript\"> var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https:\/\/ssl.\" : \"http:\/\/www.\"); document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com\/ga.js' type='text\/javascript'%3E%3C\/script%3E\")); <\/script> <script type=\"text\/javascript\"> try { var pageTracker = _gat._getTracker(\"UA-7072990-1\"); pageTracker._trackPageview(); } catch(err) {}<\/script><\/body>/g"
 
 # copy image from the Art directory
-cp Art/logoVectoriel.pdf Html/
-cp Art/MonteverdiImages/* Html/
-cp Art/QtImages/* Html/
+cp Art/logoVectoriel.pdf ${HTML_OUTPUT}/
+cp Art/MonteverdiImages/* ${HTML_OUTPUT}/
+cp Art/QtImages/* ${HTML_OUTPUT}/
 
 # Change the ../Art into ""
-sed -i -e 's,\.\./Art/MonteverdiImages/,,' Html/*.html
-sed -i -e 's,\.\./Art/QtImages/,,' Html/*.html
-sed -i -e 's,\.\./Art/,,' Html/*.html
+sed -i -e 's,\.\./Art/MonteverdiImages/,,' ${HTML_OUTPUT}/*.html
+sed -i -e 's,\.\./Art/QtImages/,,' ${HTML_OUTPUT}/*.html
+sed -i -e 's,\.\./Art/,,' ${HTML_OUTPUT}/*.html
+
+tar cvzf CookBook-${OTB_VERSION_MAJOR}.${OTB_VERSION_MINOR}-html.tar.gz CookBook-${OTB_VERSION_MAJOR}.${OTB_VERSION_MINOR}
