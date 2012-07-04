@@ -24,6 +24,7 @@ sed -i -e 's,\.\./Art/QtImages/,,' ${HTML_OUTPUT}/*.html
 sed -i -e 's,\.\./Art/,,' ${HTML_OUTPUT}/*.html
 
 cd ${HTML_OUTPUT}
+rm -f index.html
 ln -s CookBook.html index.html
 
 cd ..
