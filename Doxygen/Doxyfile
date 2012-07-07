@@ -26,7 +26,7 @@ DOXYFILE_ENCODING      = UTF-8
 # identify the project. Note that if you do not use Doxywizard you need
 # to put quotes around the project name if it contains spaces.
 
-PROJECT_NAME           = OrfeoToolbox
+PROJECT_NAME           = "Orfeo Toolbox"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -491,7 +491,7 @@ SORT_BRIEF_DOCS        = YES
 # This tag will be ignored for brief docs if SORT_BRIEF_DOCS is set to NO
 # and ignored for detailed docs if SORT_MEMBER_DOCS is set to NO.
 
-SORT_MEMBERS_CTORS_1ST = NO
+SORT_MEMBERS_CTORS_1ST = YES
 
 # If the SORT_GROUP_NAMES tag is set to YES then doxygen will sort the
 # hierarchy of group names into alphabetical order. If set to NO (the default)
@@ -665,8 +665,15 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = ../../OTB/Code/Common \
-                         ../Doxygen
+INPUT                  = ../../OTB/Code \
+                         ../Doxygen \
+                         ../../OTB/Utilities/ITK/Code \
+                         ../../OTB/Utilities/InsightJournal \
+                         ../../OTB/Utilities/otbsvm \
+                         ../../OTB/Examples
+
+#INPUT                  = ../../OTB/Code/Common \
+#                         ../Doxygen
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
