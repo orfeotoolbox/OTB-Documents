@@ -134,6 +134,10 @@ dl.el {
 .fragment {
 	font-family: monospace, fixed;
 	font-size: 105%;
+    background-color: #F5F5F5;
+    border: 1px solid #CCCCCC;
+    margin: 4px 8px 4px 2px;
+    padding: 4px 6px;
 }
 
 pre.fragment {
@@ -141,6 +145,11 @@ pre.fragment {
     border: 1px solid #CCCCCC;
     margin: 4px 8px 4px 2px;
     padding: 4px 6px;
+}
+
+div.line {
+	font-family: monospace, fixed;
+	font-size: 105%;
 }
 
 div.ah {
