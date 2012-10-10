@@ -172,7 +172,7 @@ and \textit{-out.uly} parameters.
 
 \subsubsection{Disparity estimation: Block matching along epipolar lines}
 
-Finally, we can begin the stereo correspondences lookup process! 
+Finally, we can begin the stereo correspondences lookup process!
 
 Things are becoming a little bit more complex but do not worry. First,
 we will describe the power of the \application{BlockMatching}
@@ -243,7 +243,7 @@ otbcli_BlockMatching -io.inleft image1_epipolar.tif
                      -bm.minvd 1
                      -bm.maxvd 1
                      -mask.inleft image1_epipolar_mask.tif
-                     -mask.inleft image2_epipolar_mask.tif
+                     -mask.inright image2_epipolar_mask.tif
                      -io.outmetric 1
                      -bm.metric ncc
                      -bm.subpixel dichotomy
