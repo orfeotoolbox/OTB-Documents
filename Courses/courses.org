@@ -11,22 +11,23 @@
 #+OPTIONS: ^:{}
 
 * Exercises
-** Exercise 1: Monteverdi and OTB applications
+** Exercise 1: *Monteverdi* and *OTB applications*
 *** Description
 **** Abstract
      
-     This exercise will get you familiair with the use of Monteverdi
-     and OTB applications.
+     This exercise will get you familiar with the use of *Monteverdi*
+     and *OTB applications*.
 **** Pre-requisites
 
-     - Basic knowledge of remote sensing and image processing
+     - Basic knowledge of remote sensing and image processing,
+     - Basic knowledge of command-line invocation.
 
 **** Achievements
 
-     - Visualize data in Monteverdi,
-     - Basic processing in Monteverdi,
-     - Basic processing with OTB applications in graphical mode,
-     - Basic processing with OTB applications in command-line mode.
+     - Visualize data in *Monteverdi*,
+     - Basic processing in *Monteverdi*,
+     - Basic processing with *OTB applications* in graphical mode,
+     - Basic processing with *OTB applications* in command-line mode.
 
 *** Steps
 
@@ -60,7 +61,7 @@
        channel, near infra-red channel.
 
 **** Monteverdi: basic processing
-
+     #+LABEL:   ex1_monteverdi_basic_processing
      In this part of the exercise, you will use the following data:
 
      ~phrs_xs_melbourne.tif~
@@ -92,14 +93,27 @@
      - NDVI values are within -1 and 1, but the range can be much
        more narrow.
 
-**** OTB applications: Graphical mode
+**** OTB applications: Graphical and command-line mode
 
      1. Run the following command:
-        : $ 
+        : $ otbcli_OrthoRectification
+        And then
+        : $ otbgui_OrthoRectification
+        What do you observe ?
+     2. How many *OTB applications* are currently available ?
+     3. How can you get help and documentation about applications ?
 
-**** OTB applications: Command-line mode
+**** OTB applications: Basic processing
+     
+     1. Use the *OTB applications* to produce the same results as steps 3 to
+        7 as with *Monteverdi* in section [[Monteverdi: basic processing]].
 
 **** Homework
+     
+     1. How can we load or visualise images directly from command-line using *Monteverdi* ?
+     2. Learn about the /Python/ access to *OTB Applications* and
+        write a python script performing the same steps as in section
+        [[OTB applications: Basic processing]].
 
 
 ** Exercise 2: Segmentation
