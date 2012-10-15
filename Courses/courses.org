@@ -725,10 +725,11 @@
      stitching.
 
       #+Latex:\vspace{0.5cm}
-     #+ATTR_LaTeX: width=0.\textwidth
-
-
-
+     #+Latex:\begin{center}
+     #+ATTR_LaTeX: width=0.9\textwidth
+     [[file:Images/qgis_stitch.png]]
+     #+Latex:\end{center}
+     
 *** Homework
 **** Item 1
      - The /tilesize/ option allow to tune the size of the tile used
