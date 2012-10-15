@@ -409,7 +409,8 @@
      The following command-line allow to use the *ColorMapping*
      application in optimal mode:
 
-     : $ otbcli_ColorMapping -in first_cc.tif -out first_cc_color_optimal.png uint8
+     : $ otbcli_ColorMapping -in first_cc.tif 
+     :   -out first_cc_color_optimal.png uint8
      :   -method optimal
 
      The /optimal/ color-mapping method allows to colorize each
@@ -421,7 +422,8 @@
      Looking at the colorized image with the /optimal/ look-up table,
      we can now see that the result is over-segmented.
 
-     : $ otbcli_ColorMapping -in first_cc.tif -out first_cc_color_image.png uint8
+     : $ otbcli_ColorMapping -in first_cc.tif 
+     :   -out first_cc_color_image.png uint8
      :   -method image -method.image.in segmentation_small_xt_phr.tif
 
      The /image/ color-mapping method allows to colorize each segment
