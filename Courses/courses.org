@@ -311,41 +311,54 @@
 
      1. Run the command-line and graphical version of the *StereoRectificationGridGenerator* application
      2. What are the two outputs of the applications?
-     3.Use the application to generate 2 grids (uise an average elevation of 20.45 and compute the grids at a coarser resolution (factor of 5)
+     3. Use the application to generate 2 grids
      4. Which OTB application allows to resample the two input images using this grid?
      5. Use this application to resample input stereo pairs in epipolar geometry
      6. Open the 2 resampled images. What do you notice ?
 
-**** Joint refinement of images geometry
+      _Tips and Recommandations:_
+        - Perform the grids estimation using and average elevation of 20.45m (*epi.elevation.avg.value* keyword)
+        - Stereo-rectification deformation grid only varies slowly. Therefore, it is recommanded to use a coarser grid (higher step value) in case of large images (*epi.step* keyword)
 
-     1.
-     2. Open the 2 "refined" images . What differences do you notice?
+**** Improve epipolar geometry Refinement of images geometry
 
+     TODO explain geometric model problem
+     We provide a refine version of the stereo pair
+     1. Recompute epipolar geometry with the new stereo pair
+     2. Open the 2 version of epipolar couples (total of 4 images). What differences do you notice between the two images pair?
+
+     We will use this images in the next  questions :
+     - tristereo_melbourne_1_small_ref.tif
+     - tristereo_melbourne_2_small_ref.tif
 **** Block matching :
 
      We are going to perform stereo pair block matching on the two images using the *BlockMatching* application
 
      1. Run the command-line and graphical version of the *BlockMatching* application. What are the mandatory parameters
-     2. Propose methodologies to estimate interval of disparities and use them in the application
-     3. What are the intervals of disparity
+     2. Propose manual or automatic methodologies to estimate the interval of disparities
+     3. Use these parameters to generate a disparity map and open the result with Monteverdi. What do you notice?
 
-**** Advanced Block matching
+      _Tips and Recommandations:_
+        - Discard pixels with no-data (0 in our case) value using the parameter *-mask.nodata*
+**** Advanced Block matching : refine disparity map
 
-     We are going to try here to improve the output disparity
+     We are going to try here to improve the quality of disparity
 
-     1. Use the Normalized Cross Correlation and output . What results do you obtazin
-     2. Try to
-     3.
+     1. Use the Normalized Cross Correlation and output the metric value using the io.outmetric option. Open the metric image.Which value of correlation corresponds to a
+     2. Use the option mask.variancet to discard pixels whose local variance is too small (the size of the neighborhood is given by the radius parameter)
+     3. Use the *BandMath* application to only keep disparity with high metric value
 
-**** Disparity filtering
+**** From disparity map to elevation
 
-     Here we will tru
-     1.
+     1. Use the *DisparityMapToElevationMap* to transform the disparity map into an elevation information to produce an elevation map
+     2. At which height are approximatively football players on the ground in the stadium?
+     3. What is approximatively the height of the stadium?
+
 **** Homework
      1. Try refinement steps to improve epipolar geometries (available soon in OTB -> 3.16 version)
-     2. Perform coherence
-     3. Re-compute disparity maps using sub-pixel block matching and  median filter to "boucher les trous
-     4.
+     2. Perform disparity coherence analysis by comparing disparity map obtained with image
+     3. Re-compute disparity maps with sub-pixel precision block
+     4. Use median filter to get a smooth disparity map
 * Solutions
 
 ** Solution 1: Monteverdi and OTB-Applications
