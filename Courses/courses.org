@@ -5,8 +5,8 @@
 #+LaTeX_CLASS_OPTIONS: [a4paper]
 #+LaTeX_HEADER: \usepackage{a4wide}
 #+LaTeX_HEADER: \usepackage[T1]{fontenc}
-#+LaTeX_HEADER: \usepackage{mathptmx} 
-#+LaTeX_HEADER: \usepackage[scaled=.90]{helvet} 
+#+LaTeX_HEADER: \usepackage{mathptmx}
+#+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
 #+OPTIONS: ^:{}
 
@@ -35,7 +35,7 @@
      4. Replace cli by gui in the command name. What do you notice ?
 
 **** Start with Python
-     
+
      1. Set the PYTHONPATH environment variable
      2. ...
 
@@ -48,7 +48,7 @@
      application. You will learn how to produce a raster segmentation
      output with different algorithms and how to scale up to larger input
      images by producing vector outputs.
-     
+
 **** Pre-requisites
 
      - Basic knowledge on OTB applications and QGis usage
@@ -68,7 +68,7 @@
      2. Read the documentation. What are the three segmentation
         methods available ?
      3. What are the two output modes ?
-        
+
 **** Simple segmentation in raster mode
 
      In this part of the exercise, you will use the following data:
@@ -91,15 +91,15 @@
      _Tips and Recommandations:_
       - Use the *distance* keyword in the expression to denote
         spectral distance
-      - Pay attention to the output image type     
+      - Pay attention to the output image type
 
 
 **** More segmentation algorithms
 
      In this part of the exercise, you will use the following data:
-     
+
      ~segmentation_small_xt_phr.tif~
-     
+
      1. Run the *Segmentation* application in /raster/ mode again, but
         this time use the Mean-Shift filter. Use the *ColorMapping*
         application to visualize the results.
@@ -116,7 +116,7 @@
      3. Compare the best results from the three algorithms. Keep the
         best segmentation result you had for Exercise 3.
 
-     
+
      _Tips and Recommandations:_
       - There are two implementations of the Mean-Shift filter. Edison
         is the original implementation from the Mean-Shift paper
@@ -124,9 +124,9 @@
 
 **** Going big: the vector mode
      In this part of the exercise, you will use the following data:
-     
+
      ~segmentation_large_xt_phr.tif~
-     
+
      1. Run the *Segmentation* application in /raster/ mode again,
         using the best parameters you had in previous section, on the
         large image. Look at computer ressources. What happens ?
@@ -171,13 +171,13 @@
       3. Using the *Segmentation* application (and maybe other OTB
          applications), how can we deal with segmentation of high
          reflectance structures ?
-         
+
 ** Exercise 3: Learning and classification
 *** Description
 **** Abstract
 
      This workshop will guide you through the different steps toward a "Hello World" printing on your screen.
-     
+
 **** Pre-requisites
 
      - Basic knowledge of shell and command-line invocation
@@ -196,7 +196,7 @@
      4. Replace cli by gui in the command name. What do you notice ?
 
 **** Start with Python
-     
+
      1. Set the PYTHONPATH environment variable
      2. ...
 
@@ -211,40 +211,65 @@
      You will learn how to :
      - resample for stereo pair in epipolar geometry to reduce the stereo correspondences to a 1-D problem
      - Perform block matching between the 2 images to extract the disparity (related to the elevation)
-     - Filter disparities using correclation metric analysis and coherence evaluation using 2 disparity maps 
+     - Filter disparities using correclation metric analysis and coherence evaluation using 2 disparity maps
 
 **** Pre-requisites
 
      - Basic knowledge on OTB applications and QGis usage
-     - Basic knowledge on stereoscopic reconstruction
+     - Basic knowledge on epipolar geometry
+
+       #+Latex:\vspace{0.5cm}
+     #+ATTR_LaTeX: width=0.45\textwidth
+       [[file:Images/Epipolar_geometry.svg]]
+       http://www.ai.sri.com/~luong/research/Meta3DViewer/EpipolarGeo.html
+     - Basic knowledge stereoscopic reconstruction
 
 **** Achievements
 
      - Usage of set of stereoscopic reconstruction applications
-     - Stereo reconstruction on Pleiades images
+     - Stereo reconstruction based on Pleiades stereo images pair
 
 *** Steps
 
-**** From image to epipolar geometry
+**** From images to epipolar geometry :
 
-     1. Sets the PATH environment variable
-     2. Try to find otb applications in path. What do you notice ?
-     3. Try to run one cli application
-     4. Replace cli by gui in the command name. What do you notice ?
+     1. Run the command-line and graphical version of the *StereoRectificationGridGenerator* application
+     2. What are the two outputs of the applications?
+     3.Use the application to generate 2 grids (uise an average elevation of 20.45 and compute the grids at a coarser resolution (factor of 5)
+     4. Which OTB application allows to resample the two input images using this grid?
+     5. Use this application to resample input stereo pairs in epipolar geometry
+     6. Open the 2 resampled images. What do you notice ?
 
-**** Joint refinement of images geometry 
-     
-     1. 
-     2. 
+**** Joint refinement of images geometry
 
-**** Block matching
+     1.
+     2. Open the 2 "refined" images . What differences do you notice?
 
-**** Disparity filtering 
-     
+**** Block matching :
+
+     We are going to perform stereo pair block matching on the two images using the *BlockMatching* application
+
+     1. Run the command-line and graphical version of the *BlockMatching* application. What are the mandatory parameters
+     2. Propose methodologies to estimate interval of disparities and use them in the application
+     3. What are the intervals of disparity
+
+**** Advanced Block matching
+
+     We are going to try here to improve the output disparity
+
+     1. Use the Normalized Cross Correlation and output . What results do you obtazin
+     2. Try to
+     3.
+
+**** Disparity filtering
+
+     Here we will tru
+     1.
 **** Homework
      1. Try refinement steps to improve epipolar geometries (available soon in OTB -> 3.16 version)
-     2. Re-compute disparity maps using sub-pixel block matching and  median filter to "boucher les trous"
-     3. 
+     2. Perform coherence
+     3. Re-compute disparity maps using sub-pixel block matching and  median filter to "boucher les trous
+     4.
 * Solutions
 
 ** Solution 1: Discover Monteverdi and OTB-Applications
@@ -253,23 +278,23 @@
 
 *** Getting familiar with the *Segmentation* application
 
-**** Item 1    
+**** Item 1
 
     To get the command-line help, run
-      
-    : $ otbcli_Segmentation    
-      
+
+    : $ otbcli_Segmentation
+
     To Get the graphical version of the *Segmentation* application, run
-      
+
     : $ otbgui_Segmentation
-    
+
 **** Item 2
 
      There are three segmentation methods available in the application:
      - Mean-Shift (two different implementations)
      - Watershed
      - Connected-Components
-     
+
 **** Item 3
 
      There are two outputs available in the application:
@@ -288,12 +313,12 @@
      spectral distance:
 
      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-     :   -filter cc -filter.cc.expr "distance < 30" 
+     :   -filter cc -filter.cc.expr "distance < 30"
      :   -mode raster -mode.raster.out first_cc.tif uint32
 
      Please note that we use ~uint32~ as the output type so as to be
      sure to have enough unique labels for the whole segmentation.
-     
+
 **** Item 2
 
      The segmentation result is difficult to visualize because
@@ -305,8 +330,8 @@
 
      The following command-line allow to use the *ColorMapping*
      application in optimal mode:
-     
-     : $ otbcli_ColorMapping -in first_cc.tif -out first_cc_color_optimal.png uint8 
+
+     : $ otbcli_ColorMapping -in first_cc.tif -out first_cc_color_optimal.png uint8
      :   -method optimal
 
      The /optimal/ color-mapping method allows to colorize each
@@ -318,9 +343,9 @@
      Looking at the colorized image with the /optimal/ look-up table,
      we can now see that the result is over-segmented.
 
-     : $ otbcli_ColorMapping -in first_cc.tif -out first_cc_color_image.png uint8 
+     : $ otbcli_ColorMapping -in first_cc.tif -out first_cc_color_image.png uint8
      :   -method image -method.image.in segmentation_small_xt_phr.tif
-     
+
      The /image/ color-mapping method allows to colorize each segment
      with its mean color in the original image, which gives a more
      realistic rendering. Note that since the results are
@@ -331,7 +356,7 @@
 
      #+Latex:\vspace{0.5cm}
      #+ATTR_LaTeX: width=0.45\textwidth
-     [[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]    
+     [[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]
 
 **** Item 4
 
@@ -343,10 +368,10 @@
      - Have both a near infra-red value lower than 150.
 
      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-     :   -filter cc -filter.cc.expr "distance<30 
-     :    or (intensity_p1>400 and intensity_p2 > 400 and distance<50) 
-     :    or(intensity_p1 >1000 and intensity_p2>1000 
-     :    or (p1b4 <150 and p2b4<150))" 
+     :   -filter cc -filter.cc.expr "distance<30
+     :    or (intensity_p1>400 and intensity_p2 > 400 and distance<50)
+     :    or(intensity_p1 >1000 and intensity_p2>1000
+     :    or (p1b4 <150 and p2b4<150))"
      :   -mode raster -mode.raster.out second_cc.tif uint32
 
      Here are the color-mapping results:
@@ -363,13 +388,13 @@
      Mean-Shift filter, with default parameters:
 
      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-     :   -filter meanshift -mode raster 
+     :   -filter meanshift -mode raster
      :   -mode.raster.out meanshift.tif uint32
 
      A better result is obtained by using a spectral radius of 30:
 
      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-     :   -filter meanshift -filter.meanshift.ranger 30 -mode raster 
+     :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
      :   -mode.raster.out meanshift.tif uint32
 
      Here are the results of this command:
@@ -379,12 +404,12 @@
      [[file:Images/meanshift_color_optimal.png]] [[file:Images/meanshift_color_image.png]]
      #+Latex:\vspace{0.5cm}
 
-     
+
      Here is the command-line to run the application using the
      Watershed filter, with default parameters:
 
      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-     :   -filter watershed -mode raster 
+     :   -filter watershed -mode raster
      :   -mode.raster.out watershed.tif uint32
 
      Here are the results of this command:
@@ -401,9 +426,9 @@
      image:
 
      : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif
-     :   -filter meanshift -filter.meanshift.ranger 30 -mode raster 
+     :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
      :   -mode.raster.out meanshift.tif uint32
-     
+
      Since the input image is quite large (8192 by 8192 pixels), it is
      likely that, depending on the available memory on the computer:
      - The application fails with a memory allocation error,
@@ -415,12 +440,12 @@
      The following command will run the application in /vector/ mode,
      without the /stitch/ option:
 
-     : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif 
-     :   -filter meanshift -filter.meanshift.ranger 30 -mode vector 
+     : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif
+     :   -filter meanshift -filter.meanshift.ranger 30 -mode vector
      :   -mode.vector.out meanshift.sqlite -mode.vector.stitch 0
 
      In vector mode, the memory consumption is stable because the
-     segmentation on a per tile basis. 
+     segmentation on a per tile basis.
 
 **** Item 3
 
@@ -433,8 +458,8 @@
      The following command will run the application in /vector/ mode,
      with the /stitch/ option enabled:
 
-     : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif 
-     :   -filter meanshift -filter.meanshift.ranger 30 -mode vector 
+     : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif
+     :   -filter meanshift -filter.meanshift.ranger 30 -mode vector
      :   -mode.vector.out meanshift.sqlite -mode.vector.stitch 1
 
      Looking at the results in *QGis* one can see that most of the
@@ -444,12 +469,12 @@
 
      Here is how the results look like in *QGis*. In blue, one can see
      the results without stitching, and in red, the results with
-     stitching. 
+     stitching.
 
       #+Latex:\vspace{0.5cm}
      #+ATTR_LaTeX: width=0.\textwidth
 
-     
+
 
 *** Homework
 **** Item 1
