@@ -293,26 +293,26 @@
 **** Pre-requisites
 
      - Basic knowledge on OTB applications and QGis usage
-     - Basic knowledge on epipolar geometry
-       Epipolar geometry is the
-geometry of stereo vision
-(see \href{http://en.wikipedia.org/wiki/Epipolar_geometry}{here}). The
-operation of stereo rectification determines transformations to apply
-to each image such that pairs of conjugate epipolar lines become
-collinear, parallel to one of the image axes and aligned. In this
-geometry, the objects present on a given row of the left image are
-also located on the same line in the right image.
+     - Basic knowledge on [[http://www.ai.sri.com/~luong/research/Meta3DViewer/EpipolarGeo.html][epipolar geometry]]. Epipolar geometry is the
+       geometry of stereo vision (see [[http://en.wikipedia.org/wiki/Epipolar_geometry][here]]). The operation of stereo
+       rectification determines transformations to apply to each image
+       such that pairs of conjugate epipolar lines become collinear,
+       parallel to one of the image axes and aligned. In this
+       geometry, the objects present on a given row of the left image
+       are also located on the same line in the right image.
 
-       #+Latex:\vspace{0.5cm}
+     #+Latex:\vspace{0.5cm}
      #+ATTR_LaTeX: width=0.45\textwidth
-       [[file:Images/Epipolar_geometry.svg]]
-       http://www.ai.sri.com/~luong/research/Meta3DViewer/EpipolarGeo.html
-     - Basic knowledge stereoscopic reconstruction
-       Applying this transformation reduces the problem of elevation (or
-stereo correspondences determination) to a 1-D problem. We have two
-images image1 and image2 over the same area (the stereo pair) and we
-assume that we know the localization functions (forward and inverse)
-associated for each of these images.
+     #+CAPTION: Epipolar geometry
+     [[file:Images/Epipolar_geometry.png]]
+
+
+     - Basic knowledge stereoscopic reconstruction Applying this
+       transformation reduces the problem of elevation (or stereo
+       correspondences determination) to a 1-D problem. We have two
+       images image1 and image2 over the same area (the stereo pair)
+       and we assume that we know the localization functions (forward
+       and inverse) associated for each of these images.
 **** Achievements
 
      - Usage of set of stereoscopic reconstruction applications
@@ -839,5 +839,5 @@ disparity range is defined from image1 to image2).
      [[file:Images/31_disparity_map_to_elevation_3_1.png]]
      #+Latex:\vspace{0.5cm}
 **** Item2
-     I found 20 meters for the ground and 58m for the roof 
-     see http://en.wikipedia.org/wiki/Melbourne_Cricket_Ground
+     I found 20 meters for the ground and 58m for the roof. See this
+     [[http://en.wikipedia.org/wiki/Melbourne_Cricket_Ground][Wikipedia article]] for ground truth.
