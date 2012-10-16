@@ -1,5 +1,5 @@
-#+TITLE: OGRS2012 OTB Workshop
-#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES)
+#+TITLE: OGRE2012 OTB Workshop
+#+AUTHOR: Manuel Grinder (CNES), Julien Michel (CNES)
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper]
@@ -117,7 +117,6 @@
      3. Learn about the /Python/ access to *OTB Applications* and
         write a python script performing the same steps as in section
         [[OTB applications: Basic processing]].
-
 
 ** Exercise 2: Segmentation
 *** Description
@@ -281,7 +280,6 @@
 
 
 
-
 ** Exercise 4: Elevation map from stereo pair
 *** Description
 **** Abstract
@@ -296,66 +294,80 @@
 
      - Basic knowledge on OTB applications and QGis usage
      - Basic knowledge on epipolar geometry
+       Epipolar geometry is the
+geometry of stereo vision
+(see \href{http://en.wikipedia.org/wiki/Epipolar_geometry}{here}). The
+operation of stereo rectification determines transformations to apply
+to each image such that pairs of conjugate epipolar lines become
+collinear, parallel to one of the image axes and aligned. In this
+geometry, the objects present on a given row of the left image are
+also located on the same line in the right image.
 
        #+Latex:\vspace{0.5cm}
      #+ATTR_LaTeX: width=0.45\textwidth
        [[file:Images/Epipolar_geometry.svg]]
        http://www.ai.sri.com/~luong/research/Meta3DViewer/EpipolarGeo.html
      - Basic knowledge stereoscopic reconstruction
-
+       Applying this transformation reduces the problem of elevation (or
+stereo correspondences determination) to a 1-D problem. We have two
+images image1 and image2 over the same area (the stereo pair) and we
+assume that we know the localization functions (forward and inverse)
+associated for each of these images.
 **** Achievements
 
      - Usage of set of stereoscopic reconstruction applications
      - Stereo reconstruction based on Pleiades stereo images pair
 
 *** Steps
-
-**** From images to epipolar geometry :
+    
+**** From images to epipolar geometry
 
      1. Run the command-line and graphical version of the *StereoRectificationGridGenerator* application
      2. What are the two outputs of the applications?
-     3. Use the application to generate 2 grids
-     4. Which OTB application allows to resample the two input images using this grid?
-     5. Use this application to resample input stereo pairs in epipolar geometry
-     6. Open the 2 resampled images. What do you notice ?
+     3. Use the application to generate 2 grids, which OTB application allows to resample the two input images using these grids?
+     4. Use this application to resample input stereo pairs in epipolar geometry, open the 2 resampled images. What do you notice ?
 
       _Tips and Recommandations:_
         - Perform the grids estimation using and average elevation of 20.45m (*epi.elevation.avg.value* keyword)
         - Stereo-rectification deformation grid only varies slowly. Therefore, it is recommanded to use a coarser grid (higher step value) in case of large images (*epi.step* keyword)
+        - Note the size of the images in epipolar geometry (output by the application)
 
-**** Improve epipolar geometry Refinement of images geometry
+**** Improvement of epipolar geometry
 
      TODO explain geometric model problem
      We provide a refine version of the stereo pair
-     1. Recompute epipolar geometry with the new stereo pair
-     2. Open the 2 version of epipolar couples (total of 4 images). What differences do you notice between the two images pair?
+     1. Recompute epipolar geometry with the new stereo pair (post-fix _ref.tif). Open the 2 versions of epipolar couples (total of 4 images). What differences do you notice between the two images pair?
 
      We will use this images in the next  questions :
      - tristereo_melbourne_1_small_ref.tif
      - tristereo_melbourne_2_small_ref.tif
-**** Block matching :
+**** Block matching
 
      We are going to perform stereo pair block matching on the two images using the *BlockMatching* application
 
      1. Run the command-line and graphical version of the *BlockMatching* application. What are the mandatory parameters
-     2. Propose manual or automatic methodologies to estimate the interval of disparities
+     2. Propose manual or automatic methodologies to estimate the interval of disparities in vertical or horizontal direction 
      3. Use these parameters to generate a disparity map and open the result with Monteverdi. What do you notice?
 
       _Tips and Recommandations:_
         - Discard pixels with no-data (0 in our case) value using the parameter *-mask.nodata*
 **** Advanced Block matching : refine disparity map
 
-     We are going to try here to improve the quality of disparity
+     We are going to try now to improve the quality of the disparity map using options available in the *BlockMatching*.
 
-     1. Use the Normalized Cross Correlation and output the metric value using the io.outmetric option. Open the metric image.Which value of correlation corresponds to a
+     1. Use the Normalized Cross Correlation and output the metric value using the io.outmetric option. Open the metric image, which values of correlation corresponds to a
      2. Use the option mask.variancet to discard pixels whose local variance is too small (the size of the neighborhood is given by the radius parameter)
-     3. Use the *BandMath* application to only keep disparity with high metric value
+     3. Use the *BandMath* application to only keep horizontal disparity with high metric value.
 
-**** From disparity map to elevation
+**** From disparity map to ground elevation
 
-     1. Use the *DisparityMapToElevationMap* to transform the disparity map into an elevation information to produce an elevation map
-     2. At which height are approximatively football players on the ground in the stadium?
-     3. What is approximatively the height of the stadium?
+     Use the *DisparityMapToElevationMap* to transform the disparity map into an elevation information to produce an elevation map
+     1. At which height are approximatively football players on the ground in the stadium?
+     2. What is approximatively the height of the stadium?
+
+     _Tips and Recommandations:_
+        - Reuse the same average elevation of 20.45m
+        - Bonus : produce first a disparity mask using the *BandMath* application to discard pixels using the parameter *io.mask* 
 
 **** Homework
      1. Try refinement steps to improve epipolar geometries (available soon in OTB -> 3.16 version)
@@ -763,3 +775,69 @@
 ** Solution 3: Learning and classification
 
 ** Solution 4: Elevation map from stereo pair
+*** From images to epipolar geometry
+**** Item 1
+     To get the command-line help, run
+
+    : $ otbcli_StereoRectificationGridGenerator
+
+    To Get the graphical version of the *StereoRectificationGridGenerator* application, run
+
+    : $ otbgui_StereoRectificationGridGenerator
+**** Item 2
+     The application estimates the displacement to apply to each pixel in
+both input images to obtain epipolar geometry.
+**** Item 3
+The *GridBasedImageResampling*  application allows to
+resample the two input images in the epipolar geometry using these
+grids. These grids are intermediary results not really useful on their
+own in most cases.
+*** Refinement of epipolar geometry
+**** Item 1
+     The epipolar couple generated with the images with refined geometry do not present disparities in the vertical direction
+*** Block matching
+**** Item 1
+     The mandatory parameters are the intervals of disparity in the horizontal and vertical direction. In our case the vertical direction is null.
+**** Item 2
+     In theory, the block matching can perform a
+blind exploration and search for a infinite range of disparities
+between the stereo pair. We need now to evaluate a range of
+disparities where the block matching will be performed
+
+In our case, we take one point on a \textit{flat} area. The image coordinate in the first image is 
+is $[275,343]$ and in the second image is $[277,343]$. We then select a second
+point on a higher region (in our case a point near the top of the Melbourne Cricket Ground)
+The image coordinate of this pixel in the first image is $[712,354]$ and
+in the second image is $[671,354]$.  So you see for the horizontal exploration, we
+must set the minimum value lower than $-41$ (take care of the convention for the sign of the
+disparity range is defined from image1 to image2).
+**** Item 3
+     Lots of noise...
+     It shows that we need to discard pixels where block matching does not work
+*** Advanced Block matching : refinement of the disparity map
+**** Item1
+     Use the parameters *-io.outmetric 1 -bm.metric ncc*
+**** Item2
+     Use the *mask.variancet* parameter
+**** Item3
+     : $ otb_path/otbcli_BandMath -il $results/${case}_disparity_map_$1_$2.tif  
+     :   -out $results/${case}_filtered_disparity_map_$1_$2.tif 
+     :   -exp "if(im1b3>0.9,im1b1,-1000)"
+     
+     Here is the result of this command:
+
+     #+Latex:\vspace{0.5cm}
+     #+ATTR_LaTeX: width=0.45\textwidth
+     [[file:Images/31_filtered_disparity_map_3_1.png]]
+     #+Latex:\vspace{0.5cm}
+*** From disparity map to ground elevation
+**** Item1
+     Here is the result of the command:
+
+     #+Latex:\vspace{0.5cm}
+     #+ATTR_LaTeX: width=0.45\textwidth
+     [[file:Images/31_disparity_map_to_elevation_3_1.png]]
+     #+Latex:\vspace{0.5cm}
+**** Item2
+     I found 20 meters for the ground and 58m for the roof 
+     see http://en.wikipedia.org/wiki/Melbourne_Cricket_Ground
