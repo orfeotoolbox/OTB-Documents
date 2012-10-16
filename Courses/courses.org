@@ -131,12 +131,12 @@
 
      - Basic knowledge on OTB applications and QGis usage
      - Basic knowledge on image segmentation
-     - Basic knowledge on gis vector file formats
+     - Basic knowledge on GIS vector file formats
 
 **** Achievements
 
      - Usage of the OTB Segmentation application,
-     - Segmentation of large raster and import the results in a GIS sofware.
+     - Segmentation of large raster and import the results in a GIS software.
 
 *** Steps
 
@@ -195,7 +195,7 @@
         best segmentation result you had for Exercise 3.
 
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
       - There are two implementations of the Mean-Shift filter. Edison
         is the original implementation from the Mean-Shift paper
         authors.
@@ -207,20 +207,20 @@
 
      1. Run the *Segmentation* application in /raster/ mode again,
         using the best parameters you had in previous section, on the
-        large image. Look at computer ressources. What happens ?
+        large image. Look at computer resources. What happens ?
      2. Run the *Segmentation* application again, this time in
         /vector/ mode, and *disable the stitching option*. Look at
-        computer ressources. What happens ?
+        computer resources. What happens ?
      3. Open the result of the input image and the segmentation file
         in *QGis*. Tune *QGis* to allow for proper visualization (see
-        _Tips and Recommandations_). What do you see ?
+        _Tips and Recommendation_). What do you see ?
      4. Run the *Segmentation* application again, this time in
         /vector/ mode, and *enable the stitching mode*. Write the
         results to a different file and load it into the *QGis*
         project as well. What is the effect of the *stitch* option ?
 
-     _Tips and Recommandations:_
-      - Computer ressources can be monitored by running ~top~ in
+     _Tips and Recommendations:_
+      - Computer resources can be monitored by running ~top~ in
         another terminal
       - Hit ~Ctrl C~ to interrupt the processing
       - Use the sqlite file format to store vector outputs (~.sqlite~
@@ -286,9 +286,9 @@
 
      This workshop will guide get you familiar with the set of OTB applications which allow to compute elevation map from a stereo pair of optical images.
      You will learn how to :
-     - resample for stereo pair in epipolar geometry to reduce the stereo correspondences to a 1-D problem
+     - re-sample for stereo pair in epipolar geometry to reduce the stereo correspondences to a 1-D problem
      - Perform block matching between the 2 images to extract the disparity (related to the elevation)
-     - Filter disparities using correclation metric analysis and coherence evaluation using 2 disparity maps
+     - Filter disparities using correlation metric analysis and coherence evaluation using 2 disparity maps
 
 **** Pre-requisites
 
@@ -325,11 +325,11 @@ associated for each of these images.
      1. Run the command-line and graphical version of the *StereoRectificationGridGenerator* application
      2. What are the two outputs of the applications?
      3. Use the application to generate 2 grids, which OTB application allows to resample the two input images using these grids?
-     4. Use this application to resample input stereo pairs in epipolar geometry, open the 2 resampled images. What do you notice ?
+     4. Use this application to resample input stereo pairs in epipolar geometry, open the 2 re-sampled images. What do you notice ?
 
       _Tips and Recommandations:_
         - Perform the grids estimation using and average elevation of 20.45m (*epi.elevation.avg.value* keyword)
-        - Stereo-rectification deformation grid only varies slowly. Therefore, it is recommanded to use a coarser grid (higher step value) in case of large images (*epi.step* keyword)
+        - Stereo-rectification deformation grid only varies slowly. Therefore, it is recommended to use a coarser grid (higher step value) in case of large images (*epi.step* keyword)
         - Note the size of the images in epipolar geometry (output by the application)
 
 **** Improvement of epipolar geometry
@@ -349,7 +349,7 @@ associated for each of these images.
      2. Propose manual or automatic methodologies to estimate the interval of disparities in vertical or horizontal direction 
      3. Use these parameters to generate a disparity map and open the result with Monteverdi. What do you notice?
 
-      _Tips and Recommandations:_
+      _Tips and Recommendations:_
         - Discard pixels with no-data (0 in our case) value using the parameter *-mask.nodata*
 **** Advanced Block matching : refine disparity map
 
@@ -362,8 +362,8 @@ associated for each of these images.
 **** From disparity map to ground elevation
 
      Use the *DisparityMapToElevationMap* to transform the disparity map into an elevation information to produce an elevation map
-     1. At which height are approximatively football players on the ground in the stadium?
-     2. What is approximatively the height of the stadium?
+     1. At which height are approximately football players on the ground in the stadium?
+     2. What is approximately the height of the stadium?
 
      _Tips and Recommandations:_
         - Reuse the same average elevation of 20.45m
@@ -600,7 +600,7 @@ associated for each of these images.
 
      The /optimal/ color-mapping method allows to colorize each
      segment with a color maximizing contrast with the color of its
-     neighbors. Please note that we use ~uin8~ as the output type
+     neighbors. Please note that we use ~uint8~ as the output type
      because the *ColorMapping* application produces 8-bits data that
      can be directly viewed by any image viewer.
 
