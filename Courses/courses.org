@@ -278,7 +278,6 @@
      1. Set the PYTHONPATH environment variable
      2. ...
 
-
 ** Exercise 4: Elevation map from stereo pair
 *** Description
 **** Abstract
@@ -377,7 +376,6 @@
      4. Use median filter to get a smooth disparity map
 
 * Solutions
-
 ** Solution 1: Monteverdi and OTB-Applications
 
 *** Monteverdi: data opening and visualisation
@@ -778,11 +776,11 @@
 ** Solution 4: Elevation map from stereo pair
 *** From images to epipolar geometry
 **** Item 1
-     To get the command-line help, run
+    To get the command-line help, run
 
     : $ otbcli_StereoRectificationGridGenerator
 
-    To Get the graphical version of the *StereoRectificationGridGenerator* application, run
+    To get the graphical version of the *StereoRectificationGridGenerator* application, run
 
     : $ otbgui_StereoRectificationGridGenerator
 **** Item 2
@@ -815,7 +813,9 @@ own in most cases.
 
 *** Refinement of epipolar geometry
 **** Item 1
-     The epipolar couple generated with the images with refined geometry do not present disparities in the vertical direction
+
+     The epipolar couple generated with the images with refined geometry do not
+     present disparities in the vertical direction
 **** Item 2 
 
      Here is the command-line to run the *ConcatenateImages* application to generate
@@ -836,20 +836,22 @@ own in most cases.
 
 *** Block matching
 **** Item 1
-     The mandatory parameters are the intervals of disparity in the horizontal and vertical direction. In our case the vertical direction is null.
+     The mandatory parameters are the intervals of disparity in the horizontal
+     and vertical direction. In our case the vertical direction is null.
 **** Item 2
      In theory, the block matching can perform a
-blind exploration and search for a infinite range of disparities
-between the stereo pair. We need now to evaluate a range of
-disparities where the block matching will be performed
+     blind exploration and search for a infinite range of disparities
+     between the stereo pair. We need now to evaluate a range of
+     disparities where the block matching will be performed
 
-In our case, we take one point on a \textit{flat} area. The image coordinate in the first image is 
-is $[275,343]$ and in the second image is $[277,343]$. We then select a second
-point on a higher region (in our case a point near the top of the Melbourne Cricket Ground)
-The image coordinate of this pixel in the first image is $[712,354]$ and
-in the second image is $[671,354]$.  So you see for the horizontal exploration, we
-must set the minimum value lower than $-41$ (take care of the convention for the sign of the
-disparity, the range is defined from the left to the right image).
+     In our case, we take one point on a \textit{flat} area. The image coordinate in
+     the first image is is $[275,343]$ and in the second image is $[277,343]$. We
+     then select a second point on a higher region (in our case a point near the top
+     of the Melbourne Cricket Ground) The image coordinate of this pixel in the first
+     image is $[712,354]$ and in the second image is $[671,354]$.  So you see for the
+     horizontal exploration, we must set the minimum value lower than $-41$ (take
+     care of the convention for the sign of the disparity, the range is defined from
+     the left to the right image).
 **** Item 3
 
      Here is the command-line to run the application with default parameters:
@@ -859,7 +861,15 @@ disparity, the range is defined from the left to the right image).
      : -io.out 31_disparity_map_3_1.tif 
      : -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
 
-     and here the result of this command
+     and here the result of this command:
+
+     #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
+     #+ATTR_LaTeX: width=0.45\textwidth
+     [[file:Images/31_disparity_map_simple_3_1.png]]
+     #+Latex:\end{center}
+     #+Latex:\vspace{0.5cm}
+
      It shows that we need to discard pixels where block matching does not work and also filtered low correlation values.
 *** Advanced Block matching : refinement of the disparity map
 **** Item1
@@ -880,7 +890,7 @@ disparity, the range is defined from the left to the right image).
      #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
      #+ATTR_LaTeX: width=0.45\textwidth
-     [[file:Images/31_disparity_map_3_1.png]]
+     [[file:Images/31_disparity_map_hdisparity_3_1.png]]
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 

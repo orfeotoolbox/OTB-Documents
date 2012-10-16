@@ -1,0 +1,43 @@
+<PAMDataset>
+  <GeoTransform>  0.0000000000000000e+00,  1.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  1.0000000000000000e+00</GeoTransform>
+  <Metadata domain="IMAGE_STRUCTURE">
+    <MDI key="INTERLEAVE">PIXEL</MDI>
+  </Metadata>
+  <Metadata>
+    <MDI key="gml.root-instance">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&lt;gml:FeatureCollection xmlns:gml=&quot;http://www.opengis.net/gml&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+ &lt;gml:featureMember&gt;
+    &lt;gml:FeatureCollection&gt;
+     &lt;gml:featureMember&gt;
+        &lt;gml:GridCoverage dimension=&quot;2&quot; gml:id=&quot;COVERAGE_DS_PHR1A_201202250025259_FR1_PX_E144S38_1205_01120&quot;&gt;
+         &lt;gml:description&gt;Sensor DS_PHR1A_201202250025259_FR1_PX_E144S38_1205_01120 coverage&lt;/gml:description&gt; 
+         &lt;gml:name&gt;DS_PHR1A_201202250025259_FR1_PX_E144S38_1205_01120&lt;/gml:name&gt;
+         &lt;gml:gridDomain&gt;
+            &lt;gml:Grid dimension=&quot;2&quot;&gt;
+             &lt;gml:limits&gt;
+                &lt;gml:GridEnvelope&gt;
+                 &lt;gml:low&gt;1 1&lt;/gml:low&gt;
+                 &lt;gml:high&gt;24528 41500&lt;/gml:high&gt;
+        &lt;/gml:GridEnvelope&gt;
+       &lt;/gml:limits&gt;
+             &lt;gml:axisName&gt;row&lt;/gml:axisName&gt;
+             &lt;gml:axisName&gt;col&lt;/gml:axisName&gt;
+      &lt;/gml:Grid&gt;
+     &lt;/gml:gridDomain&gt;
+         &lt;gml:rangeSet&gt;
+            &lt;gml:File&gt;
+             &lt;gml:rangeParameters&gt;
+                &lt;gml:QuantityExtent uom=&quot;int&quot;&gt;0 4095&lt;/gml:QuantityExtent&gt;
+       &lt;/gml:rangeParameters&gt;
+             &lt;gml:fileName&gt;gmljp2://codestream/0&lt;/gml:fileName&gt;
+             &lt;gml:fileStructure&gt;Record Interleaved&lt;/gml:fileStructure&gt;
+      &lt;/gml:File&gt;
+     &lt;/gml:rangeSet&gt;
+    &lt;/gml:GridCoverage&gt;
+   &lt;/gml:featureMember&gt;
+  &lt;/gml:FeatureCollection&gt;
+ &lt;/gml:featureMember&gt;
+&lt;/gml:FeatureCollection&gt;
+
+</MDI>
+  </Metadata>
+</PAMDataset>
