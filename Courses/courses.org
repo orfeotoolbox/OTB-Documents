@@ -1,5 +1,5 @@
-#+TITLE: OGRE2012 OTB Workshop
-#+AUTHOR: Manuel Grinder (CNES), Julien Michel (CNES)
+#+TITLE: OGRS2012 OTB Workshop
+#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES)
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper]
@@ -279,7 +279,6 @@
      2. ...
 
 
-
 ** Exercise 4: Elevation map from stereo pair
 *** Description
 **** Abstract
@@ -302,10 +301,11 @@
        are also located on the same line in the right image.
 
      #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
      #+ATTR_LaTeX: width=0.45\textwidth
      #+CAPTION: Epipolar geometry
      [[file:Images/Epipolar_geometry.png]]
-
+     #+Latex:\end{center}
 
      - Basic knowledge stereoscopic reconstruction Applying this
        transformation reduces the problem of elevation (or stereo
@@ -326,6 +326,7 @@
      2. What are the two outputs of the applications?
      3. Use the application to generate 2 grids, which OTB application allows to resample the two input images using these grids?
      4. Use this application to resample input stereo pairs in epipolar geometry, open the 2 re-sampled images. What do you notice ?
+     5. Combined the 2 images to create an anaglyph 3D (left image on the red channel and the right image on the green and blue channel) 
 
       _Tips and Recommandations:_
         - Perform the grids estimation using and average elevation of 20.45m (*epi.elevation.avg.value* keyword)
@@ -792,6 +793,30 @@ The *GridBasedImageResampling*  application allows to
 resample the two input images in the epipolar geometry using these
 grids. These grids are intermediary results not really useful on their
 own in most cases.
+
+    : $ StereoRectificationGridGenerator -io.inleft tristereo_melbourne_3_small_ref.tif 
+    :  -io.inright tristereo_melbourne_1_small_ref.tif -io.outleft 31_grid_tristereo_melbourne_3_small_ref.tif 
+    :  -io.outright 31_grid_tristereo_melbourne_1_small_ref.tif 
+    :  -epi.elevation avg -epi.elevation.avg.value 20.45
+**** Item 4
+
+    For the left image :
+    
+    : $ GridBasedImageResampling -io.in tristereo_melbourne_3_small_ref.tif 
+    : -io.out 31_epi_tristereo_melbourne_3_small_ref.tif 
+    : -grid.in 31_grid_tristereo_melbourne_3_small_ref.tif -out.sizex 1237 -out.sizey 1237
+
+    For the right image:
+
+    : $ GridBasedImageResampling -io.in tristereo_melbourne_1_small_ref.tif 
+    : -io.out 31_epi_tristereo_melbourne_1_small_ref.tif 
+    : -grid.in 31_grid_tristereo_melbourne_1_small_ref.tif 
+    : -out.sizex 1237 -out.sizey 1237 
+**** Item 5
+
+    : $ ConcatenateImages -il 31_epi_tristereo_melbourne_3_small_ref.tif 
+    : 31_epi_tristereo_melbourne_1_small_ref.tif 31_epi_tristereo_melbourne_1_small_ref.tif 
+    : -out /home/grizonnetm/data/Pleiades/OGRS12/Results2/31_anaglyph_3_1.tif
 *** Refinement of epipolar geometry
 **** Item 1
      The epipolar couple generated with the images with refined geometry do not present disparities in the vertical direction
@@ -812,6 +837,7 @@ in the second image is $[671,354]$.  So you see for the horizontal exploration, 
 must set the minimum value lower than $-41$ (take care of the convention for the sign of the
 disparity range is defined from image1 to image2).
 **** Item 3
+     Here is the command-line to run the application witch combine all these parameters:
      Lots of noise...
      It shows that we need to discard pixels where block matching does not work
 *** Advanced Block matching : refinement of the disparity map
@@ -819,6 +845,14 @@ disparity range is defined from image1 to image2).
      Use the parameters *-io.outmetric 1 -bm.metric ncc*
 **** Item2
      Use the *mask.variancet* parameter
+
+     Here is the command-line to run the application with default parameters:
+
+     : $ BlockMatching -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
+     : -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
+     : -io.out 31_disparity_map_3_1.tif 
+     : -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
+
 **** Item3
      : $ otb_path/otbcli_BandMath -il $results/${case}_disparity_map_$1_$2.tif  
      :   -out $results/${case}_filtered_disparity_map_$1_$2.tif 
@@ -827,16 +861,30 @@ disparity range is defined from image1 to image2).
      Here is the result of this command:
 
      #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
      #+ATTR_LaTeX: width=0.45\textwidth
      [[file:Images/31_filtered_disparity_map_3_1.png]]
+     #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 *** From disparity map to ground elevation
 **** Item1
+
+     Here is the command-line to run the application:
+
+     : $ DisparityMapToElevationMap -io.in 31_disparity_map_3_1.tif -io.left 
+     : tristereo_melbourne_3_small_ref.tif -io.right tristereo_melbourne_1_small_ref.tif 
+     : -io.lgrid 31_grid_tristereo_melbourne_3_small_ref.tif 
+     : -io.rgrid 31_grid_tristereo_melbourne_1_small_ref.tif 
+     : -hmin 0 -hmax 80 -elev average -step 1 -elev.average.value 20.45 
+     : -io.out 31_disparity_map_to_elevation_3_1.tif
+
      Here is the result of the command:
 
      #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
      #+ATTR_LaTeX: width=0.45\textwidth
      [[file:Images/31_disparity_map_to_elevation_3_1.png]]
+     #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 **** Item2
      I found 20 meters for the ground and 58m for the roof. See this
