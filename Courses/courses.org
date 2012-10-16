@@ -2,13 +2,23 @@
 #+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES)
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper]
+#+LaTeX_CLASS_OPTIONS: [a4paper,11pt,twoside,openright]
 #+LaTeX_HEADER: \usepackage{a4wide}
 #+LaTeX_HEADER: \usepackage[T1]{fontenc}
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{fancyhdr}
 #+OPTIONS: ^:{}
+
+#+LATEX:\pagestyle{fancy}
+#+LATEX:\fancyhf{}
+#+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
+#+LATEX:\fancyhead[LO]{\bfseries\rightmark}
+#+LATEX:\fancyhead[RE]{\bfseries\leftmark}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{OGRS2012 - OTB Workshop}}
 
 * Exercises
 ** Exercise 1: *Monteverdi* and *OTB applications*
