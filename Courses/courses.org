@@ -1,4 +1,4 @@
-#+TITLE: OGRS2012 OTB Workshop
+#+TITLE: OGRS2012 : Exploit Pleiades PHR data with the ORFEO ToolBox library
 #+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES)
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
