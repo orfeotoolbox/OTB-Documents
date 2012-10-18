@@ -398,8 +398,11 @@ and standard deviation of 1) of samples based on the vector data produced by the
         different object classes loaded ? How many samples per classes
         are used ?
 
-     3. Load the classification parameters file. What are the features
-        used ?
+     3. Uncheck all features except from radiometric means:
+        - Band1::Mean
+        - Band2::Mean
+        - Band3::Mean
+        - Band4::Mean
 
      4. Perform the classification. What are the objects in the image
         that are badly classified because of missing classes ?
@@ -1015,9 +1018,10 @@ and standard deviation of 1) of samples based on the vector data produced by the
      Here is what the color-mapped images look like:
      
      #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
      #+ATTR_LaTeX: width=0.4\textwidth 
      [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
-     
+     #+Latex:\end{center}
 
 **** Item 2
 
@@ -1112,6 +1116,67 @@ and standard deviation of 1) of samples based on the vector data produced by the
      4. Perform a few more iteration of active learning. What do you
         observe ?
 
+*** *Object Labeling* module - advanced
+
+**** Item 2
+
+     The classes selected in the samples file are:
+     - Circular containers
+     - Rectangular colored containers
+     - Rectangular white containers
+     - Water
+     - Asphalt
+
+
+**** Item 4
+
+     Using the provided samples and parameters, we get the following
+     result. We can see that some basic classes are detected at the
+     expense of more misclassification on difficult objects, as shown
+     in left part of the figure at the end of this section.
+     
+     We can see some obvious missing classes in the training set
+     leading to classification errors:
+     - Shadows area get classified as Water. Even if Shadow is not a
+       strictly-speaking a class of interest, the overall
+       classification quality would benefit from a Shadow class.
+     - Vegetation areas, even if there are only few of them in the
+       images, also get miss-classified because there is no vegetation
+       class in the training set.
+
+**** Item 5
+     
+     As foreseen in section [[The preliminary segmentation]], some objects
+     of interest are poorly segmented or too complex for good
+     classification results:
+     - The boat and the cranes are too complex,
+     - Some of the containres (spherical or rectangular) are poorly
+       segmented, which leads to miss-classification.
+
+**** Item 6 - 7
+
+     By adding a few more classes and samples, we get the result
+     presented on the right of following figure.
+
+     #+Latex:\begin{center}
+     #+ATTR_LaTeX: width=0.4\textwidth
+     [[file:Images/obc_classif_samples.png]] [[file:Images/obc_classif_samples_solution.png]]
+     #+Latex:\end{center}
+
+*** *Object Labeling* module - active learning
+
+**** Item 2
+
+     The implemented active learning strategy often shows objects that
+     are difficult to label manually, because they correspond to parts
+     of fragmented objects or to segmentation noise. 
+
+**** Item 4
+
+     We can observe that occasional, the active learning strategy will
+     discover a new kind of object, for which no class has been
+     created yet. It may also run several times into the same objects
+     that are still difficult to classify after some iterations.
 
 ** Solution 4: Elevation map from stereo pair
 *** From images to epipolar geometry
