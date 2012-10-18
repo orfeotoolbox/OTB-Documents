@@ -20,6 +20,37 @@
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
 #+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{OGRS2012 - OTB Workshop}}
 
+* Foreword
+** About the data
+
+  The images used during these exercise are extracts from Pleiades
+  demonstration products, made available for evaluation purpose. To
+  get the full products please refer to this [[http://www.astrium-geo.com/fr/364-produits-de-demonstration][website]]. Products used
+  are: 
+  - ~Pléiades Pan-sharpened ORTHO Compression REGULAR~
+  - ~Pléiades TRISTEREO Bundle PRIMARY~
+
+  Once these data have been downloaded, you can the following data
+  generation script to get the extracts for each exercise:
+  ~generate_data.sh~
+
+  Other data needed for some exercises, as well as solution scripts
+  can be found in the data package.
+
+** About the software
+
+   To perform the exercises, you will need to have the following
+   softwares installed:
+   - *Orfeo ToolBox* 3.14 or later, including applications
+   - *Monteverdi* 1.6 or later
+   - *QGis*
+
+     For *Orfeo ToolBox* and *Monteverdi* installation, you can refer to
+     the installation from the [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+
+     For *QGis* installation, please refer to *QGis* documentation,
+     which can be found on the project [[http://www.qgis.org/][website]].
+
 * Exercises
 ** *Monteverdi* and *OTB applications*
 *** Description
