@@ -260,33 +260,114 @@
          applications), how can we deal with segmentation of high
          reflectance structures ?
 
-** Exercise 3: Learning and classification
+** Exercise 3: Learning and classification from objects
 *** Description
 **** Abstract
 
-     This workshop will guide you through the different steps toward a "Hello World" printing on your screen.
+     This workshop will introduce you to the *Object Labeling* module
+     of *Monteverdi*. You will learn how to use the module and see the
+     influence of different features on classification results. You
+     will also experiment with a simple active learning implementation
+     on objects.
 
 **** Pre-requisites
 
-     - Basic knowledge of shell and command-line invocation
+     - Basic knowledge of Object Based Image Analysis
+     - Basic knowledge on learning and classification
 
 **** Achievements
 
-     Being able to print more "Hello World".
+     Being able to use the *Object Labeling* module of *Monteverdi*.
 
 *** Steps
 
-**** Get the environment ready
+**** The preliminary segmentation
 
-     1. Sets the PATH environment variable
-     2. Try to find otb applications in path. What do you notice ?
-     3. Try to run one cli application
-     4. Replace cli by gui in the command name. What do you notice ?
+     In this part of the exercise, we will use the following data
+     ~phr_pxs_melbourne_xt_small.tif~ and ~phr_pxs_melbourne_xt_small_segmentation.tif~
 
-**** Start with Python
+     1. Use the *ColorMapping* application to enhance the
+        visualisation of the segmentation image (you can use the
+        /optimal/ and /image/ modes as learned in the segmentation
+        exercise).
 
-     1. Set the PYTHONPATH environment variable
-     2. ...
+     2. Analyse the color-mapped segmentation results. For which kind
+        of objects is the object based classification likely to work
+        well ? For which kind of objects is it likely to perform badly
+        ?
+
+**** *Object Labeling* module - basics
+
+     1. Open both the image and the segmentation image in *Monteverdi*.
+     2. Open the *Object Labeling* module from the /learning/ menu,
+        and load the image and the segmentation inside the module.
+     3. What is the purpose of each tab on the left side of the module ?
+     4. In the /Objects/ tab, create a new class. You can change its
+        color and its name.
+     5. Right-click on an object of interest in the image. What
+        happens ?
+     6. Right-click a second time inside the selected object. What
+        happens ?
+     7. Add a few more objects to the current class
+     8. Create a new class and add some objects to it
+     9. Go to the /Features/ tab, uncheck all features but the mean
+        radiometric values.
+     10. Go to the /Learning/ tab and click on classify. What happens
+         ?
+     11. Click on the /Save/Quit/ button. What kind of outputs is
+         produced by the module ?
+
+     _Tips and Recommandations:_
+     - Choose two simple classes for this part of the exercise (for
+       instance a /Water/ class and a /Land/ class)
+     - Use the navigation map to change the displayed area
+     - You can change the opacity of the classification layer as well
+       as of the selected objects layer so as to better analyse the
+       results.
+     - You can also clear the classification layer.     
+
+**** *Object Labeling* module - advanced
+
+     In this part of the exercise, we will use these additional files:
+     ~samples.xml~ and ~parameters.xml~
+
+     1. Load again the image and the segmentation inside the module.
+
+     2. Load the samples file using /File/Load Samples/. What are the
+        different object classes loaded ? How many samples per classes
+        are used ?
+
+     3. Load the classification parameters file. What are the features
+        used ?
+
+     4. Perform the classification. What are the objects in the image
+        that are badly classified because of missing classes ?
+
+     5. What are the objects in the image that are poorly classified
+        because they are badly segmented or too complex ?
+
+     6. Try to enhance the classification by adding missing classes.
+
+     7. Try to enhance the classification by adding new features.
+
+     _Tips and Recommandations:_
+     - The *Object Labeling* module is quite memory
+       consuming. Depending on the available memory on your system,
+       you might want to restart *Monteverdi*.
+
+**** *Object Labeling* module - active learning
+
+     1. In the /Objects/ tab, click on the /Sample/ button in the
+        lower-left area. This will show you difficult samples by using
+        the margin sampling technique.
+
+     2. What kind of segments are considered by the algorithm as hard
+        to classify ?
+
+     3. Try to create a /Trash/ class to handle noise segments.
+
+     4. Perform a few more iteration of active learning. What do you
+        observe ?
 
 ** Exercise 4: Elevation map from stereo pair
 *** Description
