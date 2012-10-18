@@ -316,7 +316,7 @@
      - Use Qgis to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
      - Export this vector layer in shapefile
      - What is the label corresponding to the class *water* in the shapefile?
-       A set of learning samples is provided for the exercise in \textit{training.shp}
+       A set of learning samples is provided for the exercise in /training.shp/
 
 **** Estimate image statistics
 
@@ -324,7 +324,7 @@
 input images statistics. These statistics will be used to center and reduce the intensities (mean of 0
 and standard deviation of 1) of samples based on the vector data produced by the user.
 
-     - Use the *ComputeImagesStatistics* to compute statistics on \textit{melbourne_ms_toa_ortho_extract_small.tif} image
+     - Use the *ComputeImagesStatistics* to compute statistics on /melbourne_ms_toa_ortho_extract_small.tif/ image
      - What is the mean of the red band?
      - The extract provided was firstly converted from DN to reflectance. For what reasons, is it advice to do such conversion for multiple images classification?
 **** Estimate classification model using the Support Vector Machine algorithm
@@ -338,7 +338,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
      - What is the output from the application?
-     - Bonus : Use the same model to apply the classification to the other extract \textit{melbourne_ms_toa_ortho_extract_large.tif}
+     - Bonus : Use the same model to apply the classification to the other extract /melbourne_ms_toa_ortho_extract_large.tif/
 **** Produce printable classification map
      We are going now to produce printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
@@ -1281,7 +1281,7 @@ own in most cases.
      between the stereo pair. We need now to evaluate a range of
      disparities where the block matching will be performed
 
-     In our case, we take one point on a \textit{flat} area. The image coordinate in
+     In our case, we take one point on a /flat/ area. The image coordinate in
      the first image is is $[275,343]$ and in the second image is $[277,343]$. We
      then select a second point on a higher region (in our case a point near the top
      of the Melbourne Cricket Ground) The image coordinate of this pixel in the first
