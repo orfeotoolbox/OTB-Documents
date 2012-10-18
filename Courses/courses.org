@@ -27,8 +27,8 @@
   demonstration products, made available for evaluation purpose. To
   get the full products please refer to this [[http://www.astrium-geo.com/fr/364-produits-de-demonstration][website]]. Products used
   are: 
-  - ~Pléiades Pan-sharpened ORTHO Compression REGULAR~
-  - ~Pléiades TRISTEREO Bundle PRIMARY~
+  - ~Pleiades Pan-sharpened ORTHO Compression REGULAR~
+  - ~Pleiades TRISTEREO Bundle PRIMARY~
 
   Once these data have been downloaded, you can the following data
   generation script to get the extracts for each exercise:
@@ -43,7 +43,7 @@
    softwares installed:
    - *Orfeo ToolBox* 3.14 or later, including applications
    - *Monteverdi* 1.6 or later
-   - *QGis*
+   - *QGis* 1.8 or later
 
      For *Orfeo ToolBox* and *Monteverdi* installation, you can refer to
      the installation from the [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
@@ -295,9 +295,9 @@
 **** Abstract
 
      This exercise will get you familiar with the OTB pixel based
-     classification.  applications framework. You will learn how to produce
-     classification model from Pleaides images and learning samples and how to
-     apply this model to the input image and produce shiny classification map.
+     classification applications framework. You will learn how to produce
+     SVM classification model from Pleiades images and learning samples and how to
+     apply this model to images and produce shiny classification map.
 
 **** Pre-requisites
      
@@ -307,7 +307,7 @@
 
 **** Achievements
 
-     - Usage of the OTB Classification applications framework,
+     - Usage of the OTB Classification applications framework
      - Classification of large images and import the results in a GIS software.
 
 *** Steps
@@ -315,10 +315,11 @@
 
      - Use Qgis to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
      - Export this vector layer in shapefile
-     - What is the label corresponding to the class *water* i the shapefile?
+     - What is the label corresponding to the class *water* in the shapefile?
        A set of learning samples is provided for the exercise in \textit{training.shp}
 
 **** Estimate image statistics
+
      In order to make these features comparable between each images, the first step is to estimate the
 input images statistics. These statistics will be used to center and reduce the intensities (mean of 0
 and standard deviation of 1) of samples based on the vector data produced by the user.
@@ -327,12 +328,17 @@ and standard deviation of 1) of samples based on the vector data produced by the
      - What is the mean of the red band?
      - The extract provided was firstly converted from DN to reflectance. For what reasons, is it advice to do such conversion for multiple images classification?
 **** Estimate classification model using the Support Vector Machine algorithm
+     This *TrainSVMImagesClassifier* application performs SVM classifier training from multiple pairs of
+     input images and training vector data. Samples are composed of pixel values
+     in each band optionally centered and reduced using XML statistics file
+     produced by the ComputeImagesStatistics application. We will use this application with only one image in this case.
      - Use the *TrainSVMImagesClassifier* to produce SVM model
      - Wich kernel is used by default in the application?
      - What's the measured accuracy?
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
-     - Use the same model to apply the classification to the other extract \textit{melbourne_ms_toa_ortho_extract_large.tif}
+     - What is the output from the application?
+     - Bonus : Use the same model to apply the classification to the other extract \textit{melbourne_ms_toa_ortho_extract_large.tif}
 **** Produce printable classification map
      We are going now to produce printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
@@ -978,7 +984,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
     : -io.vd training.shp -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
     - Linear kernel is used by default in the application
-    - The measured accuracy is 0.988523. The value is high sue to the low number of training samples and their lack of variability
+    - The measured accuracy is 0.988523. The value is high due to the low number of training samples and their lack of variability
 *** Apply classification model
     
     - Here is the command line to produce the SVM model:
@@ -987,14 +993,10 @@ and standard deviation of 1) of samples based on the vector data produced by the
     : -svm melbourne_ms_toa_ortho_extract_small_model.svm 
     : -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
     : -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif uint8
+
+    - Pixels of the output image will contain the class label decided by the SVM classifier
+
 *** Produce printable classification map
-    We are going now to produce printable classification map using the
-    *ColorMapping* application This tool will replace each label with an 8-bits
-    RGB color specificied in a mapping file.  The mapping file should look like
-    this :
-    
-    : $ # Lines beginning with a # are ignored
-    : 1 255 0 0
 
     - The look-up table (LUT) use to produce the classification map in my case is:
 
@@ -1354,3 +1356,4 @@ own in most cases.
 **** Item2
      I found 20 meters for the ground and 58m for the roof. See this
      [[http://en.wikipedia.org/wiki/Melbourne_Cricket_Ground][Wikipedia article]] for ground truth.
+
