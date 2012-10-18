@@ -21,7 +21,7 @@
 #+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{OGRS2012 - OTB Workshop}}
 
 * Exercises
-** Exercise 1: *Monteverdi* and *OTB applications*
+** *Monteverdi* and *OTB applications*
 *** Description
 **** Abstract
      
@@ -128,7 +128,7 @@
         write a python script performing the same steps as in section
         [[OTB applications: Basic processing]].
 
-** Exercise 2: Segmentation
+** Segmentation
 *** Description
 **** Abstract
 
@@ -259,8 +259,7 @@
       3. Using the *Segmentation* application (and maybe other OTB
          applications), how can we deal with segmentation of high
          reflectance structures ?
-
-** Exercise 3: Learning and classification from objects
+** Learning and classification from pixels
 *** Description
 **** Abstract
 
@@ -320,8 +319,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      - Produce classification model with different type of SVM kernels. Comment different accuracies obtained? 
      - Going big : Apply this classification on the pan-sharpened image over Melbourne
-
-** Exercise 3: Learning and classification
+** Learning and classification from objects
 *** Description
 **** Abstract
 
@@ -432,8 +430,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      4. Perform a few more iteration of active learning. What do you
         observe ?
-
-** Exercise 4: Elevation map from stereo pair
+** Elevation map from stereo pair
 *** Description
 **** Abstract
 
@@ -531,7 +528,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      4. Use median filter to get a smooth disparity map
 
 * Solutions
-** Solution 1: Monteverdi and OTB-Applications
+** Monteverdi and OTB-Applications
 
 *** Monteverdi: data opening and visualisation
 
@@ -691,7 +688,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      Please refer to this chapter of the *Cookbook* to learn more
      about the /Python/ interface (TODO: Add link here).
     
-** Solution 2: Segmentation
+** Segmentation
 
 *** Getting familiar with the *Segmentation* application
 
@@ -926,7 +923,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      with the connected components method, as shown earlier in the
      solution.
 
-** Solution 3: Supervised pixel based classification
+** Learning and classification from pixels
 *** Produce and analize learning samples
 
     - The label corresponding to the class *water* in the shapefile is *2*
@@ -997,7 +994,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 
-** Exercise 3: Learning and classification from objects
+** Learning and classification from objects
 
 *** The preliminary segmentation
 
