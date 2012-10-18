@@ -521,15 +521,19 @@ and standard deviation of 1) of samples based on the vector data produced by the
        - Note the size of the images in epipolar geometry (output by the application)
 
 **** Improvement of epipolar geometry
+     
+     Pleiades data can be orthorectified to absolute accuracies of about 10 meters, as a consequence there is still a need to improve the geometric 
+     accuracy (this is the case for all satellite imagery). For orthorectification purpose, it is achieve by using Ground Control Points (three . An other way to do this in case of superimposition 
+     of multiple images is to produce homologous points on each images and evaluate with these points a transformation combining the metadata information and these points. It allows for Pleiades
+     to improve the geometric accuracy and allow to produce consistent epipolar images.
 
-     TODO explain geometric model problem
-     We provide a refine version of the stereo pair (tristereo_melbourne_1_small_ref.tif and tristereo_melbourne_2_small_ref.tif)
+     We provide for the next questions a refine version of the stereo pair (tristereo_melbourne_1_small_ref.tif and tristereo_melbourne_2_small_ref.tif)
+
      1. Recompute epipolar geometry with the new stereo pair (post-fix _ref.tif). Open the 2 versions of epipolar couples (total of 4 images). What differences do you notice between the two images pair?
      2. Combined the 2 images to create an anaglyph 3D (left image on the red channel and the right image on the green and blue channel)
 
-     We will use this images for the next questions the  :
-     - tristereo_melbourne_1_small_ref.tif
-     - tristereo_melbourne_2_small_ref.tif
+     We will use this images in the next questions.
+
 **** Block matching
 
      We are going to perform stereo pair block matching on the two images using the *BlockMatching* application
@@ -1004,7 +1008,8 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
     - Here is the command line to produce the classification map:
 
-    : $ ColorMapping -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
+    : $ ColorMapping 
+    : -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
     : -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
     : -method custom -method.custom.lut ColorTable.txt
 
@@ -1217,24 +1222,29 @@ resample the two input images in the epipolar geometry using these
 grids. These grids are intermediary results not really useful on their
 own in most cases.
 
-    : $ StereoRectificationGridGenerator -io.inleft tristereo_melbourne_3_small_ref.tif 
-    :  -io.inright tristereo_melbourne_1_small_ref.tif -io.outleft 31_grid_tristereo_melbourne_3_small_ref.tif 
-    :  -io.outright 31_grid_tristereo_melbourne_1_small_ref.tif 
-    :  -epi.elevation avg -epi.elevation.avg.value 20.45
+    : $ StereoRectificationGridGenerator 
+    :   -io.inleft tristereo_melbourne_3_small_ref.tif 
+    :   -io.inright tristereo_melbourne_1_small_ref.tif 
+    :   -io.outleft 31_grid_tristereo_melbourne_3_small_ref.tif 
+    :   -io.outright 31_grid_tristereo_melbourne_1_small_ref.tif 
+    :   -epi.elevation avg -epi.elevation.avg.value 20.45
 **** Item 4
 
     For the left image :
     
-    : $ GridBasedImageResampling -io.in tristereo_melbourne_3_small_ref.tif 
-    : -io.out 31_epi_tristereo_melbourne_3_small_ref.tif 
-    : -grid.in 31_grid_tristereo_melbourne_3_small_ref.tif -out.sizex 1237 -out.sizey 1237
+    : $ GridBasedImageResampling 
+    :   -io.in tristereo_melbourne_3_small_ref.tif 
+    :   -io.out 31_epi_tristereo_melbourne_3_small_ref.tif 
+    :   -grid.in 31_grid_tristereo_melbourne_3_small_ref.tif 
+    :   -out.sizex 1237 -out.sizey 1237
 
     For the right image:
 
-    : $ GridBasedImageResampling -io.in tristereo_melbourne_1_small_ref.tif 
-    : -io.out 31_epi_tristereo_melbourne_1_small_ref.tif 
-    : -grid.in 31_grid_tristereo_melbourne_1_small_ref.tif 
-    : -out.sizex 1237 -out.sizey 1237 
+    : $ GridBasedImageResampling 
+    :   -io.in tristereo_melbourne_1_small_ref.tif 
+    :   -io.out 31_epi_tristereo_melbourne_1_small_ref.tif 
+    :   -grid.in 31_grid_tristereo_melbourne_1_small_ref.tif 
+    :   -out.sizex 1237 -out.sizey 1237 
 
 *** Refinement of epipolar geometry
 **** Item 1
@@ -1246,9 +1256,11 @@ own in most cases.
      Here is the command-line to run the *ConcatenateImages* application to generate
      the anaglyph image:
 
-    : $ ConcatenateImages -il 31_epi_tristereo_melbourne_3_small_ref.tif 
-    : 31_epi_tristereo_melbourne_1_small_ref.tif 31_epi_tristereo_melbourne_1_small_ref.tif 
-    : -out 31_anaglyph_3_1.tif
+    : $ ConcatenateImages -il 
+    :   31_epi_tristereo_melbourne_3_small_ref.tif 
+    :   31_epi_tristereo_melbourne_1_small_ref.tif 
+    :   31_epi_tristereo_melbourne_1_small_ref.tif 
+    :   -out 31_anaglyph_3_1.tif
 
      Here is the result of this command:
 
@@ -1281,10 +1293,11 @@ own in most cases.
 
      Here is the command-line to run the application with default parameters:
 
-     : $ BlockMatching -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
-     : -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
-     : -io.out 31_disparity_map_3_1.tif 
-     : -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
+     : $ BlockMatching 
+     :   -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
+     :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
+     :   -io.out 31_disparity_map_3_1.tif 
+     :   -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
 
      and here the result of this command:
 
@@ -1304,11 +1317,12 @@ own in most cases.
      
      Here is the command-line to run the application witch combine all these parameters:
      
-     : $ BlockMatching -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
-     : -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
-     : -io.out 31_disparity_map_3_1.tif 
-     : -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
-     : -mask.nodata 0 -mask.variancet 100 -io.outmetric 1 -bm.metric ncc
+     : $ BlockMatching 
+     :   -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
+     :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
+     :   -io.out 31_disparity_map_3_1.tif 
+     :   -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
+     :   -mask.nodata 0 -mask.variancet 100 -io.outmetric 1 -bm.metric ncc
 
      Here is the result of this command:
 
@@ -1320,9 +1334,10 @@ own in most cases.
      #+Latex:\vspace{0.5cm}
 
 **** Item3
-     : $ otb_path/otbcli_BandMath -il $results/${case}_disparity_map_$1_$2.tif  
-     :   -out $results/${case}_filtered_disparity_map_$1_$2.tif 
-     :   -exp "if(im1b3>0.9,im1b1,-1000)"
+     : $ otb_path/otbcli_BandMath 
+     : -il $results/${case}_disparity_map_$1_$2.tif  
+     : -out $results/${case}_filtered_disparity_map_$1_$2.tif 
+     : -exp "if(im1b3>0.9,im1b1,-1000)"
      
      Here is the result of this command:
 
