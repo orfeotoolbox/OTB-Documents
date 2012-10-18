@@ -862,7 +862,124 @@
      with the connected components method, as shown earlier in the
      solution.
 
-** Solution 3: Learning and classification
+** Exercise 3: Learning and classification from objects
+
+*** The preliminary segmentation
+
+**** Item 1
+
+     Here are the command-line to generate the color-mapped images:
+     
+     : $ otbcli_ColorMapping -in phr_pxs_melbourne_xt_small_segmentation.tif
+     :   -out obc_segmentation_optimal.png uint8
+     :   -method optimal
+     
+     : $ otbcli_ColorMapping -in phr_pxs_melbourne_xt_small_segmentation.tif
+     :   -out obc_segmentation_image.png uint8
+     :   -method image
+     :   -method.image.in  phr_pxs_melbourne_xt_small.tif
+     
+     
+     Here is what the color-mapped images look like:
+     
+     #+Latex:\vspace{0.5cm}
+     #+ATTR_LaTeX: width=0.4\textwidth 
+     [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
+     
+
+**** Item 2
+
+     From the segmentation results, we can infer that an object-based
+     classification method might perform well on:
+     - Most of circular containers,
+     - Most of rectangular containers,
+     - Simple classes like water or roads.
+     
+     But it will most likely fail on:
+     - Some circular or rectangular containers that are fragmented by
+       segmentation,
+     - Complex objects like the boat or the cranes
+     - Small objects like cars and trucks.
+       
+*** *Object Labeling* module - basics
+
+**** Item 3
+     
+     The /Objects/ tab allows to create classes and to add training
+     segments to these classes. The /Features/ tab allows to select
+     the object-based features to be used for classification. Last,
+     the /Learning/ tab allows to tune classification parameters and
+     to perform the classification.
+
+**** Item 5
+     
+     The segment (from the image segmentation) under the mouse pointer
+     gets selected on first right-click action.
+
+**** Item 6
+
+     The selected segment is added to the current class on second
+     right-click action.
+
+**** Item 10
+
+     A SVM classifier is trained according to created classes and
+     corresponding training samples, and the remaining of the image
+     segments are classified using the trained classifier.
+
+
+**** Item 11
+
+     When the /Save/Quit/ button is pressed, the module closes and
+     produces three different outputs:
+     - An image of labels corresponding to the classes,
+     - A color-mapped image according to classes colors,
+     - A vector outputs containing polygons labeled with their
+       predicted classes.
+
+**** *Object Labeling* module - advanced
+
+     In this part of the exercise, we will use these additional files:
+     ~samples.xml~ and ~parameters.xml~
+
+     1. Load again the image and the segmentation inside the module.
+
+     2. Load the samples file using /File/Load Samples/. What are the
+        different object classes loaded ? How many samples per classes
+        are used ?
+
+     3. Load the classification parameters file. What are the features
+        used ?
+
+     4. Perform the classification. What are the objects in the image
+        that are badly classified because of missing classes ?
+
+     5. What are the objects in the image that are poorly classified
+        because they are badly segmented or too complex ?
+
+     6. Try to enhance the classification by adding missing classes.
+
+     7. Try to enhance the classification by adding new features.
+
+     _Tips and Recommandations:_
+     - The *Object Labeling* module is quite memory
+       consuming. Depending on the available memory on your system,
+       you might want to restart *Monteverdi*.
+
+**** *Object Labeling* module - active learning
+
+     1. In the /Objects/ tab, click on the /Sample/ button in the
+        lower-left area. This will show you difficult samples by using
+        the margin sampling technique.
+
+     2. What kind of segments are considered by the algorithm as hard
+        to classify ?
+
+     3. Try to create a /Trash/ class to handle noise segments.
+
+     4. Perform a few more iteration of active learning. What do you
+        observe ?
+
 
 ** Solution 4: Elevation map from stereo pair
 *** From images to epipolar geometry
