@@ -599,7 +599,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 **** Item 2
 
      The /BandMath/ module allows to do advanced band calculations
-     using the syntax from muParser (TODO: Add link).
+     using the syntax from [[http://muparser.sourceforge.net/][muParser]] .
 
 **** Item 3
 
@@ -667,7 +667,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
        /Documentation/ tab where extensive documentation of parameters
        can be found.
      - Last, the complete applications documentation can be found in
-       the Orfeo ToolBox Cookbook (TODO: Add link).
+       the [[http://www.orfeo-toolbox.org/CookBook/][Orfeo ToolBox Cookbook]].
 
 *** OTB applications: Basic processing
 
@@ -727,7 +727,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 **** Item 3
 
      Please refer to this chapter of the *Cookbook* to learn more
-     about the /Python/ interface (TODO: Add link here).
+     about the /Python/ [[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][interface]].
     
 ** Segmentation
 
