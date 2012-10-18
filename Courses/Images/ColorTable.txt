@@ -1,0 +1,11 @@
+# Lines beginning with a # are ignored
+#Vegetation (green)
+1 1 154 46
+#Water (blue)
+2 1 1 254
+#Soil (yellow)
+3 254 239 1
+#Roads (grey)
+4 127 127 127
+#Buildings (orange)
+5 246 101 1

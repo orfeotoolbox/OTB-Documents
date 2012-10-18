@@ -967,17 +967,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
     - The look-up table (LUT) use to produce the classification map in my case is:
 
-    : # Lines beginning with a # are ignored
-    : #Prairies (vert)
-    : 1 1 154 46
-    : #Surfaces en eau (bleu foncé)
-    : 2 1 1 254
-    : #Sable (jaune)
-    : 3 254 239 1
-    : #Routes (gris)
-    : 4 127 127 127
-    : #Toits (orange)
-    : 5 246 101 1
+#+INCLUDE: "Images/ColorTable.txt" src
 
     - Here is the command line to produce the classification map:
 
@@ -1175,7 +1165,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      created yet. It may also run several times into the same objects
      that are still difficult to classify after some iterations.
 
-** Solution 4: Elevation map from stereo pair
+** Elevation map from stereo pair
 *** From images to epipolar geometry
 **** Item 1
     To get the command-line help, run
