@@ -989,7 +989,8 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
     - Here is the command line to produce the SVM model:
 
-    : $ otbcli_TrainSVMImagesClassifier -io.il melbourne_ms_toa_ortho_extract_small.tif 
+    : $ otbcli_TrainSVMImagesClassifier 
+    :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
     :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
     :   -io.vd training.shp -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
@@ -999,7 +1000,8 @@ and standard deviation of 1) of samples based on the vector data produced by the
     
     - Here is the command line to produce the SVM model:
 
-    : $ otbcli_ImageSVMClassifier -in melbourne_ms_toa_ortho_extract_small.tif 
+    : $ otbcli_ImageSVMClassifier 
+    :   -in melbourne_ms_toa_ortho_extract_small.tif 
     :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
     :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
     :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
