@@ -40,7 +40,7 @@
 ** About the software
 
    To perform the exercises, you will need to have the following
-   softwares installed:
+   software installed:
    - *Orfeo ToolBox* 3.14 or later, including applications
    - *Monteverdi* 1.6 or later
    - *QGis* 1.8 or later
@@ -151,7 +151,7 @@
 
 **** Homework
      
-     1. How can we load or visualise images directly from command-line
+     1. How can we load or visualize images directly from command-line
         using *Monteverdi* ?
      2. Is there another way to compute radiometric indices like NDVI
         with the *OTB Applications* ?
@@ -338,7 +338,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      in each band optionally centered and reduced using XML statistics file
      produced by the ComputeImagesStatistics application. We will use this application with only one image in this case.
      - Use the *TrainSVMImagesClassifier* to produce SVM model
-     - Wich kernel is used by default in the application?
+     - Which kernel is used by default in the application?
      - What's the measured accuracy?
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
@@ -347,7 +347,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 **** Produce printable classification map
      We are going now to produce printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
-     RGB color specificied in a mapping file.  The mapping file should look like
+     RGB color specified in a mapping file.  The mapping file should look like
      this :
      
      : $ # Lines beginning with a # are ignored
@@ -392,7 +392,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
         /optimal/ and /image/ modes as learned in the segmentation
         exercise).
 
-     2. Analyse the color-mapped segmentation results. For which kind
+     2. Analyze the color-mapped segmentation results. For which kind
         of objects is the object based classification likely to work
         well ? For which kind of objects is it likely to perform badly
         ?
@@ -418,12 +418,12 @@ and standard deviation of 1) of samples based on the vector data produced by the
      11. Click on the /Save/Quit/ button. What kind of outputs is
          produced by the module ?
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
      - Choose two simple classes for this part of the exercise (for
        instance a /Water/ class and a /Land/ class)
      - Use the navigation map to change the displayed area
      - You can change the opacity of the classification layer as well
-       as of the selected objects layer so as to better analyse the
+       as of the selected objects layer so as to better analyze the
        results.
      - You can also clear the classification layer.     
 
@@ -454,7 +454,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      7. Try to enhance the classification by adding new features.
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
      - The *Object Labeling* module is quite memory
        consuming. Depending on the available memory on your system,
        you might want to restart *Monteverdi*.
@@ -970,7 +970,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      solution.
 
 ** Learning and classification from pixels
-*** Produce and analize learning samples
+*** Produce and analyze learning samples
 
     - The label corresponding to the class *water* in the shapefile is *2*
 
@@ -1128,7 +1128,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      7. Try to enhance the classification by adding new features.
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
      - The *Object Labeling* module is quite memory
        consuming. Depending on the available memory on your system,
        you might want to restart *Monteverdi*.
@@ -1181,7 +1181,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      of interest are poorly segmented or too complex for good
      classification results:
      - The boat and the cranes are too complex,
-     - Some of the containres (spherical or rectangular) are poorly
+     - Some of the containers (spherical or rectangular) are poorly
        segmented, which leads to miss-classification.
 
 **** Item 6 - 7
