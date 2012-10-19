@@ -318,6 +318,10 @@
      - What is the label corresponding to the class *water* in the shapefile?
        A set of learning samples is provided for the exercise in /training.shp/
 
+     _Tips and Recommendations:_
+      - Note the field name of the shapefile which contains the label. You will
+        need to provide this field in the training application
+
 **** Estimate image statistics
 
      In order to make these features comparable between each images, the first step is to estimate the
@@ -326,7 +330,8 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      - Use the *ComputeImagesStatistics* to compute statistics on /melbourne_ms_toa_ortho_extract_small.tif/ image
      - What is the mean of the red band?
-     - The extract provided was firstly converted from DN to reflectance. For what reasons, is it advice to do such conversion for multiple images classification?
+     - The extract provided was firstly converted from DN to milli-reflectance. For what reasons, is it advise to do such conversion for multiple images classification?
+
 **** Estimate classification model using the Support Vector Machine algorithm
      This *TrainSVMImagesClassifier* application performs SVM classifier training from multiple pairs of
      input images and training vector data. Samples are composed of pixel values
