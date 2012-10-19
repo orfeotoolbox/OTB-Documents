@@ -343,7 +343,8 @@ and standard deviation of 1) of samples based on the vector data produced by the
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
      - What is the output from the application?
-     - Bonus : Use the same model to apply the classification to the other extract /melbourne_ms_toa_ortho_extract_large.tif/
+     - Bonus : Use the same model to apply the classification to the other extract 
+       /melbourne_ms_toa_ortho_extract_large.tif/
 **** Produce printable classification map
      We are going now to produce printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
