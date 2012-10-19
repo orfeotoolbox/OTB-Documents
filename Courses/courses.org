@@ -973,8 +973,9 @@ and standard deviation of 1) of samples based on the vector data produced by the
      
     - Here is the command line to produce the image statistics:
 
-    : $ ComputeImagesStatistics -il melbourne_ms_toa_ortho_extract_small.tif 
-    : -out melbourne_ms_toa_ortho_extract_small_stats.xml
+    : $ otbcli_ComputeImagesStatistics 
+    :   -il melbourne_ms_toa_ortho_extract_small.tif 
+    :   -out melbourne_ms_toa_ortho_extract_small_stats.xml
 
     - The value of the mean of the red band is *111.625*
     - Reflectance allows to compare radiometric values between images of different sensors.
@@ -983,9 +984,9 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
     - Here is the command line to produce the SVM model:
 
-    : $ TrainSVMImagesClassifier -io.il melbourne_ms_toa_ortho_extract_small.tif 
-    : -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
-    : -io.vd training.shp -io.out melbourne_ms_toa_ortho_extract_small_model.svm
+    : $ otbcli_TrainSVMImagesClassifier -io.il melbourne_ms_toa_ortho_extract_small.tif 
+    :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+    :   -io.vd training.shp -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
     - Linear kernel is used by default in the application
     - The measured accuracy is 0.988523. The value is high due to the low number of training samples and their lack of variability
@@ -993,10 +994,11 @@ and standard deviation of 1) of samples based on the vector data produced by the
     
     - Here is the command line to produce the SVM model:
 
-    : $ ImageSVMClassifier -in melbourne_ms_toa_ortho_extract_small.tif 
-    : -svm melbourne_ms_toa_ortho_extract_small_model.svm 
-    : -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
-    : -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif uint8
+    : $ otbcli_ImageSVMClassifier -in melbourne_ms_toa_ortho_extract_small.tif 
+    :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
+    :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+    :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
+    :   uint8
 
     - Pixels of the output image will contain the class label decided by the SVM classifier
 
@@ -1222,7 +1224,7 @@ resample the two input images in the epipolar geometry using these
 grids. These grids are intermediary results not really useful on their
 own in most cases.
 
-    : $ StereoRectificationGridGenerator 
+    : $ otbcli_StereoRectificationGridGenerator 
     :   -io.inleft tristereo_melbourne_3_small_ref.tif 
     :   -io.inright tristereo_melbourne_1_small_ref.tif 
     :   -io.outleft 31_grid_tristereo_melbourne_3_small_ref.tif 
@@ -1232,7 +1234,7 @@ own in most cases.
 
     For the left image :
     
-    : $ GridBasedImageResampling 
+    : $ otbcli_GridBasedImageResampling 
     :   -io.in tristereo_melbourne_3_small_ref.tif 
     :   -io.out 31_epi_tristereo_melbourne_3_small_ref.tif 
     :   -grid.in 31_grid_tristereo_melbourne_3_small_ref.tif 
@@ -1256,7 +1258,7 @@ own in most cases.
      Here is the command-line to run the *ConcatenateImages* application to generate
      the anaglyph image:
 
-    : $ ConcatenateImages -il 
+    : $ otbcli_ConcatenateImages -il 
     :   31_epi_tristereo_melbourne_3_small_ref.tif 
     :   31_epi_tristereo_melbourne_1_small_ref.tif 
     :   31_epi_tristereo_melbourne_1_small_ref.tif 
@@ -1293,7 +1295,7 @@ own in most cases.
 
      Here is the command-line to run the application with default parameters:
 
-     : $ BlockMatching 
+     : $ otbcli_BlockMatching 
      :   -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
      :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
      :   -io.out 31_disparity_map_3_1.tif 
@@ -1317,7 +1319,7 @@ own in most cases.
      
      Here is the command-line to run the application witch combine all these parameters:
      
-     : $ BlockMatching 
+     : $ otbcli_BlockMatching 
      :   -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
      :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
      :   -io.out 31_disparity_map_3_1.tif 
@@ -1334,10 +1336,10 @@ own in most cases.
      #+Latex:\vspace{0.5cm}
 
 **** Item3
-     : $ otb_path/otbcli_BandMath 
-     : -il $results/${case}_disparity_map_$1_$2.tif  
-     : -out $results/${case}_filtered_disparity_map_$1_$2.tif 
-     : -exp "if(im1b3>0.9,im1b1,-1000)"
+     : $ otbcli_BandMath 
+     :   -il 31_disparity_map_3_1.tif  
+     :   -out 31_filtered_disparity_map_3_1.tif 
+     :   -exp "if(im1b3>0.9,im1b1,-1000)"
      
      Here is the result of this command:
 
@@ -1353,12 +1355,13 @@ own in most cases.
 
      Here is the command-line to run the application:
 
-     : $ DisparityMapToElevationMap -io.in 31_disparity_map_3_1.tif -io.left 
-     : tristereo_melbourne_3_small_ref.tif -io.right tristereo_melbourne_1_small_ref.tif 
-     : -io.lgrid 31_grid_tristereo_melbourne_3_small_ref.tif 
-     : -io.rgrid 31_grid_tristereo_melbourne_1_small_ref.tif 
-     : -hmin 0 -hmax 80 -elev average -step 1 -elev.average.value 20.45 
-     : -io.out 31_disparity_map_to_elevation_3_1.tif
+     : $ otbcli_DisparityMapToElevationMap -io.in 31_disparity_map_3_1.tif 
+     :   -io.left tristereo_melbourne_3_small_ref.tif 
+     :   -io.right tristereo_melbourne_1_small_ref.tif 
+     :   -io.lgrid 31_grid_tristereo_melbourne_3_small_ref.tif 
+     :   -io.rgrid 31_grid_tristereo_melbourne_1_small_ref.tif 
+     :   -hmin 0 -hmax 80 -elev average -step 1 -elev.average.value 20.45 
+     :   -io.out 31_disparity_map_to_elevation_3_1.tif
 
      Here is the result of the command:
 
