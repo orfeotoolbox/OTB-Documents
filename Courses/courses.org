@@ -1065,7 +1065,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      - Small objects like cars and trucks.
        
 *** *Object Labeling* module - basics
-
+    
 **** Item 3
      
      The /Objects/ tab allows to create classes and to add training
@@ -1089,7 +1089,6 @@ and standard deviation of 1) of samples based on the vector data produced by the
      A SVM classifier is trained according to created classes and
      corresponding training samples, and the remaining of the image
      segments are classified using the trained classifier.
-
 
 **** Item 11
 
@@ -1242,7 +1241,7 @@ own in most cases.
 
     For the right image:
 
-    : $ GridBasedImageResampling 
+    : $ otbcli_GridBasedImageResampling 
     :   -io.in tristereo_melbourne_1_small_ref.tif 
     :   -io.out 31_epi_tristereo_melbourne_1_small_ref.tif 
     :   -grid.in 31_grid_tristereo_melbourne_1_small_ref.tif 
