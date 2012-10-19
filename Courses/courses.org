@@ -992,7 +992,8 @@ and standard deviation of 1) of samples based on the vector data produced by the
     : $ otbcli_TrainSVMImagesClassifier 
     :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
     :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
-    :   -io.vd training.shp -io.out melbourne_ms_toa_ortho_extract_small_model.svm
+    :   -io.vd training.shp 
+    :   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
     - Linear kernel is used by default in the application
     - The measured accuracy is 0.988523. The value is high due to the low number of training samples and their lack of variability
@@ -1018,9 +1019,9 @@ and standard deviation of 1) of samples based on the vector data produced by the
     - Here is the command line to produce the classification map:
 
     : $ ColorMapping 
-    : -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
-    : -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
-    : -method custom -method.custom.lut ColorTable.txt
+    :   -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
+    :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
+    :   -method custom -method.custom.lut ColorTable.txt
 
     and the result of the command:
 
