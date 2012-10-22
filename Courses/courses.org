@@ -40,7 +40,7 @@
 ** About the software
 
    To perform the exercises, you will need to have the following
-   softwares installed:
+   software installed:
    - *Orfeo ToolBox* 3.14 or later, including applications
    - *Monteverdi* 1.6 or later
    - *QGis* 1.8 or later
@@ -151,7 +151,7 @@
 
 **** Homework
      
-     1. How can we load or visualise images directly from command-line
+     1. How can we load or visualize images directly from command-line
         using *Monteverdi* ?
      2. Is there another way to compute radiometric indices like NDVI
         with the *OTB Applications* ?
@@ -318,6 +318,10 @@
      - What is the label corresponding to the class *water* in the shapefile?
        A set of learning samples is provided for the exercise in /training.shp/
 
+     _Tips and Recommendations:_
+      - Note the field name of the shapefile which contains the label. You will
+        need to provide this field in the training application
+
 **** Estimate image statistics
 
      In order to make these features comparable between each images, the first step is to estimate the
@@ -326,23 +330,25 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      - Use the *ComputeImagesStatistics* to compute statistics on /melbourne_ms_toa_ortho_extract_small.tif/ image
      - What is the mean of the red band?
-     - The extract provided was firstly converted from DN to reflectance. For what reasons, is it advice to do such conversion for multiple images classification?
+     - The extract provided was firstly converted from DN to milli-reflectance. For what reasons, is it advise to do such conversion for multiple images classification?
+
 **** Estimate classification model using the Support Vector Machine algorithm
      This *TrainSVMImagesClassifier* application performs SVM classifier training from multiple pairs of
      input images and training vector data. Samples are composed of pixel values
      in each band optionally centered and reduced using XML statistics file
      produced by the ComputeImagesStatistics application. We will use this application with only one image in this case.
      - Use the *TrainSVMImagesClassifier* to produce SVM model
-     - Wich kernel is used by default in the application?
+     - Which kernel is used by default in the application?
      - What's the measured accuracy?
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
      - What is the output from the application?
-     - Bonus : Use the same model to apply the classification to the other extract /melbourne_ms_toa_ortho_extract_large.tif/
+     - Bonus : Use the same model to apply the classification to the other extract 
+       /melbourne_ms_toa_ortho_extract_large.tif/
 **** Produce printable classification map
      We are going now to produce printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
-     RGB color specificied in a mapping file.  The mapping file should look like
+     RGB color specified in a mapping file.  The mapping file should look like
      this :
      
      : $ # Lines beginning with a # are ignored
@@ -387,7 +393,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
         /optimal/ and /image/ modes as learned in the segmentation
         exercise).
 
-     2. Analyse the color-mapped segmentation results. For which kind
+     2. Analyze the color-mapped segmentation results. For which kind
         of objects is the object based classification likely to work
         well ? For which kind of objects is it likely to perform badly
         ?
@@ -413,12 +419,12 @@ and standard deviation of 1) of samples based on the vector data produced by the
      11. Click on the /Save/Quit/ button. What kind of outputs is
          produced by the module ?
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
      - Choose two simple classes for this part of the exercise (for
        instance a /Water/ class and a /Land/ class)
      - Use the navigation map to change the displayed area
      - You can change the opacity of the classification layer as well
-       as of the selected objects layer so as to better analyse the
+       as of the selected objects layer so as to better analyze the
        results.
      - You can also clear the classification layer.     
 
@@ -449,7 +455,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      7. Try to enhance the classification by adding new features.
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
      - The *Object Labeling* module is quite memory
        consuming. Depending on the available memory on your system,
        you might want to restart *Monteverdi*.
@@ -965,7 +971,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      solution.
 
 ** Learning and classification from pixels
-*** Produce and analize learning samples
+*** Produce and analyze learning samples
 
     - The label corresponding to the class *water* in the shapefile is *2*
 
@@ -973,8 +979,9 @@ and standard deviation of 1) of samples based on the vector data produced by the
      
     - Here is the command line to produce the image statistics:
 
-    : $ ComputeImagesStatistics -il melbourne_ms_toa_ortho_extract_small.tif 
-    : -out melbourne_ms_toa_ortho_extract_small_stats.xml
+    : $ otbcli_ComputeImagesStatistics 
+    :   -il melbourne_ms_toa_ortho_extract_small.tif 
+    :   -out melbourne_ms_toa_ortho_extract_small_stats.xml
 
     - The value of the mean of the red band is *111.625*
     - Reflectance allows to compare radiometric values between images of different sensors.
@@ -983,9 +990,11 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
     - Here is the command line to produce the SVM model:
 
-    : $ TrainSVMImagesClassifier -io.il melbourne_ms_toa_ortho_extract_small.tif 
-    : -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
-    : -io.vd training.shp -io.out melbourne_ms_toa_ortho_extract_small_model.svm
+    : $ otbcli_TrainSVMImagesClassifier 
+    :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
+    :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+    :   -io.vd training.shp 
+    :   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
     - Linear kernel is used by default in the application
     - The measured accuracy is 0.988523. The value is high due to the low number of training samples and their lack of variability
@@ -993,10 +1002,12 @@ and standard deviation of 1) of samples based on the vector data produced by the
     
     - Here is the command line to produce the SVM model:
 
-    : $ ImageSVMClassifier -in melbourne_ms_toa_ortho_extract_small.tif 
-    : -svm melbourne_ms_toa_ortho_extract_small_model.svm 
-    : -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
-    : -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif uint8
+    : $ otbcli_ImageSVMClassifier 
+    :   -in melbourne_ms_toa_ortho_extract_small.tif 
+    :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
+    :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+    :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
+    :   uint8
 
     - Pixels of the output image will contain the class label decided by the SVM classifier
 
@@ -1009,9 +1020,9 @@ and standard deviation of 1) of samples based on the vector data produced by the
     - Here is the command line to produce the classification map:
 
     : $ ColorMapping 
-    : -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
-    : -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
-    : -method custom -method.custom.lut ColorTable.txt
+    :   -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
+    :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
+    :   -method custom -method.custom.lut ColorTable.txt
 
     and the result of the command:
 
@@ -1063,7 +1074,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      - Small objects like cars and trucks.
        
 *** *Object Labeling* module - basics
-
+    
 **** Item 3
      
      The /Objects/ tab allows to create classes and to add training
@@ -1087,7 +1098,6 @@ and standard deviation of 1) of samples based on the vector data produced by the
      A SVM classifier is trained according to created classes and
      corresponding training samples, and the remaining of the image
      segments are classified using the trained classifier.
-
 
 **** Item 11
 
@@ -1122,7 +1132,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
      7. Try to enhance the classification by adding new features.
 
-     _Tips and Recommandations:_
+     _Tips and Recommendations:_
      - The *Object Labeling* module is quite memory
        consuming. Depending on the available memory on your system,
        you might want to restart *Monteverdi*.
@@ -1175,7 +1185,7 @@ and standard deviation of 1) of samples based on the vector data produced by the
      of interest are poorly segmented or too complex for good
      classification results:
      - The boat and the cranes are too complex,
-     - Some of the containres (spherical or rectangular) are poorly
+     - Some of the containers (spherical or rectangular) are poorly
        segmented, which leads to miss-classification.
 
 **** Item 6 - 7
@@ -1222,7 +1232,7 @@ resample the two input images in the epipolar geometry using these
 grids. These grids are intermediary results not really useful on their
 own in most cases.
 
-    : $ StereoRectificationGridGenerator 
+    : $ otbcli_StereoRectificationGridGenerator 
     :   -io.inleft tristereo_melbourne_3_small_ref.tif 
     :   -io.inright tristereo_melbourne_1_small_ref.tif 
     :   -io.outleft 31_grid_tristereo_melbourne_3_small_ref.tif 
@@ -1232,7 +1242,7 @@ own in most cases.
 
     For the left image :
     
-    : $ GridBasedImageResampling 
+    : $ otbcli_GridBasedImageResampling 
     :   -io.in tristereo_melbourne_3_small_ref.tif 
     :   -io.out 31_epi_tristereo_melbourne_3_small_ref.tif 
     :   -grid.in 31_grid_tristereo_melbourne_3_small_ref.tif 
@@ -1240,7 +1250,7 @@ own in most cases.
 
     For the right image:
 
-    : $ GridBasedImageResampling 
+    : $ otbcli_GridBasedImageResampling 
     :   -io.in tristereo_melbourne_1_small_ref.tif 
     :   -io.out 31_epi_tristereo_melbourne_1_small_ref.tif 
     :   -grid.in 31_grid_tristereo_melbourne_1_small_ref.tif 
@@ -1256,7 +1266,7 @@ own in most cases.
      Here is the command-line to run the *ConcatenateImages* application to generate
      the anaglyph image:
 
-    : $ ConcatenateImages -il 
+    : $ otbcli_ConcatenateImages -il 
     :   31_epi_tristereo_melbourne_3_small_ref.tif 
     :   31_epi_tristereo_melbourne_1_small_ref.tif 
     :   31_epi_tristereo_melbourne_1_small_ref.tif 
@@ -1293,7 +1303,7 @@ own in most cases.
 
      Here is the command-line to run the application with default parameters:
 
-     : $ BlockMatching 
+     : $ otbcli_BlockMatching 
      :   -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
      :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
      :   -io.out 31_disparity_map_3_1.tif 
@@ -1317,7 +1327,7 @@ own in most cases.
      
      Here is the command-line to run the application witch combine all these parameters:
      
-     : $ BlockMatching 
+     : $ otbcli_BlockMatching 
      :   -io.inleft 31_epi_tristereo_melbourne_3_small_ref.tif 
      :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
      :   -io.out 31_disparity_map_3_1.tif 
@@ -1334,10 +1344,10 @@ own in most cases.
      #+Latex:\vspace{0.5cm}
 
 **** Item3
-     : $ otb_path/otbcli_BandMath 
-     : -il $results/${case}_disparity_map_$1_$2.tif  
-     : -out $results/${case}_filtered_disparity_map_$1_$2.tif 
-     : -exp "if(im1b3>0.9,im1b1,-1000)"
+     : $ otbcli_BandMath 
+     :   -il 31_disparity_map_3_1.tif  
+     :   -out 31_filtered_disparity_map_3_1.tif 
+     :   -exp "if(im1b3>0.9,im1b1,-1000)"
      
      Here is the result of this command:
 
@@ -1353,12 +1363,13 @@ own in most cases.
 
      Here is the command-line to run the application:
 
-     : $ DisparityMapToElevationMap -io.in 31_disparity_map_3_1.tif -io.left 
-     : tristereo_melbourne_3_small_ref.tif -io.right tristereo_melbourne_1_small_ref.tif 
-     : -io.lgrid 31_grid_tristereo_melbourne_3_small_ref.tif 
-     : -io.rgrid 31_grid_tristereo_melbourne_1_small_ref.tif 
-     : -hmin 0 -hmax 80 -elev average -step 1 -elev.average.value 20.45 
-     : -io.out 31_disparity_map_to_elevation_3_1.tif
+     : $ otbcli_DisparityMapToElevationMap -io.in 31_disparity_map_3_1.tif 
+     :   -io.left tristereo_melbourne_3_small_ref.tif 
+     :   -io.right tristereo_melbourne_1_small_ref.tif 
+     :   -io.lgrid 31_grid_tristereo_melbourne_3_small_ref.tif 
+     :   -io.rgrid 31_grid_tristereo_melbourne_1_small_ref.tif 
+     :   -hmin 0 -hmax 80 -elev average -step 1 -elev.average.value 20.45 
+     :   -io.out 31_disparity_map_to_elevation_3_1.tif
 
      Here is the result of the command:
 
