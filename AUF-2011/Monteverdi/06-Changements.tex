@@ -1,0 +1,237 @@
+\documentclass[compress,handout]{beamer}
+\mode<presentation>
+{
+ \usetheme{Vilanova}
+}
+
+\usepackage[french]{babel}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{eurosym}
+%\usepackage{url}
+\usepackage[normal]{subfigure}
+\newcommand{\goodgap}{%
+	\hspace{\subfigtopskip}%
+	\hspace{\subfigbottomskip}}
+
+
+
+%\newtheorem{definition}{Definition}
+
+\title{Traitement d'images de télédétection}
+\subtitle{Détection de changements}
+
+
+
+
+\author
+{jordi.inglada@cesbio.cnes.fr}
+\normalsize
+
+\institute[Cesbio] % (optional, but mostly needed)
+{\textsc{Centre d'Études Spatiales de la Biosphère, Toulouse, France}}
+
+\date{}
+
+\pgfdeclareimage[height=96mm,width=128mm]{background}{fondsClairSansLogo}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{logoIncrust}
+\pgfdeclareimage[height=0.5cm]{logo_cesbio}{logo_cesbio}
+\logo{
+\begin{tabular}{lp{0.25\textwidth}lp{0.25\textwidth}r}
+\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}
+&&\footnotesize{AUF - Marrakech 2011}&&
+\href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+
+\subject{Détection de changements}
+
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \begin{center}
+{\tiny Ce contenu est dérivé de la formation \href{http://www.orfeo-toolbox.org/packages/PragmaticRemoteSensing-handout.pdf}{``Pragmatic Remote
+  Sensing''} dispensée par J. Inglada et E. Christophe en juillet 2010
+  dans le cadre du colloque IGARSS. Il est mis à disposition selon les termes de la licence :\\
+Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \href{http://creativecommons.org/licenses/by-sa/3.0/}{\includegraphics[width=0.05\textwidth]{/home/inglada/Dev/GH/IGARSS2010/Tutorial/Slides/Ressources/CC-licence.png}}    
+  \end{center}
+\end{frame}
+
+
+\section[Stratégies]{Stratégies classiques pour la détections de changements}
+
+\begin{frame}
+  \frametitle{Approches possibles}
+\begin{itemize}
+
+\item{Stratégie $1$ : détecteurs simples}
+
+  Production d'une image de vraisemblance de changement (différences,
+  ratios, etc.) et seuillage pour produire une carte binaire.
+
+\item{Stratégie $2$ : Comparaison post-classification}
+
+Génération de 2 cartes d'occupation des sols (une pour chaque date) et
+comparaison des classes.
+
+\item{Stratégie $3$ : Classification conjointe}
+
+  Génération de la carte de changements directement à partir de la
+  classification conjointe des 2 images.
+
+
+\end{itemize}
+\end{frame}
+
+
+\section[Détecteurs]{Détecteurs disponibles dans l'OTB}
+\begin{frame}
+  \frametitle{Détecteurs disponibles}
+  \small
+  \begin{itemize}
+    \item Différence pixel à pixel des valeurs moyennes dans les
+      voisinages :
+      \begin{equation}
+	I_{D}(i,j)=I_{2}(i,j)-I_{1}(i,j).
+      \end{equation}
+    \item Ratio de moyennes locales :
+      \begin{equation}
+\displaystyle I_{R}(i,j) = 1 - min \left(\frac{\displaystyle I_{2}(i,j)}{\displaystyle I_{1}(i,j)},\frac{\displaystyle I_{1}(i,j)}{\displaystyle I_{2}(i,j)}\right).
+\end{equation}
+      \item Corrélation locale :
+\begin{equation}
+  I_\rho(i,j) = \frac{1}{N}\frac{\sum_{i,j}(I_1(i,j)-m_{I_1})(I_2(i,j)-m_{I_2})}{\sigma_{I_1}
+\sigma_{I_2}}
+\end{equation}
+\item Distance de Kullback-Leibler entre les distributions locales
+  \item Plusieurs versions de l'information mutuelle
+  \end{itemize}
+  \normalsize
+\end{frame}
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Affichage des différences}
+  \begin{enumerate}
+  \item Images : SpotAfter et SpotBefore dans le dossier /home/auf/OTB/data/Examples
+  \item Monteverdi: File $\rightarrow$ Concatenate Images
+  \item Choisir les amplitudes des 2 images et construire 1 image à 2 bandes
+  \item Monteverdi: Visualization $\rightarrow$ Viewer
+  \item Choisir l'image à 2 bandes
+  \item Dans l'onglet {\em Setup}, choisir {\em RGB composition mode}
+    et prendre 1,2,2.
+  \item Interpréter les couleurs observées
+  \item La même chose pourrait être faite en utilisant des images de primitives
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Seuillage des différences}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Band Math
+  \item Choisir les amplitudes des 2 images et calculer une différence
+  \item Monteverdi: Filtering $\rightarrow$ Threshold
+  \item Choisir l'image de différences et appliquer différents seuils
+  \item La même chose pourrait être faite avec des ratios
+  \item La même chose pourrait être faite en utilisant des images de primitives
+  \end{enumerate}
+\end{frame}
+
+
+\section[Application]{Détection de changements interactive}
+
+\begin{frame}
+  \frametitle{Détection de changements interactive}
+  \begin{itemize}
+    \item Génération de cartes de changements binaires en utilisant une
+      IHM
+    \item Utilise des détecteurs simples en entrée
+    \item L'opérateur donne des exemples de {\em changement} et {\em non-changement}
+    \item Classification supervisée par SVM
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Classification conjointe}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Change Detection
+  \item Choisir les 2 images à traiter
+    \begin{itemize}
+    \item Images à 2 dates différentes
+    \end{itemize}
+  \item Décocher {\em Use Change Detectors}
+  \item Utiliser les boutons {\em Changed/Unchanged Class} pour
+    choisir chacune des classes
+  \item Tracer des polygones sur les images pour construire les
+    échantillons d'apprentissage
+  \item Le bouton {\em End Polygon} sert à fermer les polygones
+  \item Après avoir sélectionné plusieurs polygones par classe cliquer
+    sur {\em Learn}
+  \item Le bouton {\em Display Results} permet d'afficher les résultats
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Classification conjointe avec détecteurs de changement}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Change Detection
+      \item Choisir les 2 images à traiter
+    \begin{itemize}
+    \item Images à 2 dates différentes
+    \end{itemize}
+  \item S'assurer que la case {\em Use Change Detectors} est cochée
+  \item Procéder comme dans l'exercice précédent
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Classification conjointe avec primitives}
+  \begin{enumerate}
+  \item Monteverdi: Filtering $\rightarrow$ Change Detection
+      \item Choisir les 2 images à traiter
+    \begin{itemize}
+    \item Images de primitives à 2 dates différentes
+    \end{itemize}
+  \item Procéder comme dans l'exercice précédent
+  \end{enumerate}
+\end{frame}
+
+
+
+\end{document}

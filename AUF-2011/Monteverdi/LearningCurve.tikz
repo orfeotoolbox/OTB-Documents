@@ -1,0 +1,10 @@
+\begin{tikzpicture}[thick,scale=0.8]
+
+\node (origin) at (0,0){};
+\draw[->] (0,0) -- node[sloped,below]{Task complexity}(10,0);
+\draw[->] (0,0) -- node[sloped,above]{Effort}(0,6);
+
+\draw[red] (0,0) .. controls +(up:20mm) and +(left:50mm)
+            .. node[very near end,sloped,above]{learning OTB} (10,3);
+\draw[blue] (0,0) -- node[near end,sloped,above]{solution from scratch}(10,6);
+\end{tikzpicture}

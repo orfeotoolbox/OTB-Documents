@@ -1,0 +1,474 @@
+\documentclass[compress,handout]{beamer}
+\mode<presentation>
+{
+ \usetheme{Vilanova}
+}
+
+\usepackage[french]{babel}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{eurosym}
+%\usepackage{url}
+\usepackage[normal]{subfigure}
+\newcommand{\goodgap}{%
+	\hspace{\subfigtopskip}%
+	\hspace{\subfigbottomskip}}
+
+
+
+%\newtheorem{definition}{Definition}
+
+\title{Traitement d'images de télédétection}
+\subtitle{Corrections géométriques}
+
+
+
+\author
+{jordi.inglada@cesbio.cnes.fr}
+\normalsize
+
+\institute[Cesbio] % (optional, but mostly needed)
+{\textsc{Centre d'Études Spatiales de la Biosphère, Toulouse, France}}
+
+\date{}
+
+\pgfdeclareimage[height=96mm,width=128mm]{background}{fondsClairSansLogo}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{logoIncrust}
+\pgfdeclareimage[height=0.5cm]{logo_cesbio}{logo_cesbio}
+\logo{
+\begin{tabular}{lp{0.25\textwidth}lp{0.25\textwidth}r}
+\href{http://www.cesbio.ups-tlse.fr/}{\pgfuseimage{logo_cesbio}}
+&&\footnotesize{AUF - Marrakech 2011}&&
+\href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+
+\subject{Image geometry in ORFEO Toolbox}
+
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \begin{center}
+{\tiny Ce contenu est dérivé de la formation \href{http://www.orfeo-toolbox.org/packages/PragmaticRemoteSensing-handout.pdf}{``Pragmatic Remote
+  Sensing''} dispensée par J. Inglada et E. Christophe en juillet 2010
+  dans le cadre du colloque IGARSS. Il est mis à disposition selon les termes de la licence :\\
+Creative Commons Paternité – Partage à l’Identique 3.0 non transcrit.} \href{http://creativecommons.org/licenses/by-sa/3.0/}{\includegraphics[width=0.05\textwidth]{/home/inglada/Dev/GH/IGARSS2010/Tutorial/Slides/Ressources/CC-licence.png}}    
+  \end{center}
+\end{frame}
+
+
+\section*{Introduction}
+
+\begin{frame}
+
+  \frametitle{Introduction}
+  \hspace*{-1cm}
+  \begin{tikzpicture}[scale=0.165]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Série d'images};
+     \pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     \pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Modèle capteur};
+     \pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {MNT};
+     \pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     \pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     \pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Géo-référencement};
+\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Points Homologues};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Spatio triangulation};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     \pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      \pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Recalage fin};
+     \pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     \pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Série recalée};
+     \pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     \pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      \pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Projection Carto};
+     \pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     \pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Ortho-images};
+     
+       
+  \end{tikzpicture}
+\end{frame}
+
+%% \begin{frame}
+%%   \frametitle{Introduction}
+%%  \begin{block}{How to register image series}
+%%  \begin{itemize}
+%%  \item Sensor models and bundle-block adjustment
+%%  \item Homologous point extraction
+%%  \item Fine registration
+%%  \end{itemize}
+%%  \end{block}
+%%  \begin{block}{How to measure the quality}
+%%  \begin{itemize}
+%%  \item Choosing the reference
+%%  \item Quality measures
+%%  \end{itemize}
+%%  \end{block}
+%%  \end{frame}
+
+
+\section[Modèles]{Modèles de capteur}
+
+
+\begin{frame}
+  \frametitle{Modèles de capteur}
+
+  \framesubtitle{Définition}
+Transformation de coordonnées entre l'image issue du capteur $(l,c)$
+et les coordonnées au sol $(X,Y)$ pour chaque pixel :
+\pause
+\begin{displaymath}
+  \begin{array}{cc}
+    Direct & \\
+    X = f_x(l,c,h,\vec\theta) & Y = f_y(l,c,h,\vec\theta)\\
+     & \\ \pause
+    Inverse & \\
+    l = g_l(X,Y,h,\vec\theta) & c = g_c(X,Y,h,\vec\theta)
+  \end{array}
+\end{displaymath}
+\pause
+Où $\vec\theta$ est l'ensemble de paramètres décrivant le capteur et
+la géométrie d'acquisition.\\
+\pause
+L'élévation de chaque point (MNT) doit être connue.
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modèles de capteur}
+
+  \framesubtitle{Types de modèles}
+  \begin{itemize}
+    \item Modèles physiques
+      \begin{itemize}
+	\item Rigoureux, complexes, équations fortement non-linéaires
+	\item Difficiles à inverser
+	\item Les paramètres ont une signification physique
+	\item Spécifiques à chaque capteur
+      \end{itemize}
+    \item Modèles analytiques génériques
+      \begin{itemize}
+	\item Ex: polynomiaux, fractions rationnelles, etc.
+	\item Moins précis
+	\item Faciles à mettre en oeuvre
+	\item Les paramètres peuvent ne pas avoir de signification physique
+      \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modèles de capteur}
+
+  \framesubtitle{L'approche OTB}
+  \begin{itemize}
+    \item Utilisation de {\em factories} : les modèles sont générés
+      automatiquement en utilisant les méta-données des images
+    \item Modèles disponibles
+      \begin{itemize}
+	\item Fractions rationnelles : Quickbird, Ikonos, WorldView-2
+	\item Modèles physiques : SPOT5
+	\item Radar : ERS, ASAR, Radarsat, Cosmo Skymed, TerraSAR-X, Palsar
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{La main à la pâte}
+\begin{enumerate}
+\item Monteverdi : Ouvrir une image en géométrie capteur
+  \begin{itemize}
+  \item /home/auf/OTB/data/TOULOUSE (image Quickbird de Toulouse)
+  \item Choisir le fichier TIF dans l'un des 2 répertoires
+  \end{itemize}
+\item Afficher l'image
+  \begin{itemize}
+  \item Click droit sur le nom de l'image dans la fenêtre principale
+    de Monteverdi
+  \item ``Display in viewer''
+  \item Attendre la génération du quicklook
+  \end{itemize}
+\item Observer comment les coordonnées géographiques sont recalculées
+  quand le curseur se déplace
+  \begin{itemize}
+  \item Elles sont mises à jour en appliquant le modèle de capteur
+    crée à partir des méta-données de l'image
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modèles de capteur}
+
+  \framesubtitle{Utilisation : ortho-rectification}
+  \begin{enumerate}
+    \item Lecture des méta-données image et création du modèle avec
+      les bons paramètres
+  \item Définition de la ROI en coordonnées sol (c'est la matrice de
+    pixels de sortie)
+  \item Balayer les pixels de coordonnées $(X,Y)$ :
+    \begin{enumerate}
+      \item Obtenir $h$ à partir du MNT
+      \item Calculer $(c,l) = G(X,Y,h,\vec\theta)$
+      \item Interpoler les valeurs des pixels si $(c,l)$ ne sont pas
+        des valeurs entières
+    \end{enumerate}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{La main à la pâte}
+\begin{enumerate}
+\item Monteverdi: Geometry $\rightarrow$ Reproject image
+\item Choisir l'image à ortho-rectifier (Panchromatique)
+\item Choisir les paramètres
+  \begin{itemize}
+  \item Onglet ``Output image''
+    \begin{itemize}
+    \item Par défaut, projection UTM.
+    \item Choisir une petite taille (size x, size y) pour que ça aille
+    vite!
+    \end{itemize}
+  \item Regarder l'onglet ``Input image'' : l'image en entrée est bien
+    en géométrie capteur.
+  \end{itemize}
+\item Sauvegarder le résultat
+
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Modèles de capteur}
+  \framesubtitle{Limites de l'approche}
+
+  \begin{itemize}
+    \item Un géo-référencement précis nécessite :
+      \begin{itemize}
+	\item Un MNT précis
+	\item Des paramètres capteur sans erreur, $\vec\theta$
+      \end{itemize}
+    \item Pour les séries multi-temporelles d'images on a besoin de
+      \alert{recalage fin} :
+      \begin{itemize}
+      \item Précision sous-pixellique
+      \item Pour chaque pixel de la scène
+      \end{itemize}
+    \item Les MNT et les méta-données capteur ne fournissent pas cette
+      précision.
+    \item Solution : utilisation de l'information redondante entre les
+      images de la série.
+  \end{itemize}
+\end{frame}
+
+\section{Optimisations}
+\subsection{Spatio-triangulation}
+
+\begin{frame}
+  \frametitle{Spatio-triangulation}
+  \framesubtitle{Position du problème}
+  \begin{columns}[T]
+\column{.5\textwidth}
+  \begin{itemize}
+    \item La série d'images est ortho-rectifiée (avec le MNT et les
+      paramètres disponibles).
+    \item Supposons que des point homologues (PH) peuvent être obtenus
+      aisément : $PH_i = (X_i,Y_i,h_i)$
+    \item Pour chaque image et pour chaque point nous pouvons écrire :
+    $(l_{ij},c_{ij}) = G_j(X_i,Y_i,h_i,\vec\theta_j)$
+  \end{itemize}
+\column{.5\textwidth}
+\begin{tikzpicture}[scale=0.15]
+\draw[fill=yellow!20] (-5.5,-15.5) rectangle (5.5,-5.5);
+    \draw[step=0.5, gray, very thin] (-5.5,-15.5) grid (5.5,-5.5);
+
+    \draw[fill=green!20,rotate=10] (-15.5,0.5) rectangle (-5.5,10.5);
+    \draw[step=0.5, gray, very thin,rotate=10] (-15.5,0.5) grid
+    (-5.5,10.5);
+
+    \draw[fill=blue!20,rotate=-10] (5.5,0.5) rectangle (15.5,10.5);
+    \draw[step=0.5, gray, very thin,rotate=-10] (5.5,0.5) grid
+    (15.5,10.5);
+
+    \pause
+    \draw[fill=red!70] (1,-11) circle (0.2);
+    \pause
+    \draw (1,-11) .. controls +(30:1cm) and +(60:1cm) .. (-10,7);
+    \pause
+    \draw[fill=red!70] (-10,7) circle (0.2);
+    \pause
+    \node (eq1) at (-12.2,-4) {$\scriptstyle{G_1(X_i,Y_i,h_i,\vec\theta_1)}$};
+    \pause
+    \draw (1,-11) .. controls +(-30:1cm) and +(-60:1cm) .. (10,7);
+    \pause
+    \draw[fill=red!70] (10,7) circle (0.2);
+    \pause
+    \node (eq2) at (7.2,-3) {$\scriptstyle{G_2(X_i,Y_i,h_i,\vec\theta_2)}$};
+    
+\end{tikzpicture}
+\begin{itemize}
+      \item Tout est connu.
+\end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Spatio-triangulation}
+  \framesubtitle{Affinage du modèle}
+  \begin{itemize}
+    \item Si nous définissons $\vec\theta_j^R = \vec\theta_j +
+    \vec{\Delta\theta_j}$ comme étant les paramètres affinés,
+    $\vec{\Delta\theta_j}$ ce sont les inconnues du problème d'affinage.
+    \item Nous avons beaucoup plus d'équations que d'inconnues si nous
+      disposons de beaucoup de PH.
+    \item Solution par moindres carrés
+      \begin{itemize}
+	\item Nous avons besoin des dérivées du modèle de capteur par
+          rapport à ses paramètres.
+      \end{itemize}
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Recalage manuel de 2 images}
+\vspace*{-0.6cm}
+{\scriptsize
+  \begin{itemize}
+  \item Monteverdi : Geometry $\rightarrow$ Homologous points extraction
+  \item Choisir 2 images avec une zone commune
+    \begin{itemize}
+    \item /home/auf/OTB/data/Examples/QB\_Suburb.png et QB\_SuburbR10X13Y17.png
+    \end{itemize}
+  \item L'IHM permet de choisir la transformation géométrique
+    \begin{itemize}
+    \item Choisir Affine
+    \end{itemize}
+  \item On peut sélectionner des PH dans la zone de zoom et les
+    ajouter à la liste
+  \item Quand on a choisi plusieurs PH, on peut évaluer la transformation
+  \item On peut ensuite utiliser le bouton {\em guess} afin de prédire
+    la position des nouveaux points
+  \item L'IHM affiche les paramètres de la transformation estimée,
+    l'erreur commise sur chaque point et l'EQM
+  \item On peut éliminer de la liste les points qui ont le plus
+    d'erreur
+  \end{itemize}
+  }
+\end{frame}
+
+
+
+
+
+\begin{frame}
+  \frametitle{La main à la pâte}
+  \framesubtitle{Projection sur une autre image}
+  \begin{itemize}
+  \item Monteverdi: Geometry $\rightarrow$ Superimpose 2 Images
+  \item Choisir une image à reprojeter
+    \begin{itemize}
+    \item Quickbird Musltispectrale en géométrie capteur
+    \end{itemize}
+  \item Choisir une image ortho-rectifiée comme référence
+    \begin{itemize}
+    \item S'assurer que les 2 images ont une zone commune!
+    \item Prendre l'extrait ortho de la Quickbird Panchromatique
+    \end{itemize}
+  \item Utiliser le même MNT que celui utilisé pour l'image
+    ortho-rectifiée ou même élévation moyenne.
+  \item Save/Quit
+  \item Afficher et voir que l'image est floue!
+    \begin{itemize}
+    \item Nous avons ortho-rectifiée l'image Multispectrale avec la
+      résolution de l'image Panchromatique
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
