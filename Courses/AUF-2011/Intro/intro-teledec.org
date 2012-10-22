@@ -65,7 +65,7 @@
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/First_photo_from_space.jpg]]
+[[file:Figures/First_photo_from_space.jpg]]
 #+Latex: \end{center}
 
 *** Mars Odyssey
@@ -76,7 +76,7 @@
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/737px-2001_mars_odyssey_wizja.jpg]]
+[[file:Figures/737px-2001_mars_odyssey_wizja.jpg]]
 #+Latex: \end{center}
 
 *** La Terre de nuit
@@ -85,7 +85,7 @@
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/1024px-Flat_earth_night.png]]
+[[file:Figures/1024px-Flat_earth_night.png]]
 #+Latex: \end{center}
 
 *** Observation des paysages
@@ -94,7 +94,7 @@
 - Champs de céréales circulaires au Kansas
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/801px-Crops_Kansas_AST_20010624.jpg]]
+[[file:Figures/801px-Crops_Kansas_AST_20010624.jpg]]
 #+Latex: \end{center} 
 
 ** Aéroporté vs spatial
@@ -147,7 +147,7 @@
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.9\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Srtm_1.jpg]]
+[[file:Figures/Srtm_1.jpg]]
 #+Latex: \end{center}
 \pause
 **** srtm3
@@ -157,7 +157,7 @@
 :END:
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.9\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Maps-for-free_Sierra_Nevada.png]]
+[[file:Figures/Maps-for-free_Sierra_Nevada.png]]
 #+Latex: \end{center}
 
 ** Types de capteurs
@@ -170,13 +170,13 @@ Le capteur mesure le rayonnement électromagnétique
 # la NASA. 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.9\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/EM_Spectrum_Properties_edit.pdf]]
+[[file:Figures/EM_Spectrum_Properties_edit.pdf]]
 #+Latex: \end{center}
 *** Spectre électromagnétique
 Mais l'atmosphère présente des variations de transmittance (opacité)
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.95\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Atmospheric_electromagnetic_opacity.pdf]]
+[[file:Figures/Atmospheric_electromagnetic_opacity.pdf]]
 #+Latex: \end{center}
 
 *** Capteurs passifs
@@ -196,7 +196,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.7\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/368px-Death-valley-sar.jpg]]
+[[file:Figures/368px-Death-valley-sar.jpg]]
 #+Latex: \end{center}
 **** b1
 :PROPERTIES:
@@ -221,13 +221,13 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
     géométriques) \pause
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.7\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/RSAT_NewBeamModes.jpg]]
+[[file:Figures/RSAT_NewBeamModes.jpg]]
 #+Latex: \end{center}
 *** Agilité
 - Capacité du satellite à changer l'angle de prise de vue
 - Permet d'augmenter la surface imagée
 #+Latex: \begin{center}
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/pleiade.mpeg][Vidéo Pléaides]]
+[[file:Figures/pleiade.mpeg][Vidéo Pléaides]]
 #+Latex: \end{center}
 *** Revisite \\Résolution temporelle
 - Fréquence avec laquelle un point de la surface de la Terre est vu \pause
@@ -252,16 +252,16 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 :BEAMER_col: 0.5
 :BEAMER_env: ignoreheading
 :END:
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/3110_1.jpg]]
+[[file:Figures/3110_1.jpg]]
 
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/3110_2b.jpg]]
+[[file:Figures/3110_2b.jpg]]
 *** Résolution spectrale
 - Découpage des longueurs d'onde observées
 - Panchromatique : 1 seule bande "niveaux de gris"
 - Multispectral : plusieurs bandes "couleur"
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/bandes_spectrales.png]]
+[[file:Figures/bandes_spectrales.png]]
 #+Latex: \end{center}
 
 
@@ -273,7 +273,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 :END:
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.95\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/HyperspectralCube.jpg]]
+[[file:Figures/HyperspectralCube.jpg]]
 #+Latex: \end{center}
 \pause
 **** b2
@@ -283,7 +283,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 :END:
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.95\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/HSI_LWIR_stones.png]]
+[[file:Figures/HSI_LWIR_stones.png]]
 #+Latex: \end{center}
 *** Résolution spectrale \\ Utilité des bandes
   - Bleu, 450-515..520 nm, atmosphère et eaux profondes (jusqu'à 50 m) \pause
@@ -309,7 +309,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 *** 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Nasa_earth_observatories.jpg]]
+[[file:Figures/Nasa_earth_observatories.jpg]]
 #+Latex: \end{center}
 *** Landsat
 - Landsat 1 (nommé Earth Resources Technology Satellite 1) - lancé le
@@ -339,12 +339,12 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 :END:
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.95\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/480px-Landsat7photo.jpg]]
+[[file:Figures/480px-Landsat7photo.jpg]]
 #+Latex: \end{center}
 *** Landsat
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Large_Kolkata_Landsat.jpg]]
+[[file:Figures/Large_Kolkata_Landsat.jpg]]
 #+Latex: \end{center}
 
 
@@ -367,13 +367,13 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.3\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Spot-5.jpg]]
+[[file:Figures/Spot-5.jpg]]
 #+Latex: \end{center}
 
 *** Athènes vue par Spot 5
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Athens_SPOT_1012.jpg]]
+[[file:Figures/Athens_SPOT_1012.jpg]]
 #+Latex: \end{center}
 
 *** ERS
@@ -395,7 +395,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 *** ERS
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/620px-ERS_2.jpg]]
+[[file:Figures/620px-ERS_2.jpg]]
 #+Latex: \end{center}
 
 *** Envisat
@@ -422,7 +422,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 *** Envisat
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Envisatmod.jpg]]
+[[file:Figures/Envisatmod.jpg]]
 #+Latex: \end{center}
 
 *** Ikonos
@@ -436,7 +436,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/iko_pan.png]]
+[[file:Figures/iko_pan.png]]
 #+Latex: \end{center}
 *** Quickbird
 - Satellite commercial à très haute résolution spatiale
@@ -447,7 +447,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 - Fauchée : 16.5 km.
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/qb-tls.png]]
+[[file:Figures/qb-tls.png]]
 #+Latex: \end{center}
 *** Autres satellites
 **** GeoEye1
@@ -479,73 +479,73 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/var_reflect.png]]
+[[file:Figures/var_reflect.png]]
 #+Latex: \end{center}
 
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-11-28.png]]
+[[file:Figures/2005-11-28.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-11-28.png]]
+[[file:Figures/2005-11-28.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-11-20.png]]
+[[file:Figures/2005-11-20.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-11-16.png]]
+[[file:Figures/2005-11-16.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-12-08.png]]
+[[file:Figures/2005-12-08.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-12-04.png]]
+[[file:Figures/2005-12-04.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-12-16.png]]
+[[file:Figures/2005-12-16.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-12-12.png]]
+[[file:Figures/2005-12-12.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2006-01-18.png]]
+[[file:Figures/2006-01-18.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2006-01-10.png]]
+[[file:Figures/2006-01-10.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2005-12-29.png]]
+[[file:Figures/2005-12-29.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2006-01-22.png]]
+[[file:Figures/2006-01-22.png]]
 #+Latex: \end{center}
 *** \vns{}  \\ Séries temporelles
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/2006-02-16.png]]
+[[file:Figures/2006-02-16.png]]
 #+Latex: \end{center}
 
 *** Le programme Sentinel de l'ESA \\ Constellation de satellites pour les besoins de GMES
@@ -583,7 +583,7 @@ Mais l'atmosphère présente des variations de transmittance (opacité)
 
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/buffalo_etm_2002215_lrg.jpg]]
+[[file:Figures/buffalo_etm_2002215_lrg.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -594,7 +594,7 @@ http://eoimages.gsfc.nasa.gov/images/imagerecords/47000/47704/buffalo_etm_200221
 *** Agriculture
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/managed-canopy.jpg]]
+[[file:Figures/managed-canopy.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -605,7 +605,7 @@ http://www.satimagingcorp.com/media/images/managed-canopy.jpg
 *** Agriculture
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.7\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/image_1.jpg]]
+[[file:Figures/image_1.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -615,26 +615,26 @@ http://www.precision-crop-protection.uni-bonn.de/gk_research/project_2_01/image_
 *** Inondations au Ghana \\ Images radar
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.7\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/floods-ghana.jpg]]
+[[file:Figures/floods-ghana.jpg]]
 #+Latex: \end{center}
 
 *** Inondations en France \\ Images optiques
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/floods.jpg]]
+[[file:Figures/floods.jpg]]
 #+Latex: \end{center}
 
 *** Tsunami \\ Fukushima
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/fukushima.jpg]]
+[[file:Figures/fukushima.jpg]]
 #+Latex: \end{center}
 
 
 *** Hydrologie \\ Neige
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/large_nsm_depth_2008012805_Northwest.jpg]]
+[[file:Figures/large_nsm_depth_2008012805_Northwest.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -646,7 +646,7 @@ http://blog.oregonlive.com/weather/2008/01/large_nsm_depth_2008012805_Northwest.
 *** Hydrologie \\ Evapotranspiration
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/wp1_topics_evapotranspiration_catchment_scale_1.jpg]]
+[[file:Figures/wp1_topics_evapotranspiration_catchment_scale_1.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -659,7 +659,7 @@ http://wess.info/img/Research/wp1_topics_evapotranspiration_catchment_scale_1.jp
 *** Déforestation
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.5\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/bolivia_hires.jpg]]
+[[file:Figures/bolivia_hires.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -670,7 +670,7 @@ http://rst.gsfc.nasa.gov/Sect3/bolivia_hires.jpg
 *** Déforestation
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.4\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/Deforestation_brazil.jpg]]
+[[file:Figures/Deforestation_brazil.jpg]]
 #+Latex: \end{center}
 #+Latex: \begin{center}
 \scriptsize
@@ -925,27 +925,27 @@ L'élévation des points (MNT) doit être connue.
 *** Débruitage
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/denoising.png]]
+[[file:Figures/denoising.png]]
 #+Latex: \end{center}
 
 *** Débruitage \\ SAR
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/speckle.png]]
+[[file:Figures/speckle.png]]
 #+Latex: \end{center}
 ** Segmentation
 
 *** Croissance de régions
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.6\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/region-growing.png]]
+[[file:Figures/region-growing.png]]
 #+Latex: \end{center}
 
 
 *** Ligne de partage des eaux
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/watershed.png]]
+[[file:Figures/watershed.png]]
 #+Latex: \end{center}
 
 ** Extraction de primitives
@@ -1053,19 +1053,19 @@ Corrélation de Haralick& $ f_8 = \frac{\sum_{i,j}(i, j) g(i, j) -\mu_t^2}{\sigm
 *** Points saillants
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/harris.png]]
+[[file:Figures/harris.png]]
 #+Latex: \end{center}
 
 ** Classification
 *** Classification non supervisée
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/markov.png]]
+[[file:Figures/markov.png]]
 #+Latex: \end{center}
 *** Classification supervisée
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/svm-classif.png]]
+[[file:Figures/svm-classif.png]]
 #+Latex: \end{center}
 
 
@@ -1102,33 +1102,33 @@ Corrélation de Haralick& $ f_8 = \frac{\sum_{i,j}(i, j) g(i, j) -\mu_t^2}{\sigm
 *** Détection de changements
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/chdet-sar.png]]
+[[file:Figures/chdet-sar.png]]
 #+Latex: \end{center}
 
 ** Reconnaissance d'objets
 *** Formes simples
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/circles.png]]
+[[file:Figures/circles.png]]
 #+Latex: \end{center}
 
 
 *** Template matching
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/planes1.png]]
+[[file:Figures/planes1.png]]
 #+Latex: \end{center}
 
 *** Template matching
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/planes2.png]]
+[[file:Figures/planes2.png]]
 #+Latex: \end{center}
 
 *** Template matching
 #+Latex: \begin{center}
 #+ATTR_LATEX: width=0.8\textwidth
-[[file:/home/inglada/rapports/Cours/M1-SIA/Figures/planes3.png]]
+[[file:Figures/planes3.png]]
 #+Latex: \end{center}
 
 ** Démo
@@ -1148,5 +1148,5 @@ Ces planches peuvent être utilisées avec ce même esprit.
 \normalsize
 
 #+ATTR_LATEX: width=0.1\textwidth
-[[file:~/rapports/Styles/cc-by-sa.png]]
+[[file:Figures/cc-by-sa.png]]
 #+END_CENTER
