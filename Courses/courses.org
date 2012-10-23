@@ -30,9 +30,7 @@
   - ~Pleiades Pan-sharpened ORTHO Compression REGULAR~
   - ~Pleiades TRISTEREO Bundle PRIMARY~
 
-  Once these data have been downloaded, you can the following data
-  generation script to get the extracts for each exercise:
-  ~generate_data.sh~
+  They are covered by a cnes copyright.
 
   Other data needed for some exercises, as well as solution scripts
   can be found in the data package.
@@ -295,28 +293,35 @@
 **** Abstract
 
      This exercise will get you familiar with the OTB pixel based
-     classification applications framework. You will learn how to produce
-     SVM classification model from Pleiades images and learning samples and how to
-     apply this model to images and produce shiny classification map.
+     classification applications. You will learn how to train a SVM
+     classification model from Pleiades images and a set of training
+     regions. You will then learn how to apply this model to images
+     and produce shiny classification maps.
 
 **** Pre-requisites
      
      - Basic knowledge on OTB applications and QGis usage
-     - Basic knowledge on image classification
+     - Basic knowledge on image supervised classification
      - Basic knowledge on GIS vector file formats
 
 **** Achievements
 
-     - Usage of the OTB Classification applications framework
-     - Classification of large images and import the results in a GIS software.
+     - Usage of the OTB Classification applications
+     - Classification of large images
+     - Import of results in a GIS software
 
 *** Steps
-**** Produce and analize learning samples
+
+    In this part of the exercise, you will use the following data:
+    ~melbourne_ms_toa_ortho_extract_small.tif~
+
+**** Produce and analyze learning samples
 
      - Use Qgis to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
      - Export this vector layer in shapefile
-     - What is the label corresponding to the class *water* in the shapefile?
-       A set of learning samples is provided for the exercise in /training.shp/
+     - What is the label corresponding to the class *water* in the
+       shapefile?  An example set of learning samples is provided for
+       the exercise in /training.shp/
 
      _Tips and Recommendations:_
       - Note the field name of the shapefile which contains the label. You will
@@ -324,29 +329,38 @@
 
 **** Estimate image statistics
 
-     In order to make these features comparable between each images, the first step is to estimate the
-input images statistics. These statistics will be used to center and reduce the intensities (mean of 0
-and standard deviation of 1) of samples based on the vector data produced by the user.
+     In order to make these features comparable between each images,
+     the first step is to estimate the input images statistics. These
+     statistics will be used to center and reduce the intensities
+     (mean of 0 and standard deviation of 1) of training samples from
+     the vector data produced by the user.
 
-     - Use the *ComputeImagesStatistics* to compute statistics on /melbourne_ms_toa_ortho_extract_small.tif/ image
+     - Use the *ComputeImagesStatistics* to compute statistics on
+       /melbourne_ms_toa_ortho_extract_small.tif/ image
      - What is the mean of the red band?
-     - The extract provided was firstly converted from DN to milli-reflectance. For what reasons, is it advise to do such conversion for multiple images classification?
+     - The extract provided has been converted from DN to
+       milli-reflectance. For what reasons, is it advised to do so
+       when performing multiple images classification?
 
 **** Estimate classification model using the Support Vector Machine algorithm
-     This *TrainSVMImagesClassifier* application performs SVM classifier training from multiple pairs of
-     input images and training vector data. Samples are composed of pixel values
-     in each band optionally centered and reduced using XML statistics file
-     produced by the ComputeImagesStatistics application. We will use this application with only one image in this case.
+     
+     The *TrainSVMImagesClassifier* application performs SVM
+     classifier training from multiple pairs of input images and
+     training vector data. Samples are composed of pixel values in
+     each band optionally centered and reduced using XML statistics
+     file produced by the *ComputeImagesStatistics* application. We will
+     use this application with only one image in this exercise.
      - Use the *TrainSVMImagesClassifier* to produce SVM model
      - Which kernel is used by default in the application?
      - What's the measured accuracy?
+
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
-     - What is the output from the application?
+     - What is the output of the application?
      - Bonus : Use the same model to apply the classification to the other extract 
        /melbourne_ms_toa_ortho_extract_large.tif/
 **** Produce printable classification map
-     We are going now to produce printable classification map using the
+     We are now going to produce a printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
      RGB color specified in a mapping file.  The mapping file should look like
      this :
@@ -355,13 +369,15 @@ and standard deviation of 1) of samples based on the vector data produced by the
      : 1 255 0 0
 
      - Produce your custom look-up table (LUT)
-     - Use this LUT to produce a classification map (in PNG format)
-     - Overlay this map on the input image in QGIS. Comment this classification result.
+     - Use this LUT to produce a printable classification map (in PNG format)
+     - Overlay this map on the input image in QGIS. Comment on the classification results.
 
 **** Homework
 
-     - Produce classification model with different type of SVM kernels. Comment different accuracies obtained? 
-     - Going big : Apply this classification on the pan-sharpened image over Melbourne
+     - Produce classification model with different kind of SVM
+       kernels. Comment different accuracies obtained?
+     - Going big: Apply this classification on the pan-sharpened image over Melbourne
+
 ** Learning and classification from objects
 *** Description
 **** Abstract
@@ -475,22 +491,25 @@ and standard deviation of 1) of samples based on the vector data produced by the
 *** Description
 **** Abstract
 
-     This workshop will guide get you familiar with the set of OTB applications which allow to compute elevation map from a stereo pair of optical images.
-     You will learn how to :
-     - re-sample for stereo pair in epipolar geometry to reduce the stereo correspondences to a 1-D problem
-     - Perform block matching between the 2 images to extract the disparity (related to the elevation)
-     - Filter disparities using correlation metric analysis and coherence evaluation using 2 disparity maps
+     This exercise will guide get you familiar with the set of OTB
+     applications which allow to compute elevation map from a stereo
+     pair of optical images.  You will learn how to :
+     - re-sample for stereo pair in epipolar geometry to reduce the
+       stereo correspondences to a 1D problem
+     - Perform block matching between the 2 images to extract the
+       disparity (related to the elevation)
+     - Filter disparities using correlation metric analysis
        
 **** Pre-requisites
 
-     - Basic knowledge on OTB applications and QGis usage
+     - Basic knowledge on OTB applications
      - Basic knowledge on [[http://www.ai.sri.com/~luong/research/Meta3DViewer/EpipolarGeo.html][epipolar geometry]]. Epipolar geometry is the
        geometry of stereo vision (see [[http://en.wikipedia.org/wiki/Epipolar_geometry][here]]). The operation of stereo
        rectification determines transformations to apply to each image
        such that pairs of conjugate epipolar lines become collinear,
        parallel to one of the image axes and aligned. In this
-       geometry, the objects present on a given row of the left image
-       are also located on the same line in the right image.
+       geometry, the objects on a given row of the left image are also
+       located on the same line in the right image.
 
      #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
@@ -499,78 +518,115 @@ and standard deviation of 1) of samples based on the vector data produced by the
      [[file:Images/Epipolar_geometry.png]]
      #+Latex:\end{center}
 
-     - Basic knowledge stereoscopic reconstruction Applying this
-       transformation reduces the problem of elevation (or stereo
-       correspondences determination) to a 1-D problem. We have two
-       images image1 and image2 over the same area (the stereo pair)
-       and we assume that we know the localization functions (forward
-       and inverse) associated for each of these images.
+     - Basic knowledge of stereoscopic reconstruction
+
 **** Achievements
 
-     - Usage of set of stereoscopic reconstruction applications
+     - Usage of stereoscopic reconstruction applications
      - Stereo reconstruction based on Pleiades stereo images pair
 
 *** Steps
     
 **** From images to epipolar geometry
 
-     1. Run the command-line and graphical version of the *StereoRectificationGridGenerator* application
+     In this part of the exercise, you will use the following data:
+     ~tristereo_melbourne_1_small.tif and tristereo_melbourne_2_small.tif~
+
+     1. Run the command-line and graphical version of the
+        *StereoRectificationGridGenerator* application
      2. What are the two outputs of the applications?
-     3. Use the application to generate 2 grids, which OTB application allows to resample the two input images using these grids?
-     4. Use this application to resample input stereo pairs in epipolar geometry, open the 2 re-sampled images. What do you notice ? 
+     3. Use the application to generate two re-sampling grids. Which OTB application
+        allows to resample the two input images using these grids?
+     4. Use this application to resample input stereo pair in
+        epipolar geometry, open the 2 re-sampled images. What do you
+        see ?
 
      _Tips and Recommandations:_
-       - Perform the grids estimation using and average elevation of 20.45m (*epi.elevation.avg.value* keyword)
-       - Stereo-rectification deformation grid only varies slowly. Therefore, it is recommended to use a coarser grid (higher step value) in case of large images (*epi.step* keyword)
-       - Note the size of the images in epipolar geometry (output by the application)
+       - Perform the grids estimation using and average elevation of
+         20.45m (*epi.elevation.avg.value* keyword)
+       - Stereo-rectification deformation grid only varies
+         slowly. Therefore, it is recommended to use a coarser grid
+         (higher step value) in case of large images (*epi.step*
+         keyword)
+       - Note the size of the images in epipolar geometry (output by
+         the application)
 
 **** Improvement of epipolar geometry
      
-     Pleiades data can be orthorectified to absolute accuracies of about 10 meters, as a consequence there is still a need to improve the geometric 
-     accuracy (this is the case for all satellite imagery). For orthorectification purpose, it is achieve by using Ground Control Points (three . An other way to do this in case of superimposition 
-     of multiple images is to produce homologous points on each images and evaluate with these points a transformation combining the metadata information and these points. It allows for Pleiades
-     to improve the geometric accuracy and allow to produce consistent epipolar images.
+     Pleiades data can be orthorectified to absolute accuracies of
+     about 10 meters, as a consequence there is still a need to
+     improve the geometric accuracy (this is the case for all
+     satellite imagery). For orthorectification purpose, it is
+     achieved by optimizing sensor modelling with Ground Control
+     Points. An other way to do this in case of superimposition of
+     multiple images is to produce homologous points on each images
+     and refine with these points the co-localisation function. It
+     allows to improve the geometric accuracy and to produce
+     consistent epipolar images.
 
-     We provide for the next questions a refine version of the stereo pair (tristereo_melbourne_1_small_ref.tif and tristereo_melbourne_2_small_ref.tif)
+     We provide for the next questions a refined version of the stereo pair:
+     ~tristereo_melbourne_1_small_ref.tif and tristereo_melbourne_2_small_ref.tif~
 
-     1. Recompute epipolar geometry with the new stereo pair (post-fix _ref.tif). Open the 2 versions of epipolar couples (total of 4 images). What differences do you notice between the two images pair?
-     2. Combined the 2 images to create an anaglyph 3D (left image on the red channel and the right image on the green and blue channel)
+     1. Recompute epipolar geometry with the new stereo pair (post-fix
+        /_ref.tif/). Open the 2 versions of epipolar couples (total of
+        4 images). What differences do you notice between the two
+        images pair?
+     2. Combined the 2 images to create a 3D anaglyph (left image on
+        the red channel and the right image on the green and blue
+        channel). Visualize the anaglyph with anaglyph glasses.
 
      We will use this images in the next questions.
 
 **** Block matching
 
-     We are going to perform stereo pair block matching on the two images using the *BlockMatching* application
+     We are going to perform stereo pair block matching on the two
+     images using the *BlockMatching* application.
 
-     1. Run the command-line and graphical version of the *BlockMatching* application. What are the mandatory parameters
-     2. Propose manual or automatic methodologies to estimate the interval of disparities in vertical or horizontal direction 
-     3. Use these parameters to generate a disparity map and open the result with Monteverdi. What do you notice?
+     1. Run the command-line and graphical version of the
+        *BlockMatching* application. What are the mandatory parameters?
+     2. Propose manual or automatic methodologies to estimate the
+        interval of disparities in vertical or horizontal direction.
+     3. Use these parameters to generate a disparity map and open the
+        result with Monteverdi. What do you notice?
 
       _Tips and Recommendations:_
-        - Discard pixels with no-data (0 in our case) value using the parameter *-mask.nodata*
+        - Discard pixels with no-data (0 in our case) value using the
+          parameter *-mask.nodata*
 **** Advanced Block matching : refine disparity map
 
-     We are going to try now to improve the quality of the disparity map using options available in the *BlockMatching*.
+     We are going to try now to improve the quality of the disparity
+     map using options available in the *BlockMatching*.
 
-     1. Use the Normalized Cross Correlation and output the metric value using the io.outmetric option. Open the metric image, which values of correlation corresponds to a
-     2. Use the option mask.variancet to discard pixels whose local variance is too small (the size of the neighborhood is given by the radius parameter)
-     3. Use the *BandMath* application to only keep horizontal disparity with high metric value.
+     1. Use the Normalized Cross Correlation and output the metric
+        value using the io.outmetric option. Open the metric image,
+        which values of correlation corresponds to a good disparity
+        value ?
+     2. Use the option mask.variancet to discard pixels whose local
+        variance is too small (the size of the neighborhood is given
+        by the radius parameter)
+     3. Use the *BandMath* application to only keep horizontal
+        disparity with high correlation value.
 
 **** From disparity map to ground elevation
 
-     Use the *DisparityMapToElevationMap* to transform the disparity map into an elevation information to produce an elevation map
-     1. At which height are approximately football players on the ground in the stadium?
+     Use the *DisparityMapToElevationMap* to transform the disparity
+     map into an elevation map.
+     1. At which height approximately do cricket players play in the stadium?
      2. What is approximately the height of the stadium?
 
      _Tips and Recommandations:_
         - Reuse the same average elevation of 20.45m
-        - Bonus : produce first a disparity mask using the *BandMath* application to discard pixels using the parameter *io.mask* 
+        - Bonus : produce a mask using the *BandMath* application to
+          discard pixels with low correlation values using the
+          parameter *io.mask*
 
 **** Homework
-     1. Try refinement steps to improve epipolar geometries (available soon in OTB -> 3.16 version)
-     2. Perform disparity coherence analysis by comparing disparity map obtained with image
-     3. Re-compute disparity maps with sub-pixel precision block
-     4. Use median filter to get a smooth disparity map
+     1. Try refinement steps to improve epipolar geometries (available
+        soon in OTB -> 3.16 version)
+     2. Perform disparity coherence analysis by comparing disparity
+        maps obtained by switching the left and right images
+     3. Re-compute disparity maps with sub-pixel precision block-matching
+     4. Use median filter to get a smoother disparity map
 
 * Solutions
 ** Monteverdi and OTB-Applications
@@ -973,22 +1029,23 @@ and standard deviation of 1) of samples based on the vector data produced by the
 ** Learning and classification from pixels
 *** Produce and analyze learning samples
 
-    - The label corresponding to the class *water* in the shapefile is *2*
+    The label corresponding to the *water* class in the shapefile is *2*
 
 *** Estimate image statistics
      
-    - Here is the command line to produce the image statistics:
+    Here is the command line to produce the image statistics:
 
     : $ otbcli_ComputeImagesStatistics 
     :   -il melbourne_ms_toa_ortho_extract_small.tif 
     :   -out melbourne_ms_toa_ortho_extract_small_stats.xml
 
-    - The value of the mean of the red band is *111.625*
-    - Reflectance allows to compare radiometric values between images of different sensors.
+    The value of the mean of the red band is *111.625*. Reflectance
+    allows to compare radiometric values between images of different
+    sensors.
 
 *** Estimate classification model using the Support Vector Machine algorithm
 
-    - Here is the command line to produce the SVM model:
+    Here is the command line to produce the SVM model:
 
     : $ otbcli_TrainSVMImagesClassifier 
     :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
@@ -996,11 +1053,13 @@ and standard deviation of 1) of samples based on the vector data produced by the
     :   -io.vd training.shp 
     :   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
-    - Linear kernel is used by default in the application
-    - The measured accuracy is 0.988523. The value is high due to the low number of training samples and their lack of variability
+    Linear kernel is used by default in the application. The measured
+    accuracy is 0.988523. The value is high due to the low number of
+    training samples and their lack of variability.
+
 *** Apply classification model
     
-    - Here is the command line to produce the SVM model:
+    Here is the command line to produce the SVM model:
 
     : $ otbcli_ImageSVMClassifier 
     :   -in melbourne_ms_toa_ortho_extract_small.tif 
@@ -1009,22 +1068,23 @@ and standard deviation of 1) of samples based on the vector data produced by the
     :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
     :   uint8
 
-    - Pixels of the output image will contain the class label decided by the SVM classifier
+    Pixels of the output image will contain the class label decided by
+    the SVM classifier.
 
 *** Produce printable classification map
 
-    - The look-up table (LUT) use to produce the classification map in my case is:
+    The look-up table (LUT) used to produce the classification map in my case is:
 
 #+INCLUDE: "Images/ColorTable.txt" src
 
-    - Here is the command line to produce the classification map:
+    Here is the command line to produce the classification map:
 
     : $ ColorMapping 
     :   -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
     :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
     :   -method custom -method.custom.lut ColorTable.txt
 
-    and the result of the command:
+    And the result of the command:
 
     #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
@@ -1220,18 +1280,19 @@ and standard deviation of 1) of samples based on the vector data produced by the
 
     : $ otbcli_StereoRectificationGridGenerator
 
-    To get the graphical version of the *StereoRectificationGridGenerator* application, run
+    To get the graphical version of the
+    *StereoRectificationGridGenerator* application, run
 
     : $ otbgui_StereoRectificationGridGenerator
 **** Item 2
-     The application estimates the displacement to apply to each pixel in
-both input images to obtain epipolar geometry.
+     The application estimates the displacements to apply to each
+     pixel in both input images to obtain epipolar geometry.
 **** Item 3
-The *GridBasedImageResampling*  application allows to
-resample the two input images in the epipolar geometry using these
-grids. These grids are intermediary results not really useful on their
-own in most cases.
-
+     The *GridBasedImageResampling* application allows to resample the
+     two input images in the epipolar geometry using these
+     grids. These grids are intermediary results, not really useful on
+     their own in most cases.
+     
     : $ otbcli_StereoRectificationGridGenerator 
     :   -io.inleft tristereo_melbourne_3_small_ref.tif 
     :   -io.inright tristereo_melbourne_1_small_ref.tif 
@@ -1259,12 +1320,13 @@ own in most cases.
 *** Refinement of epipolar geometry
 **** Item 1
 
-     The epipolar couple generated with the images with refined geometry do not
-     present disparities in the vertical direction
+     The epipolar couple generated with the images with refined
+     geometry does not present disparities in the vertical direction.
+
 **** Item 2 
 
-     Here is the command-line to run the *ConcatenateImages* application to generate
-     the anaglyph image:
+     Here is the command-line to run the *ConcatenateImages*
+     application to generate the anaglyph image:
 
     : $ otbcli_ConcatenateImages -il 
     :   31_epi_tristereo_melbourne_3_small_ref.tif 
@@ -1283,22 +1345,25 @@ own in most cases.
 
 *** Block matching
 **** Item 1
-     The mandatory parameters are the intervals of disparity in the horizontal
-     and vertical direction. In our case the vertical direction is null.
+     The mandatory parameters are the intervals of disparity in the
+     horizontal and vertical direction. In our case the interval in
+     vertical direction should be void.
 **** Item 2
-     In theory, the block matching can perform a
-     blind exploration and search for a infinite range of disparities
-     between the stereo pair. We need now to evaluate a range of
-     disparities where the block matching will be performed
+     In theory, the block matching can perform a blind exploration and
+     search for a infinite range of disparities between the images of
+     the stereo pair. We need now to evaluate a range of disparities
+     where the block matching will be performed.
 
-     In our case, we take one point on a /flat/ area. The image coordinate in
-     the first image is is $[275,343]$ and in the second image is $[277,343]$. We
-     then select a second point on a higher region (in our case a point near the top
-     of the Melbourne Cricket Ground) The image coordinate of this pixel in the first
-     image is $[712,354]$ and in the second image is $[671,354]$.  So you see for the
-     horizontal exploration, we must set the minimum value lower than $-41$ (take
-     care of the convention for the sign of the disparity, the range is defined from
-     the left to the right image).
+     In our case, we take one point on a /ground/ area. The image
+     coordinate in the first image is is $[275,343]$ and in the second
+     image is $[277,343]$. We then select a second point on a higher
+     region (in our case a point near the top of the Melbourne Cricket
+     Ground) The image coordinate of this pixel in the first image is
+     $[712,354]$ and in the second image is $[671,354]$.  We can see
+     that for the horizontal exploration, we must set the minimum
+     value lower than $-41$ and the maximum value higher than $2$ (pay
+     attention to the convention for the sign of the disparity, the
+     range is defined from the left to the right image).
 **** Item 3
 
      Here is the command-line to run the application with default parameters:
@@ -1318,12 +1383,13 @@ own in most cases.
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 
-     It shows that we need to discard pixels where block matching does not work and also filtered low correlation values.
+     It shows that we need to discard pixels where block matching does
+     not work and also filter low correlation values.
 *** Advanced Block matching : refinement of the disparity map
 **** Item1
-     Use the parameters *-io.outmetric 1 -bm.metric ncc*
+     Use the following parameters: *-io.outmetric 1 -bm.metric ncc*
 **** Item2
-     Use the *mask.variancet* parameter
+     Use the *mask.variancet* parameter.
      
      Here is the command-line to run the application witch combine all these parameters:
      
