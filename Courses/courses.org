@@ -313,6 +313,7 @@
 *** Steps
 
     In this part of the exercise, you will use the following data:
+
     ~melbourne_ms_toa_ortho_extract_small.tif~
 
 **** Produce and analyze learning samples
@@ -336,7 +337,7 @@
      the vector data produced by the user.
 
      - Use the *ComputeImagesStatistics* to compute statistics on
-       /melbourne_ms_toa_ortho_extract_small.tif/ image
+       the image
      - What is the mean of the red band?
      - The extract provided has been converted from DN to
        milli-reflectance. For what reasons, is it advised to do so
@@ -352,13 +353,15 @@
      use this application with only one image in this exercise.
      - Use the *TrainSVMImagesClassifier* to produce SVM model
      - Which kernel is used by default in the application?
-     - What's the measured accuracy?
+     - What is the measured accuracy?
 
 **** Apply classification model
      - Use the *ImageSVMClassifier* to apply the classification model to the input image
      - What is the output of the application?
-     - Bonus : Use the same model to apply the classification to the other extract 
-       /melbourne_ms_toa_ortho_extract_large.tif/
+     - Bonus : Use the same model to apply the classification to the other extract
+ 
+       ~melbourne_ms_toa_ortho_extract_large.tif~
+
 **** Produce printable classification map
      We are now going to produce a printable classification map using the
      *ColorMapping* application This tool will replace each label with an 8-bits
@@ -401,8 +404,11 @@
 
 **** The preliminary segmentation
 
-     In this part of the exercise, we will use the following data
-     ~phr_pxs_melbourne_xt_small.tif~ and ~phr_pxs_melbourne_xt_small_segmentation.tif~
+     In this part of the exercise, we will use the following data:
+
+     ~phr_pxs_melbourne_xt_small.tif~
+     
+     ~phr_pxs_melbourne_xt_small_segmentation.tif~
 
      1. Use the *ColorMapping* application to enhance the
         visualization of the segmented image (you can use the
@@ -565,12 +571,15 @@
      consistent epipolar images.
 
      We provide for the next questions a refined version of the stereo pair:
-     ~tristereo_melbourne_1_small_ref.tif and tristereo_melbourne_2_small_ref.tif~
+     
+     ~tristereo_melbourne_1_small_ref.tif~
 
-     1. Recompute epipolar geometry with the new stereo pair (post-fix
-        /_ref.tif/). Open the 2 versions of epipolar couples (total of
-        4 images). What differences do you notice between the two
-        images pair?
+     ~tristereo_melbourne_2_small_ref.tif~
+
+     1. Recompute epipolar geometry with the new stereo pair
+        (post-fixed by /\_ref.tif/). Open the 2 versions of epipolar
+        couples (total of 4 images). What differences do you notice
+        between the two images pair?
      2. Combined the 2 images to create a 3D anaglyph (left image on
         the red channel and the right image on the green and blue
         channel). Visualize the anaglyph with anaglyph glasses.
@@ -1065,7 +1074,7 @@
     :   -in melbourne_ms_toa_ortho_extract_small.tif 
     :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
     :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
-    :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
+    :   -out melbourne_extract_small_classification_5classes.tif 
     :   uint8
 
     Pixels of the output image will contain the class label decided by
@@ -1080,8 +1089,8 @@
     Here is the command line to produce the classification map:
 
     : $ ColorMapping 
-    :   -in melbourne_ms_toa_ortho_extract_small_classification_5classes.tif 
-    :   -out melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png uint8 
+    :   -in melbourne_extract_small_classification_5classes.tif 
+    :   -out melbourne_extract_small_classification_color.png uint8 
     :   -method custom -method.custom.lut ColorTable.txt
 
     And the result of the command:
@@ -1101,11 +1110,13 @@
 
      Here are the command-line to generate the color-mapped images:
      
-     : $ otbcli_ColorMapping -in phr_pxs_melbourne_xt_small_segmentation.tif
+     : $ otbcli_ColorMapping 
+     :   -in phr_pxs_melbourne_xt_small_segmentation.tif
      :   -out obc_segmentation_optimal.png uint8
      :   -method optimal
      
-     : $ otbcli_ColorMapping -in phr_pxs_melbourne_xt_small_segmentation.tif
+     : $ otbcli_ColorMapping 
+     :   -in phr_pxs_melbourne_xt_small_segmentation.tif
      :   -out obc_segmentation_image.png uint8
      :   -method image
      :   -method.image.in  phr_pxs_melbourne_xt_small.tif
@@ -1385,7 +1396,7 @@
 
      It shows that we need to discard pixels where block matching does
      not work and also filter low correlation values.
-*** Advanced Block matching : refinement of the disparity map
+*** Advanced Block matching: refinement of the disparity map
 **** Item1
      Use the following parameters: *-io.outmetric 1 -bm.metric ncc*
 **** Item2
@@ -1398,7 +1409,8 @@
      :   -io.inright 31_epi_tristereo_melbourne_1_small_ref.tif 
      :   -io.out 31_disparity_map_3_1.tif 
      :   -bm.minhd -40 -bm.maxhd 40 -bm.minvd 0 -bm.maxvd 0
-     :   -mask.nodata 0 -mask.variancet 100 -io.outmetric 1 -bm.metric ncc
+     :   -mask.nodata 0 -mask.variancet 100 -io.outmetric 1 
+     :   -bm.metric ncc
 
      Here is the result of this command:
 
@@ -1429,12 +1441,14 @@
 
      Here is the command-line to run the application:
 
-     : $ otbcli_DisparityMapToElevationMap -io.in 31_disparity_map_3_1.tif 
+     : $ otbcli_DisparityMapToElevationMap 
+     :   -io.in 31_disparity_map_3_1.tif 
      :   -io.left tristereo_melbourne_3_small_ref.tif 
      :   -io.right tristereo_melbourne_1_small_ref.tif 
      :   -io.lgrid 31_grid_tristereo_melbourne_3_small_ref.tif 
      :   -io.rgrid 31_grid_tristereo_melbourne_1_small_ref.tif 
-     :   -hmin 0 -hmax 80 -elev average -step 1 -elev.average.value 20.45 
+     :   -hmin 0 -hmax 80 -elev average -step 1 
+     :   -elev.average.value 20.45 
      :   -io.out 31_disparity_map_to_elevation_3_1.tif
 
      Here is the result of the command:
