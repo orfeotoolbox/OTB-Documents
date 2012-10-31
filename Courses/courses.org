@@ -10,7 +10,10 @@
 #+LaTeX_HEADER: \usepackage{courier}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
-#+OPTIONS: ^:{}
+#+OPTIONS: tags:nil
+
+#+EXPORT_SELECT_TAGS:
+#+EXPORT_EXCLUDE_TAGS: mvdapps classpix stereo
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -21,7 +24,7 @@
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
 #+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{OGRS2012 - OTB Workshop}}
 
-* Foreword
+* Foreword                                                               :fw:
 ** About the data
 
   The images used during these exercise are extracts from Pleiades
@@ -50,8 +53,8 @@
      For *QGis* installation, please refer to *QGis* documentation,
      which can be found on the project [[http://www.qgis.org/][website]].
      
-* Exercises
-** *Monteverdi* and *OTB applications*
+* Exercises                                                            :exos:
+** *Monteverdi* and *OTB applications*                             :mvdapps:
 *** Description
 **** Abstract
      
@@ -159,7 +162,7 @@
         write a python script performing the same steps as in section
         [[OTB applications: Basic processing]].
 
-** Pre-processing : geometry and radiometry corrections
+** Pre-processing : geometry and radiometry corrections             :prepro:
 *** Description
 **** Abstract
      
@@ -332,7 +335,7 @@ In this part of the exercise, you will use the following data:
       - Enable the '-milli' parameter which allow to save the output image in uint16. By default,
         reflectance image is saved in float values (between 0 and 1)
 
-** Segmentation
+** Segmentation                                                        :seg:
 *** Description
 **** Abstract
 
@@ -462,7 +465,7 @@ In this part of the exercise, you will use the following data:
       3. Using the *Segmentation* application (and maybe other OTB
          applications), how can we deal with segmentation of high
          reflectance structures ?
-** Learning and classification from pixels
+** Learning and classification from pixels                        :classpix:
 *** Description
 **** Abstract
 
@@ -555,7 +558,7 @@ In this part of the exercise, you will use the following data:
        kernels. Comment different accuracies obtained?
      - Going big: Apply this classification on the pan-sharpened image over Melbourne
 
-** Learning and classification from objects
+** Learning and classification from objects                       :classobj:
 *** Description
 **** Abstract
 
@@ -667,7 +670,7 @@ In this part of the exercise, you will use the following data:
 
      4. Perform a few more iteration of active learning. What do you
         observe ?
-** Elevation map from stereo pair
+** Elevation map from stereo pair                                   :stereo:
 *** Description
 **** Abstract
 
@@ -811,8 +814,8 @@ In this part of the exercise, you will use the following data:
      3. Re-compute disparity maps with sub-pixel precision block-matching
      4. Use median filter to get a smoother disparity map
 
-* Solutions
-** Monteverdi and OTB-Applications
+* Solutions                                                       :solutions:
+** Monteverdi and OTB-Applications                                 :mvdapps:
 
 *** Monteverdi: data opening and visualisation
 
@@ -972,7 +975,7 @@ In this part of the exercise, you will use the following data:
      Please refer to this chapter of the *Cookbook* to learn more
      about the /Python/ [[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][interface]].
     
-** Pre-processing : geometry and radiometry corrections
+** Pre-processing : geometry and radiometry corrections             :prepro:
 *** Geometric corrections principle
 **** Item 2
 
@@ -1023,7 +1026,7 @@ In this part of the exercise, you will use the following data:
      
      You can use the *BandMath* module to compute the difference between the /TOA/ and /TOC/ images
 
-** Segmentation
+** Segmentation                                                        :seg:
 
 *** Getting familiar with the *Segmentation* application
 
@@ -1260,7 +1263,7 @@ In this part of the exercise, you will use the following data:
      with the connected components method, as shown earlier in the
      solution.
 
-** Learning and classification from pixels
+** Learning and classification from pixels                        :classpix:
 *** Produce and analyze learning samples
 
     The label corresponding to the *water* class in the shapefile is *2*
@@ -1327,7 +1330,7 @@ In this part of the exercise, you will use the following data:
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 
-** Learning and classification from objects
+** Learning and classification from objects                       :classobj:
 
 *** The preliminary segmentation
 
@@ -1509,7 +1512,7 @@ In this part of the exercise, you will use the following data:
      created yet. It may also run several times into the same objects
      that are still difficult to classify after some iterations.
 
-** Elevation map from stereo pair
+** Elevation map from stereo pair                                   :stereo:
 *** From images to epipolar geometry
 **** Item 1
     To get the command-line help, run
