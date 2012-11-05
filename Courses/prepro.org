@@ -1,0 +1,225 @@
+** Pre-processing : geometry and radiometry corrections             :prepro:
+*** Description
+**** Abstract
+     
+     This exercise will get you familiar with the geometric and radiometric corrections using *OTB applications*.
+     
+**** Pre-requisites
+
+     - Basic knowledge of remote sensing and image processing,
+     - Basic knowledge of command-line invocation.
+
+**** Achievements
+
+     - Orthorectification of remote sensing image using *OTB Applications*
+     - Optical calibration of remote sensing image using *OTB Applications*
+
+*** Steps
+In this part of the exercise, you will use the following data:
+     ~phr_xs_melbourne.tif~
+**** Geometric corrections principle
+
+     This operation allows to go from image index to ground coordinates.
+
+     #+BEGIN_LaTeX
+     \begin{center}
+     \begin{tikzpicture}[scale=0.2]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Input series};
+     %\pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     %%\pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
+     %\pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     %\pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     %\pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+%\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block Adjustement};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     %\pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
+     %\pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     %\pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     %\pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Map Projection};
+     %\pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+     \end{tikzpicture}
+     \end{center}
+     #+END_LaTeX
+     1. Run the command-line and graphical version of the *Orthorectification* application
+     2. Which parameters allow to manage Digital Elevation Model informations (DEM) in the application? Which modes are available?
+     3. Open the image with Monteverdi, what is the estimated spacing of the input image?
+**** Orthorectification
+     1. In which UTM zone, is located Melbourne?
+     2. Use Quantum GIS to determine the corresponding EPSG code for this projection.
+     3. Perform the orthorectification of the image and open it in Quantum GIS 
+
+     _Tips and Recommandations:_
+        - Use the estimated spacing read in *Monteverdi* to set the output spacing parameters in the *Orthorectification* application
+        - Use an average elevation of 20 meters
+
+**** Optical calibration
+
+     This operation allows to go from Digital Number (DN) to reflectance (physical values)
+
+     It includes to convert Top Of Atmosphere to Top Of Canopy reflectance which aim is to 
+     compensate the atmospheric effects.
+
+     The optical calibration framework is OTB is fully adapted to the pipeline architecture.
+
+     #+BEGIN_LaTeX
+     The aim of this operation is to obtain physical values from images.
+
+     \begin{center}
+\begin{tikzpicture}[scale=0.18]
+   \tiny
+
+    \draw[->,thick] (0,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (4,-2) rectangle +(6,4);
+    \node[text width= 0.8cm] (SensorModel) at (7,0) {DN to Lum};
+%     \pause
+
+    \draw[->,thick] (11,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (16,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (19,0) {Lum to Refl};
+%     \pause
+
+
+    \draw[->,thick] (23,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (27,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (30,0) {TOA to TOC};
+%     \pause
+
+    \draw[->,thick] (34,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6.5,4);
+    \node[text width= 0.85cm] (SensorModel) at (41,0) {Adjacency};
+%     \pause
+
+    \draw[->,thick] (45,0) --  +(3,0);
+
+ \end{tikzpicture}
+\end{center}
+
+#+END_LaTeX 
+   1. Use the *OpticalCalibration* application to compute Top Of Atmosphere reflectance.
+   2. Use the *OpticalCalibration* application to compute Top Of Canopy reflectance.
+   3. Compare the two images using Monteverdi or OTB applications.
+
+   _Tips and Recommandations:_
+      - Enable the '-milli' parameter which allow to save the output image in uint16. By default,
+        reflectance image is saved in float values (between 0 and 1)
+
+*** Solutions                                                     :solutions:
+**** Geometric corrections principle
+***** Item 2
+
+      The /elev/ group of parameters allows to manage DEM informations
+
+***** Item 3
+
+      The estimated spacing in Monteverdi is /(1.95;2.03)/ 
+
+**** Orthorectification
+***** Item 1
+      
+      The UTM zone of Melbourne is 55. See [[http://www.dmap.co.uk/utmworld.htm][here]] for example.
+
+***** Item 2 
+
+      The EPSG code is 32755. This information is available in the Quantum GIS project properties window.
+
+***** Item 3
+
+       Here is the command-line to run the orthorectification :
+
+      : $ otbcli_Orthorectification -io.in phr_xs_melbourne.tif 
+      :   -io.out solution/phr_xs_melbourne_ortho.tif uint16 
+      :   -map utm -map.utm.zone 55 
+      :   -outputs.spacingx 2. -outputs.spacingy -2. 
+      :   -interpolator bco 
+      :   -elev average -elev.average.value 20 
+
+**** Optical calibration
+***** Item 1
+      
+      Here is the command-line to compute TOA reflectance :
+
+      : $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
+      :   -io.out solution/phr_xs_melbourne_toa.tif uint16 
+      :   -milli 1
+
+***** Item 2 
+
+      Here is the command-line to compute TOA reflectance :
+
+      : $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
+      :   -io.out solution/phr_xs_melbourne_toc.tif uint16 
+      :   -milli 1 -level toc
+
+***** Item 3 
+      
+      You can use the *BandMath* module to compute the difference between the /TOA/ and /TOC/ images
+
+      
