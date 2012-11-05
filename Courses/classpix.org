@@ -1,0 +1,161 @@
+** Learning and classification from pixels                        :classpix:
+*** Description
+**** Abstract
+
+     This exercise will get you familiar with the OTB pixel based
+     classification applications. You will learn how to train a SVM
+     classification model from Pleiades images and a set of training
+     regions. You will then learn how to apply this model to images
+     and produce shiny classification maps.
+
+**** Pre-requisites
+     
+     - Basic knowledge on OTB applications and QGis usage
+     - Basic knowledge on image supervised classification
+     - Basic knowledge on GIS vector file formats
+
+**** Achievements
+
+     - Usage of the OTB Classification applications
+     - Classification of large images
+     - Import of results in a GIS software
+
+*** Steps
+
+    In this part of the exercise, you will use the following data:
+
+    ~melbourne_ms_toa_ortho_extract_small.tif~
+
+**** Produce and analyze learning samples
+
+     - Use Qgis to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
+     - Export this vector layer in shapefile
+     - What is the label corresponding to the class *water* in the
+       shapefile?  An example set of learning samples is provided for
+       the exercise in /training.shp/
+
+     _Tips and Recommendations:_
+      - Note the field name of the shapefile which contains the label. You will
+        need to provide this field in the training application
+
+**** Estimate image statistics
+
+     In order to make these features comparable between each images,
+     the first step is to estimate the input images statistics. These
+     statistics will be used to center and reduce the intensities
+     (mean of 0 and standard deviation of 1) of training samples from
+     the vector data produced by the user.
+
+     - Use the *ComputeImagesStatistics* to compute statistics on
+       the image
+     - What is the mean of the red band?
+     - The extract provided has been converted from DN to
+       milli-reflectance. For what reasons, is it advised to do so
+       when performing multiple images classification?
+
+**** Estimate classification model using the Support Vector Machine algorithm
+     
+     The *TrainSVMImagesClassifier* application performs SVM
+     classifier training from multiple pairs of input images and
+     training vector data. Samples are composed of pixel values in
+     each band optionally centered and reduced using XML statistics
+     file produced by the *ComputeImagesStatistics* application. We will
+     use this application with only one image in this exercise.
+     - Use the *TrainSVMImagesClassifier* to produce SVM model
+     - Which kernel is used by default in the application?
+     - What is the measured accuracy?
+
+**** Apply classification model
+     - Use the *ImageSVMClassifier* to apply the classification model to the input image
+     - What is the output of the application?
+     - Bonus : Use the same model to apply the classification to the other extract
+ 
+       ~melbourne_ms_toa_ortho_extract_large.tif~
+
+**** Produce printable classification map
+     We are now going to produce a printable classification map using the
+     *ColorMapping* application This tool will replace each label with an 8-bits
+     RGB color specified in a mapping file.  The mapping file should look like
+     this :
+     
+     : $ # Lines beginning with a # are ignored
+     : 1 255 0 0
+
+     - Produce your custom look-up table (LUT)
+     - Use this LUT to produce a printable classification map (in PNG format)
+     - Overlay this map on the input image in QGIS. Comment on the classification results.
+
+**** Homework
+
+     - Produce classification model with different kind of SVM
+       kernels. Comment different accuracies obtained?
+     - Going big: Apply this classification on the pan-sharpened image over Melbourne
+
+*** Solutions                                            :classpix:solutions:
+**** Produce and analyze learning samples
+
+     The label corresponding to the *water* class in the shapefile is *2*
+
+**** Estimate image statistics
+      
+     Here is the command line to produce the image statistics:
+
+     : $ otbcli_ComputeImagesStatistics 
+     :   -il melbourne_ms_toa_ortho_extract_small.tif 
+     :   -out melbourne_ms_toa_ortho_extract_small_stats.xml
+
+     The value of the mean of the red band is *111.625*. Reflectance
+     allows to compare radiometric values between images of different
+     sensors.
+
+**** Estimate classification model using the Support Vector Machine algorithm
+
+     Here is the command line to produce the SVM model:
+
+     : $ otbcli_TrainSVMImagesClassifier 
+     :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
+     :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+     :   -io.vd training.shp 
+     :   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
+
+     Linear kernel is used by default in the application. The measured
+     accuracy is 0.988523. The value is high due to the low number of
+     training samples and their lack of variability.
+
+**** Apply classification model
+     
+     Here is the command line to produce the SVM model:
+
+     : $ otbcli_ImageSVMClassifier 
+     :   -in melbourne_ms_toa_ortho_extract_small.tif 
+     :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
+     :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+     :   -out melbourne_extract_small_classification_5classes.tif 
+     :   uint8
+
+     Pixels of the output image will contain the class label decided by
+     the SVM classifier.
+
+**** Produce printable classification map
+
+    The look-up table (LUT) used to produce the classification map in my case is:
+
+#+INCLUDE: "Images/ColorTable.txt" src
+
+    Here is the command line to produce the classification map:
+
+    : $ ColorMapping 
+    :   -in melbourne_extract_small_classification_5classes.tif 
+    :   -out melbourne_extract_small_classification_color.png uint8 
+    :   -method custom -method.custom.lut ColorTable.txt
+
+    And the result of the command:
+
+    #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
+     #+ATTR_LaTeX: width=0.45\textwidth
+     [[file:Images/melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png]]
+     #+Latex:\end{center}
+     #+Latex:\vspace{0.5cm}
+
+

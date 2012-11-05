@@ -1,0 +1,296 @@
+** Learning and classification from objects                       :classobj:
+*** Description
+**** Abstract
+
+     This workshop will introduce you to the *Object Labeling* module
+     of *Monteverdi*. You will learn how to use the module and see the
+     influence of different features on classification results. You
+     will also experiment with a simple active learning implementation
+     on objects.
+
+**** Pre-requisites
+
+     - Basic knowledge of Object Based Image Analysis
+     - Basic knowledge on learning and classification
+
+**** Achievements
+
+     Being able to use the *Object Labeling* module of *Monteverdi*.
+
+*** Steps
+
+**** The preliminary segmentation
+
+     In this part of the exercise, we will use the following data:
+
+     ~phr_pxs_melbourne_xt_small.tif~
+     
+     ~phr_pxs_melbourne_xt_small_segmentation.tif~
+
+     1. Use the *ColorMapping* application to enhance the
+        visualization of the segmented image (you can use the
+        /optimal/ and /image/ modes as learned in the segmentation
+        exercise).
+
+     2. Analyze the color-mapped segmentation results. For which kind
+        of objects is the object based classification likely to work
+        well ? For which kind of objects is it likely to perform badly?
+
+**** *Object Labeling* module - basics
+
+     1. Open both the image and the segmentation image in *Monteverdi*.
+     2. Open the *Object Labeling* module from the /learning/ menu,
+        and load the image and the segmentation inside the module.
+     3. What is the purpose of each tab on the left side of the module?
+     4. In the /Objects/ tab, create a new class. You can change its
+        color and its name.
+     5. Right-click on an object of interest in the image. What
+        happens?
+     6. Right-click a second time inside the selected object. What
+        happens?
+     7. Add a few more objects to the current class.
+     8. Create a new class and add some objects to it.
+     9. Go to the /Features/ tab, uncheck all features but the mean
+        radiometric values.
+     10. Go to the /Learning/ tab and click on classify. What happens?
+     11. Click on the /Save/Quit/ button. What kind of outputs is
+         produced by the module?
+
+     _Tips and Recommendations:_
+     - Choose two simple classes for this part of the exercise (for
+       instance a /Water/ class and a /Land/ class)
+     - Use the navigation map to change the displayed area
+     - You can change the opacity of the classification layer as well
+       as of the selected objects layer so as to better analyze the
+       results.
+     - You can also clear the classification layer.     
+
+**** *Object Labeling* module - advanced
+
+     In this part of the exercise, we will use these additional files:
+     ~samples.xml~ and ~parameters.xml~
+
+     1. Load again the image and the segmentation inside the module.
+
+     2. Load the samples file using /File/Load Samples/. What are the
+        different object classes loaded ? How many samples per classes
+        are used ?
+
+     3. Uncheck all features except from radiometric means:
+        - Band1::Mean
+        - Band2::Mean
+        - Band3::Mean
+        - Band4::Mean
+
+     4. Perform the classification. What are the objects in the image
+        that are badly classified because of missing classes ?
+
+     5. What are the objects in the image that are poorly classified
+        because they are badly segmented or too complex ?
+
+     6. Try to enhance the classification by adding missing classes.
+
+     7. Try to enhance the classification by adding new features.
+
+     _Tips and Recommendations:_
+     - The *Object Labeling* module is quite memory
+       consuming. Depending on the available memory on your system,
+       you might want to restart *Monteverdi*.
+
+**** *Object Labeling* module - active learning
+
+     1. In the /Objects/ tab, click on the /Sample/ button in the
+        lower-left area. This will show you difficult samples by using
+        the /margin sampling/ technique.
+
+     2. What kind of segments are considered by the algorithm as hard
+        to classify ?
+
+     3. Try to create a /Trash/ class to handle noise segments.
+
+     4. Perform a few more iteration of active learning. What do you
+        observe ?
+
+*** Solutions                                            :classobj:solutions:
+
+**** The preliminary segmentation
+
+***** Item 1
+
+      Here are the command-line to generate the color-mapped images:
+      
+      : $ otbcli_ColorMapping 
+      :   -in phr_pxs_melbourne_xt_small_segmentation.tif
+      :   -out obc_segmentation_optimal.png uint8
+      :   -method optimal
+      
+      : $ otbcli_ColorMapping 
+      :   -in phr_pxs_melbourne_xt_small_segmentation.tif
+      :   -out obc_segmentation_image.png uint8
+      :   -method image
+      :   -method.image.in  phr_pxs_melbourne_xt_small.tif
+      
+      
+      Here is what the color-mapped images look like:
+      
+      #+Latex:\vspace{0.5cm}
+      #+Latex:\begin{center}
+      #+ATTR_LaTeX: width=0.4\textwidth 
+      [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
+      #+Latex:\end{center}
+
+***** Item 2
+
+      From the segmentation results, we can infer that an object-based
+      classification method might perform well on:
+      - Most of circular containers,
+      - Most of rectangular containers,
+      - Simple classes like water or roads.
+      
+      But it will most likely fail on:
+      - Some circular or rectangular containers that are fragmented by
+        segmentation,
+      - Complex objects like the boat or the cranes
+      - Small objects like cars and trucks.
+        
+**** *Object Labeling* module - basics
+     
+***** Item 3
+      
+      The /Objects/ tab allows to create classes and to add training
+      segments to these classes. The /Features/ tab allows to select
+      the object-based features to be used for classification. Last,
+      the /Learning/ tab allows to tune classification parameters and
+      to perform the classification.
+
+***** Item 5
+      
+      The segment (from the image segmentation) under the mouse pointer
+      gets selected on first right-click action.
+
+***** Item 6
+
+      The selected segment is added to the current class on second
+      right-click action.
+
+***** Item 10
+
+      A SVM classifier is trained according to created classes and
+      corresponding training samples, and the remaining of the image
+      segments are classified using the trained classifier.
+
+***** Item 11
+
+      When the /Save/Quit/ button is pressed, the module closes and
+      produces three different outputs:
+      - An image of labels corresponding to the classes,
+      - A color-mapped image according to classes colors,
+      - A vector outputs containing polygons labeled with their
+        predicted classes.
+
+***** *Object Labeling* module - advanced
+
+      In this part of the exercise, we will use these additional files:
+      ~samples.xml~ and ~parameters.xml~
+
+      1. Load again the image and the segmentation inside the module.
+
+      2. Load the samples file using /File/Load Samples/. What are the
+         different object classes loaded ? How many samples per classes
+         are used ?
+
+      3. Load the classification parameters file. What are the features
+         used ?
+
+      4. Perform the classification. What are the objects in the image
+         that are badly classified because of missing classes ?
+
+      5. What are the objects in the image that are poorly classified
+         because they are badly segmented or too complex ?
+
+      6. Try to enhance the classification by adding missing classes.
+
+      7. Try to enhance the classification by adding new features.
+
+      _Tips and Recommendations:_
+      - The *Object Labeling* module is quite memory
+        consuming. Depending on the available memory on your system,
+        you might want to restart *Monteverdi*.
+
+***** *Object Labeling* module - active learning
+
+      1. In the /Objects/ tab, click on the /Sample/ button in the
+         lower-left area. This will show you difficult samples by using
+         the margin sampling technique.
+
+      2. What kind of segments are considered by the algorithm as hard
+         to classify ?
+
+      3. Try to create a /Trash/ class to handle noise segments.
+
+      4. Perform a few more iteration of active learning. What do you
+         observe ?
+
+**** *Object Labeling* module - advanced
+
+***** Item 2
+
+      The classes selected in the samples file are:
+      - Circular containers
+      - Rectangular colored containers
+      - Rectangular white containers
+      - Water
+      - Asphalt
+
+
+***** Item 4
+
+      Using the provided samples and parameters, we get the following
+      result. We can see that some basic classes are detected at the
+      expense of more misclassification on difficult objects, as shown
+      in left part of the figure at the end of this section.
+      
+      We can see some obvious missing classes in the training set
+      leading to classification errors:
+      - Shadows area get classified as Water. Even if Shadow is not a
+        strictly-speaking a class of interest, the overall
+        classification quality would benefit from a Shadow class.
+      - Vegetation areas, even if there are only few of them in the
+        images, also get miss-classified because there is no vegetation
+        class in the training set.
+
+***** Item 5
+      
+      As foreseen in section [[The preliminary segmentation]], some objects
+      of interest are poorly segmented or too complex for good
+      classification results:
+      - The boat and the cranes are too complex,
+      - Some of the containers (spherical or rectangular) are poorly
+        segmented, which leads to miss-classification.
+
+***** Item 6 - 7
+
+      By adding a few more classes and samples, we get the result
+      presented on the right of following figure.
+
+      #+Latex:\begin{center}
+      #+ATTR_LaTeX: width=0.4\textwidth
+      [[file:Images/obc_classif_samples.png]] [[file:Images/obc_classif_samples_solution.png]]
+      #+Latex:\end{center}
+
+**** *Object Labeling* module - active learning
+
+***** Item 2
+
+      The implemented active learning strategy often shows objects that
+      are difficult to label manually, because they correspond to parts
+      of fragmented objects or to segmentation noise. 
+
+***** Item 4
+
+      We can observe that occasionally, the active learning strategy will
+      discover a new kind of object, for which no class has been
+      created yet. It may also run several times into the same objects
+      that are still difficult to classify after some iterations.
+
+
