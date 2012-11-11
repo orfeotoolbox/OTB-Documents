@@ -36,10 +36,47 @@ In this part of the exercise, we will use a TerraSAR-X image called
       interesting about the observed landscape?
    2. Describe the shapes of the histograms of the images.
 3. Use the /BandMath/ module to compute the image intensity.
-   
+4. In the following exercices, we will only use the intensity
+   image. You can prepare a small image by extracting a region of
+   interest of size $1024\times 1024$ pixels starting at coordinates
+   (upper left corner) $(1800,28000)$.
+
+**** Speckle reduction
+SAR images are strongly affected by speckle, a particular kind of
+noise present in all coherent acquisition systems (sonar, laser,
+etc.). This noise is very strong and it has a multiplicative
+behaviour.
+
+*Monteverdi* offers 2 speckle reduction filters which are available
+under the /SAR/$\rightarrow$/Despeckle/ menu. In this exercice, we
+will use the Frost filter, which has 2 parameters: the radius --
+window size -- and the /deramp/ parameter which regulates the decay of
+an exponential function which is used as a weight for the pixels
+inside the window. The further the pixels are from the center pixel,
+the lesser they contribute to the computation of the filtered value
+for the center pixel.
+
+1. Effect of the window size: perform the Frost despeckle with 3
+   different radiuses (3, 5 and 10) and comment on the differences
+   between the filtered images. As a reference for comparisons, use
+   the square shaped area located around the coordinates $(250,300)$
+   of the extracted region of interest.
+2. Comment on the shape of the histograms of the filtered images as a
+   function of the radiuses. Compare these histograms to the one of
+   the original image (before filtering).
+3. Effect of the /deramp/ parameter: keep a fixed radius of 10 and
+   generate 3 filtered images by using the following values for the
+   deramp parameter: 0.05, 0.2 and 0.8. Comment on the effects on the
+   results. 
 
 
-**** 
+**** Edge detection on SAR images                               :noexport:
+warning : need a vector image so ROI is concatenated with itself!
+bug in Touzi filter where radius is not taken into account!
+
+**** Image clustering                                           :noexport:
+compute textures and cluster
+idem with filterd images
 *** Solutions                                               :sar:solutions:
 **** Introduction to SAR images
 ***** Item 1
@@ -69,4 +106,38 @@ The image intensity is the square of the amplitude. Using the
    of the image: ~im1b1*im1b1~.
 2. Use the Re and Im parts as input and compute the sum of the
    squares: ~im1b1*im1b1+im2b1*im2b1~.
+
+***** Item 4
+Here is the ROI:
+#+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
+     #+ATTR_LaTeX: width=0.9\textwidth
+     [[file:Images/roi.png]]
+     #+Latex:\end{center}
+     #+Latex:\vspace{0.5cm}
+
+**** Speckle reduction
+
+***** Item 1
+The despeckle filtering with any of the proposed values for the radius
+produce a major enhancement of the image and allow to identify
+features which were barely visible on the original image.
+
+Increasing the value of the radius increases the amount of smoothing
+of the filtering, since larger areas are taken into account. This
+produces increased enhancements on the homogeneous areas of the image,
+but introduces a loss of details and even a deformation of the shapes
+where strong contrasts are present.
+
+***** Item 2
+The histograms of the filtered images become increasingly Gaussian
+(symetric bell-shaped function) and progressively differ from the
+Gamma distribution (asymetric bell-shaped function with a long tail
+towards the right) of the original image.
+
+***** Item 3
+Higher values of the deramp parameter produce a slower decay of the
+exponential weighting if the Frost filter and therefore, the smoothing
+effect increases.
+
 
