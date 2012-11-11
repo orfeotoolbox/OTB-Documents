@@ -12,9 +12,6 @@
 #+LATEX_HEADER: \usepackage{tikz}
 #+OPTIONS: tags:nil
 
-#+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: classpix stereo
-
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
 #+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
@@ -22,7 +19,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Selper2012 - OTB Workshop}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Selper~2012 - OTB Workshop}}
 
 * Foreword                                                               :fw:
 ** About the data
@@ -54,11 +51,10 @@
      which can be found on the project [[http://www.qgis.org/][website]].
      
 * Exercises                                                            :exos:
-#+INCLUDE: "mvdapps.org"
+
+#+INCLUDE: "mvdapps.org" 
 #+INCLUDE: "features.org"
-#+INCLUDE: "seg.org"
-#+INCLUDE: "classpix.org"
-#+INCLUDE: "classobj.org"
+
 
 
 
