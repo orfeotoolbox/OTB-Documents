@@ -1,0 +1,72 @@
+** SAR Image Processing                                                :sar:
+*** Description
+**** Abstract
+
+     This workshop will introduce you to SAR image processing by
+     using *Monteverdi*. You will learn how to visualize complex SAR
+     images, how to reduce noise and how to detect edges.
+
+**** Pre-requisites
+
+     Basic knowledge of *Monteverdi* usage.
+
+**** Achievements
+
+     Being able to manipulate SAR images using *Monteverdi*.
+
+*** Steps
+
+**** Introduction to SAR images
+
+
+In this part of the exercise, we will use a TerraSAR-X image called
+2008-03-10_GrandCanyon_SSC for which the principal file is:
+
+~TSX1_SAR__SSC______SM_S_SRA_20080310T133220_20080310T133228.xml~
+
+1. Open the image in *Monteverdi* by choosing the above-mentioned XML
+   file. Describe what you get in the available image list on
+   the *Monteverdi* GUI.
+2. Use the viewer to display the image. Add the 4 /parts/ of the image
+   to the same viewer so that you can switch between them in the same
+   viewer display. Move the full resolution view to the cneter of the
+   image. Compare the contents of the 4 available bands and answer to
+   the following questions:
+   1. Which is the image which gives the point of view the most
+      interesting about the observed landscape?
+   2. Describe the shapes of the histograms of the images.
+3. Use the /BandMath/ module to compute the image intensity.
+   
+
+
+**** 
+*** Solutions                                               :sar:solutions:
+**** Introduction to SAR images
+***** Item 1
+Monteverdi detects the image as a complex data set. It provides the
+single-band complex image as well as 4 different points of view of the
+image:
+1. the real part;
+2. the imaginary part;
+3. the modulus (or amplitude): $\sqrt{Re^2+Im^2}$;
+4. the phase: $\arctan{\frac{Im}{Re}}$.
+***** Item 2
+1. The modulus image corresponds to the energy of the backscatter
+   received by the sensor and is correlated to roughness, moisture and
+   slope of the surface. The other 3 images (Re, Im and phase) do not
+   contain visual information about the landscape. One can observe
+   that the Re and Im parts are rather homogeneous in the shadow
+   areas, since no signal is relected back to the sensor.
+2. The Re and Im parts are Gaussians with a zero mean. As a
+   consequence, the complex SAR image will have a circular Gaussian
+   distribution, whose phase has an uniform distribution in $[-\pi,
+   \pi]$ and whose modulus follows a Rayleigh distribution.
+***** Item 3
+The image intensity is the square of the amplitude. Using the
+/BandMath/ module, there are 2 ways of computing the amplitude:
+
+1. Use the modulus image as input to /BandMath/ and compute the square
+   of the image: ~im1b1*im1b1~.
+2. Use the Re and Im parts as input and compute the sum of the
+   squares: ~im1b1*im1b1+im2b1*im2b1~.
+
