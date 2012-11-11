@@ -105,6 +105,49 @@ Orfeo Toolbox Wiki and following the links therein.
 4. Which water indices can't be computed on a Pléiades image?
 *** *Texture extraction* module
 
+**** SFS
+The Structural Feature Set approach computes textures based on line direction analysis through the central pixel.
+ 
+ Directions are computed at a constant step angle.
+ A direction is defined as: $$ \mathit{d_{i} = \sqrt{(m^{e1}-m{e2})^{2}+(n^{e1}-n{e2})^{2}}} $$
+ From  $\mathit{d_{i}}$, histograms are defined:
+ $$ \mathit{H(c) : \{c \in I \mid \lbrack d_{1}(c), \ldots , d_{i}(c), \ldots , d_{D}(c)\rbrack  \}} $$
+ Thus, 6 textures are defined :
+ $$ \mathit{length = \max_{i \in \lbrack1; D\rbrack}(d_{i}(c)} $$
+ $$ \mathit{width = \min_{i \in \lbrack1; D\rbrack}(d_{i}(c)} $$
+ $$ \mathit{PSI = \frac{1}{D}\sum_{1=1}^{D}d_{i}(c)} $$
+ $$ \mathit{\omega-mean = \frac{1}{D}\sum_{1=1}^{D}\frac{\alpha.(k_{i}-1)}{st_{i}}d_{i}(c)} $$
+ $$ \mathit{ratio = \arctan{\frac{\sum_{j=1}^{n}{sort_{min}^{j}(H(c))}}{\sum_{j=1}^{n}{sort_{max}^{j}(H(c))}}}} $$
+ $$ \mathit{SD = \frac{1}{D-1}\sqrt{\sum_{1=1}^{D}(d_{i}(c)-PSI)^{2}}} $$
+ 
+1. Compute the $width$ and the $length$ features using the default
+   parameters and explain what are the differences you observe on the results.
+2. Which is the effect of the spectral threshold on the computation of
+   the features? Same question for the spatial threshold.
+
+**** Haralick
+The Haralick textures are a set of indices computed from the
+grey-level co-occurrence matrices of an image. These are matrices
+computed on a grey-level image and for each pixel, a neighborhood is
+defined by a rectangular window which is shifted by an offset.
+
+Mathematically, a co-occurrence matrix $C$ is defined over an $n x m$
+image $I$, parameterized by an offset $(\Delta x,\Delta y)$, as:
+
+#+BEGIN_LATEX
+$$C_{\Delta x, \Delta y}(i,j)=\sum_{p=1}^n\sum_{q=1}^m
+\begin{array}{cc}
+1, & \mbox{if }I(p,q)=i\mbox{ and }I(p+\Delta x,q+\Delta y)=j \\ 
+0, & \mbox{otherwise}
+\end{array}$$
+#+END_LATEX
+The image values are quantized using small number of bins so that the
+equality between pixels are likely to occur.
+
+There are 2 different implementations of the Haralick textures in
+Monteverdi. We will use the 2nd one.
+
+1.
 *** *Morphology* module
 
 ** Solutions                                            :features:solutions:
@@ -254,5 +297,26 @@ The NDTI and the NDWI2 can't be computed on a Pléiades image (or a
 Quickbird image, for that matter) since the MIR (mid infrared, also
 callwed SWIR for short-wave infrared) is not available.
 *** *Texture extraction* module
+
+**** SFS
+
+***** Item 1
+It may seem contradictory, but the $width$ feature gives hig values to
+pixels which belong to elongated regions, while the $length$ feature
+gives brigth values to any region (elongated or not) which has a large
+area. If you have a look at the formulas for each feature you will
+understand why.
+***** Item 2
+The spectral threshold sets the acceptable value of the difference
+between 2 adjacent pixels along a line in order to continue adding new
+pixels to the direction. Therefore, a small value for this thresholds
+will produce shorter lines and therefore fewer pixels with bright
+values.
+
+The spatial threshold stops the length of the line in the given
+direction regardless of the pixel values. Therefore, a low value for
+this threshold will also produce shorter lines.
+**** Haralick
+***** Item 1
 
 *** *Morphology* module
