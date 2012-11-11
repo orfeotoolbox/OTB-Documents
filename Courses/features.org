@@ -85,7 +85,24 @@ features, answer to the following questions.
    (high pas filter). You can set 2 different thresholds. What is
    their effect on the result?
 *** *Radiometric index extraction* module
+By radiometric index we understand a combination of spectral bands
+which enhances a particular type of material. There are indices for
+vegetation, soils, water, artificial surfaces (built-up), and so
+on. You can find detailed descriptions and bibliographic references
+about this subjects by visiting the [[http://wiki.orfeo-toolbox.org/index.php/Radiometric_Indices][Radiometric indices]] page on the
+Orfeo Toolbox Wiki and following the links therein.
 
+1. Open the /Radiometric index extraction/ module and feed it with the
+   4-band Pléiades image. Select the /NDVI/ index under the
+   /Vegetation/ list of indices. Generate the feature by using
+   different selections on the /Channels Selection/ list. Why is the
+   result always the same regardless of the chosen channels?
+2. Which are the spectral bands most commonly used for vegetation indices?
+3. Find a value of the parameter /s/ for the MSAVI index which gives
+   results close to the ones obtained by the RVI. What is the interest
+   of indices with parameters as this one with respect to indices like
+   RVI or NDVI for which there are no parameters?
+4. Which water indices can't be computed on a Pléiades image?
 *** *Texture extraction* module
 
 *** *Morphology* module
@@ -208,3 +225,34 @@ edge density computation. Therefore, the thresholds determine how the
 image produced by the Sobel filtering will be binarized before passing
 it to the density computation (percentage of detected pixels inside
 the window).
+*** *Radiometric index extraction* module
+
+**** Item 1
+For the radiometric indices, the channel selection does not matter,
+since each index is a particular combination of spectral bands. The
+bands used are selected in the /Feature Parameters/ group.
+
+**** Item 2
+Most of the indices use the red (R) and the near infrared (NIR) bands,
+since the vegetation has a low response on the R and high on the
+NIR. Most indices use therefore combinations of differences and
+ratios of these bands.
+
+Sometimes, the green band is also used.
+**** Item 3
+Values greater than 6 should be fine.
+
+The interest of having parameters is being able to take into account
+soil reflectance for the cases of sparse vegetation. The /L/ parameter
+of the SAVI index is close to 0 for very sparse vegetation and close
+to 1 for a very dense cover. The /s/ parameter of the MSAVI index is
+the slope of the soil line, that is the NIR reflectance plotted as a
+function of the red reflectance for soil pixels.
+
+**** Item 4
+The NDTI and the NDWI2 can't be computed on a Pléiades image (or a
+Quickbird image, for that matter) since the MIR (mid infrared, also
+callwed SWIR for short-wave infrared) is not available.
+*** *Texture extraction* module
+
+*** *Morphology* module
