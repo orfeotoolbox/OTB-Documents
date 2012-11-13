@@ -298,7 +298,7 @@ the slope of the soil line, that is the NIR reflectance plotted as a
 function of the red reflectance for soil pixels.
 
 ***** Item 4
-The NDTI and the NDWI2 can't be computed on a Pléiades image (or a
+The NDTI and the NDWI can't be computed on a Pléiades image (or a
 Quickbird image, for that matter) since the MIR (mid infrared, also
 callwed SWIR for short-wave infrared) is not available.
 **** *Texture extraction* module
