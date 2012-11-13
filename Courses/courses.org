@@ -13,7 +13,7 @@
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: classpix stereo
+#+EXPORT_EXCLUDE_TAGS: stereo
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -57,6 +57,7 @@
 #+INCLUDE: "mvdapps.org"
 #+INCLUDE: "prepro.org"
 #+INCLUDE: "seg.org"
+#+INCLUDE: "features.org"
 #+INCLUDE: "classpix.org"
 #+INCLUDE: "classobj.org"
 #+INCLUDE: "stereo.org"
