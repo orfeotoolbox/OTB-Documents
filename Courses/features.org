@@ -38,7 +38,7 @@ All /Feature extraction/ modules follow the same rationale: they take
 
 In this part of the exercise, we will use the following data:
 
-~phr_pxs_melbourne_xt_small.tif~
+~phr_xs_melbourne.tif~
 
 1. Open the image in *Monteverdi*.
 2. Open the *Smoothing* module from the
