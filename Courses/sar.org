@@ -19,10 +19,18 @@
 **** Introduction to SAR images
 
 
-In this part of the exercise, we will use a TerraSAR-X image called
+In this part of the exercise, we will use an extract of TerraSAR-X image called
 2008-03-10_GrandCanyon_SSC for which the principal file is:
 
 ~TSX1_SAR__SSC______SM_S_SRA_20080310T133220_20080310T133228.xml~
+
+The extract corresponds to a region of interest of size $1024\times 1024$ pixels
+starting at coordinates (upper left corner) $(1800,28000)$.
+
+In this part of the exercise, we will use the following data:
+
+~extract_tsx_canyon_complex.tif~
+
 
 1. Open the image in *Monteverdi* by choosing the above-mentioned XML
    file. Describe what you get in the available image list on
