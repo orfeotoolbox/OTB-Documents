@@ -1,5 +1,5 @@
 #+TITLE: Exploit Pleiades PHR data with the ORFEO ToolBox
-#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES)
+#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Jordi Inglada (CNES)
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,11pt,twoside,openright]
@@ -13,7 +13,7 @@
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: stereo
+#+EXPORT_EXCLUDE_TAGS: stereo solutions
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -61,3 +61,5 @@
 #+INCLUDE: "classpix.org"
 #+INCLUDE: "classobj.org"
 #+INCLUDE: "stereo.org"
+#+INCLUDE: "sar.org"
+
