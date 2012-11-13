@@ -13,7 +13,7 @@
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: stereo solutions
+#+EXPORT_EXCLUDE_TAGS: 
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
