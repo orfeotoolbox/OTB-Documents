@@ -188,49 +188,6 @@
       - A vector outputs containing polygons labeled with their
         predicted classes.
 
-***** *Object Labeling* module - advanced
-
-      In this part of the exercise, we will use these additional files:
-      ~samples.xml~ and ~parameters.xml~
-
-      1. Load again the image and the segmentation inside the module.
-
-      2. Load the samples file using /File/Load Samples/. What are the
-         different object classes loaded ? How many samples per classes
-         are used ?
-
-      3. Load the classification parameters file. What are the features
-         used ?
-
-      4. Perform the classification. What are the objects in the image
-         that are badly classified because of missing classes ?
-
-      5. What are the objects in the image that are poorly classified
-         because they are badly segmented or too complex ?
-
-      6. Try to enhance the classification by adding missing classes.
-
-      7. Try to enhance the classification by adding new features.
-
-      _Tips and Recommendations:_
-      - The *Object Labeling* module is quite memory
-        consuming. Depending on the available memory on your system,
-        you might want to restart *Monteverdi*.
-
-***** *Object Labeling* module - active learning
-
-      1. In the /Objects/ tab, click on the /Sample/ button in the
-         lower-left area. This will show you difficult samples by using
-         the margin sampling technique.
-
-      2. What kind of segments are considered by the algorithm as hard
-         to classify ?
-
-      3. Try to create a /Trash/ class to handle noise segments.
-
-      4. Perform a few more iteration of active learning. What do you
-         observe ?
-
 **** *Object Labeling* module - advanced
 
 ***** Item 2

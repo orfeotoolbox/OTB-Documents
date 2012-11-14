@@ -122,7 +122,7 @@
 
 **** Homework
       1. In /vector/ mode, study the effect of the
-         /tilesize/,/simplify/ and /minsize/ option.
+         /tilesize/, /simplify/ and /minsize/ option.
       2. Using the *Segmentation* application (and maybe other OTB
          applications), how can we segment everything but vegetation ?
       3. Using the *Segmentation* application (and maybe other OTB

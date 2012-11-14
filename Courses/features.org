@@ -301,6 +301,7 @@ function of the red reflectance for soil pixels.
 The NDTI and the NDWI can't be computed on a Pléiades image (or a
 Quickbird image, for that matter) since the MIR (mid infrared, also
 callwed SWIR for short-wave infrared) is not available.
+In this case the NDWI2 index can be use.
 **** *Texture extraction* module
 
 ***** SFS
