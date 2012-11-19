@@ -15,6 +15,7 @@
 % Required documentclass definition for JOSIS
 \documentclass{josis}
 \usepackage{graphics}
+\usepackage{subfigure}
 
 % Article details for accepted manuscripts will be added by editorial staff 
 %\josisdetails{%
@@ -28,7 +29,7 @@
 
 % Add the running author and running title information
 \runningauthor{\begin{minipage}{.9\textwidth}\centering Michel, Grizonnet, Jaen, Hermitte, Guinet, Harasse, Malik, Savinaud\end{minipage}}
-\runningtitle{Large-scale segmentation of Very High Resolution satellite images using Orfeo ToolBox}
+\runningtitle{Large-scale segmentation of VHR satellite images using Orfeo ToolBox}
 
 % Document begins
 \begin{document}
@@ -91,7 +92,14 @@ overcome these issues. In the frame of the development of the Orfeo
 ToolBox \cite{}, we therefore initiated some work to provide software
 components for this purpose.
 
-\section{Data representation and conversion}
+\section{About the Orfeo ToolBox}
+
+TODO
+
+\section{Segmenting very large images with Orfeo ToolBox}
+
+
+\subsection{Representations and data structures for segmentation results}
 
 In this section, we review three standard structures to store
 segmentation results, and explain why we selected the third one for
@@ -151,7 +159,29 @@ and databases, we then use the full extent of OGR functions
 simple file formats like ESRI shapefile or complex databases like
 PostGIS seamlessly.
 
-\section{A generic framework for large scale segmentation}
+\subsection{Segmentation algorithms}
+
+\begin{figure}[!htbp]
+\centering
+\subfigure[Connected Components (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/second_cc_color_optimal}\label{fig:cc_optimal}}
+\qquad
+\subfigure[Connected Components (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/second_cc_color_image}\label{fig:cc_natural}}\\
+
+\subfigure[Watershed (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_optimal}\label{fig:ws_optimal}}
+\qquad
+\subfigure[Watershed (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_image}\label{fig:ws_natural}}\\
+
+\subfigure[Mean-Shift (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_optimal}\label{fig:ms_optimal}}
+\qquad
+\subfigure[Mean-Shift (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_image}\label{fig:ms_natural}}\\
+\subfigure[Morphological Profiles (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_optimal}\label{fig:gm_optimal}}
+\qquad
+\subfigure[Morphological Profiles (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_image}\label{fig:gm_natural}}
+\caption{Results of various segmentation algorithms from Orfeo ToolBox}
+\end{figure}
+
+
+\subsection{Framework for large scale segmentation}
 
 We define a segmentation algorithm in the Orfeo ToolBox as a filter
 that accepts a remote sensing image as input and produces a label
@@ -170,6 +200,12 @@ efficiency or user defined parameters,
    c. Polygonize the result using a filter based on GDAL capabilities,
    d. Dump the polygons to file system or database through OGR
       abstraction.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.8\textwidth]{Pictures/schema_ogrs}\label{fig:overview}
+\caption{Overview of the large scale segmentation framework in Orfeo-ToolBox}
+\end{figure}
 
 The strength of this framework is that it will naturally scale up:
 larger images will take more time to process and more space on file
@@ -190,7 +226,14 @@ Of course, it has some drawbacks, the first one being that region
 lying on tiles borders will be artificially split by the tiling
 scheme. We address these issues in the following section.
 
-\section{Pre and post-processing to enhance usability}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.9\textwidth]{Pictures/ogrs_nostitch.png}\label{fig:nostitch}
+\caption{Example of large scale segmentation result displayed in QGis}
+\end{figure}
+
+
+\subsection{Pre and post-processing to enhance usability}
 
 In order to get useful results from this large scale segmentation, we
 need to address several issues. The first one issue is the splitting
@@ -199,6 +242,14 @@ implemented is a simple stitching rule: we post-process the vector
 data by looking for neighbour polygons lying on each side of a tile
 border and merge them if their contact surface is large enough. More
 sophisticated techniques might be derived in the future.
+
+\begin{figure}[!htb]
+\centering
+\subfigure[Stitching overview]{\includegraphics[width=0.9\textwidth]{Pictures/ogrs_stitch.png}\label{fig:stitch}}\\
+\subfigure[Stitching off (detail)]{\includegraphics[width=0.45\textwidth]{Pictures/ogrs_nostitch_xt.png}}
+\subfigure[Stitching on (detail)]{\includegraphics[width=0.45\textwidth]{Pictures/ogrs_stitch_xt.png}}
+\caption{Example of large scale segmentation result displayed in QGis, with stitching}
+\end{figure}
 
 The second problem is that the polygons reflect exactly the shape of
 the segment, and contain a large amount of vertices. This leads to
@@ -217,6 +268,10 @@ tolerance.
 These additional processing allows to produce a cleaner vector
 segmentation output which can then be used in a GIS software.
 
+
+\section{Examples and figures}
+
+TODO
 
 \section{Conclusion}
 
