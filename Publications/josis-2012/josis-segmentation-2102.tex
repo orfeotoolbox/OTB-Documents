@@ -1,0 +1,242 @@
+%% josis.tex 1.2   2009-06-11    JoSIS latex template 
+%------------------------------------------------------------------
+% Filename: josis.tex
+%
+% This file is intended as a template for typesetting articles for the
+%
+%                        Journal of Spatial Information Science.
+%
+% Please edit this template to generate your own formatted manuscripts 
+% for submission to JOSIS. See http://josis.org for further details.
+%
+% The template was developed by Matt Duckham (http://www.duckham.org) 
+% 
+
+% Required documentclass definition for JOSIS
+\documentclass{josis}
+\usepackage{graphics}
+
+% Article details for accepted manuscripts will be added by editorial staff 
+%\josisdetails{%
+%   volume=0, number=0, year=2009, firstpage=0, lastpage=1, 
+%   received={January 1, 2009}, 
+%   revised={March 1, 2009},
+%   accepted={May 1, 2009},
+%   published={June 1, 2009}
+%}
+
+
+% Add the running author and running title information
+\runningauthor{\begin{minipage}{.9\textwidth}\centering Michel, Grizonnet, Jaen, Hermitte, Guinet, Harasse, Malik, Savinaud\end{minipage}}
+\runningtitle{Large-scale segmentation of Very High Resolution satellite images using Orfeo ToolBox}
+
+% Document begins
+\begin{document}
+
+% Insert your own title
+\title{Large-scale segmentation of Very High Resolution satellite images using Orfeo ToolBox}
+
+% Insert your manuscipts authors, affiliations, and addresses
+\author{Julien Michel}
+\author{Manuel Grizonnet}\affil{CNES, DCT/SI/AP, BPI 1219 18, avenue Edouard Belin, 31401 Toulouse Cedex 09 - France}
+\author{Arnaud Jaen}
+\author{Luc Hermitte}
+\author{Jonathan Guinet}
+\author{S\'ebastien Harasse}
+\author{Julien Malik}
+\author{Micka\"el Savinaud}\affil{CS Syst\`emes d'Information, Division ESPACE \& Renseignement - D\'epartement APPLICATIONS, Parc de la Grande Plaine - 5, Rue Brindejonc des Moulinais - BP 15872, 31506 Toulouse Cedex 05 - FRANCE}
+
+
+\maketitle
+
+% Add 5-10 keywords for every submission
+\keywords{Open-source software, segmentation, remote sensing images, GIS}
+
+% Add a short abstract of 150-250 words
+\begin{abstract}
+TODO
+\end{abstract}
+
+
+% Your main text begins here. 
+\section{Introduction}
+
+With the increase of the spatial resolution of satellite images,
+analysis techniques such as Object Based Image Analysis or Spatial
+Reasoning \cite{inglada2009qualitative} have become widely studied and
+used. Because they use objects rather than pixels as their primitives,
+these methods are very well adapted to represent and extract the
+information contained in very high resolution imagery (VHR). Moreover,
+reasoning on objects is often supported by very sound theories. Yet
+one of their severe weakness is the process of obtaining the objects
+themselves: segmentation is widely used as a pre-processing step for
+these techniques, and it is well known that the task of segmenting all
+categories of object of interest, across a large very high resolution
+scene and with a controlled quality is a difficult task for which no
+method has reached a sufficient level of performance to be considered
+as operational.
+
+Even if we leave aside the question of segmentation quality and
+consider that we have a method performing reasonably well on our data
+and objects of interest, the task of scaling up segmentation to real
+very high resolution data is itself challenging. First, we can not
+load the whole data into memory, and there is a need for on the flow
+processing which does not cope well with traditional segmentation
+algorithms \cite{shi2000normalized}. Second, the result of the
+segmentation process itself is difficult to represent and manipulate
+efficiently.
+
+There are, to our best knowledge, few open source softwares able to
+overcome these issues. In the frame of the development of the Orfeo
+ToolBox \cite{}, we therefore initiated some work to provide software
+components for this purpose.
+
+\section{Data representation and conversion}
+
+In this section, we review three standard structures to store
+segmentation results, and explain why we selected the third one for
+our framework.
+
+The most common way of representing segmentation results from an image
+processing perspective is to derive a raster where each pixel contains
+the unique label of the segment it belongs to. Such a raster is also
+known as label image. Yet this representation has numerous
+drawbacks. First, accessing all pixels of a given segment identified
+by its label requires parsing the whole label image. Second, storing
+large segmentation results with billions of segments might require a
+high number of bits to represent the label, thus increasing
+dramatically the size of the output. Last, the constraint of label
+uniqueness is very strong, yet not very useful: it is required since
+label images only provides an implicit description of segments, based
+on neighbouring pixels with same labels. This representation is of
+limited interest for our purpose.
+
+A second representation of segmented image which is further from image
+processing is the map of label objects \cite{lehmann2008label}. A segment is
+represented in Run Length Encoding (RLE), and all segments are indexed
+by a unique label in a map. The RLE representation is more compact,
+the map allows fast access to a segment given its label, and it also
+allows to store attributes related to a segment, which is a first step
+toward Object Based Image Analysis. The main drawback of this
+representation is that there are no standard file format able to store
+it on a file system, and it requires to convert either to or from
+raster or vector representation at each read or write
+operation. Moreover, this representation is neither really raster nor
+really vector. Therefore, operations like walking pixels in the
+segment or following its contour are more complex.
+
+Neither of these two structures can fit our needs: the first one is
+highly inefficient, while the second one lacks of existing file
+formats. We chose to store our segmentation results as boundaries in a
+vector structure and file format. This has numerous advantages. First,
+it overcomes the issue of scaling up to large image segmentation: a
+collection of vector objects, i.e. polygons or multi-polygons, is a
+compact representation which will grow linearly with the size of the
+image, and does not need an explicit unique indexing label. Second,
+there are several file formats and even databases to represent this
+kind of vector data, especially in the GIS world. Last, using such
+formats guarantees a full interoperability between the segmentation
+tools and most GIS software, which is desirable.
+
+As described in the next section, we intend to derive a generic
+framework for large scale remote sensing images segmentation, thus we
+need to be compatible with the raster output of most segmentation
+algorithms, which usually produce label image. For this purpose, we
+need a component for exact conversion between the raster
+representation and the vector one. e take advantage of the
+polygonization and rasterization algorithms provided by GDAL
+\cite{}. To handle on the flow input and output to vector data files
+and databases, we then use the full extent of OGR functions
+\cite{}. This abstraction layer allows our tool to address
+simple file formats like ESRI shapefile or complex databases like
+PostGIS seamlessly.
+
+\section{A generic framework for large scale segmentation}
+
+We define a segmentation algorithm in the Orfeo ToolBox as a filter
+that accepts a remote sensing image as input and produces a label
+image as output. This filter is not supposed to have streaming (on the
+flow) capabilities, it is allowed to require the whole input image to
+produce its output, and it can make an internal use of
+multi-threading. Given such an algorithm, and a large image to segment
+(for instance a basic Pleiades image \cite{} has an extent of 40
+000 by 40 000 pixels), our framework works as follows:
+1. Derive a tiling scheme according to the amount of memory available
+on the computer and additional information such as file format
+efficiency or user defined parameters,
+2. For each tile of the tiling scheme:
+   a. Load the corresponding image part into memory
+   b. Segment the image extract with the segmentation algorithm
+   c. Polygonize the result using a filter based on GDAL capabilities,
+   d. Dump the polygons to file system or database through OGR
+      abstraction.
+
+The strength of this framework is that it will naturally scale up:
+larger images will take more time to process and more space on file
+system to store, but the system will never run out of the most limited
+resource on most hardware, which is memory. The most time consuming
+operation is the segmentation, and this is where we allow for parallel
+processing depending on the segmentation algorithm implementation. For
+instance, we implemented a multi-threaded version of the Mean shift
+algorithm \cite{Comaniciu2002mean}.
+ 
+A key feature is that we make few assumptions on the segmentation
+algorithm, and that our framework will be able to perform with any
+segmentation algorithm implemented under these assumptions. the same
+code already runs with a basic connected components algorithm, two
+different implementations of the Mean shift algorithm, and Watershed.
+
+Of course, it has some drawbacks, the first one being that region
+lying on tiles borders will be artificially split by the tiling
+scheme. We address these issues in the following section.
+
+\section{Pre and post-processing to enhance usability}
+
+In order to get useful results from this large scale segmentation, we
+need to address several issues. The first one issue is the splitting
+of the regions on the border of tiles. The naive solution we
+implemented is a simple stitching rule: we post-process the vector
+data by looking for neighbour polygons lying on each side of a tile
+border and merge them if their contact surface is large enough. More
+sophisticated techniques might be derived in the future.
+
+The second problem is that the polygons reflect exactly the shape of
+the segment, and contain a large amount of vertices. This leads to
+very heavy vector files, sometimes even heavier than the corresponding
+raster image would be. To deal with this issue, we added
+pre-processing as well as post-processing. First, we added an input
+mask image to avoid segmenting unwanted regions, like no-data
+pixels, clouds, or vegetation (if vegetation is not desired). We also
+added a rule to remove very small segments, which are more likely to
+correspond to segmentation noise than to real objects (this leads to
+holes in the segmentation canvas). Last, we again used the
+capabilities of OGR to perform a geometry simplification algorithm,
+which simplify polygons by removing vertices according to a given
+tolerance.
+
+These additional processing allows to produce a cleaner vector
+segmentation output which can then be used in a GIS software.
+
+
+\section{Conclusion}
+
+  This framework is only a first step toward providing an open source
+ large scale OBIA and spatial reasoning framework. Future developments
+ will include more stitching and tiling strategies to enhance the
+ segmentation performance at tiles borders, and the computation of
+ attributes along with polygons, such as statistics on radiometry from
+ an image, or shape attributes. These attributes could then be used
+ for reasoning or classification at the object level. While there is
+ still a lot missing, we hope to provide a comprehensive environment
+ for object-based techniques for VHR images analysis through the
+ ongoing efforts to integrate Orfeo ToolBox within Quantum
+ GIS \cite{}, a open source GIS software, via Sextante \cite{},
+ and bridge the gap between remote sensing and GIS.
+
+
+\subsubsection{References}
+
+\bibliographystyle{acm}
+\bibliography{refs}
+
+\end{document}
