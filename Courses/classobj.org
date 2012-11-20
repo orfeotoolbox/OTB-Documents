@@ -24,7 +24,7 @@
      In this part of the exercise, we will use the following data:
 
      ~phr_pxs_melbourne_xt_small.tif~
-     
+
      ~phr_pxs_melbourne_xt_small_segmentation.tif~
 
      1. Use the *ColorMapping* application to enhance the
@@ -63,7 +63,7 @@
      - You can change the opacity of the classification layer as well
        as of the selected objects layer so as to better analyze the
        results.
-     - You can also clear the classification layer.     
+     - You can also clear the classification layer.
 
 **** *Object Labeling* module - advanced
 
@@ -118,24 +118,24 @@
 ***** Item 1
 
       Here are the command-line to generate the color-mapped images:
-      
-      : $ otbcli_ColorMapping 
+
+      : $ otbcli_ColorMapping
       :   -in phr_pxs_melbourne_xt_small_segmentation.tif
       :   -out obc_segmentation_optimal.png uint8
       :   -method optimal
-      
-      : $ otbcli_ColorMapping 
+
+      : $ otbcli_ColorMapping
       :   -in phr_pxs_melbourne_xt_small_segmentation.tif
       :   -out obc_segmentation_image.png uint8
       :   -method image
       :   -method.image.in  phr_pxs_melbourne_xt_small.tif
-      
-      
+
+
       Here is what the color-mapped images look like:
-      
+
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth 
+      #+ATTR_LaTeX: width=0.4\textwidth
       [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
       #+Latex:\end{center}
 
@@ -146,17 +146,17 @@
       - Most of circular containers,
       - Most of rectangular containers,
       - Simple classes like water or roads.
-      
+
       But it will most likely fail on:
       - Some circular or rectangular containers that are fragmented by
         segmentation,
       - Complex objects like the boat or the cranes
       - Small objects like cars and trucks.
-        
+
 **** *Object Labeling* module - basics
-     
+
 ***** Item 3
-      
+
       The /Objects/ tab allows to create classes and to add training
       segments to these classes. The /Features/ tab allows to select
       the object-based features to be used for classification. Last,
@@ -164,7 +164,7 @@
       to perform the classification.
 
 ***** Item 5
-      
+
       The segment (from the image segmentation) under the mouse pointer
       gets selected on first right-click action.
 
@@ -189,7 +189,6 @@
         predicted classes.
 
 **** *Object Labeling* module - advanced
-
 ***** Item 2
 
       The classes selected in the samples file are:
@@ -198,15 +197,12 @@
       - Rectangular white containers
       - Water
       - Asphalt
-
-
 ***** Item 4
-
       Using the provided samples and parameters, we get the following
       result. We can see that some basic classes are detected at the
       expense of more misclassification on difficult objects, as shown
       in left part of the figure at the end of this section.
-      
+
       We can see some obvious missing classes in the training set
       leading to classification errors:
       - Shadows area get classified as Water. Even if Shadow is not a
@@ -217,7 +213,7 @@
         class in the training set.
 
 ***** Item 5
-      
+
       As foreseen in section [[The preliminary segmentation]], some objects
       of interest are poorly segmented or too complex for good
       classification results:
@@ -241,7 +237,7 @@
 
       The implemented active learning strategy often shows objects that
       are difficult to label manually, because they correspond to parts
-      of fragmented objects or to segmentation noise. 
+      of fragmented objects or to segmentation noise.
 
 ***** Item 4
 

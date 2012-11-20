@@ -13,7 +13,7 @@
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: 
+#+EXPORT_EXCLUDE_TAGS: solutions
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -30,7 +30,7 @@
   The images used during these exercise are extracts from Pleiades
   demonstration products, made available for evaluation purpose. To
   get the full products please refer to this [[http://www.astrium-geo.com/fr/364-produits-de-demonstration][website]]. Products used
-  are: 
+  are:
   - ~Pleiades Pan-sharpened ORTHO Compression REGULAR~
   - ~Pleiades TRISTEREO Bundle PRIMARY~
 
@@ -52,7 +52,7 @@
 
      For *QGis* installation, please refer to *QGis* documentation,
      which can be found on the project [[http://www.qgis.org/][website]].
-     
+
 * Exercises                                                            :exos:
 #+INCLUDE: "mvdapps.org"
 #+INCLUDE: "prepro.org"
