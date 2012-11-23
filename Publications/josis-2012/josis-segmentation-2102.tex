@@ -16,6 +16,10 @@
 \documentclass{josis}
 \usepackage{graphics}
 \usepackage{subfigure}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+% Link as footnote
+\newcommand{\furl}[1]{    $\,$\footnote{$\,$\url{#1}}}
 
 % Article details for accepted manuscripts will be added by editorial staff 
 %\josisdetails{%
@@ -94,7 +98,25 @@ components for this purpose.
 
 \section{About the Orfeo ToolBox}
 
-TODO
+The Orfeo Toolbox (OTB) is an open-source (CECILL licence), remote sensing-oriented, image processing library. Initiated by the French Space Agency (CNES) in the frame of the ORFEO accompaniment program~\furl{http://smsc.cnes.fr/PLEIADES/A_prog_accomp.htm}. Based on the medical image processing library Insight ToolKit (ITK), the OTB provides to its users an extensive set of algorithms and functionalities dedicated to remote sensing data exploitation. More specifically, the OTB embeds efficient approaches to handle large data using advanced streaming and multi-threading strategies. Thus, OTB-based processing chains take advantages of both optimized Input/Output access and streamed/multi-threaded filtering to perform efficient processing.
+
+OTB is based on large set of open-source libraries which contribute to expand the OTB ecosystem. The main part of this ecosystem are described in the figure~\ref{fig:ecosystem}. Through the use of these libraries, OTB offers the possibility to manipulate and process the main remote-sensing data from optical to hyperspectral through SAR sensor. The processing capabilities of OTB library covers a large set of uses cases from optical calibration and data projection to image segmentation and classification. An exhaustive list can be found in the documentation.   
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.8\textwidth]{Pictures/otb_ecosystem}\label{fig:ecosystem}
+\caption{Orfeo ToolBox ecosystem}
+\end{figure}
+
+The main way to access to the OTB capabilities for end-users is to use the set of applications offers by OTB. The OTB Applications has been recently improve to answer to the increasing need to interface OTB capabilities into other software and to provide a better access to end-users. These OTB applications are designed to be more user-friendly and to be auto-loaded into appropriate tools without recompiling (as a shared library). Currently Orfeo ToolBox shipped the following tools:
+\begin{itemize}
+\item A command-line launcher and a set of command lines tools
+\item A graphical launcher and a set of tools based on a QT interface which provide ergonomic parameters setting, display of documentation, and progress reporting,
+\item A SWIG interface, which allows to use any application into a high-level language such as Python or Java for instance.
+\end{itemize}
+Moreover, through the Sextante project, OTB applications are also available into the QGis project. QGis users have now a easy way to process their data and combine OTB processing with other tools.  
+
+To follow the best practices of an open-source project, OTB offers via a public official repository a high quality code to promote dissemination and contribution. Thus, the library is build and tested on a nightly basis. The results are available publicly which ensures multi-platform consistency and continuous validation. Moreover, OTB encourages full access to the details of all the algorithms through extensive documentation. This documentation is divided between class documentations, the software guide and a cookbook with use cases~\furl{http://orfeo-toolbox.org/otb/documentation.html}.
 
 \section{Segmenting very large images with Orfeo ToolBox}
 
@@ -116,7 +138,7 @@ high number of bits to represent the label, thus increasing
 dramatically the size of the output. Last, the constraint of label
 uniqueness is very strong, yet not very useful: it is required since
 label images only provides an implicit description of segments, based
-on neighbouring pixels with same labels. This representation is of
+on neighboring pixels with same labels. This representation is of
 limited interest for our purpose.
 
 A second representation of segmented image which is further from image
@@ -239,7 +261,7 @@ In order to get useful results from this large scale segmentation, we
 need to address several issues. The first one issue is the splitting
 of the regions on the border of tiles. The naive solution we
 implemented is a simple stitching rule: we post-process the vector
-data by looking for neighbour polygons lying on each side of a tile
+data by looking for neighbor polygons lying on each side of a tile
 border and merge them if their contact surface is large enough. More
 sophisticated techniques might be derived in the future.
 
