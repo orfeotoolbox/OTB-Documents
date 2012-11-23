@@ -216,13 +216,17 @@ segment quite large images. For instance a basic Pleiades image
 \cite{} has an extent of 40 000 by 40 000 pixels, which corresponds to
 a memory size of 3.2GB assuming a monoband image with 16 bits per pixel.
 Our framework works as follows:
-1. Derive a tiling scheme, 
-2. For each tile of the tiling scheme:
-   a. Load the corresponding image part into memory
-   b. Segment the image extract with the segmentation algorithm
-   c. Polygonize the result using a filter based on GDAL capabilities,
-   d. Dump the polygons to file system or database through OGR
+\begin{enumerate}[1)]
+\item Derive a tiling scheme, 
+\item For each tile of the tiling scheme:
+\begin{enumerate}[a)]
+\item Load the corresponding image part into memory
+\item Segment the image extract with the segmentation algorithm
+\item Polygonize the result using a filter based on GDAL capabilities,
+\item Dump the polygons to file system or database through OGR
       abstraction.
+\end{enumerate}
+\end{enumerate}
 
 The tiling scheme depends on several parameters :
 \begin{itemize}
