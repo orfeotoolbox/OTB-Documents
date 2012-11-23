@@ -183,23 +183,35 @@ PostGIS seamlessly.
 
 \subsection{Framework for large scale segmentation}
 
-We define a segmentation algorithm in the Orfeo ToolBox as a filter
+In the Orfeo ToolBox, we define a segmentation algorithm as a filter
 that accepts a remote sensing image as input and produces a label
 image as output. This filter is not supposed to have streaming (on the
 flow) capabilities, it is allowed to require the whole input image to
-produce its output, and it can make an internal use of
-multi-threading. Given such an algorithm, and a large image to segment
-(for instance a basic Pleiades image \cite{} has an extent of 40
-000 by 40 000 pixels), our framework works as follows:
-1. Derive a tiling scheme according to the amount of memory available
-on the computer and additional information such as file format
-efficiency or user defined parameters,
+produce its output. The streaming will be handled by the framework. The
+filter can however make an internal use of multi-threading. 
+Such an algorithm shall be supported by our framework in order to
+segment quite large images. For instance a basic Pleiades image 
+\cite{} has an extent of 40 000 by 40 000 pixels, which corresponds to
+a memory size of 3.2GB assuming a monoband image with 16 bits per pixel.
+Our framework works as follows:
+1. Derive a tiling scheme, 
 2. For each tile of the tiling scheme:
    a. Load the corresponding image part into memory
    b. Segment the image extract with the segmentation algorithm
    c. Polygonize the result using a filter based on GDAL capabilities,
    d. Dump the polygons to file system or database through OGR
       abstraction.
+
+The tiling scheme depends on several parameters :
+\begin{itemize}
+\item the amount of memory available on the computer
+\item the file format of the input image (in some formats, 
+the image is already stored in tiles)
+\item the user preferences
+\end{itemize}
+It is important to note that some tiling schemes are not suited for this
+framework. For instance, if the image is streamed line by line, performing 
+a segmentation on each line independently is irrelevant.
 
 \begin{figure}[!htb]
 \centering
@@ -210,7 +222,9 @@ efficiency or user defined parameters,
 The strength of this framework is that it will naturally scale up:
 larger images will take more time to process and more space on file
 system to store, but the system will never run out of the most limited
-resource on most hardware, which is memory. The most time consuming
+resource on most hardware, which is memory. The input image will still be 
+loaded tile by tile, and the polygons will be stored after each tile is 
+segmented. The most time consuming
 operation is the segmentation, and this is where we allow for parallel
 processing depending on the segmentation algorithm implementation. For
 instance, we implemented a multi-threaded version of the Mean shift
@@ -218,13 +232,20 @@ algorithm \cite{Comaniciu2002mean}.
  
 A key feature is that we make few assumptions on the segmentation
 algorithm, and that our framework will be able to perform with any
-segmentation algorithm implemented under these assumptions. the same
+segmentation algorithm implemented under these assumptions. The 
+different algorithms don't need to share the same set of parameters. They 
+can have their specific methods and attributes. The same
 code already runs with a basic connected components algorithm, two
 different implementations of the Mean shift algorithm, and Watershed.
 
-Of course, it has some drawbacks, the first one being that region
-lying on tiles borders will be artificially split by the tiling
-scheme. We address these issues in the following section.
+Of course, this framework has the same drawbacks as other streaming
+methods. Algorithms using global information in the input image will 
+produce different results depending on the tiling scheme, but this is
+a lesser issue for segmentation algorithms that focus on local information. 
+The main drawback is oversegmentation : the regions lying on tiles borders 
+will be artificially split by the tiling scheme. This can be a real concern 
+when a big object that cross several tiles must be segmented as one region.  
+We address these issues in the following section.
 
 \begin{figure}[!htb]
 \centering
