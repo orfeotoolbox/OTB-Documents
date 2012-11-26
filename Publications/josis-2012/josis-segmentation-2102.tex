@@ -50,7 +50,8 @@
 \author{Jonathan Guinet}
 \author{S\'ebastien Harasse}
 \author{Julien Malik}
-\author{Micka\"el Savinaud}\affil{CS Syst\`emes d'Information, Division ESPACE \& Renseignement - D\'epartement APPLICATIONS, Parc de la Grande Plaine - 5, Rue Brindejonc des Moulinais - BP 15872, 31506 Toulouse Cedex 05 - FRANCE}
+\author{Micka\"el Savinaud}
+\author{Guillaume Pasero}\affil{CS Syst\`emes d'Information, Division ESPACE \& Renseignement - D\'epartement APPLICATIONS, Parc de la Grande Plaine - 5, Rue Brindejonc des Moulinais - BP 15872, 31506 Toulouse Cedex 05 - FRANCE}
 
 
 \maketitle
@@ -224,7 +225,9 @@ PostGIS seamlessly.
 
 \subsection{Framework for large scale segmentation}
 
-In the Orfeo ToolBox, we define a segmentation algorithm as a filter
+This section describes the generic framework that has been implemented
+to support various segmentation algorithms. In the Orfeo ToolBox, 
+we define a segmentation algorithm as a filter
 that accepts a remote sensing image as input and produces a label
 image as output. This filter is not supposed to have streaming (on the
 flow) capabilities, it is allowed to require the whole input image to
@@ -235,10 +238,16 @@ segment quite large images. For instance a basic Pleiades image
 \cite{} has an extent of 40 000 by 40 000 pixels, which corresponds to
 a memory size of 3.2GB assuming a single-band image with 16 bits per pixel.
 Our framework works as follows:
-\begin{enumerate}[1)]
-\item Derive a tiling scheme,
+\begin{enumerate}[1 - ]
+\item Derive a tiling scheme, which depends on the following parameters:
+\begin{itemize}
+\item the amount of memory available on the computer
+\item the file format of the input image (in some formats,
+the image is already stored in tiles)
+\item the user preferences
+\end{itemize}
 \item For each tile of the tiling scheme:
-\begin{enumerate}[a)]
+\begin{enumerate}[a - ]
 \item Load the corresponding image part into memory
 \item Segment the image extract with the segmentation algorithm
 \item Polygonize the result using a filter based on GDAL capabilities,
@@ -247,13 +256,6 @@ Our framework works as follows:
 \end{enumerate}
 \end{enumerate}
 
-The tiling scheme depends on several parameters :
-\begin{itemize}
-\item the amount of memory available on the computer
-\item the file format of the input image (in some formats,
-the image is already stored in tiles)
-\item the user preferences
-\end{itemize}
 It is important to note that some tiling schemes are not suited for this
 framework. For instance, if the image is streamed line by line, performing
 a segmentation on each line independently is irrelevant.
@@ -271,15 +273,19 @@ resource on most hardware, which is memory. The input image will still be
 loaded tile by tile, and the polygons will be stored after each tile is
 segmented. The most time consuming
 operation is the segmentation, and this is where we allow for parallel
-processing depending on the segmentation algorithm implementation. For
+processing depending on the segmentation algorithm implementation. In the 
+OTB, the typical way to perform parallel processing is to sub-divide the 
+streaming tiles into smaller tiles, processed by different threads. For
 instance, we implemented a multi-threaded version of the Mean Shift
-algorithm \cite{Comaniciu2002mean}.
+algorithm \cite{Comaniciu2002mean}. This version provides a significant 
+performance gain when the system has multiple processor cores.
 
-A key feature is that we make few assumptions on the segmentation
+An other key feature is that we make few assumptions on the segmentation
 algorithm, and that our framework will be able to perform with any
 segmentation algorithm implemented under these assumptions. The
 different algorithms don't need to share the same set of parameters. They
-can have their specific methods and attributes. The same
+can have their specific methods and attributes (the segmentation algorithm
+can be accessed from outside the framework). The same
 code already runs with a basic connected components algorithm, two
 different implementations of the Mean Shift algorithm, and a Watershed algorithm.
 
