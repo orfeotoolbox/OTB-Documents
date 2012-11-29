@@ -74,11 +74,12 @@ need for on the flow processing which does not cope well with traditional
 segmentation algorithms. Second, the result of the segmentation process itself
 is difficult to represent and manipulate efficiently.
 
-The experience of segmenting large remote sensing images is packed into a single
-segmentation in the ORFEO ToolBox library. This application provide a complete
-framework to get a vector segmentation output that can be used in GIS software
-but it is only a first step toward providing an open source large scale Object
-Based Image Analysis (OBIA) and spatial reasoning framework.
+The experience of segmenting large remote sensing images is packed
+into a single segmentation application in the Orfeo ToolBox
+library. This application provide a complete framework to get a vector
+segmentation output that can be used in GIS software but it is only a
+first step toward providing an open source large scale Object Based
+Image Analysis (OBIA) and spatial reasoning framework.
 
 \end{abstract}
 
@@ -125,18 +126,18 @@ program~\furl{http://smsc.cnes.fr/PLEIADES/A_prog_accomp.htm}. Based
 on the medical image processing library Insight ToolKit (ITK), the OTB
 provides to its users an extensive set of algorithms and
 functionalities dedicated to remote sensing data exploitation. More
-specifically, the OTB embeds efficient approaches to handle large data
-using advanced streaming and multi-threading strategies. Thus,
-OTB-based processing chains take advantages of both optimized
-Input/Output access and streamed/multi-threaded filtering to perform
-efficient processing.
+specifically, the OTB embeds approaches to handle large data using
+advanced streaming and multi-threading strategies. Thus, OTB-based
+processing chains take advantages of both optimized Input/Output
+access and streamed/multi-threaded filtering to perform efficient
+processing.
 
 OTB is based on a large set of open-source libraries which contribute
 to expand the OTB ecosystem. The main part of this ecosystem are
 described in the figure~\ref{fig:ecosystem}. Through the use of these
 libraries, OTB offers the possibility to manipulate and process the
 main remote-sensing data from optical to hyperspectral through SAR
-sensor. The processing capabilities of OTB library covers a large set
+sensors. The processing capabilities of OTB library covers a large set
 of uses cases from optical calibration and data projection to image
 segmentation and classification. An exhaustive list can be found in
 the documentation.
@@ -147,35 +148,35 @@ the documentation.
 \caption{Orfeo ToolBox ecosystem}
 \end{figure}
 
-The main way to access to the OTB capabilities for end-users is to use
-the set of applications offered by OTB. The OTB Applications have been
-recently improved to answer to the increasing need to interface OTB
-capabilities into other software and to provide a better access to
-end-users. These OTB applications are designed to be more
-user-friendly and to be auto-loaded into appropriate tools without
-recompiling (as a shared library). Currently Orfeo ToolBox ships the
-following tools:
+One of the main way to access to the OTB capabilities for end-users is
+to use the set of applications offered by OTB (the other beeing to use
+the C++ API directly). The OTB Applications have recently been
+improved to answer to the increasing need to interface OTB
+capabilities into other softwares and to provide a better access to
+end-users. These OTB applications are designed to be auto-loaded into
+appropriate tools without recompiling (as a shared library). Currently
+Orfeo ToolBox ships the following tools:
 \begin{itemize}
-\item A command-line launcher and a set of command-line tools
-\item A graphical launcher and a set of tools based on a QT interface
-  which provide ergonomic parameters setting, display of
-  documentation, and progress reporting,
+\item A command-line launcher,
+\item A graphical launcher based on a QT interface which provide
+  ergonomic parameters setting, display of documentation, and progress
+  reporting,
 \item A SWIG interface, which allows to use any application into a
   high-level language such as Python or Java for instance.
 \end{itemize}
 Moreover, through the Sextante project, OTB applications are also
-available into the QGIS project. QGIS users have now an easy way to
-process their data and combine OTB processing with other tools.
+available into the QGIS software. QGIS users have therefore an easy
+way to combine OTB processing with other tools.
 
-To follow the best practices of an open-source project, OTB offers via
-a public official repository a high quality code to promote
-dissemination and contribution. Thus, the library is built and tested
-on a nightly basis. The results are available publicly which ensures
-multi-platform consistency and continuous validation. Moreover, OTB
+As an open-source project, OTB exposes its source code via a public
+official repository. Moreover, the library is built and tested on a
+nightly basis. The results are available publicly which ensures
+multi-platform consistency and continuous validation. Last, OTB
 encourages full access to the details of all the algorithms through
 extensive documentation. This documentation is divided between class
-documentations, the software guide and a cookbook with use
-cases~\furl{http://orfeo-toolbox.org/otb/documentation.html}.
+documentations, the software guide\cite{} which gives some technical
+remote sensing processing background along with code examples and a
+cookbook\cite{} dedicated to non-programming users.
 
 \section{Segmenting very large images with Orfeo ToolBox}
 
@@ -382,11 +383,6 @@ tolerance.
 
 These additional processing allows to produce a cleaner vector
 segmentation output which can then be used in a GIS software.
-
-
-\section{Examples and figures}
-
-TODO
 
 \section{Conclusion}
 
