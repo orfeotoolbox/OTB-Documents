@@ -61,25 +61,22 @@
 
 % Add a short abstract of 150-250 words
 \begin{abstract}
-TO COMPLETE
-Segmenting objects across a very high resolution scene and with a controlled
-quality is a difficult task for which no method has reached a sufficient level
-of performance to be considered as operational.
+Many high level techniques to analyse very high resolution remote
+sensing images consider segmentation as a pre-processing
+step. However, segmenting this kind of data is challenging: there are
+of course issues such as the ability of the segmentation to fit the
+objects of interest with high inner variance implied by the image
+resolution, or the stability of the segmentation quality across large
+or multiple scenes. This work tries to address yet another issue,
+which is the segmentation algorithms scalability to process full very
+high resolution remote sensing images. This latter issue prevent from
+any assessment of a range of techniques at full scene scale.
 
-Even if we leave aside the question of segmentation quality and consider that we
-have a method performing reasonably well on our data and objects of interest,
-the task of scaling up segmentation to real very high resolution data is itself
-challenging. First, we can not load the whole data into memory, and there is a
-need for on the flow processing which does not cope well with traditional
-segmentation algorithms. Second, the result of the segmentation process itself
-is difficult to represent and manipulate efficiently.
-
-The experience of segmenting large remote sensing images is packed
-into a single segmentation application in the Orfeo ToolBox
-library. This application provide a complete framework to get a vector
-segmentation output that can be used in GIS software but it is only a
-first step toward providing an open source large scale Object Based
-Image Analysis (OBIA) and spatial reasoning framework.
+In order to work around this issue, we reviewed data structures and
+segmentation algorithms so as to design and implement into the Orfeo
+ToolBox open-source remote sensing software a generic framework for
+the segmentation of very large images, which has been successfully
+applied to Pleiades images and produces GIS-compatible outputs.
 
 \end{abstract}
 
@@ -118,10 +115,14 @@ efficiently.
 
 There are, to our best knowledge, few open source software able to
 overcome these issues. In the frame of the development of the Orfeo
-ToolBox\furl{www.orfeo-toolbox.org}, we therefore initiated
-some work to provide software components for this purpose.
+ToolBox\furl{www.orfeo-toolbox.org}, we therefore initiated some work
+to provide software components for this purpose. The remaining of the
+paper is organized as follows. Section~\ref{sec:otb} briefly
+introduces the Orfeo ToolBox software, while section~\ref{sec:seg}
+presents the large scale segmentation framework which is the main
+focus of the paper.
 
-\section{About the Orfeo ToolBox}
+\section{About the Orfeo ToolBox}\label{sec:otb}
 
 The Orfeo Toolbox (OTB) is an open-source (CeCILL license), remote
 sensing-oriented, image processing library~\cite{inglada2009orfeo}. It
@@ -153,7 +154,7 @@ the documentation.
 \end{figure}
 
 One of the main way to access to the OTB capabilities for end-users is
-to use the set of applications offered by OTB (the other beeing to use
+to use the set of applications offered by OTB (the other being to use
 the C++ API directly). The OTB Applications have recently been
 improved to answer to the increasing need to interface OTB
 capabilities into other softwares and to provide a better access to
@@ -183,7 +184,7 @@ some technical remote sensing processing background along with code
 examples and a cookbook~\cite{otbCookBook} dedicated to non-programming
 users.
 
-\section{Segmenting very large images with Orfeo ToolBox}
+\section{Segmenting very large images with Orfeo ToolBox}\label{sec:seg}
 
 
 \subsection{Representations and data structures for segmentation results}
