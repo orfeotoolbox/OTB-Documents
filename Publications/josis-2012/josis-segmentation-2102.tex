@@ -277,17 +277,17 @@ a Pleiades image patch.
 
 \begin{figure}[!htb]
 \centering
-\subfigure[Watershed]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_optimal}}
-\qquad
-\subfigure[Mean-Shift]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_optimal}}
-\qquad
-\subfigure[Morphological Profiles]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_optimal}}\\
+\subfigure[Watershed]{\includegraphics[width=0.3\textwidth]{Pictures/watershed_color_optimal}}
+\quad
+\subfigure[Mean-Shift]{\includegraphics[width=0.3\textwidth]{Pictures/meanshift_color_optimal}}
+\quad
+\subfigure[Morphological Profiles]{\includegraphics[width=0.3\textwidth]{Pictures/geomorpho_color_optimal}}\\
 
-\subfigure[Watershed]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_image}}
-\qquad
-\subfigure[Mean-Shift]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_image}}
-\qquad
-\subfigure[Morphological Profiles]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_image}}
+\subfigure[Watershed]{\includegraphics[width=0.3\textwidth]{Pictures/watershed_color_image}}
+\quad
+\subfigure[Mean-Shift]{\includegraphics[width=0.3\textwidth]{Pictures/meanshift_color_image}}
+\quad
+\subfigure[Morphological Profiles]{\includegraphics[width=0.3\textwidth]{Pictures/geomorpho_color_image}}
 \caption{Results of various segmentation algorithms from Orfeo ToolBox
   applied on a pan-sharpened Pleiades extract. The optimal LUT (figures
   (a) to (c)) maps
@@ -374,7 +374,8 @@ issues in the following section.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.9\textwidth]{Pictures/ogrs_nostitch.png}\label{fig:nostitch}
-\caption{Example of large scale segmentation result displayed in QGIS}
+\caption{Example of large scale segmentation result from a Pleiades
+  image displayed in QGIS}
 \end{figure}
 
 
@@ -393,7 +394,9 @@ sophisticated techniques might be derived in the future.
 \subfigure[Stitching overview]{\includegraphics[width=0.9\textwidth]{Pictures/ogrs_stitch.png}\label{fig:stitch}}\\
 \subfigure[Stitching off (detail)]{\includegraphics[width=0.45\textwidth]{Pictures/ogrs_nostitch_xt.png}}
 \subfigure[Stitching on (detail)]{\includegraphics[width=0.45\textwidth]{Pictures/ogrs_stitch_xt.png}}
-\caption{Example of large scale segmentation result displayed in QGIS, with stitching}
+\caption{Example of large scale segmentation result from a Pleiades
+  image displayed in QGIS, with stitching. Tile borders that have
+  successfully been removed are displayed in blue.}
 \end{figure}
 
 The second problem is that the polygons reflect exactly the shape of
