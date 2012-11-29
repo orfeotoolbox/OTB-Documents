@@ -106,9 +106,12 @@ a sufficient level of performance to be considered as operational.
 Even if we leave aside the question of segmentation quality and
 consider that we have a method performing reasonably well on our data
 and objects of interest, the task of scaling up segmentation to real
-very high resolution data is itself challenging. First, we can not
-load the whole data into memory, and there is a need for on the flow
-processing which does not cope well with traditional segmentation
+very high resolution data is itself challenging.  For instance a basic
+Pleiades image~\cite{tinel2012orfeo} has an extent of 40 000 by 40 000
+pixels, which corresponds to a memory size of 12.8 GB assuming a
+4-bands image with 16 bits per pixel. First, we can not load the
+whole data into memory, and there is a need for on the flow processing
+which does not cope well with traditional segmentation
 algorithms~\cite{shi2000normalized}. Second, the result of the
 segmentation process itself is difficult to represent and manipulate
 efficiently.
@@ -175,7 +178,7 @@ nightly basis. The results are available publicly which ensures
 multi-platform consistency and continuous validation. Last, OTB
 encourages full access to the details of all the algorithms through
 extensive documentation. This documentation is divided between class
-documentations, the software guide\cite{otbSoftwareGuide} which gives
+documentations, the software guide~\cite{otbSoftwareGuide} which gives
 some technical remote sensing processing background along with code
 examples and a cookbook~\cite{otbCookBook} dedicated to non-programming
 users.
@@ -237,52 +240,67 @@ algorithms, which usually produce a label image. For this purpose, we
 need a component for exact conversion between the raster
 representation and the vector one. We take advantage of the
 polygonization and rasterization algorithms provided by
-GDAL\furl{www.gdal.org}. To handle on the flow input and output to vector data
-files and databases, we then use the full extent of OGR
-functions\furl{http://www.gdal.org/ogr/}. This abstraction layer allows our tool to address
-simple file formats like ESRI Shapefile or complex databases like
-PostGIS seamlessly.
+GDAL\furl{www.gdal.org}. To handle on the flow input and output to
+vector data files and databases, we then use the full extent of OGR
+functions\furl{http://www.gdal.org/ogr/}. This abstraction layer
+allows our tool to address simple file formats like ESRI Shapefile and
+Sqlite or complex databases like PostGIS seamlessly.
 
 \subsection{Segmentation algorithms}
 
-The ITK library on top of which OTB is built proposes many segmentation algorithms, based on region growing or level-sets. 
+In the Orfeo ToolBox, we define a segmentation algorithm as a filter
+that accepts a remote sensing image as input and produces a label
+image as output. This filter is not supposed to have streaming (on the
+flow) capabilities, it is allowed to require the whole input image to
+produce its output. The streaming will be handled by the
+framework. The filter can however make an internal use of
+multi-threading.
 
+The ITK library on top of which OTB is built proposes many
+segmentation algorithms based on region growing strategies, some being
+coupled with level sets propagation
+techniques~\cite{otbSoftwareGuide}. However, these techniques must be
+supervised by seeds selection, and are adapted to the segmentation of
+one particular object of interest in the image, such as one organ in a
+medical image for instance. As a result, they can not be used for the
+purpose of segmenting or partitioning all objects within a remote
+sensing image.
 
-\begin{figure}[!htbp]
+For this purpose, in addition to the watershed algorithm available in
+ITK, we implemented in Orfeo ToolBox a simple connected-component
+algorithm with a user defined criterion, the Mean-Shift
+algorithm~\cite{comaniciu2002mean}, and the morphological segmentation
+described in~\cite{pesaresi2001new}. Figure~\ref{fig:segalgs} shows
+the result of three different algorithms from Orfeo ToolBox applied to
+a Pleiades image patch.
+
+\begin{figure}[!htb]
 \centering
-\subfigure[Connected Components (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/second_cc_color_optimal}\label{fig:cc_optimal}}
+\subfigure[Watershed]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_optimal}}
 \qquad
-\subfigure[Connected Components (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/second_cc_color_image}\label{fig:cc_natural}}\\
+\subfigure[Mean-Shift]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_optimal}}
+\qquad
+\subfigure[Morphological Profiles]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_optimal}}\\
 
-\subfigure[Watershed (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_optimal}\label{fig:ws_optimal}}
+\subfigure[Watershed]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_image}}
 \qquad
-\subfigure[Watershed (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/watershed_color_image}\label{fig:ws_natural}}\\
-
-\subfigure[Mean-Shift (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_optimal}\label{fig:ms_optimal}}
+\subfigure[Mean-Shift]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_image}}
 \qquad
-\subfigure[Mean-Shift (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/meanshift_color_image}\label{fig:ms_natural}}\\
-\subfigure[Morphological Profiles (optimal LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_optimal}\label{fig:gm_optimal}}
-\qquad
-\subfigure[Morphological Profiles (natural LUT)]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_image}\label{fig:gm_natural}}
-\caption{Results of various segmentation algorithms from Orfeo ToolBox}
+\subfigure[Morphological Profiles]{\includegraphics[width=0.26\textwidth]{Pictures/geomorpho_color_image}}
+\caption{Results of various segmentation algorithms from Orfeo ToolBox
+  applied on a pan-sharpened Pleiades extract. The optimal LUT (figures
+  (a) to (c)) maps
+  neighboring segments to highly contrasted colors, whereas the
+  natural LUT (figures
+  (d) to (f)) paints segment with the mean color of the underlying image.}\label{fig:segalgs}
 \end{figure}
 
 
-\subsection{Framework for large scale segmentation}
+\subsection{Framework and application for large scale segmentation}
 
-This section describes the generic framework that has been implemented
-to support various segmentation algorithms. In the Orfeo ToolBox, we
-define a segmentation algorithm as a filter that accepts a remote
-sensing image as input and produces a label image as output. This
-filter is not supposed to have streaming (on the flow) capabilities,
-it is allowed to require the whole input image to produce its
-output. The streaming will be handled by the framework. The filter can
-however make an internal use of multi-threading.  Such an algorithm
-shall be supported by our framework in order to segment quite large
-images. For instance a basic Pleiades image~\cite{tinel2012orfeo} has
-an extent of 40 000 by 40 000 pixels, which corresponds to a memory
-size of 3.2GB assuming a single-band image with 16 bits per pixel.
-Our framework works as follows:
+This section describes the generic framework and the segmentation
+application that have been implemented in the Orfeo ToolBox. The large
+scale segmentation framework works as follows:
 \begin{enumerate}[1 - ]
 \item Derive a tiling scheme, which depends on the following
   parameters:
@@ -306,10 +324,19 @@ It is important to note that some tiling schemes are not suited for
 this framework. For instance, if the image is streamed line by line,
 performing a segmentation on each line independently is irrelevant.
 
+This framework is used in the segmentation application available in
+the orfeo ToolBox, whose workflow is shown in
+figure~\ref{fig:framework}. The application has two modes. The raster
+mode loads the whole input image into memory and segment it with an
+algorithm selected in the segmentation algorithm bank. The output is a
+classical labeled raster image. The vector mode applies the large
+scale segmentation framework with the selected algorithm from the
+segmentation algorithms bank, and produces a vector file.
+
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Pictures/schema_ogrs}\label{fig:overview}
-\caption{Overview of the large scale segmentation framework in the Orfeo ToolBox}
+\caption{Overview of the large scale segmentation framework in the Orfeo ToolBox}\label{fig:framework}
 \end{figure}
 
 The strength of this framework is that it will naturally scale up:
@@ -323,19 +350,15 @@ depending on the segmentation algorithm implementation. In the OTB,
 the typical way to perform parallel processing is to sub-divide the
 streaming tiles into smaller tiles, processed by different
 threads. For instance, we implemented a multi-threaded version of the
-Mean Shift algorithm~\cite{Comaniciu2002mean}. This version provides a
+Mean Shift algorithm~\cite{comaniciu2002mean}. This version provides a
 significant performance gain when the system has multiple processor
 cores.
 
 An other key feature is that we make few assumptions on the
 segmentation algorithm, and that our framework will be able to perform
 with any segmentation algorithm implemented under these
-assumptions. The different algorithms don't need to share the same set
+assumptions. The different algorithms do not need to share the same set
 of parameters. They can have their specific methods and attributes
-(the segmentation algorithm can be accessed from outside the
-framework). The same code already runs with a basic connected
-components algorithm, two different implementations of the Mean Shift
-algorithm, and a Watershed algorithm.
 
 Of course, this framework has the same drawbacks as other streaming
 methods. Algorithms using global information in the input image will
