@@ -118,9 +118,28 @@ components for this purpose.
 
 \section{About the Orfeo ToolBox}
 
-The Orfeo Toolbox (OTB) is an open-source (CeCILL license), remote sensing-oriented, image processing library. Initiated by the French Space Agency (CNES) in the frame of the ORFEO accompaniment program~\furl{http://smsc.cnes.fr/PLEIADES/A_prog_accomp.htm}. Based on the medical image processing library Insight ToolKit (ITK), the OTB provides to its users an extensive set of algorithms and functionalities dedicated to remote sensing data exploitation. More specifically, the OTB embeds efficient approaches to handle large data using advanced streaming and multi-threading strategies. Thus, OTB-based processing chains take advantages of both optimized Input/Output access and streamed/multi-threaded filtering to perform efficient processing.
+The Orfeo Toolbox (OTB) is an open-source (CeCILL license), remote
+sensing-oriented, image processing library. It has been initiated by
+the French Space Agency (CNES) in the frame of the ORFEO accompaniment
+program~\furl{http://smsc.cnes.fr/PLEIADES/A_prog_accomp.htm}. Based
+on the medical image processing library Insight ToolKit (ITK), the OTB
+provides to its users an extensive set of algorithms and
+functionalities dedicated to remote sensing data exploitation. More
+specifically, the OTB embeds efficient approaches to handle large data
+using advanced streaming and multi-threading strategies. Thus,
+OTB-based processing chains take advantages of both optimized
+Input/Output access and streamed/multi-threaded filtering to perform
+efficient processing.
 
-OTB is based on a large set of open-source libraries which contribute to expand the OTB ecosystem. The main part of this ecosystem are described in the figure~\ref{fig:ecosystem}. Through the use of these libraries, OTB offers the possibility to manipulate and process the main remote-sensing data from optical to hyperspectral through SAR sensor. The processing capabilities of OTB library covers a large set of uses cases from optical calibration and data projection to image segmentation and classification. An exhaustive list can be found in the documentation.
+OTB is based on a large set of open-source libraries which contribute
+to expand the OTB ecosystem. The main part of this ecosystem are
+described in the figure~\ref{fig:ecosystem}. Through the use of these
+libraries, OTB offers the possibility to manipulate and process the
+main remote-sensing data from optical to hyperspectral through SAR
+sensor. The processing capabilities of OTB library covers a large set
+of uses cases from optical calibration and data projection to image
+segmentation and classification. An exhaustive list can be found in
+the documentation.
 
 \begin{figure}[!htb]
 \centering
@@ -128,15 +147,35 @@ OTB is based on a large set of open-source libraries which contribute to expand 
 \caption{Orfeo ToolBox ecosystem}
 \end{figure}
 
-The main way to access to the OTB capabilities for end-users is to use the set of applications offered by OTB. The OTB Applications have been recently improved to answer to the increasing need to interface OTB capabilities into other software and to provide a better access to end-users. These OTB applications are designed to be more user-friendly and to be auto-loaded into appropriate tools without recompiling (as a shared library). Currently Orfeo ToolBox ships the following tools:
+The main way to access to the OTB capabilities for end-users is to use
+the set of applications offered by OTB. The OTB Applications have been
+recently improved to answer to the increasing need to interface OTB
+capabilities into other software and to provide a better access to
+end-users. These OTB applications are designed to be more
+user-friendly and to be auto-loaded into appropriate tools without
+recompiling (as a shared library). Currently Orfeo ToolBox ships the
+following tools:
 \begin{itemize}
 \item A command-line launcher and a set of command-line tools
-\item A graphical launcher and a set of tools based on a QT interface which provide ergonomic parameters setting, display of documentation, and progress reporting,
-\item A SWIG interface, which allows to use any application into a high-level language such as Python or Java for instance.
+\item A graphical launcher and a set of tools based on a QT interface
+  which provide ergonomic parameters setting, display of
+  documentation, and progress reporting,
+\item A SWIG interface, which allows to use any application into a
+  high-level language such as Python or Java for instance.
 \end{itemize}
-Moreover, through the Sextante project, OTB applications are also available into the QGIS project. QGIS users have now an easy way to process their data and combine OTB processing with other tools.
+Moreover, through the Sextante project, OTB applications are also
+available into the QGIS project. QGIS users have now an easy way to
+process their data and combine OTB processing with other tools.
 
-To follow the best practices of an open-source project, OTB offers via a public official repository a high quality code to promote dissemination and contribution. Thus, the library is built and tested on a nightly basis. The results are available publicly which ensures multi-platform consistency and continuous validation. Moreover, OTB encourages full access to the details of all the algorithms through extensive documentation. This documentation is divided between class documentations, the software guide and a cookbook with use cases~\furl{http://orfeo-toolbox.org/otb/documentation.html}.
+To follow the best practices of an open-source project, OTB offers via
+a public official repository a high quality code to promote
+dissemination and contribution. Thus, the library is built and tested
+on a nightly basis. The results are available publicly which ensures
+multi-platform consistency and continuous validation. Moreover, OTB
+encourages full access to the details of all the algorithms through
+extensive documentation. This documentation is divided between class
+documentations, the software guide and a cookbook with use
+cases~\furl{http://orfeo-toolbox.org/otb/documentation.html}.
 
 \section{Segmenting very large images with Orfeo ToolBox}
 
@@ -162,15 +201,15 @@ on neighboring pixels with same labels. This representation is of
 limited interest for our purpose.
 
 A second representation of segmented image which is further from image
-processing is the map of label objects \cite{lehmann2008label}. A segment is
-represented in Run Length Encoding (RLE), and all segments are indexed
-by a unique label in a map. The RLE representation is more compact,
-the map allows fast access to a segment given its label, and it also
-allows to store attributes related to a segment, which is a first step
-toward Object Based Image Analysis. The main drawback of this
-representation is that there are no standard file format able to store
-it on a file system, and it requires to convert either to or from
-raster or vector representation at each read or write
+processing is the map of label objects \cite{lehmann2008label}. A
+segment is represented in Run Length Encoding (RLE), and all segments
+are indexed by a unique label in a map. The RLE representation is more
+compact, the map allows fast access to a segment given its label, and
+it also allows to store attributes related to a segment, which is a
+first step toward Object Based Image Analysis. The main drawback of
+this representation is that there are no standard file format able to
+store it on a file system, and it requires to convert either to or
+from raster or vector representation at each read or write
 operation. Moreover, this representation is neither really raster nor
 really vector. Therefore, operations like walking pixels in the
 segment or following its contour are more complex.
@@ -197,9 +236,9 @@ representation and the vector one. We take advantage of the
 polygonization and rasterization algorithms provided by GDAL
 \cite{}. To handle on the flow input and output to vector data files
 and databases, we then use the full extent of OGR functions
-\cite{}. This abstraction layer allows our tool to address
-simple file formats like ESRI Shapefile or complex databases like
-PostGIS seamlessly.
+\cite{}. This abstraction layer allows our tool to address simple file
+formats like ESRI Shapefile or complex databases like PostGIS
+seamlessly.
 
 \subsection{Segmentation algorithms}
 
@@ -226,20 +265,21 @@ PostGIS seamlessly.
 \subsection{Framework for large scale segmentation}
 
 This section describes the generic framework that has been implemented
-to support various segmentation algorithms. In the Orfeo ToolBox, 
-we define a segmentation algorithm as a filter
-that accepts a remote sensing image as input and produces a label
-image as output. This filter is not supposed to have streaming (on the
-flow) capabilities, it is allowed to require the whole input image to
-produce its output. The streaming will be handled by the framework. The
-filter can however make an internal use of multi-threading.
-Such an algorithm shall be supported by our framework in order to
-segment quite large images. For instance a basic Pleiades image
-\cite{} has an extent of 40 000 by 40 000 pixels, which corresponds to
-a memory size of 3.2GB assuming a single-band image with 16 bits per pixel.
-Our framework works as follows:
+to support various segmentation algorithms. In the Orfeo ToolBox, we
+define a segmentation algorithm as a filter that accepts a remote
+sensing image as input and produces a label image as output. This
+filter is not supposed to have streaming (on the flow) capabilities,
+it is allowed to require the whole input image to produce its
+output. The streaming will be handled by the framework. The filter can
+however make an internal use of multi-threading.  Such an algorithm
+shall be supported by our framework in order to segment quite large
+images. For instance a basic Pleiades image \cite{} has an extent of
+40 000 by 40 000 pixels, which corresponds to a memory size of 3.2GB
+assuming a single-band image with 16 bits per pixel.  Our framework
+works as follows:
 \begin{enumerate}[1 - ]
-\item Derive a tiling scheme, which depends on the following parameters:
+\item Derive a tiling scheme, which depends on the following
+  parameters:
 \begin{itemize}
 \item the amount of memory available on the computer
 \item the file format of the input image (in some formats,
@@ -256,9 +296,9 @@ the image is already stored in tiles)
 \end{enumerate}
 \end{enumerate}
 
-It is important to note that some tiling schemes are not suited for this
-framework. For instance, if the image is streamed line by line, performing
-a segmentation on each line independently is irrelevant.
+It is important to note that some tiling schemes are not suited for
+this framework. For instance, if the image is streamed line by line,
+performing a segmentation on each line independently is irrelevant.
 
 \begin{figure}[!htb]
 \centering
@@ -269,34 +309,37 @@ a segmentation on each line independently is irrelevant.
 The strength of this framework is that it will naturally scale up:
 larger images will take more time to process and more space on file
 system to store, but the system will never run out of the most limited
-resource on most hardware, which is memory. The input image will still be
-loaded tile by tile, and the polygons will be stored after each tile is
-segmented. The most time consuming
-operation is the segmentation, and this is where we allow for parallel
-processing depending on the segmentation algorithm implementation. In the 
-OTB, the typical way to perform parallel processing is to sub-divide the 
-streaming tiles into smaller tiles, processed by different threads. For
-instance, we implemented a multi-threaded version of the Mean Shift
-algorithm \cite{Comaniciu2002mean}. This version provides a significant 
-performance gain when the system has multiple processor cores.
+resource on most hardware, which is memory. The input image will still
+be loaded tile by tile, and the polygons will be stored after each
+tile is segmented. The most time consuming operation is the
+segmentation, and this is where we allow for parallel processing
+depending on the segmentation algorithm implementation. In the OTB,
+the typical way to perform parallel processing is to sub-divide the
+streaming tiles into smaller tiles, processed by different
+threads. For instance, we implemented a multi-threaded version of the
+Mean Shift algorithm \cite{Comaniciu2002mean}. This version provides a
+significant performance gain when the system has multiple processor
+cores.
 
-An other key feature is that we make few assumptions on the segmentation
-algorithm, and that our framework will be able to perform with any
-segmentation algorithm implemented under these assumptions. The
-different algorithms don't need to share the same set of parameters. They
-can have their specific methods and attributes (the segmentation algorithm
-can be accessed from outside the framework). The same
-code already runs with a basic connected components algorithm, two
-different implementations of the Mean Shift algorithm, and a Watershed algorithm.
+An other key feature is that we make few assumptions on the
+segmentation algorithm, and that our framework will be able to perform
+with any segmentation algorithm implemented under these
+assumptions. The different algorithms don't need to share the same set
+of parameters. They can have their specific methods and attributes
+(the segmentation algorithm can be accessed from outside the
+framework). The same code already runs with a basic connected
+components algorithm, two different implementations of the Mean Shift
+algorithm, and a Watershed algorithm.
 
 Of course, this framework has the same drawbacks as other streaming
 methods. Algorithms using global information in the input image will
 produce different results depending on the tiling scheme, but this is
-a lesser issue for segmentation algorithms that focus on local information.
-The main drawback is over-segmentation : the regions lying on tiles borders
-will be artificially split by the tiling scheme. This can be a real concern
-when a big object that crosses several tiles must be segmented as one region.
-We address these issues in the following section.
+a lesser issue for segmentation algorithms that focus on local
+information.  The main drawback is over-segmentation : the regions
+lying on tiles borders will be artificially split by the tiling
+scheme. This can be a real concern when a big object that crosses
+several tiles must be segmented as one region.  We address these
+issues in the following section.
 
 \begin{figure}[!htb]
 \centering
@@ -328,9 +371,9 @@ the segment, and contain a large amount of vertices. This leads to
 very heavy vector files, sometimes even heavier than the corresponding
 raster image would be. To deal with this issue, we added
 pre-processing as well as post-processing. First, we added an input
-mask image to avoid segmenting unwanted regions, like no-data
-pixels, clouds, or vegetation (if vegetation is not desired). We also
-added a rule to remove very small segments, which are more likely to
+mask image to avoid segmenting unwanted regions, like no-data pixels,
+clouds, or vegetation (if vegetation is not desired). We also added a
+rule to remove very small segments, which are more likely to
 correspond to segmentation noise than to real objects (this leads to
 holes in the segmentation canvas). Last, we again used the
 capabilities of OGR to perform a geometry simplification algorithm,
@@ -347,18 +390,18 @@ TODO
 
 \section{Conclusion}
 
-  This framework is only a first step toward providing an open source
- large scale OBIA and spatial reasoning framework. Future developments
- will include more stitching and tiling strategies to enhance the
- segmentation performance at tiles borders, and the computation of
- attributes along with polygons, such as statistics on radiometry from
- an image, or shape attributes. These attributes could then be used
- for reasoning or classification at the object level. While there is
- still a lot missing, we hope to provide a comprehensive environment
- for object-based techniques for VHR images analysis through the
- ongoing efforts to integrate Orfeo ToolBox within Quantum
- GIS \cite{}, a open source GIS software, via Sextante \cite{},
- and bridge the gap between remote sensing and GIS.
+This framework is only a first step toward providing an open source
+large scale OBIA and spatial reasoning framework. Future developments
+will include more stitching and tiling strategies to enhance the
+segmentation performance at tiles borders, and the computation of
+attributes along with polygons, such as statistics on radiometry from
+an image, or shape attributes. These attributes could then be used for
+reasoning or classification at the object level. While there is still
+a lot missing, we hope to provide a comprehensive environment for
+object-based techniques for VHR images analysis through the ongoing
+efforts to integrate Orfeo ToolBox within Quantum GIS \cite{}, a open
+source GIS software, via Sextante \cite{}, and bridge the gap between
+remote sensing and GIS.
 
 
 \subsubsection{References}
