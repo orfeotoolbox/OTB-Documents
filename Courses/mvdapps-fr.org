@@ -48,7 +48,7 @@ _Tucs et astuces:_
  - Les flèches du clavier peuvent être utilisées pour naviguer dans les images.
  - L'ordre des bandes Pléiades est : rouge, vert, bleu et proche infra-rouge.
 
-**** Monteverdi: traitements basiques
+**** Monteverdi : traitements basiques
 #+LABEL:   ex1_monteverdi_basic_processing
 Dans cette partie l'image suivante est utilisée :
 
@@ -79,31 +79,29 @@ _Trucs et astuces :_
 - Les valeurs du NDVI sont comprises entre -1 et +1, mais la vraie
   dynamique des valeurs observées peut être beaucoup plus faible.
 
-**** OTB applications: Graphical and command-line mode
+**** OTB applications : mode graphique et ligne de commande
+1. Lancez la commande suivante :
+   : $ otbcli_OrthoRectification
+   et ensuite
+   : $ otbgui_OrthoRectification
+   Qu'observez-vous?
+2. Combien d'applications sont actuellement disponibles dans *OTB Applications*?
+3. Comment peut-on obtenir de l'aide et de la documentation à propos
+   des applications?
 
-     1. Run the following command:
-        : $ otbcli_OrthoRectification
-        And then
-        : $ otbgui_OrthoRectification
-        What do you observe ?
-     2. How many *OTB applications* are currently available ?
-     3. How can you get help and documentation about applications ?
-
-**** OTB applications: Basic processing
+**** OTB applications : traitements simples
+Utilisez les applications afin de reproduire les résultats des étapes
+3 à 7 de la section sur Monteverdi [[Monteverdi : traitements basiques]].
      
-     1. Use the *OTB applications* to produce the same results as steps 3 to
-        7 as with *Monteverdi* in section [[Monteverdi: basic processing]].
-
-**** Homework
+**** Pour aller plus loin
+1. Comment peut-on lire ou visualiser des images directement depuis la
+   ligne de commande avec *Monteverdi*?
+2. Y-t'il d'autres façons de calculer des indices comme le NDVI avec
+   les *OTB Applications*?
+3. Renseignez-vous sur l'utilisation des *OTB Applications* depuis
+   /Python/ et écrivez un script en /Python/ qui réalise les mêmes
+   traitements que dans la section [[OTB applications : traitements simples]]
      
-     1. How can we load or visualize images directly from command-line
-        using *Monteverdi* ?
-     2. Is there another way to compute radiometric indices like NDVI
-        with the *OTB Applications* ?
-     3. Learn about the /Python/ access to *OTB Applications* and
-        write a python script performing the same steps as in section
-        [[OTB applications: Basic processing]].
-
 *** Solutions                                                     :solutions:
 
 **** Monteverdi: data opening and visualisation
