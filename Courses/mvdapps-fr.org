@@ -48,38 +48,36 @@ _Tucs et astuces:_
  - Les flèches du clavier peuvent être utilisées pour naviguer dans les images.
  - L'ordre des bandes Pléiades est : rouge, vert, bleu et proche infra-rouge.
 
-**** Monteverdi: basic processing
-     #+LABEL:   ex1_monteverdi_basic_processing
-     In this part of the exercise, you will use the following data:
+**** Monteverdi: traitements basiques
+#+LABEL:   ex1_monteverdi_basic_processing
+Dans cette partie l'image suivante est utilisée :
 
-     ~phr_xs_melbourne.tif~
+~phr_xs_melbourne.tif~
 
-     1. Open the image in *Monteverdi*.
-     2. Find the /BandMath/ module in the menu. Open the image in
-        this module. What kind of processing is offered ?
-     3. Using this module, compute the NDVI of the image: 
-        #+LATEX:\begin{equation}
-        NDVI = \frac{NIR-RED}{NIR+RED}
-        #+LATEX:\end{equation}
-     
-     Visualize the input image and the mask in
-        the same viewer.
-     4. Using this module, build a mask of pixels whose Digital Number (DN) in the NIR
-        channel is lower than 150. Visualize the input image and the
-        mask in the same viewer.
-     5. Using this module, build a mask of pixels whose DN is upper
-        than 1000 in all spectral bands. Visualize the input image and
-        the mask in the same viewer.
-     6. Using the /Concatenate/ module, build a composite RGB image
-        with the mask of high values in the red channel, the mask of
-        low NIR values in the blue channel and the NDVI in the green
-        channel.
-     7. Using the /Color Mapping/ Module, build a composite RGB image
-        of the NDVI that allows for better image interpretation.
+1. Ouvrez l'image dans *Monteverdi*.
+2. Trouvez le module /BandMath/ dans les menus. Ouvrez l'image dans ce
+   module. Quel type de traitement est proposé?
+3. \`A l'aide de ce module, calculez le NDVI de l'image :
+   #+LATEX:\begin{equation}
+   NDVI = \frac{PIR-Rouge}{PIR+Rouge}
+   #+LATEX:\end{equation}
+4. En utilisant le même module, créez un masque des pixels dont la
+   valeur dans le PIR est inférieure à 150. Affichez l'image et le
+   masque dans le même /viewer/
+5. Créez un masque correspondant aux pixels dont la valeur est
+   supérieure à 1000 dans toutes les bandes spectrales. Visualisez le
+   masque et l'image dans le même /viewer/.
+6. Utilisez le module /Concatenate/ afin de créer une image RVB
+   composite avec le masque des valeurs élevées dans le rouge, le
+   masque des valeurs faibles de PIR dans le bleu et le NDVI dans le
+   vert.
+7. Utilisez le module /Color Mapping/ afin de créer une image
+   composite RVB du NDVI qui permet une meilleure interprétation
+   visuelle.
 
-     _Tips and Recommandations:_
-     - NDVI values are within -1 and 1, but the range can be much
-       more narrow.
+_Trucs et astuces :_
+- Les valeurs du NDVI sont comprises entre -1 et +1, mais la vraie
+  dynamique des valeurs observées peut être beaucoup plus faible.
 
 **** OTB applications: Graphical and command-line mode
 
