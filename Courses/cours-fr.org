@@ -1,0 +1,67 @@
+#+TITLE: Analyse d'images Pleiades PHR avec l'ORFEO ToolBox
+#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Jordi Inglada (CNES/CESBIO)
+#+OPTIONS: H:4
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper,11pt,twoside,openright]
+#+LaTeX_HEADER: \usepackage{a4wide}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathptmx}
+#+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage{tikz}
+#+OPTIONS: tags:nil
+
+#+EXPORT_SELECT_TAGS:
+#+EXPORT_EXCLUDE_TAGS: solutions
+
+#+LATEX:\pagestyle{fancy}
+#+LATEX:\fancyhf{}
+#+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
+#+LATEX:\fancyhead[LO]{\bfseries\rightmark}
+#+LATEX:\fancyhead[RE]{\bfseries\leftmark}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Selper2012 - OTB Workshop}}
+
+* Avant-propos                                                           :fw:
+** Données
+
+Les images utilisées pour cette formation sont des extraits de
+produits de démonstration Pléiades mis à disposition à des fins
+d'évaluation. Afin d'obtenir les produits complets, vous pouvez aller
+sur ce [[http://www.astrium-geo.com/fr/364-produits-de-demonstration][site web]]. Les produits utilisés sont :
+
+- ~Pleiades Pan-sharpened ORTHO Compression REGULAR~
+- ~Pleiades TRISTEREO Bundle PRIMARY~
+
+Ils sont sous copyright CNES.
+
+Les autres données nécessaires pour les exercices ainsi que les
+solutions des exercices sont fournies dans le paquet /data/.
+
+** Les logiciels
+
+Afin de réaliser les exercices, les logiciels suivants sont
+nécessaires :
+
+- *Orfeo ToolBox* 3.14 ou plus récent avec les applications
+- *Monteverdi* 1.6 ou plus récent
+- *QGis* 1.8 ou plus récent
+
+Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
+de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+
+Pour installer *QGis* consultez la documentation du logiciel qui est
+disponible sur le  [[http://www.qgis.org/][site du projet]].
+
+* Exercices                                                            :exos:
+#+INCLUDE: "mvdapps-fr.org"
+#+INCLUDE: "prepro-fr.org"
+#+INCLUDE: "seg-fr.org"
+#+INCLUDE: "features-fr.org"
+#+INCLUDE: "classpix-fr.org"
+#+INCLUDE: "classobj-fr.org"
+#+INCLUDE: "stereo-fr.org"
+#+INCLUDE: "sar-fr.org"
+
