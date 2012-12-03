@@ -104,147 +104,132 @@ Utilisez les applications afin de reproduire les résultats des étapes
      
 *** Solutions                                                     :solutions:
 
-**** Monteverdi: data opening and visualisation
+**** Monteverdi: lecture de données et visualisation
 
-***** Item 3
+***** Point 3
+Pour visualiser une image dans *Monteverdi*, vous pouvez :
+- soit faire click droit sur l'image et sélectionner /Display in viewer/,
+- soit utiliser le menu /Visualization/Viewer/, choisir l'image et
+  cliquer sur /OK/.
 
-      To load an image into *Monteverdi* viewer module, you can either:
-      - Right-click on the image and select /Display in viewer/,
-      - In the menu bar, select /Visualization/Viewer/, select the
-        corresponding image and push /Ok/.
+La 2è option permet de visualiser plusieurs images simultanément.
 
-      The latter allows to load multiple images into a single viewer.
+***** Point 4
+La zone en bas à gauche affiche des informations sur l'image et sur le
+pixel qui se trouve sous le pointeur de la souris :
+- la position courante dans l'image,
+- la taille de l'image,
+- la bande affichée,
+- les valeurs des pixels,
+- la résolution (spacing),
+- la position géographique si elle est disponible,
+- le nom de l'endroit s'il est diponible.
 
-***** Item 4
+**** Monteverdi : traitements basiques
+
+***** Point 2
+Le module *BandMath* permet de faire des calculs avec les bandes des
+images en utilisant la syntaxe de [[http://muparser.sourceforge.net/][muParser]].
+
+***** Point 3
+Afin de calculer le NDVI, on peut utiliser l'expression *BandMath*
+suivante :
+: (im1b4-im1b1)/(im1b4+im1b1)
+
+***** Point 4
+Afin de construire le masque des pixels dont le compte numérique dans
+le PIR est inférieur à 150, on peut utiliser l'expression *BandMath*
+suivante :
+: if(im1b4<150,255,0)
+
+***** Point 5
+Pour générer le masque des pixels dont le compte numérique est
+supérieur à 1000 dans toutes les bandes spectrales, on peut utiliser
+l'expression *BandMath* suivante :
+
+: if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)
+
+***** Point 6
+Dans la barre de menu, choisir /File/Concatenate images/ et choisir
+les sorties des 3 modules *BandMath*. L'image résultante peut être
+affichée dans le /Viewer/ et elle ressemble à ceci :
+
+#+Latex:\vspace{0.5cm}
+#+Latex:\begin{center}
+#+ATTR_LaTeX: width=0.9\textwidth
+file:Images/bandmath.png]]
+#+Latex:\end{center}
+
+***** Point 7
+Dans la barre de menu, choisir /Visualisation/Color Mapping/ et
+charger la sortie du NDVI calculé avec le
+module *BandMath*. Sélectionner une plage de valeurs entre -0.2 et 0.7
+et utiliser la table de couleurs /Jet/. Voici le résultat tel
+qu'affiché par le /Viewer/ :
+
+#+Latex:\vspace{0.5cm}
+#+Latex:\begin{center}
+#+ATTR_LaTeX: width=0.9\textwidth
+file:Images/colormapping.png]]
+#+Latex:\end{center}
+
+**** OTB applications : mode graphique et ligne de commande
+
+***** Point 1
+La première commande lance la version en ligne de commande de
+l'application *Orthorectification*. La deuxième commande en lance la
+verssion avec IHM graphique.
       
-      The lower left text area displays information on the image and on
-      the pixel under the mouse pointer:
-      - The current position in image,
-      - The image size,
-      - The channel displayed,
-      - The pixel values,
-      - The estimated ground spacing,
-      - The geographic position (if available),
-      - The current location (if available).
+***** Point 2
+Il y a 59 applications dans la version 3.14.1 de l'OTB.
 
-**** Monteverdi: basic processing
+***** Point 3
+Il existe plusieurs façons d'obtenir de l'aide et de la documentation :
+- Le lancement d'une application en ligne de commande sans paramètres
+  affiche une courte description de l'application et de ses
+  paramètres. Un lien vers la documentation complète
+  [[http://www.orfeo-toolbox.org][sur le site de l'OTB]] est aussi affiché.
+- La version graphique des applications dispose d'un onglet
+  /Documentation/ où une description détaillée est donnée.
+- Enfin, une documentation très complète sur les applications est
+  disponible dans l'[[http://www.orfeo-toolbox.org/CookBook/][Orfeo ToolBox Cookbook]].
 
-***** Item 2
+**** OTB applications : traitements simples
 
-      The *BandMath* module allows to do advanced band calculations
-      using the syntax from [[http://muparser.sourceforge.net/][muParser]] .
-
-***** Item 3
-
-      To compute the NDVI, use the following *BandMath* expression:
-      : (im1b4-im1b1)/(im1b4+im1b1)
-
-***** Item 4
-
-      To build a mask of pixels whose DN in the NIR channel is lower
-      than 150, use the following *BandMath* expression:
-      : if(im1b4<150,255,0)
-
-***** Item 5
-
-      To build a mask of pixels whose DN is upper
-      than 1000 in all spectral bands, use the following *BandMath*
-      expression:
-      : if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)
-
-***** Item 6
-
-      In the menu bar, select /File/Concatenate images/, and loads the
-      three *BandMath* module  outputs. The resulting image can be
-      displayed in the viewer and will look like this:
-
-      #+Latex:\vspace{0.5cm}
-      #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
-      [[file:Images/bandmath.png]]
-      #+Latex:\end{center}
-
-***** Item 7
-
-      In the menu bar, select /Visualisation/Color Mapping/ and load
-      the NDVI output from the *BandMath* module. Set a mapping range
-      from -0.2 to 0.7 so as to adapt to NDVI range, and select the /Jet/
-      color map. The resulting image can be displayed in the viewer and
-      will look like this:
-
-      #+Latex:\vspace{0.5cm}
-      #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
-      [[file:Images/colormapping.png]]
-      #+Latex:\end{center}
-
-**** OTB applications: Graphical and command-line mode
-
-***** Item 1
-      
-      The first command runs the command-line version of the
-      *Orthorectification* application, the second one runs the
-      graphical version.
-      
-***** Item 2
-
-      There are 59 applications available in OTB 3.14.1.
-
-***** Item 3
-
-      There are several ways to get help and documentation:
-      - Running the command-line version of the application displays a
-        short description of the parameters, and also gives a link to
-        the documentation on the [[http://www.orfeo-toolbox.org][OTB website]],
-      - Running the graphical version of the application shows a
-        /Documentation/ tab where extensive documentation of parameters
-        can be found.
-      - Last, the complete applications documentation can be found in
-        the [[http://www.orfeo-toolbox.org/CookBook/][Orfeo ToolBox Cookbook]].
-
-**** OTB applications: Basic processing
-
-***** Item 1
+***** Point 1
+Voici l'ensemble des commandes à utiliser :
    
-      Here is the set of commands to reproduce the processing from
-      section [[Monteverdi: basic processing]].
+D'abord, nous calculons le NDVI avec l'application *BandMath* :
+: $ otbcli_BandMath -il phr_xs_melbourne.tif
+:   -out ndvi.tif float -exp "(im1b4-im1b1)/(im1b4+im1b1)"
 
-      First, we compute the NDVI with the *BandMath* application:
+Ensuite, nous calculons le masque pour PIR < 150 :
+: $ otbcli_BandMath -il phr_xs_melbourne.tif
+:   -out lownir.tif uint8 -exp "if(im1b4<150,255,0)"
 
-      : $ otbcli_BandMath -il phr_xs_melbourne.tif
-      :   -out ndvi.tif float -exp "(im1b4-im1b1)/(im1b4+im1b1)"
+Puis, nous calculons le masque des pixels dont toutes les bandes sont
+supérieures à 1000 :
+: $ otbcli_BandMath -il phr_xs_melbourne.tif
+:   -out high.tif uint8 
+:   -exp "if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)"
 
-      Then, we compute the mask of pixels whose DN in the NIR channel
-      is lower than 150:
+Notez que pour générer des masques, un type de pixel /uint8/ (entier
+codé en 8 bits) est suffisant, tandis que pour le calcul du NDVI, un
+codage en flotant est nécessaire.
 
-      : $ otbcli_BandMath -il phr_xs_melbourne.tif
-      :   -out lownir.tif uint8 -exp "if(im1b4<150,255,0)"
+Nous pouvons maintenant concaténer tous ces résultats dans une seule
+image : 
+: $ otbcli_ConcatenateImages -il high.tif ndvi.tif lownir.tif 
+:   -out map1.tif float
 
-      Next, we compute the mask of pixels whose DN is upper
-      than 1000 in all spectral bands:
+Enfin, nous appliquons la palette de couleurs au NDVI comme ceci :
 
-      : $ otbcli_BandMath -il phr_xs_melbourne.tif
-      :   -out high.tif uint8 
-      :   -exp "if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)"
-
-      Please note that for masks using a /uint8/ data type is enough,
-      while for NDVI a floating point data type is needed.
-      
-      Now, we can concatenate all outputs in a single map with the
-      *ConcatenateImages* application:
-
-      : $ otbcli_ConcatenateImages -il high.tif ndvi.tif lownir.tif 
-      :   -out map1.tif float
-
-      Finally, we can create a color-mapping of the NDVI using the
-      *ColorMapping* application:
-
-      : $ otbcli_ColorMapping -in ndvi.tif -out map2.png uint8 
-      :   -method continuous -method.continuous.min -0.2 
-      :   -method.continuous.max 0.7 -method.continuous.lut jet
+: $ otbcli_ColorMapping -in ndvi.tif -out map2.png uint8 
+:   -method continuous -method.continuous.min -0.2 
+:   -method.continuous.max 0.7 -method.continuous.lut jet
 
 **** Homework
-***** Item 1
+***** Point 1
       From the command-line, running 
       : $ monteverdi -in  phr_xs_melbourne.tif
       will open the image in *Monteverdi* and display it in the viewer,
@@ -252,12 +237,12 @@ Utilisez les applications afin de reproduire les résultats des étapes
       : $ monteverdi -il  phr_xs_melbourne.tif ndvi.tif
       allows to open a list of images in *Monteverdi*.
 
-***** Item 2
+***** Point 2
       In *OTB Applications*, there is a *RadiometricVegetationIndices*
       application that allows to compute several indices including the
       NDVI.
 
-***** Item 3
+***** Point 3
 
       Please refer to this chapter of the *Cookbook* to learn more
       about the /Python/ [[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][interface]].
