@@ -1,0 +1,226 @@
+** Pré-traitements : corrections géométriques et radiométriques      :prepro:
+*** Description
+**** Résumé
+
+Cet exercice présente les corrections radiométriques et géométriques
+des images à l'aide d'*OTB applications*.
+     
+**** Pré-requis
+- Connaissances de base en traitement des images de télédétection.
+- Notions d'utilisation d'applications en ligne de commande.
+
+**** Objectifs
+- Ortho-rectifications d'images de télédétection avec *OTB Applications*.
+- Corrections radiométriques d'images optiques avec *OTB Applications*.
+
+*** \'Etapes
+Dans cette partie de l'exercice, vous utiliserez l'image
+~phr_xs_melbourne.tif~
+
+**** Principe des corrections géométriques
+Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
+
+     #+BEGIN_LaTeX
+     \begin{center}
+     \begin{tikzpicture}[scale=0.2]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Input series};
+     %\pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     %%\pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
+     %\pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     %\pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     %\pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+%\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block Adjustement};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     %\pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
+     %\pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     %\pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     %\pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Map Projection};
+     %\pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+     \end{tikzpicture}
+     \end{center}
+     #+END_LaTeX
+1. Lancez les versions en ligne de commande et graphique de
+   l'application *Orthorectification*.
+2. Quels paramètres permettent de gérer les modèles numériques de
+   terrrain (DEM)? Quels modes sont-ils disponibles?
+3. Ouvrez l'image avec *Monteverdi*. Quelle est la résolution de l'image?
+
+**** Orthorectification
+1. Dans quelle zone UTM se trouve Melbourne?
+2. Utilisez Quantum GIS afin de déterminer le code EPSG pour cette projection.
+3. Réalisez l'orthorectification de l'image et ouvrez-la dans Quantum
+   GIS.
+
+_Trucs et astuces :_
+- Utilisez la résolution estimée dans *Monteverdi* comme paramètre de
+  résolution de sortie dans l'*Orthorectification*.
+- Utilisez une élévation moyenne de 20 m.
+
+**** Corrections radiométriques d'images optiques
+Cette opération consiste à transformer les comptes numériques en
+réflectances (valeurs physiques). Elle comprend le passage de
+réflectance au sommet de l'atmosphère vers la réflectance de surface,
+dont l'objectif est de corriger les effets atmosphériques.
+     #+BEGIN_LaTeX
+
+
+     \begin{center}
+\begin{tikzpicture}[scale=0.18]
+   \tiny
+
+    \draw[->,thick] (0,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (4,-2) rectangle +(6,4);
+    \node[text width= 0.8cm] (SensorModel) at (7,0) {DN to Lum};
+%     \pause
+
+    \draw[->,thick] (11,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (16,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (19,0) {Lum to Refl};
+%     \pause
+
+
+    \draw[->,thick] (23,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (27,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (30,0) {TOA to TOC};
+%     \pause
+
+    \draw[->,thick] (34,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6.5,4);
+    \node[text width= 0.85cm] (SensorModel) at (41,0) {Adjacency};
+%     \pause
+
+    \draw[->,thick] (45,0) --  +(3,0);
+
+ \end{tikzpicture}
+\end{center}
+
+#+END_LaTeX 
+
+1. Utilisez l'application *OpticalCalibration* pour calculer la
+   réflectance au sommet de l'atmosphère.
+2. Utilisez l'application *OpticalCalibration* pour calculer la
+   réflectance de surface (top of canopy).
+3. Comparez les 2 images en utilisant Monteverdi ou les applications
+   en ligne de commande.
+
+-Trucs et astuces :_
+- Activez l'option '-milli' afin de générer les images de sortie en
+  millièmes de réflectance (entier 16 bits). Par défaut, les images de
+  réflectance sont sauvegardées en flotant (entre 0 et 1).
+
+*** Solutions                                                     :solutions:
+**** Principe des corrections géométriques
+***** Point 2
+Le groupe de paramètres /elev/ sert à configurer la gestion des
+modèles numériques de terrain.
+
+***** Point 3
+
+La résolution estimée dans *Monteverdi* est de /(1.95;2.03)/.
+
+**** Orthorectification
+***** Point 1
+La zone UTM de Melbourne est la 55. Voir par exemple 
+[[http://www.dmap.co.uk/utmworld.htm][ici]].
+      
+***** Point 2 
+Le code EPSG est le 32755. Cette information est disponible dans la
+fenêtre de propriétés de projet dans Quantum GIS.
+
+***** Point 3
+Voici la commande pour exécuter l'orthorectification :
+: $ otbcli_Orthorectification -io.in phr_xs_melbourne.tif 
+:   -io.out solution/phr_xs_melbourne_ortho.tif uint16 
+:   -map utm -map.utm.zone 55 
+:   -outputs.spacingx 2. -outputs.spacingy -2. 
+:   -interpolator bco 
+:   -elev average -elev.average.value 20 
+
+**** Corrections radiométriques d'images optiques
+***** Point 1
+Voici la commande pour calculer la réflectance au sommet de
+l'atmosphère :
+      
+: $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
+:   -io.out solution/phr_xs_melbourne_toa.tif uint16 
+:   -milli 1
+
+***** Point 2 
+Voici la commande pour calculer la réflectance de surface (TOC) :
+: $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
+:   -io.out solution/phr_xs_melbourne_toc.tif uint16 
+:   -milli 1 -level toc
+
+***** Point 3 
+On peut utiliser le module *BandMath* pour calculer la différence
+entre les 2 images.
+
+      
