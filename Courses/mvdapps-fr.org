@@ -228,22 +228,21 @@ Enfin, nous appliquons la palette de couleurs au NDVI comme ceci :
 :   -method continuous -method.continuous.min -0.2 
 :   -method.continuous.max 0.7 -method.continuous.lut jet
 
-**** Homework
+**** Pour aller plus loin
 ***** Point 1
-      From the command-line, running 
-      : $ monteverdi -in  phr_xs_melbourne.tif
-      will open the image in *Monteverdi* and display it in the viewer,
-      and
-      : $ monteverdi -il  phr_xs_melbourne.tif ndvi.tif
-      allows to open a list of images in *Monteverdi*.
+A partir de la ligne de commande, lancer
+: $ monteverdi -in  phr_xs_melbourne.tif
+ouvrira l'image dans *Monteverdi* et l'affichera dans le module de
+visualisation, et
+: $ monteverdi -il  phr_xs_melbourne.tif ndvi.tif
+permet d'ouvrir plusieurs imagaes dans *Monteverdi*.
 
 ***** Point 2
-      In *OTB Applications*, there is a *RadiometricVegetationIndices*
-      application that allows to compute several indices including the
-      NDVI.
-
+L'application *RadiometricVegetationIndices* permet de calculer
+plusieurs indices de végétation dont le NDVI.
+      
 ***** Point 3
-
-      Please refer to this chapter of the *Cookbook* to learn more
-      about the /Python/ [[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][interface]].
+Vous pouvez consulter ce
+[[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][chapitre]] 
+du *Cookbook* afin de vous documenter sur l'interface /Python/.
      
