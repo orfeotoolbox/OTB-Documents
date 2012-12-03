@@ -118,239 +118,214 @@ _Trucs et astuces :_
          
 *** Solutions                                                     :solutions:
 
-**** Getting familiar with the *Segmentation* application
+**** Introduction à l'application *Segmentation*
 
-***** Item 1
+***** Point 1
+Pour obtenir l'aide en ligne de commande, lancez
+: $ otbcli_Segmentation
 
-     To get the command-line help, run
+Pour la version graphique, lancez
+: $ otbgui_Segmentation
 
-     : $ otbcli_Segmentation
+***** Point 2
+Il y a 3 méthodes de segmentation dans l'application :
+- Mean-Shift (deux version différentes)
+- Ligne de partage des eaux ou Watershed
+- Composantes connexes
 
-     To Get the graphical version of the *Segmentation* application, run
+***** Point 3
+Il y a 2 modes pour la génération de la segmentation :
+- Le mode /raster/ qui est utile pour des images de petite taille et
+  qui produit une image où chaque région de la segmentation est
+  étiquettée avec un identifiant unique.
+- Le mode /vecteur/ qui permet de segmenter des images de grande
+  taille et qui produit un fichier vecteur où chaque région de la
+  segmentation est représentée par un polygone.
 
-     : $ otbgui_Segmentation
+**** Segmentation simple en mode raster
 
-***** Item 2
+***** Point 1
+Voici la ligne de commande avec un seuil de 30 sur la distance
+spectrale :
+: $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
+:   -filter cc -filter.cc.expr "distance < 30"
+:   -mode raster -mode.raster.out first_cc.tif uint32
 
-      There are three segmentation methods available in the application:
-      - Mean-Shift (two different implementations)
-      - Watershed (ITK implementation)
-      - Connected-Components
+Notez que nous utilisons ~uint32~ pour le codage des valeurs de sortie
+afin d'avoir assez d'étiquettes uniques pour toutes les régions.
 
-***** Item 3
+***** Point 2
+Le résultat de la segmentation est difficile à visualiser car les
+segments adjacents sont souvent étiquettés de façon consécutive. On
+peut noter le gradient d'intensité entre le haut el le bas de l'image,
+ce qui correspond aux valeurs croissantes des étiquettes.
 
-      There are two outputs available in the application:
-      - The raster mode allows to segment a small image and produces a
-        raster where each component of the segmentation is labeled with
-        a unique integer,
-      - The vector mode allows to segment larger images and produces a
-        vector file where each segment of the segmentation is
-        represented by a polygon.
+***** Point 3
+La ligne de commande suivante utilise *ColorMapping* en mode /optimal/ :
 
-**** Simple segmentation in raster mode
+: $ otbcli_ColorMapping -in first_cc.tif 
+:   -out first_cc_color_optimal.png uint8
+:   -method optimal
 
-***** Item 1
+La table de couleurs /optimal/e associe une couleur à chaque région de
+façon à maximiser le contraste avec les régions voisines. Nous
+utilisons ~uint8~ pour le codage de sortie, car *ColorMapping* produit
+des images en 8 bits qui peuvent être visualisées avec n'importe quel
+outil de visualisation.
 
-      Here is the command-line to run, using a threshold of 30 on the
-      spectral distance:
+Avec cette table de couleurs, on observe que l'image est
+sur-segmentée.
 
-      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-      :   -filter cc -filter.cc.expr "distance < 30"
-      :   -mode raster -mode.raster.out first_cc.tif uint32
+: $ otbcli_ColorMapping -in first_cc.tif 
+:   -out first_cc_color_image.png uint8
+:   -method image -method.image.in segmentation_small_xt_phr.tif
 
-      Please note that we use ~uint32~ as the output type so as to be
-      sure to have enough unique labels for the whole segmentation.
+La table de couleurs /image/ associe à chaque segment la couleur
+moyenne dans l'image originale. Ceci permet d'avoir une visualisation
+plus réaliste. Etant donné que l'image est sur-segmentée,
+l'application affichera beaucoup de messages dans le terminal.
 
-***** Item 2
+Voici les résultats obtenus avec les 2 méthodes, /optimal/ à gauche et
+/image/ à droite :
 
-      The segmentation result is difficult to visualize because
-      neighboring segments are likely to be labeled with very close
-      labels. One can notice the brightness gradient from top to bottom
-      corresponding to globally increasing labels.
+#+Latex:\vspace{0.5cm}
+#+ATTR_LaTeX: width=0.45\textwidth
+[[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]
 
-***** Item 3
+***** Point 4
+Voici un autre exemple. La commande suivante regroupera les pixels qui
+- ont une distance spectrale inférieure à 30
+- ou qui ont simultanément une intensité supérieure à 400 et une distance
+  spectrale inférieure à 50
+- ou qui ont tous les deux une intensité supérieure à 1000
+- ou qui ont tous les deux une valeur dans le PIR inféreiure à 150.
 
-      The following command-line allow to use the *ColorMapping*
-      application in optimal mode:
+: $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
+:   -filter cc -filter.cc.expr "distance<30
+:    or (intensity_p1>400 and intensity_p2 > 400 and distance<50)
+:    or(intensity_p1 >1000 and intensity_p2>1000
+:    or (p1b4 <150 and p2b4<150))"
+:   -mode raster -mode.raster.out second_cc.tif uint32
 
-      : $ otbcli_ColorMapping -in first_cc.tif 
-      :   -out first_cc_color_optimal.png uint8
-      :   -method optimal
+Voici le résultat obtenu :
 
-      The /optimal/ color-mapping method allows to colorize each
-      segment with a color maximizing contrast with the color of its
-      neighbors. Please note that we use ~uint8~ as the output type
-      because the *ColorMapping* application produces 8-bits data that
-      can be directly viewed by any image viewer.
+#+Latex:\vspace{0.5cm}
+#+ATTR_LaTeX: width=0.45\textwidth
+[[file:Images/second_cc_color_optimal.png]] [[file:Images/second_cc_color_image.png]]
 
-      Looking at the colorized image with the /optimal/ look-up table,
-      we can now see that the result is over-segmented.
+**** Autres algorithmes de segmentation
 
-      : $ otbcli_ColorMapping -in first_cc.tif 
-      :   -out first_cc_color_image.png uint8
-      :   -method image -method.image.in segmentation_small_xt_phr.tif
+***** Point 1
+Voici la ligne de commande pour lancer la segmentation /Mean-Shift/
+avec les paramètres par défaut :
 
-      The /image/ color-mapping method allows to colorize each segment
-      with its mean color in the original image, which gives a more
-      realistic rendering. Note that since the results are
-      over-segmented, the application will output a huge amount of text
-      to the terminal.
+: $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
+:   -filter meanshift -mode raster
+:   -mode.raster.out meanshift.tif uint32
 
-      Here are the results of the /optimal/ (left) and /image/ (right) methods:
+Un meilleur résultat est obtenu en utilisant un rayon spectral de 30 :
 
-      #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
-      [[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]
+: $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
+:   -filter meanshift -filter.meanshift.ranger 30 -mode raster
+:   -mode.raster.out meanshift.tif uint32
 
-***** Item 4
-
-      Here is another example: the following command-line will segment
-      together pixels that either:
-      - Have a spectral distance lower than 30,
-      - Have both an intensity value greater than 400 and a spectral distance lower than 50,
-      - Have both an intensity value greater than 1000,
-      - Have both a near infra-red value lower than 150.
-
-      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-      :   -filter cc -filter.cc.expr "distance<30
-      :    or (intensity_p1>400 and intensity_p2 > 400 and distance<50)
-      :    or(intensity_p1 >1000 and intensity_p2>1000
-      :    or (p1b4 <150 and p2b4<150))"
-      :   -mode raster -mode.raster.out second_cc.tif uint32
-
-      Here are the color-mapping results:
-
-      #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
-      [[file:Images/second_cc_color_optimal.png]] [[file:Images/second_cc_color_image.png]]
-
-**** More segmentation algorithms
-
-***** Item 1
-
-      Here is the command-line to run the application using the
-      Mean-Shift filter, with default parameters:
-
-      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-      :   -filter meanshift -mode raster
-      :   -mode.raster.out meanshift.tif uint32
-
-      A better result is obtained by using a spectral radius of 30:
-
-      : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
-      :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
-      :   -mode.raster.out meanshift.tif uint32
-
-      Here are the results of this command:
-
+Voici le résultat :
       #+Latex:\vspace{0.5cm}
       #+ATTR_LaTeX: width=0.45\textwidth
       [[file:Images/meanshift_color_optimal.png]] [[file:Images/meanshift_color_image.png]]
       #+Latex:\vspace{0.5cm}
 
 
-      Here is the command-line to run the application using the
-      Watershed filter, with default parameters:
+Voici la ligne de commande pour l'algorithme du Watershed avec les
+paramètres par défaut : 
 
       : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
       :   -filter watershed -mode raster
       :   -mode.raster.out watershed.tif uint32
 
-      Here are the results of this command:
+Et enfin les résultats :
 
       #+Latex:\vspace{0.5cm}
       #+ATTR_LaTeX: width=0.45\textwidth
       [[file:Images/watershed_color_optimal.png]] [[file:Images/watershed_color_image.png]]
 
-**** Going big: the vector mode
+**** Passage à l'échelle : mode vecteur
 
-***** Item 1
-
-      The following command will run the application on the larger
-      image:
+***** Point 1
+La commande suivante lance la segmentation sur la grande image :
 
       : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif
       :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
       :   -mode.raster.out meanshift.tif uint32
 
-      Since the input image is quite large (8192 by 8192 pixels), it is
-      likely that, depending on the available memory on the computer:
-      - The application fails with a memory allocation error,
-      - The application does not fails but starts to eat all the
-        available memory.
+Etant donné que l'image est de grande taille, (8192 par 8192 pixels),
+il est probable que, en fonction de la machine :
+- l'application termine en erreur par manque de mémoire
+- l'application ne s'arrête pas, mais consomme toute la mémoire disponible.
 
-***** Item 2
-
-      The following command will run the application in /vector/ mode,
-      without the /stitch/ option:
+***** Point 2
+La commande suivante lance la segmentation en mode /vecteur/ sans
+l'option stitch :
 
       : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif
       :   -filter meanshift -filter.meanshift.ranger 30 -mode vector
       :   -mode.vector.out meanshift.sqlite -mode.vector.stitch 0
 
-      In vector mode, the memory consumption is stable because the
-      segmentation on a per tile basis.
+En mode vecteur, la consommation de mémoire est stable, car la
+segmentation se fait en applicant un tuilage sur l'image.
 
-***** Item 3
+***** Point 3
+Dans le SIG on observe l'effet du tuilage : les bords des tuiles sont
+visibles sur le résultat de la segmentation. On peut aussi voir que la
+segmentation produit un très grand nombre de polygones.
 
-      In *QGis* we can see the effect of this tile-based segmentation :
-      tiles border are visible in the segmentation result. On can also
-      see that the segmentation produces a large number of polygons.
-
-***** Item 4
-
-      The following command will run the application in /vector/ mode,
-      with the /stitch/ option enabled:
+***** Point 4
+La commande suivante lance l'application en mode /vecteur/ avec
+l'option /stitch/ :
 
       : $ otbcli_Segmentation -in segmentation_large_xt_phr.tif
       :   -filter meanshift -filter.meanshift.ranger 30 -mode vector
       :   -mode.vector.out meanshift.sqlite -mode.vector.stitch 1
 
-      Looking at the results in *QGis* one can see that most of the
-      tiling effects have been removed by the stitching option (there
-      might be some left). The results are therefore closer (but not
-      identical) to what we would expect without the tiling strategy.
+La visualisation des résultats dans Quantum GIS permet de voir que la
+plupart des effets du tuilage ont disparu. Les résultats sont donc
+proches de ce que nous obtiendrions sans tuilage.
 
-      Here is how the results look like in *QGis*. In blue, one can see
-      the results without stitching, and in red, the results with
-      stitching.
+Voici les résultats tels que visualisés dans le SIG. En bleu, les
+résultats sans stitching et en rouge, avec.
 
-       #+Latex:\vspace{0.5cm}
+      #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
       #+ATTR_LaTeX: width=0.9\textwidth
       [[file:Images/qgis_stitch.png]]
       #+Latex:\end{center}
       
-**** Homework
-***** Item 1
-      - The /tilesize/ option allows to tune the size of the tile used
-        during piecewise segmentation
-      - The /simplify/ option allows to simplify the output polygons up
-        to a given tolerance (always expressed in pixels). The
-        resulting file will be smaller.
-      - The /minsize/ option allows to discard segments whose size is
-        smaller than a user-defined threshold (in pixels).
+**** Pour aller plus loin
+***** Point 1
+- L'option /tilesize/ permet de régler la taille des tuiles utilisées
+  pour la segmentation.
+- L'option /simplify/ permet de simplifier les polygones générés en
+  utilisant une valeur de tolérance exprimée en pixels. Le fichier
+  résultat sera de taille inférieure.
+- L'option /minsize/ permet d'éliminer les segments de taille
+  inférieure à un seuil (en pixels).
 
-***** Item 2
+***** Point 2
+Afin d'éviter de segmenter la végétation, on peut construire un masque
+de végétation avec *BandMath* par seuillage du NDVI. Ce masque peut
+être utilisé par la segmentation en utilisant l'option
+/mode.vector.inmask/. Notez que cette option est seulement disponible
+en mode /vecteur/.
 
-      To avoid segmenting vegetation, one can build a vegetation mask
-      with the *BandMath* application by thresholding the NDVI of the
-      image. This mask can then be used in the segmentation application
-      using the /mode.vector.inmask/ option. Note that this mode is
-      only available in /vector/ mode.
+***** Point 3
+Les objets de forte réflectance sont souvent difficiles à segmenter. A
+cause des réflexions spéculaires, leur variance est très forte. En
+conséquence, les méthodes basées sur la comparaison de pixels voisins
+ne marchent pas correctement. Les 3 méthodes présentées ici utilisent
+cette approche.
 
-***** Item 3
-
-      Objects with high reflectance values are often more difficult to
-      segment. Because of specular reflections, their inner variance is
-      usually higher than other objects. Therefore, segmentation
-      methods relying on comparison of neighboring pixels with respect
-      to a given threshold will fail (this is the case for all three methods we
-      used during the exercise).
-
-      An idea to overcome this issue is to segment together all
-      neighboring pixels with very high reflectance. This can be done
-      with the connected components method, as shown earlier in the
-      solution.
+Une façon de contourner le problème est d'associer ensemble tous les
+pixels voisins de forte réflectance, ce qui peut s'obtenir avec la
+segmentation par composantes connexes comme cela a été montré plus haut.
 
 
