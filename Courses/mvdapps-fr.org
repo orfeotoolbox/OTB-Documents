@@ -19,7 +19,7 @@ de *Monteverdi* et les outils disponibles dans *OTB Applications*.
 
 *** \'Etapes
 
-**** Monteverdi: data opening and visualisation
+**** Monteverdi: lecture de données et visualisation
 Dans cette partie de l'exercice, l'image suivante sera utilisée :
 ~phr_pxs_melbourne.tif~
 
