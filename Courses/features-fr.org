@@ -200,42 +200,39 @@ verticale. Plus la taille de la fenêtre est grande, plus l'effet de
 lissage est important.
 
 ***** Point 3
-The /Meanshift smooth/ uses the mean-shift algorithm to smooth the
-image. There are 2 main interests to this smoothing with respect to
-the classical mean seen on the previous point:
+La primitive /Meanshift smooth/ utilise l'algorithme du mean-shift
+afin de lisser l'image. Il y a 2 intérêts principaux à utiliser cet
+algorithme par rapport à la moyenne glissante :
 
-1) edge preservation;
-2) can be used on multi-channel images and take profit of
-   inter-channel correlation.
+1) les contours sont préservés;
+2) on peut l'appliquer à des images multi-canal et utiliser la
+   corrélation entre canaux.
 
-This algorithm performs the smoothing simultaneously on the image
-space (lines, columns) and on the feature space (for example, the
-4-dimensional space defined by RGB+NIR images).
+Cet algorithme effectue le lissage de façon simultanée dans l'espace
+image (lignes, colonnes) et dans l'espace spectral (celui défini par
+exemple par les bandes spectrales).
 
-The meaning of the parameters is the following:
-1. Spatial radius: the radius of the spatial window used for the smoothing.
-2. Range radius: the radius of the smoothing window in the feature
-   space.
-3. Min. region size: the minimum size for a region to be kept in the
-   clustering step (not used for the smoothing).
-4. Scale: a multiplicative factor to be used for the image values
-   which needs to be set if the image dynamics is low.
+Voici la description des paramètres disponibles :
+
+1. Spatial radius : le rayon de la fenêtre spatiale pour le lissage.
+2. Range radius : le rayon de la fenêtre de lissage dans l'espace spectral.
+3. Min. region size : la taille minimale pour qu'une région soit
+   conservé dans le clustering (n'est pas utilisé dans le lissage).
+4. Scale : facteur multiplicatif pour modifier les valeurs des pixels,
+   ce qui est nécessaire quand la dynamique de l'image est faible.
 
 ***** Point 4
-The difference between the smoothing and the clustering is that the
-latter produces an image which is piecewise constant. That is, an
-image where connected pixels have the same value and form
-regions. 
+La différence entre le lissage et le clustering réside sur le fait que
+ce dernier produit une image qui est constante par morceaux, c'est à
+dire que les pixels qui appartiennent à une même région ont la même
+valeur.
 
-These regions are defined at the end of the smoothing procedure by
-assigning each pixel the value of the mode of the histogram (in the
-feature space) to which it belongs. Since these histograms are
-computed also using a spatial window, the pixels belonging to the same
-mode are close pixels in space. 
+Ces régions sont définies à la fin du lissage en attribuant à chaque
+pixel la valeur du mode de de l'histogramme auquel il appartient.
 
-When clusters (a set of connected pixels associated with the same
-histogram mode) define regions with sizes smaller than the minimum
-region parameter, they are merged with the closest and most similar one.
+Quand des clusters (les régions associées au même mode) ont une taille
+inférieure au minimum spécifié dans les paramètres, ils sont fusionnés
+avec la région adjacente la plus similaire.
 
 **** *Edge extraction* module
 
