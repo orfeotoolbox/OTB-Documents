@@ -80,54 +80,65 @@ primitive et leurs effets sur les résultats.
    leur effet sur le résultat?
 
 **** Le module *Radiometric index extraction*
-By radiometric index we understand a combination of spectral bands
-which enhances a particular type of material. There are indices for
-vegetation, soils, water, artificial surfaces (built-up), and so
-on. You can find detailed descriptions and bibliographic references
-about this subjects by visiting the [[http://wiki.orfeo-toolbox.org/index.php/Radiometric_Indices][Radiometric indices]] page on the
-Orfeo Toolbox Wiki and following the links therein.
+Les indices radiométriques sont des combinaisons de bandes spectrales
+qui permettent de mettre en évidence la présence de certains matériaux
+ou types de couverture de la surface. Il existe des indices de
+végétation, de sols, d'eau, de surfaces bâties, etc. Vous pouvez
+trouver des descriptions détaillées et des références bibliographiques
+à partir de la page sur les
+[[http://wiki.orfeo-toolbox.org/index.php/Radiometric_Indices][indices
+radiométriquee]] du wiki de l'Orfeo Toolbox.
 
-1. Open the /Radiometric index extraction/ module and feed it with the
-   4-band Pléiades image. Select the /NDVI/ index under the
-   /Vegetation/ list of indices. Generate the feature by using
-   different selections on the /Channels Selection/ list. Why is the
-   result always the same regardless of the chosen channels?
-2. Which are the spectral bands most commonly used for vegetation indices?
-3. Find a value of the parameter /s/ for the MSAVI index which gives
-   results close to the ones obtained by the RVI. What is the interest
-   of indices with parameters as this one with respect to indices like
-   RVI or NDVI for which there are no parameters?
-4. Which water indices can't be computed on a Pléiades image?
-**** *Texture extraction* module
+1. Ouvrez le module /Radiometric index extraction/ et choisissez comme
+   entrée l'image à 4 bandes. Choisissez /NDVI/ dans la liste
+   /Vegetation/. Générez des résultats en utilisant différents choix
+   pour les canaux (/Channels Selection/). Pourquoi le résultat est-il
+   toujours le même indépendamment de ce choix?
+2. Quelles sont les bandes spectrales les plus souvent utilisées pour
+   les indices de végétation?
+3. Trouvez une valeur pour le paramètre /s/ de MSAVI qui donne des
+   résultats similaires à ceux du RVI. Quel est l'intérêt d'indices
+   avec des paramètres par rapport à des indices qui n'en ont pas,
+   comme le RVI ou le NDVI?
+4. Quels indices d'eau ne peuvent pas être calculés pour une image
+   Pléiades?
+
+**** Le module *Texture extraction*
 
 ***** SFS
-The Structural Feature Set approach computes textures based on line direction analysis through the central pixel.
- 
- Directions are computed at a constant step angle.
- A direction is defined as: $$ \mathit{d_{i} = \sqrt{(m^{e1}-m{e2})^{2}+(n^{e1}-n{e2})^{2}}} $$
- From  $\mathit{d_{i}}$, histograms are defined:
- $$ \mathit{H(c) : \{c \in I \mid \lbrack d_{1}(c), \ldots , d_{i}(c), \ldots , d_{D}(c)\rbrack  \}} $$
- Thus, 6 textures are defined :
+L'approche /Structural Feature Set/ calcule des textures en applicant
+une analyse directionnelle à partir du pixel central de la fenêtre
+d'analyse. Les directions sont calculées en utilisant un pas constant.
+
+Une direction est définie comme : $$ \mathit{d_{i} = \sqrt{(m^{e1}-m{e2})^{2}+(n^{e1}-n{e2})^{2}}} $$
+
+A partir de $\mathit{d_{i}}$, on définit des histogrammes :
+ $$ \mathit{H(c) : \{c \in I \mid \lbrack d_{1}(c), \ldots , d_{i}(c),  \ldots , d_{D}(c)\rbrack  \}} $$
+
+Enfin, 6 textures sont calculées :
+
  $$ \mathit{length = \max_{i \in \lbrack1; D\rbrack}(d_{i}(c)} $$
  $$ \mathit{width = \min_{i \in \lbrack1; D\rbrack}(d_{i}(c)} $$
  $$ \mathit{PSI = \frac{1}{D}\sum_{1=1}^{D}d_{i}(c)} $$
  $$ \mathit{\omega-mean = \frac{1}{D}\sum_{1=1}^{D}\frac{\alpha.(k_{i}-1)}{st_{i}}d_{i}(c)} $$
  $$ \mathit{ratio = \arctan{\frac{\sum_{j=1}^{n}{sort_{min}^{j}(H(c))}}{\sum_{j=1}^{n}{sort_{max}^{j}(H(c))}}}} $$
  $$ \mathit{SD = \frac{1}{D-1}\sqrt{\sum_{1=1}^{D}(d_{i}(c)-PSI)^{2}}} $$
- 
-1. Compute the $width$ and the $length$ features using the default
-   parameters and explain what are the differences you observe on the results.
-2. Which is the effect of the spectral threshold on the computation of
-   the features? Same question for the spatial threshold.
+
+1. En utilisant les paramètres par défaut, calculez les primitives
+   $width$ et $length$. Expliquez les différences observées.
+2. Quel est l'effet du seuil spectral sur le résultat? Même question
+   pour le seuim spatial.
 
 ***** Haralick
-The Haralick textures are a set of indices computed from the
-grey-level co-occurrence matrices of an image. These are matrices
-computed on a grey-level image and for each pixel, a neighborhood is
-defined by a rectangular window which is shifted by an offset.
+Les textures de Haralick sont un ensemble d'indices calculés à partir
+des matrices de co-occurrence en niveaux de gris. Ces matrices sont
+calculées pour chaque pixel de l'image en niveaux de gris. Un
+voisinage est défini par une fenêtre rectangulaire et son homologue
+décalé d'un certain offset est aussi utilisé.
 
-Mathematically, a co-occurrence matrix $C$ is defined over an $n x m$
-image $I$, parameterized by an offset $(\Delta x,\Delta y)$, as:
+La matrice de co-occurrence $C$ définie sur un voisinage de $n x m$
+pixels d'une image $I$ et avec un offset $(\Delta x,\Delta y)$ est
+définie comme ceci :
 
 #+BEGIN_LATEX
 $$C_{\Delta x, \Delta y}(i,j)=\sum_{p=1}^n\sum_{q=1}^m
@@ -136,59 +147,59 @@ $$C_{\Delta x, \Delta y}(i,j)=\sum_{p=1}^n\sum_{q=1}^m
 0, & \mbox{otherwise}
 \end{array}$$
 #+END_LATEX
-The image values are quantized using small number of bins so that the
-equality between pixels are likely to occur.
 
-There are 2 different implementations of the Haralick textures in
-Monteverdi. We will use the 1st one.
+Les valeurs des niveaux de gris sont quantifiées avec une certaine
+précision (nombre de bins) de façon à ce que l'égalité entre les
+valeurs soit probable.
 
-1. Given the description above, what do you think is the meaning of
-   the /radius/, /offset/, /min\/max/ and /quant. levels/ parameters?
-2. Compute the /Entropy/ of the /intensity/ channel for different
-   radiuses (2, 3, etc.). Which is the effect of this parameter?
-3. Compute the /Energy/, /Entropy/, /Correlation/ and /Inertia/
-   textures with the same parameters. Compare them and see if some of
-   them are redundant.
+Dans *Monteverdi*, il existe 2 versions des textures de Haralick. Nous
+utiliserons seulement la 1ère.
+
+1. Quel est le sens des paramètres /radius/, /offset/, /min\/max/ et /quant. levels/?
+2. Calculez l'entropie de l'intensité de l'image pour des rayons
+   différents (2, 3, etc.). Quel est l'effet de ce paramètre?
+3. Calculez les indices /Energy/, /Entropy/, /Correlation/ et
+   /Inertia/ avec les mêmes paramètres. Comparez-les et dites si
+   certains vous paraissent rédondants.
 
 *** Solutions                                          :features:solutions:
 
-**** Getting around the *Feature Extraction* modules
+**** Familiarisation avec les modules d'extraction de primitives
 
-***** Item 3
-The graphical user interface displays a sub-sampled version of the
-input image onn the left, the full resolution on the center and the
-computed feature on the right. 
+***** Point 3
+L'interface graphique affiche une version sous-échantillonnée de
+l'image à gauche, la pleine résolution au centre et la primitive
+calculée à droite.
 
-***** Item 4
-The /Action/ tab allows you to select the feature to be computed,
-decide on which channels the feature will be computed (if applicable),
-set the parameters for the feature computation and see the list of
-computed features. The /Add/ button effectively selects a given
-feature for computation.
+***** Point 4
+L'onglet /Action/ permet de sélectioner la primitive à calculer,
+décider sur quels canaux elle sera calculée, choisir les paramètres de
+la primitive et voir la liste des primitives calculées. Le boutton
+/Add/ ajoute une primitive à la liste de droite.
 
-***** Item 5
-The /Output/ tab allows you to decide which of the computed features
-will be kept in the output image and in which order they will be
-stored. 
+***** Point 5
+L'onglet /Output/ permet de choisir, parmi les primitives calculées,
+quelles seront gardées en sortie et dans quel orde elles apparaîtront
+sur l'image.
 
-**** *Smoothing* module
+**** Le moule *Smoothing* 
 
-***** Item 1
-The /Original data/ just copies the selected channels of the input
-image as bands of the output image. This can be useful in the case
-where you are creating a multi-channel image for a later
-classification and you want to include some of the original bands,
-side by side to other computed features.
+***** Point 1
+/Original data/ copie les canaux de l'image d'entrée choisis comme des
+canaux des l'image de sortie. Ceci peut être utile dans le cas où l'on
+souhaite créer une image pour réaliser des classifications et l'on
+souhaite avoir des bandes d'origine en plus des primitives calculées.
 
-***** Item 2
-The radiuses define the size of a sliding window used to compute the
-mean around every pixel of the image. The window will be a rectangle
-centered on the pixel for which the mean is computed and sizes equal
-to $2\times Radius_x +1$ in the horizontal direction and $2\times
-Radius_y +1$ in the vertical one. The larger the radius the stronger
-the smoothing.
+***** Point 2
+Les /radius/ définissent la taille de la fenêtre glissante qui sera
+utilisée pour de calcul de la moyenne autour de chaque pixel. Il
+s'agit d'une fenêtre rectangulaire centrée sur le pixel à traiter dont
+la taille est de $2\times Radius_x +1$ pixels dans la direction
+horizontale et $2\times Radius_y +1$ pixels dans la direction
+verticale. Plus la taille de la fenêtre est grande, plus l'effet de
+lissage est important.
 
-***** Item 3
+***** Point 3
 The /Meanshift smooth/ uses the mean-shift algorithm to smooth the
 image. There are 2 main interests to this smoothing with respect to
 the classical mean seen on the previous point:
@@ -210,7 +221,7 @@ The meaning of the parameters is the following:
 4. Scale: a multiplicative factor to be used for the image values
    which needs to be set if the image dynamics is low.
 
-***** Item 4
+***** Point 4
 The difference between the smoothing and the clustering is that the
 latter produces an image which is piecewise constant. That is, an
 image where connected pixels have the same value and form
@@ -228,11 +239,11 @@ region parameter, they are merged with the closest and most similar one.
 
 **** *Edge extraction* module
 
-***** Item 1
+***** Point 1
 It's just the boundaries of the regions produced by the /Meanshift
 clusters/ feature of the /Smoothing/ module.
 
-***** Item 2
+***** Point 2
 This filter assigns to each pixel the value of the local variance
 inside a window centered on it:
 $$ var(i,j) = \frac{1}{(2 Radius_x +1)\times(2 Radius_x +1)}\sum_{i-Radius_x}^{i+Radius_x}\sum_{j-Radius_y}^{j+Radius_y} \left(pix(i,j)-\mu(i,j)\right)^2$$
@@ -246,7 +257,7 @@ window deviate from the local mean. This can happen in 2 cases:
 2. When there are 2 or more regions inside the window with different
    mean values. This is the case when an edge is present.
 
-***** Item 3
+***** Point 3
 The recursive gradient uses a Gaussian smoothing (low pass filtering)
 previous to gradient computation for edge detection. The /sigma/
 parameter determines the width of the Gaussian smoothing, and
@@ -260,7 +271,7 @@ to noise.
 Therefore, the choice of the value of /sigma/ will depend on the noise
 level of the image and on the kind of edges that one wants to detect.
 
-***** Item 4
+***** Point 4
 The lower and upper thresholds define the intervals of pixels which
 will be set to 1 (below the lower and above the upper thresholds) or 0
 (between the 2 thresholds) after the Sobel filtering and before the
@@ -270,19 +281,19 @@ it to the density computation (percentage of detected pixels inside
 the window).
 **** *Radiometric index extraction* module
 
-***** Item 1
+***** Point 1
 For the radiometric indices, the channel selection does not matter,
 since each index is a particular combination of spectral bands. The
 bands used are selected in the /Feature Parameters/ group.
 
-***** Item 2
+***** Point 2
 Most of the indices use the red (R) and the near infrared (NIR) bands,
 since the vegetation has a low response on the R and high on the
 NIR. Most indices use therefore combinations of differences and
 ratios of these bands.
 
 Sometimes, the green band is also used.
-***** Item 3
+***** Point 3
 Values greater than 6 should be fine.
 
 The interest of having parameters is being able to take into account
@@ -292,7 +303,7 @@ to 1 for a very dense cover. The /s/ parameter of the MSAVI index is
 the slope of the soil line, that is the NIR reflectance plotted as a
 function of the red reflectance for soil pixels.
 
-***** Item 4
+***** Point 4
 The NDTI and the NDWI can't be computed on a Pléiades image (or a
 Quickbird image, for that matter) since the MIR (mid infrared, also
 callwed SWIR for short-wave infrared) is not available.
@@ -301,13 +312,13 @@ In this case the NDWI2 index can be use.
 
 ***** SFS
 
-****** Item 1
+****** Point 1
 It may seem contradictory, but the $width$ feature gives hig values to
 pixels which belong to elongated regions, while the $length$ feature
 gives brigth values to any region (elongated or not) which has a large
 area. If you have a look at the formulas for each feature you will
 understand why.
-****** Item 2
+****** Point 2
 The spectral threshold sets the acceptable value of the difference
 between 2 adjacent pixels along a line in order to continue adding new
 pixels to the direction. Therefore, a small value for this thresholds
@@ -318,7 +329,7 @@ The spatial threshold stops the length of the line in the given
 direction regardless of the pixel values. Therefore, a low value for
 this threshold will also produce shorter lines.
 ***** Haralick
-****** Item 1
+****** Point 1
 - The /radius/ parameter determines the size if the local window used
   for the co-occurrence matrix computation.
 - The /offset/ parameter sets the $\Delta x$ and $\Delta y$ values for
@@ -328,10 +339,10 @@ this threshold will also produce shorter lines.
 - The /quant. levels/ parameter defines the number of discrete values
   that will be used for comparing the pixel values in the
   co-occurrence matrix.
-****** Item 2
+****** Point 2
 The larger the radius, the wider the detected areas, since we are
 introducing a kind of blurring of the computation by using larger windows.
-****** Item 3
+****** Point 3
 Visually, /Energy/ and /Entropy/ seem to be the most correlated, since
 the pixel values are the most similar. However, if you have a closer
 look, you will see that all 4 textures give the same kind of
