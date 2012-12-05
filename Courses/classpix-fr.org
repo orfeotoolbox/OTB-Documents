@@ -3,7 +3,7 @@
 **** Résumé
 Cet exercice présente l'approche pixel des outils de classification de
 l'OTB. On apprendra à faire l'apprentissage d'un SVM avec des images
-Pléiades en utilisant des régions d'entrainement. On appliquera
+Pléiades en utilisant des régions d'entraînement. On appliquera
 ensuite le modèle appris afin de générer des cartes d'occupation des
 sols à partir d'images Pléiades.
 
