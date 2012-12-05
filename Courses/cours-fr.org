@@ -22,7 +22,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Selper2012 - OTB Workshop}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{FITRA 2012 - Orfeo Toolbox}}
 
 * Avant-propos                                                           :fw:
 ** Données
@@ -62,6 +62,5 @@ disponible sur le  [[http://www.qgis.org/][site du projet]].
 #+INCLUDE: "features-fr.org"
 #+INCLUDE: "classpix-fr.org"
 #+INCLUDE: "classobj-fr.org"
-#+INCLUDE: "stereo-fr.org"
-#+INCLUDE: "sar-fr.org"
+
 
