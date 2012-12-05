@@ -230,6 +230,7 @@ Un meilleur résultat est obtenu en utilisant un rayon spectral de 30 :
 :   -mode.raster.out meanshift.tif uint32
 
 Voici le résultat :
+
       #+Latex:\vspace{0.5cm}
       #+ATTR_LaTeX: width=0.45\textwidth
       [[file:Images/meanshift_color_optimal.png]] [[file:Images/meanshift_color_image.png]]
