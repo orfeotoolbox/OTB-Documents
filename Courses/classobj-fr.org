@@ -47,83 +47,68 @@ suivantes :
     le module?
 
 _Trucs et astuces :_
+- Choisissez deux classes simples pour cette partie de l'exercice, par
+  exemple /eau/ et /sol/.
+- Utilisez la fenêtre de navigation pour changer la zone affichée.
+- On peut modifier l'opacité de la couche de classification ainsi que
+  celle des objets sélectionnés de façon à mieux analyser les résultats.
+- Vous pouvez aussi effacer la couche de classification.
 
-      _Tips and Recommendations:_
-    12. Choose two simple classes for this part of the exercise (for
-        instance a /Water/ class and a /Land/ class)
-    13. Use the navigation map to change the displayed area
-    14. You can change the opacity of the classification layer as well
-        as of the selected objects layer so as to better analyze the
-        results.
-    15. You can also clear the classification layer.
+**** Utilisation avancée du module *Object Labeling*
+Dans cette partie de l'exercice, nous utiliserons ces fichiers
+supplémentaires : ~samples.xml~ et ~parameters.xml~.
 
-**** *Object Labeling* module - advanced
+1. Chargez à nouveau dans le module l'image et la segmentation.
+2. Chargez le fichier ~samples.xml~ à l'aide du menu /File/Load
+   Samples/. Quelles sont les classes importées? Combien d'exemples
+   par classe sont utilisés?
+3. Dé-selectionnez toutes les primitives sauf les moyennes
+   radiométriques :
+   - Band1::Mean
+   - Band2::Mean
+   - Band3::Mean
+   - Band4::Mean
+4. Réalisez la classification. Quels sont les objets de l'image mal
+   classés du fait que leur classe n'existe pas?
+5. Quels sont les objets mal classés à cause d'une mauvaise
+   segmentation ou à cause de leur complexité?
+6. Essayez d'améliorer la classification en ajoutant des classes manquantes.
+7. Essayez d'améliorer la classification en utilisant d'autres
+   primitives.
 
-     In this part of the exercise, we will use these additional files:
-     ~samples.xml~ and ~parameters.xml~
+_Trucs et astuces :_
+- Ce module est très gourmand en mémoire. En fonction de la mémoire
+  disponible sur votre machine, il peut être utile de
+  réinitialiser *Monteverdi*. 
 
-     1. Load again the image and the segmentation inside the module.
-
-     2. Load the samples file using /File/Load Samples/. What are the
-        different object classes loaded ? How many samples per classes
-        are used ?
-
-     3. Uncheck all features except from radiometric means:
-        - Band1::Mean
-        - Band2::Mean
-        - Band3::Mean
-        - Band4::Mean
-
-     4. Perform the classification. What are the objects in the image
-        that are badly classified because of missing classes ?
-
-     5. What are the objects in the image that are poorly classified
-        because they are badly segmented or too complex ?
-
-     6. Try to enhance the classification by adding missing classes.
-
-     7. Try to enhance the classification by adding new features.
-
-     _Tips and Recommendations:_
-     - The *Object Labeling* module is quite memory
-       consuming. Depending on the available memory on your system,
-       you might want to restart *Monteverdi*.
-
-**** *Object Labeling* module - active learning
-
-     1. In the /Objects/ tab, click on the /Sample/ button in the
-        lower-left area. This will show you difficult samples by using
-        the /margin sampling/ technique.
-
-     2. What kind of segments are considered by the algorithm as hard
-        to classify ?
-
-     3. Try to create a /Trash/ class to handle noise segments.
-
-     4. Perform a few more iteration of active learning. What do you
-        observe ?
+**** Apprentissage actif avec le module *Object Labeling*
+1. Dans l'onglet /Objects/, cliquez sur /Sample/ en bas à gauche. Ceci
+   permet d'afficher des objets considérés comme étant difficiles à
+   classer. On utilise ici la technique dite du /margin sampling/.
+2. Quels sont les types de segments qui apparaissent comme difficiles
+   à classer?
+3. Essayez de créer une classe de rejet pour y ranger des segments de "bruit".
+4. Réalisez quelques itérations de plus d'apprentissage actif. Qu'observez-vous?
 
 *** Solutions                                            :classobj:solutions:
 
-**** The preliminary segmentation
+**** La segmentation préalable
 
-***** Item 1
+***** Point 1
+Voici les lignes de commande pour générer les images couleur :
 
-      Here are the command-line to generate the color-mapped images:
+: $ otbcli_ColorMapping
+:   -in phr_pxs_melbourne_xt_small_segmentation.tif
+:   -out obc_segmentation_optimal.png uint8
+:   -method optimal
 
-      : $ otbcli_ColorMapping
-      :   -in phr_pxs_melbourne_xt_small_segmentation.tif
-      :   -out obc_segmentation_optimal.png uint8
-      :   -method optimal
+: $ otbcli_ColorMapping
+:   -in phr_pxs_melbourne_xt_small_segmentation.tif
+:   -out obc_segmentation_image.png uint8
+:   -method image
+:   -method.image.in  phr_pxs_melbourne_xt_small.tif
 
-      : $ otbcli_ColorMapping
-      :   -in phr_pxs_melbourne_xt_small_segmentation.tif
-      :   -out obc_segmentation_image.png uint8
-      :   -method image
-      :   -method.image.in  phr_pxs_melbourne_xt_small.tif
-
-
-      Here is what the color-mapped images look like:
+Et voici le résultat :
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
@@ -131,111 +116,100 @@ _Trucs et astuces :_
       [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
       #+Latex:\end{center}
 
-***** Item 2
+***** Point 2
+A partir des résultats de segmentation, on peut supposer que la
+classification objet marchera bien sur :
+- la plupart des cuves circulaires,
+- la plupart des containers rectangulaires,
+- les classes simples comme l'eau ou les routes.
 
-      From the segmentation results, we can infer that an object-based
-      classification method might perform well on:
-      - Most of circular containers,
-      - Most of rectangular containers,
-      - Simple classes like water or roads.
+En revanche, elle marchera plutôt mal sur :
+- certains objets circulaires ou rectangulaires qui sont fragmentés
+  par la segmentation,
+- des objets complexes comme les bateaux ou les grues,
+- des petits objets comme les voitures et les camions.
 
-      But it will most likely fail on:
-      - Some circular or rectangular containers that are fragmented by
-        segmentation,
-      - Complex objects like the boat or the cranes
-      - Small objects like cars and trucks.
+**** Introduction au module *Object Labeling*
 
-**** *Object Labeling* module - basics
+***** Point 3
+L'onglet /Objects/ permet de créer des classes et de leur ajouter des
+objets pour l'apprentissage. L'onglet /Features/ permet de
+sélectionner les primitives calculées sur les objets qui seront
+utilisées pour la classification. Enfin, l'onglet /Learning/ sert à
+régler les paramètres de la classification et à exécuter celle-ci.
 
-***** Item 3
+***** Point 5
+La région de la segmentation qui se trouve sous la souris est
+sélectionné lors du premier click.
 
-      The /Objects/ tab allows to create classes and to add training
-      segments to these classes. The /Features/ tab allows to select
-      the object-based features to be used for classification. Last,
-      the /Learning/ tab allows to tune classification parameters and
-      to perform the classification.
+***** Point 6
+La région sélectionnée est ajoutée à la classe courante lors du 2è
+click.
 
-***** Item 5
+***** Point 10
+Un classifieur SVM est généré par apprentissage sur les objets
+sélectionnées. Les autres régions de l'image sont classés en utilisant
+le classifieur ainsi obtenu.
 
-      The segment (from the image segmentation) under the mouse pointer
-      gets selected on first right-click action.
+***** Point 11
+Le boutton /Save/Quit/ permet de fermer le module et de produire les
+sorties suivantes :
+- une image d'étiquettes correspondant aux classes,
+- une image couleur avec les couleurs des classes utilisées dans le module,
+- ue sortie vecteur contenant des polygones étiquettés avec les
+  classes décidées par le classifieur.
 
-***** Item 6
+**** Utilisation avancée du module *Object Labeling*
+***** Point 2
+Les classes contenues dans le fichier sont :
+- Circular containers
+- Rectangular colored containers
+- Rectangular white containers
+- Water
+- Asphalt
 
-      The selected segment is added to the current class on second
-      right-click action.
+***** Point 4
+Les échantillons fournis et les paramètres choisis produisent un
+résultat où quelques classes de base sont détectées au prix de
+mauvaises classifications sur des objets difficiles (voir la partie
+gauche de la figure à la fin de cette section).
 
-***** Item 10
+On peut noter quelques classes manquantes dans le jeu d'apprentissage
+et qui induisent des erreurs :
+- Les ombres qui sont classées comme eau. Même si la classe ombre ne
+  fait pas partie des classes d'intérêt, il peut être utile de
+  l'ajouter pour réduire les erreurs.
+- Les zones de végétation, même si elles sont peu nombreuses, seront
+  mal classées, car cette classe n'existe pas dans la nomenclature utilisée.
 
-      A SVM classifier is trained according to created classes and
-      corresponding training samples, and the remaining of the image
-      segments are classified using the trained classifier.
+***** Point 5
+Comme prédit dans la section sur la segmentation, quelques objets
+d'intérêt sont mal segmentés ou trop complexes pour être bien classés :
+- les bateaux et les grues sont trop complexes,
+- certains containers (circulaires ou rectangulaires) sont mal
+  segmentés, ce qui conduit à une mauvaise classification.
 
-***** Item 11
-
-      When the /Save/Quit/ button is pressed, the module closes and
-      produces three different outputs:
-      - An image of labels corresponding to the classes,
-      - A color-mapped image according to classes colors,
-      - A vector outputs containing polygons labeled with their
-        predicted classes.
-
-**** *Object Labeling* module - advanced
-***** Item 2
-
-      The classes selected in the samples file are:
-      - Circular containers
-      - Rectangular colored containers
-      - Rectangular white containers
-      - Water
-      - Asphalt
-***** Item 4
-      Using the provided samples and parameters, we get the following
-      result. We can see that some basic classes are detected at the
-      expense of more misclassification on difficult objects, as shown
-      in left part of the figure at the end of this section.
-
-      We can see some obvious missing classes in the training set
-      leading to classification errors:
-      - Shadows area get classified as Water. Even if Shadow is not a
-        strictly-speaking a class of interest, the overall
-        classification quality would benefit from a Shadow class.
-      - Vegetation areas, even if there are only few of them in the
-        images, also get miss-classified because there is no vegetation
-        class in the training set.
-
-***** Item 5
-
-      As foreseen in section [[The preliminary segmentation]], some objects
-      of interest are poorly segmented or too complex for good
-      classification results:
-      - The boat and the cranes are too complex,
-      - Some of the containers (spherical or rectangular) are poorly
-        segmented, which leads to miss-classification.
-
-***** Item 6 - 7
-
-      By adding a few more classes and samples, we get the result
-      presented on the right of following figure.
+***** Point 6 - 7
+En ajoutant quelques classes de plus et quelques exemples
+supplémentaires, nous pouvons obtenir ce genre de résultat :
 
       #+Latex:\begin{center}
       #+ATTR_LaTeX: width=0.4\textwidth
       [[file:Images/obc_classif_samples.png]] [[file:Images/obc_classif_samples_solution.png]]
       #+Latex:\end{center}
 
-**** *Object Labeling* module - active learning
+**** Apprentissage actif avec le module *Object Labeling*
 
-***** Item 2
+***** Point 2
+La stratégie mise en oeuvre pour l'apprentissage actif propose souvent
+des objets difficiles à étiquetter manuellement, car ils correspondent
+à des parties d'objets mal segmentés ou à du bruit de segmentation.
 
-      The implemented active learning strategy often shows objects that
-      are difficult to label manually, because they correspond to parts
-      of fragmented objects or to segmentation noise.
-
-***** Item 4
-
-      We can observe that occasionally, the active learning strategy will
-      discover a new kind of object, for which no class has been
-      created yet. It may also run several times into the same objects
-      that are still difficult to classify after some iterations.
+***** Point 4
+Nous pouvons remarquer que, de façon occasionnelle, l'apprentissage
+actif permet de découvrir des nouveaux objets pour lesquels il n'y a
+pas de classe encore définie. Parfois, on tombe aussi sur les mêmes
+objets de façon répétée, car ils restent difficiles à classer après
+plusieurs itérations.
 
 
