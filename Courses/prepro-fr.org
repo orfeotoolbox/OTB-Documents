@@ -102,7 +102,7 @@ Cette opération permet d'associer des coordonnées au sol aux pixels de l'image
 1. Lancez les versions en ligne de commande et graphique de
    l'application *Orthorectification*.
 2. Quels paramètres permettent de gérer les modèles numériques de
-   terrrain (DEM)? Quels modes sont-ils disponibles?
+   terrain (DEM)? Quels modes sont-ils disponibles?
 3. Ouvrez l'image avec *Monteverdi*. Quelle est la résolution de l'image?
 
 **** Orthorectification
@@ -171,10 +171,10 @@ dont l'objectif est de corriger les effets atmosphériques.
 3. Comparez les 2 images en utilisant Monteverdi ou les applications
    en ligne de commande.
 
--Trucs et astuces :_
+_Trucs et astuces :_
 - Activez l'option '-milli' afin de générer les images de sortie en
   millièmes de réflectance (entier 16 bits). Par défaut, les images de
-  réflectance sont sauvegardées en flotant (entre 0 et 1).
+  réflectance sont sauvegardées en flottant (entre 0 et 1).
 
 *** Solutions                                                     :solutions:
 **** Principe des corrections géométriques
