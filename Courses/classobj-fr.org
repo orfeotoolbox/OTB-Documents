@@ -25,7 +25,7 @@ suivantes :
 1. Utilisez l'application *ColorMapping* afin de mieux visualiser
    l'image segmentée (vous pouvez utiliser les modes /optimal/ ou /image/).
 
-2. Analisez cette image couleur. Pour quel type d'objets la
+2. Analysez cette image couleur. Pour quel type d'objets la
    classification sur les objets risque de bien marcher? Et pour
    lesquels elle risque de ne pas bien marcher?
 
@@ -35,12 +35,12 @@ suivantes :
 3. A quoi sert chaque onglet à gauche de l'interface?
 4. Créez une nouvelle classe dans l'onglet /Objects/. On peut lui
    changer le nom et la couleur.
-5. Cliquez avec le boutton droit sur un objet de l'image. Que se passe-t'il?
-6. Cliquez une 2è fois avec le boutton droit sur le même
+5. Cliquez avec le bouton droit sur un objet de l'image. Que se passe-t'il?
+6. Cliquez une 2è fois avec le bouton droit sur le même
    objet. Décrivez ce que vous observez.
 7. Ajoutez quelques objets de plus à la classe courante.
 8. Créez une nouvelle classe et ajoutez-y quelques objets.
-9. Allez dans l'onglet /Features/ et dé-selectionnez toutes les
+9. Allez dans l'onglet /Features/ et dé-sélectionnez toutes les
    primitives sauf les moyennes des valeurs radiométriques.
 10. Allez dans l'onglet /Learning/ et cliquez sur /classify/. Que se passe-t'il?
 11. Cliquez sur /Save/Quit/. Quel type de sorties sont produites par
@@ -62,7 +62,7 @@ supplémentaires : ~samples.xml~ et ~parameters.xml~.
 2. Chargez le fichier ~samples.xml~ à l'aide du menu /File/Load
    Samples/. Quelles sont les classes importées? Combien d'exemples
    par classe sont utilisés?
-3. Dé-selectionnez toutes les primitives sauf les moyennes
+3. Dé-sélectionnez toutes les primitives sauf les moyennes
    radiométriques :
    - Band1::Mean
    - Band2::Mean
@@ -152,11 +152,11 @@ sélectionnées. Les autres régions de l'image sont classés en utilisant
 le classifieur ainsi obtenu.
 
 ***** Point 11
-Le boutton /Save/Quit/ permet de fermer le module et de produire les
+Le bouton /Save/Quit/ permet de fermer le module et de produire les
 sorties suivantes :
 - une image d'étiquettes correspondant aux classes,
 - une image couleur avec les couleurs des classes utilisées dans le module,
-- ue sortie vecteur contenant des polygones étiquettés avec les
+- une sortie vecteur contenant des polygones étiquetés avec les
   classes décidées par le classifieur.
 
 **** Utilisation avancée du module *Object Labeling*
@@ -202,7 +202,7 @@ supplémentaires, nous pouvons obtenir ce genre de résultat :
 
 ***** Point 2
 La stratégie mise en oeuvre pour l'apprentissage actif propose souvent
-des objets difficiles à étiquetter manuellement, car ils correspondent
+des objets difficiles à étiqueter manuellement, car ils correspondent
 à des parties d'objets mal segmentés ou à du bruit de segmentation.
 
 ***** Point 4
