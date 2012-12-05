@@ -25,7 +25,7 @@ traitement d'images de taille très grande.
 3. Quels sont les 2 modes (type de format) des données en sortie?
 
 **** Segmentation simple en mode raster
-Dans cette partie de l'exercie vous utiliserez l'image
+Dans cette partie de l'exercice vous utiliserez l'image
 ~segmentation_small_xt_phr.tif~
 
 1. Lancez la segmentation en mode /raster/ avec la méthode des
@@ -137,7 +137,7 @@ Il y a 3 méthodes de segmentation dans l'application :
 Il y a 2 modes pour la génération de la segmentation :
 - Le mode /raster/ qui est utile pour des images de petite taille et
   qui produit une image où chaque région de la segmentation est
-  étiquettée avec un identifiant unique.
+  étiquetée avec un identifiant unique.
 - Le mode /vecteur/ qui permet de segmenter des images de grande
   taille et qui produit un fichier vecteur où chaque région de la
   segmentation est représentée par un polygone.
@@ -156,8 +156,8 @@ afin d'avoir assez d'étiquettes uniques pour toutes les régions.
 
 ***** Point 2
 Le résultat de la segmentation est difficile à visualiser car les
-segments adjacents sont souvent étiquettés de façon consécutive. On
-peut noter le gradient d'intensité entre le haut el le bas de l'image,
+segments adjacents sont souvent étiquetés de façon consécutive. On
+peut noter le gradient d'intensité entre le haut et le bas de l'image,
 ce qui correspond aux valeurs croissantes des étiquettes.
 
 ***** Point 3
@@ -182,7 +182,7 @@ sur-segmentée.
 
 La table de couleurs /image/ associe à chaque segment la couleur
 moyenne dans l'image originale. Ceci permet d'avoir une visualisation
-plus réaliste. Etant donné que l'image est sur-segmentée,
+plus réaliste. Étant donné que l'image est sur-segmentée,
 l'application affichera beaucoup de messages dans le terminal.
 
 Voici les résultats obtenus avec les 2 méthodes, /optimal/ à gauche et
@@ -198,7 +198,7 @@ Voici un autre exemple. La commande suivante regroupera les pixels qui
 - ou qui ont simultanément une intensité supérieure à 400 et une distance
   spectrale inférieure à 50
 - ou qui ont tous les deux une intensité supérieure à 1000
-- ou qui ont tous les deux une valeur dans le PIR inféreiure à 150.
+- ou qui ont tous les deux une valeur dans le PIR inférieure à 150.
 
 : $ otbcli_Segmentation -in segmentation_small_xt_phr.tif
 :   -filter cc -filter.cc.expr "distance<30
@@ -259,7 +259,7 @@ La commande suivante lance la segmentation sur la grande image :
       :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
       :   -mode.raster.out meanshift.tif uint32
 
-Etant donné que l'image est de grande taille, (8192 par 8192 pixels),
+Étant donné que l'image est de grande taille, (8192 par 8192 pixels),
 il est probable que, en fonction de la machine :
 - l'application termine en erreur par manque de mémoire
 - l'application ne s'arrête pas, mais consomme toute la mémoire disponible.
@@ -273,7 +273,7 @@ l'option stitch :
       :   -mode.vector.out meanshift.sqlite -mode.vector.stitch 0
 
 En mode vecteur, la consommation de mémoire est stable, car la
-segmentation se fait en applicant un tuilage sur l'image.
+segmentation se fait en appliquant un tuilage sur l'image.
 
 ***** Point 3
 Dans le SIG on observe l'effet du tuilage : les bords des tuiles sont
