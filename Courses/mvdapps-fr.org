@@ -23,7 +23,7 @@ de *Monteverdi* et les outils disponibles dans *OTB Applications*.
 Dans cette partie de l'exercice, l'image suivante sera utilisée :
 ~phr_pxs_melbourne.tif~
 
-1. Lancement de *Monteverdi* : ouvrir un terminal et tapper
+1. Lancement de *Monteverdi* : ouvrir un terminal et taper
    : $ monteverdi    
 2. Ouvrir l'image (avec le menu /File/Open dataset/)
 3. Trouver une façon d'afficher l'image (il y a 2 façons de faire).
@@ -33,18 +33,18 @@ Dans cette partie de l'exercice, l'image suivante sera utilisée :
    3. Changer le niveau de zoom;
    4. Quelles sont les informations affichées à propos du pixel qui se
       trouve sous le pointeur de la souris?
-5. \`A l'aide du paneau de configuration de la visualisation dans
+5. \`A l'aide du panneau de configuration de la visualisation dans
    l'onglet /Setup/ :
    1. Changer la configuration pour visualiser la 4ème bande;
    2. Affichage en fausses couleurs (mettre le proche infra-rouge dans
       l'affichage rouge, la bande rouge dans l'affichage vert et la
       bande verte dans l'affichage bleu);
    3. Changer la configuration pour revenir à un affichage en couleurs naturelles;
-   4. Améliorer le contraste en utilisant la zonne à pleine résolution;
-   5. Améliorer le contraste en utilisant la zonne de zoom;
+   4. Améliorer le contraste en utilisant la zone à pleine résolution;
+   5. Améliorer le contraste en utilisant la zone de zoom;
    6. Revenir aux ajustements de contraste par défaut.
         
-_Tucs et astuces:_
+_Trucs et astuces:_
  - Les flèches du clavier peuvent être utilisées pour naviguer dans les images.
  - L'ordre des bandes Pléiades est : rouge, vert, bleu et proche infra-rouge.
 
@@ -96,7 +96,7 @@ Utilisez les applications afin de reproduire les résultats des étapes
 **** Pour aller plus loin
 1. Comment peut-on lire ou visualiser des images directement depuis la
    ligne de commande avec *Monteverdi*?
-2. Y-t'il d'autres façons de calculer des indices comme le NDVI avec
+2. Y-a-t'il d'autres façons de calculer des indices comme le NDVI avec
    les *OTB Applications*?
 3. Renseignez-vous sur l'utilisation des *OTB Applications* depuis
    /Python/ et écrivez un script en /Python/ qui réalise les mêmes
@@ -108,7 +108,7 @@ Utilisez les applications afin de reproduire les résultats des étapes
 
 ***** Point 3
 Pour visualiser une image dans *Monteverdi*, vous pouvez :
-- soit faire click droit sur l'image et sélectionner /Display in viewer/,
+- soit faire clic droit sur l'image et sélectionner /Display in viewer/,
 - soit utiliser le menu /Visualization/Viewer/, choisir l'image et
   cliquer sur /OK/.
 
@@ -123,7 +123,7 @@ pixel qui se trouve sous le pointeur de la souris :
 - les valeurs des pixels,
 - la résolution (spacing),
 - la position géographique si elle est disponible,
-- le nom de l'endroit s'il est diponible.
+- le nom de l'endroit s'il est disponible.
 
 **** Monteverdi : traitements basiques
 
@@ -178,7 +178,7 @@ file:Images/colormapping.png]]
 ***** Point 1
 La première commande lance la version en ligne de commande de
 l'application *Orthorectification*. La deuxième commande en lance la
-verssion avec IHM graphique.
+version avec IHM graphique.
       
 ***** Point 2
 Il y a 59 applications dans la version 3.14.1 de l'OTB.
@@ -215,7 +215,7 @@ supérieures à 1000 :
 
 Notez que pour générer des masques, un type de pixel /uint8/ (entier
 codé en 8 bits) est suffisant, tandis que pour le calcul du NDVI, un
-codage en flotant est nécessaire.
+codage en flottant est nécessaire.
 
 Nous pouvons maintenant concaténer tous ces résultats dans une seule
 image : 
@@ -235,7 +235,7 @@ A partir de la ligne de commande, lancer
 ouvrira l'image dans *Monteverdi* et l'affichera dans le module de
 visualisation, et
 : $ monteverdi -il  phr_xs_melbourne.tif ndvi.tif
-permet d'ouvrir plusieurs imagaes dans *Monteverdi*.
+permet d'ouvrir plusieurs images dans *Monteverdi*.
 
 ***** Point 2
 L'application *RadiometricVegetationIndices* permet de calculer
