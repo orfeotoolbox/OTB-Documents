@@ -234,123 +234,131 @@ Quand des clusters (les régions associées au même mode) ont une taille
 inférieure au minimum spécifié dans les paramètres, ils sont fusionnés
 avec la région adjacente la plus similaire.
 
-**** *Edge extraction* module
+**** Module *Edge extraction*
 
 ***** Point 1
-It's just the boundaries of the regions produced by the /Meanshift
-clusters/ feature of the /Smoothing/ module.
+Il s'agit des contours des régions générées par la primitive
+/Meanshift clusters/ du module /Smoothing/.
 
 ***** Point 2
-This filter assigns to each pixel the value of the local variance
-inside a window centered on it:
+Ce filtre associe à chaque pixel la valeur de la variance locale à
+l'intérieur d'une fenêtre centrée sur celui-ci :
+
 $$ var(i,j) = \frac{1}{(2 Radius_x +1)\times(2 Radius_x +1)}\sum_{i-Radius_x}^{i+Radius_x}\sum_{j-Radius_y}^{j+Radius_y} \left(pix(i,j)-\mu(i,j)\right)^2$$
-where $pix(i,j)$ is the input pixel value and $\mu(i,j)$ is the local
-mean computed using the same window.
 
-The variance values will be high when the pixel values inside the
-window deviate from the local mean. This can happen in 2 cases:
+où $pix(i,j)$ est la valeur du pixel d'entrée et $\mu(i,j)$ est la
+moyenne locale calculée en utilisant la même fenêtre.
 
-1. When there is a strong texture effect.
-2. When there are 2 or more regions inside the window with different
-   mean values. This is the case when an edge is present.
+Les valeurs de variance seront élevées quand les pixels à l'intérieur
+de la fenêtre s'éloignent de la moyenne locale. Ceci peut arriver dans
+2 cas différents :
+
+1. Quand il y a une texture très prononcée.
+2. Quand il y a plusieurs régions dans la fenêtre avec des valeurs
+   moyennes différentes. Ceci correspond au cas où un contour est présent.
 
 ***** Point 3
-The recursive gradient uses a Gaussian smoothing (low pass filtering)
-previous to gradient computation for edge detection. The /sigma/
-parameter determines the width of the Gaussian smoothing, and
-therefore the degree of blurring applied to the image before gradient
-computation (edge detection).
+Le gradient recursif utilise un lissage gaussien (filtrage passe-bas)
+préalable au calcul du gradient utilisé pour détecter les contours. Le
+paramètre /sigma/ règle la largeur de la gaussienne utilisée pour le
+lissage, c'est à dire le degré de flou.
 
-The effect of the /sigma/ parameter will be the following: the larger
-the value, the wider the edges and the fewer the over-detections due
-to noise.
+L'effet de ce paramètre est le suivant : plus sa valeur est élevée,
+plus les contours détectés seront larges et moins il y aura de fausses
+détections dues au bruit.
 
-Therefore, the choice of the value of /sigma/ will depend on the noise
-level of the image and on the kind of edges that one wants to detect.
+La valeur de /sigma/ choisie dépendra donc du niveau de bruit de
+l'image et du type de contours que l'on souhaite détecter.
 
 ***** Point 4
-The lower and upper thresholds define the intervals of pixels which
-will be set to 1 (below the lower and above the upper thresholds) or 0
-(between the 2 thresholds) after the Sobel filtering and before the
-edge density computation. Therefore, the thresholds determine how the
-image produced by the Sobel filtering will be binarized before passing
-it to the density computation (percentage of detected pixels inside
-the window).
-**** *Radiometric index extraction* module
+Les seuils haut et bas definissent les intervalles de valeurs qui
+seront mis à 1 (à l'extérieur des seuils) ou à 0 (entre les 2 seuils)
+après le filtrage de Sobel et avant le calcul de densité de
+contours. Ces seuils déterminent donc comment le résultat du filtrage
+de Sobel est binarisé.
+
+**** Le module *Radiometric index extraction*
 
 ***** Point 1
-For the radiometric indices, the channel selection does not matter,
-since each index is a particular combination of spectral bands. The
-bands used are selected in the /Feature Parameters/ group.
+Pour les indices radiométriques, la sélection des canaux à gauche n'a
+pas d'influence, car chaque indice demande à ce que les bandes
+spectrales utilisées soient sélectionnées dans la partie centrale de
+l'interface (/Feature Parameters/).
 
 ***** Point 2
-Most of the indices use the red (R) and the near infrared (NIR) bands,
-since the vegetation has a low response on the R and high on the
-NIR. Most indices use therefore combinations of differences and
-ratios of these bands.
+La plupart des indices de végétation utilisent la bande rouge (R) et
+la bande proche infra-rouge (NIR), car la végétation a une faible
+réponse dans le rouge et très forte dans le PIR. Beaucoup d'indices
+utilisent donc des différences ou des ratios entre ces 2 bandes.
 
-Sometimes, the green band is also used.
+Parfois, la bande verte est aussi utilisée.
+
 ***** Point 3
-Values greater than 6 should be fine.
+Des valeurs supérieures à 6 devraient bien marcher.
 
-The interest of having parameters is being able to take into account
-soil reflectance for the cases of sparse vegetation. The /L/ parameter
-of the SAVI index is close to 0 for very sparse vegetation and close
-to 1 for a very dense cover. The /s/ parameter of the MSAVI index is
-the slope of the soil line, that is the NIR reflectance plotted as a
-function of the red reflectance for soil pixels.
+L'intérêr d'avoir des paramètres est que l'on peut prendre en compte
+la réfléctance du sol pour le cas de végétations peu denses. La
+paramètre /L/ du SAVI est proche de 0 pour des végétations très
+éparses et proche de 1 pour des végétations très denses. Le paramètre
+/s/ du MSAVI est la pente de la droite des dols, c'est à dire, la
+réflectance PIR en fonctions de la réflectance dans le rouge pour des
+pixels de sol nu.
 
 ***** Point 4
-The NDTI and the NDWI can't be computed on a Pléiades image (or a
-Quickbird image, for that matter) since the MIR (mid infrared, also
-callwed SWIR for short-wave infrared) is not available.
-In this case the NDWI2 index can be use.
-**** *Texture extraction* module
+Le NDTI et le NDWI ne peuvent pas être calculés avec des images
+Pléiades (ou avec des images Quickbird ou Ikonos d'ailleurs) car le
+moyen infra-rouge (MIR ou SWIR) n'est pas disponible. Dans ce cas, le
+NDWI2 peut être utilisé.
+
+**** Le module *Texture extraction* 
 
 ***** SFS
 
 ****** Point 1
-It may seem contradictory, but the $width$ feature gives hig values to
-pixels which belong to elongated regions, while the $length$ feature
-gives brigth values to any region (elongated or not) which has a large
-area. If you have a look at the formulas for each feature you will
-understand why.
-****** Point 2
-The spectral threshold sets the acceptable value of the difference
-between 2 adjacent pixels along a line in order to continue adding new
-pixels to the direction. Therefore, a small value for this thresholds
-will produce shorter lines and therefore fewer pixels with bright
-values.
+Il peut paraître paradoxal, mais $width$ donne des valeurs élevées aux
+pixels qui appartiennent à des régions longues, tandis que $length$
+attribue des valeurs élevées à toute région (longue ou pas) qui a une
+grande superficie. Les formules de chaque primitive permettent de
+comprendre pourquoi.
 
-The spatial threshold stops the length of the line in the given
-direction regardless of the pixel values. Therefore, a low value for
-this threshold will also produce shorter lines.
+****** Point 2
+Le seuil spectral règle la valeur de la différence entre 2 pixels
+adjacents le long d'une ligne qui peut être acceptée pour continuer à
+calculer la lingueur dans cette direction. Un faible valeur de ce
+seuil produira donc des lignes plus courtes et donc moins de pixels
+avec des valeurs élevées.
+
+Le seuil spatial arrête l'analyse dans une direction indépendamment de
+la valeur des pixels une fois qu'une certaine longueur est
+atteinte. Une valeur faible produira aussi des lignes plus courtes.
+
 ***** Haralick
 ****** Point 1
-- The /radius/ parameter determines the size if the local window used
-  for the co-occurrence matrix computation.
-- The /offset/ parameter sets the $\Delta x$ and $\Delta y$ values for
-  the co-occurrence matrix.
-- The /min\/max/ values can be used to define the range of image
-  values over which the quantification levels will be defined.
-- The /quant. levels/ parameter defines the number of discrete values
-  that will be used for comparing the pixel values in the
-  co-occurrence matrix.
-****** Point 2
-The larger the radius, the wider the detected areas, since we are
-introducing a kind of blurring of the computation by using larger windows.
-****** Point 3
-Visually, /Energy/ and /Entropy/ seem to be the most correlated, since
-the pixel values are the most similar. However, if you have a closer
-look, you will see that all 4 textures give the same kind of
-information for typical remote sensign images. Although /Correlation/
-and /Energy/ seem to be the most different because they present
-different contrasts, they enhance the same areas as the other
-textures.
+- Le paramètre /radius/ définit la taille de la fenêtre locale
+  utilisée pour le calcul de la matrice de co-occurrence.
+- Le paramètre /offset/ fixe $\Delta x$ et $\Delta y$.
+- Les valeurs /min\/max/ peuvent être utilisées pour définir la plage
+  de valeurs sur laquelle la quantification sera réalisée.
+- Le parmaètre /quant. levels/ détermine le nombre de valeurs qui
+  seront utilisées pour la quantification.
 
-Actually, Haralick textures are most useful for cases where
-pseudo-periodic patterns appear and the texture parameters are well
-suited. Otherwise, it is better to use 1st order statistics (as the
-local variance) which are much more easy to compute and yield the same
-kind of information.
+****** Point 2
+Plus le rayon est grand, plus les zones détectées seront grandes, car
+une sorte de lissage est introduit quand on utilise des fenêtres plus
+grandes.
+
+****** Point 3
+Visuellement, l'énergie et l'entropie semblent très
+corrélées. Cependant, à y regarder de plus près, on voit que les 4
+textures donnent le même type d'information en général. Même si la
+corrélation et l'énergie paraissent très différentes à cause de
+l'inversion de contraste, elles mettent en évidence le même type de
+zones.
+
+En fait, les textures de Haralick sont utiles pour les zones avec des
+motifs pseudo-périodiques et que l'on choisit les paramètres
+correctement. Dans les autres cas, il est souvent plus judicieux
+d'utiliser des statistiques de 1er ordre (comme la variance locale)
+qui sont plus simples et plus rapides à calculer et qui donnent des
+informations similaires.
 
