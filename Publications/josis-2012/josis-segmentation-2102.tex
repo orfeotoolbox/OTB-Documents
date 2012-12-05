@@ -90,7 +90,7 @@ analysis techniques such as Object Based Image Analysis
 Reasoning~\cite{inglada2009qualitative,vanegas2009fuzzy,vanegas2010detection}
 have become widely studied and used. Because they use objects rather
 than pixels as their primitives, these methods are very well adapted
-to represent and extract the information contained in very high
+to represent and extract information contained in very high
 resolution imagery (VHR). Moreover, reasoning on objects is often
 supported by very sound theories. Yet one of their severe weakness is
 the process of obtaining the objects themselves: segmentation is
@@ -101,24 +101,24 @@ controlled quality is a difficult task for which no method has reached
 a sufficient level of performance to be considered as operational.
 
 Even if we leave aside the question of segmentation quality and
-consider that we have a method performing reasonably well on our data
+consider a method which performs reasonably well on our data
 and objects of interest, the task of scaling up segmentation to real
 very high resolution data is itself challenging.  For instance a basic
 Pleiades image~\cite{tinel2012orfeo} has an extent of 40 000 by 40 000
 pixels, which corresponds to a memory size of 12.8 GB assuming a
-4-bands image with 16 bits per pixel. First, we can not load the
+4-bands image with 16 bits per pixel. Firstly, we can not load the
 whole data into memory, and there is a need for on the flow processing
 which does not cope well with traditional segmentation
-algorithms~\cite{shi2000normalized}. Second, the result of the
+algorithms~\cite{shi2000normalized}. Secondly, the result of the
 segmentation process itself is difficult to represent and manipulate
-efficiently.
+efficiently as it can include millions of segments at the image scale.
 
 There are, to our best knowledge, few open source software able to
 overcome these issues. In the frame of the development of the Orfeo
 ToolBox\furl{www.orfeo-toolbox.org}, we therefore initiated some work
 to provide software components for this purpose. The remaining of the
 paper is organized as follows. Section~\ref{sec:otb} briefly
-introduces the Orfeo ToolBox software, while section~\ref{sec:seg}
+introduces the Orfeo ToolBox, while section~\ref{sec:seg}
 presents the large scale segmentation framework which is the main
 focus of the paper.
 
