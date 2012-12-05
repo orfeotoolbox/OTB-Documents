@@ -1,0 +1,154 @@
+** Apprentissage et classification au niveau pixel                 :classpix:
+*** Description
+**** Résumé
+Cet exercice présente l'approche pixel des outils de classification de
+l'OTB. On apprendra à faire l'apprentissage d'un SVM avec des images
+Pléiades en utilisant des régions d'entrainement. On appliquera
+ensuite le modèle appris afin de générer des cartes d'occupation des
+sols à partir d'images Pléiades.
+
+**** Pré-requis
+- Utilisation des applications OTB et savoir de débrouiller avec QGis
+- Notions sur la classification supervisée
+- Connaissance des formats vecteur utilisés dans les SIG.
+
+**** Objectifs
+- Utilisation des applications de classification de l'OTB
+- Classification d'images de grande taille
+- Import de résultats dans un SIG
+
+*** \'Etapes
+Dans cet exercice, vous utiliserez l'image
+~melbourne_ms_toa_ortho_extract_small.tif~
+
+**** Génération et analyse d'exemples d'apprentissage
+- Utilisez QGis pour générer des polygones pour 5 classes (végétation,
+  routes, sols nus, bâtiments et eau).
+- Exportez cette couche vecteur en format shapefile.
+- Quelle est l'étiquette de la classe *eau* dans le shapefile? Un
+  exemple de fichier avec des échantillons d'apprentissage est
+  disponible pour cet exercice dans le fichier /training.shp/
+
+_Trucs et astuces :_
+- Notez le nom du champ du shapefile qui contient l'étiquette. Il sera
+  nécessaire pour lancer l'application qui réalise l'apprentissage.
+
+**** Estimation des statistiques de l'image
+Afin de rendre les primitives comparables entre images, il est utile
+d'en analyser les statistiques. Ces statistiques seront utilisées pour
+normaliser les données (centrer et réduire).
+
+- Utilisez l'application *ComputeImagesStatistics* afin d'obtenir les
+  statistiques de l'image.
+- Quelle est la moyenne de la bande rouge?
+- L'extrait fourni a été converti en millièmes de réflectance à partir
+  des comptes numériques. Quel est l'utilité de cette transformation
+  pour la classification d'images?
+
+**** Estimation du modèle de classification avec les SVM
+
+L'application *TrainSVMImagesClassifier* réalise l'apprentissage d'un
+classifieur SVM à partir de plusieurs paires image/donnée vecteur
+(exemples). Les échantillons sont composés des valeurs des pixels dans
+chaque bande, éventuellement centrées-réduites en utilisant les
+statistiques fournies par un fichier XML qui peut être produit
+avec *ComputeImagesStatistics*.
+
+Nous réaliserons l'apprentissage avec une seule image ici.
+
+- Utilisez *TrainSVMImagesClassifier* afin de générer le modèle SVM.
+- Quel noyau est utilisé par défaut par l'application?
+- Quelle est la précision (/accuracy/) mesurée?
+
+**** Utilisation du modèle de classification
+- Utilisez *ImageSVMClassifier* afin d'appliquer le modèle de
+  classification à l'image.
+- Quelle est la sortie de l'application?
+- Bonus : utilisez le même modèle sur un autre extrait
+  ~melbourne_ms_toa_ortho_extract_large.tif~
+
+**** Génération d'une carte de classification /imprimable/
+Afin de pouvoir imprimer ou visualiser plus aisément le résultat de la
+classification, nous utiliserons *ColorMapping*. Cet outil remplace
+chaque étiquette avec une couleur RVB codée en 8 bits donnée dans un
+fichier de correspondances. Ce fichier ressemble à ceci :
+
+: $ # Les lignes commençant par # sont ignorées
+: 1 255 0 0
+
+- Produisez votre table de correspondances (LUT, pour /look-up table/).
+- Utilisez cette LUT pour générer la classification /imprimable/
+  (format PNG).
+- Superposez ce résultat sur l'image originale dans QGis. Commentez
+  les résultats de la classification.
+
+**** Pour aller plus loin
+- Générez un modèle de classification avec un type différent de noyau
+  SVM. 
+- Passage à l'échelle : appliquez ce type de classification à une
+  image Pléiades fusionnée.
+
+*** Solutions                                            :classpix:solutions:
+**** Génération et analyse d'exemples d'apprentissage
+L'étiquette de la classe *eau* (water) dans le fichier est *2*.
+
+**** Estimation des statistiques de l'image
+Voici la commande pour produire les statistiques de l'image :
+: $ otbcli_ComputeImagesStatistics 
+:   -il melbourne_ms_toa_ortho_extract_small.tif 
+:   -out melbourne_ms_toa_ortho_extract_small_stats.xml
+
+La valeur de la moyenne de la bande rouge est *111.625*. L'utilisation
+des réflectances permet de comparer les valeurs radiométriques
+obtenues par des capteurs différents ou par le même capteur à des
+instants différents.
+
+**** Estimation du modèle de classification avec les SVM
+
+Voici la commande pour générer le modèle SVM :
+
+: $ otbcli_TrainSVMImagesClassifier 
+:   -io.il melbourne_ms_toa_ortho_extract_small.tif 
+:   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+:   -io.vd training.shp 
+:   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
+
+Le noyau linéaire est utilisé par défaut dans l'application. 
+
+La précision mesurée est d'environ 0.988. Cette valeur est très élevée
+à cause du faible nombre d'échantillons d'apprentissage et de les
+faible variabilité.
+
+**** Utilisation du modèle de classification
+Voici la commande pour générer la classification :
+: $ otbcli_ImageSVMClassifier 
+:   -in melbourne_ms_toa_ortho_extract_small.tif 
+:   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
+:   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
+:   -out melbourne_extract_small_classification_5classes.tif 
+:   uint8
+
+Les pixels de l'image de sortie contiendront l'étiquette de la classe
+choisie par le classifieur.
+
+**** Génération d'une carte de classification /imprimable/
+Voici un exemple de LUT :
+
+#+INCLUDE: "Images/ColorTable.txt" src
+
+Et voici la commande pour l'appliquer à la classification :
+
+: $ ColorMapping 
+:   -in melbourne_extract_small_classification_5classes.tif 
+:   -out melbourne_extract_small_classification_color.png uint8 
+:   -method custom -method.custom.lut ColorTable.txt
+
+Et le résultat de cette commande :
+    #+Latex:\vspace{0.5cm}
+     #+Latex:\begin{center}
+     #+ATTR_LaTeX: width=0.45\textwidth
+     [[file:Images/melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png]]
+     #+Latex:\end{center}
+     #+Latex:\vspace{0.5cm}
+
+
