@@ -2,7 +2,7 @@
 *** Description
 **** Résumé
 Cet atelier présente les modules d'extraction de primitives
-de *Monteverdi*. Vous apprendres à utiliser ces modules et à evaluer
+de *Monteverdi*. Vous apprendrez à utiliser ces modules et à évaluer
 visuellement l'utilité de différents types de primitives pour
 l'extraction d'information des images.
 
@@ -24,12 +24,12 @@ d'abstraction plus élevé.
 
 D'autres termes que /primitives/ peuvent être utilisés, comme par
 exemple /indices/ ou /descripteurs/. Même s'il existe des différences
-légères entre ces termes, nous les utiliserons comme des synonimes.
+légères entre ces termes, nous les utiliserons comme des synonymes.
 
 Dans *Monteverdi* il y a 5 modules pour l'extraction de primitives et
 ils sont regroupés sous le menu /Filtering/$\rightarrow$/Feature extraction/.
 
-Tous les modules d'extraction de primitives utilsent la même approche :
+Tous les modules d'extraction de primitives utilisent la même approche :
 ils prennent une image en entrée (avec un nombre quelconque de bandes)
 et produisent une image multi-canal où chaque composante est une des
 primitives calculées.
@@ -75,7 +75,7 @@ primitive et leurs effets sur les résultats.
 2. Comment peut-on détecter des contours avec un filtre de /Variance/?
 3. Quel est l'effet du paramètre /sigma/ du filtre /Recursive gradient/?
 4. Dans la primitive /Sobel/, le résultat est une densité de contours
-   calculée après l'application d'un filtre de réhaussement de
+   calculée après l'application d'un filtre de rehaussement de
    contours de Sobel. On peut utiliser 2 seuils différents. Quel est
    leur effet sur le résultat?
 
@@ -106,7 +106,7 @@ radiométriquee]] du wiki de l'Orfeo Toolbox.
 **** Le module *Texture extraction*
 
 ***** SFS
-L'approche /Structural Feature Set/ calcule des textures en applicant
+L'approche /Structural Feature Set/ calcule des textures en appliquant
 une analyse directionnelle à partir du pixel central de la fenêtre
 d'analyse. Les directions sont calculées en utilisant un pas constant.
 
@@ -127,7 +127,7 @@ Enfin, 6 textures sont calculées :
 1. En utilisant les paramètres par défaut, calculez les primitives
    $width$ et $length$. Expliquez les différences observées.
 2. Quel est l'effet du seuil spectral sur le résultat? Même question
-   pour le seuim spatial.
+   pour le seuil spatial.
 
 ***** Haralick
 Les textures de Haralick sont un ensemble d'indices calculés à partir
@@ -160,7 +160,7 @@ utiliserons seulement la 1ère.
    différents (2, 3, etc.). Quel est l'effet de ce paramètre?
 3. Calculez les indices /Energy/, /Entropy/, /Correlation/ et
    /Inertia/ avec les mêmes paramètres. Comparez-les et dites si
-   certains vous paraissent rédondants.
+   certains vous paraissent redondants.
 
 *** Solutions                                          :features:solutions:
 
@@ -172,14 +172,14 @@ l'image à gauche, la pleine résolution au centre et la primitive
 calculée à droite.
 
 ***** Point 4
-L'onglet /Action/ permet de sélectioner la primitive à calculer,
+L'onglet /Action/ permet de sélectionner la primitive à calculer,
 décider sur quels canaux elle sera calculée, choisir les paramètres de
-la primitive et voir la liste des primitives calculées. Le boutton
+la primitive et voir la liste des primitives calculées. Le bouton
 /Add/ ajoute une primitive à la liste de droite.
 
 ***** Point 5
 L'onglet /Output/ permet de choisir, parmi les primitives calculées,
-quelles seront gardées en sortie et dans quel orde elles apparaîtront
+quelles seront gardées en sortie et dans quel ordre elles apparaîtront
 sur l'image.
 
 **** Le moule *Smoothing* 
@@ -258,7 +258,7 @@ de la fenêtre s'éloignent de la moyenne locale. Ceci peut arriver dans
    moyennes différentes. Ceci correspond au cas où un contour est présent.
 
 ***** Point 3
-Le gradient recursif utilise un lissage gaussien (filtrage passe-bas)
+Le gradient récursif utilise un lissage gaussien (filtrage passe-bas)
 préalable au calcul du gradient utilisé pour détecter les contours. Le
 paramètre /sigma/ règle la largeur de la gaussienne utilisée pour le
 lissage, c'est à dire le degré de flou.
@@ -271,7 +271,7 @@ La valeur de /sigma/ choisie dépendra donc du niveau de bruit de
 l'image et du type de contours que l'on souhaite détecter.
 
 ***** Point 4
-Les seuils haut et bas definissent les intervalles de valeurs qui
+Les seuils haut et bas définissent les intervalles de valeurs qui
 seront mis à 1 (à l'extérieur des seuils) ou à 0 (entre les 2 seuils)
 après le filtrage de Sobel et avant le calcul de densité de
 contours. Ces seuils déterminent donc comment le résultat du filtrage
@@ -296,7 +296,7 @@ Parfois, la bande verte est aussi utilisée.
 ***** Point 3
 Des valeurs supérieures à 6 devraient bien marcher.
 
-L'intérêr d'avoir des paramètres est que l'on peut prendre en compte
+L'intérêt d'avoir des paramètres est que l'on peut prendre en compte
 la réfléctance du sol pour le cas de végétations peu denses. La
 paramètre /L/ du SAVI est proche de 0 pour des végétations très
 éparses et proche de 1 pour des végétations très denses. Le paramètre
@@ -324,7 +324,7 @@ comprendre pourquoi.
 ****** Point 2
 Le seuil spectral règle la valeur de la différence entre 2 pixels
 adjacents le long d'une ligne qui peut être acceptée pour continuer à
-calculer la lingueur dans cette direction. Un faible valeur de ce
+calculer la longueur dans cette direction. Un faible valeur de ce
 seuil produira donc des lignes plus courtes et donc moins de pixels
 avec des valeurs élevées.
 
@@ -339,7 +339,7 @@ atteinte. Une valeur faible produira aussi des lignes plus courtes.
 - Le paramètre /offset/ fixe $\Delta x$ et $\Delta y$.
 - Les valeurs /min\/max/ peuvent être utilisées pour définir la plage
   de valeurs sur laquelle la quantification sera réalisée.
-- Le parmaètre /quant. levels/ détermine le nombre de valeurs qui
+- Le paramètre /quant. levels/ détermine le nombre de valeurs qui
   seront utilisées pour la quantification.
 
 ****** Point 2
