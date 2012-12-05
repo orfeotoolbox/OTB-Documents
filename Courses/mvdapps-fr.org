@@ -33,7 +33,7 @@ Dans cette partie de l'exercice, l'image suivante sera utilisée :
    3. Changer le niveau de zoom;
    4. Quelles sont les informations affichées à propos du pixel qui se
       trouve sous le pointeur de la souris?
-5. \`A l'aide paneau de configuration de la visualisation dans
+5. \`A l'aide du paneau de configuration de la visualisation dans
    l'onglet /Setup/ :
    1. Changer la configuration pour visualiser la 4ème bande;
    2. Affichage en fausses couleurs (mettre le proche infra-rouge dans
