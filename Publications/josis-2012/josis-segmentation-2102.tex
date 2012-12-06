@@ -319,12 +319,16 @@ performing a segmentation on each line independently is irrelevant.
 
 This framework is used in the segmentation application available in
 the orfeo ToolBox, whose workflow is shown in
-figure~\ref{fig:framework}. The application has two modes.The raster
+figure~\ref{fig:framework}. The application has two modes:
+\begin{itemize}
+\item The raster
 mode loads the whole input image into memory and segment it with an
 algorithm selected in the segmentation algorithm bank. The output is a
-classical labeled raster image. The vector mode applies the large
+classical labeled raster image; 
+\item The vector mode applies the large
 scale segmentation framework with the selected algorithm from the
 segmentation algorithms bank, and produces a vector file.
+\end{itemize}
 
 \begin{figure}[!htb]
 \centering
@@ -354,7 +358,7 @@ need to share the same set of parameters. They can have their specific methods
 and attributes.
 
 Of course, this framework has the same drawbacks as other streaming
-methods. Algorithms using global information in the input image will
+methods. Algorithms using global information in the image will
 produce different results depending on the tiling scheme, but this is
 a lesser issue for segmentation algorithms that focus on local
 information. The main drawback is over-segmentation : the regions
