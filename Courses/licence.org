@@ -1,0 +1,11 @@
+
+#+BEGIN_LaTeX
+\newpage
+
+\begin{center}
+\vspace*{10cm}
+\tiny Creative Commons Attribution-ShareAlike 3.0 Unported License\\
+\normalsize
+\includegraphics[width=0.1\textwidth]{/home/inglada/rapports/Styles/cc-by-sa.png}
+\end{center}
+#+BEGIN_LaTeX
