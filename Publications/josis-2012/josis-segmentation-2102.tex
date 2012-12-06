@@ -280,8 +280,8 @@ different algorithms from Orfeo ToolBox applied to a Pleiades image patch.
 \subfigure[Mean-shift]{\includegraphics[width=0.3\textwidth]{Pictures/meanshift_color_image}}
 \quad
 \subfigure[Morphological Profiles]{\includegraphics[width=0.3\textwidth]{Pictures/geomorpho_color_image}}
-\caption{Results of various segmentation algorithms from Orfeo ToolBox
-  applied on a pan-sharpened Pleiades extract. The optimal LUT (figures
+\caption{Results of various segmentation algorithms from the Orfeo ToolBox
+  applied on a pan-sharpened Pleiades extract. The optimal lookup table (LUT) (figures
   (a) to (c)) maps
   neighboring segments to highly contrasted colors, whereas the
   natural LUT (figures
@@ -319,7 +319,7 @@ performing a segmentation on each line independently is irrelevant.
 
 This framework is used in the segmentation application available in
 the orfeo ToolBox, whose workflow is shown in
-figure~\ref{fig:framework}. The application has two modes. The raster
+figure~\ref{fig:framework}. The application has two modes.The raster
 mode loads the whole input image into memory and segment it with an
 algorithm selected in the segmentation algorithm bank. The output is a
 classical labeled raster image. The vector mode applies the large
