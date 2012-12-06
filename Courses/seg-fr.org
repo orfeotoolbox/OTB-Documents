@@ -88,7 +88,8 @@ Dans cette partie de l'exercice, vous utiliserez l'image
 
 _Trucs et astuces :_
 - Sous Linux ou Mac OS, les ressources peuvent être consultées avec la
-  commande ~top~ dans un terminal. Sous Windows,
+  commande ~top~ dans un terminal. Sous Windows, on peut utiliser le
+  gestionnaire de tâches.
 - Appuyez sur ~Ctrl C~ pour arrêter l'application.
 - Utilisez le format /sqlite/ pour sauvegarder les fichiers vecteur
   (extension ~.sqlite~).
