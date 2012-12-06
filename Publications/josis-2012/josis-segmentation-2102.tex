@@ -377,12 +377,11 @@ issues in the following section.
 
 \subsection{Pre and post-processing to enhance usability}
 
-In order to get useful results from this large scale segmentation, we
-need to address several issues. The first one issue is the splitting
-of regions on the border of tiles. The naive solution we
-implemented is a simple stitching rule: we post-process the vector
-data by looking for neighbor polygons lying on each side of a tile
-border and merge them if their contact surface is large enough. More
+In order to get useful results from this large scale segmentation, we need to
+address several issues. The first issue is the splitting of regions on the
+tiles' borders. The naive solution we implemented is a simple stitching rule: we
+post-process the vector data by looking for neighbor polygons lying on each side
+of a tile border and merge them if their contact surface is large enough. More
 sophisticated techniques might be derived in the future.
 
 \begin{figure}[!htb]
@@ -399,7 +398,7 @@ The second problem is that polygons reflect exactly the shape of
 the segment, and contain a large amount of vertices. This leads to
 very heavy vector files, sometimes even heavier than the corresponding
 raster image would be. To deal with this issue, we added
-pre-processing as well as post-processing. Firstly, we added an input
+pre-processing as well as post-processing steps. Firstly, we added an input
 mask image to avoid segmenting unwanted regions, like no-data pixels,
 clouds, or vegetation (if vegetation is not desired). We also added a
 rule to remove very small segments, which are more likely to
@@ -410,7 +409,7 @@ which simplify polygons by removing vertices according to a given
 tolerance.
 
 These additional processing allows to produce a cleaner (and lighter) vector
-segmentation output which can then be used in a GIS software.
+segmentation output compatible with GIS software.
 
 \section{Conclusion}
 
@@ -420,13 +419,13 @@ images in an efficent and generic way.
 
 This framework is only a first step toward providing an open source
 large scale OBIA and spatial reasoning framework. Future developments
-will include more stitching and tiling strategies to enhance the
+will include new stitching and tiling strategies to enhance the
 segmentation performance at tiles borders, using approaches such as
-presented in~\cite{crisp2003fast}, and the computation of attributes
+presented in~\cite{crisp2003fast}. Moreover the computation of attributes
 along with polygons, such as statistics on radiometry from an image,
 or shape attributes. These attributes could then be used for reasoning
 or classification at the object level. While there is still a lot
-missing, we hope to provide a comprehensive environment for
+missing, we also hope to provide a comprehensive environment for
 object-based techniques for VHR images analysis through the ongoing
 efforts to integrate Orfeo ToolBox within Quantum
 GIS\furl{www.qgis.org} \textit{via}
