@@ -53,6 +53,7 @@
      For *QGis* installation, please refer to *QGis* documentation,
      which can be found on the project [[http://www.qgis.org/][website]].
 
+#+INCLUDE: "licence.org"
 * Exercises                                                            :exos:
 #+INCLUDE: "mvdapps.org"
 #+INCLUDE: "prepro.org"
