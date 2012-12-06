@@ -1,4 +1,3 @@
-
 #+BEGIN_LaTeX
 \newpage
 
@@ -8,4 +7,5 @@
 \normalsize
 \includegraphics[width=0.1\textwidth]{/home/inglada/rapports/Styles/cc-by-sa.png}
 \end{center}
-#+BEGIN_LaTeX
+\newpage
+#+END_LaTeX

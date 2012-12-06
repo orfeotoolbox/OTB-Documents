@@ -56,6 +56,7 @@ de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packag
 Pour installer *QGis* consultez la documentation du logiciel qui est
 disponible sur le  [[http://www.qgis.org/][site du projet]].
 
+#+INCLUDE: "licence.org"
 * Exercices                                                            :exos:
 #+INCLUDE: "mvdapps-fr.org"
 #+INCLUDE: "prepro-fr.org"
