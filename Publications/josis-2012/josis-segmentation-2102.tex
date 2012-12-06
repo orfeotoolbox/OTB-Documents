@@ -183,7 +183,7 @@ way to combine these processings with other tools.
 \section{Segmenting very large images with Orfeo ToolBox}\label{sec:seg}
 
 
-\subsection{Representations and data structures for segmentation results}
+\subsection{Representations and data structures of segmentation results}
 
 In this section, we review three standard structures to store
 segmentation results, and explain why we selected the third one for
@@ -192,7 +192,7 @@ our framework.
 The most common way of representing segmentation results from an image
 processing perspective is to derive a raster where each pixel contains
 the unique label of the segment it belongs to. Such a raster is also
-known as label image. Yet this representation has numerous
+known as a label image. Yet this representation has numerous
 drawbacks. First, accessing all pixels of a given segment identified
 by its label requires parsing the whole label image. Second, storing
 large segmentation results with billions of segments might require a
@@ -204,42 +204,41 @@ on neighboring pixels with same labels. As a consequence, this representation is
 limited interest for our purpose.
 
 A second representation of segmented image which is further from image
-processing is the map of label objects~\cite{lehmann2008label}. A segment is
-represented in Run Length Encoding (RLE), and all segments are indexed by a
-unique label in a map. The RLE representation is more compact, the map allows
-fast access to a segment given its label, and it also allows to store attributes
-related to a segment, which is a first step toward Object Based Image
-Analysis. The main drawback of this representation is that there are no standard
-file format able to store it on a file system, and it requires to convert either
-to or from raster or vector representation at each read or write
-operation. Moreover, this representation is neither really raster nor really
-vector. Therefore, operations like scanning pixels segment or following its
-contour are more complex.
+processing is the map of label objects~\cite{lehmann2008label}. With this
+representation a segment is represented in Run Length Encoding (RLE), and all
+segments are indexed by a unique label in a map. The RLE representation is more
+compact, the map allows fast access to a segment given its label, and it also
+allows to store attributes related to a segment, which is a first step toward
+Object Based Image Analysis. The main drawback of this representation is that
+there are no standard file format able to store it on a file system, and it
+requires to convert either to or from raster or vector representation at each
+read or write operation. Moreover, this representation is neither really raster
+nor really vector. Therefore, operations like scanning pixels segment or
+following its contour are more complex.
 
-Neither of these two structures can fit our needs: the first one is
-highly inefficient, while the second one lacks of existing file
-formats. We chose to store our segmentation results as boundaries in a
-vector structure and file format. This has numerous advantages. First,
-it overcomes the issue of scaling up to large image segmentation: a
-collection of vector objects, i.e. polygons or multi-polygons, is a
-compact representation which will grow linearly with the size of the
-image, and does not need an explicit unique indexing label. Second,
-there are several file formats and even databases to represent this
-kind of vector data, especially in the GIS world. Last, using such
-formats guarantees a full interoperability between the segmentation
-tools and most GIS software.
+Neither of these two structures can fit our needs: the first one is highly
+inefficient, while the second one lacks of existing file formats. As a
+consequence, we chose to store our segmentation results as boundaries in a
+vector structure and file format. This has numerous advantages. First, it
+overcomes the issue of scaling up to large image segmentation: a collection of
+vector objects, i.e. polygons or multi-polygons, is a compact representation
+which will grow linearly with the size of the image, and does not need an
+explicit unique indexing label. Second, there are several file formats and even
+databases to represent this kind of vector data. Last, using such formats
+guarantees a full interoperability between the segmentation tools and most GIS
+software.
 
 As described in the next section, we intend to derive a generic framework for
 large scale remote sensing images segmentation, thus we need to be compatible
 with the raster output of most segmentation algorithms, which usually produce a
 label image. For this purpose, we need a component for exact conversion between
-the raster and the vector representation. We take advantage of the
-polygonization and rasterization algorithms provided by
+the raster and the vector representation. For this purpose, we take advantage of
+the polygonization and rasterization algorithms provided by
 GDAL\furl{www.gdal.org}. To handle on the flow input and output to vector data
 files and databases, we then use the full extent of OGR
-functions\furl{http://www.gdal.org/ogr/}. This abstraction layer allows our tool
-to address seamlessly different file formats like ESRI Shapefile and SQLite or spatial
-databases like PostGIS.
+functions\furl{http://www.gdal.org/ogr/}. Indeed, this abstraction layer allows
+our tool to address seamlessly different file formats like ESRI Shapefile and
+SQLite or spatial databases like PostGIS.
 
 \subsection{Segmentation algorithms}
 %% FIXME on introduit pas dans la section précedente le probleme des effets de tuiles...
