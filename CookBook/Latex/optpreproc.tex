@@ -487,18 +487,20 @@ A few more interesting options are available:
 
 \subsection{Residual registration}\label{ssec:registration}
 
-Orthorectification or map reprojection is generally not sufficient to provide
-image registrations. Indeed, several sources of geometric
-distortion can be contained in optical remote sensing images including earth
-rotation, platform movement, nonlinearity\ldots 
+Image registration is a fundamental problem in image processing. The aim is to
+align two or more images of the same scene often taken at different times, from
+different viewpoints, or by different sensors. It is a basic step for
+orthorectification, image stiching, image fusion, change detection\ldots
 
-As a result it is generally necessary to update image level. 
+Sensor model is generally not sufficient to provide image registrations. Indeed,
+several sources of geometric distortion can be contained in optical remote
+sensing images including earth rotation, platform movement, nonlinearity\ldots
 
 They result in geometric errors on scene level, image level and pixel level. It
 is critical to rectify the errors before a thematic map is generated, especially
 when the remote sensing data need to be integrated together with other GIS data.
 
-This figure illustrates the workflow to apply to register image series: 
+This figure illustrates the generic workflow to register image series: 
 %add figure
 \begin{center}
      \begin{tikzpicture}[scale=0.2]
@@ -579,11 +581,17 @@ This figure illustrates the workflow to apply to register image series:
      \end{center}
 
 
-Image superposition principle
+We will now illustrate this process by applying this workflow to register two
+images. This process can be easyly extended to perform image series
+registration.
+
 
 \subsubsection{Extract metadata from the image reference}
 
-We first dump geometry metadata of the image we want to refine. As you will see the application wich will estimate a refine geometry only needs as input this metadata and a set of homologous points.
+We first dump geometry metadata of the image we want to refine in a text
+file. In OTB, we use the extension \textit{.geom} for this type of file. As you
+will see the application wich will estimate a refine geometry only needs as
+input this metadata and a set of homologous points.
 
 \begin{verbatim}
 
@@ -595,14 +603,34 @@ otbcli_ReadImageInfo   -in slave_image
 
 \subsubsection{Extract homologous points from images}
 
-The main idea of the residual registration is to estimate a residual transformation (after the application of sensors model) to allow to correct 
+The main idea of the residual registration is to estimate an second
+transformation (after the application of sensors model).
 
-The basic idea is to use image pixels in both images to find a set of homologous points and estimate with them a residual transformation which will be use to superimpose. 
+The basic idea is to use image pixels in both images to find a set of homologous
+points and estimate with them a residual transformation which will be use to
+superimpose.
   
-So the first step is to compute homologous points between images using keypoints. SIFT or SURF keypoints can be used and the band on which keypoints are computed can be set independantly for both images. 
-The application offers two modes : the first is the full mode where keypoints are extracted from the full extent of both images (please note that in this mode large image file are not supported). The second mode, called \textit{geobins}, allows to set-up spatial binning so as to get fewer points spread accross the entire image. In this mode, the corresponding spatial bin in the second image is estimated using geographical transform or sensor modelling, and is padded according to the user defined precision. 
-Last, in both modes the application can filter matches whose colocalisation in first image exceed this precision. The elevation parameters are to deal more precisely with sensor modelling in case of sensor geometry data. The \textit{outvector} option allows to create a vector file with segments corresponding to the localisation error between the matches. 
-It can be useful to assess the precision of a registration for instance.
+So the first step is to compute homologous points between images using
+keypoints. SIFT or SURF keypoints can be used and the band on which keypoints
+are computed can be set independantly for both images. These methods have bthe
+advantage to be invariant to uniform scaling, orientation, and partially
+invariant to affine distortion and illumination changes
+
+The application offers two modes : the first is the full mode where keypoints
+are extracted from the full extent of both images (please note that in this mode
+large image file are not supported). The second mode, called \textit{geobins},
+allows to set-up spatial binning so as to get fewer points spread accross the
+entire image. In this mode, the corresponding spatial bin in the second image is
+estimated using geographical transform or sensor modelling, and is padded
+according to the user defined precision. We will use this second mode in the
+case of image registration.
+
+Last, in both modes the application can filter matches whose colocalisation in
+the first image exceed this precision. The elevation parameters allow to deal
+more precisely with sensor modelling in case of sensor geometry data. The
+\textit{outvector} option allows to create a vector file with segments
+corresponding to the localisation error between the matches.
+
 \begin{verbatim}
 
 
@@ -621,19 +649,30 @@ otbcli_HomologousPointsExtraction   -in1 slave_image
 
 \end{verbatim}
 
-Note that for a proper use of the application, elevation must be correctly set (including DEM and geoid file).
+Note that for a proper use of the application, elevation must be correctly set
+(including DEM and geoid file).
 
 \subsubsection{Geometry refinement using homologous points}
 
-Now that we can use the 
+Now that we can use this set of tie points to estimate a residual transformation (affine)  
 
-For this, we
+For this we use the dedicated application called \textbf{RefineSensorModel}. 
 
-This application reads the input geometry metadata file which contains the sensor model of the image that we want to refine the geometry and a text file containing a list of ground control point, and performs a least-square fit of the sensor model adjustable parameters to these tie points. It produces an updated geometry file as output (the extension always use is \textit{.geom})
+This application reads the input geometry metadata file which contains the
+sensor model information that we want to refine and a text file containing a
+list of ground control point, and performs a least-square fit of the sensor
+model adjustable parameters to these tie points. It produces an
+updated geometry file as output (the extension always use is \textit{.geom})
 
-The application can provide as well as an optional ground control points based statistics file and a vector file containing residues. 
+The application can provide as well as an optional ground control points based
+statistics file and a vector file containing residues.
 
-Please note again that for a proper use of the application, elevation must be correctly set (including DEM and geoid file). The map parameters allows to choose a map projection in which the accuracy will be estimated (in meters).
+Please note again that for a proper use of the application, elevation must be
+correctly set (including DEM and geoid file). The map parameters allows to
+choose a map projection in which the accuracy will be estimated (in meters).
+
+Accuracy (computed using tie points location) allows to control the precision of
+the estimated model.
 
 \begin{verbatim}
 
@@ -649,11 +688,13 @@ otbcli_RefineSensorModel   -elev.dem dem_path/SRTM4-HGT/
 
 \subsubsection{Superimpose images using affine geometry}
 
-Now we will show how we can use this new sensor model. In our case we'll use this sensor model
-
-\otb offers since version 3.16 the possibility to extend image path to use different metadata.
-
-That's what we are going to use there to superimpose the second image over the first one using for the second image the estimated sensor model which take into account the original sensor model of the slave and which also fit to the set of tie points.
+Now we will show how we can use this new sensor model. In our case we'll use
+this sensor model to superimpose the image over the reference. \otb offers since
+version 3.16 the possibility to extend image path to use different metadata file
+as input. That's what we are going to use there to superimpose the second image
+over the first one using for the second image estimated sensor model which take
+into account the original sensor model of the slave and which also fit to the
+set of tie points.
 
 TODO : explain or link to an explanation on how works extended file name in OTB  
 
@@ -667,7 +708,9 @@ otbcli_Superimpose   -inr reference_image
 
 \end{verbatim}
 
-As a result, if you've got enough homologous points in images and control that the residual error between the set of tie points and the estimated sensor model is small, you must achieve a godd registration between the 2 images.
+As a result, if you've got enough homologous points in images and control that
+the residual error between the set of tie points and the estimated sensor model
+is small, you must achieve a good registration now between the 2 images.
 
 This methodology can be adapt and apply in several cases, for example :
 \begin{itemize}
