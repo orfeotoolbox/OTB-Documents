@@ -53,8 +53,8 @@ sensors are :
 \item SPOT5,
 \item QuickBird,
 \item Ikonos,
-\item WorldView1,
-\item WorldView2,
+\item WorldView-1,
+\item WorldView-2,
 \item Formosat.
 \end{itemize}
 
@@ -194,8 +194,8 @@ There are two more optional parameters that can be useful for this
 tool:
 \begin{itemize}
 \item The \verb?-elev? option allows to specify the elevation, either with
-  a DEM formatted for OTB (\verb?-elev.dem.path? option, see 
-  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.average.value? 
+  a DEM formatted for OTB (\verb?-elev.dem? option, see 
+  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.default? 
   option). Since registration
   and zooming of the multi-spectral image is performed using
   sensor-models, it may happen that the registration is not perfect in
@@ -287,8 +287,20 @@ cover, which are both delivered as 1-by-1 tiles:
 The \otb suite relies on \ossim capabilities for sensor modelling and
 DEM handling. Tiles of a given DEM are supposed to be located within a
 single directory. Whenever some applications or modules from
-\mont require a DEM, there is an option or a field to set the DEM
-directory.
+\mont require a DEM, the option \textbf{elev.dem} allows set the DEM
+directory
+
+For some type DEM for example, you need also use a geoid to manage elevation
+properly. For this, you need to specify a path to a file which contains the
+geoid. Geoid corresponds to the equipotential surface that would coincide with
+the mean ocean surface of the Earth (see
+\href{http://en.wikipedia.org/wiki/Geoid}). We provide one geoid in the OTB-Data
+repository available
+\href{http://hg.orfeo-toolbox.org/OTB-Data/file/4722d9e672c6/Input/DEM/egm96.grd}{here}.
+
+In all applications, the option \textbf{elev.geoid} allows to manage the path to
+the geoid. Finally, it is also possible to use an average elevation in case no
+DEM is available by using the \textbf{elev.default} option.
 
 %
 %\subsubsection{Making DEM files usable in \otb suite using \application{DEMConvert}}
@@ -389,8 +401,7 @@ containing the DEM tiles to the application:
 \begin{verbatim}
 otbcli_OrthoRectification -io.in input_image 
                           -io.out output_image 
-                          -elev dem
-                          -elev.dem.path dem_dir
+                          -elev.dem dem_dir
 \end{verbatim}
 
 If one wants to use a different map projection, the \emph{-map}
@@ -400,8 +411,7 @@ option may be used (example with \emph{lambert93} map projection):
 
 otbcli_OrthoRectification -io.in input_image 
                           -io.out output_image 
-                          -elev dem
-                          -elev.dem.path dem_dir 
+                          -elev.dem dem_dir 
                           -map lambert93
 
 \end{verbatim}
@@ -429,8 +439,7 @@ For instance, the ground spacing can be specified as follows:
 
 otbcli_OrthoRectification -io.in input_image 
                           -io.out output_image 
-                          -elev dem
-                          -elev.dem.path dem_dir 
+                          -elev.dem dem_dir 
                           -map lambert93 
                           -outputs.spacingx spx 
                           -outputs.spacingy spy
@@ -447,8 +456,7 @@ follows:
 
 otbcli_OrthoRectification -io.in input_image 
                           -io.out output_image 
-                          -elev dem 
-                          -elev.dem.path dem_dir 
+                          -elev.dem dem_dir 
                           -map lambert93 
                           -outputs.spacingx spx 
                           -outputs.spacingy spy 
