@@ -1,7 +1,7 @@
 \section{Optical pre-processing}\label{sec:optpreproc}
 
-This section presents various pre-processing tasks that are presented in 
-a classical order to obtain a calibrated, pan-sharpened image. 
+This section presents various pre-processing tasks that are presented in
+a classical order to obtain a calibrated, pan-sharpened image.
 
 \subsection{Optical radiometric calibration}\label{ssec:optcal}
 
@@ -63,8 +63,8 @@ sensors are :
 The \application{OpticalCalibration} application
 allows to perform optical calibration. The mandatory
 parameters are the input and output images. All other parameters are
-optional. By default the level of calibration is set to TOA (Top Of 
-Atmosphere).  The output images are expressed in thousandth of 
+optional. By default the level of calibration is set to TOA (Top Of
+Atmosphere).  The output images are expressed in thousandth of
 reflectivity using a 16 bits unsigned integer type.
 
 A basic TOA calibration task can be performed with the following command :
@@ -194,8 +194,8 @@ There are two more optional parameters that can be useful for this
 tool:
 \begin{itemize}
 \item The \verb?-elev? option allows to specify the elevation, either with
-  a DEM formatted for OTB (\verb?-elev.dem? option, see 
-  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.default? 
+  a DEM formatted for OTB (\verb?-elev.dem? option, see
+  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.default?
   option). Since registration
   and zooming of the multi-spectral image is performed using
   sensor-models, it may happen that the registration is not perfect in
@@ -399,8 +399,8 @@ for better localisation performances, one can pass the directory
 containing the DEM tiles to the application:
 
 \begin{verbatim}
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
                           -elev.dem dem_dir
 \end{verbatim}
 
@@ -409,9 +409,9 @@ option may be used (example with \emph{lambert93} map projection):
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev.dem dem_dir 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
                           -map lambert93
 
 \end{verbatim}
@@ -424,8 +424,8 @@ The UTM zone and hemisphere can be set by the options \verb?-map.utm.zone? and \
 \item Lambert 2 etendu: \verb?-map lambert2?
 \item Lambert 93: \verb?-map lambert93?
 \item TransMercator: \verb?-map transmercator? \\
-The related parameters (false easting, false northing and scale factor) can be set by the 
-options \verb?-map.transmercator.falseeasting?, \verb?-map.transmercator.falsenorthing? and 
+The related parameters (false easting, false northing and scale factor) can be set by the
+options \verb?-map.transmercator.falseeasting?, \verb?-map.transmercator.falsenorthing? and
 \verb?-map.transmercator.scale?
 \item WGS : \verb?-map wgs?
 \item Any map projection system with an EPSG code : \verb?-map epsg? \\
@@ -437,11 +437,11 @@ For instance, the ground spacing can be specified as follows:
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev.dem dem_dir 
-                          -map lambert93 
-                          -outputs.spacingx spx 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
+                          -map lambert93
+                          -outputs.spacingx spx
                           -outputs.spacingy spy
 
 \end{verbatim}
@@ -454,22 +454,22 @@ follows:
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev.dem dem_dir 
-                          -map lambert93 
-                          -outputs.spacingx spx 
-                          -outputs.spacingy spy 
-                          -outputs.ulx ul_x_coord 
-                          -outputs.uly ul_y_coord 
-                          -outputs.sizex x_size 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
+                          -map lambert93
+                          -outputs.spacingx spx
+                          -outputs.spacingy spy
+                          -outputs.ulx ul_x_coord
+                          -outputs.uly ul_y_coord
+                          -outputs.sizex x_size
                           -outputs.sizey y_size
 
 \end{verbatim}
 
-Where the \verb?-outputs.ulx? and \verb?-outputs.uly? options allow to 
+Where the \verb?-outputs.ulx? and \verb?-outputs.uly? options allow to
 specify the coordinates of the upper-left corner of the output image.
-The \verb?-outputs.sizex? and \verb?-outputs.sizey? options allow to 
+The \verb?-outputs.sizex? and \verb?-outputs.sizey? options allow to
 specify the size of the output image.
 
 A few more interesting options are available:
@@ -479,10 +479,10 @@ A few more interesting options are available:
 \item The \verb?-opt.gridspacing? option allows to define the spacing of the
   localisation grid used for ortho-rectification. A coarser grid
   results in speeding-up the processing, but with potential loss of
-  accuracy. A standard value would be 10 times the ground spacing of 
+  accuracy. A standard value would be 10 times the ground spacing of
   the output image.
 \item The \verb?-interpolator? option allows to change the interpolation
-  algorithm between nearest neighbor, linear and bicubic. Default is nearest 
+  algorithm between nearest neighbor, linear and bicubic. Default is nearest
   neighbor interpolation, but bicubic should be fine in most cases.
 \item The \verb?-opt.ram? option allows to specify the amount of memory
   available for the processing (in Mb). Default is 256 Mb. Increasing
@@ -508,7 +508,7 @@ They result in geometric errors on scene level, image level and pixel level. It
 is critical to rectify the errors before a thematic map is generated, especially
 when the remote sensing data need to be integrated together with other GIS data.
 
-This figure illustrates the generic workflow to register image series: 
+This figure illustrates the generic workflow to register image series:
 %add figure
 \begin{center}
      \begin{tikzpicture}[scale=0.2]
@@ -537,10 +537,10 @@ This figure illustrates the generic workflow to register image series:
      \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
        (28,-1) {Geo-referenced Series};
 %\pause
-      
+
 
        \draw[->,thick] (25.5,8.5) --  +(0,3);
-       
+
      \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
      \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
 
@@ -558,7 +558,7 @@ This figure illustrates the generic workflow to register image series:
      \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
      %\pause
 
-     
+
      \draw[->,thick] (39.5,5) --  +(3,0);
      %\pause
      \foreach \x in {5,...,1}
@@ -576,15 +576,15 @@ This figure illustrates the generic workflow to register image series:
           {Map Projection};
      %\pause
 
-     
+
      \draw[->,thick] (61.5,5) --  +(3,0);
      %\pause
      \foreach \x in {5,...,1}
        \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
      \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
        (68,-1) {Cartographic Series};
-     
-       
+
+
      \end{tikzpicture}
      \end{center}
 
@@ -603,8 +603,8 @@ input this metadata and a set of homologous points.
 
 \begin{verbatim}
 
-otbcli_ReadImageInfo   -in slave_image 
-                       -outkwl slave_image.geom 
+otbcli_ReadImageInfo   -in slave_image
+                       -outkwl slave_image.geom
 
 \end{verbatim}
 
@@ -617,7 +617,7 @@ transformation (after the application of sensors model).
 The basic idea is to use image pixels in both images to find a set of homologous
 points and estimate with them a residual transformation which will be use to
 superimpose.
-  
+
 So the first step is to compute homologous points between images using
 keypoints. SIFT or SURF keypoints can be used and the band on which keypoints
 are computed can be set independantly for both images. These methods have bthe
@@ -638,21 +638,22 @@ the first image exceed this precision. The elevation parameters allow to deal
 more precisely with sensor modelling in case of sensor geometry data. The
 \textit{outvector} option allows to create a vector file with segments
 corresponding to the localisation error between the matches.
-
+%todo let 2wgs84
 \begin{verbatim}
 
 
 otbcli_HomologousPointsExtraction   -in1 slave_image
                                     -in2 reference_image
                                     -algorithm.surf
-                                    -modee geobins
+                                    -mode geobins
                                     -mode.geobins.binstep 512
                                     -mode.geobins.binsize 512
                                     -mfilter 1
-                                    -precision 20  
+                                    -precision 20
+                                    -2wgs84 1
                                     -out homologous_points.txt
                                     -outvector points.shp
-                                    -elev.dem dem_path/SRTM4-HGT/ 
+                                    -elev.dem dem_path/SRTM4-HGT/
                                     -elev.geoid OTB-Data/Input/DEM/egm96.grd
 
 \end{verbatim}
@@ -662,9 +663,9 @@ Note that for a proper use of the application, elevation must be correctly set
 
 \subsubsection{Geometry refinement using homologous points}
 
-Now that we can use this set of tie points to estimate a residual transformation (affine)  
+Now that we can use this set of tie points to estimate a residual transformation (affine)
 
-For this we use the dedicated application called \textbf{RefineSensorModel}. 
+For this we use the dedicated application called \textbf{RefineSensorModel}.
 
 This application reads the input geometry metadata file which contains the
 sensor model information that we want to refine and a text file containing a
@@ -684,12 +685,12 @@ the estimated model.
 
 \begin{verbatim}
 
-otbcli_RefineSensorModel   -elev.dem dem_path/SRTM4-HGT/ 
-                           -elev.geoid OTB-Data/Input/DEM/egm96.grd 
-                           -ingeom slave_image.geom 
-                           -outgeom refined_slave_image.geom 
-                           -inpoints homologous_points.txt 
-                           -outstat stats.txt 
+otbcli_RefineSensorModel   -elev.dem dem_path/SRTM4-HGT/
+                           -elev.geoid OTB-Data/Input/DEM/egm96.grd
+                           -ingeom slave_image.geom
+                           -outgeom refined_slave_image.geom
+                           -inpoints homologous_points.txt
+                           -outstat stats.txt
                            -outvector refined_slave_image.shp
 
 \end{verbatim}
@@ -704,15 +705,15 @@ over the first one using for the second image estimated sensor model which take
 into account the original sensor model of the slave and which also fit to the
 set of tie points.
 
-TODO : explain or link to an explanation on how works extended file name in OTB  
+TODO : explain or link to an explanation on how works extended file name in OTB
 
 \begin{verbatim}
 
 otbcli_Superimpose   -inr reference_image
-                     -inm slave_image?&refined_slave_image.geom 
-                     -elev.dem dem_path/SRTM4-HGT/ 
-                     -elev.geoid OTB-Data/Input/DEM/egm96.grd 
-                     -out superimpose_slave_image 
+                     -inm slave_image?&refined_slave_image.geom
+                     -elev.dem dem_path/SRTM4-HGT/
+                     -elev.geoid OTB-Data/Input/DEM/egm96.grd
+                     -out superimpose_slave_image
 
 \end{verbatim}
 
@@ -724,6 +725,6 @@ This methodology can be adapt and apply in several cases, for example :
 \begin{itemize}
 
 \item to register stereo pair of images and estimate accurate epipolar geometry (see todo)
-\item to refine orthorectified images using a reference image (like IGN orthophoto) 
+\item to refine orthorectified images using a reference image (like IGN orthophoto)
 
 \end{itemize}
