@@ -499,6 +499,8 @@ Image registration is a fundamental problem in image processing. The aim is to
 align two or more images of the same scene often taken at different times, from
 different viewpoints, or by different sensors. It is a basic step for
 orthorectification, image stiching, image fusion, change detection\ldots
+But this process is also critical for stereo reconstruction process to be able
+to obtain an accurate estimation of epipolar geometry.
 
 Sensor model is generally not sufficient to provide image registrations. Indeed,
 several sources of geometric distortion can be contained in optical remote
@@ -508,7 +510,7 @@ They result in geometric errors on scene level, image level and pixel level. It
 is critical to rectify the errors before a thematic map is generated, especially
 when the remote sensing data need to be integrated together with other GIS data.
 
-This figure illustrates the generic workflow to register image series:
+This figure illustrates the generic workflow in the case of image series registration:
 %add figure
 \begin{center}
      \begin{tikzpicture}[scale=0.2]
@@ -590,7 +592,7 @@ This figure illustrates the generic workflow to register image series:
 
 
 We will now illustrate this process by applying this workflow to register two
-images. This process can be easyly extended to perform image series
+images. This process can be easilly extended to perform image series
 registration.
 
 
@@ -599,12 +601,19 @@ registration.
 We first dump geometry metadata of the image we want to refine in a text
 file. In OTB, we use the extension \textit{.geom} for this type of file. As you
 will see the application wich will estimate a refine geometry only needs as
-input this metadata and a set of homologous points.
+input this metadata and a set of homologous points. The refinement application
+will create a new \textit{.geom} file containing refined geometry parameters
+which can be used after for reprojection for example.
+
+The use of external \textit{.geom} file is available in OTB since release
+$3.16$. See
+\href{http://wiki.orfeo-toolbox.org/index.php/ExtendedFileName}{here} for more
+information.
 
 \begin{verbatim}
 
 otbcli_ReadImageInfo   -in slave_image
-                       -outkwl slave_image.geom
+                       -outkwl TheGeom.geom
 
 \end{verbatim}
 
@@ -614,27 +623,36 @@ otbcli_ReadImageInfo   -in slave_image
 The main idea of the residual registration is to estimate an second
 transformation (after the application of sensors model).
 
-The basic idea is to use image pixels in both images to find a set of homologous
-points and estimate with them a residual transformation which will be use to
-superimpose.
+The homologous point application use interest point detection method to get a set of
+point which match in both images.
 
-So the first step is to compute homologous points between images using
-keypoints. SIFT or SURF keypoints can be used and the band on which keypoints
-are computed can be set independantly for both images. These methods have bthe
-advantage to be invariant to uniform scaling, orientation, and partially
-invariant to affine distortion and illumination changes
+The basic idea is to use this set of homologous points and estimate with them a
+residual transformation between the two images.
 
-The application offers two modes : the first is the full mode where keypoints
+There is a wide variety of keypoint detector in the litterature. They allow to detect and describe local features in images. These algorithms provide for each interesting point a ``feature description''. This descriptor has the property to be invariant to image translation, scaling, and rotation, partially invariant to illumination changes and robust to local geometric distortion.
+keypoints.
+Features extracted from the input images are then matched against each other. These correspondences are then used to create the homologous points.
+
+\href{http://en.wikipedia.org/wiki/Scale-invariant_feature_transform}{SIFT} or \href{http://en.wikipedia.org/wiki/SURF}{SURF} keypoints can be computed in the application. The band on which keypoints
+are computed can be set independantly for both images.
+
+The application offers two modes :
+\begin{itemize}
+\item the first is the full mode where keypoints
 are extracted from the full extent of both images (please note that in this mode
-large image file are not supported). The second mode, called \textit{geobins},
+large image file are not supported).
+\item The second mode, called \textit{geobins},
 allows to set-up spatial binning so as to get fewer points spread accross the
 entire image. In this mode, the corresponding spatial bin in the second image is
 estimated using geographical transform or sensor modelling, and is padded
-according to the user defined precision. We will use this second mode in the
+according to the user defined precision.
+\end{itemize}
+
+We will use this second mode in the
 case of image registration.
 
-Last, in both modes the application can filter matches whose colocalisation in
-the first image exceed this precision. The elevation parameters allow to deal
+Moreover, in both modes the application can filter matches whose colocalisation in
+the first image exceed this precision. Last, the elevation parameters allow to deal
 more precisely with sensor modelling in case of sensor geometry data. The
 \textit{outvector} option allows to create a vector file with segments
 corresponding to the localisation error between the matches.
@@ -663,24 +681,24 @@ Note that for a proper use of the application, elevation must be correctly set
 
 \subsubsection{Geometry refinement using homologous points}
 
-Now that we can use this set of tie points to estimate a residual transformation (affine)
+Now that we can use this set of tie points to estimate a residual transformation (affine in case of RPC model)
 
 For this we use the dedicated application called \textbf{RefineSensorModel}.
 
-This application reads the input geometry metadata file which contains the
+This application reads the input geometry metadata file (\textit{.geom}) which contains the
 sensor model information that we want to refine and a text file containing a
-list of ground control point, and performs a least-square fit of the sensor
-model adjustable parameters to these tie points. It produces an
+list of ground control point. It  performs a least-square fit of the sensor
+model adjustable parameters to these tie points and produces an
 updated geometry file as output (the extension always use is \textit{.geom})
 
-The application can provide as well as an optional ground control points based
+The application can provide as well an optional ground control points based
 statistics file and a vector file containing residues.
 
 Please note again that for a proper use of the application, elevation must be
 correctly set (including DEM and geoid file). The map parameters allows to
 choose a map projection in which the accuracy will be estimated (in meters).
 
-Accuracy (computed using tie points location) allows to control the precision of
+Accuracy values are provided as output of the application (computed using tie points location) and allow to control the precision of
 the estimated model.
 
 \begin{verbatim}
@@ -725,6 +743,6 @@ This methodology can be adapt and apply in several cases, for example :
 \begin{itemize}
 
 \item to register stereo pair of images and estimate accurate epipolar geometry (see todo)
-\item to refine orthorectified images using a reference image (like IGN orthophoto)
+\item to refine orthorectified images using a reference image
 
 \end{itemize}
