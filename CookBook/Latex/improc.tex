@@ -212,12 +212,91 @@ and this image is produced with the commands inside this
 \end{figure}
 
 
+
+
+
+
+
+\subsection{Fusion of Classification Maps}\label{ssec:fusionofclassifications}
+
+After having processed several classifications of the same input image but from different models or methods (SVM,...),
+it is possible to make a fusion of these classification maps with the \application{FusionOfClassifications} application which uses majority voting to handle
+this fusion. The Fusion of Classifications generates a single more robust and precise classification map which combines the information extracted from the input
+list of labeled images. 
+
+\subsubsection{Majority Voting for the Fusion of Classifications}
+
+In the Majority Voting method implemented in the \application{FusionOfClassifications} application, the value of each output pixel is equal to the more frequent
+class label of the same pixel in the input classification maps. However, it may happen that the more frequent class labels are not unique in individual pixels. In that case,
+the undecided label is attributed to the output pixels.
+
+
+ 
+The \application{FusionOfClassifications} application has the following input parameters :
+\begin{itemize}
+\item \verb?-il? list of input labeled classification images to fuse.
+\item \verb?-out? the output labeled image resulting from the fusion of the input classification images.
+\item \verb?-undecided? label for the undecided class (default value = 0).
+\end{itemize}
+
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_FusionOfClassifications  -il         list_of_input_images
+                                -out        OutputFusedClassificationImage
+                                -undecided  10
+\end{verbatim}
+ 
+
+\subsubsection{Recommandations to properly use the fusion of classification maps}
+
+In order to properly use the \application{FusionOfClassifications} application, some points should be considered. First, the \verb?list_of_input_images?
+and \verb?OutputFusedClassificationImage? are single band labeled images, which means that the value of each pixel corresponds to the class label it belongs
+to, and labels in each classification map must represent the same class. Secondly, the undecided label value must be different from existing labels in the input images in order to avoid any ambiguity in the interpretation of
+the \verb?OutputFusedClassificationImage?.
+
+
+
+\subsubsection{Example}
+
+As an example of the \application{FusionOfClassifications} application, the fusion of the three input classification maps represented in
+Fig. \ref{fig:ClassificationMapFusionApplication} leads to the classification map illustrated on the right in Fig. \ref{fig:ClassificationMapFusionApplication2}.
+Thus, it appears that this fusion gives access to a more precise and robust classification map which highlight the more relevant classes among the three different input
+classifications.
+
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_input.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_input_2.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_input_3.png}
+  \itkcaption[ExampleSVMClassifFusion]{Three fancy colored classified images to be fused, generated from 3 different SVM models.}
+  \label{fig:ClassificationMapFusionApplication}
+\end{figure}
+
+
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_inputimage.jpg}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_Fusion_123.png}
+  \itkcaption[ExampleSVMClassifFusion2]{From left to right: Original image, and fancy colored classified image obtained by a fusion of
+  the 3 classification maps represented in Fig. \ref{fig:ClassificationMapFusionApplication}.}
+  \label{fig:ClassificationMapFusionApplication2}
+\end{figure}
+
+
+
+
+
+
+
 \subsection{Majority Voting based Classification Map Regularization}\label{ssec:classificationmapregularization}
 
 Resulting classification maps can be regularized in order to smoothen irregular classes. Such a regularization process
 improves classification results by making more homogeneous areas which are easier to handle.
 
-\subsubsection{Majority Voting}
+\subsubsection{Majority Voting for the Classification Map Regularization}
 
 The \application{ClassificationMapRegularization} application performs a regularization of a labeled input image
 based on the Majority Voting method in a specified ball shaped neighborhood. For each center pixel, Majority Voting takes the
