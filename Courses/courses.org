@@ -22,8 +22,8 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Selper2012 - OTB Workshop}}
-
+#+LATEX:\fancyfoot[C]{\vspace{3pt}\footnotesize{This content is provided under a Creative Commons Attribution 3.0 Unported License
+}\includegraphics[height=5pt]{Images/CC-licence.png}}
 * Foreword                                                               :fw:
 ** About the data
 
