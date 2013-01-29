@@ -1,5 +1,5 @@
 \newpage
-\subsection{Stereoscopic reconstruction from VHR optical images pair}\label{sec:stereoreconstruction}
+\section{Stereoscopic reconstruction from VHR optical images pair}\label{sec:stereoreconstruction}
 %add intro
 This section describes how to convert pair of stereo images into elevation information.
 
@@ -15,7 +15,7 @@ the following steps:
 
 Let's go to the third dimension!
 
-\subsubsection{First step: Estimate epipolar geometry transformation}\label{ssec:epipolar}
+\subsection{Estimate epipolar geometry transformation}\label{ssec:epipolar}
 
 The aim of this application is to generate resampled grids to
 transform images in epipolar geometry. Epipolar geometry is the
@@ -124,7 +124,7 @@ elevation offset of one meter with respect to the mean elevation.
 
 we can now move forward to the resampling in epipolar geometry.
 
-\subsubsection{Resample images in epipolar geometry}
+\subsection{Resample images in epipolar geometry}
 
 The former application generates two grids of
 displacements. The \application{GridBasedImageResampling} allows to
@@ -170,7 +170,7 @@ figure~\ref{fig:EpipolarImages}. Note that the application allows to
 resample only a part of the image using the \textit{-out.ulx}
 and \textit{-out.uly} parameters.
 
-\subsubsection{Disparity estimation: Block matching along epipolar lines}
+\subsection{Disparity estimation: Block matching along epipolar lines}
 
 Finally, we can begin the stereo correspondences lookup process!
 
@@ -307,7 +307,7 @@ Of course all these parameters can be combined to improve the disparity map.
   \label{fig:DisparityMetric}
 \end{figure}
 
-\subsubsection{From disparity to Digital Elevation Model}
+\subsection{From disparity to Digital Elevation Model}
 
 Using the previous application, we evaluated disparities between images. The
 next (and last!) step is now to transform the disparity map into an elevation
@@ -374,3 +374,37 @@ ground area covered by the stereo pair. Pixels values are expressed in meters.
 \end{figure}
 
 This is it ! Figure~\ref{fig:stereo_out} shows the output DEM from the Cheops pair.
+
+\subsection{One application to rule them all}
+An application has been added to combine all these steps using a standard approach 
+: \application{StereoFramework}. It computes the DEM (still projected in WGS84) 
+from an input stereo pair. The user has to specify the sampling step (in meters) 
+of the output DEM, but the other parameters are optional. In addition to the 
+usual elevation parameters, here are the main parameters to control the application:
+\begin{itemize}
+\item \code{-res} : sampling step of the output DEM in meters
+\item \code{-above} : maximum elevation offset from the chosen elevation source (in meters)
+\item \code{-below} : minimum elevation offset from the chosen elevation source (in meters)
+\item \code{-mask.left} and \code{-mask.right} : input mask for the stereo pair
+\item \code{-disp} : path to the output disparity map
+\end{itemize}
+
+The parameters \code{-above} and \code{-below} are used inside the application to derive the
+minimum and maximum horizontal disparity exploration, so they have a critical impact on 
+computation time. It is advised to choose an elevation source that is not too far from the
+DEM you want to produce (for instance, an SRTM elevation model). Therefore, the altitude 
+from your elevation source will be already taken into account in the epipolar geometry
+and the disparities will reveal the elevation offsets (such as buildings). It allows you
+ to use a smaller exploration range along the elevation axis, causing a smaller exploration
+along horizontal disparities and faster computation.
+
+The following algorithms are used in the application:
+\begin{itemize}
+\item Computation of epipolar rectification grids
+\item Resampling into epipolar geometry with BCO interpolator
+\item Block matching with NCC score on a 9x9 correlation window (only horizontal exploration)
+\item Subpixel refinement with dichotomy method
+\item Median filtering of horizontal disparities
+\item Filtering of disparities with a low correlation (NCC lower than 0.6)
+\item Projection on a WGS84 grid
+\end{itemize}
