@@ -230,7 +230,7 @@ set of tie points.
 \begin{verbatim}
 
 otbcli_Orthorectification   -inr reference_image
-                     -inm slave_image?&refined_slave_image.geom
+                     -inm "slave_image?&geom=refined_slave_image.geom"
                      -elev.dem dem_path/SRTM4-HGT/
                      -elev.geoid OTB-Data/Input/DEM/egm96.grd
                      -out superimpose_slave_image
