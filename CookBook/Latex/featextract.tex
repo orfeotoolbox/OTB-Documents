@@ -1,0 +1,389 @@
+\section{Feature extraction}\label{sec:featextract}
+
+As described in the OTB Software Guide, the term {\em Feature Extraction} refers to
+techniques aiming at extracting added value information from images. These
+extracted items named {\em features} can be local statistical moments, edges,
+radiometric indices, morphological and textural properties. For example, such
+features can be used as input data for other image processing methods like
+{\em Segmentation} and {\em Classification}.
+
+\subsection{Local statistics extraction}\label{ssec:localstatextraction}
+
+This application computes the 4 local statistical moments on every pixel in the
+selected channel of the input image, over a specified neighborhood. The output
+image is multi band with one statistical moment (feature) per band. Thus, the 4
+output features are the Mean, the Variance, the Skewness and the Kurtosis. They are
+provided in this exact order in the output image.
+
+
+The \application{LocalStatisticExtraction} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to compute the features on
+\item \verb?-channel? the selected channel index in the input image to be processed (default value is 1)
+\item \verb?-radius? the computational window radius (default value is 3 pixels)
+\item \verb?-out? the output image containing the local statistical moments
+\end{itemize}
+
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_LocalStatisticExtraction  -in        InputImage
+                                 -channel   1
+                                 -radius    3
+                                 -out       OutputImage
+\end{verbatim}
+
+
+
+\subsection{Edge extraction}\label{ssec:edgeextraction}
+
+This application Computes edge features on every pixel in the selected channel
+of the input image.
+
+The \application{EdgeExtraction} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to compute the features on
+\item \verb?-channel? the selected channel index in the input image to be processed (default value is 1)
+\item \verb?-filter? the choice of edge detection method (gradient/sobel/touzi) (default value is gradient)
+~~\\
+\item \verb?(-filter.touzi.xradius)? the X Radius of the Touzi processing neighborhood (only if filter==touzi) (default value is 1 pixel)
+\item \verb?(-filter.touzi.yradius)? the Y Radius of the Touzi processing neighborhood (only if filter==touzi) (default value is 1 pixel)
+~~\\
+\item \verb?-out? the output mono band image containing the edge features
+\end{itemize}
+
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_EdgeExtraction  -in        InputImage
+                       -channel   1
+                       -filter    sobel
+                       -out       OutputImage
+\end{verbatim}
+
+or like this if filter==touzi:
+
+\begin{verbatim}
+otbcli_EdgeExtraction  -in                    InputImage
+                       -channel               1
+                       -filter                touzi
+                       -filter.touzi.xradius  2
+                       -filter.touzi.yradius  2 
+                       -out                   OutputImage
+\end{verbatim}
+
+
+
+
+\subsection{Radiometric indices extraction}\label{ssec:Radiomindextraction}
+
+This application computes radiometric indices using the channels of the input
+image. The output is a multi band image into which each channel is one of
+the selected indices.
+
+
+The \application{RadiometricIndices} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to compute the features on
+\item \verb?-out? the output image containing the radiometric indices
+\item \verb?-channels.blue? the Blue channel index in the input image (default value is 1)
+\item \verb?-channels.green? the Green channel index in the input image (default value is 1)
+\item \verb?-channels.red? the Red channel index in the input image (default value is 1)
+\item \verb?-channels.nir? the Near Infrared channel index in the input image (default value is 1)
+\item \verb?-channels.mir? the Mid-Infrared channel index in the input image (default value is 1)
+\item \verb?-list? the list of available radiometric indices (default value is Vegetation:NDVI)
+\end{itemize}
+
+The available radiometric indices to be listed into -list with their relevant
+channels in brackets are:
+
+\begin{verbatim}
+Vegetation:NDVI - Normalized difference vegetation index (Red, NIR)
+Vegetation:TNDVI - Transformed normalized difference vegetation index (Red, NIR)
+Vegetation:RVI - Ratio vegetation index (Red, NIR)
+Vegetation:SAVI - Soil adjusted vegetation index (Red, NIR)
+Vegetation:TSAVI - Transformed soil adjusted vegetation index (Red, NIR)
+Vegetation:MSAVI - Modified soil adjusted vegetation index (Red, NIR)
+Vegetation:MSAVI2 - Modified soil adjusted vegetation index 2 (Red, NIR)
+Vegetation:GEMI - Global environment monitoring index (Red, NIR)
+Vegetation:IPVI - Infrared percentage vegetation index (Red, NIR)
+
+Water:NDWI - Normalized difference water index (Gao 1996) (NIR, MIR)
+Water:NDWI2 - Normalized difference water index (Mc Feeters 1996) (Green, NIR)
+Water:MNDWI - Modified normalized difference water index (Xu 2006) (Green, MIR)
+Water:NDPI - Normalized difference pond index (Lacaux et al.) (MIR, Green)
+Water:NDTI - Normalized difference turbidity index (Lacaux et al.) (Red, Green)
+
+Soil:RI - Redness index (Red, Green)
+Soil:CI - Color index (Red, Green)
+Soil:BI - Brightness index (Red, Green)
+Soil:BI2 - Brightness index 2 (NIR, Red, Green)
+\end{verbatim}
+
+The application can be used like this, which leads to an output image with 3 bands,
+respectively with the Vegetation:NDVI, Vegetation:RVI and Vegetation:IPVI
+radiometric indices in this exact order:
+
+\begin{verbatim}
+otbcli_RadiometricIndices -in             InputImage
+                          -out            OutputImage
+                          -channels.red   3
+                          -channels.green 2
+                          -channels.nir   4
+                          -list           Vegetation:NDVI Vegetation:RVI Vegetation:IPVI 
+\end{verbatim}
+
+
+or like this, which leads to a single band output image with the Water:NDWI2 radiometric indice:
+\begin{verbatim}
+otbcli_RadiometricIndices -in             InputImage
+                          -out            OutputImage
+                          -channels.red   3
+                          -channels.green 2
+                          -channels.nir   4
+                          -list           Water:NDWI2 
+\end{verbatim}
+
+        
+
+
+
+
+\subsection{Morphological features extraction}\label{ssec:morphofeatextraction}
+
+Morphological features can be highlighted by using image filters based on
+mathematical morphology either on binary or gray scale images.
+
+\subsubsection{Binary morphological operations}
+
+This application performs binary morphological operations (dilation, erosion,
+opening and closing) on a mono band image with a specific structuring element (a
+ball or a cross) having one radius along X and another one along Y. NB: the cross
+shaped structuring element has a fixed radius equal to 1 pixel in both X and Y
+directions.
+
+The \application{BinaryMorphologicalOperation} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to be filtered
+\item \verb?-channel? the selected channel index in the input image to be processed (default value is 1)
+\item \verb?-structype? the choice of the structuring element type (ball/cross) (default value is ball)
+\item \verb?(-structype.ball.xradius)? the ball structuring element X Radius (only if structype==ball) (default value is 5 pixels)
+\item \verb?(-structype.ball.yradius)? the ball structuring element Y Radius (only if structype==ball) (default value is 5 pixels)
+\item \verb?-filter? the choice of the morphological operation (dilate/erode/opening/closing) (default value is dilate)
+\item \verb?(-filter.dilate.foreval)? the foreground value for the dilation (idem for filter.erode/opening/closing) (default value is 1)
+\item \verb?(-filter.dilate.backval)? the background value for the dilation (idem for filter.erode/opening/closing) (default value is 0)
+\item \verb?-out? the output filtered image
+\end{itemize}
+
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_BinaryMorphologicalOperation  -in                     InputImage
+                                     -channel                1
+                                     -structype              ball
+                                     -structype.ball.xradius 10
+                                     -structype.ball.yradius 5
+                                     -filter                 opening
+                                     -filter.opening.foreval 1.0
+                                     -filter.opening.backval 0.0
+                                     -out                    OutputImage
+\end{verbatim}
+
+
+
+
+
+\subsubsection{Gray scale morphological operations}
+
+This application performs morphological operations (dilation, erosion,
+opening and closing) on a gray scale mono band image with a specific structuring
+element (a ball or a cross) having one radius along X and another one along Y. NB:
+the cross shaped structuring element has a fixed radius equal to 1 pixel in both X
+and Y directions.
+
+The \application{GrayScaleMorphologicalOperation} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to be filtered
+\item \verb?-channel? the selected channel index in the input image to be processed (default value is 1)
+\item \verb?-structype? the choice of the structuring element type (ball/cross) (default value is ball)
+\item \verb?(-structype.ball.xradius)? the ball structuring element X Radius (only if structype==ball) (default value is 5 pixels)
+\item \verb?(-structype.ball.yradius)? the ball structuring element Y Radius (only if structype==ball) (default value is 5 pixels)
+\item \verb?-filter? the choice of the morphological operation (dilate/erode/opening/closing) (default value is dilate)
+\item \verb?-out? the output filtered image
+\end{itemize}
+
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_GrayScaleMorphologicalOperation  -in                     InputImage
+                                        -channel                1
+                                        -structype              ball
+                                        -structype.ball.xradius 10
+                                        -structype.ball.yradius 5
+                                        -filter                 opening
+                                        -out                    OutputImage
+\end{verbatim}
+
+
+
+\subsection{Textural features extraction}\label{ssec:texturefeatextraction}
+
+Texture features can be extracted with the help of image filters based on
+texture analysis methods like Haralick and structural feature set (SFS).
+
+\subsubsection{Haralick texture features}
+
+This application computes Haralick, advanced and higher order texture features on
+every pixel in the selected channel of the input image. The output image is multi
+band with a feature per band.
+
+The \application{HaralickTextureExtraction} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to compute the features on
+\item \verb?-channel? the selected channel index in the input image to be processed (default value is 1)
+\item \verb?-texture? the texture set selection [simple/advanced/higher] (default value is simple)
+\item \verb?-parameters.min? the input image minimum (default value is 0) 
+\item \verb?-parameters.max? the input image maximum (default value is 255)
+\item \verb?-parameters.xrad? the X Radius of the processing neighborhood (default value is 2 pixels)
+\item \verb?-parameters.yrad? the Y Radius of the processing neighborhood (default value is 2 pixels)
+\item \verb?-parameters.xoff? the $\Delta$X Offset for the co-occurrence computation (default value is 1 pixel)
+\item \verb?-parameters.yoff? the $\Delta$Y Offset for the co-occurrence computation (default value is 1 pixel)
+\item \verb?-parameters.nbbin? the number of bin per axis for histogram generation (default value is 8)
+\item \verb?-out? the output multi band image containing the selected texture features (one feature per band)
+\end{itemize}
+
+
+The available values for -texture with their relevant features are:
+
+\begin{itemize}
+\item \verb?-texture=simple:?
+In this case, 8 local Haralick textures features will be processed.
+The 8 output image channels are: Energy, Entropy, Correlation, Inverse Difference
+Moment, Inertia, Cluster Shade, Cluster Prominence and Haralick Correlation. They
+are provided in this exact order in the output image. Thus, this application
+computes the following Haralick textures over a sliding windows with user defined
+radius: (where $ g(i, j) $ is the element in cell i, j of a normalized Gray Level
+Co-occurrence Matrix (GLCM)):
+
+"Energy" $ = f_1 = \sum_{i, j}g(i, j)^2 $
+
+"Entropy" $ = f_2 = -\sum_{i, j}g(i, j) \log_2 g(i, j)$, or 0 if $g(i, j) = 0$
+
+"Correlation" $ = f_3 = \sum_{i, j}\frac{(i - \mu)(j - \mu)g(i, j)}{\sigma^2} $
+
+"Inverse Difference Moment" $= f_4 = \sum_{i, j}\frac{1}{1 + (i - j)^2}g(i, j) $
+
+"Inertia" $ = f_5 = \sum_{i, j}(i - j)^2g(i, j) $ (sometimes called "contrast")
+
+"Cluster Shade" $ = f_6 = \sum_{i, j}((i - \mu) + (j - \mu))^3 g(i, j) $
+
+"Cluster Prominence" $ = f_7 = \sum_{i, j}((i - \mu) + (j - \mu))^4 g(i, j) $
+
+"Haralick's Correlation" $ = f_8 = \frac{\sum_{i, j}(i, j) g(i, j) -\mu_t^2}{\sigma_t^2} $
+where $\mu_t$ and $\sigma_t$ are the mean and standard deviation of the row (or
+column, due to symmetry) sums.
+
+Above, $ \mu = $ (weighted pixel average) $ = \sum_{i, j}i \cdot g(i, j) = \sum_{i, j}j \cdot g(i, j) $
+(due to matrix symmetry), and $ \sigma = $ (weighted pixel variance) $ = \sum_{i, j}(i - \mu)^2 \cdot g(i, j) = \sum_{i, j}(j - \mu)^2 \cdot g(i, j) $
+(due to matrix symmetry).
+
+\item \verb?-texture=advanced:?
+In this case, 9 advanced texture features will be processed. The 9 output image
+channels are: Mean, Variance, Sum Average, Sum Variance, Sum Entropy, Difference of
+Entropies, Difference of Variances, IC1 and IC2. They are provided in this exact
+order in the output image.
+
+\item \verb?-texture=higher:?
+In this case, 11 local higher order statistics texture coefficients based on the
+grey level run-length matrix will be processed. The 11 output image channels are:
+Short Run Emphasis, Long Run Emphasis, Grey-Level Nonuniformity, Run Length
+Nonuniformity, Run Percentage, Low Grey-Level Run Emphasis, High Grey-Level Run
+Emphasis, Short Run Low Grey-Level Emphasis, Short Run High Grey-Level Emphasis,
+Long Run Low Grey-Level Emphasis and Long Run High Grey-Level Emphasis. They are
+provided in this exact order in the output image. Thus, this application computes
+the following Haralick textures over a sliding window with user defined radius:
+(where $ p(i, j) $ is the element in cell i, j of a normalized Run Length Matrix,
+$n_r$ is the total number of runs and $n_p$ is the total number of pixels):
+
+"Short Run Emphasis" $ = SRE = \frac{1}{n_r} \sum_{i, j}\frac{p(i, j)}{j^2} $
+
+"Long Run Emphasis" $ = LRE = \frac{1}{n_r} \sum_{i, j}p(i, j) * j^2 $
+
+"Grey-Level Nonuniformity" $ = GLN = \frac{1}{n_r} \sum_{i} \left( \sum_{j}{p(i, j)} \right)^2 $
+
+"Run Length Nonuniformity" $ = RLN = \frac{1}{n_r} \sum_{j} \left( \sum_{i}{p(i, j)} \right)^2 $
+
+"Run Percentage" $ = RP = \frac{n_r}{n_p} $
+
+"Low Grey-Level Run Emphasis" $ = LGRE = \frac{1}{n_r} \sum_{i, j}\frac{p(i, j)}{i^2} $
+
+"High Grey-Level Run Emphasis" $ = HGRE = \frac{1}{n_r} \sum_{i, j}p(i, j) * i^2 $
+
+"Short Run Low Grey-Level Emphasis" $ = SRLGE = \frac{1}{n_r} \sum_{i, j}\frac{p(i, j)}{i^2 j^2} $
+
+"Short Run High Grey-Level Emphasis" $ = SRHGE = \frac{1}{n_r} \sum_{i, j}\frac{p(i, j) * i^2}{j^2} $
+
+"Long Run Low Grey-Level Emphasis" $ = LRLGE = \frac{1}{n_r} \sum_{i, j}\frac{p(i, j) * j^2}{i^2} $
+
+"Long Run High Grey-Level Emphasis" $ = LRHGE = \frac{1}{n_r} \sum_{i, j} p(i, j) i^2 j^2 $
+
+\end{itemize}
+
+
+
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_HaralickTextureExtraction  -in             InputImage
+                                  -channel        1
+                                  -texture        simple
+                                  -parameters.min 0
+                                  -parameters.max 255
+                                  -out            OutputImage
+\end{verbatim}
+
+
+
+
+
+\subsubsection{SFS texture extraction}
+
+This application computes Structural Feature Set textures on every pixel in the
+selected channel of the input image. The output image is multi band with a feature
+per band. The 6 output texture features are SFS'Length, SFS'Width, SFS'PSI,
+SFS'W-Mean, SFS'Ratio and SFS'SD. They are provided in this exact order in the
+output image.
+
+It is based on line direction estimation and described in the following
+publication. Please refer to Xin Huang, Liangpei Zhang and Pingxiang Li
+publication, Classification and Extraction of Spatial Features in Urban Areas Using
+High-Resolution Multispectral Imagery. IEEE Geoscience and Remote Sensing Letters,
+vol. 4, n. 2, 2007, pp 260-264.
+
+The texture is computed for each pixel using its neighborhood. User can set the
+spatial threshold that is the max line length, the spectral threshold that is the
+max difference authorized between a pixel of the line and the center pixel of the
+current neighborhood. The adjustement constant alpha and the ratio Maximum
+Consideration Number, which describes the shape contour around the central pixel,
+are used to compute the $w - mean$ value.
+
+
+The \application{SFSTextureExtraction} application has the following input parameters:
+\begin{itemize}
+\item \verb?-in? the input image to compute the features on
+\item \verb?-channel? the selected channel index in the input image to be processed (default value is 1)
+\item \verb?-parameters.spethre? the spectral threshold (default value is 50) 
+\item \verb?-parameters.spathre? the spatial threshold (default value is 100 pixels)
+\item \verb?-parameters.nbdir? the number of directions (default value is 20)
+\item \verb?-parameters.alpha? the alpha value (default value is 1)
+\item \verb?-parameters.maxcons? the ratio Maximum Consideration Number (default value is 5)
+\item \verb?-out? the output multi band image containing the selected texture features (one feature per band)
+\end{itemize}
+ 
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_SFSTextureExtraction -in             InputImage
+                            -channel        1
+                            -out            OutputImage
+\end{verbatim}
