@@ -255,7 +255,7 @@ sensor model of the slave and which also fit to the set of tie points.
 \begin{verbatim}
 
 otbcli_Orthorectification   -inr reference_image
-                     -inm slave_image?&TheRefinedGeom.geom
+                     -inm slave_image?&geom=TheRefinedGeom.geom
                      -elev.dem dem_path/SRTM4-HGT/
                      -elev.geoid OTB-Data/Input/DEM/egm96.grd
                      -out ortho_slave_image
