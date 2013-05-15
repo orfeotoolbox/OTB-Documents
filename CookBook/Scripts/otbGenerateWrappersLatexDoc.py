@@ -120,6 +120,8 @@ def GenerateParameterType(app,param):
         return "Input image list"
     if app.GetParameterType(param) == otbApplication.ParameterType_InputVectorDataList:
         return "Input vector data list"
+    if app.GetParameterType(param) == otbApplication.ParameterType_InputFilenameList :
+        return "Input File name list"
     if app.GetParameterType(param) == otbApplication.ParameterType_ListView:
         return "List"
     if app.GetParameterType(param) == otbApplication.ParameterType_Group:
