@@ -70,14 +70,15 @@ Once images statistics have been estimated, the learning scheme is the following
   (confusion matrix, precision, recall and F-Score).
 \end{enumerate}
 
-These steps can be performed by the \application{TrainSVMImagesClassifier}
+These steps can be performed by the \application{TrainImagesClassifier}
 command-line using the following:
 
 \begin{verbatim}
-otbcli_TrainSVMImagesClassifier -io.imstat  images_statistics.xml
-                                -io.il  list_of_input_images
-                                -io.vd  list_of_positive_examples_shapefiles
-                                -io.out model.svm
+otbcli_TrainImagesClassifier -io.imstat  images_statistics.xml
+                             -io.il      list_of_input_images
+                             -io.vd      list_of_positive_examples_shapefiles
+                             -classifier classifier_to_use_for_the_training
+                             -io.out     model.svm
 \end{verbatim}
 
 Optionnal groups of parameters are also available (see application help for
@@ -91,16 +92,16 @@ more details):
 \subsubsection{Validating the classification model}
 It is also possible to estimate the performance of the SVM model with a
 new validation sample set and another image with the
-\application{ValidateSVMImagesClassifier} application. It will compute
+\application{ValidateImagesClassifier} application. It will compute
 the global confusion matrix and precision, recall and F-score of each
 class based on the \href{http://www.orfeo-toolbox.org/doxygen-current/classotb_1_1ConfusionMatrixCalculator.html}{ConfusionMatrixCalculator}
 class.
 
 \begin{verbatim}
-otbcli_ValidateSVMImagesClassifier -imstat  images_statistics.xml
-                                   -svm model.svm
-                                   -il  input_image_list
-                                   -vd  list_of_positive_examples_shapefiles
+otbcli_ValidateImagesClassifier -imstat images_statistics.xml
+                                -model  model.svm
+                                -il     input_image_list
+                                -vd     list_of_positive_examples_shapefiles
 \end{verbatim}
 
 You can save these results with the option -out output filename.
@@ -109,13 +110,13 @@ You can save these results with the option -out output filename.
 \subsubsection{Using the classification model}
 Once the classifier has been trained, one can apply the model to classify
 pixel inside defined classes on a new image using the
-\application{ImageSVMClassifier} application:
+\application{ImageClassifier} application:
 
 \begin{verbatim}
-otbcli_ImageSVMClassifier -imstat  images_statistics.xml
-                          -svm model.svm
-                          -in  input_image
-                          -out labeled_image
+otbcli_ImageClassifier -imstat images_statistics.xml
+                       -model  model.svm
+                       -in     input_image
+                       -out    labeled_image
 \end{verbatim}
 
 You can set an input mask to limit the classification to the mask area with
@@ -140,10 +141,10 @@ In the previous example, 1 is the label and 255 0 0 is a RGB color
 the following :
 
 \begin{verbatim}
-otbcli_ColorMapping -in  labeled_image
-                    -out color_image
-                    -method custom
-                    -method.custom.lut  mapping_file
+otbcli_ColorMapping -in                labeled_image
+                    -out               color_image
+                    -method            custom
+                    -method.custom.lut mapping_file
 \end{verbatim}
 
 Other look-up tables (LUT) are available : standard continuous LUT,
@@ -174,39 +175,71 @@ and this image is produced with the commands inside this
 
 \subsection{Fusion of classification maps}\label{ssec:fusionofclassifications}
 
-After having processed several classifications of the same input image but from different models or methods (SVM,...),
-it is possible to make a fusion of these classification maps with the \application{FusionOfClassifications} application which uses majority voting to handle
-this fusion. The Fusion of Classifications generates a single more robust and precise classification map which combines the information extracted from the input
-list of labeled images. 
-
-\subsubsection{Majority voting for the fusion of classifications}
-
-In the Majority Voting method implemented in the \application{FusionOfClassifications} application, the value of each output pixel is equal to the more frequent
-class label of the same pixel in the input classification maps. However, it may happen that the more frequent class labels are not unique in individual pixels. In that case,
-the undecided label is attributed to the output pixels.
+After having processed several classifications of the same input image but from 
+different models or methods (SVM,...), it is possible to make a fusion of these 
+classification maps with the \application{FusionOfClassifications} application 
+which uses either majority voting or the Demspter Shafer framework to handle this 
+fusion. The Fusion of Classifications generates a single more robust and precise 
+classification map which combines the information extracted from the input list of 
+labeled images.
 
 The \application{FusionOfClassifications} application has the following input parameters :
 \begin{itemize}
 \item \verb?-il? list of input labeled classification images to fuse
 \item \verb?-out? the output labeled image resulting from the fusion of the input classification images
-\item \verb?-undecided? label for the undecided class (default value = 0)
+\item \verb?-method? the fusion method (either by majority voting or by Dempster Shafer)
+\item \verb?-nodatalabel? label for the no data class (default value = 0)
+\item \verb?-undecidedlabel? label for the undecided class (default value = 0)
 \end{itemize}
+
+\subsubsection{Majority voting for the fusion of classifications}
+
+In the Majority Voting method implemented in the \application{FusionOfClassifications} 
+application, the value of each output pixel is equal to the more frequent class 
+label of the same pixel in the input classification maps. However, it may happen 
+that the more frequent class labels are not unique in individual pixels. In that 
+case, the undecided label is attributed to the output pixels.
 
 
 The application can be used like this:
 \begin{verbatim}
-otbcli_FusionOfClassifications  -il         list_of_input_images
-                                -out        OutputFusedClassificationImage
-                                -undecided  10
+otbcli_FusionOfClassifications  -il             list_of_input_images
+                                -out            OutputFusedClassificationImage
+                                -method         majorityvoting
+                                -nodatalabel    0
+                                -undecidedlabel 10
+\end{verbatim}
+
+
+\subsubsection{Dempster Shafer framework for the fusion of classifications}
+
+The \application{FusionOfClassifications} application, handles another method to 
+compute the fusion: the Dempster Shafer framework. The use of this method needs 
+an additional input list of *.CSV files corresponding to the confusion matrices of 
+the input classification map. These confusion matrices files can be generated with 
+the \application{ComputeConfusionMatrix} application.
+
+The application can be used like this:
+\begin{verbatim}
+otbcli_FusionOfClassifications  -il             list_of_input_images
+                                -out            OutputFusedClassificationImage
+                                -method         dempstershafer
+                                -method.dempstershafer.cmfl 
+                                    list_of_input_confusion_matrices_CSV_files
+                                -nodatalabel    0
+                                -undecidedlabel 10
 \end{verbatim}
  
 
 \subsubsection{Recommandations to properly use the fusion of classification maps}
 
-In order to properly use the \application{FusionOfClassifications} application, some points should be considered. First, the \verb?list_of_input_images?
-and \verb?OutputFusedClassificationImage? are single band labeled images, which means that the value of each pixel corresponds to the class label it belongs
-to, and labels in each classification map must represent the same class. Secondly, the undecided label value must be different from existing labels in the input images in order to avoid any ambiguity in the interpretation of
-the \verb?OutputFusedClassificationImage?.
+In order to properly use the \application{FusionOfClassifications} application, 
+some points should be considered. First, the \verb?list_of_input_images? and 
+\verb?OutputFusedClassificationImage? are single band labeled images, which means 
+that the value of each pixel corresponds to the class label it belongs to, and 
+labels in each classification map must represent the same class. Secondly, the 
+undecided label value must be different from existing labels in the input images in 
+order to avoid any ambiguity in the interpretation of the \verb?OutputFusedClassificationImage?.
 
 
 
