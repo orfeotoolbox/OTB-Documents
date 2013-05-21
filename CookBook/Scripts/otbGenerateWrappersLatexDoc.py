@@ -128,27 +128,36 @@ def GenerateParameterType(app,param):
         return "Group"
 
 def GenerateParametersTable(app,paramlist,label):
-    output = "\\begin{table}[!htbp]" + linesep
-    output += "\\begin{center}" + linesep
+    output = "\\begin{center}" + linesep
     output += "\\begin{small}" + linesep
-    output += "\\begin{tabular}{|p{0.4\\textwidth}|l|p{0.4\\textwidth}|}" + linesep
+    output += "\\begin{longtable}{|p{0.4\\textwidth}|l|p{0.4\\textwidth}|}" + linesep
+    output += "\\hline" + linesep
+    output += "Parameter key & Parameter type & Parameter description \\endfirsthead" + linesep
     output += "\\hline" + linesep
     output += "Parameter key & Parameter type & Parameter description \\\\" + linesep
     output += "\\hline" + linesep
+    output += "\\multicolumn{3}{|p{0.6666\\linewidth}|}{.../...} \\\\" + linesep
+    output += "\\endhead" + linesep
+    output += "\\multicolumn{3}{|p{0.6666\\linewidth}|}{.../...} \\\\" + linesep
+    output += "\\hline" + linesep
+    output += "\\endfoot" + linesep
+    output += "\\hline" + linesep
+    output += "\\multicolumn{3}{|p{0.6666\\linewidth}|}{} \\\\" + linesep
+    output += "\\hline" + linesep
+    output += "\\endlastfoot" + linesep
+    output += "\\hline" + linesep
     for param in paramlist:
-        output+= "\\verb|"+param + "| & "
+        output+= "\\verb|" + param + "| & "
         output += GenerateParameterType(app,param) + " & "
         output+= ConvertString(app.GetParameterName(param)) + "\\\\" + linesep
         if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
             for (choicekey,choicename) in zip(app.GetChoiceKeys(param),app.GetChoiceNames(param)):
                 output +="\\verb|" + param + " " + choicekey +"| & \\emph{Choice} & " + choicename + "\\\\" + linesep
-    output += "\\hline" + linesep
-    output += "\\end{tabular}"
+    output += "\\end{longtable}" + linesep
     output += "\\end{small}" + linesep
     output += "\\end{center}" + linesep
     output += "\\caption{Parameters table for " + ConvertString(app.GetDocName()) + ".} "
     output += "\\label{" + label + "}" + linesep
-    output += "\\end{table} " + linesep
     return output
 
 def unique(seq): 
