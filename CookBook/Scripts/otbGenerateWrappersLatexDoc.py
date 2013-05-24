@@ -19,6 +19,7 @@ def ConvertString(s):
     s = s.replace('\n', '\\\\ ')
     s = s.replace('_', '\\_')
     s = s.replace('#', '\\#')
+    s = s.replace('%', '\\%')
     s = s.replace('<', '\\textless')
     s = s.replace('>', '\\textgreater')
     s = s.replace('<=', '\\le')

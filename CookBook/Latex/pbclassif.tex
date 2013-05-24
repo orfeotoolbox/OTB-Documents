@@ -152,7 +152,7 @@ optimal LUT, and LUT computed over a support image.
 
 \subsubsection{Example}
 
-We take 4 classes: water, roads, vegetation and buildings with red roof.
+We consider 4 classes: water, roads, vegetation and buildings with red roofs.
 Data is available in the OTB-Data
 \href{http://hg.orfeo-toolbox.org/OTB-Data/file/0fed8f4f035c/Input/Classification}{repository}
 and this image is produced with the commands inside this
@@ -176,12 +176,12 @@ and this image is produced with the commands inside this
 \subsection{Fusion of classification maps}\label{ssec:fusionofclassifications}
 
 After having processed several classifications of the same input image but from 
-different models or methods (SVM,...), it is possible to make a fusion of these 
-classification maps with the \application{FusionOfClassifications} application 
-which uses either majority voting or the Demspter Shafer framework to handle this 
-fusion. The Fusion of Classifications generates a single more robust and precise 
-classification map which combines the information extracted from the input list of 
-labeled images.
+different models or methods (SVM, KNN, Random Forest,...), it is possible to make a 
+fusion of these classification maps with the \application{FusionOfClassifications} 
+application which uses either majority voting or the Demspter Shafer framework to 
+handle this fusion. The Fusion of Classifications generates a single more robust and 
+precise classification map which combines the information extracted from the input 
+list of labeled images. 
 
 The \application{FusionOfClassifications} application has the following input parameters :
 \begin{itemize}
@@ -191,6 +191,11 @@ The \application{FusionOfClassifications} application has the following input pa
 \item \verb?-nodatalabel? label for the no data class (default value = 0)
 \item \verb?-undecidedlabel? label for the undecided class (default value = 0)
 \end{itemize}
+
+
+The input pixels with the nodata class label are simply ignored by the fusion process. 
+Moreover, the output pixels for which the fusion process does not result in a unique 
+class label, are set to the undecided value.
 
 \subsubsection{Majority voting for the fusion of classifications}
 
@@ -211,13 +216,72 @@ otbcli_FusionOfClassifications  -il             list_of_input_images
 \end{verbatim}
 
 
+Let us consider 6 independent classification maps of the same input image (Cf. left 
+image in Fig. \ref{fig:MeanShiftVectorImageFilter}) generated from 6 different SVM 
+models. The Fig. \ref{fig:ClassificationMapFusionApplication} represents them after 
+a color mapping by the same LUT. Thus, 4 classes (water: blue, roads: gray, 
+vegetation: green, buildings with red roofs: red) are observable on each of them.
+
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_C1_CM.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_C2_CM.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_C3_CM.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_C4_CM.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_C5_CM.png}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_C6_CM.png}
+  \itkcaption[ExampleSVMClassifFusion]{Six fancy colored classified images to be fused, generated from 6 different SVM models.}
+  \label{fig:ClassificationMapFusionApplication}
+\end{figure}
+
+
+As an example of the \application{FusionOfClassifications} application by 
+\emph{majority voting}, the fusion of the six input classification maps 
+represented in Fig. \ref{fig:ClassificationMapFusionApplication} leads to the 
+classification map illustrated on the right in Fig. \ref{fig:ClassificationMapFusionApplicationMV}. 
+Thus, it appears that this fusion highlights the more relevant classes among the six  
+different input classifications. The white parts of the fused image correspond to 
+the undecided class labels, i.e. to pixels for which there is not a unique 
+majority voting.
+
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_inputimage.jpg}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_MV_C123456_CM.png}
+  \itkcaption[ExampleSVMClassifFusionMV]{From left to right: Original image, and fancy colored classified image obtained by a 
+  majority voting fusion of the 6 classification maps represented in Fig. \ref{fig:ClassificationMapFusionApplication} (water: blue, roads: gray, 
+vegetation: green, buildings with red roofs: red, undecided: white).}
+  \label{fig:ClassificationMapFusionApplicationMV}
+\end{figure}
+
+
 \subsubsection{Dempster Shafer framework for the fusion of classifications}
 
 The \application{FusionOfClassifications} application, handles another method to 
-compute the fusion: the Dempster Shafer framework. The use of this method needs 
-an additional input list of *.CSV files corresponding to the confusion matrices of 
-the input classification map. These confusion matrices files can be generated with 
-the \application{ComputeConfusionMatrix} application.
+compute the fusion: the Dempster Shafer framework. 
+In the \href{http://en.wikipedia.org/wiki/Dempster\%E2\%80\%93Shafer_theory}{Dempster-Shafer theory}, 
+the performance of each classifier resulting in the classification maps to fuse are 
+evaluated with the help of the so-called \emph{belief function} of each class label, 
+which measures the degree of belief that the corresponding label is correctly assigned 
+to a pixel. For each classifier, and for each class label, this belief functions are 
+estimated from another parameter called the \emph{mass of belief} of each class label, 
+which measures the confidence that the user can have in each classifier according to 
+the resulting labels.
+
+In the Dempster Shafer framework for the fusion of classification maps, the fused 
+class label for each pixel is the one with the maximal belief function. In case of 
+multiple class labels maximizing the belief functions, the output fused pixels are 
+set to the undecided value.
+
+In order to estimate the confidence level in each classification map, each of them 
+should be confronted with a ground truth. For this purpose, the masses of belief of 
+the class labels resulting from a classifier are estimated from its confusion 
+matrix, which is itself exported as a *.CSV file with the help of the 
+\application{ComputeConfusionMatrix} application. Thus, using the Dempster Shafer 
+method to fuse classification maps needs an additional input list of such *.CSV files 
+corresponding to their respective confusion matrices.
 
 The application can be used like this:
 \begin{verbatim}
@@ -229,6 +293,26 @@ otbcli_FusionOfClassifications  -il             list_of_input_images
                                 -nodatalabel    0
                                 -undecidedlabel 10
 \end{verbatim}
+
+
+
+As an example of the \application{FusionOfClassifications} application by 
+\emph{Dempster Shafer}, the fusion of the six input classification maps 
+represented in Fig. \ref{fig:ClassificationMapFusionApplication} leads to the 
+classification map illustrated on the right in Fig. \ref{fig:ClassificationMapFusionApplicationDS}. 
+Thus, it appears that this fusion gives access to a more precise and robust 
+classification map based on the confidence level in each classifier.
+
+
+\begin{figure}[!h]
+  \center
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_inputimage.jpg}
+  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/QB_1_ortho_DS_V_P_C123456_CM.png}
+  \itkcaption[ExampleSVMClassifFusionDS]{From left to right: Original image, and fancy colored classified image obtained by a 
+  Dempster Shafer fusion of the 6 classification maps represented in Fig. \ref{fig:ClassificationMapFusionApplication} (water: blue, roads: gray, 
+vegetation: green, buildings with red roofs: red, undecided: white).}
+  \label{fig:ClassificationMapFusionApplicationDS}
+\end{figure}
  
 
 \subsubsection{Recommandations to properly use the fusion of classification maps}
@@ -240,36 +324,6 @@ that the value of each pixel corresponds to the class label it belongs to, and
 labels in each classification map must represent the same class. Secondly, the 
 undecided label value must be different from existing labels in the input images in 
 order to avoid any ambiguity in the interpretation of the \verb?OutputFusedClassificationImage?.
-
-
-
-\subsubsection{Example}
-
-As an example of the \application{FusionOfClassifications} application, the fusion of the three input classification maps represented in
-Fig. \ref{fig:ClassificationMapFusionApplication} leads to the classification map illustrated on the right in Fig. \ref{fig:ClassificationMapFusionApplication2}.
-Thus, it appears that this fusion gives access to a more precise and robust classification map which highlight the more relevant classes among the three different input
-classifications.
-
-
-\begin{figure}[!h]
-  \center
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_input.png}
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_input_2.png}
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_input_3.png}
-  \itkcaption[ExampleSVMClassifFusion]{Three fancy colored classified images to be fused, generated from 3 different SVM models.}
-  \label{fig:ClassificationMapFusionApplication}
-\end{figure}
-
-
-\begin{figure}[!h]
-  \center
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_inputimage.jpg}
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_CMR_Fusion_123.png}
-  \itkcaption[ExampleSVMClassifFusion2]{From left to right: Original image, and fancy colored classified image obtained by a fusion of
-  the 3 classification maps represented in Fig. \ref{fig:ClassificationMapFusionApplication}.}
-  \label{fig:ClassificationMapFusionApplication2}
-\end{figure}
-
 
 
 
@@ -338,7 +392,7 @@ which is its default value. Both NoData and Undecided labels have a default valu
 
 Resulting from the \application{ColorMapping} application presented in section \ref{ssec:classificationcolormapping}, and illustrated in
 Fig. \ref{fig:MeanShiftVectorImageFilter}, the Fig. \ref{fig:ClassificationMapRegularizationApplication} shows a regularization of a classification
-map composed of 4 classes: water, roads, vegetation and buildings with red roof. The radius of the ball shaped structuring element is equal to 3 pixels,
+map composed of 4 classes: water, roads, vegetation and buildings with red roofs. The radius of the ball shaped structuring element is equal to 3 pixels,
 which corresponds to a ball included in a 7 x 7 pixels square. Pixels with more than one majority class keep their original labels.
 
 \begin{figure}[!h]
