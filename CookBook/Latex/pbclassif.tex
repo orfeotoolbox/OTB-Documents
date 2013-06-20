@@ -2,19 +2,22 @@
 
 \subsection{Pixel based classification}\label{ssec:pbclassif}
 
-The SVM classification in application framework provides a supervised pixel-wise
-classification chain based on learning from multiple images. It supports huge
-images through streaming and multi-threading.
-The classification chain performs a SVM training step based on the intensities
-of each pixel as features. Please note that all the input images must have the
-same number of bands to be comparable.
+The classification in the application framework provides a supervised pixel-wise
+classification chain based on learning from multiple images, and using one 
+specified machine learning method like SVM, Bayes, KNN, Random Forests, Artificial 
+Neural Network, and others...(see application help of 
+\application{TrainImagesClassifier} for further details about all the available 
+classifiers). It supports huge images through streaming and multi-threading. The 
+classification chain performs a training step based on the intensities of each 
+pixel as features. Please note that all the input images must have the same number 
+of bands to be comparable.
 
 \subsubsection{Statistics estimation}
-In order to make these features comparable between each images, the first step
-is to estimate the input images statistics. These statistics will be used to
-center and reduce the intensities (mean of 0 and standard deviation of 1) of
-samples based on the vector data produced by the user. To do so, the
-\application{ComputeImagesStatistics} tool can be used :
+In order to make these features comparable between each training images, the first 
+step consists in estimating the input images statistics. These statistics will be 
+used to center and reduce the intensities (mean of 0 and standard deviation of 1) 
+of samples based on the vector data produced by the user. To do so, the
+\application{ComputeImagesStatistics} tool can be used:
 
 \begin{verbatim}
 otbcli_ComputeImagesStatistics -il  list_of_input_images
@@ -27,11 +30,11 @@ The features statistics XML file will be an input of the following tools.
 
 \subsubsection{Building the training data set}
 
-As the chain is supervised, we need first to build a training set with
+As the chain is supervised, we first need to build a training set with
 positive examples of different objects of interest. This can be done
 with Monteverdi Vectorization module
 (Fig.\ref{fig:vectoModuleDataSetCreation}).
-These polygons must be save in OGR vector format supported
+These polygons must be saved in OGR vector format supported
 by GDAL like ESRI shapefile for example.
 
 This operation will be reproduced on each image used as input of the training
@@ -70,8 +73,8 @@ Once images statistics have been estimated, the learning scheme is the following
   (confusion matrix, precision, recall and F-Score).
 \end{enumerate}
 
-These steps can be performed by the \application{TrainImagesClassifier}
-command-line using the following:
+Let us consider a SVM classification. These steps can be performed by the 
+\application{TrainImagesClassifier} command-line using the following:
 
 \begin{verbatim}
 otbcli_TrainImagesClassifier -io.imstat  images_statistics.xml
@@ -81,31 +84,14 @@ otbcli_TrainImagesClassifier -io.imstat  images_statistics.xml
                              -io.out     model.svm
 \end{verbatim}
 
-Optionnal groups of parameters are also available (see application help for
+Additional groups of parameters are also available (see application help for
 more details):
 \begin{itemize}
 \item \verb?-elev? Handling of elevation (DEM or average elevation)
 \item \verb?-sample? Group of parameters for sampling
-\item \verb?-svm? Group of parameters for SVM
+\item \verb?-classifier? Classifiers to use for the training, and their corresponding groups of parameters
 \end{itemize}
 
-\subsubsection{Validating the classification model}
-It is also possible to estimate the performance of the SVM model with a
-new validation sample set and another image with the
-\application{ValidateImagesClassifier} application. It will compute
-the global confusion matrix and precision, recall and F-score of each
-class based on the \href{http://www.orfeo-toolbox.org/doxygen-current/classotb_1_1ConfusionMatrixCalculator.html}{ConfusionMatrixCalculator}
-class.
-
-\begin{verbatim}
-otbcli_ValidateImagesClassifier -imstat images_statistics.xml
-                                -model  model.svm
-                                -il     input_image_list
-                                -vd     list_of_positive_examples_shapefiles
-\end{verbatim}
-
-You can save these results with the option -out output filename.
-%You can also set a DEM repository (-dem) to keep the vectordata reprojection accurate.
 
 \subsubsection{Using the classification model}
 Once the classifier has been trained, one can apply the model to classify
@@ -121,6 +107,34 @@ otbcli_ImageClassifier -imstat images_statistics.xml
 
 You can set an input mask to limit the classification to the mask area with
 value \textgreater 0.
+
+
+\subsubsection{Validating the classification model}
+The performance of the model generated by the \application{TrainImagesClassifier} 
+application is directly estimated by the application itself, which displays the 
+precision, recall and F-score of each class, and can generate the global confusion 
+matrix as an output *.CSV file.
+ 
+With the \application{ConputeConfusionMatrix} application, it is also possible to 
+estimate the performance of a model from a classification map generated with the 
+\application{ImageClassifier} application. 
+This labeled image is compared to positive reference samples (either represented as 
+a raster labeled image or as a vector data containing the reference classes). It 
+will compute the confusion matrix and precision, recall and F-score of each class 
+too, based on the 
+\href{http://www.orfeo-toolbox.org/doxygen-current/classotb_1_1ConfusionMatrixCalculator.html}{ConfusionMatrixCalculator} 
+class.
+
+\begin{verbatim}
+otbcli_ComputeConfusionMatrix -in                input_labeled_image
+                              -ref               vector
+                              -ref.vector.in     positive_example_shapefile
+                              -ref.vector.field  class_discrimination_field
+                              -out               confusion_matrix.csv
+\end{verbatim}
+
+
+%You can also set a DEM repository (-dem) to keep the vectordata reprojection accurate.
 
 \subsubsection{Fancy classification results}
 \label{ssec:classificationcolormapping}
@@ -381,7 +395,7 @@ otbcli_ClassificationMapRegularization  -io.in              InputLabeledImage
 In order to properly use the \application{ClassificationMapRegularization} application, some points should be considered.
 First, both \verb?InputLabeledImage? and \verb?OutputLabeledImage? are single band labeled images, which means that the
 value of each pixel corresponds to the class label it belongs to. The \verb?InputLabeledImage? is commonly an image generated
-with a classification algorithm such as the SVM classification (see section \ref{ssec:classification}). Remark: both
+with a classification algorithm such as the SVM classification. Remark: both
 \verb?InputLabeledImage? and \verb?OutputLabeledImage? are not necessarily of the same datatype. Secondly, if ip.suvbool == true,
 the Undecided label value must be different from existing labels in the input labeled image in order to avoid any ambiguity in the
 interpretation of the regularized \verb?OutputLabeledImage?. Finally, the structuring element radius must have a minimum value equal to 1 pixel,
