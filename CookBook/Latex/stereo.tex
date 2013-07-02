@@ -10,7 +10,7 @@ the following steps:
 \item Estimation of displacements grids for epipolar geometry transformation
 \item Epipolar resampling of the image pair using those grids
 \item Dense disparity map estimation
-\item Projection of the disparities on a Digital Elevation Map (DEM)
+\item Projection of the disparities on a Digital Surface Model (DSM)
 \end{itemize}
 
 Let's go to the third dimension!
@@ -307,15 +307,15 @@ Of course all these parameters can be combined to improve the disparity map.
   \label{fig:DisparityMetric}
 \end{figure}
 
-\subsection{From disparity to Digital Elevation Model}
+\subsection{From disparity to Digital Surface Model}
 
 Using the previous application, we evaluated disparities between images. The
 next (and last!) step is now to transform the disparity map into an elevation
 information to produce an elevation map. It uses as input the disparity maps
-(horizontal and vertical) to produce a Digital Elevation Model (DEM) with a
+(horizontal and vertical) to produce a Digital Surface Model (DSM) with a
 regular sampling. The elevation values is computed from the triangulation of the
 "left-right" pairs of matched pixels. When several elevations are available on
-a DEM cell, the highest one is kept.
+a DSM cell, the highest one is kept.
 
 First, an important point is that it is often a good idea to rework
 the disparity map given by the \application{BlockMatching} application
@@ -375,36 +375,106 @@ ground area covered by the stereo pair. Pixels values are expressed in meters.
 
 This is it ! Figure~\ref{fig:stereo_out} shows the output DEM from the Cheops pair.
 
-\subsection{One application to rule them all}
-An application has been added to combine all these steps using a standard approach 
-: \application{StereoFramework}. It computes the DEM (still projected in WGS84) 
-from an input stereo pair. The user has to specify the sampling step (in meters) 
-of the output DEM, but the other parameters are optional. In addition to the 
-usual elevation parameters, here are the main parameters to control the application:
-\begin{itemize}
-\item \code{-res} : sampling step of the output DEM in meters
-\item \code{-above} : maximum elevation offset from the chosen elevation source (in meters)
-\item \code{-below} : minimum elevation offset from the chosen elevation source (in meters)
-\item \code{-mask.left} and \code{-mask.right} : input mask for the stereo pair
-\item \code{-disp} : path to the output disparity map
+\subsection{One application to rule them all in multi stereo framework scheme}
+An application has been added to fuse one or multiple stereo
+reconstruction(s) using all in one approach :
+\application{StereoFramework}. It computes the DSM 
+from one or several stereo pair. First of all the user have to choose his input
+data and defines stereo couples using \textit{-input.co} string parameter. This
+parameter use the following formatting convention " index0  index1 ,index2
+  index3, \ldots ", which will create a first couple with image index $0$ and
+$1$, a second with image index $1$ and
+$2$, and so on. If left blank images a processed by pair (which is equivalent
+as using " 0 1,2 3,4 5 " \ldots). 
+In addition to the usual elevationn and projection parameters,
+main parameters have been splitted in  groups detailled below:
+\begin{description}
+\item[Output :] output parameters : DSM resolution, NoData value, Cell Fusion
+method, 
+ \begin{itemize}
+\item \code{-output.map} : output projection map selection.
+\item \code{-output.res} : Spatial Sampling Distance of the output
+DSM in meters
+\item \code{-output.nodata} : DSM empty cells are filled with this float value
+(-32768 by default)
+\item \code{-output.fusionmethod} : Choice of fusion strategy in each DSM cell
+(max, min, mean, acc) 
+\item \code{-output.out} :  Output DSM
+\item \code{-output.mode} : Output DSM extent choice
+\end{itemize} 
+\item[Stereorect :] Direct and inverse stereorectification grid subsampling
+parameters
+ \begin{itemize}
+\item \code{-stereorect.fwdgridstep} : Step of the direct deformation grid (in
+pixels)
+\item \code{-stereorect.invgridssrate} : Sub-sampling of the inverse epipolar
+grid
 \end{itemize}
+\item[BM : ] Block Matching parameters.
+\begin{itemize}
+ \item \code{-bm.metric} : Block-matching metric choice (robust SSD, SSD, NCC,
+ Lp Norm) 
+ \item \code{-bm.radius} : Radius of blocks for matching filter (in pixels,
+ $2$ by default)
+ \item \code{-bm.minhoffset} : Minimum altitude below the
+ selected elevation source (in meters, -20.0 by default)
+ \item \code{-bm.maxhoffset} : Maximum altitude above the
+ selected elevation source (in meters, 20.0 by default)
+\end{itemize}
+\item[Postproc : ] Post-Processing parameters
+ \begin{itemize}
+ \item \code{-postproc.bij} : use bijection consistency. Right to Left
+ correlation is computed to validate Left to Right disparities. If bijection is not found pixel is rejected
+\item \code{-postproc.med} :  use median disparities filtering (disabled by
+default)
+\item \code{-postproc.metrict} : use block matching metric output to discard pixels with low correlation value (disabled by default, float value)");
+\end{itemize}
+\item[Mask : ] Compute optional intermeaite masks.
+\begin{itemize}
+ \item \code{-mask.left} : Mask for left input image (must have the same size
+ for all couples)
+ \item \code{-mask.right}: Mask for right input image  (must have the same size
+ for all couples)
+ \item \code{-mask.variancet} : This parameter allows to discard pixels whose
+ local variance is too small. The size of the neighborhood is given by the
+ radius parameter. (disabledd by default)
+\end{itemize}
+\end{description}
 
-The parameters \code{-above} and \code{-below} are used inside the application to derive the
-minimum and maximum horizontal disparity exploration, so they have a critical impact on 
+
+
+The parameters \code{-bm.minhoffset} and \code{-bm.maxhoffset} are used
+inside the application to derive the minimum and maximum horizontal disparity exploration, so they have a critical impact on 
 computation time. It is advised to choose an elevation source that is not too far from the
-DEM you want to produce (for instance, an SRTM elevation model). Therefore, the altitude 
+DSM you want to produce (for instance, an SRTM elevation model). Therefore, the altitude 
 from your elevation source will be already taken into account in the epipolar geometry
 and the disparities will reveal the elevation offsets (such as buildings). It allows you
  to use a smaller exploration range along the elevation axis, causing a smaller exploration
 along horizontal disparities and faster computation.
+\code{-stereorect.fwdgridstep} and \code{-stereorect.invgridssrate} have also a
+deep impact in time consumption, thus they have to be carefully chosen in case
+of large image processing.
+
+
 
 The following algorithms are used in the application:
+For each sensor pair
 \begin{itemize}
-\item Computation of epipolar rectification grids
-\item Resampling into epipolar geometry with BCO interpolator
-\item Block matching with NCC score on a 9x9 correlation window (only horizontal exploration)
-\item Subpixel refinement with dichotomy method
-\item Median filtering of horizontal disparities
-\item Filtering of disparities with a low correlation (NCC lower than 0.6)
-\item Projection on a WGS84 grid
+\item Compute the epipolar deformation grids from the stereo pair (direct and
+inverse)
+\item Resample into epipolar geometry with BCO interpolator
+\item Create masks for each epipolar image : remove black borders and resample input masks
+\item Compute horizontal disparities with a block matching algorithm
+\item Refing Disparities to sub-pixel precision with a dichotomy algorithm
+\item Apply an optional Median filter 
+\item Filter disparities based on the correlation score (optional) and
+exploration bounds
+\item Translate disparities in sensor geometry
+\item Convert disparity map to 3D map
 \end{itemize}
+
+Then fuse all 3D maps to produce DSM with desired geographic or cartographic
+projection and parametrizable extent.
+
+
+
