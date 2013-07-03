@@ -381,13 +381,13 @@ reconstruction(s) using all in one approach :
 \application{StereoFramework}. It computes the DSM 
 from one or several stereo pair. First of all the user have to choose his input
 data and defines stereo couples using \textit{-input.co} string parameter. This
-parameter use the following formatting convention " index0  index1 ,index2
-  index3, \ldots ", which will create a first couple with image index $0$ and
-$1$, a second with image index $1$ and
-$2$, and so on. If left blank images a processed by pair (which is equivalent
-as using " 0 1,2 3,4 5 " \ldots). 
-In addition to the usual elevationn and projection parameters,
-main parameters have been splitted in  groups detailled below:
+parameter use the following formatting convention " $index_{0}$  $index_{1}$, 
+$index_{2}$ $index_{3}$, \ldots ", which will create a first couple with image
+$index_{0}$ and $index_{1}$, a second with image $index_{1}$ and
+$index_{2}$, and so on. If left blank images are processed by pairs (which is
+equivalent as using " 0 1,2 3,4 5 " \ldots). 
+In addition to the usual elevation and projection parameters,
+main parameters have been splitted in groups detailled below:
 \begin{description}
 \item[Output :] output parameters : DSM resolution, NoData value, Cell Fusion
 method, 
@@ -429,11 +429,11 @@ grid
 default)
 \item \code{-postproc.metrict} : use block matching metric output to discard pixels with low correlation value (disabled by default, float value)");
 \end{itemize}
-\item[Mask : ] Compute optional intermeaite masks.
+\item[Mask : ] Compute optional intermediate masks.
 \begin{itemize}
  \item \code{-mask.left} : Mask for left input image (must have the same size
  for all couples)
- \item \code{-mask.right}: Mask for right input image  (must have the same size
+ \item \code{-mask.right} : Mask for right input image  (must have the same size
  for all couples)
  \item \code{-mask.variancet} : This parameter allows to discard pixels whose
  local variance is too small. The size of the neighborhood is given by the
@@ -441,7 +441,7 @@ default)
 \end{itemize}
 \end{description}
 
-
+\subsection{Stereo reconstruction good practices}
 
 The parameters \code{-bm.minhoffset} and \code{-bm.maxhoffset} are used
 inside the application to derive the minimum and maximum horizontal disparity exploration, so they have a critical impact on 
@@ -451,11 +451,18 @@ from your elevation source will be already taken into account in the epipolar ge
 and the disparities will reveal the elevation offsets (such as buildings). It allows you
  to use a smaller exploration range along the elevation axis, causing a smaller exploration
 along horizontal disparities and faster computation.
+
 \code{-stereorect.fwdgridstep} and \code{-stereorect.invgridssrate} have also a
 deep impact in time consumption, thus they have to be carefully chosen in case
-of large image processing.
+of large image processing. 
 
+To reduce time consumption it would be useful to crop
+all sensor images to the same extent. The easiest way to do
+that is to choose an image as reference, and then apply 
+\application{ExtractROI} application on the other sensor images using the
+fit mode \code{-mode.fit} option.
 
+\subsection{Algorithm outline}
 
 The following algorithms are used in the application:
 For each sensor pair
