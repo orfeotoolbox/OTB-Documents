@@ -36,6 +36,9 @@
 
   They are covered by a cnes copyright.
 
+  Exercises based on these Pleiades data include a set of
+  command-line to generate the needed extracts.
+
   Other data needed for some exercises, as well as solution scripts
   can be found in the data package.
 
