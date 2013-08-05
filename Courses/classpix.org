@@ -8,6 +8,37 @@
      regions. You will then learn how to apply this model to images
      and produce shiny classification maps.
 
+**** Data
+     If you need to generate the data ~melbourne_ms_toa_ortho_extract_small.tif~
+     used in this exercise from the
+     original products, you can use the following command lines.
+
+     To orthorectify the MS product:
+
+     #+LATEX:\begin{tiny}
+     #+BEGIN_SRC bash
+     $ otbcli_OrthoRectification \
+    -io.in FCGC600031035/IMG_PHR1A_MS_002/IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.JP2 
+    -io.out ~/temporary/ortho_phr_ms_small.tif uint16 -outputs.mode auto -outputs.ulx 313892 
+    -outputs.uly 5816639 -outputs.spacingx 2 -outputs.spacingy -2 -opt.ram 1024 -map utm 
+    -map.utm.zone 55 -outputs.sizex  2048 -outputs.sizey 2048  -map.utm.northhem 0
+     #+END_SRC
+     #+LATEX:\end{tiny}
+
+     To convert pixel values in top of atmosphere milli-reflectance:
+
+     #+LATEX:\begin{tiny}
+     #+BEGIN_SRC bash
+     $ otbcli_OpticalCalibration \
+       -in ~/temporary/ortho_phr_ms_small.tif 
+       -out melbourne_ms_toa_ortho_extract_small.tif uint16 -milli 1
+     #+END_SRC
+     #+LATEX:\end{tiny}
+
+     You can also generate also the ~melbourne_ms_toa_ortho_extract_large.tif~
+     with the same set of commands. You just need to change the size of the
+     orthorectify region to 4096 instead of 2048. 
+     
 **** Pre-requisites
      
      - Basic knowledge on OTB applications and QGis usage
@@ -66,7 +97,7 @@
      - What is the measured accuracy?
 
 **** Apply classification model
-     - Use the *ImageSVMClassifier* to apply the classification model to the input image
+     - Use the *ImageClassifier* to apply the classification model to the input image
      - What is the output of the application?
      - Bonus : Use the same model to apply the classification to the other extract
  
