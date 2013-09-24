@@ -5,6 +5,7 @@ import sys
 import glob
 from optparse import OptionParser
 
+
 ##############################################################################
 # Parameters
 linesep = os.linesep
@@ -127,6 +128,10 @@ def GenerateParameterType(app,param):
         return "List"
     if app.GetParameterType(param) == otbApplication.ParameterType_Group:
         return "Group"
+    if app.GetParameterType(param) == otbApplication.ParameterType_InputProcessXML:
+        return "XML input parameters file"
+    if app.GetParameterType(param) == otbApplication.ParameterType_OutputProcessXML:
+        return "XML output parameters file"
 
 def GenerateParametersTable(app,paramlist,label):
     output = "\\begin{center}" + linesep
@@ -149,7 +154,7 @@ def GenerateParametersTable(app,paramlist,label):
     output += "\\hline" + linesep
     for param in paramlist:
         output+= "\\verb|" + param + "| & "
-        output += GenerateParameterType(app,param) + " & "
+        output+= GenerateParameterType(app,param) + " & "
         output+= ConvertString(app.GetParameterName(param)) + "\\\\" + linesep
         if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
             for (choicekey,choicename) in zip(app.GetChoiceKeys(param),app.GetChoiceNames(param)):
