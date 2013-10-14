@@ -123,6 +123,12 @@ those segments. The \emph{minsize} parameter will filter segments
 whose size in pixels is bellow its value, and their labels will be set
 to 0 (nodata). 
 
+Please note that the output segmented image may look patchy, as if
+there were tiling artifacts: this is because segments are numbered
+sequentially with respect to the order in which tiles are
+processed. You will see after the result of the vectorization step
+that there are no artifacts in the results.
+
 The \application{LSMSSegmentation} application will write as many
 intermediate files as tiles needed during processing. As such, it may
 require twice as free disk space as the final size of the final
