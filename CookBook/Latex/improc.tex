@@ -56,7 +56,7 @@ You can find more information about this application
 
 LSMS is a segmentation workflow which allows to perform tile-wise
 segmentation of very large image with theoretical guarantees of
-getting identical results to those wihtout tiling. It has been
+getting identical results to those without tiling. It has been
 developed by David Youssefi and Julien Michel during David internship
 at CNES and is to be published soon.
 
@@ -101,9 +101,9 @@ them by tiles whose dimensions are defined by the
 \emph{tilesizex} and \emph{tilesizey} parameters, and by
 writing intermediate images to disk, thus keeping the memory
 consumption very low throughout the process. The segmentation will
-group together adjacent pixels whose range distance is bellow the
+group together adjacent pixels whose range distance is below the
 \emph{ranger} parameter and (optionally) spatial distance is
-bellow the \emph{spatialr} parameter.
+below the \emph{spatialr} parameter.
 
 \begin{verbatim}
 otbcli_LSMSSegmentation -in filtered_range.tif
@@ -120,7 +120,7 @@ Note that the final segmentation image may contains a very large
 number of segments, and the \emph{uint32} image type should
 therefore be used to ensure that there will be enough labels to index
 those segments. The \emph{minsize} parameter will filter segments
-whose size in pixels is bellow its value, and their labels will be set
+whose size in pixels is below its value, and their labels will be set
 to 0 (nodata). 
 
 Please note that the output segmented image may look patchy, as if
@@ -169,7 +169,7 @@ write any temporary file to disk.
 
 \subsubsection{Step 4: Vectorization}
 
-The last step of the LSMS workflow consist in the vectorization of the
+The last step of the LSMS workflow consists in the vectorization of the
 segmented image into a GIS vector file. This vector file will contain
 one polygon per segment, and each of these polygons will hold
 additional attributes denoting the label of the original segment, the
