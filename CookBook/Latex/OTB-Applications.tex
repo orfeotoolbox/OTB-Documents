@@ -364,4 +364,46 @@ for type in ['mean', 'gaussian', 'anidif']:
 
 
 
+\subsection{Load/Save OTB-Applications parameters from/to file}
 
+Since OTB 3.20, OTB applications parameters can be export/import to/from an XML
+file using inxml/outxml parameters. Those parameters are available in all
+applications.
+
+An example is worth a thousand words
+
+\begin{verbatim}
+otbcli_BandMath -il input_image_1 input_image_2
+                -exp "abs(im1b1 - im2b1)"
+                -out output_image
+                -outxml saved_applications_parameters.xml
+\end{verbatim}
+
+Then, you can run the applications with the same parameters using the output xml
+file previously saved. For this, you have to use the inxml parameter:
+
+\begin{verbatim}
+otbcli_BandMath -inxml saved_applications_parameters.xml
+\end{verbatim}
+
+Note that you can also overload parameters from command line at the same time
+
+\begin{verbatim}
+otbcli_BandMath -inxml saved_applications_parameters.xml 
+                -exp "(im1b1 - im2b1)"
+\end{verbatim}
+
+In this cas it will use as mathematical expression "(im1b1 - im2b1)" instead
+of "abs(im1b1 - im2b1)".
+
+Finally, you can also launch applications directly from the command-line launcher executable using
+the inxml parameter without having to declare the application name. Use in this case:
+
+\begin{verbatim}
+otbApplicationLauncherCommandLine -inxml saved_applications_parameters.xml
+\end{verbatim}
+ 
+It will retrieve the application name and related parameters from the input xml
+file and launch in this case the BandMath applications.
+
+ 
