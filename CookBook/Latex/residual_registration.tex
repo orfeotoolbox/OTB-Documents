@@ -254,12 +254,11 @@ sensor model of the slave and which also fit to the set of tie points.
 
 \begin{verbatim}
 
-otbcli_Orthorectification   -inr reference_image
-                     -inm slave_image?&geom=TheRefinedGeom.geom
-                     -elev.dem dem_path/SRTM4-HGT/
-                     -elev.geoid OTB-Data/Input/DEM/egm96.grd
-                     -out ortho_slave_image
-
+otbcli_OrthoRectification   -io.in slave_image?&geom=TheRefinedGeom.geom
+                            -io.out ortho_slave_image
+                            -elev.dem dem_path/SRTM4-HGT/
+                            -elev.geoid OTB-Data/Input/DEM/egm96.grd
+                     
 \end{verbatim}
 
 As a result, if you've got enough homologous points in images and control that
