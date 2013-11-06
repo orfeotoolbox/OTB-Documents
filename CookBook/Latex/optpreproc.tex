@@ -261,18 +261,19 @@ projection.
 
 \subsection{Digital Elevation Model management}\label{ssec:dem}
 
-A Digital Elevation Model (DEM) is an georeferenced image (collection
-of images) of the elevation. DEM are useful for tasks involving sensor
-to ground and ground to sensor coordinate transforms like
-ortho-rectification (see section~\ref{ssec:ortho}). In facts, these
-transforms need to find the intersection between the line of sight of
+A Digital Elevation Model (DEM) is a georeferenced image (or collection
+of images) where each pixel corresponds to a local elevation. 
+DEM are useful for tasks involving sensor
+to ground and ground to sensor coordinate transforms, like
+during ortho-rectification (see section~\ref{ssec:ortho}).
+These transforms need to find the intersection between the line of sight of
 the sensor and the earth geoid. If a simple spheroid is used as the
 earth model, potentially high localisation errors can be made in areas
 where elevation is high or perturbed. Of course, DEM accuracy and
 resolution have a great impact on the precision of these transforms.
 
-There exists two main available DEM free of charges with worldwide
-cover, which are both delivered as 1-by-1 tiles:
+Two main available DEM, free of charges, and with worldwide
+cover, are both delivered as 1 degree by 1 degree tiles:
 \begin{itemize}
 \item \href{http://www2.jpl.nasa.gov/srtm/}{The Shuttle Radar
   topographic Mission (SRTM)} is a 90 meters resolution DEM, obtained
@@ -284,15 +285,17 @@ cover, which are both delivered as 1-by-1 tiles:
   archive of the ASTER instrument.
 \end{itemize}
 
-General elevation support is also handled using image of elevation (such as tiff file for instance).
-The \otb suite relies on \ossim capabilities for sensor modelling and
+The \otb relies on \ossim capabilities for sensor modelling and
 DEM handling. Tiles of a given DEM are supposed to be located within a
-single directory. Whenever some applications or modules from
-\mont require a DEM, the option \textbf{elev.dem} allows set the DEM
-directory
+single directory. General elevation support is also supported from GeoTIFF files.
 
-For some type DEM for example, you need also use a geoid to manage elevation
-properly. For this, you need to specify a path to a file which contains the
+Whenever an application or \mont module
+requires a DEM, the option \textbf{elev.dem} allows set the DEM
+directory. This directory must contains the DEM tiles, either in DTED or SRTM format directly,
+or as GeoTIFF files. Subdirectories are not supported.
+
+Depending on the reference of the elevation, you also need to use a geoid 
+to manage elevation accurately. For this, you need to specify a path to a file which contains the
 geoid. Geoid corresponds to the equipotential surface that would coincide with
 the mean ocean surface of the Earth (see
 \href{http://en.wikipedia.org/wiki/Geoid}). We provide one geoid in the OTB-Data
