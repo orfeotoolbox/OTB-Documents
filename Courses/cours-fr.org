@@ -1,6 +1,6 @@
 #+TITLE: Analyse d'images Pleiades PHR avec l'ORFEO ToolBox
 #+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Jordi Inglada (CNES/CESBIO)
-#+DATE: Décembre 2012
+#+DATE: Décembre 2013
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,11pt,twoside,openright]
