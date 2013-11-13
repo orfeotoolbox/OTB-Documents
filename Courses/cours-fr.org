@@ -58,11 +58,11 @@ disponible sur le  [[http://www.qgis.org/][site du projet]].
 
 #+INCLUDE: "licence.org"
 * Exercices                                                            :exos:
-#+INCLUDE: "mvdapps-fr.org"
-#+INCLUDE: "prepro-fr.org"
-#+INCLUDE: "seg-fr.org"
-#+INCLUDE: "features-fr.org"
-#+INCLUDE: "classpix-fr.org"
-#+INCLUDE: "classobj-fr.org"
+#+INCLUDE: "mvdapps-fr.org" :minlevel 2
+#+INCLUDE: "prepro-fr.org" :minlevel 2
+#+INCLUDE: "seg-fr.org" :minlevel 2
+#+INCLUDE: "features-fr.org" :minlevel 2
+#+INCLUDE: "classpix-fr.org" :minlevel 2
+#+INCLUDE: "classobj-fr.org" :minlevel 2
 
 
