@@ -17,7 +17,7 @@ de *Monteverdi* et les outils disponibles dans *OTB Applications*.
 - Traitements simples avec *OTB Applications* en mode graphique
 - Traitements simples avec *OTB Applications* en ligne de commande
 
-*** \'Etapes
+*** Étapes
 
 **** Monteverdi: lecture de données et visualisation
 Dans cette partie de l'exercice, l'image suivante sera utilisée :
@@ -33,7 +33,7 @@ Dans cette partie de l'exercice, l'image suivante sera utilisée :
    3. Changer le niveau de zoom;
    4. Quelles sont les informations affichées à propos du pixel qui se
       trouve sous le pointeur de la souris?
-5. \`A l'aide du panneau de configuration de la visualisation dans
+5. À l'aide du panneau de configuration de la visualisation dans
    l'onglet /Setup/ :
    1. Changer la configuration pour visualiser la 4ème bande;
    2. Affichage en fausses couleurs (mettre le proche infra-rouge dans
@@ -57,7 +57,7 @@ Dans cette partie l'image suivante est utilisée :
 1. Ouvrez l'image dans *Monteverdi*.
 2. Trouvez le module /BandMath/ dans les menus. Ouvrez l'image dans ce
    module. Quel type de traitement est proposé?
-3. \`A l'aide de ce module, calculez le NDVI de l'image :
+3. À l'aide de ce module, calculez le NDVI de l'image :
    #+LATEX:\begin{equation}
    NDVI = \frac{PIR-Rouge}{PIR+Rouge}
    #+LATEX:\end{equation}
