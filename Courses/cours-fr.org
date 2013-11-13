@@ -23,7 +23,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{FITRA 2012 - Orfeo Toolbox}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{FOSTIT 2013 - Orfeo Toolbox}}
 
 * Avant-propos                                                           :fw:
 ** Données
