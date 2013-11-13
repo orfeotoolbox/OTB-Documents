@@ -190,7 +190,7 @@ Voici les résultats obtenus avec les 2 méthodes, /optimal/ à gauche et
 /image/ à droite :
 
 #+Latex:\vspace{0.5cm}
-#+ATTR_LaTeX: width=0.45\textwidth
+#+ATTR_LaTeX: :width 0.45\textwidth
 [[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]
 
 ***** Point 4
@@ -211,7 +211,7 @@ Voici un autre exemple. La commande suivante regroupera les pixels qui
 Voici le résultat obtenu :
 
 #+Latex:\vspace{0.5cm}
-#+ATTR_LaTeX: width=0.45\textwidth
+#+ATTR_LaTeX: :width 0.45\textwidth
 [[file:Images/second_cc_color_optimal.png]] [[file:Images/second_cc_color_image.png]]
 
 **** Autres algorithmes de segmentation
@@ -233,7 +233,7 @@ Un meilleur résultat est obtenu en utilisant un rayon spectral de 30 :
 Voici le résultat :
 
       #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/meanshift_color_optimal.png]] [[file:Images/meanshift_color_image.png]]
       #+Latex:\vspace{0.5cm}
 
@@ -248,7 +248,7 @@ paramètres par défaut :
 Et enfin les résultats :
 
       #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/watershed_color_optimal.png]] [[file:Images/watershed_color_image.png]]
 
 **** Passage à l'échelle : mode vecteur
@@ -298,7 +298,7 @@ résultats sans stitching et en rouge, avec.
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LaTeX: :width 0.9\textwidth
       [[file:Images/qgis_stitch.png]]
       #+Latex:\end{center}
       

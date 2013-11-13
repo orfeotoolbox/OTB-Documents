@@ -10,9 +10,9 @@ l'extraction d'information des images.
 - Utilisation de *Monteverdi*
 
 **** Objectifs
-\^Etre capable d'utiliser les modules d'extraction de primitives de *Monteverdi*.
+Être capable d'utiliser les modules d'extraction de primitives de *Monteverdi*.
 
-*** \'Etapes
+*** Étapes
 
 **** Familiarisation avec les modules d'extraction de primitives
 

@@ -156,7 +156,7 @@ affichée dans le /Viewer/ et elle ressemble à ceci :
 
 #+Latex:\vspace{0.5cm}
 #+Latex:\begin{center}
-#+ATTR_LaTeX: width=0.9\textwidth
+#+ATTR_LaTeX: :width 0.9\textwidth
 file:Images/bandmath.png]]
 #+Latex:\end{center}
 
@@ -169,7 +169,7 @@ qu'affiché par le /Viewer/ :
 
 #+Latex:\vspace{0.5cm}
 #+Latex:\begin{center}
-#+ATTR_LaTeX: width=0.9\textwidth
+#+ATTR_LaTeX: :width 0.9\textwidth
 file:Images/colormapping.png]]
 #+Latex:\end{center}
 

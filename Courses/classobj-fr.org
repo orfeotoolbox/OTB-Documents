@@ -13,7 +13,7 @@ approche simple d'apprentissage actif.
 **** Objectifs
 Apprendre à utiliser le module *Object Labeling* de *Monteverdi*.
 
-*** \'Etapes
+*** Étapes
 
 **** La segmentation préalable
 Dans cette partie de l'exercice, nous utiliserons les données
@@ -112,7 +112,7 @@ Et voici le résultat :
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth
+      #+ATTR_LaTeX: :width 0.4\textwidth
       [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
       #+Latex:\end{center}
 
@@ -194,7 +194,7 @@ En ajoutant quelques classes de plus et quelques exemples
 supplémentaires, nous pouvons obtenir ce genre de résultat :
 
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth
+      #+ATTR_LaTeX: :width 0.4\textwidth
       [[file:Images/obc_classif_samples.png]] [[file:Images/obc_classif_samples_solution.png]]
       #+Latex:\end{center}
 

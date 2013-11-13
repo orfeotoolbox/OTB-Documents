@@ -13,7 +13,7 @@ des images à l'aide d'*OTB applications*.
 - Ortho-rectifications d'images de télédétection avec *OTB Applications*.
 - Corrections radiométriques d'images optiques avec *OTB Applications*.
 
-*** \'Etapes
+*** Étapes
 Dans cette partie de l'exercice, vous utiliserez l'image
 ~phr_xs_melbourne.tif~
 

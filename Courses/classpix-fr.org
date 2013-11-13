@@ -17,7 +17,7 @@ sols à partir d'images Pléiades.
 - Classification d'images de grande taille
 - Import de résultats dans un SIG
 
-*** \'Etapes
+*** Étapes
 Dans cet exercice, vous utiliserez l'image
 ~melbourne_ms_toa_ortho_extract_small.tif~
 
@@ -146,7 +146,7 @@ Et voici la commande pour l'appliquer à la classification :
 Et le résultat de cette commande :
     #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
-     #+ATTR_LaTeX: width=0.45\textwidth
+     #+ATTR_LaTeX: :width 0.45\textwidth
      [[file:Images/melbourne_ms_toa_ortho_extract_small_classification_5classes_color_mapping.png]]
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
