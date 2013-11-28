@@ -110,7 +110,7 @@ L'approche /Structural Feature Set/ calcule des textures en appliquant
 une analyse directionnelle à partir du pixel central de la fenêtre
 d'analyse. Les directions sont calculées en utilisant un pas constant.
 
-Une direction est définie comme : $$ \mathit{d_{i} = \sqrt{(m^{e1}-m{e2})^{2}+(n^{e1}-n{e2})^{2}}} $$
+Une direction est définie comme : $$ \mathit{d_{i} = \sqrt{(m^{e1}-m^{e2})^{2}+(n^{e1}-n^{e2})^{2}}} $$
 
 A partir de $\mathit{d_{i}}$, on définit des histogrammes :
  $$ \mathit{H(c) : \{c \in I \mid \lbrack d_{1}(c), \ldots , d_{i}(c),  \ldots , d_{D}(c)\rbrack  \}} $$
