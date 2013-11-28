@@ -5,6 +5,23 @@
      This exercise will get you familiar with the use of *Monteverdi*
      and *OTB applications*.
 
+**** Data
+  
+  If you need to generate the data used in this exercise from the
+  original products, you can use the following command lines.
+   
+  #+LATEX:\begin{tiny}
+  #+BEGIN_SRC bash
+  $ otbcli_ExtractROI \
+   -in ORTHO_UTM_PMS/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_201202250025599_ORT_IPU_20120504_1772-001_R1C1.JP2 \
+   -out phr_pxs_melbourne.tif uint16 -startx 18432 -starty 4096 -sizex 4096 -sizey 4096
+
+  $ otbcli_ExtractROI \
+    -in PRIMARY_TRISTEREO_BUNDLE/IMG_PHR1A_MS_006/IMG_PHR1A_MS_201202250025599_SEN_IPU_20120509_2001-012_R1C1.JP2 \
+    -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4084
+  #+END_SRC
+  #+LATEX:\end{tiny}
+
 **** Pre-requisites
 
      - Basic knowledge of remote sensing and image processing,

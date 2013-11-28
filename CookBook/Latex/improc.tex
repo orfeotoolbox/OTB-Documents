@@ -42,175 +42,6 @@ The experience of segmenting large remote sensing images is packed into a single
 You can find more information about this application
 \href{http://blog.orfeo-toolbox.org/preview/coming-next-large-scale-segmentation}{here}.
 
-\subsection{Classification}\label{ssec:classification}
-
-The SVM classification in application framework provides a supervised pixel-wise
-classification chain based on learning from multiple images. It supports huge
-images through streaming and multi-threading.
-The classification chain performs a SVM training step based on the intensities
-of each pixel as features. Please note that all the input images must have the
-same number of bands to be comparable.
-
-\subsubsection{Statistics estimation}
-In order to make these features comparable between each images, the first step
-is to estimate the input images statistics. These statistics will be used to
-center and reduce the intensities (mean of 0 and standard deviation of 1) of
-samples based on the vector data produced by the user. To do so, the
-\application{ComputeImagesStatistics} tool can be used :
-
-\begin{verbatim}
-otbcli_ComputeImagesStatistics -il  list_of_input_images
-                               -out statistics.xml
-\end{verbatim}
-
-This tool will compute each band mean, compute the standard deviation based on
-pooled variance of each band and finally export them to an XML file.
-The features statistics XML file will be an input of the following tools.
-
-\subsubsection{Building the training data set}
-
-As the chain is supervised, we need first to build a training set with
-positive examples of different objects of interest. This can be done
-with Monteverdi Vectorization module
-(Fig.\ref{fig:vectoModuleDataSetCreation}).
-These polygons must be save in OGR vector format supported
-by GDAL like ESRI shapefile for example.
-
-This operation will be reproduced on each image used as input of the training
-function.
-
-Please note that the positive examples in the vector data should have a ``Class``
-field with a label value higher than 1 and coherent in each images.
-
-\begin{figure}
-  \center
-  \includegraphics[width=1\textwidth]{../Art/MonteverdiImages/monteverdi_vectorization_module_for_classification.png}
-  \itkcaption[GUI of the vectorization module with data for classification chain]{A training data set builded with the vectorization monteverdi module.}
-  \label{fig:vectoModuleDataSetCreation}
-\end{figure}
-
-You can generate the vector data set with \qgis software for
-example and save it in an OGR vector format supported by \gdal (ESRI
-sphapefile for example). \app should be able to transform the
-vector data into the image coordinate system.
-
-\subsubsection{Performing the learning scheme}
-
-Once images statistics have been estimated, the learning scheme is the following:
-\begin{enumerate}
-  \item For each input image:
-  \begin{enumerate}
-    \item Read the region of interest (ROI) inside the shapefile,
-    \item Generate validation and training data within the ROI,
-    \item Add vectors respectively to the training samples set and the validation
-    samples set.
-  \end{enumerate}
-  \item Increase the size of the training samples set and balance it by
-  generating new noisy samples from the previous ones,
-  \item Perform the learning with this training set
-  \item Estimate performances of the classifier on the validation samples set
-  (confusion matrix, precision, recall and F-Score).
-\end{enumerate}
-
-These steps can be performed by the \application{TrainSVMImagesClassifier}
-command-line using the following:
-
-\begin{verbatim}
-otbcli_TrainSVMImagesClassifier -io.imstat  images_statistics.xml
-                                -io.il  list_of_input_images
-                                -io.vd  list_of_positive_examples_shapefiles
-                                -io.out model.svm
-\end{verbatim}
-
-Optionnal groups of parameters are also available (see application help for
-more details):
-\begin{itemize}
-\item \verb?-elev? Handling of elevation (DEM or average elevation)
-\item \verb?-sample? Group of parameters for sampling
-\item \verb?-svm? Group of parameters for SVM
-\end{itemize}
-
-\subsubsection{Validating the classification model}
-It is also possible to estimate the performance of the SVM model with a
-new validation sample set and another image with the
-\application{ValidateSVMImagesClassifier} application. It will compute
-the global confusion matrix and precision, recall and F-score of each
-class based on the \href{http://www.orfeo-toolbox.org/doxygen-current/classotb_1_1ConfusionMatrixCalculator.html}{ConfusionMatrixCalculator}
-class.
-
-\begin{verbatim}
-otbcli_ValidateSVMImagesClassifier -imstat  images_statistics.xml
-                                   -svm model.svm
-                                   -il  input_image_list
-                                   -vd  list_of_positive_examples_shapefiles
-\end{verbatim}
-
-You can save these results with the option -out output filename.
-%You can also set a DEM repository (-dem) to keep the vectordata reprojection accurate.
-
-\subsubsection{Using the classification model}
-Once the classifier has been trained, one can apply the model to classify
-pixel inside defined classes on a new image using the
-\application{ImageSVMClassifier} application:
-
-\begin{verbatim}
-otbcli_ImageSVMClassifier -imstat  images_statistics.xml
-                          -svm model.svm
-                          -in  input_image
-                          -out labeled_image
-\end{verbatim}
-
-You can set an input mask to limit the classification to the mask area with
-value \textgreater 0.
-
-\subsubsection{Fancy classification results}
-
-Color mapping can be used to apply color transformations on the final
-graylevel label image. It allows to get an RGB classification map
-by re-mapping the image values to be suitable for display purposes.
-One can use the \application{ColorMapping} application. This tool will
-replace each label with an 8-bits RGB color specificied in a mapping
-file. The mapping file should look like this :
-
-\begin{verbatim}
-# Lines beginning with a # are ignored
-1 255 0 0
-\end{verbatim}
-
-In the previous example, 1 is the label and 255 0 0 is a RGB color
-(this one will be rendered as red). To use the mapping tool, enter
-the following :
-
-\begin{verbatim}
-otbcli_ColorMapping -in  labeled_image
-                    -out color_image
-                    -method custom
-                    -method.custom.lut  mapping_file
-\end{verbatim}
-
-Other look-up tables (LUT) are available : standard continuous LUT,
-optimal LUT, and LUT computed over a support image.
-
-\subsubsection{Example}
-We take 4 classes: water, roads, vegetation and buildings with red roof.
-Data is available in the OTB-Data
-\href{http://hg.orfeo-toolbox.org/OTB-Data/file/0fed8f4f035c/Input/Classification}{repository}
-and this image is produced with the commands inside this
-\href{http://hg.orfeo-toolbox.org/OTB-Applications/file/3ce975605013/Testing/Classification/CMakeLists.txt}{file}.
-
-\begin{figure}[!h]
-  \center
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_inputimage.jpg}
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif_fusion.jpg}
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/classification_chain_fancyclassif.jpg}
-  \itkcaption[ExampleSVMCalssif]{From left to right: Original image,
-    result image with fusion (with monteverdi viewer) of original
-    image and fancy classification and input image with fancy color
-    classification from labeled image.}
-  \label{fig:MeanShiftVectorImageFilter}
-\end{figure}
-
-
 
 %\subsection{Segmentation}\label{ssec:segmentation}
 %todo.
@@ -220,6 +51,147 @@ and this image is produced with the commands inside this
 
 %\subsection{Object-based image analysis}\label{ssec:obia}
 %todo.
+
+\subsection{Large-Scale Mean-Shift (LSMS) segmentation}
+
+LSMS is a segmentation workflow which allows to perform tile-wise
+segmentation of very large image with theoretical guarantees of
+getting identical results to those without tiling. It has been
+developed by David Youssefi and Julien Michel during David internship
+at CNES and is to be published soon.
+
+The workflow consists in chaining 3 or 4 dedicated applications and
+produces a GIS vector file with artifact-free polygons corresponding
+to the segmented image, as well as mean and variance of the radiometry
+of each band for each polygon.
+
+\subsubsection{Step 1: Mean-Shift Smoothing}
+
+The first step of the workflow is to perform Mean-Shift smoothing with
+the \application{MeanShiftSmoothing} application:
+
+\begin{verbatim}
+otbcli_MeanShiftSmoothing -in input_image 
+                          -fout filtered_range.tif 
+                          -foutpos filtered_spat.tif 
+                          -ranger 30 
+                          -spatialr 5 
+                          -maxiter 10 
+                          -modesearch 0
+\end{verbatim}
+
+Note that the \emph{modesearch} option should be disabled, and
+that the \emph{foutpos} parameter is optional: it can be activated
+if you want to perform the segmentation based on both spatial and
+range modes.
+
+This application will smooth large images by streaming them, and
+deactivating the \emph{modesearch} will guarantee that the results
+will not depend on the streaming scheme. Please also note that the
+\emph{maxiter} is used to set the margin to ensure these
+identical results, and as such increasing the \emph{maxiter} may
+have an additional impact on processing time.
+
+\subsubsection{Step 2: Segmentation}
+
+The next step is to produce an initial segmentation based on the
+smoothed images produced by the \application{MeanShiftSmoothing}
+application. To do so, the \application{LSMSSegmentation} will process
+them by tiles whose dimensions are defined by the
+\emph{tilesizex} and \emph{tilesizey} parameters, and by
+writing intermediate images to disk, thus keeping the memory
+consumption very low throughout the process. The segmentation will
+group together adjacent pixels whose range distance is below the
+\emph{ranger} parameter and (optionally) spatial distance is
+below the \emph{spatialr} parameter.
+
+\begin{verbatim}
+otbcli_LSMSSegmentation -in filtered_range.tif
+                        -inpos filtered_spatial.tif
+                        -out  segmentation.tif uint32 
+                        -ranger 30 
+                        -spatialr 5 
+                        -minsize 0 
+                        -tilesizex 256 
+                        -tilesizey 256
+\end{verbatim}
+
+Note that the final segmentation image may contains a very large
+number of segments, and the \emph{uint32} image type should
+therefore be used to ensure that there will be enough labels to index
+those segments. The \emph{minsize} parameter will filter segments
+whose size in pixels is below its value, and their labels will be set
+to 0 (nodata). 
+
+Please note that the output segmented image may look patchy, as if
+there were tiling artifacts: this is because segments are numbered
+sequentially with respect to the order in which tiles are
+processed. You will see after the result of the vectorization step
+that there are no artifacts in the results.
+
+The \application{LSMSSegmentation} application will write as many
+intermediate files as tiles needed during processing. As such, it may
+require twice as free disk space as the final size of the final
+image. The \emph{cleanup} option (active by default) will clear the
+intermediate files during the processing as soon as they are not
+needed anymore. By default, files will be written to the current
+directory. The \emph{tmpdir} option allows to specify a different
+directory for these intermediate files.
+
+\subsubsection{Step 3 (optional): Merging small regions}
+
+The \application{LSMSSegmentation} application allows to filter out
+small segments. In the output segmented image, those segments will be
+removed and replaced by the background label (0). Another solution to
+deal with the small regions is to merge them with the closest big
+enough adjacent region in terms of radiometry. This is handled by the
+\application{LSMSSmallRegionsMerging} application, which will output a
+segmented image where small regions have been merged. Again, the
+\emph{uint32} image type is advised for this output image.
+
+\begin{verbatim}
+otbcli_LSMSSmallRegionsMerging -in filtered_range.tif
+                               -inseg segementation.tif
+                               -out segmentation_merged.tif uint32 
+                               -minsize 10 
+                               -tilesizex 256 
+                               -tilesizey 256
+\end{verbatim}
+
+The \emph{minsize} parameter allows to specify the threshold on the
+size of the regions to be merged. Like the \application{LSMSSegmentation}
+application, this application will process the input images tile-wise
+to keep resources usage low, with the guarantee of identical
+results. You can set the tile size using the \emph{tilesizex} and
+\emph{tilesizey} parameters. However unlike the
+\application{LSMSSegmentation} application, it does not require to
+write any temporary file to disk.
+
+\subsubsection{Step 4: Vectorization}
+
+The last step of the LSMS workflow consists in the vectorization of the
+segmented image into a GIS vector file. This vector file will contain
+one polygon per segment, and each of these polygons will hold
+additional attributes denoting the label of the original segment, the
+size of the segment in pixels, and the mean and variance of each band
+over the segment. The projection of the output GIS vector file will be
+the same as the projection from the input image (if input image has no
+projection, so does the output GIS file).
+
+\begin{verbatim}
+otbcli_LSMSVectorization -in input_image 
+                         -inseg segmentation_merged.tif 
+                         -out segmentation_merged.shp 
+                         -tilesizex 256 
+                         -tilesizey 256
+\end{verbatim}
+
+This application will process the input images tile-wise
+to keep resources usage low, with the guarantee of identical
+results. You can set the tile size using the \emph{tilesizex} and
+\emph{tilesizey} parameters. However unlike the
+\application{LSMSSegmentation} application, it does not require to
+write any temporary file to disk.
 
 \subsection{Dempster Shafer based Classifier Fusion}\label{ssec:classifierfusion}
 
@@ -337,5 +309,3 @@ otbcli_VectorDataDSValidation -in      extractedRoads_enriched.shp
                               -descmod FuzzyModel.xml
                               -out     validatedSamples.shp
 \end{verbatim}
-
-\input{stereo}

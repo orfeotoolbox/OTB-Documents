@@ -1,7 +1,7 @@
 \section{Optical pre-processing}\label{sec:optpreproc}
 
-This section presents various pre-processing tasks that are presented in 
-a classical order to obtain a calibrated, pan-sharpened image. 
+This section presents various pre-processing tasks that are presented in
+a classical order to obtain a calibrated, pan-sharpened image.
 
 \subsection{Optical radiometric calibration}\label{ssec:optcal}
 
@@ -53,8 +53,8 @@ sensors are :
 \item SPOT5,
 \item QuickBird,
 \item Ikonos,
-\item WorldView1,
-\item WorldView2,
+\item WorldView-1,
+\item WorldView-2,
 \item Formosat.
 \end{itemize}
 
@@ -63,8 +63,8 @@ sensors are :
 The \application{OpticalCalibration} application
 allows to perform optical calibration. The mandatory
 parameters are the input and output images. All other parameters are
-optional. By default the level of calibration is set to TOA (Top Of 
-Atmosphere).  The output images are expressed in thousandth of 
+optional. By default the level of calibration is set to TOA (Top Of
+Atmosphere).  The output images are expressed in thousandth of
 reflectivity using a 16 bits unsigned integer type.
 
 A basic TOA calibration task can be performed with the following command :
@@ -194,8 +194,8 @@ There are two more optional parameters that can be useful for this
 tool:
 \begin{itemize}
 \item The \verb?-elev? option allows to specify the elevation, either with
-  a DEM formatted for OTB (\verb?-elev.dem.path? option, see 
-  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.average.value? 
+  a DEM formatted for OTB (\verb?-elev.dem? option, see
+  section~\ref{ssec:dem}) or with an average elevation (\verb?-elev.default?
   option). Since registration
   and zooming of the multi-spectral image is performed using
   sensor-models, it may happen that the registration is not perfect in
@@ -261,18 +261,19 @@ projection.
 
 \subsection{Digital Elevation Model management}\label{ssec:dem}
 
-A Digital Elevation Model (DEM) is an georeferenced image (collection
-of images) of the elevation. DEM are useful for tasks involving sensor
-to ground and ground to sensor coordinate transforms like
-ortho-rectification (see section~\ref{ssec:ortho}). In facts, these
-transforms need to find the intersection between the line of sight of
+A Digital Elevation Model (DEM) is a georeferenced image (or collection
+of images) where each pixel corresponds to a local elevation. 
+DEM are useful for tasks involving sensor
+to ground and ground to sensor coordinate transforms, like
+during ortho-rectification (see section~\ref{ssec:ortho}).
+These transforms need to find the intersection between the line of sight of
 the sensor and the earth geoid. If a simple spheroid is used as the
 earth model, potentially high localisation errors can be made in areas
 where elevation is high or perturbed. Of course, DEM accuracy and
 resolution have a great impact on the precision of these transforms.
 
-There exists two main available DEM free of charges with worldwide
-cover, which are both delivered as 1-by-1 tiles:
+Two main available DEM, free of charges, and with worldwide
+cover, are both delivered as 1 degree by 1 degree tiles:
 \begin{itemize}
 \item \href{http://www2.jpl.nasa.gov/srtm/}{The Shuttle Radar
   topographic Mission (SRTM)} is a 90 meters resolution DEM, obtained
@@ -284,11 +285,26 @@ cover, which are both delivered as 1-by-1 tiles:
   archive of the ASTER instrument.
 \end{itemize}
 
-The \otb suite relies on \ossim capabilities for sensor modelling and
+The \otb relies on \ossim capabilities for sensor modelling and
 DEM handling. Tiles of a given DEM are supposed to be located within a
-single directory. Whenever some applications or modules from
-\mont require a DEM, there is an option or a field to set the DEM
-directory.
+single directory. General elevation support is also supported from GeoTIFF files.
+
+Whenever an application or \mont module
+requires a DEM, the option \textbf{elev.dem} allows set the DEM
+directory. This directory must contains the DEM tiles, either in DTED or SRTM format,
+either as GeoTIFF files. Subdirectories are not supported.
+
+Depending on the reference of the elevation, you also need to use a geoid 
+to manage elevation accurately. For this, you need to specify a path to a file which contains the
+geoid. Geoid corresponds to the equipotential surface that would coincide with
+the mean ocean surface of the Earth (see
+\href{http://en.wikipedia.org/wiki/Geoid}). We provide one geoid in the OTB-Data
+repository available
+\href{http://hg.orfeo-toolbox.org/OTB-Data/file/4722d9e672c6/Input/DEM/egm96.grd}{here}.
+
+In all applications, the option \textbf{elev.geoid} allows to manage the path to
+the geoid. Finally, it is also possible to use an average elevation in case no
+DEM is available by using the \textbf{elev.default} option.
 
 %
 %\subsubsection{Making DEM files usable in \otb suite using \application{DEMConvert}}
@@ -387,10 +403,9 @@ for better localisation performances, one can pass the directory
 containing the DEM tiles to the application:
 
 \begin{verbatim}
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev dem
-                          -elev.dem.path dem_dir
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
 \end{verbatim}
 
 If one wants to use a different map projection, the \emph{-map}
@@ -398,10 +413,9 @@ option may be used (example with \emph{lambert93} map projection):
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev dem
-                          -elev.dem.path dem_dir 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
                           -map lambert93
 
 \end{verbatim}
@@ -414,8 +428,8 @@ The UTM zone and hemisphere can be set by the options \verb?-map.utm.zone? and \
 \item Lambert 2 etendu: \verb?-map lambert2?
 \item Lambert 93: \verb?-map lambert93?
 \item TransMercator: \verb?-map transmercator? \\
-The related parameters (false easting, false northing and scale factor) can be set by the 
-options \verb?-map.transmercator.falseeasting?, \verb?-map.transmercator.falsenorthing? and 
+The related parameters (false easting, false northing and scale factor) can be set by the
+options \verb?-map.transmercator.falseeasting?, \verb?-map.transmercator.falsenorthing? and
 \verb?-map.transmercator.scale?
 \item WGS : \verb?-map wgs?
 \item Any map projection system with an EPSG code : \verb?-map epsg? \\
@@ -427,12 +441,11 @@ For instance, the ground spacing can be specified as follows:
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev dem
-                          -elev.dem.path dem_dir 
-                          -map lambert93 
-                          -outputs.spacingx spx 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
+                          -map lambert93
+                          -outputs.spacingx spx
                           -outputs.spacingy spy
 
 \end{verbatim}
@@ -445,23 +458,22 @@ follows:
 
 \begin{verbatim}
 
-otbcli_OrthoRectification -io.in input_image 
-                          -io.out output_image 
-                          -elev dem 
-                          -elev.dem.path dem_dir 
-                          -map lambert93 
-                          -outputs.spacingx spx 
-                          -outputs.spacingy spy 
-                          -outputs.ulx ul_x_coord 
-                          -outputs.uly ul_y_coord 
-                          -outputs.sizex x_size 
+otbcli_OrthoRectification -io.in input_image
+                          -io.out output_image
+                          -elev.dem dem_dir
+                          -map lambert93
+                          -outputs.spacingx spx
+                          -outputs.spacingy spy
+                          -outputs.ulx ul_x_coord
+                          -outputs.uly ul_y_coord
+                          -outputs.sizex x_size
                           -outputs.sizey y_size
 
 \end{verbatim}
 
-Where the \verb?-outputs.ulx? and \verb?-outputs.uly? options allow to 
+Where the \verb?-outputs.ulx? and \verb?-outputs.uly? options allow to
 specify the coordinates of the upper-left corner of the output image.
-The \verb?-outputs.sizex? and \verb?-outputs.sizey? options allow to 
+The \verb?-outputs.sizex? and \verb?-outputs.sizey? options allow to
 specify the size of the output image.
 
 A few more interesting options are available:
@@ -471,10 +483,10 @@ A few more interesting options are available:
 \item The \verb?-opt.gridspacing? option allows to define the spacing of the
   localisation grid used for ortho-rectification. A coarser grid
   results in speeding-up the processing, but with potential loss of
-  accuracy. A standard value would be 10 times the ground spacing of 
+  accuracy. A standard value would be 10 times the ground spacing of
   the output image.
 \item The \verb?-interpolator? option allows to change the interpolation
-  algorithm between nearest neighbor, linear and bicubic. Default is nearest 
+  algorithm between nearest neighbor, linear and bicubic. Default is nearest
   neighbor interpolation, but bicubic should be fine in most cases.
 \item The \verb?-opt.ram? option allows to specify the amount of memory
   available for the processing (in Mb). Default is 256 Mb. Increasing
@@ -485,7 +497,5 @@ A few more interesting options are available:
 %\subsubsection{Ortho-rectification with \mont}
 %todo
 
-\subsection{Residual registration}\label{ssec:registration}
-todo
-%add figure
+\input{residual_registration}
 

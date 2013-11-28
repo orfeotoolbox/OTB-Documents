@@ -10,7 +10,25 @@
      - Perform block matching between the 2 images to extract the
        disparity (related to the elevation)
      - Filter disparities using correlation metric analysis
-       
+      
+**** Data
+  
+  If you need to generate the data used in this exercise from the
+  original products, you can use the following command lines.
+   
+  #+LATEX:\begin{tiny}
+  #+BEGIN_SRC bash
+  $ otbcli_ExtractROI \
+    -in PRIMARY_TRISTEREO_BUNDLE/IMG_PHR1A_P_001/IMG_PHR1A_P_201202250026276_SEN_IPU_20120509_2001-006_R1C1.JP2 \
+    -out  tristereo_melbourne_1_small.tif uint16 -startx 25036 -starty 12455 -sizex 1024 -sizey 1024
+
+  $ otbcli_ExtractROI \
+    -in  PRIMARY_TRISTEREO_BUNDLE/IMG_PHR1A_P_003/IMG_PHR1A_P_201202250025329_SEN_IPU_20120509_2001-008_R1C1.JP2 \
+    -out tristereo_melbourne_2_small.tif uint16 -startx 25020 -starty 11863 -sizex 1024 -sizey 1024
+
+  #+END_SRC
+  #+LATEX:\end{tiny}
+
 **** Pre-requisites
 
      - Basic knowledge on OTB applications

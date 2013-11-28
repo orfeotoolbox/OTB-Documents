@@ -7,6 +7,24 @@
      output with different algorithms and how to scale up to larger input
      images by producing vector outputs.
 
+**** Data
+  
+  If you need to generate the data used in this exercise from the
+  original products, you can use the following command lines.
+   
+  #+LATEX:\begin{tiny}
+  #+BEGIN_SRC bash
+  $ otbcli_ExtractROI \
+   -in ORTHO_UTM_PMS/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_201202250025599_ORT_IPU_20120504_1772-001_R1C1.JP2 \
+   -out segmentation_small_xt_phr.tif uint16 -startx 11848 -starty 11426 -sizex 1024 -sizey 1024
+
+  $ otbcli_ExtractROI \
+   -in ORTHO_UTM_PMS/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_201202250025599_ORT_IPU_20120504_1772-001_R1C1.JP2 \
+   -out segmentation_large_xt_phr.tif uint16 -startx 10240 -starty 10240 -sizex 4096 -sizey 4096
+  
+  #+END_SRC
+  #+LATEX:\end{tiny}
+
 **** Pre-requisites
 
      - Basic knowledge on OTB applications and QGis usage
