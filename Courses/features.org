@@ -159,7 +159,7 @@ There are 2 different implementations of the Haralick textures in
 Monteverdi. We will use the 1st one.
 
 1. Given the description above, what do you think is the meaning of
-   the /radius/, /offset/, /min\/max/ and /quant. levels/ parameters?
+   the /radius/, /offset/, /min/max/ and /quant. levels/ parameters?
 2. Compute the /Entropy/ of the /intensity/ channel for different
    radiuses (2, 3, etc.). Which is the effect of this parameter?
 3. Compute the /Energy/, /Entropy/, /Correlation/ and /Inertia/

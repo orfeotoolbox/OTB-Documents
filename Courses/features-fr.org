@@ -155,7 +155,7 @@ valeurs soit probable.
 Dans *Monteverdi*, il existe 2 versions des textures de Haralick. Nous
 utiliserons seulement la 1ère.
 
-1. Quel est le sens des paramètres /radius/, /offset/, /min\/max/ et /quant. levels/?
+1. Quel est le sens des paramètres /radius/, /offset/, /min/max/ et /quant. levels/?
 2. Calculez l'entropie de l'intensité de l'image pour des rayons
    différents (2, 3, etc.). Quel est l'effet de ce paramètre?
 3. Calculez les indices /Energy/, /Entropy/, /Correlation/ et
