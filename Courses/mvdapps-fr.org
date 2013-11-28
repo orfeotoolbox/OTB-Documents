@@ -170,7 +170,7 @@ qu'affiché par le /Viewer/ :
 #+Latex:\vspace{0.5cm}
 #+Latex:\begin{center}
 #+ATTR_LaTeX: :width 0.9\textwidth
-file:Images/colormapping.png]]
+file:Images/colormapping.png
 #+Latex:\end{center}
 
 **** OTB applications : mode graphique et ligne de commande
