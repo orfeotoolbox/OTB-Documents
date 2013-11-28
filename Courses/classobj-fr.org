@@ -85,9 +85,9 @@ _Trucs et astuces :_
 1. Dans l'onglet /Objects/, cliquez sur /Sample/ en bas à gauche. Ceci
    permet d'afficher des objets considérés comme étant difficiles à
    classer. On utilise ici la technique dite du /margin sampling/.
-2. Quels sont les types de segments qui apparaissent comme difficiles
+2. Quels sont les types de régions qui apparaissent comme difficiles
    à classer?
-3. Essayez de créer une classe de rejet pour y ranger des segments de "bruit".
+3. Essayez de créer une classe de rejet pour y ranger des régions de "bruit".
 4. Réalisez quelques itérations de plus d'apprentissage actif. Qu'observez-vous?
 
 *** Solutions                                            :classobj:solutions:
