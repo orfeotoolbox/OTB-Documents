@@ -109,7 +109,7 @@ Orfeo Toolbox Wiki and following the links therein.
 The Structural Feature Set approach computes textures based on line direction analysis through the central pixel.
  
  Directions are computed at a constant step angle.
- A direction is defined as: $$ \mathit{d_{i} = \sqrt{(m^{e1}-m{e2})^{2}+(n^{e1}-n{e2})^{2}}} $$
+ A direction is defined as: $$ \mathit{d_{i} = \sqrt{(m^{e1}-m^{e2})^{2}+(n^{e1}-n^{e2})^{2}}} $$
  From  $\mathit{d_{i}}$, histograms are defined:
  $$ \mathit{H(c) : \{c \in I \mid \lbrack d_{1}(c), \ldots , d_{i}(c), \ldots , d_{D}(c)\rbrack  \}} $$
  Thus, 6 textures are defined :
