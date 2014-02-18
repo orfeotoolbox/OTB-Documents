@@ -1,0 +1,56 @@
+\chapter{A brief tour of Monteverdi2}\label{chap:Monteverdi2} 
+
+\section{Introduction}\label{sec:montintro}
+TODO 
+
+\section{Installation}\label{sec:montinstall} 
+  
+Installation of \mont2 is very simple. Standard installer packages are available on the main platforms thanks to OTB-Developpers and external users. These packages are available few days after the release. Get the latest information on binary packages on the \website in the section download.
+
+We will discribe in the following sections the way to install \mont2 on:
+\begin{itemize}
+\item Windows platform (XP/Seven)
+\item Ubuntu 12.04 and higher
+\item MacOSX 10.8
+\end{itemize}
+
+If you want build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source)
+
+\subsection{Windows XP/Seven}
+For Windows XP/Seven users, there is a classical standalone installation program for \mont2, available from the \download after each release of \mont2. 
+
+\subsection{MacOS X}
+A standard DMG package is available for \mont2 for MacOS X 10.8. Please go the \download.
+Click on the file to launch \mont2. We will provide in the nex release a package for MacOSX 10.9.
+
+\subsection{Ubuntu 12.04 and higher}
+For Ubuntu 12.04 and higher, \mont2 package may be available as Debian package through APT repositories.
+
+Since release 0.2, \mont2 packages are available in the
+\href{https://launchpad.net/~ubuntugis/+archive/ubuntugis-unstable}{ubuntugis-unstable} repository.
+
+You can add it by using these command-lines:
+\begin{verbatim}
+sudo aptitude install add-apt-repository
+sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+\end{verbatim}
+
+Now run:
+\begin{verbatim}
+sudo aptitude install monteverdi2
+\end{verbatim}
+
+If you are using \emph{Synaptic}, you can add the repository, update and install the package through the
+graphical interface.
+
+\textbf{apt-add-repository} will try to retrieve the GPG keys of the
+repositories to certify the origin of the packages. If you are behind a http
+proxy, this step won't work and apt-add-repository will stall and eventually
+quit. You can temporarily ignore this error and proceed with the update
+step. Following this, aptitude update will issue a warning about a signature
+problem. This warning won't prevent you from installing the packages.
+
+
+\subsection{What does it look like?}
+TODO
+
