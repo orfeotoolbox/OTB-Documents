@@ -1,4 +1,4 @@
-\section{Optical pre-processing}\label{sec:optpreproc}
+\section{From raw image to calibrated product}\label{sec:optpreproc}
 
 This section presents various pre-processing tasks that are presented in
 a classical order to obtain a calibrated, pan-sharpened image.
@@ -377,6 +377,48 @@ supports ortho-rectification of raw products are the following:
 In addition, GeoTiff and other file format with geographical
 information are seamlessly read by \otb, and the ortho-rectification
 tools can be used to re-sample these images in another map projection.
+
+\subsubsection{Beware of "ortho-ready" products}
+
+There are some image products, called "ortho-ready", that should be 
+processed carefully. They are actual products in raw geometry, but their 
+metadata also contains projection data :
+\begin{itemize}
+\item a map projection
+\item a physical origin
+\item a physical spacing
+\item and sometimes an orientation angle
+\end{itemize}
+The purpose of this projection information is to give an approximate map 
+projection to a raw product. It allows you to display the raw image in a
+GIS viewer at the (almost) right location, without having to reproject it. 
+Obviously, this map projection is not as accurate as the sensor parameters
+ of the raw geometry. In addition, the impact of the elevation model can't 
+be observed if the map projection is used. In order to perform an 
+ortho-rectification on this type of product, the map projection has to 
+be hidden from \otb.
+
+You can see if a product is an "ortho-ready" product by using tools such
+as \texttt{gdalinfo} or \application{ReadImageInfo} (see 
+\ref{app:ReadImageInfo}), and check if the product verifies the 2 following
+ conditions :
+\begin{itemize}
+\item The product is in raw geometry : you should expect the presence of 
+RPC coefficients and a non-empty OSSIM keywordlist.
+\item The product has a map projection : you should see a projection 
+name with physical origin and spacing. 
+\end{itemize}
+
+In that case, you can hide the map projection from the \otb by using 
+\textit{extended} filenames. Instead of using the plain input image
+path, you append a specific key at the end :
+\begin{verbatim}
+"path_to_image?&skipcarto=true"
+\end{verbatim}
+The double quote can be necessary for a successful parsing. More details
+about the extended filenames can be found 
+\href{http://wiki.orfeo-toolbox.org/index.php/ExtendedFileName}{here}, 
+and also in the \sg.
 
 \subsubsection{Ortho-rectification with \app}
 
