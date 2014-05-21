@@ -171,7 +171,15 @@ described in the above sections.
 The \application{BundleToPerfectSensor} application allows to
 perform both steps in a row. Seamless sensor modelling is used to
 perform zooming and registration of the multi-spectral image on the
-panchromatic image. Then, a simple pan-sharpening is applied,
+panchromatic image. In the case of a Pl\'eiades bundle, a different
+approach is used : an affine transform is used to zoom the multi-spectral
+image and apply a residual translation. This translation is computed 
+based on metadata about the geometric processing of the bundle. This 
+zooming and registration of the multi-spectral image over the panchromatic
+image can also be performed by the \application{Superimpose}
+application.
+
+After the registration step, a simple pan-sharpening is applied,
 according to the following formula:
 
 \begin{equation}
@@ -190,8 +198,7 @@ Here is a simple example of how to use the
 otbcli_BundleToPerfectSensor -inp pan_image -inxs xs_image -out output_image
 \end{verbatim}
 
-There are two more optional parameters that can be useful for this
-tool:
+There are also optional parameters that can be useful for this tool:
 \begin{itemize}
 \item The \verb?-elev? option allows to specify the elevation, either with
   a DEM formatted for OTB (\verb?-elev.dem? option, see
@@ -210,6 +217,11 @@ tool:
   with the sensor models, and thus increase the computation
   time. Default value is 10 pixels, which gives sufficient precision
   in most of the cases.
+\item The \verb?-mode? option allows to select the registration mode
+  for the multi-spectral image. The \verb?default? mode uses the sensor 
+  model of each image to create a generic "MS to Pan" transform. The 
+  \verb?phr? mode uses a simple affine transform (which doesn't need 
+  an elevation source nor a registration grid).
 \end{itemize}
 
 Pan-sharpening is a quite heavy processing requiring a lot of system
