@@ -329,9 +329,9 @@ GLCIL stores a pair of frequency of two pixels taken from the given offset and t
 Above, $ \mu =  $ (weighted pixel average) 
  $ = \sum_{i, j}i \cdot g(i, j) =  \sum_{i, j}j \cdot g(i, j) $ (due to matrix summetry), and
 
- $ \g_{x+y}(k) =  \sum_{i}\sum_{j}g(i) $ where $ i+j=k $ and $ k = 2, 3, .., 2N_{g} $ and
+ $ g_{x+y}(k) =  \sum_{i}\sum_{j}g(i) $ where $ i+j=k $ and $ k = 2, 3, .., 2N_{g} $ and
 
- $ \g_{x-y}(k) =  \sum_{i}\sum_{j}g(i) $ where $ i-j=k $ and $ k = 0, 1, .., N_{g}-1 $
+ $ g_{x-y}(k) =  \sum_{i}\sum_{j}g(i) $ where $ i-j=k $ and $ k = 0, 1, .., N_{g}-1 $
 
 \item \verb?-texture=higher:?
 In this case, 11 local higher order statistics texture coefficients based on the
