@@ -5,7 +5,7 @@
 \vspace*{10cm}
 \tiny Creative Commons Attribution-ShareAlike 3.0 Unported License\\
 \normalsize
-\includegraphics[width=0.1\textwidth]{/home/inglada/rapports/Styles/cc-by-sa.png}
+\includegraphics[width=0.1\textwidth]{Images/CC-licence.png}
 \end{center}
 \newpage
 #+END_LaTeX
