@@ -22,8 +22,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{3pt}\footnotesize{This content is provided under a Creative Commons Attribution 3.0 Unported License
-}\includegraphics[height=5pt]{Images/CC-licence.png}}
+#+LATEX:\fancyfoot[C]{\vspace{3pt}\footnotesize{This content is provided under a Creative Commons Attribution 3.0 Unported License}\includegraphics[height=5pt]{Images/CC-licence.png}}
 * Foreword                                                               :fw:
 ** About the data
 
@@ -58,12 +57,12 @@
 
 #+INCLUDE: "licence.org"
 * Exercises                                                            :exos:
-#+INCLUDE: "mvdapps.org"
-#+INCLUDE: "prepro.org"
-#+INCLUDE: "seg.org"
-#+INCLUDE: "features.org"
-#+INCLUDE: "classpix.org"
-#+INCLUDE: "classobj.org"
-#+INCLUDE: "stereo.org"
-#+INCLUDE: "sar.org"
+#+INCLUDE: "mvdapps.org" :minlevel 2
+#+INCLUDE: "prepro.org" :minlevel 2
+#+INCLUDE: "seg.org" :minlevel 2
+#+INCLUDE: "features.org" :minlevel 2
+#+INCLUDE: "classpix.org" :minlevel 2
+#+INCLUDE: "classobj.org" :minlevel 2
+#+INCLUDE: "stereo.org" :minlevel 2
+#+INCLUDE: "sar.org" :minlevel 2
 
