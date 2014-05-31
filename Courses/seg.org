@@ -146,6 +146,9 @@
       3. Using the *Segmentation* application (and maybe other OTB
          applications), how can we deal with segmentation of high
          reflectance structures ?
+      4. Perform the same operation as in the "Vector mode" section using the
+         LSMS framework (Large Scale Mean-Shift segmentation) which allows to perform
+         exact segmentation at large scale without having to deal with tile effects.
 
 *** Solutions                                                     :solutions:
 
