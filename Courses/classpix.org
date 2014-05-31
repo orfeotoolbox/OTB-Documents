@@ -41,7 +41,7 @@
      
 **** Pre-requisites
      
-     - Basic knowledge on OTB applications and QGis usage
+     - Basic knowledge on OTB applications and QGIS usage
      - Basic knowledge on image supervised classification
      - Basic knowledge on GIS vector file formats
 
@@ -86,18 +86,19 @@
 
 **** Estimate classification model using the Support Vector Machine algorithm
      
-     The *TrainSVMImagesClassifier* application performs SVM
+     The *TrainImagesClassifier* application performs SVM
      classifier training from multiple pairs of input images and
      training vector data. Samples are composed of pixel values in
      each band optionally centered and reduced using XML statistics
      file produced by the *ComputeImagesStatistics* application. We will
      use this application with only one image in this exercise.
-     - Use the *TrainSVMImagesClassifier* to produce SVM model
+     - Use the *TrainImagesClassifier* to produce SVM model
      - Which kernel is used by default in the application?
      - What is the measured accuracy?
+     - Use the *TrainImagesClassifier* to produce Random Forests model
 
 **** Apply classification model
-     - Use the *ImageClassifier* to apply the classification model to the input image
+     - Use the *ImageClassifier* to apply the classification model (SVM and RF) to the input image
      - What is the output of the application?
      - Bonus : Use the same model to apply the classification to the other extract
  
@@ -113,15 +114,17 @@
      : 1 255 0 0
 
      - Produce your custom look-up table (LUT)
-     - Use this LUT to produce a printable classification map (in PNG format)
+     - Use this LUT to produce a printable classification map for both classifier (in PNG format)
      - Overlay this map on the input image in QGIS. Comment on the classification results.
+
+**** Fusion of classification maps
 
 **** Homework
 
      - Produce classification model with different kind of SVM
-       kernels. Comment different accuracies obtained?
+       kernels and try other machine learning algorithms available. Comment different accuracies obtained?
      - Going big: Apply this classification on the pan-sharpened image over Melbourne
-
+       
 *** Solutions                                            :classpix:solutions:
 **** Produce and analyze learning samples
 
@@ -141,9 +144,10 @@
 
 **** Estimate classification model using the Support Vector Machine algorithm
 
-     Here is the command line to produce the SVM model:
+     Here is the command line to produce the SVM model (default algorithm used
+     by the application):
 
-     : $ otbcli_TrainSVMImagesClassifier 
+     : $ otbcli_TrainImagesClassifier 
      :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
      :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
      :   -io.vd training.shp 
@@ -189,4 +193,4 @@
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 
-
+**** Fusion of classification
