@@ -6,7 +6,7 @@
      applications*.
 
      Monteverdi2 is the successor of the Monteverdi application which allows
-     image visualization and to build processing based on OTB.
+     image visualization and also to build processing based on OTB.
 
      The development started in 2012 with regular release and an iterative
      development process whit short loop which include user feedbacks.
@@ -14,27 +14,39 @@
      What's new (different from Monteverdi first version) in Monteverdi2?
 
      - GUI revamp: the software interface using the Qt toolkit
-     - Modern viewer (navigation in resolutions, multiple color dynamic modes...)
+     - Modern viewer (navigation in resolutions, multiple color dynamic modes,
+       fast OpenGL rendering...)
      - Session manager : database manager to store all datasets and display parameters
      - Processing : interactive access to OTB application tools
 
      This tutorial is an adaptation of the one dedicated to Monteverdi and focus
      on Monteverdi2 main features.
 
+      Monteverdi2 main window:
+      
+      #+Latex:\vspace{0.5cm}
+      #+Latex:\begin{center}
+      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LaTeX: :caption This is the caption for the next table (or link)
+      [[file:Images/capture_mvd2_small.png]]
+      #+Latex:\end{center}
+      
+      
 **** Data
   
+  In this exercise we will use extract from PMS and MS products.
   If you need to generate the data used in this exercise from the
   original products, you can use the following command lines.
    
   #+LATEX:\begin{tiny}
   #+BEGIN_SRC bash
   $ otbcli_ExtractROI \
-   -in ORTHO_UTM_PMS/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_201202250025599_ORT_IPU_20120504_1772-001_R1C1.JP2 \
+   -in IMG_PHR1A_PMS-N_201202250025599_ORT_PRG_FC_5855-001_R1C1.JP2 \
    -out phr_pxs_melbourne.tif uint16 -startx 18432 -starty 4096 -sizex 4096 -sizey 4096
 
   $ otbcli_ExtractROI \
-    -in PRIMARY_TRISTEREO_BUNDLE/IMG_PHR1A_MS_006/IMG_PHR1A_MS_201202250025599_SEN_IPU_20120509_2001-012_R1C1.JP2 \
-    -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4084
+    -in IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.JP2 \
+    -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4096
   #+END_SRC
   #+LATEX:\end{tiny}
   
@@ -76,14 +88,12 @@
            near infra-red channel, screen green: red channel, screen
            blue: green channel).
         3. Change set-up to come back to natural colors
-     8. Using the Dataset widget:
-        1. What is the image size?
-     9. Using the preferences widget
+     8. Using the preferences widget
         1. Monteverdi2 allows to specify a directory containing DEM
            information. Can you give one example of RS processing where a DEM is needed?
         
      _Tips and Recommandations:_
-     - Starting with Monteverdi2 0.7 you need to press Ctrl and use the mouse
+     - Starting with Monteverdi2 0.7 you need to press /Ctrl/ and use the mouse
        wheel to navigate through image resolution,
      - Pleiades bands order is red channel, green channel, blue
        channel, near infra-red channel.
@@ -94,9 +104,11 @@
 
      ~phr_xs_melbourne.tif~
 
-     1. What are the 3 different ways to change the rendering threshold?
-     2. What is the behaviour when you move the cursor of the gamma correction widget?
-     3. What is the purpose of the "No data" setup?
+     
+     1. What is the default rendering function apply in Monteverdi2  
+     2. What are the 2 different ways to change the rendering threshold?
+     3. What is the behaviour when you move the cursor of the gamma correction widget?
+     4. What is the purpose of the "No data" setup?
 
 **** OTB applications: Graphical and command-line mode
 
@@ -108,6 +120,7 @@
         What do you observe ?
      2. How many *OTB applications* are currently available ?
      3. How can you get help and documentation about applications ?
+     4. Do you know other graphical software which allow to access to OTB applications? 
 
 **** OTB applications in Monteverdi2: Basic processing
      
@@ -158,10 +171,176 @@
     
 **** Monteverdi2: data opening and visualisation
 
-**** Monteverdi: basic rendering functions
+***** Item 3
+      Monteverdi2 will try to generate external overviews image to speendup
+      navigation in resolution. It stores also the histogram of the Quick Look
+      (QL) to allow histogram visualization and rendering settings. It will also
+      save information of the session (channel composition, viewer position,
+      rendering settings...).
 
+      All those parameters are store internally in a SQLite database
+
+***** Item 5
+      Image size is available in the /Dataset properties/ widget (4096,4096)
+
+      The /Block size/ corresponds to the way that bitmapped data is organized
+      in memory. For instance, for the TIFF format, images can be dividing an
+      image into rectangular tiles rather than horizontal strips which can have
+      benefit on very large high-resolution images.
+
+      If you want to learn more about writing large images and the way that TIFF
+      format store data, see [[http://wiki.orfeo-toolbox.org/index.php/Writing_large_images][Writing large images]].
+
+      OTB is using GDAL to read/write images and writing TIFF format with gdal
+      produce by default stripped data (1 line all columns). In this case 
+
+      This default behaviour can be set in OTB using /Extended Filename/
+      mechanism, see [[http://www.orfeo-toolbox.org/SoftwareGuide/SoftwareGuidech6.html#x26-900006.10][Extended Filename]]. 
+      
+***** Item 6
+      The status bar display the index position and the radiometric values of
+      the pixel under the mouse pointer. Other information are available in the
+      /Pixel Description/ widget.
+
+      The /Pixel Description/ widget provides information about geographic
+      position of the pixel under the mouse pointer. 
+
+      If the image is georeferenced, the geographic position is marked as
+      *Exact*. If no geo-information are available, OTB will try to estimate
+      geographic position using sensor models (based on OSSIM library). In this
+      case the position is marked as *Sensor model*.
+
+***** Item 8
+      A digital elevation modelis a digital model or 3D representation of a
+      terrain's surface used for instance for rectification of satellite
+      imagery, surface analysis...
+
+**** Monteverdi: basic rendering functions and histogram visualization
+
+***** Item 1
+      Linear rescale using the histogram 2% minimum and maximum values  
+      
+***** Item 2
+      You can set lower and upper quantile in percentage or set min/max values use for
+      threshold.  
+
+      This two variable can be linked/unlinked using the padlock icon. Unlinking
+      the two controls allow to specify Min/Max values outside the range of the
+      computed histogram.
+
+***** Item 3
+
+      Gamma correction is a process that can compensate from the production of
+      the image, the fact that the acquisition process get DN proportional to
+      the illumination which can leads to information /too dark/. The inverse
+      gamma curve applied to images will therefore clarify and spread the tonal
+      range to produce a more or less linear visual picture.
+
+      Cf illustration (from Wikipedia):
+      #+Latex:\vspace{0.5cm}
+      #+Latex:\begin{center}
+      #+ATTR_LaTeX: width=0.9\textwidth
+      [[file:Images/GammaFunctionGraph.png]]
+      #+Latex:\end{center}
+
+***** Item 4
+
+      /No data/ corresponds to pixel values not taken into account into the
+      rendering methods. It could be useful for instance with ortho products
+      which can be rotated and contain a large number of /black/ pixels
+      (radiometry equal to zero)
+ 
 **** OTB applications: Graphical and command-line mode
+***** Item 1
+      
+      The first command runs the command-line version of the
+      *Orthorectification* application, the second one runs the
+      graphical version.
+
+***** Item 2
+
+      The number of OTB applications vary depending of the OTB version. All
+      applications are listed in the [[http://orfeo-toolbox.org/CookBook/][OTB Cookbook]]. You can also try the
+      following command in your /bin/ directory:
+      
+      #+BEGIN_SRC bash
+      ls ~/local/bin/otbcli_* | wc -l
+      #+END_SRC
+
+***** Item 3
+
+      There are several ways to get help and documentation:
+      - Running the command-line version of the application displays a
+        short description of the parameters, and also gives a link to
+        the documentation on the [[http://www.orfeo-toolbox.org][OTB website]],
+      - Running the graphical version of the application shows a
+        /Documentation/ tab where extensive documentation of parameters
+        can be found.
+      - Last, the complete applications documentation can be found in
+        the [[http://www.orfeo-toolbox.org/CookBook/][Orfeo ToolBox Cookbook]].
+
+***** Item 4
+      OTB applications are also available through the *Processing* module in QGIS.
 
 **** OTB applications in Monteverdi2: Basic processing
+     Here is the set of commands to reproduce the processing from
+      section [[OTB%20applications%20in%20Monteverdi2:%20Basic%20processing][OTB applications in Monteverdi2: Basic processing]].
 
+      You can get parameters values that should be setted in the graphical mode
+      of OTB applications integrated in Monteverdi2
+
+      First, we compute the NDVI with the *BandMath* application:
+
+      : $ otbcli_BandMath -il phr_xs_melbourne.tif
+      :   -out ndvi.tif float -exp "(im1b4-im1b1)/(im1b4+im1b1)"
+
+      Then, we compute the mask of pixels whose DN in the NIR channel
+      is lower than 150:
+
+      : $ otbcli_BandMath -il phr_xs_melbourne.tif
+      :   -out lownir.tif uint8 -exp "if(im1b4<150,255,0)"
+
+      Next, we compute the mask of pixels whose DN is upper
+      than 1000 in all spectral bands:
+
+      : $ otbcli_BandMath -il phr_xs_melbourne.tif
+      :   -out high.tif uint8 
+      :   -exp "if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)"
+
+      Please note that for masks using a /uint8/ data type is enough,
+      while for NDVI a floating point data type is needed.
+      
+      Now, we can concatenate all outputs in a single map with the
+      *ConcatenateImages* application:
+
+      : $ otbcli_ConcatenateImages -il high.tif ndvi.tif lownir.tif 
+      :   -out map1.tif float
+
+      Finally, we can create a color-mapping of the NDVI using the
+      *ColorMapping* application:
+
+      : $ otbcli_ColorMapping -in ndvi.tif -out map2.png uint8 
+      :   -method continuous -method.continuous.min -0.2 
+      :   -method.continuous.max 0.7 -method.continuous.lut jet
 **** Homework
+***** Item 1
+      Not yet
+***** Item 2
+      The geoid is the shape that the surface of the oceans would take under the
+      influence of Earth's gravitation (source Wikipedia).
+
+      In case of tasks involving sensor to ground and ground to sensor
+      coordinate transforms, like during ortho-rectification. These transforms
+      need to find the intersection between the line of sight of the sensor and
+      the earth geoid. If a simple spheroid is used as the earth model,
+      potentially high localisation errors can be made in areas where elevation
+      is high or perturbed.
+
+***** Item 3
+      In *OTB Applications*, there is a *RadiometricVegetationIndices*
+      application that allows to compute several indices including the NDVI.
+
+***** Item 4
+
+      Please refer to this chapter of the *Cookbook* to learn more about the
+      /Python/ [[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][interface]].

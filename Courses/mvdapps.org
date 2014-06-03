@@ -159,7 +159,7 @@
 
       To compute the NDVI, use the following *BandMath* expression:
       : (im1b4-im1b1)/(im1b4+im1b1)
-
+      
 ***** Item 4
 
       To build a mask of pixels whose DN in the NIR channel is lower

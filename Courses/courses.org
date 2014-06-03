@@ -13,7 +13,7 @@
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: solutions
+#+EXPORT_EXCLUDE_TAGS:
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -30,10 +30,12 @@
   demonstration products, made available for evaluation purpose. To
   get the full products please refer to this [[http://www.astrium-geo.com/fr/364-produits-de-demonstration][website]]. Products used
   are:
-  - ~Pleiades Pan-sharpened ORTHO Compression REGULAR~
+  - ~Pléiades Primary Product - Bundle~
+  - ~Pléiades Ortho Product – Pan-sharpened~
   - ~Pleiades TRISTEREO Bundle PRIMARY~
 
-  They are covered by a cnes copyright.
+  Those images are located on Melbourne, Australia and are covered by a CNES
+  copyright.
 
   Exercises based on these Pleiades data include a set of
   command-line to generate the needed extracts.
