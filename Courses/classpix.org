@@ -11,7 +11,7 @@
 **** Data
      If you need to generate the data ~melbourne_ms_toa_ortho_extract_small.tif~
      used in this exercise from the
-     original products, you can use the following command lines.
+     original products (Bundle MS), you can use the following command lines.
 
      To orthorectify the MS product:
 
@@ -31,7 +31,7 @@
      #+BEGIN_SRC bash
      $ otbcli_OpticalCalibration \
        -in ~/temporary/ortho_phr_ms_small.tif 
-       -out melbourne_ms_toa_ortho_extract_small.tif uint16 -milli 1
+       -out melbourne_ms_toa_ortho_extract_small.tif uint16 -milli 1 -level toa
      #+END_SRC
      #+LATEX:\end{tiny}
 
@@ -59,8 +59,9 @@
 
 **** Produce and analyze learning samples
 
-     - Use Qgis to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
-     - Export this vector layer in shapefile
+     - Use QGIS to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
+     - Export this vector layer in ESRI Shapefile (.shp). Other OGR format can
+       also be used here.
      - What is the label corresponding to the class *water* in the
        shapefile?  An example set of learning samples is provided for
        the exercise in /training.shp/
@@ -86,12 +87,13 @@
 
 **** Estimate classification model using the Support Vector Machine algorithm
      
-     The *TrainImagesClassifier* application performs SVM
+     The *TrainImagesClassifier* application performs supervised
      classifier training from multiple pairs of input images and
      training vector data. Samples are composed of pixel values in
      each band optionally centered and reduced using XML statistics
      file produced by the *ComputeImagesStatistics* application. We will
      use this application with only one image in this exercise.
+     - How many classifiers are available in the  *TrainImagesClassifier* application?
      - Use the *TrainImagesClassifier* to produce SVM model
      - Which kernel is used by default in the application?
      - What is the measured accuracy?
@@ -144,6 +146,11 @@
 
 **** Estimate classification model using the Support Vector Machine algorithm
 
+     This application is based on LibSVM and on OpenCV Machine Learning
+     classifiers, and is compatible with OpenCV 2.3.1 and later.
+     
+     There is currently 9 algorithms available.
+
      Here is the command line to produce the SVM model (default algorithm used
      by the application):
 
@@ -154,7 +161,7 @@
      :   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
      Linear kernel is used by default in the application. The measured
-     accuracy is 0.988523. The value is high due to the low number of
+     accuracy is around 0.9. The value is high due to the low number of
      training samples and their lack of variability.
 
 **** Apply classification model
@@ -163,7 +170,7 @@
 
      : $ otbcli_ImageSVMClassifier 
      :   -in melbourne_ms_toa_ortho_extract_small.tif 
-     :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
+     :   -model melbourne_ms_toa_ortho_extract_small_model.svm 
      :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
      :   -out melbourne_extract_small_classification_5classes.tif 
      :   uint8

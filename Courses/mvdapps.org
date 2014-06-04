@@ -2,8 +2,12 @@
 *** Description
 **** Abstract
      
-     This exercise will get you familiar with the use of *Monteverdi*
-     and *OTB applications*.
+     This exercise will get you familiar with the use of *Monteverdi* and *OTB
+     applications*. Monteverdi is the OTB composer which allows building
+     processing chains by selecting modules from a set of menus.It was developed
+     in 2009 and is now replace by a brand new software call *Monteverdi2*.
+ 
+     If you want to learn more about *Monteverdi2* you can see [[mvd2apps][this exercise]].
 
 **** Data
   
@@ -179,11 +183,10 @@
       three *BandMath* module  outputs. The resulting image can be
       displayed in the viewer and will look like this:
 
-      #+Latex:\vspace{0.5cm}
-      #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LaTeX: width=0.8\textwidth
+      #+LABEL: fig::bandmath
+      #+CAPTION: Results of the concatenation of Band Math 
       [[file:Images/bandmath.png]]
-      #+Latex:\end{center}
 
 ***** Item 7
 
@@ -193,11 +196,10 @@
       color map. The resulting image can be displayed in the viewer and
       will look like this:
 
-      #+Latex:\vspace{0.5cm}
-      #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LaTeX: width=0.8\textwidth
+      #+LABEL: fig::colormap
+      #+CAPTION: Color mapping of NDVI using Jet color map
       [[file:Images/colormapping.png]]
-      #+Latex:\end{center}
 
 **** OTB applications: Graphical and command-line mode
 

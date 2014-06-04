@@ -48,7 +48,6 @@
    To perform the exercises, you will need to have the following
    software installed:
    - *Orfeo ToolBox* 4.0 or later, including applications
-   - *Monteverdi* 1.22 or later
    - *Monteverdi2* 0.6 or later
    - *QGIS* 2.0 or later
 
@@ -57,10 +56,11 @@
 
      For *QGIS* installation, please refer to *QGIS* documentation,
      which can be found on the project [[http://www.qgis.org/][website]].
+   - *Monteverdi* 1.22 or later
 
 #+INCLUDE: "licence.org"
 * Exercises                                                            :exos:
-##+INCLUDE: "mvdapps.org" :minlevel 2
+
 #+INCLUDE: "mvd2apps.org" :minlevel 2
 #+INCLUDE: "prepro.org" :minlevel 2
 #+INCLUDE: "seg.org" :minlevel 2
@@ -69,4 +69,4 @@
 #+INCLUDE: "classobj.org" :minlevel 2
 #+INCLUDE: "stereo.org" :minlevel 2
 #+INCLUDE: "sar.org" :minlevel 2
-
+#+INCLUDE: "mvdapps.org" :minlevel 2

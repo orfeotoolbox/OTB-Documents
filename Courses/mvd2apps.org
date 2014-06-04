@@ -11,26 +11,21 @@
      The development started in 2012 with regular release and an iterative
      development process whit short loop which include user feedbacks.
 
-     What's new (different from Monteverdi first version) in Monteverdi2?
+     _What's new (different from Monteverdi first version) in Monteverdi2?_
 
      - GUI revamp: the software interface using the Qt toolkit
      - Modern viewer (navigation in resolutions, multiple color dynamic modes,
        fast OpenGL rendering...)
-     - Session manager : database manager to store all datasets and display parameters
+     - Session manager : database manager to store datasets and display parameters
      - Processing : interactive access to OTB application tools
 
      This tutorial is an adaptation of the one dedicated to Monteverdi and focus
      on Monteverdi2 main features.
 
-      Monteverdi2 main window:
-      
-      #+Latex:\vspace{0.5cm}
-      #+Latex:\begin{center}
       #+ATTR_LaTeX: width=0.9\textwidth
-      #+ATTR_LaTeX: :caption This is the caption for the next table (or link)
+      #+LABEL: fig::mvd2
+      #+CAPTION: Monteverdi2 main window
       [[file:Images/capture_mvd2_small.png]]
-      #+Latex:\end{center}
-      
       
 **** Data
   
@@ -57,7 +52,7 @@
 **** Achievements
 
      - Visualize data in *Monteverdi2*,
-     - Basic processing in *Monteverdi2* (rendering methods, access dataset and
+     - Basic processing in *Monteverdi2* (rendering methods, get dataset and
        pixel information),
      - Basic processing with *OTB applications* in graphical mode
 
@@ -68,7 +63,7 @@
 
      1. Run *Monteverdi2*: open a terminal and run the following command:
         : $ monteverdi2    
-     2. Open the image (use the /File/Import image...)
+     2. Open the image (use /File/Import image...)
      3. After opening Monteverdi2, the application runs through the
            importation process before opening the application. In your opinion
            what are the main processing done by the application?
@@ -94,7 +89,7 @@
         
      _Tips and Recommandations:_
      - Starting with Monteverdi2 0.7 you need to press /Ctrl/ and use the mouse
-       wheel to navigate through image resolution,
+       wheel at the same time to navigate through image resolution,
      - Pleiades bands order is red channel, green channel, blue
        channel, near infra-red channel.
 
@@ -119,8 +114,9 @@
         and then searh for the Orthorectification application from the applications 
         What do you observe ?
      2. How many *OTB applications* are currently available ?
-     3. How can you get help and documentation about applications ?
-     4. Do you know other graphical software which allow to access to OTB applications? 
+     3. What is the purpose of the *ram* parameter in the Orthorectification application?
+     4. How can you get help and documentation about applications ?
+     5. Do you know other graphical software which allow to access to OTB applications? 
 
 **** OTB applications in Monteverdi2: Basic processing
      
@@ -172,7 +168,7 @@
 **** Monteverdi2: data opening and visualisation
 
 ***** Item 3
-      Monteverdi2 will try to generate external overviews image to speendup
+      Monteverdi2 will try to generate external overviews image to speed-up
       navigation in resolution. It stores also the histogram of the Quick Look
       (QL) to allow histogram visualization and rendering settings. It will also
       save information of the session (channel composition, viewer position,
@@ -211,7 +207,7 @@
       case the position is marked as *Sensor model*.
 
 ***** Item 8
-      A digital elevation modelis a digital model or 3D representation of a
+      A digital elevation model is a digital model or 3D representation of a
       terrain's surface used for instance for rectification of satellite
       imagery, surface analysis...
 
@@ -236,12 +232,10 @@
       gamma curve applied to images will therefore clarify and spread the tonal
       range to produce a more or less linear visual picture.
 
-      Cf illustration (from Wikipedia):
-      #+Latex:\vspace{0.5cm}
-      #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LATEX: width=0.8\textwidth
+      #+LABEL: fig:gamma
+      #+CAPTION: Example of CRT gamma correction (Wikipedia)
       [[file:Images/GammaFunctionGraph.png]]
-      #+Latex:\end{center}
 
 ***** Item 4
 
@@ -266,8 +260,17 @@
       #+BEGIN_SRC bash
       ls ~/local/bin/otbcli_* | wc -l
       #+END_SRC
-
+      
 ***** Item 3
+      
+      It allows to set the maximum amount of RAM available for processing. As the
+      writing task is time consuming, it is better to write large pieces of data,
+      which can be achieved by increasing this parameter (pay attention to your system
+      capabilities).
+
+      Note that this value can be underestimate. 
+
+***** Item 4
 
       There are several ways to get help and documentation:
       - Running the command-line version of the application displays a
@@ -283,45 +286,53 @@
       OTB applications are also available through the *Processing* module in QGIS.
 
 **** OTB applications in Monteverdi2: Basic processing
-     Here is the set of commands to reproduce the processing from
-      section [[OTB%20applications%20in%20Monteverdi2:%20Basic%20processing][OTB applications in Monteverdi2: Basic processing]].
 
-      You can get parameters values that should be setted in the graphical mode
-      of OTB applications integrated in Monteverdi2
-
-      First, we compute the NDVI with the *BandMath* application:
-
-      : $ otbcli_BandMath -il phr_xs_melbourne.tif
-      :   -out ndvi.tif float -exp "(im1b4-im1b1)/(im1b4+im1b1)"
-
-      Then, we compute the mask of pixels whose DN in the NIR channel
-      is lower than 150:
-
-      : $ otbcli_BandMath -il phr_xs_melbourne.tif
-      :   -out lownir.tif uint8 -exp "if(im1b4<150,255,0)"
-
-      Next, we compute the mask of pixels whose DN is upper
-      than 1000 in all spectral bands:
-
-      : $ otbcli_BandMath -il phr_xs_melbourne.tif
-      :   -out high.tif uint8 
-      :   -exp "if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)"
-
-      Please note that for masks using a /uint8/ data type is enough,
-      while for NDVI a floating point data type is needed.
+***** Item 1
+      Output images of OTB applications in Monteverdi2 are stored by default in
+      a /Result/ directory. This directory is located by default in the cache
+      directory.
+      The output file is filled by default with an automatic path using [[http://en.wikipedia.org/wiki/Universally_unique_identifier][Universally unique identifier]]. 
       
-      Now, we can concatenate all outputs in a single map with the
-      *ConcatenateImages* application:
+***** Item 2
+      Here is the set of commands to reproduce the processing from
+       section [[OTB%20applications%20in%20Monteverdi2:%20Basic%20processing][OTB applications in Monteverdi2: Basic processing]].
 
-      : $ otbcli_ConcatenateImages -il high.tif ndvi.tif lownir.tif 
-      :   -out map1.tif float
+       You can get parameters values that should be setted in the graphical mode
+       of OTB applications integrated in Monteverdi2
 
-      Finally, we can create a color-mapping of the NDVI using the
-      *ColorMapping* application:
+       First, we compute the NDVI with the *BandMath* application:
 
-      : $ otbcli_ColorMapping -in ndvi.tif -out map2.png uint8 
-      :   -method continuous -method.continuous.min -0.2 
-      :   -method.continuous.max 0.7 -method.continuous.lut jet
+       : $ otbcli_BandMath -il phr_xs_melbourne.tif
+       :   -out ndvi.tif float -exp "(im1b4-im1b1)/(im1b4+im1b1)"
+
+       Then, we compute the mask of pixels whose DN in the NIR channel
+       is lower than 150:
+
+       : $ otbcli_BandMath -il phr_xs_melbourne.tif
+       :   -out lownir.tif uint8 -exp "if(im1b4<150,255,0)"
+
+       Next, we compute the mask of pixels whose DN is upper
+       than 1000 in all spectral bands:
+
+       : $ otbcli_BandMath -il phr_xs_melbourne.tif
+       :   -out high.tif uint8 
+       :   -exp "if(min(im1b1,im1b2,im1b3,im1b4)>1000,255,0)"
+
+       Please note that for masks using a /uint8/ data type is enough,
+       while for NDVI a floating point data type is needed.
+       
+       Now, we can concatenate all outputs in a single map with the
+       *ConcatenateImages* application:
+
+       : $ otbcli_ConcatenateImages -il high.tif ndvi.tif lownir.tif 
+       :   -out map1.tif float
+
+       Finally, we can create a color-mapping of the NDVI using the
+       *ColorMapping* application:
+
+       : $ otbcli_ColorMapping -in ndvi.tif -out map2.png uint8 
+       :   -method continuous -method.continuous.min -0.2 
+       :   -method.continuous.max 0.7 -method.continuous.lut jet
 **** Homework
 ***** Item 1
       Not yet
