@@ -2,10 +2,14 @@
 *** Description
 **** Abstract
 
-     This workshop will introduce you to the *Feature Extraction*
-     modules of *Monteverdi*. You will learn how to use these modules
-     and visually evaluate the usefulness of different features for
-     image information extraction.
+     This workshop will introduce you to the *Feature Extraction* methods
+     available in OTB. *Feature extraction*. Those methods are available in
+     Monteverdi modules and also in applications integrated in Monteverdi2.  You
+     will learn how to use these modules and visually evaluate the usefulness of
+     different features for image information extraction.
+
+     All exercises can be done using *Monteverdi* modules or *OTB
+     applications*. Solutions for both software are provided. 
 **** Data 
      If you need to generate the data used in this exercise from the
      original products, you can use the following command lines.
@@ -13,7 +17,7 @@
   #+LATEX:\begin{tiny}
   #+BEGIN_SRC bash
   $ otbcli_ExtractROI \
-    -in PRIMARY_TRISTEREO_BUNDLE/IMG_PHR1A_MS_006/IMG_PHR1A_MS_201202250025599_SEN_IPU_20120509_2001-012_R1C1.JP2 \
+    -in  FCGC600031035/IMG_PHR1A_MS_002/IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.JP2 \
     -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4084
   #+END_SRC
   #+LATEX:\end{tiny}
@@ -21,10 +25,12 @@
 **** Pre-requisites
 
      - Basic knowledge of *Monteverdi* usage
+     - Basic knwoledge of *OTB applications*
 
 **** Achievements
 
-     Being able to use the *Feature Extraction* modules of *Monteverdi*.
+     Being able to use the *Feature Extraction* modules of *Monteverdi* and *OTB
+     applications*.
 
 *** Steps
 
@@ -60,6 +66,7 @@ In this part of the exercise, we will use the following data:
 4. The /Action/ tab is selected by default. What can you do on this
    part of the module?
 5. Select the /Output/ tab and describe what can you do on it.
+6. What are the *OTB applications* which implement /feature extraction/ algorithms.
 
 **** *Smoothing* module
 You can either keep the /Smoothing/ module open from the previous
@@ -185,7 +192,21 @@ feature for computation.
 ***** Item 5
 The /Output/ tab allows you to decide which of the computed features
 will be kept in the output image and in which order they will be
-stored. 
+stored.
+
+***** Item 6
+      *OTB applications* which implement /feature extraction/ algorithms:
+      - *LocalStatisticExtraction*
+      - *Smoothing*
+      - *MeanShiftSmoothing*
+      - *EdgeExtraction*
+      - *RadiometricIndices*
+      - *BinaryMorphologicalOperation*
+      - *GrayScaleMorphologicalOperation*
+      - *HaralickTextureExtraction*
+      - *SFSTextureExtraction*
+
+      You can find more information about those applications in the [[http://orfeo-toolbox.org/CookBook/][Cookbook]].
 
 **** *Smoothing* module
 
@@ -203,6 +224,14 @@ centered on the pixel for which the mean is computed and sizes equal
 to $2\times Radius_x +1$ in the horizontal direction and $2\times
 Radius_y +1$ in the vertical one. The larger the radius the stronger
 the smoothing.
+
+You can also perform /Smoothing/ with the following command:
+
+: $ otbcli_Smoothing
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_smooth.tif
+:   -type mean
+:   -type.mean.radius 2
 
 ***** Item 3
 The /Meanshift smooth/ uses the mean-shift algorithm to smooth the
@@ -225,6 +254,14 @@ The meaning of the parameters is the following:
    clustering step (not used for the smoothing).
 4. Scale: a multiplicative factor to be used for the image values
    which needs to be set if the image dynamics is low.
+
+You can also perform /Smoothing/ with the following command:
+
+: $ otbcli_MeanShiftSmoothing
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ms_smooth.tif
+:   -type mean
+:   -type.mean.radius 2
 
 ***** Item 4
 The difference between the smoothing and the clustering is that the
@@ -262,6 +299,14 @@ window deviate from the local mean. This can happen in 2 cases:
 2. When there are 2 or more regions inside the window with different
    mean values. This is the case when an edge is present.
 
+You can also compute local variance using the  /LocalStatisticExtraction/ with the following command:
+
+: $ LocalStatisticExtraction
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ms_variance.tif
+:   -channel 1
+:   -radius 2
+
 ***** Item 3
 The recursive gradient uses a Gaussian smoothing (low pass filtering)
 previous to gradient computation for edge detection. The /sigma/
@@ -276,6 +321,15 @@ to noise.
 Therefore, the choice of the value of /sigma/ will depend on the noise
 level of the image and on the kind of edges that one wants to detect.
 
+You can compute the gradient magnitude (not the recursive gradient above) with
+the /EdgeExtraction/
+
+: $ EdgeExtraction
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ms_gradient.tif
+:   -filter gradient
+:   -radius 2
+
 ***** Item 4
 The lower and upper thresholds define the intervals of pixels which
 will be set to 1 (below the lower and above the upper thresholds) or 0
@@ -284,6 +338,14 @@ edge density computation. Therefore, the thresholds determine how the
 image produced by the Sobel filtering will be binarized before passing
 it to the density computation (percentage of detected pixels inside
 the window).
+
+You can compute the Sobel filter with the /EdgeExtraction/ application:
+
+: $ EdgeExtraction
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ms_gradient.tif
+:   -filter sobel
+:   -radius 2
 **** *Radiometric index extraction* module
 
 ***** Item 1
@@ -291,6 +353,17 @@ For the radiometric indices, the channel selection does not matter,
 since each index is a particular combination of spectral bands. The
 bands used are selected in the /Feature Parameters/ group.
 
+You can generate NDVI using the *RadiometricIndices*:
+
+: $ otbcli_RadiometricIndices
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ndvi.tif
+:   -channels.red 1 
+:   -channels.green 2
+:   -channels.blue 3 
+:   -channels.nir 4 
+:   -list Vegetation:NDVI
+ 
 ***** Item 2
 Most of the indices use the red (R) and the near infrared (NIR) bands,
 since the vegetation has a low response on the R and high on the
@@ -308,11 +381,34 @@ to 1 for a very dense cover. The /s/ parameter of the MSAVI index is
 the slope of the soil line, that is the NIR reflectance plotted as a
 function of the red reflectance for soil pixels.
 
+You can compute /MSAVI/ index with the following command:
+
+: $ otbcli_RadiometricIndices
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_msavi.tif
+:   -channels.red 1
+:   -channels.green 2
+:   -channels.blue 3 
+:   -channels.nir 4 
+:   -list Vegetation:MSAVI
+
 ***** Item 4
 The NDTI and the NDWI can't be computed on a Pléiades image (or a
 Quickbird image, for that matter) since the MIR (mid infrared, also
 callwed SWIR for short-wave infrared) is not available.
 In this case the NDWI2 index can be use.
+
+You can compute /NDWI2/ index with the following command:
+
+: $ otbcli_RadiometricIndices
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ndwi2.tif
+:   -channels.red 1
+:   -channels.green 2
+:   -channels.blue 3 
+:   -channels.nir 4 
+:   -list Water:NDWI2
+
 **** *Texture extraction* module
 
 ***** SFS
@@ -323,6 +419,20 @@ pixels which belong to elongated regions, while the $length$ feature
 gives brigth values to any region (elongated or not) which has a large
 area. If you have a look at the formulas for each feature you will
 understand why.
+
+You can compute /SFS/ with the following command:
+
+: $ SFSTextureExtraction
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ms_sfs.tif
+:   -channel 1
+:   -parameters.spethre 50.0
+:   -parameters.spathre 100
+:   -radius 2
+
+The available texture features are SFS'Length, SFS'Width, SFS'PSI, SFS'W-Mean,
+SFS'Ratio and SFS'SD.They are provided in this order in the output image.
+
 ****** Item 2
 The spectral threshold sets the acceptable value of the difference
 between 2 adjacent pixels along a line in order to continue adding new
@@ -347,6 +457,21 @@ this threshold will also produce shorter lines.
 ****** Item 2
 The larger the radius, the wider the detected areas, since we are
 introducing a kind of blurring of the computation by using larger windows.
+
+You can compute Haralick textures with the *HaralickTextureExtraction*:
+
+: $ HaralickTextureExtraction
+:   -in phr_xs_melbourne.tif
+:   -out phr_xs_melbourne_ms_haralick.tif
+:   -channel 1
+:   -parameters.xrad 2
+:   -parameters.yrad 2
+:   -parameters.xoffset 1
+:   -parameters.yoffset 1
+:   -parameters.min 100
+:   -parameters.max 4000
+:   -parameters.nbbin 8
+
 ****** Item 3
 Visually, /Energy/ and /Entropy/ seem to be the most correlated, since
 the pixel values are the most similar. However, if you have a closer
