@@ -369,10 +369,10 @@ those NoData input pixels are invariant and keep their NoData label in the outpu
  
 The \application{ClassificationMapRegularization} application has the following input parameters :
 \begin{itemize}
-\item \verb?-io.in? a labeled input image resulting from a previous classification process
-\item \verb?-io.out? the output labeled image corresponding to the regularization of the input image
-\item \verb?-ip.radius? an integer corresponding to the radius of the ball shaped structuring element (default value = 1 pixel)
-\item \verb?-ip.suvbool? a Boolean number used to choose whether pixels with more than one majority class are set to Undecided (true),
+\item \verb?-io.in? labeled input image resulting from a previous classification process
+\item \verb?-io.out? output labeled image corresponding to the regularization of the input image
+\item \verb?-ip.radius? integer corresponding to the radius of the ball shaped structuring element (default value = 1 pixel)
+\item \verb?-ip.suvbool? boolean parameter used to choose whether pixels with more than one majority class are set to Undecided (true),
 or to their Original labels (false = default value). Please note that the Undecided value must be different from existing labels in the input image
 \item \verb?-ip.nodatalabel? label for the NoData class. Such input pixels keep their NoData label in the output image (default value = 0)
 \item \verb?-ip.undecidedlabel? label for the Undecided class (default value = 0).
