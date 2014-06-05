@@ -116,7 +116,7 @@
      2. How many *OTB applications* are currently available ?
      3. What is the purpose of the *ram* parameter in the Orthorectification application?
      4. How can you get help and documentation about applications ?
-     5. Do you know other graphical software which allow to access to OTB applications? 
+     5. Do you know other graphical software which allow to access to OTB applications?
 
 **** OTB applications in Monteverdi2: Basic processing
      
@@ -131,7 +131,7 @@
         #+LATEX:\begin{equation}
         NDVI = \frac{NIR-RED}{NIR+RED}
         #+LATEX:\end{equation}
-
+        
      4. What is the path of the output image file?
      5. Visualize the output in Monteverdi2
      6. Using this application, build a mask of pixels whose Digital Number (DN) in the NIR
@@ -159,7 +159,9 @@
      2. What is the geoid?
      3. Is there another way to compute radiometric indices like NDVI
         with the *OTB Applications* ?
-     4. Learn about the /Python/ access to *OTB Applications* and
+     4. Is there a way to save applications parameters values (input/output
+        images, parameters) in a file for future reuse?
+     5. Learn about the /Python/ access to *OTB Applications* and
         write a python script performing the same steps as in section
         [[OTB applications in Monteverdi2: Basic processing]]
         
@@ -352,6 +354,13 @@
       application that allows to compute several indices including the NDVI.
 
 ***** Item 4
+      You can save parameters values for all applications in an XML file using
+      the /outxml/ parameter.
+
+      Therefore, you can relaunch the application with the exact same parameter
+      using the /inxml/ parameter.Note that these parameters values can also be
+      overwrited in the application.  
+***** Item 5
 
       Please refer to this chapter of the *Cookbook* to learn more about the
       /Python/ [[http://www.orfeo-toolbox.org/CookBook/CookBooksu7.html#x16-170001.3.4][interface]].
