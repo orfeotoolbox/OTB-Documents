@@ -31,13 +31,22 @@ In this part of the exercise, we will use the following data:
 
 ~extract_tsx_canyon_complex.tif~
 
+You can generate this extract using the *gdal_translate* utility with the
+following command:
+
+: $ gdal_translate 
+:   TSX1_SAR__SSC______SM_S_SRA_20080310T133220_20080310T133228.xml 
+:   extract_tsx_canyon_complex.tif
+:   -in phr_xs_melbourne.tif
+:   -srcwin 1800 28000 1024 1024
+
 
 1. Open the image in *Monteverdi* by choosing the above-mentioned XML
    file. Describe what you get in the available image list on
    the *Monteverdi* GUI.
 2. Use the viewer to display the image. Add the 4 /parts/ of the image
    to the same viewer so that you can switch between them in the same
-   viewer display. Move the full resolution view to the cneter of the
+   viewer display. Move the full resolution view to the center of the
    image. Compare the contents of the 4 available bands and answer to
    the following questions:
    1. Which is the image which gives the point of view the most
@@ -83,7 +92,7 @@ warning : need a vector image so ROI is concatenated with itself!
 bug in Touzi filter where radius is not taken into account!
 
 **** Image clustering                                           :noexport:
-compute textures and cluster
+     compute textures and cluster
 idem with filterd images
 *** Solutions                                               :sar:solutions:
 **** Introduction to SAR images
