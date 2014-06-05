@@ -118,8 +118,30 @@
      - Produce your custom look-up table (LUT)
      - Use this LUT to produce a printable classification map for both classifier (in PNG format)
      - Overlay this map on the input image in QGIS. Comment on the classification results.
+     - 
 
+**** Classification map regularization
+
+     Resulting classification maps can be regularized in order to smoothen
+     irregular classes. Such a regularization process improves classification
+     results by making more homogeneous areas which are easier to handle.
+
+     - What is the application which allows to perform classification map regularization?
+     - What is the purpose of the boolean parameter /suvbool/?
+     - Perform classification map regularization using the output of the
+       *ImageClassifier* application?
 **** Fusion of classification maps
+
+     After having processed several classifications of the same input image but
+     from different models or methods (SVM, KNN, Random Forest,...), it is
+     possible to make a fusion of these classification maps. The Fusion of
+     Classifications generates a single more robust and precise classification
+     map which combines the information extracted from the input list of labeled
+     images.
+     - What application should be use to perform fusion of classification maps?
+     - How many algorithms are available in the application?
+     - Perform fusion of the 2 classification map using DS algorithm (fused SVM
+       and RF classification maps)
 
 **** Homework
 
@@ -200,4 +222,42 @@
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 
+**** Classification map regularization
+
+***** Item 1
+      The application is the *ClassificationMapRegularization*.
+***** Item 2
+      The *FusionOfClassifications* application uses either majority voting or
+      the Demspter Shafer framework to handle this fusion.
+***** Item 3
+
+      Here is the command line to produce the fusion of classification maps:
+
+    : $ FusionOfClassifications
+    :   -il cmap1.tif cmap2.tif  
+    :   -out melbourne_extract_small_classification_fused.tif
+    :   -method majorityvoting  
+    :   -nodatalabel    0  
+    :   -undecidedlabel 10  
+
 **** Fusion of classification
+
+***** Item 1
+      The application is the *FusionOfClassifications*.
+***** Item 2
+
+      The boolean parameter /suvbool/ used to choose whether pixels with more than one
+      majority class are set to Undecided (true), or to their Original labels
+      (false = default value). Please note that the Undecided value must be
+      different from existing labels in the input image
+***** Item 3
+
+      Here is the command line to produce the classification map:
+
+    : $ ClassificationMapRegularization
+    :   -io.in melbourne_extract_small_classification_5classes.tif 
+    :   -io.out melbourne_extract_small_classification_regul.png uint8
+    :   -ip.radius          3  
+    :   -ip.suvbool         true  
+    :   -ip.nodatalabel     10  
+    :   -ip.undecidedlabel  7 
