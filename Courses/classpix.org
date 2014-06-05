@@ -189,17 +189,14 @@
 **** Apply classification model
      
      Here is the command line to produce the SVM model:
-
      : $ otbcli_ImageSVMClassifier 
      :   -in melbourne_ms_toa_ortho_extract_small.tif 
      :   -model melbourne_ms_toa_ortho_extract_small_model.svm 
      :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
      :   -out melbourne_extract_small_classification_5classes.tif 
      :   uint8
-
      Pixels of the output image will contain the class label decided by
      the SVM classifier.
-
 **** Produce printable classification map
 
     The look-up table (LUT) used to produce the classification map in my case is:

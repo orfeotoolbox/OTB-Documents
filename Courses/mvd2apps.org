@@ -343,14 +343,14 @@
       influence of Earth's gravitation (source Wikipedia).
 
       In case of tasks involving sensor to ground and ground to sensor
-      coordinate transforms, like during ortho-rectification. These transforms
+      coordinate transforms (like during ortho-rectification),these transforms
       need to find the intersection between the line of sight of the sensor and
       the earth geoid. If a simple spheroid is used as the earth model,
       potentially high localisation errors can be made in areas where elevation
       is high or perturbed.
 
 ***** Item 3
-      In *OTB Applications*, there is a *RadiometricVegetationIndices*
+      In *OTB Applications*, there is the *RadiometricVegetationIndices*
       application that allows to compute several indices including the NDVI.
 
 ***** Item 4
