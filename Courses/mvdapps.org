@@ -1,4 +1,4 @@
-** *Monteverdi* and *OTB applications*                              :mvdapps:
+** Monteverdi and OTB applications                                  :mvdapps:
 *** Description
 **** Abstract
      

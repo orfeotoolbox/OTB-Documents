@@ -1,4 +1,4 @@
-** *Monteverdi2* and *OTB applications*                             :mvd2apps:
+** Monteverdi2 and OTB applications                                :mvd2apps:
 *** Description
 **** Abstract
      
@@ -44,6 +44,12 @@
     -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4096
   #+END_SRC
   #+LATEX:\end{tiny}
+
+  $ otbcli_ExtractROI \
+    -in IMG_PHR1A_P_201202250025329_SEN_PRG_FC_5110-001_R1C1.JP2 \
+    -out phr_pan_melbourne.tif uint16 -startx 19751 -starty 10192 -sizex 4096 -sizey 4096
+  #+END_SRC
+  #+LATEX:\end{tiny}
   
 **** Pre-requisites
 
@@ -59,7 +65,7 @@
 *** Steps
 **** Monteverdi2: data opening and visualisation
      In this part of the exercise, you will use the following data:
-     ~phr_pxs_melbourne.tif~
+     ~phr_pxs_melbourne.tif~ and ~phr_pan_melbourne.tif~ 
 
      1. Run *Monteverdi2*: open a terminal and run the following command:
         : $ monteverdi2    
@@ -71,6 +77,8 @@
         1. Change the full resolution displayed area using the QL window
         2. Change the zoom level,
         3. How to navigate through resolution in Monteverdi2?
+        4. Point the mouse cursor on the navigation view in a region with
+           shadows and right click. What happens?
      5. Using the dataset properties widget
         1. What is the image size?
         2. What is the meaning of the information "Block size"?
@@ -177,6 +185,17 @@
       rendering settings...).
 
       All those parameters are store internally in a SQLite database
+
+***** Item 4
+      Use /Ctlr/ and the mouse wheel to navigate through resolution with
+      Monteverdi2.
+
+      Right click triggered a "magnifying glass" for local contrast
+      enhancement. The apply formula is:
+      $$255\times(\frac{x-min}{max-min})^{gamma}$$
+
+      The exponent is used for gamma correction and /min/ and /max/ are the
+      image X percent minimum and maximum values.
 
 ***** Item 5
       Image size is available in the /Dataset properties/ widget (4096,4096)

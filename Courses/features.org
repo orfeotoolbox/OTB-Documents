@@ -43,10 +43,10 @@ processed image in a higher level of abstraction.
 
 Other terms than /features/ can be used as for instance /primitives/,
 /indices/ or /descriptors/. Although minor differences in meaning
-exist among these terms, we will use the as synonims here.
+exist among these terms, we will use the as synonyms here.
 
 In *Monteverdi* there are 5 different modules for feature extraction
-and they are all grouped under the /Filtering/$\rightarrow$/Feature
+and they are all grouped under the /Filtering/ \rightarrow /Feature
 extraction/ menu.
 
 All /Feature extraction/ modules follow the same rationale: they take
@@ -59,7 +59,7 @@ In this part of the exercise, we will use the following data:
 
 1. Open the image in *Monteverdi*.
 2. Open the *Smoothing* module from the
-   /Filtering/$\rightarrow$/Feature extraction/ menu, and load the
+   /Filtering/ \rightarrow /Feature extraction/ menu, and load the
    image and the segmentation inside the module.
 3. What are the 3 image windows which appear at the top of the
    graphical user interface?
@@ -82,7 +82,7 @@ fresh one.
 3. Select the /Meanshift smooth/ feature. And try to guess the meaning
    of the parameters and their influence on the results.
 4. Select the /Meanshift clusters/ feature. As you can see, the same
-   parameters as for the /Meanshift smooth are available/. Which is
+   parameters as for the /Meanshift smooth/ are available. Which is
    the difference in terms of the computed feature?
 **** *Edge extraction* module
 Open the /Edge extraction/ module and give it the input image. In
