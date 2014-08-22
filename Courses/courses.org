@@ -12,8 +12,8 @@
 #+LATEX_HEADER: \usepackage{tikz}
 #+OPTIONS: tags:nil
 
-#+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS:
+#+SELECT_TAGS:
+#+EXCLUDE_TAGS: solutions 
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -23,6 +23,10 @@
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
 #+LATEX:\fancyfoot[C]{\vspace{3pt}\footnotesize{This content is provided under a Creative Commons Attribution 3.0 Unported License}\includegraphics[height=5pt]{Images/CC-licence.png}}
+* How to build                                                     :noexport:
+  - Use org-mode
+  - You can generate pdf using org-babel
+  - Solutions can be exclude from the tutorial using the exclude_tags export option
 * Foreword                                                               :fw:
 ** About the data
 
