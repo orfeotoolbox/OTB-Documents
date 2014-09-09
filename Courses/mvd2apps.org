@@ -44,12 +44,6 @@
     -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4096
   #+END_SRC
   #+LATEX:\end{tiny}
-
-  $ otbcli_ExtractROI \
-    -in IMG_PHR1A_P_201202250025329_SEN_PRG_FC_5110-001_R1C1.JP2 \
-    -out phr_pan_melbourne.tif uint16 -startx 19751 -starty 10192 -sizex 4096 -sizey 4096
-  #+END_SRC
-  #+LATEX:\end{tiny}
   
 **** Pre-requisites
 
