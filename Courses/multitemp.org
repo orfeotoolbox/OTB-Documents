@@ -1,0 +1,32 @@
+** Multi temporal image analysis                                  :multitemp:
+*** Description
+**** Abstract
+
+     This exercise will get you familiar with multi temporal image analysis
+     using OTB applications. You will learn some basic Python scripting methods to
+     manipulate a set of LandSat-8 images and produce change detection map from
+     the image series (read/stack/extract). 
+
+**** Data
+  
+  We'll use the 
+
+**** Pre-requisites
+
+     - Basic knowledge on *OTB applications* and *QGIS* usage
+     - Basic knowledge of Python
+
+**** Achievements
+
+     - Usage of the OTB applications in Python
+     - Produce detection map from a image series
+*** Steps
+**** LandSat-8 imagery : basic visualization
+**** Concatenate image bands
+**** Radiometric index extraction
+**** Change detection using MAD
+*** Solutions                                                     :solutions:
+**** LandSat-8 imagery : basic visualization
+**** Concatenate image bands
+**** Radiometric index extraction
+**** Change detection using MAD
