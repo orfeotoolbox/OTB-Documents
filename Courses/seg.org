@@ -233,7 +233,7 @@
       Here are the results of the /optimal/ (left) and /image/ (right) methods:
 
       #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]
 
 ***** Item 4
@@ -255,7 +255,7 @@
       Here are the color-mapping results:
 
       #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/second_cc_color_optimal.png]] [[file:Images/second_cc_color_image.png]]
 
 **** More segmentation algorithms
@@ -278,7 +278,7 @@
       Here are the results of this command:
 
       #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/meanshift_color_optimal.png]] [[file:Images/meanshift_color_image.png]]
       #+Latex:\vspace{0.5cm}
 
@@ -293,7 +293,7 @@
       Here are the results of this command:
 
       #+Latex:\vspace{0.5cm}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/watershed_color_optimal.png]] [[file:Images/watershed_color_image.png]]
 
 **** Going big: the vector mode
@@ -351,7 +351,7 @@
 
        #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LaTeX: :width 0.9\textwidth
       [[file:Images/qgis_stitch.png]]
       #+Latex:\end{center}
       
