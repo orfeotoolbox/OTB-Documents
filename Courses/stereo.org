@@ -99,7 +99,7 @@
      ~tristereo_melbourne_2_small_ref.tif~
 
      1. Recompute epipolar geometry with the new stereo pair
-        (post-fixed by /\_ref.tif/). Open the 2 versions of epipolar
+        (post-fixed by ~_ref.tif~). Open the 2 versions of epipolar
         couples (total of 4 images). What differences do you notice
         between the two images pair?
      2. Combined the 2 images to create a 3D anaglyph (left image on

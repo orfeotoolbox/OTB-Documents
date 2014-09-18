@@ -28,7 +28,7 @@
 * How to build                                                     :noexport:
   - Use org-mode
   - You can generate pdf using org-babel
-  - Solutions can be exclude from the tutorial using the exclude_tags export option
+  - Solutions can be exclude from the tutorial using the ~exclude_tags~ export option
 * Foreword                                                               :fw:
 ** About the data
 

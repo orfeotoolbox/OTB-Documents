@@ -20,7 +20,7 @@
 
 
 In this part of the exercise, we will use an extract of TerraSAR-X image called
-2008-03-10_GrandCanyon_SSC for which the principal file is:
+~2008-03-10_GrandCanyon_SSC~ for which the principal file is:
 
 ~TSX1_SAR__SSC______SM_S_SRA_20080310T133220_20080310T133228.xml~
 
@@ -31,7 +31,7 @@ In this part of the exercise, we will use the following data:
 
 ~extract_tsx_canyon_complex.tif~
 
-You can generate this extract using the *gdal_translate* utility with the
+You can generate this extract using the ~gdal_translate~ utility with the
 following command:
 
 : $ gdal_translate 
