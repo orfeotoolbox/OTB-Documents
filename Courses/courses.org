@@ -10,6 +10,8 @@
 #+LaTeX_HEADER: \usepackage{courier}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \usepackage{ulem}
 #+OPTIONS: tags:nil
 
 #+SELECT_TAGS:
