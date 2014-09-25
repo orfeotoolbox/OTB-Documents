@@ -9,11 +9,12 @@
 
 **** Data
   
-  We'll use the 
+  We'll use Landsat 8 images. It provides moderate-resolution imagery, from 15
+  meters to 100 meters with a revisit time of approx 16 days.
 
 **** Pre-requisites
 
-     - Basic knowledge on *OTB applications* and *QGIS* usage
+     - Basic knowledge on *OTB applications*
      - Basic knowledge of Python
 
 **** Achievements
@@ -21,12 +22,24 @@
      - Usage of the OTB applications in Python
      - Produce detection map from a image series
 *** Steps
-**** LandSat-8 imagery : basic visualization
+
 **** Concatenate image bands
+     - Landsat 8 images are stored in separate directories. Moreover each band
+       are inseparate tiff files. Develop a Python script which browse in each
+       directory and concatenate image bands in a single vector image. We will
+       use those vector images in the following steps of this exercise.
+**** LandSat-8 imagery : basic visualization and band combinations
+      - Use Monteverdi2 or Ice to visualize Landsat 8 images
 **** Radiometric index extraction
 **** Change detection using MAD
 *** Solutions                                                     :solutions:
-**** LandSat-8 imagery : basic visualization
 **** Concatenate image bands
+     #+INCLUDE: "./Scripts/concatenate.py" src python
+**** LandSat-8 imagery : basic visualization and band combinations
+     - Color Infrared:  5,4,3
+     - Natural Color: 4,3,2
+     - coastal/aerosol band (band1)
+     - cirrus band (band 9) : better detection of cirrus cloud contamination
 **** Radiometric index extraction
+     #+INCLUDE: "./Scripts/ndvi.py" src python
 **** Change detection using MAD
