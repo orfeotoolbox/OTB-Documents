@@ -6,35 +6,14 @@
  *
  * \section intro Introduction
  *
- * Welcome to CNES' ORFEO Toolbox (OTB). OTB is an open-source sofware
- * system developed in the framework of the ORFEO Accompaniment
- *  Program. 
+ * Welcome to CNES' ORFEO Toolbox (OTB). OTB is an open-source image processing
+ * software, designed for remote sensing applications.
  *
  * \section homepage Home Page
  *
- * The Home Page of the ORFEO Toolbox can be found at:
+ * The Home Page of the project can be found at:
  *
  * http://www.orfeo-toolbox.org 
- *
- * The OTB software guide can be downloaded here:
- *
- * http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf
- *
- * More information about the ORFEO Program is available here:
- *
- * http://smsc.cnes.fr/PLEIADES/A_prog_accomp.htm
- *
- * The OTB users mailing list is located here:
- *
- * http://groups.google.com/group/otb-users
- *
- * All the source code is online and can be retrieved using mercurial from here:
- *
- * http://hg.orfeo-toolbox.org/
- *
- * Latest news, tips and preview about OTB will be on the blog:
- *
- * http://blog.orfeo-toolbox.org
  *
  * \section howto How to use this documentation
  *
