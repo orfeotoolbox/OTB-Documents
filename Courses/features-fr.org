@@ -10,9 +10,9 @@ l'extraction d'information des images.
 - Utilisation de *Monteverdi*
 
 **** Objectifs
-\^Etre capable d'utiliser les modules d'extraction de primitives de *Monteverdi*.
+Être capable d'utiliser les modules d'extraction de primitives de *Monteverdi*.
 
-*** \'Etapes
+*** Étapes
 
 **** Familiarisation avec les modules d'extraction de primitives
 
@@ -110,7 +110,7 @@ L'approche /Structural Feature Set/ calcule des textures en appliquant
 une analyse directionnelle à partir du pixel central de la fenêtre
 d'analyse. Les directions sont calculées en utilisant un pas constant.
 
-Une direction est définie comme : $$ \mathit{d_{i} = \sqrt{(m^{e1}-m{e2})^{2}+(n^{e1}-n{e2})^{2}}} $$
+Une direction est définie comme : $$ \mathit{d_{i} = \sqrt{(m^{e1}-m^{e2})^{2}+(n^{e1}-n^{e2})^{2}}} $$
 
 A partir de $\mathit{d_{i}}$, on définit des histogrammes :
  $$ \mathit{H(c) : \{c \in I \mid \lbrack d_{1}(c), \ldots , d_{i}(c),  \ldots , d_{D}(c)\rbrack  \}} $$
@@ -155,7 +155,7 @@ valeurs soit probable.
 Dans *Monteverdi*, il existe 2 versions des textures de Haralick. Nous
 utiliserons seulement la 1ère.
 
-1. Quel est le sens des paramètres /radius/, /offset/, /min\/max/ et /quant. levels/?
+1. Quel est le sens des paramètres /radius/, /offset/, /min/max/ et /quant. levels/?
 2. Calculez l'entropie de l'intensité de l'image pour des rayons
    différents (2, 3, etc.). Quel est l'effet de ce paramètre?
 3. Calculez les indices /Energy/, /Entropy/, /Correlation/ et

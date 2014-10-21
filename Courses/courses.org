@@ -10,10 +10,12 @@
 #+LaTeX_HEADER: \usepackage{courier}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \usepackage{ulem}
 #+OPTIONS: tags:nil
 
-#+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: solutions
+#+SELECT_TAGS:
+#+EXCLUDE_TAGS:
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -22,8 +24,11 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{3pt}\footnotesize{This content is provided under a Creative Commons Attribution 3.0 Unported License
-}\includegraphics[height=5pt]{Images/CC-licence.png}}
+#+LATEX:\fancyfoot[C]{\vspace{3pt}\footnotesize{This content is provided under a Creative Commons Attribution 3.0 Unported License}\includegraphics[height=5pt]{Images/CC-licence.png}}
+* How to build                                                     :noexport:
+  - Use org-mode
+  - You can generate pdf using org-babel
+  - Solutions can be exclude from the tutorial using the ~exclude_tags~ export option
 * Foreword                                                               :fw:
 ** About the data
 
@@ -31,38 +36,44 @@
   demonstration products, made available for evaluation purpose. To
   get the full products please refer to this [[http://www.astrium-geo.com/fr/364-produits-de-demonstration][website]]. Products used
   are:
-  - ~Pleiades Pan-sharpened ORTHO Compression REGULAR~
+  - ~Pléiades Primary Product - Bundle~
+  - ~Pléiades Ortho Product – Pan-sharpened~
   - ~Pleiades TRISTEREO Bundle PRIMARY~
 
-  They are covered by a cnes copyright.
+  Those images are located on Melbourne, Australia and are covered by a CNES
+  copyright.
 
   Exercises based on these Pleiades data include a set of
   command-line to generate the needed extracts.
 
   Other data needed for some exercises, as well as solution scripts
   can be found in the data package.
-
+  
 ** About the software
 
    To perform the exercises, you will need to have the following
    software installed:
-   - *Orfeo ToolBox* 3.14 or later, including applications
-   - *Monteverdi* 1.6 or later
-   - *QGis* 1.8 or later
+   - *Orfeo ToolBox* 4.2 or later, including applications
+   - *Monteverdi2* 0.8 or later
+   - *QGIS* 2.0 or later
 
      For *Orfeo ToolBox* and *Monteverdi* installation, you can refer to
      the installation from the [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
 
-     For *QGis* installation, please refer to *QGis* documentation,
+     For *QGIS* installation, please refer to *QGIS* documentation,
      which can be found on the project [[http://www.qgis.org/][website]].
+   - *Monteverdi* 1.22 or later
 
+#+INCLUDE: "licence.org"
 * Exercises                                                            :exos:
-#+INCLUDE: "mvdapps.org"
-#+INCLUDE: "prepro.org"
-#+INCLUDE: "seg.org"
-#+INCLUDE: "features.org"
-#+INCLUDE: "classpix.org"
-#+INCLUDE: "classobj.org"
-#+INCLUDE: "stereo.org"
-#+INCLUDE: "sar.org"
 
+#+INCLUDE: "mvd2apps.org" :minlevel 2
+#+INCLUDE: "prepro.org" :minlevel 2
+#+INCLUDE: "seg.org" :minlevel 2
+#+INCLUDE: "features.org" :minlevel 2
+#+INCLUDE: "classpix.org" :minlevel 2
+#+INCLUDE: "classobj.org" :minlevel 2
+#+INCLUDE: "stereo.org" :minlevel 2
+#+INCLUDE: "sar.org" :minlevel 2
+#+INCLUDE: "multitemp.org" :minlevel 2
+#+INCLUDE: "mvdapps.org" :minlevel 2

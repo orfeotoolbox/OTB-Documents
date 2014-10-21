@@ -1,4 +1,4 @@
-\section{Optical pre-processing}\label{sec:optpreproc}
+\section{From raw image to calibrated product}\label{sec:optpreproc}
 
 This section presents various pre-processing tasks that are presented in
 a classical order to obtain a calibrated, pan-sharpened image.
@@ -171,7 +171,15 @@ described in the above sections.
 The \application{BundleToPerfectSensor} application allows to
 perform both steps in a row. Seamless sensor modelling is used to
 perform zooming and registration of the multi-spectral image on the
-panchromatic image. Then, a simple pan-sharpening is applied,
+panchromatic image. In the case of a Pl\'eiades bundle, a different
+approach is used : an affine transform is used to zoom the multi-spectral
+image and apply a residual translation. This translation is computed 
+based on metadata about the geometric processing of the bundle. This 
+zooming and registration of the multi-spectral image over the panchromatic
+image can also be performed by the \application{Superimpose}
+application.
+
+After the registration step, a simple pan-sharpening is applied,
 according to the following formula:
 
 \begin{equation}
@@ -190,8 +198,7 @@ Here is a simple example of how to use the
 otbcli_BundleToPerfectSensor -inp pan_image -inxs xs_image -out output_image
 \end{verbatim}
 
-There are two more optional parameters that can be useful for this
-tool:
+There are also optional parameters that can be useful for this tool:
 \begin{itemize}
 \item The \verb?-elev? option allows to specify the elevation, either with
   a DEM formatted for OTB (\verb?-elev.dem? option, see
@@ -210,6 +217,11 @@ tool:
   with the sensor models, and thus increase the computation
   time. Default value is 10 pixels, which gives sufficient precision
   in most of the cases.
+\item The \verb?-mode? option allows to select the registration mode
+  for the multi-spectral image. The \verb?default? mode uses the sensor 
+  model of each image to create a generic "MS to Pan" transform. The 
+  \verb?phr? mode uses a simple affine transform (which doesn't need 
+  an elevation source nor a registration grid).
 \end{itemize}
 
 Pan-sharpening is a quite heavy processing requiring a lot of system
@@ -377,6 +389,48 @@ supports ortho-rectification of raw products are the following:
 In addition, GeoTiff and other file format with geographical
 information are seamlessly read by \otb, and the ortho-rectification
 tools can be used to re-sample these images in another map projection.
+
+\subsubsection{Beware of "ortho-ready" products}
+
+There are some image products, called "ortho-ready", that should be 
+processed carefully. They are actual products in raw geometry, but their 
+metadata also contains projection data :
+\begin{itemize}
+\item a map projection
+\item a physical origin
+\item a physical spacing
+\item and sometimes an orientation angle
+\end{itemize}
+The purpose of this projection information is to give an approximate map 
+projection to a raw product. It allows you to display the raw image in a
+GIS viewer at the (almost) right location, without having to reproject it. 
+Obviously, this map projection is not as accurate as the sensor parameters
+ of the raw geometry. In addition, the impact of the elevation model can't 
+be observed if the map projection is used. In order to perform an 
+ortho-rectification on this type of product, the map projection has to 
+be hidden from \otb.
+
+You can see if a product is an "ortho-ready" product by using tools such
+as \texttt{gdalinfo} or \application{ReadImageInfo} (see 
+\ref{app:ReadImageInfo}), and check if the product verifies the 2 following
+ conditions :
+\begin{itemize}
+\item The product is in raw geometry : you should expect the presence of 
+RPC coefficients and a non-empty OSSIM keywordlist.
+\item The product has a map projection : you should see a projection 
+name with physical origin and spacing. 
+\end{itemize}
+
+In that case, you can hide the map projection from the \otb by using 
+\textit{extended} filenames. Instead of using the plain input image
+path, you append a specific key at the end :
+\begin{verbatim}
+"path_to_image?&skipcarto=true"
+\end{verbatim}
+The double quote can be necessary for a successful parsing. More details
+about the extended filenames can be found 
+\href{http://wiki.orfeo-toolbox.org/index.php/ExtendedFileName}{here}, 
+and also in the \sg.
 
 \subsubsection{Ortho-rectification with \app}
 

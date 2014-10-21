@@ -11,7 +11,7 @@
 **** Data
      If you need to generate the data ~melbourne_ms_toa_ortho_extract_small.tif~
      used in this exercise from the
-     original products, you can use the following command lines.
+     original products (Bundle MS), you can use the following command lines.
 
      To orthorectify the MS product:
 
@@ -31,7 +31,7 @@
      #+BEGIN_SRC bash
      $ otbcli_OpticalCalibration \
        -in ~/temporary/ortho_phr_ms_small.tif 
-       -out melbourne_ms_toa_ortho_extract_small.tif uint16 -milli 1
+       -out melbourne_ms_toa_ortho_extract_small.tif uint16 -milli 1 -level toa
      #+END_SRC
      #+LATEX:\end{tiny}
 
@@ -41,7 +41,7 @@
      
 **** Pre-requisites
      
-     - Basic knowledge on OTB applications and QGis usage
+     - Basic knowledge on OTB applications and QGIS usage
      - Basic knowledge on image supervised classification
      - Basic knowledge on GIS vector file formats
 
@@ -59,8 +59,9 @@
 
 **** Produce and analyze learning samples
 
-     - Use Qgis to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
-     - Export this vector layer in shapefile
+     - Use QGIS to produce polygons for 5 classes (vegetation, roads, soil, buildings and water)
+     - Export this vector layer in ESRI Shapefile (.shp). Other OGR format can
+       also be used here.
      - What is the label corresponding to the class *water* in the
        shapefile?  An example set of learning samples is provided for
        the exercise in /training.shp/
@@ -86,18 +87,20 @@
 
 **** Estimate classification model using the Support Vector Machine algorithm
      
-     The *TrainSVMImagesClassifier* application performs SVM
+     The *TrainImagesClassifier* application performs supervised
      classifier training from multiple pairs of input images and
      training vector data. Samples are composed of pixel values in
      each band optionally centered and reduced using XML statistics
      file produced by the *ComputeImagesStatistics* application. We will
      use this application with only one image in this exercise.
-     - Use the *TrainSVMImagesClassifier* to produce SVM model
+     - How many classifiers are available in the  *TrainImagesClassifier* application?
+     - Use the *TrainImagesClassifier* to produce SVM model
      - Which kernel is used by default in the application?
      - What is the measured accuracy?
+     - Use the *TrainImagesClassifier* to produce Random Forests model
 
 **** Apply classification model
-     - Use the *ImageClassifier* to apply the classification model to the input image
+     - Use the *ImageClassifier* to apply the classification model (SVM and RF) to the input image
      - What is the output of the application?
      - Bonus : Use the same model to apply the classification to the other extract
  
@@ -113,15 +116,39 @@
      : 1 255 0 0
 
      - Produce your custom look-up table (LUT)
-     - Use this LUT to produce a printable classification map (in PNG format)
+     - Use this LUT to produce a printable classification map for both classifier (in PNG format)
      - Overlay this map on the input image in QGIS. Comment on the classification results.
+     - 
+
+**** Classification map regularization
+
+     Resulting classification maps can be regularized in order to smoothen
+     irregular classes. Such a regularization process improves classification
+     results by making more homogeneous areas which are easier to handle.
+
+     - What is the application which allows to perform classification map regularization?
+     - What is the purpose of the boolean parameter /suvbool/?
+     - Perform classification map regularization using the output of the
+       *ImageClassifier* application?
+**** Fusion of classification maps
+
+     After having processed several classifications of the same input image but
+     from different models or methods (SVM, KNN, Random Forest,...), it is
+     possible to make a fusion of these classification maps. The Fusion of
+     Classifications generates a single more robust and precise classification
+     map which combines the information extracted from the input list of labeled
+     images.
+     - What application should be use to perform fusion of classification maps?
+     - How many algorithms are available in the application?
+     - Perform fusion of the 2 classification map using DS algorithm (fused SVM
+       and RF classification maps)
 
 **** Homework
 
      - Produce classification model with different kind of SVM
-       kernels. Comment different accuracies obtained?
+       kernels and try other machine learning algorithms available. Comment different accuracies obtained?
      - Going big: Apply this classification on the pan-sharpened image over Melbourne
-
+       
 *** Solutions                                            :classpix:solutions:
 **** Produce and analyze learning samples
 
@@ -135,38 +162,53 @@
      :   -il melbourne_ms_toa_ortho_extract_small.tif 
      :   -out melbourne_ms_toa_ortho_extract_small_stats.xml
 
+     # #+HEADERS: :tangle yes  :var cmdpath="/home/grizonnetm/local/bin/otbApplicationLauncherCommandLine"
+     # #+begin_src sh
+     # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/local/lib:$HOME/local/lib/otb
+     # $cmdpath ComputeImagesStatistics /home/grizonnetm/local/lib/otb/applications  -out /media/grizonnetm/MANU_LINUX/OTB_Courses/test.xml -il /media/grizonnetm/MANU_LINUX/OTB_Courses/Exercises/ex3_classif_pixel/melbourne_ms_toa_ortho_extract_small.tif
+     # #+end_src
+
+     # #+RESULTS:
+     # : Processing Image (1/1): 0% [                                                  ]Processing Image (1/1): 2% [*                                                 ]Processing Image (1/1): 4% [**                                                ]Processing Image (1/1): 6% [***                                               ]Processing Image (1/1): 8% [****                                              ]Processing Image (1/1): 10% [*****                                             ]Processing Image (1/1): 12% [******                                            ]Processing Image (1/1): 14% [*******                                           ]Processing Image (1/1): 16% [********                                          ]Processing Image (1/1): 18% [*********                                         ]Processing Image (1/1): 20% [**********                                        ]Processing Image (1/1): 22% [***********                                       ]Processing Image (1/1): 24% [************                                      ]Processing Image (1/1): 26% [*************                                     ]Processing Image (1/1): 28% [**************                                    ]Processing Image (1/1): 30% [***************                                   ]Processing Image (1/1): 32% [****************                                  ]Processing Image (1/1): 34% [*****************                                 ]Processing Image (1/1): 36% [******************                                ]Processing Image (1/1): 38% [*******************                               ]Processing Image (1/1): 40% [********************                              ]Processing Image (1/1): 42% [*********************                             ]Processing Image (1/1): 44% [**********************                            ]Processing Image (1/1): 46% [***********************                           ]Processing Image (1/1): 48% [************************                          ]Processing Image (1/1): 50% [*************************                         ]Processing Image (1/1): 52% [**************************                        ]Processing Image (1/1): 54% [***************************                       ]Processing Image (1/1): 56% [****************************                      ]Processing Image (1/1): 58% [*****************************                     ]Processing Image (1/1): 60% [******************************                    ]Processing Image (1/1): 62% [*******************************                   ]Processing Image (1/1): 64% [********************************                  ]Processing Image (1/1): 66% [*********************************                 ]Processing Image (1/1): 68% [**********************************                ]Processing Image (1/1): 70% [***********************************               ]Processing Image (1/1): 72% [************************************              ]Processing Image (1/1): 74% [*************************************             ]Processing Image (1/1): 76% [**************************************            ]Processing Image (1/1): 78% [***************************************           ]Processing Image (1/1): 80% [****************************************          ]Processing Image (1/1): 82% [*****************************************         ]Processing Image (1/1): 84% [******************************************        ]Processing Image (1/1): 86% [*******************************************       ]Processing Image (1/1): 88% [********************************************      ]Processing Image (1/1): 90% [*********************************************     ]Processing Image (1/1): 92% [**********************************************    ]Processing Image (1/1): 94% [***********************************************   ]Processing Image (1/1): 96% [************************************************  ]Processing Image (1/1): 98% [************************************************* ]Processing Image (1/1): 100% [**************************************************] (0.4 seconds)
+
+     
+#     #+INCLUDE: "/media/grizonnetm/MANU_LINUX/OTB_Courses/test.xml"
+
      The value of the mean of the red band is *111.625*. Reflectance
      allows to compare radiometric values between images of different
      sensors.
 
 **** Estimate classification model using the Support Vector Machine algorithm
 
-     Here is the command line to produce the SVM model:
+     This application is based on LibSVM and on OpenCV Machine Learning
+     classifiers, and is compatible with OpenCV 2.3.1 and later.
+     
+     There is currently 9 algorithms available.
 
-     : $ otbcli_TrainSVMImagesClassifier 
+     Here is the command line to produce the SVM model (default algorithm used
+     by the application):
+
+     : $ otbcli_TrainImagesClassifier 
      :   -io.il melbourne_ms_toa_ortho_extract_small.tif 
      :   -io.imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
      :   -io.vd training.shp 
      :   -io.out melbourne_ms_toa_ortho_extract_small_model.svm
 
      Linear kernel is used by default in the application. The measured
-     accuracy is 0.988523. The value is high due to the low number of
+     accuracy is around 0.9. The value is high due to the low number of
      training samples and their lack of variability.
 
 **** Apply classification model
      
      Here is the command line to produce the SVM model:
-
      : $ otbcli_ImageSVMClassifier 
      :   -in melbourne_ms_toa_ortho_extract_small.tif 
-     :   -svm melbourne_ms_toa_ortho_extract_small_model.svm 
+     :   -model melbourne_ms_toa_ortho_extract_small_model.svm 
      :   -imstat melbourne_ms_toa_ortho_extract_small_stats.xml 
      :   -out melbourne_extract_small_classification_5classes.tif 
      :   uint8
-
      Pixels of the output image will contain the class label decided by
      the SVM classifier.
-
 **** Produce printable classification map
 
     The look-up table (LUT) used to produce the classification map in my case is:
@@ -189,4 +231,42 @@
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
 
+**** Classification map regularization
 
+***** Item 1
+      The application is the *ClassificationMapRegularization*.
+***** Item 2
+      The *FusionOfClassifications* application uses either majority voting or
+      the Demspter Shafer framework to handle this fusion.
+***** Item 3
+
+      Here is the command line to produce the fusion of classification maps:
+
+    : $ FusionOfClassifications
+    :   -il cmap1.tif cmap2.tif  
+    :   -out melbourne_extract_small_classification_fused.tif
+    :   -method majorityvoting  
+    :   -nodatalabel    0  
+    :   -undecidedlabel 10  
+
+**** Fusion of classification
+
+***** Item 1
+      The application is the *FusionOfClassifications*.
+***** Item 2
+
+      The boolean parameter /suvbool/ used to choose whether pixels with more than one
+      majority class are set to Undecided (true), or to their Original labels
+      (false = default value). Please note that the Undecided value must be
+      different from existing labels in the input image
+***** Item 3
+
+      Here is the command line to produce the classification map:
+
+    : $ ClassificationMapRegularization
+    :   -io.in melbourne_extract_small_classification_5classes.tif 
+    :   -io.out melbourne_extract_small_classification_regul.png uint8
+    :   -ip.radius          3  
+    :   -ip.suvbool         true  
+    :   -ip.nodatalabel     10  
+    :   -ip.undecidedlabel  7 

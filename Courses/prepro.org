@@ -6,13 +6,13 @@
      
 **** Data 
      If you need to generate the data used in this exercise from the
-     original products, you can use the following command lines.
+     original products (Bundle MS), you can use the following command lines.
    
   #+LATEX:\begin{tiny}
   #+BEGIN_SRC bash
   $ otbcli_ExtractROI \
-    -in PRIMARY_TRISTEREO_BUNDLE/IMG_PHR1A_MS_006/IMG_PHR1A_MS_201202250025599_SEN_IPU_20120509_2001-012_R1C1.JP2 \
-    -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4084
+    -in IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.JP2 \
+    -out phr_xs_melbourne.tif uint16 -startx 4096 -starty 2048 -sizex 4096 -sizey 4096
   #+END_SRC
   #+LATEX:\end{tiny}
 
@@ -197,7 +197,7 @@ In this part of the exercise, you will use the following data:
 ***** Item 1
       
       The UTM zone of Melbourne is 55. See [[http://www.dmap.co.uk/utmworld.htm][here]] for example.
-
+      
 ***** Item 2 
 
       The EPSG code is 32755. This information is available in the Quantum GIS project properties window.
@@ -224,7 +224,7 @@ In this part of the exercise, you will use the following data:
 
 ***** Item 2 
 
-      Here is the command-line to compute TOA reflectance :
+      Here is the command-line to compute TOC reflectance :
 
       : $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
       :   -io.out solution/phr_xs_melbourne_toc.tif uint16 

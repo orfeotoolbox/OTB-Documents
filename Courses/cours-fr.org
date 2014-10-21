@@ -1,6 +1,6 @@
 #+TITLE: Analyse d'images Pleiades PHR avec l'ORFEO ToolBox
 #+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Jordi Inglada (CNES/CESBIO)
-#+DATE: Décembre 2012
+#+DATE: Décembre 2013
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,11pt,twoside,openright]
@@ -14,7 +14,7 @@
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXPORT_EXCLUDE_TAGS: solutions
+#+EXPORT_EXCLUDE_TAGS:
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -23,7 +23,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{FITRA 2012 - Orfeo Toolbox}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{FOSTIT 2013 - Orfeo Toolbox}}
 
 * Avant-propos                                                           :fw:
 ** Données
@@ -56,12 +56,13 @@ de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packag
 Pour installer *QGis* consultez la documentation du logiciel qui est
 disponible sur le  [[http://www.qgis.org/][site du projet]].
 
+#+INCLUDE: "licence.org"
 * Exercices                                                            :exos:
-#+INCLUDE: "mvdapps-fr.org"
-#+INCLUDE: "prepro-fr.org"
-#+INCLUDE: "seg-fr.org"
-#+INCLUDE: "features-fr.org"
-#+INCLUDE: "classpix-fr.org"
-#+INCLUDE: "classobj-fr.org"
+#+INCLUDE: "mvdapps-fr.org" :minlevel 2
+#+INCLUDE: "prepro-fr.org" :minlevel 2
+#+INCLUDE: "seg-fr.org" :minlevel 2
+#+INCLUDE: "features-fr.org" :minlevel 2
+#+INCLUDE: "classpix-fr.org" :minlevel 2
+#+INCLUDE: "classobj-fr.org" :minlevel 2
 
 

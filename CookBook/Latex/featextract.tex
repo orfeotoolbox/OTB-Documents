@@ -262,9 +262,15 @@ In this case, 8 local Haralick textures features will be processed.
 The 8 output image channels are: Energy, Entropy, Correlation, Inverse Difference
 Moment, Inertia, Cluster Shade, Cluster Prominence and Haralick Correlation. They
 are provided in this exact order in the output image. Thus, this application
-computes the following Haralick textures over a sliding windows with user defined
-radius: (where $ g(i, j) $ is the element in cell i, j of a normalized Gray Level
-Co-occurrence Matrix (GLCM)):
+computes the following Haralick textures over a neighborhood with user defined
+radius. 
+To improve the speed of computation, a variant of Grey Level Co-occurrence Matrix(GLCM) 
+called Grey Level Co-occurrence Indexed List (GLCIL) is used.
+Given below is the mathematical explanation on the computation of each textures. 
+Here $ g(i, j) $ is the frequency of element in the GLCIL whose index is i, j.
+GLCIL stores a pair of frequency of two pixels taken from the given offset and the cell index (i, j) of the pixel in the neighborhood window.
+:(where each element in GLCIL is a pair of pixel index and it's frequency,
+ $ g(i, j) $ is the frequency value of the pair having index is i, j).
 
 "Energy" $ = f_1 = \sum_{i, j}g(i, j)^2 $
 
@@ -281,18 +287,51 @@ Co-occurrence Matrix (GLCM)):
 "Cluster Prominence" $ = f_7 = \sum_{i, j}((i - \mu) + (j - \mu))^4 g(i, j) $
 
 "Haralick's Correlation" $ = f_8 = \frac{\sum_{i, j}(i, j) g(i, j) -\mu_t^2}{\sigma_t^2} $
-where $\mu_t$ and $\sigma_t$ are the mean and standard deviation of the row (or
-column, due to symmetry) sums.
-
-Above, $ \mu = $ (weighted pixel average) $ = \sum_{i, j}i \cdot g(i, j) = \sum_{i, j}j \cdot g(i, j) $
-(due to matrix symmetry), and $ \sigma = $ (weighted pixel variance) $ = \sum_{i, j}(i - \mu)^2 \cdot g(i, j) = \sum_{i, j}(j - \mu)^2 \cdot g(i, j) $
-(due to matrix symmetry).
+where $\mu_t$ and $\sigma_t$ are the mean and standard deviation of the row (or column, due to symmetry) sums. Above, 
+$ \mu = $ (weighted pixel average) $ = \sum_{i, j}i \cdot g(i, j) = \sum_{i, j}j \cdot g(i, j) $ (due to matrix symmetry), and 
+$ \sigma = $ (weighted pixel variance) $ = \sum_{i, j}(i - \mu)^2 \cdot g(i, j) = \sum_{i, j}(j - \mu)^2 \cdot g(i, j) $ (due to matrix symmetry).
 
 \item \verb?-texture=advanced:?
-In this case, 9 advanced texture features will be processed. The 9 output image
-channels are: Mean, Variance, Sum Average, Sum Variance, Sum Entropy, Difference of
-Entropies, Difference of Variances, IC1 and IC2. They are provided in this exact
-order in the output image.
+In this case, 10 advanced texture features will be processed. 
+The 10 output image channels are: Mean, Variance, Dissimilarity, Sum Average, 
+Sum Variance, Sum Entropy, Difference of Entropies, Difference of Variances, IC1 and IC2. 
+They are provided in this exact order in the output image. 
+The textures are computed over a sliding window with user defined radius.
+
+To improve the speed of computation, a variant of Grey Level Co-occurrence Matrix(GLCM) 
+called Grey Level Co-occurrence Indexed List (GLCIL) is used.
+Given below is the mathematical explanation on the computation of each textures. 
+Here $ g(i, j) $ is the frequency of element in the GLCIL whose index is i, j.
+GLCIL stores a pair of frequency of two pixels taken from the given offset and the cell index (i, j) of the pixel in the neighborhood window.
+:(where each element in GLCIL is a pair of pixel index and it's frequency,
+ $ g(i, j) $ is the frequency value of the pair having index is i, j).
+
+"Mean" $ = \sum_{i, j}i g(i, j) $
+
+"Sum of squares: Variance" $ = f_4 = \sum_{i, j}(i - \mu)^2 g(i, j) $
+
+"Dissimilarity" $ = f_5 = \sum_{i, j}(i - j) g(i, j)^2 $
+
+"Sum average" $ = f_6 = -\sum_{i}i g_{x+y}(i) $
+
+"Sum Variance" $ = f_7 = \sum_{i}(i - f_8)^2 g_{x+y}(i) $
+
+"Sum Entropy" $= f_8 = -\sum_{i}g_{x+y}(i) log (g_{x+y}(i)) $
+
+"Difference variance" $ = f_10 = variance of g_{x-y}(i) $
+
+"Difference entropy" $ = f_11 = -\sum_{i}g_{x-y}(i) log (g_{x-y}(i)) $
+
+"Information Measures of Correlation IC1" $ = f_12 = \frac{f_9 - HXY1}{H} $
+
+"Information Measures of Correlation IC2" $ = f_13 = \sqrt{1 - \exp{-2}|HXY2 - f_9|} $
+
+Above, $ \mu =  $ (weighted pixel average) 
+ $ = \sum_{i, j}i \cdot g(i, j) =  \sum_{i, j}j \cdot g(i, j) $ (due to matrix summetry), and
+
+ $ g_{x+y}(k) =  \sum_{i}\sum_{j}g(i) $ where $ i+j=k $ and $ k = 2, 3, .., 2N_{g} $ and
+
+ $ g_{x-y}(k) =  \sum_{i}\sum_{j}g(i) $ where $ i-j=k $ and $ k = 0, 1, .., N_{g}-1 $
 
 \item \verb?-texture=higher:?
 In this case, 11 local higher order statistics texture coefficients based on the

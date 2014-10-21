@@ -89,11 +89,114 @@ chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 \section{Installation}\label{sec:appinstall}
 
-Since \app are now included within the standard \otb package, their 
-installation is made while installing the whole \otb.
+We provide different binary packages for OTB-Applications:
+\begin{itemize}
+\item for Windows platform (XP/Seven) through OsGeo4W installer (32/64bit)
+\item for Ubuntu 12.04 and higher
+\item for OpenSuse 12.X and higher
+\item for MacOSX through MacPorts software  
+\end{itemize}
 
-Detailed instructions on how to install the whole \otb suite either from 
-binary packages or from source are available in the \sg, in section \textbf{Installation}.
+If you want build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source)
+
+\subsection{Windows XP/Seven}
+
+Since version 3.12, we provide OTB Applications packages through OSGeo4W for Windows XP/Seven users:
+\begin{itemize}
+\item \textbf{otb-bin} for command line and QT applications
+\item \textbf{otb-python} for python applications
+\end{itemize}
+Follow the instructions in the installer and select the packages you want to add. The installer will proceed with the installation of selected packages and all their dependencies.
+For the \textbf{otb-bin} packages, it will be available directly in the OSGeo4W shell, for example run
+\begin{verbatim}
+otbgui_BandMath.
+\end{verbatim}
+For the \textbf{otb-python} packages, you can simply check from an OSGeo4W shell the list of available applications:
+\begin{verbatim}
+python
+import otbApplication
+print str( otbApplication.Registry.GetAvailableApplications() )
+\end{verbatim}
+
+\subsection{MacOS X}
+
+OTB Applications are now available on \href{http://http://www.macports.org/}{MacPorts}.
+The port name is called orfeotoolbox.
+You can follow the \href{ http://guide.macports.org/}{MacPorts documentation} to install MacPorts first, then install the orfeotoolbox port.
+After the installation, you can used directly on your system, the OTB applications.
+
+\subsection{Ubuntu 12.04 and higher}
+For Ubuntu 12.04 and higher, OTB Applications packages may be available as
+Debian packages through APT repositories:
+\begin{itemize}
+\item \textbf{otb-bin} for command line applications
+\item \textbf{otb-bin-qt} for Qt applications
+\item \textbf{python-otb} for python applications
+\end{itemize}
+
+Since release 3.14.1, OTB Applications packages are available in the
+\href{https://launchpad.net/~ubuntugis/+archive/ubuntugis-unstable}{ubuntugis-unstable} repository.
+
+You can add it by using these command-lines:
+\begin{verbatim}
+sudo aptitude install add-apt-repository
+sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+\end{verbatim}
+
+After you can run:
+\begin{verbatim}
+sudo aptitude install otb-bin otb-bin-qt python-otb
+\end{verbatim}
+
+If you are using \emph{Synaptic}, you can add the repositories, update and install the packages through the
+graphical interface.
+
+For further informations about Ubuntu packages go to
+\href{https://launchpad.net/~ubuntugis/+archive/ubuntugis-unstable}{ubuntugis-unstable}
+launchpad page and click on \textbf{Read about installing}.
+
+\textbf{apt-add-repository} will try to retrieve the GPG keys of the
+repositories to certify the origin of the packages. If you are behind a http
+proxy, this step won't work and apt-add-repository will stall and eventually
+quit. You can temporarily ignore this error and proceed with the update
+step. Following this, aptitude update will issue a warning about a signature
+problem. This warning won't prevent you from installing the packages.
+
+\subsection{OpenSuse 12.X and higher}
+
+For OpenSuse 12.X and higher, OTB Applications packages are available through
+\emph{zypper}.
+
+First, you need to add the appropriate repositories with these command-lines (please replace $11.4$ by your OpenSuse version):
+\begin{verbatim}
+sudo zypper ar
+http://download.opensuse.org/repositories/games/openSUSE_11.4/ Games
+sudo zypper ar
+http://download.opensuse.org/repositories/Application:/Geo/openSUSE_11.4/ GEO
+sudo zypper ar
+http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_11.4/ tzotsos
+\end{verbatim}
+
+Now run:
+\begin{verbatim}
+sudo zypper refresh
+sudo zypper install OrfeoToolbox
+sudo zypper install OrfeoToolbox-python
+\end{verbatim}
+
+Alternatively you can use the One-Click Installer from the \href{http://software.opensuse.org/search?q=Orfeo&baseproject=openSUSE\%3A11.4&lang=en&include_home=true&exclude_debug=true}{openSUSE Download page} or add the above repositories and install through Yast Package Management.
+
+There is also support for the recently introduced 'rolling' openSUSE distribution named 'Tumbleweed'.
+For Tumbleweed you need to add the following repositories with these command-lines:
+\begin{verbatim}
+sudo zypper ar
+http://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/ Games
+sudo zypper ar
+http://download.opensuse.org/repositories/Application:/Geo/openSUSE_Tumbleweed/ GEO
+sudo zypper ar
+http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_Tumbleweed/ tzotsos
+\end{verbatim}
+and then add the OTB packages as shown above.
 
 \section{Using the applications}\label{sec:usingapps}
 

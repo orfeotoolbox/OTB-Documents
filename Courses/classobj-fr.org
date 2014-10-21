@@ -13,7 +13,7 @@ approche simple d'apprentissage actif.
 **** Objectifs
 Apprendre à utiliser le module *Object Labeling* de *Monteverdi*.
 
-*** \'Etapes
+*** Étapes
 
 **** La segmentation préalable
 Dans cette partie de l'exercice, nous utiliserons les données
@@ -85,9 +85,9 @@ _Trucs et astuces :_
 1. Dans l'onglet /Objects/, cliquez sur /Sample/ en bas à gauche. Ceci
    permet d'afficher des objets considérés comme étant difficiles à
    classer. On utilise ici la technique dite du /margin sampling/.
-2. Quels sont les types de segments qui apparaissent comme difficiles
+2. Quels sont les types de régions qui apparaissent comme difficiles
    à classer?
-3. Essayez de créer une classe de rejet pour y ranger des segments de "bruit".
+3. Essayez de créer une classe de rejet pour y ranger des régions de "bruit".
 4. Réalisez quelques itérations de plus d'apprentissage actif. Qu'observez-vous?
 
 *** Solutions                                            :classobj:solutions:
@@ -112,7 +112,7 @@ Et voici le résultat :
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth
+      #+ATTR_LaTeX: :width 0.4\textwidth
       [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
       #+Latex:\end{center}
 
@@ -194,7 +194,7 @@ En ajoutant quelques classes de plus et quelques exemples
 supplémentaires, nous pouvons obtenir ce genre de résultat :
 
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth
+      #+ATTR_LaTeX: :width 0.4\textwidth
       [[file:Images/obc_classif_samples.png]] [[file:Images/obc_classif_samples_solution.png]]
       #+Latex:\end{center}
 

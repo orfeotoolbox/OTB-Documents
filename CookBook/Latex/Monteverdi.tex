@@ -19,12 +19,91 @@ The application is called \mont, since this is the name of the Orfeo
 composer. The application allows you to build interactivelly remote
 sensing processes based on the \otb. This is also in
 remembering of the great (and once open source) Khoros/Cantata
-software.  Installation of \mont is very simple. Standard
-installer packages are available on MS Windows (\download or through \osgeow) 
-and MacOS X (.dmg file can be found on the \download). For many 
-flavors of GNU/Linux binary packages (rpm and deb) or software
-repositories to add to your installation manager are also provided. 
-Get the latest information on binary packages on the \website.
+software.
+  
+Installation of \mont is very simple. Standard installer packages are available on the main platforms thanks to OTB-Developpers and external users. These packages are available few days after the release. Get the latest information on binary packages on the \website in the section download.
+
+We will discribe in the following sections the way to install monteverdi on:
+\begin{itemize}
+\item Windows platform (XP/Seven)
+\item Ubuntu 12.04 and higher
+\item OpenSuse 12.X and higher
+\item MacOSX 10.8
+\end{itemize}
+
+If you want build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source)
+
+\subsection{Windows XP/Seven/8.1}
+For Windows XP/Seven/8.1 users, there is a classical standalone installation program for Monteverdi, available from the \download after each release. 
+
+Since version 1.12, it is also possible to get Monteverdi package through \osgeow for Windows XP/Seven users. Package for Monteverdi is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. The installer will proceed with the installation of the package and all its dependencies. Monteverdi will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). You can now use directly Monteverdi from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. Currently, you should use the 32bit OSGeo4W installer but we will soon distribute monteverdi package for 64 bit installer. 
+
+\subsection{MacOS X}
+A standard DMG package is available for Monteverdi for MacOS X 10.8. Please go the \download.
+Click on the file to launch Monteverdi. This DMG file is also compatible with MacOSX 10.9.
+
+\subsection{Ubuntu 12.04 and higher}
+For Ubuntu 12.04 and higher, Monteverdi package may be available as Debian package through APT repositories.
+
+Since release 1.14, Monteverdi packages are available in the
+\href{https://launchpad.net/~ubuntugis/+archive/ubuntugis-unstable}{ubuntugis-unstable} repository.
+
+You can add it by using these command-lines:
+\begin{verbatim}
+sudo aptitude install add-apt-repository
+sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+\end{verbatim}
+
+Now run:
+\begin{verbatim}
+sudo aptitude install monteverdi
+\end{verbatim}
+
+If you are using \emph{Synaptic}, you can add the repository, update and install the package through the
+graphical interface.
+
+\textbf{apt-add-repository} will try to retrieve the GPG keys of the
+repositories to certify the origin of the packages. If you are behind a http
+proxy, this step won't work and apt-add-repository will stall and eventually
+quit. You can temporarily ignore this error and proceed with the update
+step. Following this, aptitude update will issue a warning about a signature
+problem. This warning won't prevent you from installing the packages.
+
+\subsection{OpenSuse 11.X and higher}
+\label{ssec:opensuse_binaries}
+
+For OpenSuse 12.X and higher, Monteverdi packages is available through
+\emph{zypper}.
+
+First, you need to add the appropriate repositories with these command-lines (please replace $11.4$ by your OpenSuse version):
+\begin{verbatim}
+sudo zypper ar
+http://download.opensuse.org/repositories/games/openSUSE_11.4/ Games
+sudo zypper ar
+http://download.opensuse.org/repositories/Application:/Geo/openSUSE_11.4/ GEO
+sudo zypper ar
+http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_11.4/ tzotsos
+\end{verbatim}
+
+Now run:
+\begin{verbatim}
+sudo zypper refresh
+sudo zypper install Monteverdi
+\end{verbatim}
+
+Alternatively you can use the One-Click Installer from the \href{http://software.opensuse.org/search?q=Orfeo&baseproject=openSUSE\%3A11.4&lang=en&include_home=true&exclude_debug=true}{openSUSE Download page} or add the above repositories and install through Yast Package Management.
+
+There is also support for the recently introduced 'rolling' openSUSE distribution named 'Tumbleweed'.
+For Tumbleweed you need to add the following repositories with these command-lines:
+\begin{verbatim}
+sudo zypper ar
+http://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/ Games
+sudo zypper ar
+http://download.opensuse.org/repositories/Application:/Geo/openSUSE_Tumbleweed/ GEO
+sudo zypper ar
+http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_Tumbleweed/ tzotsos
+\end{verbatim}
+and then add the monteverdi packages as shown above.
 
 \section{Anatomy of the applications}\label{sec:anatomy}
 
