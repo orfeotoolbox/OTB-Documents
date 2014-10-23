@@ -1794,8 +1794,8 @@ MAN_EXTENSION          = .3
 # MAN_OUTPUT in which the man pages are placed. If defaults to man followed by
 # MAN_EXTENSION with the initial . removed.
 # This tag requires that the tag GENERATE_MAN is set to YES.
-
-MAN_SUBDIR             =
+# [not in ver. 1.8.6]
+#MAN_SUBDIR             =
 
 # If the MAN_LINKS tag is set to YES and doxygen generates man output, then it
 # will generate one additional man file for each entity documented in the real
@@ -1857,8 +1857,8 @@ DOCBOOK_OUTPUT         = docbook
 # increase the size of the DOCBOOK output.
 # The default value is: NO.
 # This tag requires that the tag GENERATE_DOCBOOK is set to YES.
-
-DOCBOOK_PROGRAMLISTING = NO
+# [not in ver. 1.8.6]
+#DOCBOOK_PROGRAMLISTING = NO
 
 #---------------------------------------------------------------------------
 # Configuration options for the AutoGen Definitions output
@@ -2341,8 +2341,8 @@ DIAFILE_DIRS           =
 # generate a warning when it encounters a \startuml command in this case and
 # will not generate output for the diagram.
 # This tag requires that the tag HAVE_DOT is set to YES.
-
-PLANTUML_JAR_PATH      =
+# [not in ver. 1.8.6]
+#PLANTUML_JAR_PATH      =
 
 # The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
 # that will be shown in the graph. If the number of nodes in a graph becomes
