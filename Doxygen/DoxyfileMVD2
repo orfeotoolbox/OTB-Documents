@@ -2076,7 +2076,9 @@ SKIP_FUNCTION_MACROS   = YES
 # the path). If a tag file is not located in the directory in which doxygen is
 # run, you must also specify the path to the tagfile here.
 
-TAGFILES               =
+TAGFILES               = ../../InsightDoxygenDocTag-4.6.0=http://www.itk.org/Doxygen46/html \
+                         ../../OTBDoxygen-4.2.1.tag=http://orfeo-toolbox.org/doxygen \
+                         ../../qt.tags=http://qt-project.org/doc/qt-4.8
 
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create a
 # tag file that is based on the input files it reads. See section "Linking to
