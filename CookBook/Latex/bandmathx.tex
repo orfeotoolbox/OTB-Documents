@@ -1,0 +1,361 @@
+\newpage
+\section{BandMathImageFilterX (based on muParserX)}\label{sec:bandmathx}
+%add intro
+This section describes how to use the BandMathImageFilterX.
+
+
+\subsection{Fundamentals: headers, declaration and instantiation}\label{ssec:fund}
+
+A simple example is given below:
+
+\begin{verbatim}
+
+#include "otbBandMathImageFilterX.h"
+#include "otbVectorImage.h"
+
+int otbBandMathImageFilterXNew( int itkNotUsed(argc), char* itkNotUsed(argv) [])
+{
+  	typedef double                                            			PixelType;
+  	typedef otb::VectorImage<PixelType, 2>                     	ImageType;
+  	typedef otb::BandMathImageFilterX<ImageType>                FilterType;
+
+   	FilterType::Pointer         filter       = FilterType::New();
+
+   	return EXIT_SUCCESS;
+}
+
+\end{verbatim}
+
+As we can see, the new band math filter works with the class otb::VectorImage.
+
+\subsection{Syntax : first elements}\label{ssec:syntax}
+
+The default prefix name for variables related to the ith input is \textit{im(i+1)} (note the indexing from 1 to N, for N inputs). The user has the possibility to change this default behaviour by setting its own prefix:
+
+\begin{verbatim}
+
+// All variables related to image1 (input 0) will have the prefix im1 
+filter->SetNthInput(0, image1);   		
+
+// All variables related to image2 (input 1) will have the prefix  toulouse   
+filter->SetNthInput(1, image2, "toulouse");   
+
+// All variables related to anotherImage (input 2) will have the prefix im3
+filter->SetNthInput(2, anotherImage); 	   
+
+\end{verbatim}
+
+In this document, we will keep the default convention. Following list summaries the available variables for input #0 (and so on for every input):
+
+
+\begin{center} 
+\begin{tabular}{||l|l||}
+\hline
+\bf Variables & \bf Description \\
+\hline\hline
+im1 & a pixel from first input, made of n components (n bands) \\
+im1bj & jth component of a pixel from first input (first band is indexed by 1) \\
+im1bjNkxp & a neighbourhood ("N") of pixels of the jth component from first input, of size kxp \\
+im1PhyX and im1PhyY & spacing of first input in X and Y directions \\
+idxX and idxY & indices of the current pixel \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Variables and their descriptions.}
+\label{variables}
+
+\newline
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Always keep in mind that a pixel of an otb::VectorImage is always represented as a row vector inside the muParserX framework.
+\end{center} 
+\end{minipage}}
+\end{center}}
+
+\newline
+
+So the following formula (addition of two pixels):
+\begin{equation}
+  im1+im2
+\end{equation}
+\label{firstequation}
+
+is correct only if the two first inputs have the same number of bands. In addition, the following formula is not consistent even if im1 represent a pixel of an image made of only one band:
+
+\begin{equation}
+  im1+1
+\end{equation}
+
+The right formula is instead:
+
+\begin{equation}
+  im1+\{ 1 \}
+\end{equation}
+
+
+or
+
+\begin{equation}
+  im1 + \{1,1,1,...,1\}
+\end{equation}
+
+if im1 is made of n components (one can notice the way that muParserX allows to define vectors on the fly). 
+
+On the other hand, the variable im1b1 for instance is represented as a scalar; so we have the following different possibilities:
+
+\begin{center} 
+\begin{tabular}{||c|c||}
+\hline
+\bf Expression & \bf Status \\
+\hline\hline
+im1b1 + 1 & correct \\
+\{im1b1\} + \{1\} & correct \\
+im1b1 + \{1\} & incorrect \\
+\{im1b1\} + 1 & incorrect \\
+im1 + \{im2b1,im2b2\} & correct if im1 represents a pixel of two components (equivalent to  im1 + im2) \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Correct / incorrect expressions.}
+\label{correctness}
+
+
+Similar remarks can be made for the multiplication/division; for instance, the following formula is incorrect:
+
+\begin{equation}
+  \{im2b1,im2b2\} * \{1,2\}
+\end{equation}
+
+whereas this one is correct:
+\begin{equation}
+  \{im2b1,im2b2\} * \{1,2\}'
+\end{equation}
+
+or in more simple terms (and only if im2 contains two components): 
+
+\begin{equation}
+  im2* \{1,2\}'
+\end{equation}
+
+Concerning division, this operation is not originally defined between two vectors (see next section "New operators and functions" -\ref{ssec:operators}-).
+
+\newline
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Actually, the different remarks above could have been summarized in a very simple manner: muParserX only addresses mathematically well-defined formulas. 
+\end{center}
+\end{minipage}}
+\end{center}}
+
+\newline
+
+Now, let's go back to the first formula: this one specifies the addition of two images band to band. With muParserX lib, we can now define such operation with only one formula, instead of many formulas (as many as the number of bands). We call this new functionality the \textbf{batch mode}, which directly arises from the introduction of vectors within muParserX framework.
+
+\newline
+
+\newline Finally, let's say a few words about neighbourhood variables. These variables are defined for each particular input, and for each particular band. The two last numbers, kxp, indicate the size of the neighbourhood. All neighbourhoods are centred: this means that k and p can only be odd numbers. Moreover, k represents the dimension in the x direction (number of columns), and p the dimension in the y direction (number of rows). For instance, im1b3N3x5 represents the following neighbourhood: 
+
+\begin{center} 
+\begin{tabular}{|c|c|c|}
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Neighborhood of 3x5.}
+\label{correctness}
+
+Fundamentally, a neighbourhood is represented as a matrix inside the muParserX framework; so the remark about mathematically well-defined formulas still stands.
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Another last important remark is the following: the result of the evaluation of a formula can't be a matrix, since it must be mapped to a itk::VariableLengthVector. So the result can only be:
+\begin{itemize}
+\item an integer, a float, a row vector of dimension 1 (one-band output)
+\item a row vector of dimension n (n-bands output)
+\end{itemize}
+\end{center}
+\end{minipage}}
+\end{center}}
+
+
+\subsection{New operators and functions}\label{ssec:operators}
+
+New operators and functions have been implemented within BandMathImageFilterX. These ones can be divided into two categories:
+
+\begin{itemize}
+\item adaptation of existing operators/functions, that were not originally defined for vectors and matrices (for instance cos, sin, ...). These new operators/ functions keep the original names to which we add the prefix "v" for vector (vcos, vsin, ...) .
+\item truly new operators/functions.
+\end{itemize}
+
+They are all implemented inside the file otbParserXPlugins.h  (OTB/Code/Common).
+
+Concerning the last category, here is a list of implemented operators/functions:
+
+\textbf{Function ndvi} \newline
+This function implements the classical normalized difference vegetation index. For instance:
+
+\begin{equation}
+	ndvi(im1b1,im1b4)
+\end{equation}
+
+First argument is related to the visible red band, and the second one to the near-infrareds band. 
+
+\textbf{Function bands} \newline
+This function allows to select specific bands from a pixel, and/or to rearrange them in a new vector; for instance:
+
+\begin{equation}
+  bands(im1,\{1,2,1,1\})
+\end{equation}
+
+produces a vector of 4 components made of band 1, band 2, band 1 and band 1 values from a pixel of the first input. Note that curly brackets must be used in order to select the desired band indices.
+
+\textbf{Function conv } \newline
+This function allows the convolution between two matrices (actually in our case, a kernel and a neighbourhood of pixels):
+
+\begin{equation}
+\sum_{(i,j)} m_1(i,j)*m_2(i,j)
+\end{equation}
+
+For instance: 
+\begin{equation}
+  conv(kernel1,im1b1N3x5)
+\end{equation}
+
+is correct provided that kernel1 and im1b1N3x5 have the same dimensions. The operator can take as many neighbourhoods as needed in inputs; \textbf{thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values.} 
+
+\textbf{Function mean} \newline
+This function allows to compute the mean value of a given neighborhood (the operator can take
+as many neighbourhoods as needed in inputs). For instance:
+
+\begin{equation}
+	mean(im1b1N3x3)
+\end{equation}
+
+\textbf{Function var} \newline
+This function allows to compute the variance of a given neighborhood (the operator can take
+as many neighbourhoods as needed in inputs). For instance:
+
+\begin{equation}
+	var(im1b1N3x3)
+\end{equation} 
+
+\textbf{Function median} \newline
+This function allows to compute the median value of a given neighborhood (the operator can take
+as many neighbourhoods as needed in inputs). For instance:
+
+\begin{equation}
+	median(im1b1N3x3)
+\end{equation}
+
+
+\textbf{Operator div} \newline
+This operator allows the definition of an element-wise division of two vectors (and even matrices), provided that they have the same dimensions. For instance (batch mode): 
+
+\begin{equation}
+	im1  div  im2
+\end{equation}
+
+\textbf{Operator mult} \newline
+This operator is the dual of the previous one. For instance:
+
+\begin{equation}
+	im1  mult  im2
+\end{equation}
+
+
+
+\subsection{API}\label{ssec:API}
+
+In this section, we make some comments about the public member functions of the new band math filter.
+
+\begin{verbatim}
+/** Set the nth filter input with or without a specified associated variable name */
+void SetNthInput( unsigned int idx, const ImageType * image);
+void SetNthInput( unsigned int idx, const ImageType * image, const std::string& varName);
+
+/** Return a pointer on the nth filter input */
+ImageType * GetNthInput(unsigned int idx);
+\end{verbatim}
+
+Refer to the section "Syntax : first elements" (\ref{ssec:syntax}) where the two first functions have already been commented. The function GetNthInput is quite clear to understand.
+
+\begin{verbatim}
+/** Set an expression to be parsed */
+void SetExpression(const std::string& expression);
+\end{verbatim}
+
+Each time the function  SetExpression is called, a new expression is pushed inside the filter. \textbf{There are as many outputs as there are expressions. The dimensions of the outputs (number of bands) are totally dependent on the dimensions of the related expressions (see also last remark of the section "Syntax : first element" -\ref{ssec:syntax}-).} Thus, the filter always performs a pre-evaluation of each expression, in order to guess how to allocate the outputs.
+
+The concatenation of the results of many expressions (whose results can have different dimensions) into one unique output is possible. For that puropose, semi-colons (";") are used as separating characters. For instance:
+
+
+\begin{equation}
+	filter->SetExpression("im1 + im2 ; im1b1*im2b1");
+\end{equation}
+
+
+\begin{verbatim}
+/** Return the nth expression to be parsed */
+std::string GetExpression(int) const;
+\end{verbatim}
+
+This function allows the user to get any expression by its ID number.
+
+\begin{verbatim}
+/** Set a matrix (or a vector) */
+void SetMatrix(const std::string& name, const std::string& definition);
+\end{verbatim}
+
+This function allows the user to set new vectors or matrices. This is particularly useful when the user wants to use the conv function (see previous section). First argument is related to the name of the variable, and the second one to the definition of the vector/matrix. The definition is done by a string, where first and last elements must be curly brackets ("\{" and "\}"). Different elements of a row are separated by commas (","), and different rows are separated by semi-colons (";"). For instance:
+
+\begin{verbatim}
+filter->SetMatrix("kernel1","{ 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; 0.7 , 0.8 , 0.9 ; 1.0 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 }");
+\end{verbatim}
+
+defines the kernel1, whose elements are given as follows:
+
+\begin{center} 
+\begin{tabular}{|c|c|c|}
+\hline
+0,1	& 0,2	& 0,3 \\
+\hline
+0,4 &	0,5	& 0,6 \\
+\hline
+0,7 &	0,8	& 0,9 \\
+\hline
+1,0	& 1,1	& 1,2 \\
+\hline
+1,3	& 1,4	& 1,5 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Definition of kernel1.}
+\label{correctness}
+
+
+\begin{verbatim}
+/** Return the variable names */
+std::vector<std::string>& GetVarNames() const;
+\end{verbatim}
+
+This function allows the user to get the list of the variable names, in the form of a std::vector of strings.
+
+
+\newline \newline Please, also refer to the section dedicated to \application{BandMathX}.
+
+
+
