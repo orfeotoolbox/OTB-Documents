@@ -57,7 +57,6 @@ im1 & a pixel from first input, made of n components (n bands) \\
 im1bj & jth component of a pixel from first input (first band is indexed by 1) \\
 im1bjNkxp & a neighbourhood ("N") of pixels of the jth component from first input, of size kxp \\
 im1PhyX and im1PhyY & spacing of first input in X and Y directions \\
-idxX and idxY & indices of the current pixel \\
 \hline
 \end{tabular}
 \end{center}
@@ -65,6 +64,8 @@ idxX and idxY & indices of the current pixel \\
 \label{variables}
 
 \newline
+
+Moreover, we also have the following generic variables, idxX and idxY, that represent the indices of the current pixel.
 
 \begin{center}
 \fbox{\begin{minipage}{0.9\textwidth}
@@ -215,13 +216,13 @@ This function implements the classical normalized difference vegetation index. F
 First argument is related to the visible red band, and the second one to the near-infrareds band. 
 
 \textbf{Function bands} \newline
-This function allows to select specific bands from a pixel, and/or to rearrange them in a new vector; for instance:
+This function allows to select specific bands from an image, and/or to rearrange them in a new vector; for instance:
 
 \begin{equation}
   bands(im1,\{1,2,1,1\})
 \end{equation}
 
-produces a vector of 4 components made of band 1, band 2, band 1 and band 1 values from a pixel of the first input. Note that curly brackets must be used in order to select the desired band indices.
+produces a vector of 4 components made of band 1, band 2, band 1 and band 1 values from the first input. Note that curly brackets must be used in order to select the desired band indices.
 
 \textbf{Function conv } \newline
 This function allows the convolution between two matrices (actually in our case, a kernel and a neighbourhood of pixels):
