@@ -65,7 +65,8 @@ im1PhyX and im1PhyY & spacing of first input in X and Y directions \\
 
 \newline
 
-Moreover, we also have the following generic variables, idxX and idxY, that represent the indices of the current pixel.
+Moreover, we also have the generic variables idxX and idxY that represent the indices of the current pixel. \newline 
+
 
 \begin{center}
 \fbox{\begin{minipage}{0.9\textwidth}
@@ -77,7 +78,7 @@ Always keep in mind that a pixel of an otb::VectorImage is always represented as
 
 \newline
 
-So the following formula (addition of two pixels):
+For instance, the following formula (addition of two pixels):
 \begin{equation}
   im1+im2
 \end{equation}
@@ -348,16 +349,56 @@ defines the kernel1, whose elements are given as follows:
 \caption{Definition of kernel1.}
 \label{correctness}
 
-
 \begin{verbatim}
-/** Return the variable names */
-std::vector<std::string>& GetVarNames() const;
+/** Set a constant */
+void SetConstant(const std::string& name, double value);
 \end{verbatim}
 
-This function allows the user to get the list of the variable names, in the form of a std::vector of strings.
+This function allows the user to set new constants.
 
 
-\newline \newline Please, also refer to the section dedicated to \application{BandMathX} application.
+\begin{verbatim}
+/** Return the variable and constant names */
+std::vector<std::string> GetVarNames() const;
+\end{verbatim}
+
+This function allows the user to get the list of the variable and constant names, in the form of a std::vector of strings.
+
+\begin{verbatim}
+  /** Import constants and expressions from a given filename */
+  void ImportContext(const std::string& filename);
+\end{verbatim}
+
+This function allows the user to define new constants and/or expressions (context) by using a txt file with a specific syntax.
+For the definition of constants, the following pattern must be observed:
+\newline  \#type name value. 
+\newline For instance:
+
+
+\#F expo 1.1 \newline 
+\#M kernel1 \{ 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; 0.7 , 0.8 , 0.9 ; 1 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 \} \newline
+
+
+As we can see,  \#I/\#F allows the definition of an integer/float constant, whereas \#M allows the definition of a vector/matrix. 
+
+It is also possible to define expressions within the same txt file, with the pattern \#E expr. For instance:
+
+
+\#F expo 1.1 \newline 
+\#M kernel1 { 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; 0.7 , 0.8 , 0.9 ; 1 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 } \newline 
+\#E conv(kernel1,im1b1N3x5) \newline
+
+\begin{verbatim}
+  /** Export constants and expressions to a given filename */
+  void ExportContext(const std::string& filename);
+\end{verbatim}
+
+This function allows the user to export a txt file that saves its favorite constant or expression definitions. Such a file will be reusable by the ImportContext function (see above).
+
+
+\newline 
+\newline 
+Please, also refer to the section dedicated to \application{BandMathX} application.
 
 
 
