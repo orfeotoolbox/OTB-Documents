@@ -1,4 +1,4 @@
-#+TITLE: Exploit Pleiades PHR data with the ORFEO ToolBox
+#+TITLE: Exploit Pleiades PHR data with the ORFEO ToolBox \\ Updated for OTB-4.2
 #+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Jordi Inglada (CNES)
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
