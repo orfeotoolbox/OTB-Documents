@@ -42,7 +42,7 @@
 
      #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
-     #+ATTR_LaTeX: width=0.45\textwidth
+     #+ATTR_LaTeX: :width 0.45\textwidth
      #+CAPTION: Epipolar geometry
      [[file:Images/Epipolar_geometry.png]]
      #+Latex:\end{center}
@@ -224,7 +224,7 @@
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       #+CAPTION: Epipolar geometry
       [[file:Images/31_anaglyph_3_1.png]]
       #+Latex:\end{center}
@@ -264,7 +264,7 @@
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/31_disparity_map_simple_3_1.png]]
       #+Latex:\end{center}
       #+Latex:\vspace{0.5cm}
@@ -291,7 +291,7 @@
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/31_disparity_map_hdisparity_3_1.png]]
       #+Latex:\end{center}
       #+Latex:\vspace{0.5cm}
@@ -306,7 +306,7 @@
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/31_filtered_disparity_map_3_1.png]]
       #+Latex:\end{center}
       #+Latex:\vspace{0.5cm}
@@ -330,7 +330,7 @@
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.45\textwidth
+      #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/31_disparity_map_to_elevation_3_1.png]]
       #+Latex:\end{center}
       #+Latex:\vspace{0.5cm}

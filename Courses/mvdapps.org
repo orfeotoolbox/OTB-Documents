@@ -183,7 +183,7 @@
       three *BandMath* module  outputs. The resulting image can be
       displayed in the viewer and will look like this:
 
-      #+ATTR_LaTeX: width=0.8\textwidth
+      #+ATTR_LaTeX: :width 0.8\textwidth
       #+LABEL: fig::bandmath
       #+CAPTION: Results of the concatenation of Band Math 
       [[file:Images/bandmath.png]]
@@ -196,7 +196,7 @@
       color map. The resulting image can be displayed in the viewer and
       will look like this:
 
-      #+ATTR_LaTeX: width=0.8\textwidth
+      #+ATTR_LaTeX: :width 0.8\textwidth
       #+LABEL: fig::colormap
       #+CAPTION: Color mapping of NDVI using Jet color map
       [[file:Images/colormapping.png]]

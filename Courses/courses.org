@@ -15,7 +15,7 @@
 #+OPTIONS: tags:nil
 
 #+SELECT_TAGS:
-#+EXCLUDE_TAGS: solutions
+#+EXCLUDE_TAGS:
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}

@@ -128,7 +128,7 @@ The image intensity is the square of the amplitude. Using the
 Here is the ROI:
 #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
-     #+ATTR_LaTeX: width=0.9\textwidth
+     #+ATTR_LaTeX: :width 0.9\textwidth
      [[file:Images/roi.png]]
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}
