@@ -49,14 +49,19 @@ In this document, we will keep the default convention. Following list summaries 
 
 
 \begin{center} 
-\begin{tabular}{||l|l||}
+\begin{tabular}{||l|l|l||}
 \hline
-\bf Variables & \bf Description \\
+\bf Variables & \bf Description & \bf Type \\
 \hline\hline
-im1 & a pixel from first input, made of n components (n bands) \\
-im1bj & jth component of a pixel from first input (first band is indexed by 1) \\
-im1bjNkxp & a neighbourhood ("N") of pixels of the jth component from first input, of size kxp \\
-im1PhyX and im1PhyY & spacing of first input in X and Y directions \\
+im1 & a pixel from first input, made of n components/bands (first image is indexed by 1) & Vector \\
+im1bj & jth component of a pixel from first input (first band is indexed by 1) & Scalar \\
+im1bjNkxp & a neighbourhood ("N") of pixels of the jth component from first input, of size kxp & Matrix \\
+im1bjMini & global statistic : minimum of the jth band from first input & Scalar \\
+im1bjMaxi & global statistic : maximum of the jth band from first input & Scalar \\
+im1bjMean & global statistic : mean of the jth band from first input & Scalar \\
+im1bjSum & global statistic : sum of the jth band from first input & Scalar \\
+im1bjVar & global statistic : variance of the jth band from first input & Scalar \\
+im1PhyX and im1PhyY & spacing of first input in X and Y directions & Scalar \\
 \hline
 \end{tabular}
 \end{center}
@@ -65,7 +70,7 @@ im1PhyX and im1PhyY & spacing of first input in X and Y directions \\
 
 \newline
 
-Moreover, we also have the generic variables idxX and idxY that represent the indices of the current pixel. \newline 
+Moreover, we also have the generic variables idxX and idxY that represent the indices of the current pixel (scalars). \newline 
 
 
 \begin{center}
@@ -84,13 +89,13 @@ For instance, the following formula (addition of two pixels):
 \end{equation}
 \label{firstequation}
 
-is correct only if the two first inputs have the same number of bands. In addition, the following formula is not consistent even if im1 represent a pixel of an image made of only one band:
+is correct only if the two first inputs have the same number of bands. In addition, the following formula is not consistent even if im1 represents a pixel of an image made of only one band:
 
 \begin{equation}
   im1+1
 \end{equation}
 
-The right formula is instead:
+A scalar can't be added to a vector. The right formula is instead (one can notice the way that muParserX allows to define vectors on the fly):
 
 \begin{equation}
   im1+\{ 1 \}
@@ -103,7 +108,7 @@ or
   im1 + \{1,1,1,...,1\}
 \end{equation}
 
-if im1 is made of n components (one can notice the way that muParserX allows to define vectors on the fly). 
+if im1 is made of n components. 
 
 On the other hand, the variable im1b1 for instance is represented as a scalar; so we have the following different possibilities:
 
@@ -206,20 +211,40 @@ New operators and functions have been implemented within BandMathImageFilterX. T
 
 Concerning the last category, here is a list of implemented operators/functions (they are all implemented in otbParserXPlugins.h/.cxx files -OTB/Code/Common-):
 
-\textbf{Operator div} \newline
-This operator allows the definition of an element-wise division of two vectors (and even matrices), provided that they have the same dimensions. For instance (batch mode): 
+\textbf{Operators div and dv} \newline
+The first operator allows the definition of an element-wise division of two vectors (and even matrices), provided that they have the same dimensions.
+The second one allows the definition of the division of a vector/matrix by a scalar (components are divided by the same unique value). For instance: 
 
 \begin{equation}
 	im1 ~ div ~ im2
 \end{equation}
 
-\textbf{Operator mult} \newline
-This operator is the dual of the previous one. For instance:
+\begin{equation}
+	im1 ~ dv ~ 2.0
+\end{equation}
+
+\textbf{Operator mult and mlt} \newline
+These operators are the duals of the previous ones. For instance:
 
 \begin{equation}
 	im1 ~  mult ~ im2
 \end{equation}
  
+\begin{equation}
+	im1 ~  mlt ~ 2.0
+\end{equation}
+
+\textbf{Operators pow and pw} \newline
+The first operator allows the definition of an element-wise exponentiation of two vectors (and even matrices), provided that they have the same dimensions.
+The second one allows the definition of the division of a vector/matrix by a scalar (components are exponentiated by the same unique value). For instance: 
+
+\begin{equation}
+	im1 ~ pow ~ im2
+\end{equation}
+
+\begin{equation}
+	im1 ~ pw ~ 2.0
+\end{equation}
 
 \textbf{Function bands} \newline
 This function allows to select specific bands from an image, and/or to rearrange them in a new vector; for instance:
@@ -279,8 +304,8 @@ as many inputs as needed; one median value is computed per input). For instance:
 	median(im1b1N3x3)
 \end{equation}
 
-\textbf{Function min and max} \newline
-These functions allow to compute the min or max value of a given vector or neighborhood (the operator can take
+\textbf{Function vmin and vmax} \newline
+These functions allow to compute the min or max value of a given vector or neighborhood (they can take
 as many inputs as needed; one min or max value is computed per input). For instance:
 
 \begin{equation}
