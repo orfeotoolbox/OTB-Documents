@@ -71,6 +71,8 @@ im1PhyX and im1PhyY & spacing of first input in X and Y directions & Scalar \\
 \newline
 
 Moreover, we also have the generic variables idxX and idxY that represent the indices of the current pixel (scalars). \newline 
+Note that the use of a global statistic will automatically make the filter or the (application) request for the largest possible region.
+
 
 
 \begin{center}
@@ -223,7 +225,7 @@ The second one allows the definition of the division of a vector/matrix by a sca
 	im1 ~ dv ~ 2.0
 \end{equation}
 
-\textbf{Operator mult and mlt} \newline
+\textbf{Operators mult and mlt} \newline
 These operators are the duals of the previous ones. For instance:
 
 \begin{equation}
@@ -233,6 +235,8 @@ These operators are the duals of the previous ones. For instance:
 \begin{equation}
 	im1 ~  mlt ~ 2.0
 \end{equation}
+
+Note that the operator '*' could have been used instead of 'pw' one. But 'pw' is a little bit more permisive, and can tolerate one-dimensional vector as right element.
 
 \textbf{Operators pow and pw} \newline
 The first operator allows the definition of an element-wise exponentiation of two vectors (and even matrices), provided that they have the same dimensions.
@@ -255,8 +259,8 @@ This function allows to select specific bands from an image, and/or to rearrange
 
 produces a vector of 4 components made of band 1, band 2, band 1 and band 1 values from the first input. Note that curly brackets must be used in order to select the desired band indices.
 
-\textbf{Function conv } \newline
-This function allows the convolution between two matrices (actually in our case, a kernel and a neighbourhood of pixels):
+\textbf{Function dotpr } \newline
+This function allows the dot product between two vectors or matrices (actually in our case, a kernel and a neighbourhood of pixels):
 
 \begin{equation}
 \sum_{(i,j)} m_1(i,j)*m_2(i,j)
@@ -267,19 +271,19 @@ For instance:
   conv(kernel1,im1b1N3x5)
 \end{equation}
 
-is correct provided that kernel1 and im1b1N3x5 have the same dimensions. The operator can take as many neighbourhoods as needed in inputs.
+is correct provided that kernel1 and im1b1N3x5 have the same dimensions. The function can take as many neighbourhoods as needed in inputs.
 
 
 \begin{center}
 \fbox{\begin{minipage}{0.9\textwidth}
 \begin{center}
-Thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values. This behaviour is typical of the operators implemented in the band math X filter.
+Thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values. This behaviour is typical of the functions implemented in the band math X filter.
 \end{center}
 \end{minipage}}
 \end{center}}
 
 \textbf{Function mean} \newline
-This function allows to compute the mean value of a given vector or neighborhood (the operator can take
+This function allows to compute the mean value of a given vector or neighborhood (the function can take
 as many inputs as needed; one mean value is computed per input). For instance:
 
 \begin{equation}
@@ -289,7 +293,7 @@ as many inputs as needed; one mean value is computed per input). For instance:
 Note: a limitation coming from muparserX itself makes impossible to pass all those neighborhoods with a unique variable.
 
 \textbf{Function var} \newline
-This function allows to compute the variance of a given vector or neighborhood (the operator can take
+This function allows to compute the variance of a given vector or neighborhood (the function can take
 as many inputs as needed; one var value is computed per input). For instance:
 
 \begin{equation}
@@ -297,31 +301,45 @@ as many inputs as needed; one var value is computed per input). For instance:
 \end{equation} 
 
 \textbf{Function median} \newline
-This function allows to compute the median value of a given vector or neighborhood (the operator can take
+This function allows to compute the median value of a given vector or neighborhood (the function can take
 as many inputs as needed; one median value is computed per input). For instance:
 
 \begin{equation}
 	median(im1b1N3x3)
 \end{equation}
 
+\textbf{Function corr} \newline
+This function allows to compute the correlation between two vectors or matrices of the same dimensions (the function takes two inputs). For instance:
+
+\begin{equation}
+	corr(im1b1N3x3,im1b2N3x3)
+\end{equation}
+
+\textbf{Function maj} \newline
+This function allows to compute the most represented element within a vector or a matrix (the function can take
+as many inputs as needed; one maj element value is computed per input). For instance:
+
+\begin{equation}
+	maj(im1b1N3x3,im1b2N3x3)
+\end{equation}
+
 \textbf{Function vmin and vmax} \newline
-These functions allow to compute the min or max value of a given vector or neighborhood (they can take
-as many inputs as needed; one min or max value is computed per input). For instance:
+These functions allow to compute the min or max value of a given vector or neighborhood (only one input). For instance:
 
 \begin{equation}
 	(vmax(im3b1N3x5)+vmin(im3b1N3x5)) ~ div ~ \{2.0\}
 \end{equation}
 
 \textbf{Function cat} \newline
-This function allows to concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the operator can take
+This function allows to concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the function can take
 as many inputs as needed). For instance:
 
 \begin{equation}
 	cat(im3b1,vmin(im3b1N3x5),median(im3b1N3x5),vmax(im3b1N3x5))
 \end{equation}
 
-Note: the user should prefer the use of semi-colons (;) when setting expressions, instead of directly use this operator.
-The filter or the application will call the operator 'cat' automatically. For instance:
+Note: the user should prefer the use of semi-colons (;) when setting expressions, instead of directly use this function.
+The filter or the application will call the function 'cat' automatically. For instance:
 \begin{equation}
 	filter->SetExpression("im3b1 ; vmin(im3b1N3x5) ; median(im3b1N3x5) ; vmax(im3b1N3x5)");
 \end{equation} 
@@ -329,13 +347,54 @@ The filter or the application will call the operator 'cat' automatically. For in
 Please, also refer to the next section "Application Programming Interface" (\ref{ssec:API}).
 
 \textbf{Function ndvi} \newline
-This function implements the classical normalized difference vegetation index. For instance:
+This function implements the classical normalized difference vegetation index; it tkaes two inputs. For instance:
 
 \begin{equation}
 	ndvi(im1b1,im1b4)
 \end{equation}
 
 First argument is related to the visible red band, and the second one to the near-infrareds band.
+
+The table below summarises the different functions and operators.
+
+
+\begin{center} 
+\begin{tabular}{||l|l||}
+\hline
+\bf Variables & \bf Remark \\
+\hline\hline
+ndvi &  two inputs\\
+bands & two inputs; length of second vector input gives the dimension of the output \\
+dotptr &  many inputs \\
+cat & many inputs \\
+mean & many inputs \\
+var & many inputs \\
+median & many inputs \\
+maj & many inputs \\
+corr & two inputs \\
+div and dv &  operators \\
+mult and mlt & operators \\
+pow and pw  & operators \\
+vnorm  & adapation of an existing function to vectors : one input \\
+vabs   & adapation of an existing function to vectors : one input \\
+vmin   & adapation of an existing function to vectors : one input \\
+vmax   & adapation of an existing function to vectors : one input \\
+vcos   & adapation of an existing function to vectors : one input \\
+vsin   & adapation of an existing function to vectors : one input \\
+vtan   & adapation of an existing function to vectors : one input \\
+vtanh  & adapation of an existing function to vectors : one input \\
+vsinh  & adapation of an existing function to vectors : one input \\
+vcosh  & adapation of an existing function to vectors : one input \\
+vlog   & adapation of an existing function to vectors : one input \\
+vlog10 & adapation of an existing function to vectors : one input \\
+vexp   & adapation of an existing function to vectors : one input \\
+vsqrt  & adapation of an existing function to vectors : one input \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Functions and operators summary.}
+\label{variables}
+
 
 \subsection{Application Programming Interface (API)}\label{ssec:API}
 
