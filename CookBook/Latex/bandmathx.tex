@@ -268,7 +268,7 @@ This function allows the dot product between two vectors or matrices (actually i
 
 For instance: 
 \begin{equation}
-  conv(kernel1,im1b1N3x5)
+  dotpr(kernel1,im1b1N3x5)
 \end{equation}
 
 is correct provided that kernel1 and im1b1N3x5 have the same dimensions. The function can take as many neighbourhoods as needed in inputs.
@@ -439,7 +439,7 @@ This function allows the user to get any expression by its ID number.
 void SetMatrix(const std::string& name, const std::string& definition);
 \end{verbatim}
 
-This function allows the user to set new vectors or matrices. This is particularly useful when the user wants to use the conv function (see previous section). First argument is related to the name of the variable, and the second one to the definition of the vector/matrix. The definition is done by a string, where first and last elements must be curly brackets ("\{" and "\}"). Different elements of a row are separated by commas (","), and different rows are separated by semi-colons (";"). For instance:
+This function allows the user to set new vectors or matrices. This is particularly useful when the user wants to use the dotpr function (see previous section). First argument is related to the name of the variable, and the second one to the definition of the vector/matrix. The definition is done by a string, where first and last elements must be curly brackets ("\{" and "\}"). Different elements of a row are separated by commas (","), and different rows are separated by semi-colons (";"). For instance:
 
 \begin{verbatim}
 filter->SetMatrix("kernel1","{ 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; \
@@ -503,7 +503,7 @@ It is also possible to define expressions within the same txt file, with the pat
 
 \#F expo 1.1 \newline 
 \#M kernel1 { 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; 0.7 , 0.8 , 0.9 ; 1 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 } \newline 
-\#E conv(kernel1,im1b1N3x5) \newline
+\#E dotpr(kernel1,im1b1N3x5) \newline
 
 \begin{verbatim}
   /** Export constants and expressions to a given filename */
