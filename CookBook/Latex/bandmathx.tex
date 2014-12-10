@@ -1,32 +1,9 @@
 \newpage
-\section{BandMathImageFilterX (based on muParserX)}\label{sec:bandmathx}
+\section{BandMathX application (based on muParserX)}\label{sec:bandmathx}
 %add intro
-This section describes how to use the BandMathImageFilterX.
+This section describes how to use the BandMathX application.
 
 
-\subsection{Fundamentals: headers, declaration and instantiation}\label{ssec:fund}
-
-A simple example is given below:
-
-\begin{verbatim}
-
-#include "otbBandMathImageFilterX.h"
-#include "otbVectorImage.h"
-
-int otbBandMathImageFilterXNew( int itkNotUsed(argc), char* itkNotUsed(argv) [])
-{
-  	typedef double                                            			PixelType;
-  	typedef otb::VectorImage<PixelType, 2>                     	ImageType;
-  	typedef otb::BandMathImageFilterX<ImageType>                FilterType;
-
-   	FilterType::Pointer         filter       = FilterType::New();
-
-   	return EXIT_SUCCESS;
-}
-
-\end{verbatim}
-
-As we can see, the new band math filter works with the class otb::VectorImage.
 
 \subsection{Syntax : first elements}\label{ssec:syntax}
 
@@ -34,18 +11,6 @@ The default prefix name for variables related to the ith input is \textit{im(i+1
 (note the indexing from 1 to N, for N inputs). The user has the 
 possibility to change this default behaviour by setting its own prefix.
 
-\begin{verbatim}
-
-// All variables related to image1 (input 0) will have the prefix im1 
-filter->SetNthInput(0, image1);   		
-
-// All variables related to image2 (input 1) will have the prefix  toulouse   
-filter->SetNthInput(1, image2, "toulouse");   
-
-// All variables related to anotherImage (input 2) will have the prefix im3
-filter->SetNthInput(2, anotherImage); 	   
-
-\end{verbatim}
 
 In this document, we will keep the default convention. Following list 
 summaries the available variables for input \#0 (and so on for every input).
@@ -73,9 +38,6 @@ im1PhyX and im1PhyY & spacing of first input in X and Y directions & Scalar \\
 Moreover, we also have the generic variables idxX and idxY that represent 
 the indices of the current pixel (scalars). 
 
-Note that the use of a global statistics will automatically make the filter 
-(or the application) request the largest possible regions from the 
-concerned input images, without user intervention.
 
 \begin{center}
 \fbox{\begin{minipage}{0.9\textwidth}
@@ -216,7 +178,7 @@ Another last important remark is the following: the result of the evaluation of 
 \subsection{New operators and functions}\label{ssec:operators}
 
 New operators and functions have been implemented within 
-BandMathImageFilterX. These ones can be divided into two categories.
+BandMathX application. These ones can be divided into two categories.
 
 \begin{itemize}
 \item adaptation of existing operators/functions, that were not originally defined for vectors and matrices (for instance cos, sin, ...). These new operators/ functions keep the original names to which we add the prefix "v" for vector (vcos, vsin, ...) .
@@ -292,7 +254,7 @@ is correct provided that kernel1 and im1b1N3x5 have the same dimensions. The fun
 \begin{center}
 \fbox{\begin{minipage}{0.9\textwidth}
 \begin{center}
-Thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values. This behaviour is typical of the functions implemented in the band math X filter.
+Thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values. This behaviour is typical of the functions implemented in the BandMathX application.
 \end{center}
 \end{minipage}}
 \end{center}
@@ -354,12 +316,8 @@ as many inputs as needed). For instance:
 \end{equation}
 
 Note: the user should prefer the use of semi-colons (;) when setting expressions, instead of directly use this function.
-The filter or the application will call the function 'cat' automatically. For instance:
-\begin{equation}
-	filter->SetExpression("im3b1 ; vmin(im3b1N3x5) ; median(im3b1N3x5) ; vmax(im3b1N3x5)");
-\end{equation} 
+The application will call the function 'cat' automatically.  
 
-Please, also refer to the next section "Application Programming Interface" (\ref{ssec:API}).
 
 \textbf{Function ndvi} \newline
 This function implements the classical normalized difference vegetation index; it tkaes two inputs. For instance:
@@ -409,143 +367,6 @@ vsqrt  & adapation of an existing function to vectors : one input \\
 \end{center}
 \caption{Functions and operators summary.}
 \label{variables}
-
-
-\subsection{Application Programming Interface (API)}\label{ssec:API}
-
-In this section, we make some comments about the public member functions of the new band math filter.
-
-\begin{verbatim}
-/** Set the nth filter input with or without a specified associated variable name */
-void SetNthInput( unsigned int idx, const ImageType * image);
-void SetNthInput( unsigned int idx, const ImageType * image, const std::string& varName);
-
-/** Return a pointer on the nth filter input */
-ImageType * GetNthInput(unsigned int idx);
-\end{verbatim}
-
-Refer to the section "Syntax : first elements" (\ref{ssec:syntax}) 
-where the two first functions have already been commented. 
-The function GetNthInput is quite clear to understand.
-
-\begin{verbatim}
-/** Set an expression to be parsed */
-void SetExpression(const std::string& expression);
-\end{verbatim}
-
-Each time the function  SetExpression is called, a new expression is 
-pushed inside the filter. \textbf{There are as many outputs as there 
-are expressions. The dimensions of the outputs (number of bands) are 
-totally dependent on the dimensions of the related expressions (see 
-also last remark of the section "Syntax : first element" -\ref{ssec:syntax}-).} 
-Thus, the filter always performs a pre-evaluation of each expression, 
-in order to guess how to allocate the outputs.
-
-The concatenation of the results of many expressions (whose results 
-can have different dimensions) into one unique output is possible. 
-For that puropose, semi-colons (";") are used as separating characters. 
-For instance:
-
-\begin{equation}
-	filter->SetExpression("im1 + im2 ; im1b1*im2b1");
-\end{equation}
-
-will produce a unique output (one expression) of many bands (actually, 
-number of bands of im1 + 1).
-
-\begin{verbatim}
-/** Return the nth expression to be parsed */
-std::string GetExpression(int) const;
-\end{verbatim}
-
-This function allows the user to get any expression by its ID number.
-
-\begin{verbatim}
-/** Set a matrix (or a vector) */
-void SetMatrix(const std::string& name, const std::string& definition);
-\end{verbatim}
-
-This function allows the user to set new vectors or matrices. This is 
-particularly useful when the user wants to use the dotpr function 
-(see previous section). First argument is related to the name of the 
-variable, and the second one to the definition of the vector/matrix. 
-The definition is done by a string, where first and last elements must 
-be curly brackets ("\{" and "\}"). Different elements of a row are 
-separated by commas (","), and different rows are separated by 
-semi-colons (";"). For instance:
-
-\begin{verbatim}
-filter->SetMatrix("kernel1","{ 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; \
-0.7 , 0.8 , 0.9 ; 1.0 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 }");
-\end{verbatim}
-
-defines the kernel1, whose elements are given as follows:
-
-\begin{center} 
-\begin{tabular}{|c|c|c|}
-\hline
-0,1	& 0,2	& 0,3 \\
-\hline
-0,4 &	0,5	& 0,6 \\
-\hline
-0,7 &	0,8	& 0,9 \\
-\hline
-1,0	& 1,1	& 1,2 \\
-\hline
-1,3	& 1,4	& 1,5 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Definition of kernel1.}
-\label{correctness}
-
-\begin{verbatim}
-/** Set a constant */
-void SetConstant(const std::string& name, double value);
-\end{verbatim}
-
-This function allows the user to set new constants.
-
-\begin{verbatim}
-/** Return the variable and constant names */
-std::vector<std::string> GetVarNames() const;
-\end{verbatim}
-
-This function allows the user to get the list of the variable and constant names, in the form of a std::vector of strings.
-
-\begin{verbatim}
-  /** Import constants and expressions from a given filename */
-  void ImportContext(const std::string& filename);
-\end{verbatim}
-
-This function allows the user to define new constants and/or expressions (context) by using a txt file with a specific syntax.
-For the definition of constants, the following pattern must be observed:
-\newline  \#type name value. 
-\newline For instance:
-
-
-\#F expo 1.1 \newline 
-\#M kernel1 \{ 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; 0.7 , 0.8 , 0.9 ; 1 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 \} \newline
-
-As we can see,  \#I/\#F allows the definition of an integer/float constant, 
-whereas \#M allows the definition of a vector/matrix. It is also possible 
-to define expressions within the same txt file, with the pattern \#E expr. 
-For instance:
-
-\#F expo 1.1 \newline 
-\#M kernel1 { 0.1 , 0.2 , 0.3 ; 0.4 , 0.5 , 0.6 ; 0.7 , 0.8 , 0.9 ; 1 , 1.1 , 1.2 ; 1.3 , 1.4 , 1.5 } \newline 
-\#E dotpr(kernel1,im1b1N3x5) \newline
-
-\begin{verbatim}
-  /** Export constants and expressions to a given filename */
-  void ExportContext(const std::string& filename);
-\end{verbatim}
-
-This function allows the user to export a txt file that saves its 
-favorite constant or expression definitions. Such a file will be 
-reusable by the ImportContext function (see above).
-
-Please, also refer to the section dedicated to \application{BandMathX} application.
 
 
 
