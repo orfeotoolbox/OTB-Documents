@@ -71,7 +71,7 @@
 
      _Tips and Recommandations:_
        - Perform the grids estimation using and average elevation of
-         20.45m (*epi.elevation.avg.value* keyword)
+         20.45m (*epi.elevation.default* keyword)
        - Stereo-rectification deformation grid only varies
          slowly. Therefore, it is recommended to use a coarser grid
          (higher step value) in case of large images (*epi.step*
@@ -184,7 +184,7 @@
      :   -io.inright tristereo_melbourne_1_small_ref.tif 
      :   -io.outleft 31_grid_tristereo_melbourne_3_small_ref.tif 
      :   -io.outright 31_grid_tristereo_melbourne_1_small_ref.tif 
-     :   -epi.elevation avg -epi.elevation.avg.value 20.45
+     :   -epi.elevation avg -epi.elevation.default 20.45
 ***** Item 4
 
      For the left image :
