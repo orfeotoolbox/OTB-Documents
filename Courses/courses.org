@@ -29,6 +29,13 @@
   - Use org-mode
   - You can generate pdf using org-babel
   - Solutions can be exclude from the tutorial using the ~exclude_tags~ export option
+  - TODO LIST   
+    - p.15 (section 3.2.3.3 item 1 et 2), les deux commandes OpticalCalibration : le nom du paramètre est -out et non -io.out
+    - p.21 (section 3.3.3.2 item 4), commande compliquée avec la méthode connected component, qui implique des variables p1b4 par ex. Si j'en crois les extracts faits au début de la section 3.3, segmentation_small_xt_phr.tif est censée être une image à 3 bandes, et non 4; donc la commande ne peut pas fonctionner.
+    - p.27 (section 3.3.3.4 item 1), l'image fait 4096x4096 et non 8192x8192 (voir extracts faits au début de la section 3.3)
+    - p.56 (section 3.7.3.1 item 3), le nom du paramètre est -epi.elevation.avgdem.value et non -epi.elevation.avg.value
+    - internationalisation
+    - automatiser la génération des sorties avec des scripts intégrés dans org
 * Foreword                                                               :fw:
 ** About the data
 
