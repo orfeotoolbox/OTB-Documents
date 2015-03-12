@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PYTHONPATH=@OTB_DIR@/bin:$PYTHONPATH
+export PYTHONPATH=@OTB_DIR@/lib:$PYTHONPATH
 export PYTHONPATH=@OTB_DIR@/Modules/Wrappers/SWIG/src:$PYTHONPATH
 
 export ITK_AUTOLOAD_PATH=@OTB_DIR@/lib/otb/applications
