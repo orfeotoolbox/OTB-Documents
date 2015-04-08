@@ -777,7 +777,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \section{Fonctionnalités}
 
 \begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplètes)}
 
 \begin{block}{Pré-traitements}
 \begin{itemize}
@@ -888,6 +888,64 @@ OrthoRectification.ExecuteAndWriteOutput()
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame} 
 
+\section{Quoi de neuf dans l'OTB 5.0 ?}
+
+\begin{frame}
+\frametitle{Modularité (inspirée de l'organisation du code ITK 4.x)}
+\begin{block}{Qu'est ce qui change?}
+\begin{itemize}
+\item Une meilleure organisation du code, en modules cohérents:
+  \begin{itemize}
+    \item OTB 4.4.0: 1672 fichiers dans 26 répertoires
+    \item OTB 5.0: 1627 fichiers dans 124 modules répartis en 16 groupes
+  \end{itemize}
+\item Les modules sont complets: tests, code source, applications sont regroupés
+\item Chaque module peut etre activé ou non, avec gestion des dépendances
+\end{itemize}
+\end{block}
+
+\begin{block}{Quels sont les avantages?}
+\begin{itemize}
+\item Les logiciels tiers sont importés dans des modules désactivables comme les autres
+\item Beaucoup de magie CMake (moins de code cmake, plus de choses automatisées)
+\item La documentation doxygen reflète l'organisation en groupes/modules
+\item Les contributions sont facilitées, notamment avec le mécanisme de \textit{remote module}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Superbuild}
+\begin{block}{Avant OTB 4.4.0}
+\begin{itemize}
+\item Certaines dépendances (mais pas toutes) peuvent etre compilée en interne
+\item Leur code source est intégré à celui de l'Orfeo ToolBox (pas une bonne pratique en général)
+\end{itemize}
+\end{block}
+
+\begin{block}{Dans OTB 5.0, on Superbuild!}
+\begin{itemize}
+\item Il n'y a plus de logiciels tiers dans l'OTB
+\item Il existe un projet séparé appelé Superbuild, qui télécharge, configure, compile et installe chaque dépendance dans sa bonne version
+\item On peut ainsi compiler une OTB complète avec très peu de pré-requis (cmake, gcc, zlib, curl), et totalement automatiquement
+\item Il existe également un mode offline pour compiler l'OTB en avion (ou toute autre situation sans accès internet)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Project Steering Committee}
+\begin{itemize}
+\item Le PSC est un système de gouvernance ouverte
+\item Il s'agit d'une entité de coordination plus qu'un organisme de décision
+\item Animation de la communauté, et grandes orientations du projet
+\item Tout le monde peut en devenir membre (nouveau membre = vote)
+\item Les décisions et les débats sont publics (sur la liste de diffusion pour les développeurs)
+\item Les status sont publics\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
+\end{itemize}
+\end{frame}
+
+
 \section{Conclusion et perspectives}
 \begin{frame}
 \frametitle{Combien d'utilisateurs ?}
@@ -960,28 +1018,6 @@ OrthoRectification.ExecuteAndWriteOutput()
 \includegraphics[width=\textwidth]{images/Writing.png}\\
 \tiny{Effets des paramètres d'encodage tif et du streaming sur les performances d'une chaîne de traitement}
 \end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Conclusion}
-
-\begin{block}{Encore!}
-\begin{itemize}
-\item Après ORFEO, le CNES va poursuivre le développement de l'OTB
-\item De nouveaux défis arrivent avec des missions comme Sentinel2, SWOT ou le post-Pléiades
-\item Le projet va se doter d'une gouvernance ouverte 
-\end{itemize}
-\end{block}
-
-\begin{block}{Prochainement dans votre OTB}
-\begin{itemize}
-\item Un gros chantier de modularisation est en cours
-\item L'OTB se compilera bientôt avec un superbuild,
-\item Une nouvelle application de calcul de bandes (BandMathX) est déjà disponible!
-\item Prochaine version prévue pour début 2015.
-\end{itemize}
-\end{block}
-
 \end{frame}
 
 \begin{frame}
