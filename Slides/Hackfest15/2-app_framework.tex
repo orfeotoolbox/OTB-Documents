@@ -72,23 +72,148 @@
 \end{tabular}
 }
 
+%FIXME modify graphicspath with your local path to the images directory 
+\graphicspath {{/home/grizonnetm/projets/otb/src/OTB-Documents/Slides/OTB-General/}}
+
 \begin{document}
 \begin{frame}
 \titlepage
 \end{frame}
 
+\section{OTB applications in a nutshell}
+
 \begin{frame}
-\frametitle{Welcome!}
+\frametitle{Applications: code once, use (nearly) everywhere}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+\item 80 applications shipped with OTB
+\item 1 application $=$ 1 dynamic library (plugin)
+\item Auto generation, auto-doc
+\item Application C++ API not specific to OTB
+\item Wrappers build upon Application engine
+\begin{itemize}
+  \item CLI
+  \item Qt (used in Monteverdi2 and QGIS)
+  \item Python (thanks to SWIG)
+\end{itemize}
+\item Easy integration in external system 
+\end{itemize}
+\column{0.5\textwidth}
+\includegraphics[width=\textwidth]{images/cloud_applications.png}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Applications: CLI}
+\begin{scriptsize}
+\vspace{-0.5cm}\begin{verbatim}
+$ otbcli_OrthoRectification
+
+This is the OrthoRectification application, version 4.5.0
+This application allows to ortho-rectify optical images from supported sensors.
+
+
+Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
+
+Parameters: 
+        -progress                <boolean>        Report progress 
+MISSING -io.in                   <string>         Input Image  (mandatory)
+MISSING -io.out                  <string> [pixel] Output Image  [pixel=uint8/uint16/int16/uint32/int32/float/double] (default value is float) (mandatory)
+        -map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
+        -map.utm.zone            <int32>          Zone number  (mandatory, default value is 31)
+        -map.utm.northhem        <boolean>        Northern Hemisphere  (optional, off by default)
+        -map.epsg.code           <int32>          EPSG Code  (mandatory, default value is 4326)
+        -outputs.mode            <string>         Parameters estimation modes [auto/autosize/autospacing/outputroi/orthofit] (mandatory, default value is auto)
+MISSING -outputs.ulx             <float>          Upper Left X  (mandatory)
+MISSING -outputs.uly             <float>          Upper Left Y  (mandatory)
+MISSING -outputs.sizex           <int32>          Size X  (mandatory)
+MISSING -outputs.sizey           <int32>          Size Y  (mandatory)
+MISSING -outputs.spacingx        <float>          Pixel Size X  (mandatory)
+MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
+        -outputs.lrx             <float>          Lower right X  (optional, off by default)
+        -outputs.lry             <float>          Lower right Y  (optional, off by default)
+        -outputs.ortho           <string>         Model ortho-image  (optional, off by default)
+        -outputs.isotropic       <boolean>        Force isotropic spacing by default  (optional, on by default)
+        -outputs.default         <float>          Default pixel value  (optional, on by default, default value is 0)
+        -elev.dem                <string>         DEM directory  (optional, off by default)
+        -elev.geoid              <string>         Geoid File  (optional, off by default)
+        -elev.default            <float>          Default elevation  (mandatory, default value is 0)
+        -interpolator            <string>         Interpolation [bco/nn/linear] (mandatory, default value is bco)
+        -interpolator.bco.radius <int32>          Radius for bicubic interpolation  (mandatory, default value is 2)
+        -opt.rpc                 <int32>          RPC modeling (points per axis)  (optional, off by default, default value is 10)
+        -opt.ram                 <int32>          Available RAM (Mb)  (optional, off by default, default value is 128)
+        -opt.gridspacing         <float>          Resampling grid spacing  (optional, on by default, default value is 4)
+        -inxml                   <string>         Load otb application from xml file  (optional, off by default)
+
+Examples: 
+otbcli_OrthoRectification -io.in QB_TOULOUSE_MUL_Extract_500_500.tif -io.out QB_Toulouse_ortho.tif
+\end{verbatim}
+\end{scriptsize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications: Qt graphical interface (parameters)}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{images/app_parameters.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Applications: Qt graphical interface (documentation)}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{images/app_doc.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications: Python interface}
+\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#!/usr/bin/python 
+ 
+# Import the otb applications package 
+import otbApplication 
+ 
+# The following line creates an instance of the OrthoRectification application 
+OrthoRectification = otbApplication.Registry.CreateApplication("OrthoRectification") 
+ 
+# The following lines set all the application parameters: 
+OrthoRectification.SetParameterString("io.in", "QB_TOULOUSE_MUL_Extract_500_500.tif") 
+ 
+OrthoRectification.SetParameterString("io.out", "QB_Toulouse_ortho.tif") 
+ 
+# The following line execute the application 
+OrthoRectification.ExecuteAndWriteOutput()
+\end{lstlisting}
+\end{frame}
+
+\section{Inside OTB applications}
+
+\begin{frame}
+\frametitle{Application engine}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Agenda}
+\frametitle{Application wrapper}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Useful information}
+\frametitle{Applications are good for}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Applications are not}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Roadmap for OTB applications}
 
 \end{frame}
 
