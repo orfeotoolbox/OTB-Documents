@@ -209,14 +209,14 @@ Voici la commande pour exécuter l'orthorectification :
 Voici la commande pour calculer la réflectance au sommet de
 l'atmosphère :
       
-: $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
-:   -io.out solution/phr_xs_melbourne_toa.tif uint16 
+: $ otbcli_OpticalCalibration -in phr_xs_melbourne.tif 
+:   -out solution/phr_xs_melbourne_toa.tif uint16 
 :   -milli 1
 
 ***** Point 2 
 Voici la commande pour calculer la réflectance de surface (TOC) :
-: $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
-:   -io.out solution/phr_xs_melbourne_toc.tif uint16 
+: $ otbcli_OpticalCalibration -in phr_xs_melbourne.tif 
+:   -out solution/phr_xs_melbourne_toc.tif uint16 
 :   -milli 1 -level toc
 
 ***** Point 3 

@@ -235,6 +235,8 @@
       #+Latex:\vspace{0.5cm}
       #+ATTR_LaTeX: :width 0.45\textwidth
       [[file:Images/first_cc_color_optimal.png]] [[file:Images/first_cc_color_image.png]]
+      
+      
 
 ***** Item 4
 
@@ -249,7 +251,7 @@
       :   -filter cc -filter.cc.expr "distance<30
       :    or (intensity_p1>400 and intensity_p2 > 400 and distance<50)
       :    or(intensity_p1 >1000 and intensity_p2>1000
-      :    or (p1b4 <150 and p2b4<150))"
+      :    or (p1b3 <150 and p2b3<150))"
       :   -mode raster -mode.raster.out second_cc.tif uint32
 
       Here are the color-mapping results:
@@ -307,7 +309,7 @@
       :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
       :   -mode.raster.out meanshift.tif uint32
 
-      Since the input image is quite large (8192 by 8192 pixels), it is
+      Since the input image is quite large (4096 by 4096 pixels), it is
       likely that, depending on the available memory on the computer:
       - The application fails with a memory allocation error,
       - The application does not fails but starts to eat all the

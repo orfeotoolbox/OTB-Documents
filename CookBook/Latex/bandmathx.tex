@@ -1,0 +1,372 @@
+\newpage
+\section{BandMathX application (based on muParserX)}\label{sec:bandmathx}
+%add intro
+This section describes how to use the BandMathX application.
+
+
+
+\subsection{Syntax : first elements}\label{ssec:syntax}
+
+The default prefix name for variables related to the ith input is \textit{im(i+1)} 
+(note the indexing from 1 to N, for N inputs). The user has the 
+possibility to change this default behaviour by setting its own prefix.
+
+
+In this document, we will keep the default convention. Following list 
+summaries the available variables for input \#0 (and so on for every input).
+
+\begin{center} 
+\begin{tabular}{||l|l|l||}
+\hline
+\bf Variables & \bf Description & \bf Type \\
+\hline\hline
+im1 & a pixel from first input, made of n components/bands (first image is indexed by 1) & Vector \\
+im1bj & jth component of a pixel from first input (first band is indexed by 1) & Scalar \\
+im1bjNkxp & a neighbourhood ("N") of pixels of the jth component from first input, of size kxp & Matrix \\
+im1bjMini & global statistic : minimum of the jth band from first input & Scalar \\
+im1bjMaxi & global statistic : maximum of the jth band from first input & Scalar \\
+im1bjMean & global statistic : mean of the jth band from first input & Scalar \\
+im1bjSum & global statistic : sum of the jth band from first input & Scalar \\
+im1bjVar & global statistic : variance of the jth band from first input & Scalar \\
+im1PhyX and im1PhyY & spacing of first input in X and Y directions & Scalar \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Variables and their descriptions.}
+\label{variables}
+
+Moreover, we also have the generic variables idxX and idxY that represent 
+the indices of the current pixel (scalars). 
+
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Always keep in mind that a pixel of an otb::VectorImage is always represented as a row vector inside the muParserX framework.
+\end{center} 
+\end{minipage}}
+\end{center}
+
+For instance, the following formula (addition of two pixels)
+\begin{equation}
+  im1+im2
+\end{equation}
+\label{firstequation}
+
+is correct only if the two first inputs have the same number of bands. 
+In addition, the following formula is not consistent even if im1 
+represents a pixel of an image made of only one band:
+
+\begin{equation}
+  im1+1
+\end{equation}
+
+A scalar can't be added to a vector. The right formula is instead 
+(one can notice the way that muParserX allows to define vectors on the fly):
+
+\begin{equation}
+  im1+\{ 1 \}
+\end{equation}
+
+or
+
+\begin{equation}
+  im1 + \{1,1,1,...,1\}
+\end{equation}
+
+if im1 is made of n components. 
+
+On the other hand, the variable im1b1 for instance is represented as a 
+scalar; so we have the following different possibilities:
+
+\begin{center} 
+\begin{tabular}{||c|c||}
+\hline
+\bf Expression & \bf Status \\
+\hline\hline
+im1b1 + 1 & correct \\
+\{im1b1\} + \{1\} & correct \\
+im1b1 + \{1\} & incorrect \\
+\{im1b1\} + 1 & incorrect \\
+im1 + \{im2b1,im2b2\} & correct if im1 represents a pixel of two components (equivalent to  im1 + im2) \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Correct / incorrect expressions.}
+\label{correctness}
+
+
+Similar remarks can be made for the multiplication/division; 
+for instance, the following formula is incorrect:
+
+\begin{equation}
+  \{im2b1,im2b2\} * \{1,2\}
+\end{equation}
+
+whereas this one is correct:
+\begin{equation}
+  \{im2b1,im2b2\} * \{1,2\}'
+\end{equation}
+
+or in more simple terms (and only if im2 contains two components): 
+
+\begin{equation}
+  im2* \{1,2\}'
+\end{equation}
+
+Concerning division, this operation is not originally defined between 
+two vectors (see next section "New operators and functions" -\ref{ssec:operators}-).
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Actually, the different remarks above could have been summarized in a very simple manner: muParserX only addresses mathematically well-defined formulas. 
+\end{center}
+\end{minipage}}
+\end{center}
+
+Now, let's go back to the first formula: this one specifies the addition 
+of two images band to band. With muParserX lib, we can now define such 
+operation with only one formula, instead of many formulas (as many as 
+the number of bands). We call this new functionality the \textbf{batch mode}, 
+which directly arises from the introduction of vectors within muParserX framework.
+
+Finally, let's say a few words about neighbourhood variables. 
+These variables are defined for each particular input, and for each 
+particular band. The two last numbers, kxp, indicate the size of the 
+neighbourhood. All neighbourhoods are centred: this means that k and p 
+can only be odd numbers. Moreover, k represents the dimension in the 
+x direction (number of columns), and p the dimension in the y direction 
+(number of rows). For instance, im1b3N3x5 represents the following 
+neighbourhood: 
+
+\begin{center} 
+\begin{tabular}{|c|c|c|}
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+.	& .	& . \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Neighborhood of 3x5.}
+\label{correctness}
+
+Fundamentally, a neighbourhood is represented as a matrix inside the 
+muParserX framework; so the remark about mathematically well-defined 
+formulas still stands.
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Another last important remark is the following: the result of the evaluation of a formula can't be a matrix, since it must be mapped to a itk::VariableLengthVector. So the result can only be:
+\begin{itemize}
+\item an integer, a float, a row vector of dimension 1 (one-band output)
+\item a row vector of dimension n (n-bands output)
+\end{itemize}
+\end{center}
+\end{minipage}}
+\end{center}
+
+
+\subsection{New operators and functions}\label{ssec:operators}
+
+New operators and functions have been implemented within 
+BandMathX application. These ones can be divided into two categories.
+
+\begin{itemize}
+\item adaptation of existing operators/functions, that were not originally defined for vectors and matrices (for instance cos, sin, ...). These new operators/ functions keep the original names to which we add the prefix "v" for vector (vcos, vsin, ...) .
+\item truly new operators/functions.
+\end{itemize}
+
+
+Concerning the last category, here is a list of implemented 
+operators or functions (they are all implemented in 
+otbParserXPlugins.h/.cxx files -OTB/Code/Common-):
+
+\textbf{Operators div and dv} \newline
+The first operator allows the definition of an element-wise division of two vectors (and even matrices), provided that they have the same dimensions.
+The second one allows the definition of the division of a vector/matrix by a scalar (components are divided by the same unique value). For instance: 
+
+\begin{equation}
+	im1 ~ div ~ im2
+\end{equation}
+
+\begin{equation}
+	im1 ~ dv ~ 2.0
+\end{equation}
+
+\textbf{Operators mult and mlt} \newline
+These operators are the duals of the previous ones. For instance:
+
+\begin{equation}
+	im1 ~  mult ~ im2
+\end{equation}
+ 
+\begin{equation}
+	im1 ~  mlt ~ 2.0
+\end{equation}
+
+Note that the operator '*' could have been used instead of 'pw' one. But 'pw' is a little bit more permisive, and can tolerate one-dimensional vector as right element.
+
+\textbf{Operators pow and pw} \newline
+The first operator allows the definition of an element-wise exponentiation of two vectors (and even matrices), provided that they have the same dimensions.
+The second one allows the definition of the division of a vector/matrix by a scalar (components are exponentiated by the same unique value). For instance: 
+
+\begin{equation}
+	im1 ~ pow ~ im2
+\end{equation}
+
+\begin{equation}
+	im1 ~ pw ~ 2.0
+\end{equation}
+
+\textbf{Function bands} \newline
+This function allows to select specific bands from an image, and/or to rearrange them in a new vector; for instance:
+
+\begin{equation}
+  bands(im1,\{1,2,1,1\})
+\end{equation}
+
+produces a vector of 4 components made of band 1, band 2, band 1 and band 1 values from the first input. Note that curly brackets must be used in order to select the desired band indices.
+
+\textbf{Function dotpr } \newline
+This function allows the dot product between two vectors or matrices (actually in our case, a kernel and a neighbourhood of pixels):
+
+\begin{equation}
+\sum_{(i,j)} m_1(i,j)*m_2(i,j)
+\end{equation}
+
+For instance: 
+\begin{equation}
+  dotpr(kernel1,im1b1N3x5)
+\end{equation}
+
+is correct provided that kernel1 and im1b1N3x5 have the same dimensions. The function can take as many neighbourhoods as needed in inputs.
+
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+\begin{center}
+Thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values. This behaviour is typical of the functions implemented in the BandMathX application.
+\end{center}
+\end{minipage}}
+\end{center}
+
+\textbf{Function mean} \newline
+This function allows to compute the mean value of a given vector or neighborhood (the function can take
+as many inputs as needed; one mean value is computed per input). For instance:
+
+\begin{equation}
+	mean(im1b1N3x3,im1b2N3x3,im1b3N3x3,im1b4N3x3)
+\end{equation}
+
+Note: a limitation coming from muparserX itself makes impossible to pass all those neighborhoods with a unique variable.
+
+\textbf{Function var} \newline
+This function allows to compute the variance of a given vector or neighborhood (the function can take
+as many inputs as needed; one var value is computed per input). For instance:
+
+\begin{equation}
+	var(im1b1N3x3)
+\end{equation} 
+
+\textbf{Function median} \newline
+This function allows to compute the median value of a given vector or neighborhood (the function can take
+as many inputs as needed; one median value is computed per input). For instance:
+
+\begin{equation}
+	median(im1b1N3x3)
+\end{equation}
+
+\textbf{Function corr} \newline
+This function allows to compute the correlation between two vectors or matrices of the same dimensions (the function takes two inputs). For instance:
+
+\begin{equation}
+	corr(im1b1N3x3,im1b2N3x3)
+\end{equation}
+
+\textbf{Function maj} \newline
+This function allows to compute the most represented element within a vector or a matrix (the function can take
+as many inputs as needed; one maj element value is computed per input). For instance:
+
+\begin{equation}
+	maj(im1b1N3x3,im1b2N3x3)
+\end{equation}
+
+\textbf{Function vmin and vmax} \newline
+These functions allow to compute the min or max value of a given vector or neighborhood (only one input). For instance:
+
+\begin{equation}
+	(vmax(im3b1N3x5)+vmin(im3b1N3x5)) ~ div ~ \{2.0\}
+\end{equation}
+
+\textbf{Function cat} \newline
+This function allows to concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the function can take
+as many inputs as needed). For instance:
+
+\begin{equation}
+	cat(im3b1,vmin(im3b1N3x5),median(im3b1N3x5),vmax(im3b1N3x5))
+\end{equation}
+
+Note: the user should prefer the use of semi-colons (;) when setting expressions, instead of directly use this function.
+The application will call the function 'cat' automatically.  
+
+
+\textbf{Function ndvi} \newline
+This function implements the classical normalized difference vegetation index; it tkaes two inputs. For instance:
+
+\begin{equation}
+	ndvi(im1b1,im1b4)
+\end{equation}
+
+First argument is related to the visible red band, and the second one to the near-infrareds band.
+
+The table below summarises the different functions and operators.
+
+
+\begin{center} 
+\begin{tabular}{||l|l||}
+\hline
+\bf Variables & \bf Remark \\
+\hline\hline
+ndvi &  two inputs\\
+bands & two inputs; length of second vector input gives the dimension of the output \\
+dotptr &  many inputs \\
+cat & many inputs \\
+mean & many inputs \\
+var & many inputs \\
+median & many inputs \\
+maj & many inputs \\
+corr & two inputs \\
+div and dv &  operators \\
+mult and mlt & operators \\
+pow and pw  & operators \\
+vnorm  & adapation of an existing function to vectors : one input \\
+vabs   & adapation of an existing function to vectors : one input \\
+vmin   & adapation of an existing function to vectors : one input \\
+vmax   & adapation of an existing function to vectors : one input \\
+vcos   & adapation of an existing function to vectors : one input \\
+vsin   & adapation of an existing function to vectors : one input \\
+vtan   & adapation of an existing function to vectors : one input \\
+vtanh  & adapation of an existing function to vectors : one input \\
+vsinh  & adapation of an existing function to vectors : one input \\
+vcosh  & adapation of an existing function to vectors : one input \\
+vlog   & adapation of an existing function to vectors : one input \\
+vlog10 & adapation of an existing function to vectors : one input \\
+vexp   & adapation of an existing function to vectors : one input \\
+vsqrt  & adapation of an existing function to vectors : one input \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Functions and operators summary.}
+\label{variables}
+
+
+

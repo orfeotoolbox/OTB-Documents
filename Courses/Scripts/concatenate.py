@@ -16,14 +16,18 @@ def main(args):
                 process = ['otbcli_ConcatenateImages']
                 process.append('-ram 512')
                 process.append('-out')
-                process.append(os.path.join(dirname, subdirname) + '_concat.tif' + '?&box=1540:680:3000:3000')
+                output_file=
+                process.append(os.path.join(dirname, subdirname) 
+                               + '_concat.tif' 
+                               + '?&box=1540:680:3000:3000')
                 #process.append('?&box=1438:613:3015:2586"') 
                 process.append('uint16')
                 process.append('-il')
                 #print process
                 for band in band_list:
-                    #img_list.append(os.path.join(os.path.join(dirname, subdirname),subdirname + '_' + band + '.TIF'))
-                    process.append(os.path.join(os.path.join(dirname, subdirname),subdirname + '_' + band + '.TIF'))
+                    process.append(os.path.join(
+                                   os.path.join(dirname, subdirname),
+                                   subdirname + '_' + band + '.TIF'))
                 print process
                 
                 subprocess.check_call(process)

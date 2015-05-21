@@ -205,7 +205,7 @@ Voici un autre exemple. La commande suivante regroupera les pixels qui
 :   -filter cc -filter.cc.expr "distance<30
 :    or (intensity_p1>400 and intensity_p2 > 400 and distance<50)
 :    or(intensity_p1 >1000 and intensity_p2>1000
-:    or (p1b4 <150 and p2b4<150))"
+:    or (p1b3 <150 and p2b3<150))"
 :   -mode raster -mode.raster.out second_cc.tif uint32
 
 Voici le résultat obtenu :
@@ -260,7 +260,7 @@ La commande suivante lance la segmentation sur la grande image :
       :   -filter meanshift -filter.meanshift.ranger 30 -mode raster
       :   -mode.raster.out meanshift.tif uint32
 
-Étant donné que l'image est de grande taille, (8192 par 8192 pixels),
+Étant donné que l'image est de grande taille, (4096 par 4096 pixels),
 il est probable que, en fonction de la machine :
 - l'application termine en erreur par manque de mémoire
 - l'application ne s'arrête pas, mais consomme toute la mémoire disponible.

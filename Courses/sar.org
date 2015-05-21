@@ -114,7 +114,7 @@ image:
 2. The Re and Im parts are Gaussians with a zero mean. As a
    consequence, the complex SAR image will have a circular Gaussian
    distribution, whose phase has an uniform distribution in $[-\pi,
-   \pi]$ and whose modulus follows a Rayleigh distribution.
+   \pi]$ (Central limit theorem) and whose modulus follows a Rayleigh distribution.
 ***** Item 3
 The image intensity is the square of the amplitude. Using the
 /BandMath/ module, there are 2 ways of computing the amplitude:
@@ -128,7 +128,7 @@ The image intensity is the square of the amplitude. Using the
 Here is the ROI:
 #+Latex:\vspace{0.5cm}
      #+Latex:\begin{center}
-     #+ATTR_LaTeX: width=0.9\textwidth
+     #+ATTR_LaTeX: :width 0.9\textwidth
      [[file:Images/roi.png]]
      #+Latex:\end{center}
      #+Latex:\vspace{0.5cm}

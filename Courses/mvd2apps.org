@@ -22,7 +22,7 @@
      This tutorial is an adaptation of the one dedicated to Monteverdi and focus
      on Monteverdi2 main features.
 
-      #+ATTR_LaTeX: width=0.9\textwidth
+      #+ATTR_LaTeX: :width 0.9\textwidth
       #+LABEL: fig::mvd2
       #+CAPTION: Monteverdi2 main window
       [[file:Images/capture_mvd2_small.png]]
@@ -247,7 +247,7 @@
       gamma curve applied to images will therefore clarify and spread the tonal
       range to produce a more or less linear visual picture.
 
-      #+ATTR_LATEX: width=0.8\textwidth
+      #+ATTR_LATEX: :width 0.8\textwidth
       #+LABEL: fig:gamma
       #+CAPTION: Example of CRT gamma correction (Wikipedia)
       [[file:Images/GammaFunctionGraph.png]]

@@ -218,16 +218,16 @@ In this part of the exercise, you will use the following data:
       
       Here is the command-line to compute TOA reflectance :
 
-      : $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
-      :   -io.out solution/phr_xs_melbourne_toa.tif uint16 
+      : $ otbcli_OpticalCalibration -in phr_xs_melbourne.tif 
+      :   -out solution/phr_xs_melbourne_toa.tif uint16 
       :   -milli 1
 
 ***** Item 2 
 
       Here is the command-line to compute TOC reflectance :
 
-      : $ otbcli_OpticalCalibration -io.in phr_xs_melbourne.tif 
-      :   -io.out solution/phr_xs_melbourne_toc.tif uint16 
+      : $ otbcli_OpticalCalibration -in phr_xs_melbourne.tif 
+      :   -out solution/phr_xs_melbourne_toc.tif uint16 
       :   -milli 1 -level toc
 
 ***** Item 3 

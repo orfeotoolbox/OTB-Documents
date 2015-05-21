@@ -1,0 +1,126 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES & THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[8pt]{beamer}
+
+\usepackage{etex}
+\mode<presentation> {
+
+\usetheme{Vilanova}
+}
+
+
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{chronology}
+\let\CHRONOLOGY\chronology
+\let\endCHRONOLOGY\endchronology
+\def\chronology{\shorthandoff{;}\CHRONOLOGY}
+\def\endchronology{\endCHRONOLOGY\shorthandon{;}}
+\usepackage{pstricks}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{xmpincl}
+\usetikzlibrary{arrows}
+\usepackage{pifont}
+
+\usepackage{listings,color}
+
+\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+\definecolor{listnumbers}{gray}{0.65}
+\definecolor{listlightgray}{gray}{0.955}
+\definecolor{listwhite}{gray}{1.0}
+
+
+%% \setbeamertemplate{background canvas}{\includegraphics
+%%    [width=\paperwidth,height=\paperheight]{./images/title.pdf}}
+
+\AtBeginSection[]
+{
+\addtocounter{framenumber}{-1}
+\begin{frame}
+\frametitle{Sommaire}
+\tableofcontents[currentsection]
+\end{frame}}
+
+%----------------------------------------------------------------------------------------
+%	PAGE TITRE
+%----------------------------------------------------------------------------------------
+\title{Orfeo ToolBox users meeting and hackfest 2015}
+\includexmp{images/cc}
+\subtitle{Welcome, agenda, useful information}
+\author{OTB development team}% date and event here
+\date{3 - 5 june 2015, Toulouse}
+
+\pgfdeclareimage[height=96mm,width=128mm]{background}{images/fondsClairSansLogo}
+\pgfdeclareimage[height=0.2cm]{cc}{images/CC-licence.png}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{images/logoIncrust}
+\logo{
+\begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}
+\href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}}
+& \vspace{-0.03\textwidth} \scriptsize{} % date and event here
+&  & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Technical session}
+\begin{itemize}
+\item 2 sessions (in parallel?)
+\item Coder track (developer oriented) and application track (user oriented)
+\item We can adapt the content to your needs/questions 
+\end{itemize}
+
+\begin{block}{Coder track}
+\begin{itemize}
+\item Create a remote module with OTB
+\item Gradual tutorial covering applications 
+\item Writing new filters (if enough time)
+\end{itemize} 
+\end{block}
+
+\begin{block}{Application track}
+\begin{itemize}
+\item Discover new features in OTB, Ice and Monteverdi2
+\item Introduction to Monteverdi2 and OTB-Applications with OTB courses
+\item New exercise with BandMathX
+\item Presentation of Mapla, ice
+\end{itemize} 
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Useful information}
+\begin{block}{Coder track}
+\begin{itemize}
+\item Development environnement : compiler, editor\ldots
+\item Gradual tutorial covering applications 
+\item Writing new filters (if enough time)
+\end{itemize} 
+\end{block}
+
+\begin{block}{Application track}
+\begin{itemize}
+\item Install Monteverdi2   
+\item Get OTB tutorial : \href{http://sourceforge.net/projects/orfeo-toolbox/files/OTBCourses-4.2.pdf/download}{http://sourceforge.net/projects/orfeo-toolbox/files/OTBCourses-4.2.pdf/download}
+\end{itemize} 
+\end{block}
+
+\end{frame}
+
+\end{document}

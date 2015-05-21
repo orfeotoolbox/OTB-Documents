@@ -26,6 +26,7 @@ def ConvertString(s):
     s = s.replace('<=', '\\le')
     s = s.replace('>=', '\\re')
     s = s.replace('^-1','$^-1$')
+    s = s.replace('&','\\&')
     return s
 
 def EncloseString(s):

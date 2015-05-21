@@ -80,7 +80,7 @@
 **** *Object Labeling* module - advanced
 
      In this part of the exercise, we will use these additional files:
-     ~samples.xml~ and ~parameters.xml~
+     ~samples.xml~.
 
      1. Load again the image and the segmentation inside the module.
 
@@ -93,6 +93,8 @@
         - Band2::Mean
         - Band3::Mean
         - Band4::Mean
+
+        And use RBF SVM kernel with parameters optimization.myg
 
      4. Perform the classification. What are the objects in the image
         that are badly classified because of missing classes ?
@@ -141,13 +143,14 @@
       :   -out obc_segmentation_image.png uint8
       :   -method image
       :   -method.image.in  phr_pxs_melbourne_xt_small.tif
-
+      :   -method.image.low 0
+      :   -method.image.up 0
 
       Here is what the color-mapped images look like:
 
       #+Latex:\vspace{0.5cm}
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth
+      #+ATTR_LaTeX: :width 0.4\textwidth
       [[file:Images/obc_segmentation_optimal.png]] [[file:Images/obc_segmentation_image.png]]
       #+Latex:\end{center}
 
@@ -239,7 +242,7 @@
       presented on the right of following figure.
 
       #+Latex:\begin{center}
-      #+ATTR_LaTeX: width=0.4\textwidth
+      #+ATTR_LaTeX: :width 0.4\textwidth
       [[file:Images/obc_classif_samples.png]] [[file:Images/obc_classif_samples_solution.png]]
       #+Latex:\end{center}
 

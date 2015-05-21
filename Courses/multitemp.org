@@ -2,31 +2,130 @@
 *** Description
 **** Abstract
 
-     This exercise will get you familiar with multi temporal image analysis
-     using OTB applications. You will learn some basic Python scripting methods to
-     manipulate a set of LandSat-8 images and produce change detection map from
-     the image series (read/stack/extract). 
+     This exercise will get you familiar with multi-temporal image analysis
+     using OTB applications. You will learn how to script OTB applications with
+     Python to facilitate manipulation of a set of LandSat-8 images and produce
+     change detection map from the image series.
 
 **** Data
   
-  We'll use the 
+  We'll use Landsat 8 images. It provides moderate-resolution imagery, from 15
+  meters to 100 meters with a revisit time of approximately 16 days.
+  Images were download on the USGS Earth Explorer website:
+  http://earthexplorer.usgs.gov/
+
+  Products downloaded:
+  - LC81530752013182LGN00 
+  - LC81530752013262LGN00
+  - LC81530752013326LGN00
+  - LC81530752014025LGN00
+  - LC81530752014073LGN00
+  - LC81530752014121LGN00
+  - LC81530752014169LGN00
+  - LC81530752014233LGN00
+
+  From:
+
+  - DATE ACQUIRED = 2013-07-01
+  - DATE ACQUIRED = 2013-09-19
+  - DATE ACQUIRED = 2013-11-22
+  - DATE ACQUIRED = 2014-01-25
+  - DATE ACQUIRED = 2014-03-14
+  - DATE ACQUIRED = 2014-05-01
+  - DATE ACQUIRED = 2014-06-18
+  - DATE ACQUIRED = 2014-08-21
 
 **** Pre-requisites
 
-     - Basic knowledge on *OTB applications* and *QGIS* usage
+     - Basic knowledge on *OTB applications*
      - Basic knowledge of Python
 
 **** Achievements
-
      - Usage of the OTB applications in Python
      - Produce detection map from a image series
+
 *** Steps
-**** LandSat-8 imagery : basic visualization
+
 **** Concatenate image bands
+     - Landsat 8 images are stored in separate directories. Moreover each band
+       are separated in different tif files. Develop a Python script which browse in each
+       directory and concatenate image bands in a single vector image. We will
+       use those vector images in the following steps of this exercise.
+**** LandSat-8 imagery : basic visualization and band combinations
+     Use Monteverdi2 or Ice to visualize Landsat 8 images.
+     - What is the color composition for "color infrared" visualization?
+     - What is the color composition for "Natural color?
+     - What is the number of the new coastal/aerosol band in Landsat 8's OLI
+       sensor?
+     - What is the number of the new cirrus band in Landsat 8's OLI sensor?
 **** Radiometric index extraction
+     - Develop a Python script which compute NDVI from all Landsat 8 images series.
 **** Change detection using MAD
+     MAD stands for Multivariate Alteration Detector and is a change detection
+analysis technique based on the following : find pairs of linear combination
+between bands from image 1 and bands from image 2 that maximize correlation,
+each pair being orthogonal with the others.  Subtract each pairs of linear
+combination one from each other. This leads to a set of change maps which are
+invariant to linear scaling, un-correlated and can be used to perform change
+detection with images with different bands and number of bands for instance.
+
+     - What is the OTB applications which allows to perform MAD change detection?
+     - What is the command to perform MAD change detection between images from the 2013-07-01 and
+       2013-09-19?
+     - Which band of the MAD result seems of interest to extract change of fields?
+     - Try to perform threshold on this band to extract a detection mask.
+     - What is the command top Perform subtraction between NDVI images from the  2013-07-01 and
+       2013-09-19?
+     - Try also to threshold the result from the previous question.
 *** Solutions                                                     :solutions:
-**** LandSat-8 imagery : basic visualization
 **** Concatenate image bands
+     #+INCLUDE: "./Scripts/concatenate.py" src python
+**** LandSat-8 imagery : basic visualization and band combinations
+     - Color Infrared:  5,4,3
+     - Natural Color: 4,3,2
+     - coastal/aerosol band (band1) (use clamp around min/max with 2% and 8%)
+     - cirrus band (band 9) : better detection of cirrus cloud contamination
+       (problem with Reunion data)
+     [[file:Images/L8_band_combos_b.jpg]]
 **** Radiometric index extraction
+     #+INCLUDE: "./Scripts/ndvi.py" src python
 **** Change detection using MAD
+     - *MultivariateAlterationDetector*
+     - Here is the command line to produce the MAD change detection on input
+       image:
+
+     : $ otbcli_MultivariateAlterationDetector 
+     :   -in1 LC81530752013182LGN00_concat.tif 
+     :   -in2 LC81530752013262LGN00_concat.tif 
+     :   -out ~/temporary/mad_182_262.tif
+     
+     - It seems that band number 5 allows to discriminate changes on
+       agricultural lands. 
+     - Threshold using the *BandMath* application. I choose to threshold mad
+       values superior to 4.5:
+     : $otbcli_BandMath 
+     : -il ~/temporary/mad_182_262.tif 
+     : -out ~/temporary/mad_182_262_thres.tif uint8
+     : -exp "im1b5>=4.5?255:0"
+
+       Still need to filter clouds. MAD filter could take a mask as input in the
+       future.
+
+     Results:
+
+     [[file:Images/l8_change_detection.png]]
+
+     Extract from the 2013-07-01:
+
+     [[file:Images/before_zoom.png]] 
+
+     Extract from the 2013-09-19:
+
+     [[file:Images/after_zoom.png]]
+
+     Extract from the change detection result:
+
+     [[file:Images/mad_zoom.png]]  
+
+     - TODO
+     - TODO
