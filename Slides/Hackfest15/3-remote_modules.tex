@@ -56,7 +56,7 @@
 %----------------------------------------------------------------------------------------
 \title{Orfeo ToolBox users meeting and hackfest 2015}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
+\subtitle{Contributions through remote modules}
 \author{OTB development team}% date and event here
 \date{3 - 5 june 2015, Toulouse}
 
@@ -78,17 +78,99 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Welcome!}
+\frametitle{By now, you know that:}
+\begin{itemize}
+\item Orfeo ToolBox is now organized in groups/modules
+\item Each module contains classes, applications, third parties, and their related tests
+\item Each module can be deactivated
+\item There is a dependency tracking mechanism that deactivate downstream modules
+\item CMake automagically recognize any subfolder of Modules/*/ as a module
+\item In particular, we have a dedicated Modules/Remote folder to host contributions
+\end{itemize}
+
+\textcolor{red}{So, next time you want to contribute a piece of code, why not write a module?}
+
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Writing a remote module is simple (1/2)}
+Let's write a remote module to share the \textbf{Awesome} algorithm code:
+\begin{itemize}
+\item A header file: \textit{otbAwesomeFilter.h}
+\item A template methods file: \textit{otbAwesomeFilter.txx}
+\item A source file: \textit{otbAwesomeFilter.cxx}
+\end{itemize}
+
+\begin{block}{otb-module.cmake}
+\begin{small}
+\begin{verbatim}
+otb_module(Awesome 
+           DEPENDS OTBImageBase OTBStatistics 
+           DESCRIPTION "Implementation of awesome algorithm")
+\end{verbatim}
+\end{small}
+\end{block}
+
+\begin{block}{CMakeLists.txt}
+\begin{small}
+\begin{verbatim}
+project(Awesome)
+set(Awesome_LIBRARIES OTBAwesome) # only if your module contain a src folder
+otb_module_impl()
+\end{verbatim}
+\end{small}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Writing a remote module is simple (2/2)}
+\begin{block}{The include folder}
+\begin{itemize}
+\item There goes the \textit{otbAwesomeFilter.h} and \textit{otbAwesomeFilter.txx} files
+\item A nothing more!
+\end{itemize}
+\end{block}
+
+\begin{block}{The src folder (not needed if template only code)}
+\begin{itemize}
+\item There goes the \textit{otbAwesomeFilter.cxx} file
+\item And a \textit{CMakeLists.txt} file
+\end{itemize}
+\end{block}
+
+
+\begin{block}{CMakeLists.txt in src folder}
+\begin{small}
+\begin{verbatim}
+set(OTBAwesome_SRC otbAwesomeFilter.cxx)
+
+add_library(OTBAwesome ${OTBAwesome_SRC})
+
+target_link_libraries(OTBAwesome ${OTBImageBase_LIBRARIES} ${OTBStatistics_LIBRARIES})
+
+otb_module_target(OTBAwesome)
+\end{verbatim}
+\end{small}
+\end{block}
+
+\textcolor{red}{That'all folks! (extra folders and cmake required for tests and app)}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Agenda}
+\frametitle{Great, but how do I build it?}
+\begin{block}{Building the new module}
+\begin{enumerate}
+\item Place your module in Modules/Remote folder
+\item Run cmake configuration (ensure the BUILD\_DEFAULT\_MODULES is ON, or your module is enabled)
+\item make
+\end{enumerate}
+\end{block}
 
-\end{frame}
+\begin{block}{Sharing the new module}
 
-\begin{frame}
-\frametitle{Useful information}
+\end{block}
 
 \end{frame}
 
