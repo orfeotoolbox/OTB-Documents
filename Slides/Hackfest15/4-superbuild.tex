@@ -56,7 +56,7 @@
 %----------------------------------------------------------------------------------------
 \title{Orfeo ToolBox users meeting and hackfest 2015}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
+\subtitle{Third parties policy and SuperBuild}
 \author{OTB development team}% date and event here
 \date{3 - 5 june 2015, Toulouse}
 
@@ -78,17 +78,68 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Welcome!}
+\frametitle{Third parties in OTB}
+
+\begin{itemize}
+\item Reduced number of third parties, goodbye to Edison, ConfigFile, Expat, msinttypes
+\item Reduced dependency contamination with optional third parties
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{c | c}
+Mandatory dependencies & Optional dependencies \\
+\hline \\
+ITK & 6S \\
+GDAL & Curl \\
+Boost & libKML \\
+GeoTIFF & libSVM \\
+OpenThread & Mapnik \\
+Ossim & MuParser \\
+OssimPlugins & MuParserX \\
+TinyXML & OpenCV \\
+ & OpenJPEG \\
+ & Qt4 \\
+ & SiftFast \\
+\end{tabular}
+\end{center}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Agenda}
+\frametitle{Third parties integration}
+
+\begin{itemize}
+\item Almost all third parties source code is removed from OTB (except with 6S, Siftfast and OssimPlugins)
+\item "External" dependencies have to be installed by the user
+\item One module for each third party, containing a CMake call to find\_package(...)
+\item Optional third parties enabled disabled using specific CMake options : OTB\_USE\_ ...
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Useful information}
+\frametitle{SuperBuild : why ?}
+
+\begin{itemize}
+\item Reduce the effort to prepare an environment ready for OTB compilation
+\item Before OTB 5.0 , this was partially done using internal third-parties
+\item External dependencies imply different versions and compilation settings depending on the user platform
+\item Lots of issues coming from incompatible versions or library setup
+\item Need to identify a set of third parties (with their version and compilation options) 
+that is known to work well with OTB on all supported platforms
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{SuperBuild : how ?}
+
+\begin{itemize}
+\item CMake feature : ExternalProject
+\item At compilation time, CMake will download->patch->configure->build->install third parties as external projects
+\item User may choose between a library already present on the system or the superbuild version that is built during compilation
+\item CMake can download all the source archives, but we also provide an all-in-one archive for an offline compilation.
+\end{itemize}
 
 \end{frame}
 
