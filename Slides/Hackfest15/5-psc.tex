@@ -54,7 +54,7 @@
 %----------------------------------------------------------------------------------------
 %	PAGE TITRE
 %----------------------------------------------------------------------------------------
-\title{Orfeo ToolBox users meeting and hackfest 2015}
+\title{Steering OTB: an introduction to the new OTB PSC}
 \includexmp{images/cc}
 \subtitle{Welcome, agenda, useful information}
 \author{OTB development team}% date and event here
@@ -78,17 +78,233 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Welcome!}
+\frametitle{Introduction}
+The aim of this presentation is:
+\begin{itemize}
+\item To describe how Orfeo ToolBox project worked until PSC creation
+\item To explain what the PSC is and how it works
+\item To sketch the possibilities offered by this new, more open governance
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Agenda}
+\frametitle{How OTB worked before PSC: the benevolent dictatorship dynasty}
+\begin{block}{Who makes feature requests}
+\begin{itemize}
+\item Users from Orfeo CNES program (main funding source for 8 years)
+\item CNES team (based on feedback from ml and orfeo)
+\item Users from mailing list
+\end{itemize}
+\end{block}
+
+\begin{block}{Who decides}
+\begin{itemize}
+\item CNES team (b.d.: Jordi, then Jordi + Emmanuel, then Jordi + Manuel, then Julien + Manuel)
+\item With the support of CS dev team
+\end{itemize}
+\end{block}
+
+\begin{block}{Who actually writes code}
+\begin{itemize}
+\item CS dev team (funded by CNES, reconducted through 4 consecutive call for tenders) at 75\%
+\item CNES team at 20\%
+\item Contributors at 5\% (most ofthen goes through CNES or CS dev team)
+\end{itemize}
+\end{block}
+
+\textcolor{red}{So CNES gathers, decides and funds everything (hopefully with consideration for users and contributors)}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Useful information}
+\frametitle{The making of (a release of) Orfeo ToolBox}
+\begin{enumerate}
+\item CNES decides what major changes (features and infra) will be made
+\item The dev team starts iterating scrum sprints (around 2 weeks each)
+\item At each sprint end, CNES reviews with the dev team the next sprint and release scopes to accomodate urgent/new requests 
+\item After 4 to 6 sprints (or when the scope is achieved to a satisfactory level), the Relese Candidate is announced
+\item If no major issue shows up, the Release Candidate becomes the final release
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ok, but this worked for 8 years, why changing now?}
+\begin{block}{For transparency}
+\begin{itemize}
+\item Users do not know the mid-term directions of the project
+\item Users are often informed afterward of major changes
+\item No insight on motivations behind some decisions
+\item Difficult to participate in decision making
+\item OTB is a big project now, someone may want to get involved more deeply
+\end{itemize}
+\end{block}
+
+\begin{block}{For more, easier contributions}
+\begin{itemize}
+\item Question: what is the process for contributing code to OTB? 
+\item Question: how can I know if my contribution will be accepted?
+\item Question: if I contribute a lot, do I get a grip on decision making?
+\end{itemize}
+\end{block}
+
+\begin{block}{For sustainability}
+\begin{itemize}
+\item What if, one day, CNES stops funding OTB at the current level?
+\item We need new actors to be able to get involved in OTB!
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introducing Orfeo ToolBox Project Steering Committee (starts march 2015)}
+
+\begin{block}{The PSC statement}
+Verbatim from the \href{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}{PSC status}:
+\begin{itemize}
+\item \textit{The aim of the OTB Project Steering committee (PSC) is to provide high level guidance and coordination for the ORFEO ToolBox.}
+\item \textit{It provides a central point of contact for the project and arbitrates disputes. It is also a stable base of "institutional knowledge" to the project and tries its best to involve more developers.}
+\item \textit{It should help to guarantee that OTB remains open and company neutral.}
+\end{itemize}
+\end{block}
+
+\begin{block}{... and its scope}
+\begin{itemize}
+\item Roadmaps
+\item Communication
+\item Users support and documentation
+\item Contribution management
+\item Release planning
+\item Handling of legal issues
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{PSC Members and roles}
+
+\begin{itemize}
+\item All members have equal standing and voice in the PSC
+\item The PSC seats are non-expiring
+\item PSC members may resign their position, or be asked to vacate their seat after a unanimous vote of no confidence from the remaining PSC members
+\item Members can be assigned roles corresponding to each category of the PSC scope
+\end{itemize}
+
+The expectations on PSC members are:
+\begin{itemize}
+\item Be willing to commit to the OTB development effort
+\item Be responsive to requests for information from fellow members
+\item Be able and willing to attend on-line meetings
+\item Act in the best interests of the project 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Decision making in PSC}
+
+\begin{block}{When is a vote required?}
+\begin{enumerate}
+\item Request for changes
+  \begin{itemize}
+    \item Anything that could cause backward compatibility issues
+    \item Adding substantial amounts of new code
+    \item Changing inter-subsystem APIs, or objects
+  \end{itemize}
+\item Addition or removal of PSC members (including the selection of a new Chair)
+\item Release process 
+\item Changing PSC rules and processes
+\item Anything else that might be controversial 
+\end{enumerate}
+\end{block}
+\begin{block}{Voting process}
+\begin{itemize}
+\item Proposals are written up and submitted on the otb-developers mailing list for discussion and voting
+\item Proposals are available for review at least 3 days before vote is closed
+\item Anyone is encouraged to comment and vote, though ultimately only PSC members vote are counted
+\item Vote are casted by +1/-1. Acceptance if at least +2 and no veto (-1)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Current PSC members}
+\textit{In March 2015, CNES nominated 3 persons deeply involved in OTB as initial PSC members. They are responsible for defining PSC rules and establishing a fully functioning PSC.}
+\vspace{0.5cm}
+\begin{small}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Name} 	&\textbf{Affiliation}	&\textbf{Role}\\
+\hline
+Manuel Grizonnet (chair) &	CNES  &	Infrastructure, release planning, legal issues\\
+Jordi Inglada 	&CNES/CESBIO 		&User support and documentation, roadmaps\\
+Julien Michel 	&CNES &	Communication, contributions \\
+\hline
+\end{tabular}
+\end{small}
+
+\begin{block}{?!?! ... but wait!}
+\begin{itemize}
+\item \textcolor{red}{This is (almost) the full dynasty of benevolent dictactors!}
+\item Yes, but ...
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{... There are new possibilities! (1/2)}
+
+\begin{block}{You can become a PSC member}
+\begin{itemize}
+\item Anyone showing a substantial and ongoing involvement in OTB is eligible to be nominated to the OTB PSC
+\item The PSC is not only composed of OTB developers as there are many ways to join and contribute to the project
+\item Remember: an active membership will take time and effort
+\item Note that the PSC is not a legal entity!
+\end{itemize}
+\end{block}
+
+\begin{block}{You can submit RFCs}
+\begin{itemize}
+\item If you have an important contribution you want to make, you can submit a RFC
+\item It will be discussed, decided, and logged publicly
+\item You will be able to discuss a target release for the contribution to be included
+\item Remember: contributions $\neq$ feature requests!
+\item An alternate way for contributions exists: remote modules (see dedicated presentation)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{... There are new possibilities! (2/2)}
+
+\begin{block}{You can comment on RFCs}
+\begin{itemize}
+\item You are encouraged to comment every RFC you want
+\item ... or even vote!
+\item Ultimately only PSC members gets their vote counted, their
+  decision shall reflect the opinions from all participants
+\end{itemize}
+\end{block}
+
+\begin{block}{You can submit feature requests}
+One member of the PSC is responsible for roadmaps and will receive and track feature requests
+\end{block}
+
+\begin{block}{You know what is going on}
+New RFCs, releases, new PSC members, status ... everything is discussed and logged publicly
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Final thoughts}
+
+\begin{itemize}
+\item The PSC is young (the entity, not its members ...)
+\item It is a tool that can be adapted to best serve the interest of Orfeo ToolBox
+\item Anything can be discussed and modified: processes, scope, rules, members ...
+\item We hope to be more than 3 members in the future!
+\end{itemize}
 
 \end{frame}
 
