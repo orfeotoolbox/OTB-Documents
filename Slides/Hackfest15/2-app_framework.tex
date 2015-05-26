@@ -115,7 +115,6 @@ $ otbcli_OrthoRectification
 This is the OrthoRectification application, version 4.5.0
 This application allows to ortho-rectify optical images from supported sensors.
 
-
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
 
 Parameters: 
@@ -193,28 +192,61 @@ OrthoRectification.ExecuteAndWriteOutput()
 \section{Inside OTB applications}
 
 \begin{frame}
-\frametitle{Application engine}
-
+  \frametitle{Application engine}
+  \begin{itemize}
+  \item Wrappers for parameters definition (numerical, groups, choice) and also
+    parameters related to OTB types (images, vector, image list)
+  \item Application definition  
+    \begin{itemize}
+    \item Application definition, documentation
+    \item   /* Implement this method to add parameters */ virtual void DoInit() = 0;
+    \item /* Implement this method to update non valued parameters */ virtual void DoUpdateParameters() = 0;
+    \item /* Implement this method to build the output */ virtual void DoExecute() = 0;
+    \end{itemize}
+  \item Goodies
+    \begin{itemize}
+    \item Dependencies between parameters
+    \item Logger
+    \item Tags
+    \item Auto doc generation
+    \item Serialization (XLM files) 
+      -outxml - Save otb application to xml file: Save otb application to xml file
+      -inxml  - Load otb application from xml file  (optional, off by default)
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Application wrapper}
-
+The general philosophy of this new framework is to have to write the processing only once, and then use it from whatever environment, programming language or software you want through one of these access points.
 \end{frame}
 
 \begin{frame}
-\frametitle{Applications are good for}
-
+\frametitle{Applications framework is:}
+\begin{itemize}
+  \item "Standard way'' to distribute processing chain based on OTB
+  \item Showcase for OTB features
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Applications are not}
-
+\frametitle{Applications framework is not:}
+\begin{itemize}
+  \item Wrapper of all OTB classes ($\neq$ WrapITK)
+  \item An external project based on the library (like ice or MVD). OTB
+    Applications are included in the library source (as a set of modules in
+    version 5.0)
+\end{itemize}
 \end{frame}
 
+\section{Discussion for future of OTB applications}
 \begin{frame}
-\frametitle{Roadmap for OTB applications}
-
+\frametitle{Discussion for future of OTB applications}
+\begin{itemize}
+  \item New applications in the OTB ? Ideas?  
+  \item Improve integration of OTB-Applications in external projects?
+  \item Improve documentation (internationalization\ldots)
+\end{itemize}
 \end{frame}
 
 \end{document}
