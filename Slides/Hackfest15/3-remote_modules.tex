@@ -158,7 +158,7 @@ otb_module_target(OTBAwesome)
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Great, but how do I build it?}
 \begin{block}{Building the new module}
 \begin{enumerate}
@@ -169,8 +169,69 @@ otb_module_target(OTBAwesome)
 \end{block}
 
 \begin{block}{Sharing the new module}
+\begin{enumerate}
+\item Place your code on a public git repository
+\item Others can test it directly by cloning it in Modules/Remote
+\item But you can also provide us a awesome.remote.cmake file for inclusion in OTB sources (in Modules/Remote). Your module will be visible at configuration time.
+\end{enumerate}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+#Contact: OTB Guru <og@orfeo-toolbox.org>
 
+otb_fetch_module(Awesome
+  "A truly awesome filter"
+  GIT_REPOSITORY www.somegitrepo.org/awesome.git
+  GIT_TAG 00000000000)
+\end{verbatim}
+\end{small}
+\end{center}
 \end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Benefits of remote modules}
+\begin{itemize}
+\item Writing new code for OTB is much, much simpler
+\item You do not need to modify a single line of OTB code to share contributions with others
+\item You remain the manager of the contributed code, and your contribution is clearly attributed
+\item You can licence your contribution with whatever licence you want
+\item If you are accepted as an official remote module (with *.remote.cmake in OTB sources), you benefit from dashboard and packaging
+\item If you do not want to maintain the new code, or if you feel like it, your remote module can become an official internal OTB module
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Official remote modules acceptance policy}
+\begin{itemize}
+\item Remote module source code should be hosted on a publicly available Git repository
+\item Author of the remote module should be identified and registed to otb-developers mailing list
+\item Author of the remote module accepts to be contacted by developers or users regarding issues with his module (on a best effort basis),
+\item Remote module source code should comply with OTB style as much as possible,
+\item Remote module source code should be documented using doxygen tags,
+\item Remote module should provide a minimal set of tests to ensure build of template code and basic non-regression testing,
+\item Remote module should come with a form of documentation (website, publication, readme file ...)
+\item Remote module should not embed code from any third party software (unless strong arguments are given by the author, in which case an exception can be made),
+\item Remote module should avoid depending on new third parties if possible,
+\item Remote module author should be the copyright owner and comply with licences of any third party,
+\item Author of remote module should provide a small description of the remote module to be added on OTB website.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Official remote modules release policy}
+
+During the OTB release process, a remote module will be included in source and binary packages if
+\begin{itemize}
+\item Dashboard submission exist and show that the remote module:
+     \begin{itemize}
+       \item Builds on all plateform,
+       \item Passes all tests on the reference platform,
+       \item Does not have any test crashing (i.e. failing with core dump or memory issues) on remaining platform.
+     \end{itemize}
+\item The remote module complies with the remote module acceptance policy at the time of the Release Candidate 
+\end{itemize}
 
 \end{frame}
 
