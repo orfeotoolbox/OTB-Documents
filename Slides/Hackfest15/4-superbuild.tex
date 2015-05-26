@@ -136,11 +136,67 @@ that is known to work well with OTB on all supported platforms
 
 \begin{itemize}
 \item CMake feature : ExternalProject
-\item At compilation time, CMake will download->patch->configure->build->install third parties as external projects
+\item At compilation time, CMake will download, patch, configure, build and install third parties as external projects
 \item User may choose between a library already present on the system or the superbuild version that is built during compilation
 \item CMake can download all the source archives, but we also provide an all-in-one archive for an offline compilation.
+\item Each ExternalProject can declare a set of dependencies that will be processed first at compilation time.
 \end{itemize}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{SuperBuild : settings}
+
+\begin{itemize}
+\item CMAKE\_INSTALL\_PREFIX : should be set by the user as OTB and the dependencies built by SuperBuild will always be installed there (even whitout calling target "install")  
+\item OTB\_USE\_... : the activation options of OTB third parties are also available in SuperBuild. Depending on their value, they will trigger the activation of the corresponding dependencies.
+\item USE\_SYSTEM\_... : when a third party is needed, user may choose to use a version already installed on the system, or use the SuperBuild version.
+\item DOWNLOAD\_LOCATION : directory used to download source archives. When archives are already present, no download is performed. Users have to set this variable in order to use the 'offline' mode.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{SuperBuild : status}
+
+\begin{center}
+\begin{tabular}{|c|@{}c@{}|@{}c@{}|@{}c@{}||c|@{}c@{}|@{}c@{}|@{}c@{}|}
+\hline
+Third Party  & \multicolumn{3}{c||}{Support :} & Third Party  & \multicolumn{3}{c|}{Support :}\\
+(version) & Linux & OSX & Win32 & (version) & Linux & OSX & Win32 \\
+\hline
+Boost (1.50.0) & x & x & x & OpenCV (2.4.10) & x & x & x\\
+\hline
+Curl (7.40.0) & & & x & OpenJPEG (2.1.0) & x & x & x\\
+\hline
+Expat (2.1.0) & x & x & x & OpenThreads (3.2.0) & x & x & x\\
+\hline
+FFTW (3.3.4) & x & x & x & Ossim (r23092) & x & x & x\\
+\hline
+GDAL (1.11.2) & x & x & x & PCRE (8.36) & & &\\
+\hline
+GEOS (3.4.2) & x & x & x & PNG (1.6.16) &  &  & x\\
+\hline
+GeoTIFF (1.4.0) & x & x & x & Proj4 (4.8.0) & x & x & x\\
+\hline
+ITK (4.7.1) & x & x & x & Qt4 (4.8.6) & & & x\\
+\hline
+Jpeg (9a) & x & x & x & SQLite (3.8.8.1) & x & x & x\\
+\hline
+libKML (1.3.0)\footnote{r863} & x & x & x & SWIG (3.0.5) & & & x\\
+\hline
+libSVM (3.20) & x & x & x & TIFF (4.0.3) & x & x & x\\
+\hline
+muParser (2.2.3) & x & x & x & TinyXML (2.6.2) & x & x & x\\
+\hline
+muParserX (3.0.5) & x & x & x & Zlib (1.2.8) & x & & x\\
+\hline
+
+\end{tabular}
+\end{center}
+
+
+\end{frame}
+
 
 \end{document}
