@@ -90,6 +90,29 @@
 \begin{frame}
 \frametitle{Useful information}
 
+Tutorial steps :
+Clone module template
+Uncompress in OTB/Module/Remote
+(rename folder)
+Update otb-module.cmake
+Update CMakeLists.txt : also change lib name = module name
+
+Try to compile :
+ > make -j3 TutoHackfest-all
+
+Copy OTB/Modules/Applications/AppImageUtils/app/otbTileFusion.cxx to OTB/Modules/Remote/tutoRemoteModule/app
+Rename into otbAdvancedTileFusion.cxx
+Edit file : change class name and SetName() in DoInit().
+Edit app/CMakeLists.txt
+Edit test/CMakeLists.txt : change app name in otb_test_application
+
+Try to compile
+   - add modules dependencies if needed
+
+
+
+
+
 \end{frame}
 
 \end{document}
