@@ -93,9 +93,9 @@
 \item Application C++ API not specific to OTB
 \item Wrappers build upon Application engine
 \begin{itemize}
-  \item CLI
-  \item Qt (used in Monteverdi2 and QGIS)
-  \item Python (thanks to SWIG)
+\item CLI
+\item Qt (used in Monteverdi2 and QGIS (custom version of otb app))
+\item Python (thanks to SWIG)
 \end{itemize}
 \item Easy integration in external system 
 \end{itemize}
@@ -107,7 +107,7 @@
 
 
 \begin{frame}[fragile]
-\frametitle{Applications: CLI}
+%\frametitle{Applications: CLI}
 \begin{scriptsize}
 \vspace{-0.5cm}\begin{verbatim}
 $ otbcli_OrthoRectification
@@ -118,34 +118,34 @@ This application allows to ortho-rectify optical images from supported sensors.
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
 
 Parameters: 
-        -progress                <boolean>        Report progress 
+-progress                <boolean>        Report progress 
 MISSING -io.in                   <string>         Input Image  (mandatory)
 MISSING -io.out                  <string> [pixel] Output Image  [pixel=uint8/uint16/int16/uint32/int32/float/double] (default value is float) (mandatory)
-        -map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
-        -map.utm.zone            <int32>          Zone number  (mandatory, default value is 31)
-        -map.utm.northhem        <boolean>        Northern Hemisphere  (optional, off by default)
-        -map.epsg.code           <int32>          EPSG Code  (mandatory, default value is 4326)
-        -outputs.mode            <string>         Parameters estimation modes [auto/autosize/autospacing/outputroi/orthofit] (mandatory, default value is auto)
+-map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
+-map.utm.zone            <int32>          Zone number  (mandatory, default value is 31)
+-map.utm.northhem        <boolean>        Northern Hemisphere  (optional, off by default)
+-map.epsg.code           <int32>          EPSG Code  (mandatory, default value is 4326)
+-outputs.mode            <string>         Parameters estimation modes [auto/autosize/autospacing/outputroi/orthofit] (mandatory, default value is auto)
 MISSING -outputs.ulx             <float>          Upper Left X  (mandatory)
 MISSING -outputs.uly             <float>          Upper Left Y  (mandatory)
 MISSING -outputs.sizex           <int32>          Size X  (mandatory)
 MISSING -outputs.sizey           <int32>          Size Y  (mandatory)
 MISSING -outputs.spacingx        <float>          Pixel Size X  (mandatory)
 MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
-        -outputs.lrx             <float>          Lower right X  (optional, off by default)
-        -outputs.lry             <float>          Lower right Y  (optional, off by default)
-        -outputs.ortho           <string>         Model ortho-image  (optional, off by default)
-        -outputs.isotropic       <boolean>        Force isotropic spacing by default  (optional, on by default)
-        -outputs.default         <float>          Default pixel value  (optional, on by default, default value is 0)
-        -elev.dem                <string>         DEM directory  (optional, off by default)
-        -elev.geoid              <string>         Geoid File  (optional, off by default)
-        -elev.default            <float>          Default elevation  (mandatory, default value is 0)
-        -interpolator            <string>         Interpolation [bco/nn/linear] (mandatory, default value is bco)
-        -interpolator.bco.radius <int32>          Radius for bicubic interpolation  (mandatory, default value is 2)
-        -opt.rpc                 <int32>          RPC modeling (points per axis)  (optional, off by default, default value is 10)
-        -opt.ram                 <int32>          Available RAM (Mb)  (optional, off by default, default value is 128)
-        -opt.gridspacing         <float>          Resampling grid spacing  (optional, on by default, default value is 4)
-        -inxml                   <string>         Load otb application from xml file  (optional, off by default)
+-outputs.lrx             <float>          Lower right X  (optional, off by default)
+-outputs.lry             <float>          Lower right Y  (optional, off by default)
+-outputs.ortho           <string>         Model ortho-image  (optional, off by default)
+-outputs.isotropic       <boolean>        Force isotropic spacing by default  (optional, on by default)
+-outputs.default         <float>          Default pixel value  (optional, on by default, default value is 0)
+-elev.dem                <string>         DEM directory  (optional, off by default)
+-elev.geoid              <string>         Geoid File  (optional, off by default)
+-elev.default            <float>          Default elevation  (mandatory, default value is 0)
+-interpolator            <string>         Interpolation [bco/nn/linear] (mandatory, default value is bco)
+-interpolator.bco.radius <int32>          Radius for bicubic interpolation  (mandatory, default value is 2)
+-opt.rpc                 <int32>          RPC modeling (points per axis)  (optional, off by default, default value is 10)
+-opt.ram                 <int32>          Available RAM (Mb)  (optional, off by default, default value is 128)
+-opt.gridspacing         <float>          Resampling grid spacing  (optional, on by default, default value is 4)
+-inxml                   <string>         Load otb application from xml file  (optional, off by default)
 
 Examples: 
 otbcli_OrthoRectification -io.in QB_TOULOUSE_MUL_Extract_500_500.tif -io.out QB_Toulouse_ortho.tif
@@ -169,21 +169,28 @@ otbcli_OrthoRectification -io.in QB_TOULOUSE_MUL_Extract_500_500.tif -io.out QB_
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{OTB in QGIS}
+\begin{center}
+\includegraphics[width=0.4\textwidth]{images/otb_qgis.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Applications: Python interface}
 \begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
 #!/usr/bin/python 
- 
+
 # Import the otb applications package 
 import otbApplication 
- 
+
 # The following line creates an instance of the OrthoRectification application 
 OrthoRectification = otbApplication.Registry.CreateApplication("OrthoRectification") 
- 
+
 # The following lines set all the application parameters: 
 OrthoRectification.SetParameterString("io.in", "QB_TOULOUSE_MUL_Extract_500_500.tif") 
- 
+
 OrthoRectification.SetParameterString("io.out", "QB_Toulouse_ortho.tif") 
- 
+
 # The following line execute the application 
 OrthoRectification.ExecuteAndWriteOutput()
 \end{lstlisting}
@@ -192,60 +199,96 @@ OrthoRectification.ExecuteAndWriteOutput()
 \section{Inside OTB applications}
 
 \begin{frame}
-  \frametitle{Application engine}
-  \begin{itemize}
-  \item Wrappers for parameters definition (numerical, groups, choice) and also
-    parameters related to OTB types (images, vector, image list)
-  \item Application definition  
-    \begin{itemize}
-    \item Application definition, documentation
-    \item   /* Implement this method to add parameters */ virtual void DoInit() = 0;
-    \item /* Implement this method to update non valued parameters */ virtual void DoUpdateParameters() = 0;
-    \item /* Implement this method to build the output */ virtual void DoExecute() = 0;
-    \end{itemize}
-  \item Goodies
-    \begin{itemize}
-    \item Dependencies between parameters
-    \item Logger
-    \item Tags
-    \item Auto doc generation
-    \item Serialization (XLM files) 
-      -outxml - Save otb application to xml file: Save otb application to xml file
-      -inxml  - Load otb application from xml file  (optional, off by default)
-    \end{itemize}
-  \end{itemize}
+\frametitle{Application engine}
+\begin{itemize}
+\item Wrappers for parameters definition (numerical, groups of parameters,
+choice parameter) and also
+parameters related to OTB types (images, vector, image list)
+\item Application definition  
+\begin{itemize}
+\item Application name, documentation\ldots
+\item   /* Implement this method to add parameters */ virtual void DoInit() = 0;
+\item /* Implement this method to update non valued parameters */ virtual void DoUpdateParameters() = 0;
+\item /* Implement this method to build the output */ virtual void DoExecute() = 0;
+\end{itemize}
+\item Goodies
+\begin{itemize}
+\item Dependencies between parameters
+\item Logger
+\item Tags
+\item Auto doc generation
+\item Serialization (XML files) 
+-outxml - Save otb application to xml file: Save otb application to xml file
+-inxml  - Load otb application from xml file  (optional, off by default)
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Application wrapper}
-The general philosophy of this new framework is to have to write the processing only once, and then use it from whatever environment, programming language or software you want through one of these access points.
+The general philosophy of this new framework is to have to write the processing
+only once, and then use it from whatever environment, programming language or
+software you want through one of these access points.
+
+\begin{block}{CLI}
+\begin{itemize}
+\item itk Object
+\item Pointer to an application (load the application)
+\item Parse the command line and pilot application
+\end{itemize}
+\end{block}
+
+\begin{block}{Qt}
+\begin{itemize}
+\item QApplication
+\item Wrap application parameters types in Qt objects
+\end{itemize}
+\end{block}
+
+\begin{block}{SWIG}
+\begin{itemize}
+\item Wrap ApplicationEngine classes with SWIG
+\end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Applications framework is:}
+\frametitle{Applications framework is}
 \begin{itemize}
-  \item "Standard way'' to distribute processing chain based on OTB
-  \item Showcase for OTB features
+\item Standard way to distribute processing chain based on OTB
+\item Showcase for OTB features
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Applications framework is not:}
+\frametitle{Applications framework is not (yet)}
 \begin{itemize}
-  \item Wrapper of all OTB classes ($\neq$ WrapITK)
-  \item An external project based on the library (like ice or MVD). OTB
-    Applications are included in the library source as a set of modules in
-    version 5.0.
+\item Wrapper of all OTB classes ($\neq$ WrapITK)
+\item An external project based on the library (like ice or MVD). OTB
+Applications are included in the library source as a set of modules in
+version 5.0.
+\item Scheduler of OTB process (applications read and write on disk)
 \end{itemize}
 \end{frame}
 
 \section{Discussion for future of OTB applications}
+
+\begin{frame}
+\frametitle{What-s new for applications in OTB 5.0}
+\begin{itemize}
+\item Not much\ldots
+\item There is a group of modules which include all applications
+\item 24 modules (change detection, mathParser, Segmentation, Fusion\ldots)
+\item Currently 81 applications
+\end{itemize}
+\end{frame}
+
 \begin{frame}
 \frametitle{Discussion for future of OTB applications}
 \begin{itemize}
-  \item New applications in the OTB ? Ideas?  
-  \item Improve integration of OTB-Applications in external projects?
-  \item Improve documentation (internationalization\ldots)
+\item New applications in the OTB ? Ideas?  
+\item Improve integration of OTB-Applications in external projects?
+\item Improve documentation (internationalization\ldots)
 \end{itemize}
 \end{frame}
 
