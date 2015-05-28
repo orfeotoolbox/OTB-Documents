@@ -1,0 +1,246 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES & THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[8pt]{beamer}
+
+\usepackage{etex}
+\mode<presentation> {
+
+\usetheme{Vilanova}
+}
+
+
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{chronology}
+\let\CHRONOLOGY\chronology
+\let\endCHRONOLOGY\endchronology
+\def\chronology{\shorthandoff{;}\CHRONOLOGY}
+\def\endchronology{\endCHRONOLOGY\shorthandon{;}}
+\usepackage{pstricks}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{red},
+  keywordstyle=\color{blue}
+}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{xmpincl}
+\usetikzlibrary{arrows}
+\usepackage{pifont}
+
+\usepackage{listings,color}
+
+\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+\definecolor{listnumbers}{gray}{0.65}
+\definecolor{listlightgray}{gray}{0.955}
+\definecolor{listwhite}{gray}{1.0}
+
+
+%% \setbeamertemplate{background canvas}{\includegraphics
+%%    [width=\paperwidth,height=\paperheight]{./images/title.pdf}}
+
+\AtBeginSection[]
+{
+\addtocounter{framenumber}{-1}
+\begin{frame}
+\frametitle{Sommaire}
+\tableofcontents[currentsection]
+\end{frame}}
+
+%----------------------------------------------------------------------------------------
+%	PAGE TITRE
+%----------------------------------------------------------------------------------------
+\title{Orfeo ToolBox users meeting and hackfest 2015}
+\includexmp{images/cc}
+\subtitle{Welcome, agenda, useful information}
+\author{OTB development team}% date and event here
+\date{3 - 5 june 2015, Toulouse}
+
+\pgfdeclareimage[height=96mm,width=128mm]{background}{images/fondsClairSansLogo}
+\pgfdeclareimage[height=0.2cm]{cc}{images/CC-licence.png}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{images/logoIncrust}
+\logo{
+\begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}
+\href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}}
+& \vspace{-0.03\textwidth} \scriptsize{} % date and event here
+&  & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Welcome!}
+\begin{block}{Goal}
+\begin{itemize}
+\item Explore the way that OTB read/write geometry information
+\item Explore the way that OTB stream the data
+\item See how you can modify otb behaviour using extended filename features
+\end{itemize}
+\end{block}
+
+\begin{block}{ToDo}
+\begin{itemize}
+\item Goal : Orthorectification or NDVI computation  of a Pleiades image
+\item Easy?
+\item In a efficient way...
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\section{Profiling with extractROI}
+
+\begin{frame}[fragile]
+\frametitle{ExtractROI basic}
+
+\begin{block}{Command}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+time otbcli_ExtractROI -in
+IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.TIF 
+-out extract.tif 
+-startx 1000 -starty 1000 
+-sizex 5000  -sizey 5000 
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Profiling}
+real	0m7.851s
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Pixel encoding (storage)}
+\begin{itemize}
+\item Input image is encoded on 16 bits
+\item  By default output is written in float in OTB-Applications
+\item  To write in unsigned int : add ``uint16'' after output image
+\item Save Space and time (faster to write integers)
+\item Can save more space using jpeg in tiff
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{ExtractROI (change output pixel type)}
+
+\begin{block}{Command}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+otbcli_ExtractROI -in  IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.TIF 
+-out extract.tif uint16 
+-startx 1000 -starty 1000 -sizex 5000 -sizey 5000
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Profiling}
+- real	0m5.010s
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Dynamic range $\neq$ Storage}
+\begin{itemize}
+\item Dynamic range 12 bits and storage 16 bits for most HR sensors (like Pléiades)
+\item Tif format support 12 bits/pixel
+\item Possible with gdal options to write 12 bits tif
+\item How to do this in OTB? Using extended filename mechanism
+\item The reader and writer extended file name support is based on the same syntax, only the options are different.
+\item Syntax: \begin{verbatim} Path/Image.ext?&key1=<value1>&key2=<value2> \end{verbatim}
+\item IMPORTANT: Note that you'll probably need to "quote" the filename. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{ExtractROI with 12 bit per pixel}
+
+\begin{block}{Command}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+otbcli_ExtractROI -in  IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.TIF 
+-out "extract.tif?&gdal:co:NBITS=12" uint16 
+-startx 1000 -starty 1000 -sizex 5000 -sizey 5000
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Profiling}
+real	0m26.768s
+Why?
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Write large file 1/2}
+\begin{itemize}
+\item Ram parameter in OTB Applications: Available memory for processing (in MB)
+\item Gdal got some caching capabilities. Writing large image file with OTB, it is
+\item a good idea to extend size of this cache: export $GDAL_CACHEMAX=256$
+\item Combination of streaming mode and internal file encoding  mode (tile/strip)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Write large file 2/2}
+\begin{itemize}
+\item see todo add link
+\item You can manage the way that OTB streamed the data:
+\item \begin{verbatim} "ortho.tif?&gdal:co:NBITS=12&streaming:type=tiled" \end{verbatim}
+\item You can also manage the size of streaming pieces computation
+\item \begin{verbatim}ortho.tif?&gdal:co:NBITS=12&streaming:type=tiled&streaming:sizevalue=2048" \end{verbatim} 
+\item Never do tiled streaming and write stripped GeoTiff (default mode in gdal!)
+\item \begin{verbatim} "ortho.tif?&gdal:co:NBITS=12&streaming:type=tiled
+                       &streaming:sizevalue=2048&gdal:co:TILED=yes" \end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{ExtractROI -> tiled tiff as output}
+
+\begin{block}{Command}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+ otbcli_ExtractROI -in
+ IMG_PHR1A_MS_201202250025599_SEN_PRG_FC_5847-002_R1C1.TIF 
+-out "extract.tif?&gdal:co:TILED=yes" uint16 
+-startx 1000 -starty 1000 -sizex 5000 -sizey 5000
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Profiling}
+real	0m2.997s
+\end{block}
+
+\end{frame}
+
+\section{Bonus}
+\begin{frame}[fragile]
+\frametitle{Write a subset of the output}
+\begin{itemize}
+\item Method 1 : write the entire image and ExtractROI (facepalm)
+\item Method 2 : use the extendedfilename box
+\item \begin{verbatim} &box=<startx>:<starty>:<sizex>:<sizey> \end{verbatim}
+\item \begin{verbatim} "ortho.tif?&gdal:co:NBITS=12&gdal:co:TILED=yes
+                       &streaming:type=tiled&box=1000:1000:512:512" \end{verbatim}
+\end{itemize}
+\end{frame}
+
+\end{document}
