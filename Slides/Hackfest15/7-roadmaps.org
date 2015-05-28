@@ -1,0 +1,178 @@
+#+TITLE: Orfeo ToolBox users meeting and hackfest 2015
+#+AUTHOR: OTB development team
+#+DATE: 3 - 5 june 2015, Toulouse
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:1 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:nil mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+#+startup: oddeven
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [8pt]
+
+#+latex_header: \usepackage{etex}
+#+latex_header: \mode<presentation>{\usetheme{Vilanova}}
+#+latex_header: \usepackage[english]{babel}
+#+latex_header: \usepackage[utf8]{inputenc}
+#+latex_header: \usepackage{array}
+#+latex_header: \usepackage{chronology}
+#+latex_header: \let\CHRONOLOGY\chronology
+#+latex_header: \let\endCHRONOLOGY\endchronology
+#+latex_header: \def\chronology{\shorthandoff{;}\CHRONOLOGY}
+#+latex_header: \def\endchronology{\endCHRONOLOGY\shorthandon{;}}
+#+latex_header: \usepackage{pstricks}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \usepackage{booktabs}
+#+latex_header: \usepackage{amsmath,amssymb,amsthm}
+#+latex_header: \usepackage{xcolor}
+#+latex_header: \usepackage{textpos}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usepackage{xmpincl}
+#+latex_header: \usetikzlibrary{arrows}
+#+latex_header: \usepackage{pifont}
+#+latex_header: \usepackage{listings,color}
+#+latex_header: \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+#+latex_header: \definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+#+latex_header: \definecolor{listnumbers}{gray}{0.65}
+#+latex_header: \definecolor{listlightgray}{gray}{0.955}
+#+latex_header: \definecolor{listwhite}{gray}{1.0}
+#+latex_header: \AtBeginSection[]{\addtocounter{framenumber}{-1}\begin{frame}\frametitle{Outline}\tableofcontents[currentsection]\end{frame}}
+#+latex_header: \includexmp{images/cc}
+#+latex_header: \subtitle{What's ahead: An overview of OTB road-maps}
+#+latex_header: \pgfdeclareimage[height=96mm,width=128mm]{background}{images/fondsClairSansLogo}
+#+latex_header: \pgfdeclareimage[height=0.2cm]{cc}{images/CC-licence.png}
+#+latex_header: \setbeamertemplate{background}{\pgfuseimage{background}}
+#+latex_header: \pgfdeclareimage[height=0.6cm]{logoIncrust}{images/logoIncrust}
+#+latex_header: \logo{  \begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}   \href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}}    & \vspace{-0.03\textwidth} \scriptsize{}     &  & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\\end{tabular} }
+
+
+#+BEAMER_FRAME_LEVEL: 1
+
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+
+
+* ORFEO: the original OTB road-map
+- OTB was initially a means to prepare the use of the imagery provided
+  by the ORFEO (Pléiades HR + Cosmo Skymed) programme
+- OTB was meant to be a receptacle to capitalise the results of R&D
+  studies funded by CNES
+- The road-map was only about _methods_ for the image _information
+  extraction_ pipeline
+- The road-map was fed as follows
+  1. Gather thematic users' needs
+  2. Factor needs in terms of processing blocks
+  3. Identify priorities
+     - technical readiness level (availability as software, literature, etc.)
+     - impact on users' needs
+     - cost of implementation
+
+* Themes in the first road-map
++ Pre-processing : geometry, radiometry
++ 2D information extraction (surfaces, networks, etc.)
++ 3D information extraction
++ Object detection, recognition and identification
++ Multi-temporal analysis and change detection
++ Image fusion and synthesis
++ Product delivery and display (GIS formats, visualisation)
+* Example of item in the road-map
+| Sujet                   | 6.1 Détection de changements : approches objet             |
+|-------------------------+------------------------------------------------------------|
+| Descriptif              | Le problème est ici de détecter des changement             |
+|                         | abrupts entre deux images acquises à des dates différentes |
+|                         | sans avoir besoin d'extraire des informations 3D,          |
+|                         | mais en essayant d'exploiter des informations extraites    |
+|                         | à partir des objets contenus dans les images.              |
+|-------------------------+------------------------------------------------------------|
+| Missions visées         | Pléiades HR                                                |
+|-------------------------+------------------------------------------------------------|
+| Priorité                | Haute                                                      |
+|-------------------------+------------------------------------------------------------|
+| Contexte de réalisation | Orfeo Toolbox + études internes (stage V. Poulain) +       |
+|                         | bourse de thèse (V. Poulain)                               |
+|-------------------------+------------------------------------------------------------|
+
+
+* Need for a new road-map
+- The ORFEO programme has come to an end
+- Upcoming EO missions
+  - Sentinels and LANDSAT8
+  - SPOT6,7
+  - SWOT
+  - others ...
+- OTB is widely used beyond CNES and its neighbourhood
+  - Need to take into account other long-term goals
+- OTB has become much more than a library for R&D
+  - Increased pressure on performance and genericity
+  - Not 1 but 3 road-maps: features + technical + infrastructure
+
+* Interlude: OTB's Mission Statement proposal
+#+BEGIN_QUOTE
+Provide a Free Software end-to-end solution for the Earth Observation
+image information extraction pipeline based on a generic, high
+performance C++ library upon which applications and processing chains
+can be built to fulfil the needs of users from ground segment
+processing chains to single user desktop applications.
+#+END_QUOTE
+
+* What is a road-map for?
+- Declination of the Mission Statement down to concrete milestones
+- Communicates the project plan to users and stakeholders
+- Sets priorities but it is not static
+  - Can and must be updated as needs evolve, resources become
+    available or disappear, opportunities emerge
+- Organises ideas:
+  - feature requests, evil plans, elephants in the room
+- Difference between road-map and objectives of a release : mid-term
+  vs long-term
+* The 3 OTB road-maps
+1. Features
+   - Library
+     - ex: Sentinels sensor support, OBIA, data assimilation
+   - Applications
+     - ex: classification framework
+   - Monteverdi
+2. Technical
+   - code optimisation and refactoring
+   - developer guidelines
+     - ex: use STL or BOOST before coding anything, no naked ~new/delete~
+   - target platforms (OS, compilers)
+   - language bindings
+   - external dependencies
+3. Infrastructure
+   - CMS, Wiki
+   - Dashboard
+   - Build/packaging resources
+
+* How to efficiently maintain and use the road-maps
+- Maintaining
+  - A PSC member is responsible for
+    - keeping track of suggestions made trough the bug tracker
+    - factoring suggestions into the appropriate items of the road-maps
+    - presenting the updated road-maps to the PSC
+  - PSC members with [[http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee#Current_members_and_roles][roles]] feed the road-maps with their needs
+  - The full PSC sets the priorities and validates the road-maps
+- Using
+  - A release content is guided by the Feature and Technical road-maps
+  - The PSC should
+    - check that release contents are in tune with the road-maps
+    - identify the means needed to meet the road-maps' milestones
+
+* Contributions to the road-maps
+- How ideas are collected currently
+  - The [[http://wiki.orfeo-toolbox.org/index.php/OTB_Backlog][backlog page]] on the OTB wiki
+  - The [[http://scrum.orfeo-toolbox.org/][OTB Jira]]
+  - The [[https://bugs.orfeo-toolbox.org/my_view_page.php][OTB bug tracker]]
+- From now on
+  - The [[https://bugs.orfeo-toolbox.org/my_view_page.php][OTB bug tracker]]
+  - The [[http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee#Requests_for_changes][RFC mechanism]]
+- The road-maps will be publicly available on dedicated pages of the
+  OTB web site
+  - Not on the wiki, since they have to be validated by the PSC

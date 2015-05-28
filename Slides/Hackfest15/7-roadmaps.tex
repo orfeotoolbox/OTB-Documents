@@ -1,17 +1,23 @@
-%----------------------------------------------------------------------------------------
-%	PACKAGES & THEMES
-%----------------------------------------------------------------------------------------
-
+% Created 2015-05-28 Thu 09:36
 \documentclass[8pt]{beamer}
-
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
 \usepackage{etex}
-\mode<presentation> {
-
-\usetheme{Vilanova}
-}
-
-
-
+\mode<presentation>{\usetheme{Vilanova}}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{array}
@@ -30,66 +36,215 @@
 \usepackage{xmpincl}
 \usetikzlibrary{arrows}
 \usepackage{pifont}
-
 \usepackage{listings,color}
-
 \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
 \definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
-
-
-%% \setbeamertemplate{background canvas}{\includegraphics
-%%    [width=\paperwidth,height=\paperheight]{./images/title.pdf}}
-
-\AtBeginSection[]
-{
-\addtocounter{framenumber}{-1}
-\begin{frame}
-\frametitle{Sommaire}
-\tableofcontents[currentsection]
-\end{frame}}
-
-%----------------------------------------------------------------------------------------
-%	PAGE TITRE
-%----------------------------------------------------------------------------------------
-\title{Orfeo ToolBox users meeting and hackfest 2015}
+\AtBeginSection[]{\addtocounter{framenumber}{-1}\begin{frame}\frametitle{Outline}\tableofcontents[currentsection]\end{frame}}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
-\author{OTB development team}% date and event here
-\date{3 - 5 june 2015, Toulouse}
-
+\subtitle{What's ahead: An overview of OTB road-maps}
 \pgfdeclareimage[height=96mm,width=128mm]{background}{images/fondsClairSansLogo}
 \pgfdeclareimage[height=0.2cm]{cc}{images/CC-licence.png}
 \setbeamertemplate{background}{\pgfuseimage{background}}
 \pgfdeclareimage[height=0.6cm]{logoIncrust}{images/logoIncrust}
-\logo{
-\begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}
-\href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}}
-& \vspace{-0.03\textwidth} \scriptsize{} % date and event here
-&  & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
-\end{tabular}
-}
-
+\logo{  \begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}   \href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}}    & \vspace{-0.03\textwidth} \scriptsize{}     &  & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\\end{tabular} }
+\author{OTB development team}
+\date{3 - 5 june 2015, Toulouse}
+\title{Orfeo ToolBox users meeting and hackfest 2015}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 25.0.50.1 (Org mode 8.2.10)}}
 \begin{document}
-\begin{frame}
-\titlepage
-\end{frame}
 
-\begin{frame}
-\frametitle{Welcome!}
+\maketitle
 
-\end{frame}
 
-\begin{frame}
-\frametitle{Agenda}
+\section{ORFEO: the original OTB road-map}
+\label{sec-1}
+\begin{itemize}
+\item OTB was initially a means to prepare the use of the imagery provided
+by the ORFEO (Pléiades HR + Cosmo Skymed) programme
+\item OTB was meant to be a receptacle to capitalise the results of R\&D
+studies funded by CNES
+\item The road-map was only about \uline{methods} for the image \uline{information
+extraction} pipeline
+\item The road-map was fed as follows
+\begin{enumerate}
+\item Gather thematic users' needs
+\item Factor needs in terms of processing blocks
+\item Identify priorities
+\begin{itemize}
+\item technical readiness level (availability as software, literature, etc.)
+\item impact on users' needs
+\item cost of implementation
+\end{itemize}
+\end{enumerate}
+\end{itemize}
 
-\end{frame}
+\section{Themes in the first road-map}
+\label{sec-2}
+\begin{itemize}
+\item Pre-processing : geometry, radiometry
+\item 2D information extraction (surfaces, networks, etc.)
+\item 3D information extraction
+\item Object detection, recognition and identification
+\item Multi-temporal analysis and change detection
+\item Image fusion and synthesis
+\item Product delivery and display (GIS formats, visualisation)
+\end{itemize}
+\section{Example of item in the road-map}
+\label{sec-3}
+\begin{center}
+\begin{tabular}{ll}
+Sujet & 6.1 Détection de changements : approches objet\\
+\hline
+Descriptif & Le problème est ici de détecter des changement\\
+ & abrupts entre deux images acquises à des dates différentes\\
+ & sans avoir besoin d'extraire des informations 3D,\\
+ & mais en essayant d'exploiter des informations extraites\\
+ & à partir des objets contenus dans les images.\\
+\hline
+Missions visées & Pléiades HR\\
+\hline
+Priorité & Haute\\
+\hline
+Contexte de réalisation & Orfeo Toolbox + études internes (stage V. Poulain) +\\
+ & bourse de thèse (V. Poulain)\\
+\hline
+\end{tabular}
+\end{center}
 
-\begin{frame}
-\frametitle{Useful information}
 
-\end{frame}
+\section{Need for a new road-map}
+\label{sec-4}
+\begin{itemize}
+\item The ORFEO programme has come to an end
+\item Upcoming EO missions
+\begin{itemize}
+\item Sentinels and LANDSAT8
+\item SPOT6,7
+\item SWOT
+\item others \ldots{}
+\end{itemize}
+\item OTB is widely used beyond CNES and its neighbourhood
+\begin{itemize}
+\item Need to take into account other long-term goals
+\end{itemize}
+\item OTB has become much more than a library for R\&D
+\begin{itemize}
+\item Increased pressure on performance and genericity
+\item Not 1 but 3 road-maps: features + technical + infrastructure
+\end{itemize}
+\end{itemize}
 
+\section{Interlude: OTB's Mission Statement proposal}
+\label{sec-5}
+\begin{quote}
+Provide a Free Software end-to-end solution for the Earth Observation
+image information extraction pipeline based on a generic, high
+performance C++ library upon which applications and processing chains
+can be built to fulfil the needs of users from ground segment
+processing chains to single user desktop applications.
+\end{quote}
+
+\section{What is a road-map for?}
+\label{sec-6}
+\begin{itemize}
+\item Declination of the Mission Statement down to concrete milestones
+\item Communicates the project plan to users and stakeholders
+\item Sets priorities but it is not static
+\begin{itemize}
+\item Can and must be updated as needs evolve, resources become
+available or disappear, opportunities emerge
+\end{itemize}
+\item Organises ideas:
+\begin{itemize}
+\item feature requests, evil plans, elephants in the room
+\end{itemize}
+\item Difference between road-map and objectives of a release : mid-term
+vs long-term
+\end{itemize}
+\section{The 3 OTB road-maps}
+\label{sec-7}
+\begin{enumerate}
+\item Features
+\begin{itemize}
+\item Library
+\begin{itemize}
+\item ex: Sentinels sensor support, OBIA, data assimilation
+\end{itemize}
+\item Applications
+\begin{itemize}
+\item ex: classification framework
+\end{itemize}
+\item Monteverdi
+\end{itemize}
+\item Technical
+\begin{itemize}
+\item code optimisation and refactoring
+\item developer guidelines
+\begin{itemize}
+\item ex: use STL or BOOST before coding anything, no naked \verb~new/delete~
+\end{itemize}
+\item target platforms (OS, compilers)
+\item language bindings
+\item external dependencies
+\end{itemize}
+\item Infrastructure
+\begin{itemize}
+\item CMS, Wiki
+\item Dashboard
+\item Build/packaging resources
+\end{itemize}
+\end{enumerate}
+
+\section{How to efficiently maintain and use the road-maps}
+\label{sec-8}
+\begin{itemize}
+\item Maintaining
+\begin{itemize}
+\item A PSC member is responsible for
+\begin{itemize}
+\item keeping track of suggestions made trough the bug tracker
+\item factoring suggestions into the appropriate items of the road-maps
+\item presenting the updated road-maps to the PSC
+\end{itemize}
+\item PSC members with \href{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee#Current_members_and_roles}{roles} feed the road-maps with their needs
+\item The full PSC sets the priorities and validates the road-maps
+\end{itemize}
+\item Using
+\begin{itemize}
+\item A release content is guided by the Feature and Technical road-maps
+\item The PSC should
+\begin{itemize}
+\item check that release contents are in tune with the road-maps
+\item identify the means needed to meet the road-maps' milestones
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\section{Contributions to the road-maps}
+\label{sec-9}
+\begin{itemize}
+\item How ideas are collected currently
+\begin{itemize}
+\item The \href{http://wiki.orfeo-toolbox.org/index.php/OTB_Backlog}{backlog page} on the OTB wiki
+\item The \href{http://scrum.orfeo-toolbox.org/}{OTB Jira}
+\item The \href{https://bugs.orfeo-toolbox.org/my_view_page.php}{OTB bug tracker}
+\end{itemize}
+\item From now on
+\begin{itemize}
+\item The \href{https://bugs.orfeo-toolbox.org/my_view_page.php}{OTB bug tracker}
+\item The \href{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee#Requests_for_changes}{RFC mechanism}
+\end{itemize}
+\item The road-maps will be publicly available on dedicated pages of the
+OTB web site
+\begin{itemize}
+\item Not on the wiki, since they have to be validated by the PSC
+\end{itemize}
+\end{itemize}
+% Emacs 25.0.50.1 (Org mode 8.2.10)
 \end{document}
