@@ -54,9 +54,9 @@
 %----------------------------------------------------------------------------------------
 %	PAGE TITRE
 %----------------------------------------------------------------------------------------
-\title{Orfeo ToolBox users meeting and hackfest 2015}
+\title{ Insight on the applications framework}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
+\subtitle{OTB functions without templates}
 \author{OTB development team}% date and event here
 \date{3 - 5 june 2015, Toulouse}
 
@@ -87,15 +87,15 @@
 \begin{columns}
 \column{0.5\textwidth}
 \begin{itemize}
-\item 80 applications shipped with OTB
-\item 1 application $=$ 1 dynamic library (plugin)
+\item 81 applications shipped with OTB
+\item 1 application $=$ 1 dynamic library (plugin) (otbapp\_*.so)
 \item Auto generation, auto-doc
 \item Application C++ API not specific to OTB
 \item Wrappers build upon Application engine
 \begin{itemize}
-\item CLI
+\item Command Line
 \item Qt (used in Monteverdi2 and QGIS (custom version of otb app))
-\item Python (thanks to SWIG)
+\item Python (with SWIG) other languages are wrapped (Java,Lua,PyQt) 
 \end{itemize}
 \item Easy integration in external system 
 \end{itemize}
@@ -112,7 +112,7 @@
 \vspace{-0.5cm}\begin{verbatim}
 $ otbcli_OrthoRectification
 
-This is the OrthoRectification application, version 4.5.0
+This is the OrthoRectification application, version 5.0.0
 This application allows to ortho-rectify optical images from supported sensors.
 
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
@@ -201,6 +201,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{frame}
 \frametitle{Application engine}
 \begin{itemize}
+\item C++ library inside the OTB library
 \item Wrappers for parameters definition (numerical, groups of parameters,
 choice parameter) and also
 parameters related to OTB types (images, vector, image list)
@@ -213,8 +214,8 @@ parameters related to OTB types (images, vector, image list)
 \end{itemize}
 \item Goodies
 \begin{itemize}
-\item Dependencies between parameters
-\item Logger
+\item Handle dependencies between parameters
+\item Logger (warniong, error, progress\ldots)
 \item Tags
 \item Auto doc generation
 \item Serialization (XML files) 
@@ -223,6 +224,51 @@ parameters related to OTB types (images, vector, image list)
 \end{itemize}
 \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications: Python interface}
+\begin{lstlisting}[language=xml,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+<?xml version="1.0" ?>
+<OTB>
+    <version>3.18</version>
+    <build>18-05-2013</build>
+    <platform>Linux</platform>
+    <application>
+        <name>Smoothing</name>
+        <descr>Apply a smoothing filter to an image</descr>
+        <doc>
+            <name>Smoothing</name>
+            <longdescr>This application applies smoothing filter to an image. Either gaussian, mean, or anisotropic diffusion are available.</longdescr>
+            <authors>OTB-Team</authors>
+            <limitations>None</limitations>
+            <seealso> </seealso>
+            <tags>
+                <tag>Image Filtering</tag>
+            </tags>
+        </doc>
+        <parameter mandatory="true">
+            <key>in</key>
+            <type>InputImage</type>
+            <name>Input Image</name>
+            <value>/home/rashad/repos/orfeo/OTB-Data/Input/poupees.tif</value>
+        </parameter>
+        <parameter mandatory="true">
+            <key>out</key>
+            <type>OutputImage</type>
+            <name>Output Image</name>
+            <value>/home/rashad/repos/orfeo/build/OTB_/test-build/Testing/Temporary/apTvUtSmoothingTest_OutXML.tif</value>
+        </parameter>
+        <parameter mandatory="true">
+            <key>type</key>
+            <type>Choice</type>
+            <name>Smoothing Type</name>
+            <value>mean</value>
+        </parameter>
+    </application>
+</OTB>
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Application wrapper}
@@ -235,6 +281,7 @@ software you want through one of these access points.
 \item itk Object
 \item Pointer to an application (load the application)
 \item Parse the command line and pilot application
+\item Way that we access OTB processing in graphical environnement (mvd2, qgis\ldots)
 \end{itemize}
 \end{block}
 
@@ -277,7 +324,7 @@ version 5.0.
 \frametitle{What-s new for applications in OTB 5.0}
 \begin{itemize}
 \item Not much\ldots
-\item There is a group of modules which include all applications
+\item Applications are now stored in a group of modules
 \item 24 modules (change detection, mathParser, Segmentation, Fusion\ldots)
 \item Currently 81 applications
 \end{itemize}
