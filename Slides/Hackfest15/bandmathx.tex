@@ -123,7 +123,7 @@
 \begin{tabular}{c | c}
 Formula & Status \\
 \hline \\
-im1 + im2 & correct only if the two first inputs have the same number of bands (Note : batch mode)\\
+im1 + im2 & correct only if the two first inputs have the same number of bands (*)\\
 im1 + 1  & incorrect even if im1 represents a one-band pixel  \\
 im1 + \{1\} & much better ! \\
 im1 + \{1,1,1,...,1\} & correct if im1 is made of n bands \\
@@ -131,6 +131,7 @@ im1 + \{1,1,1,...,1\} & correct if im1 is made of n bands \\
 \end{tabular}
 \end{center}
 
+(*) Note : batch mode
 
 
 
@@ -214,7 +215,7 @@ New operators and functions have been implemented within BandMathX application. 
 \begin{itemize}
 \item div (element-wise division) and dv (division by a scalar)
 \item mult (element-wise multiplication) and mlt (multiplication by a scalar)
-\item mult (element-wise exponentiation) and mlt (exponentiation by a scalar)
+\item pow (element-wise exponentiation) and ŵ (exponentiation by a scalar)
 \end{itemize}
 
 
@@ -237,10 +238,7 @@ pow and pw & im1 ~ pow ~ im2 & im1 ~ pw ~ 2.0
 
 
 \begin{itemize}
-\item dotpr : This function allows the dot product between two vectors or matrices (actually in our case, a kernel and a neighbourhood of pixels)
-
-
-\sum_{(i,j)} m_1(i,j)*m_2(i,j)
+\item dotpr : This function allows the dot product between two vectors or matrices (actually in our case, a kernel and a neighbourhood of pixels) : \sum_{(i,j)} m_1(i,j)*m_2(i,j)
 
 
 \item For instance: dotpr(kernel1,im1b1N3x5) is correct provided that kernel1 and im1b1N3x5 have the same dimensions. 
@@ -286,7 +284,7 @@ vmin and vmax (one input) & (vmax(im3b1N3x5)+vmin(im3b1N3x5)) ~ div ~ \{2.0\} \\
 
 
 \begin{itemize}
-\item car    : This function allows to concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the function can take
+\item cat    : This function allows to concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the function can take
 as many inputs as needed)
 \item band   : This function allows to select specific bands from an image, and/or to rearrange them in a new vector.
 \end{itemize}
@@ -313,14 +311,14 @@ The application will call the function 'cat' automatically.
 \begin{itemize}
 \item #include "otbBandMathXImageFilter.h"
 \item ....
-\item typedef otb::BandMathXImageFilter<ImageType>                  FilterType;
+\item typedef otb::BandMathXImageFilter\<ImageType\>  FilterType;
 \item ...
 \item FilterType::Pointer filter = FilterType::New();
 \item ...
-\item filter-\>SetExpression("im1-mean(im1b1N5x5,im1b2N5x5,im1b3N5x5,im1b4N5x5)");
-\item filter-\>SetNthInput(0,reader->GetOutput()); ou filter->SetNthInput(0, reader->GetOutput(),"imageA");
-\item writer-\>SetInput(filter->GetOutput()); 
-\item writer-\>Update();
+\item filter$->$SetExpression("im1-mean(im1b1N5x5,im1b2N5x5,im1b3N5x5,im1b4N5x5)");
+\item filter$->$SetNthInput(0,reader$->$GetOutput()); ou filter$->$SetNthInput(0, reader$->$GetOutput(),"imageA");
+\item writer$->$SetInput(filter$->$GetOutput()); 
+\item writer$->$Update();
 \end{itemize}
 
 \end{frame}
@@ -331,11 +329,10 @@ The application will call the function 'cat' automatically.
 
 
 \begin{itemize}
-\item filter-\>SetMatrix("kernel","{ 0.1 , 0.1 , 0.1; 0.1 , 0.2 , 0.1; 0.1 , 0.1 , 0.1 }");
-\item filter-\>SetConstant("cst",1.0);
-\item filter-\>SetExpression("bands(im1,{1,2,3})-dotpr(kernel,im1b1N3x3,im1b2N3x3,im1b3N3x3) + {cst,cst,cst}");  
-\item filter-\>ExportContext(argv[4]);
-\item filter-\>ImportContext(argv[4]);
+\item filter$->$SetMatrix("kernel","\{ 0.1 , 0.1 , 0.1; 0.1 , 0.2 , 0.1; 0.1 , 0.1 , 0.1 \}");
+\item filter$->$SetConstant("cst",1.0);
+\item filter$->$SetExpression("bands(im1,\{1,2,3\})-dotpr(kernel,im1b1N3x3,im1b2N3x3,im1b3N3x3) + \{cst,cst,cst\}");  
+
 \end{itemize}
 
 Note : concatenation of the results of several expressions into a multidimensional vector is possible.
@@ -347,11 +344,49 @@ For this purpose, use semi-colons (;) as separators between expressions.
 
 
 \begin{frame}
-\frametitle{Context}
+\frametitle{Filter : example 3}
 
-#F expo 1.1
-#M kernel1 { 0.1 , 0.2 , 0.3; 0.4 , 0.5 , 0.6; 0.7 , 0.8 , 0.9; 1 , 1.1 , 1.2; 1.3 , 1.4 , 1.5}
-#E cat(dotpr(kernel1,imageAb1N3x5,imageAb2N3x5), im2b1^expo, vcos(canal3), mean(imageAb2N3x3), var(imageAb2N3x3), median(imageAb2N3x3))
+\begin{itemize}
+\item filter$->$ExportContext(argv[4]);
+\item filter$->$ImportContext(argv[4]);
+\end{itemize}
+
+\vspace{1cm}
+
+\fbox{\begin{minipage}{\textwidth}
+\#F cst 1.1
+\newline
+\#M kernel1 \{ 0.1 , 0.2 , 0.3; 0.4 , 0.5 , 0.6; 0.7 , 0.8 , 0.9; 1 , 1.1 , 1.2; 1.3 , 1.4 , 1.5\}
+\newline
+\#E dotpr(kernel1,imageAb1N3x5,imageAb2N3x5) ; im2b1 * cst
+\end{minipage}}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Application}
+
+\includegraphics[width=7cm,height=7cm]{images/bandmathx.png}
+
+\end{frame}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Real life examples}
+
+\begin{itemize}
+\item Conversion 12 bits RGBNIR to 8 bits RGB with gamma correction : (im1 - min) div ( (max-min) pw gamma )
+\item Many vegetation indices into a single image : im1b4/im1b1 ; (im1b4-im1b1) / (im1b4+im1b1) ; (alpha*im1b4-im1b1) / (alpha*im1b4+im1b1)
+\item Single scale retinex : vlog(im1) - vlog( mean(im1b1N5x5,im1b2N5x5,im1b3N5x5,im1b4N5x5) )
+\newline
+\newline
+\item Spectral angle : vacos( dotpr(im1,im2) div (vnorm(im1) mult vnorm(im2)) )
+\item Maps of local maxima/minima : (im1b1 $>$ vmax(im1b1N5x5))?\{1\}:\{0\}
+\end{itemize} 
 
 \end{frame}
 
