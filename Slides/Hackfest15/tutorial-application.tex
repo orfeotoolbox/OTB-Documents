@@ -60,9 +60,9 @@
 %----------------------------------------------------------------------------------------
 %	PAGE TITRE
 %----------------------------------------------------------------------------------------
-\title{Orfeo ToolBox users meeting and hackfest 2015}
+\title{Tips and tricks with OTB}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
+\subtitle{Some little-known features}
 \author{OTB development team}% date and event here
 \date{3 - 5 june 2015, Toulouse}
 
@@ -85,7 +85,7 @@
 
 \section{Introduction}
 \begin{frame}
-\frametitle{Welcome!}
+\frametitle{Program}
 \begin{block}{Goal}
 \begin{itemize}
 \item Explore the way that OTB read/write geometry information
@@ -94,11 +94,12 @@
 \end{itemize}
 \end{block}
 
-\begin{block}{ToDo}
+\begin{block}{Extended filenames}
 \begin{itemize}
 \item Goal : Orthorectification or NDVI computation  of a Pleiades image
 \item Easy?
 \item In a efficient way...
+\item Extend read/write capabilities of OTB using extended filenames
 \end{itemize}
 \end{block}
 
@@ -234,6 +235,17 @@ real	0m2.997s
 \section{Bonus}
 \begin{frame}[fragile]
 \frametitle{Write a subset of the output}
+\begin{itemize}
+\item Method 1 : write the entire image and ExtractROI (facepalm)
+\item Method 2 : use the extendedfilename box
+\item \begin{verbatim} &box=<startx>:<starty>:<sizex>:<sizey> \end{verbatim}
+\item \begin{verbatim} "ortho.tif?&gdal:co:NBITS=12&gdal:co:TILED=yes
+                       &streaming:type=tiled&box=1000:1000:512:512" \end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Import/export application paramaters}
 \begin{itemize}
 \item Method 1 : write the entire image and ExtractROI (facepalm)
 \item Method 2 : use the extendedfilename box
