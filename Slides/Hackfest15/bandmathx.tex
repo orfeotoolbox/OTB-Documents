@@ -385,7 +385,7 @@ For this purpose, use semi-colons (;) as separators between expressions.
 \newline
 \newline
 \item Spectral angle : vacos( dotpr(im1,im2) div (vnorm(im1) mult vnorm(im2)) )
-\item Maps of local maxima/minima : (im1b1 $>$ vmax(im1b1N5x5))?\{1\}:\{0\}
+\item Maps of local maxima/minima : (im1b1 $>$ vect2scal(vmax(im1b1N5x5)) )?\{1\}:\{0\}
 \end{itemize} 
 
 \end{frame}
