@@ -18,8 +18,6 @@
 #include "otbWrapperApplication.h"
 #include "otbWrapperApplicationFactory.h"
 
-#include "otbTileImageFilter.h"
-
 namespace otb
 {
 namespace Wrapper
@@ -38,8 +36,6 @@ public:
   itkNewMacro(Self);
 
   itkTypeMacro(AdvancedTileFusion, otb::Application);
-
-  typedef otb::TileImageFilter<FloatVectorImageType> TileFilterType;
   
   typedef otb::ImageFileReader<FloatVectorImageType> ReaderType;
 
@@ -97,8 +93,11 @@ private:
     vrtParts.push_back(vrtName.str());
     vrtOutputPath = itksys::SystemTools::JoinPath(vrtParts);
     
-    // check first image
-    std::vector<std::string> pathList = this->GetParameterStringList("il");
+    // check first image 
+    // TODO : get image list
+    //   std::vector<std::string> pathList = this->GetParameterStringList("il");
+    
+    
     ReaderType::Pointer reader = ReaderType::New();
     reader->SetFileName(pathList[0]);
     reader->UpdateOutputInformation();

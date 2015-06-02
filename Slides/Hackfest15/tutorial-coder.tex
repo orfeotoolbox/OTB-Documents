@@ -88,21 +88,48 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Useful information}
+\frametitle{Using OTB v5}
+
+\begin{itemize}
+\item Source archi (show)
+\item CMake usage (show)
+\item Modules enablement : dependency / default list / optional 3rd parties
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tutorial : remote module}
 
 Tutorial steps :
-Clone module template
-Uncompress in OTB/Module/Remote
-(rename folder)
-Choose a module name ( here : TutoHackfest)
-Update otb-module.cmake
-Update CMakeLists.txt : also change lib name = module name
+\begin{itemize}
+\item Clone module template (git)
+\item External template structure (show)
+\item Test the otb_fetch_module()
+\item Rename your external module ( here : TutoHackfest)
+  \begin{itemize}
+  \item Update otb-module.cmake
+  \item Update CMakeLists.txt : also change lib name = module name
+  \end{itemize}
+\item Try to compile : \texttt{make -j3 TutoHackfest-all}
+\item Launch module test : \texttt{ctest -L TutoHackfest}
+\end{itemize}
 
-Try to compile :
- > make -j3 TutoHackfest-all
+\end{frame}
 
-Copy OTB/Modules/Applications/AppImageUtils/app/otbTileFusion.cxx to OTB/Modules/Remote/tutoRemoteModule/app
-Rename into otbAdvancedTileFusion.cxx
+\begin{frame}
+\frametitle{Tutorial : new application for tile fusion}
+
+Explain why this application , show code of TileFusion, show bugs 
+Explain the logic : write 
+Show an example of VRT.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tutorial : AdvancedTileFusion}
+
+Copy otbAdvancedTileFusion.cxx to OTB/Modules/Remote/tutoRemoteModule/app
 Edit file : change class name and SetName() in DoInit().
 Edit app/CMakeLists.txt
 Edit test/CMakeLists.txt : change app name in otb_test_application
@@ -111,9 +138,8 @@ Try to compile
    - add modules dependencies if needed
 
 
-
-
-
+Use StreamingStatisticsVectorImageFilter to compute ratio and offsets between tiles
+Switch the SimpleSource section into ComplexSource.
 
 \end{frame}
 
