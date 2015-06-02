@@ -77,70 +77,82 @@
 \titlepage
 \end{frame}
 
+\section{Organization of OTB sources} 
 \begin{frame}
-\frametitle{Welcome!}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Agenda}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Using OTB v5}
+\frametitle{Using OTB 5.0.0}
 
 \begin{itemize}
-\item Source archi (show)
-\item CMake usage (show)
+\item For most OTB consumers/users, the modularization of the toolkit is relatively transparent. 
+\item Presentation of the source organization (groups, modules)\ldots
+\item CMake usage (How to configure OTB, options\ldots)
 \item Modules enablement : dependency / default list / optional 3rd parties
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Tutorial : remote module}
+\section{Extend OTB with remote module} 
 
-Tutorial steps :
+\begin{frame}
+\frametitle{Remote module: steps}
 \begin{itemize}
-\item Clone module template (git)
-\item External template structure (show)
-\item Test the otb_fetch_module()
-\item Rename your external module ( here : TutoHackfest)
+\item Clone module template (\href{https://github.com/orfeotoolbox/otbExternalModuleTemplate.git})
+\item Module structure (CMake, sources, applications, tests
+\item Test the $otb_fetch_module()$ cmake macro
+\item Rename your external module (here : TutoHackfest)
   \begin{itemize}
   \item Update otb-module.cmake
-  \item Update CMakeLists.txt : also change lib name = module name
+  \item Update CMakeLists.txt : also change lib $name = module name$
   \end{itemize}
-\item Try to compile : \texttt{make -j3 TutoHackfest-all}
-\item Launch module test : \texttt{ctest -L TutoHackfest}
+\item How to compile a module?
+\item How to compile tests related to a module?
+\item How to launch tests related to a module
 \end{itemize}
 
 \end{frame}
 
+\section{Write your  application}
 \begin{frame}
-\frametitle{Tutorial : new application for tile fusion}
-
-Explain why this application , show code of TileFusion, show bugs 
-Explain the logic : write 
-Show an example of VRT.
-
+\frametitle{Tutorial: new application for tile fusion}
+\begin{itemize}
+\item Explain why this application, show code of TileFusion, show bugs 
+\item Explain the logic : write 
+\item Show an example of a VRT file
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Tutorial : AdvancedTileFusion}
-
-Copy otbAdvancedTileFusion.cxx to OTB/Modules/Remote/tutoRemoteModule/app
-Edit file : change class name and SetName() in DoInit().
-Edit app/CMakeLists.txt
-Edit test/CMakeLists.txt : change app name in otb_test_application
-
-Try to compile
-   - add modules dependencies if needed
-
-
-Use StreamingStatisticsVectorImageFilter to compute ratio and offsets between tiles
-Switch the SimpleSource section into ComplexSource.
-
+\frametitle{Tile fusion in OTB}
+\begin{itemize}
+\item Explain why this application, show code of TileFusion, show bugs
+\item href{ http://www.orfeo-toolbox.org/Applications/TileFusion.html}
+\item Problem: number of reader instances
+\item href{https://bugs.orfeo-toolbox.org/view.php?id=1036}
+\end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Enhanced Tile fusion application (gourou)}
+\begin{itemize}
+\item todo
+\end{itemize}
+\end{frame}
+
+\section{Write your application (advanced)}
+%% \begin{frame}
+%% \frametitle{Tutorial : AdvancedTileFusion}
+
+%% Copy otbAdvancedTileFusion.cxx to OTB/Modules/Remote/tutoRemoteModule/app
+%% Edit file : change class name and SetName() in DoInit().
+%% Edit app/CMakeLists.txt
+%% Edit test/CMakeLists.txt : change app name in otb_test_application
+
+%% Try to compile
+%%    - add modules dependencies if needed
+
+
+%% Use StreamingStatisticsVectorImageFilter to compute ratio and offsets between tiles
+%% Switch the SimpleSource section into ComplexSource.
+
+%% \end{frame}
 
 \end{document}
