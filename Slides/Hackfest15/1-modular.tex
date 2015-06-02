@@ -15,11 +15,6 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{array}
-\usepackage{chronology}
-\let\CHRONOLOGY\chronology
-\let\endCHRONOLOGY\endchronology
-\def\chronology{\shorthandoff{;}\CHRONOLOGY}
-\def\endchronology{\endCHRONOLOGY\shorthandon{;}}
 \usepackage{pstricks}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -30,6 +25,8 @@
 \usepackage{xmpincl}
 \usetikzlibrary{arrows}
 \usepackage{pifont}
+
+
 
 \usepackage{listings,color}
 
@@ -56,7 +53,7 @@
 %----------------------------------------------------------------------------------------
 \title{Orfeo ToolBox users meeting and hackfest 2015}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
+\subtitle{The new modular build system of OTB 5}
 \author{OTB development team}% date and event here
 \date{3 - 5 june 2015, Toulouse}
 
@@ -78,18 +75,98 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Welcome!}
-
+\frametitle{Motivations : the status with OTB <= 4.0}
+\begin{itemize}
+\item Code in directories but no real build dependency (cyclic dependencies between directories)
+\item Third parties : a maintainance hell (activation/deactivation, external/internal, interdependencies)
+\item Build system written in old CMake times (~ version 2.4), stayed more or less the same
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Agenda}
+\frametitle{Design choices}
+\begin{itemize}
+\item Let's do it the ITK way : they faced the same issue a few years ago. The CMake gurus did the work
+\item State-of-the-art renewed CMake code : a bunch of new features, and ready for later improvements
+\item No more third party code inside OTB code (to the maximum extent...)
+\end{itemize}
+\end{frame}
 
+
+\begin{frame}
+\frametitle{What modular means ?}
+\begin{itemize}
+\item The OTB classes are organized in self-contained directories called modules
+\item One module contain headers, definitions, tests, applications, ... for all classes of the module
+\item Dependency tracking between modules is at the heart of the system : enable a module and its dependencies are enabled automatically
+\item Only build what you want/use
+\item Third parties are also modules now
+\item Modules are organized in thematic Groups (no real build consequences here)
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Useful information}
+\frametitle{How do I build OTB now?}
+\begin{itemize}
+\item Still with CMake, but way easier.
+\item Less CMake options visible (unless you switch to advanced mode)
+\item Better option naming, systematic : OTB\_USE\_XXX for third parties
+\item Third parties are always external now. They can only be activated or not.
+\item A default set of modules is defined
+\end{itemize}
+\end{frame}
 
+\begin{frame}
+\frametitle{The internals}
+
+\begin{itemize}
+\item Module enablement evaluated in two passes
+\begin{itemize}
+\item Modules which are activated
+\item Third party deactivated, with all its dependees 
+\end{itemize}
+\end{itemize}
+
+
+\begin{itemize}
+\item BUILD\_DEFAULT\_MODULE
+\begin{itemize}
+\item ON = all modules activated, except Mapnik and its dependees
+\item OFF = you choose each enabled module with the Module\_XXX option
+\end{itemize}
+
+\item OTB\_USE\_XXX 
+\begin{itemize}
+\item Only for third parties
+\item Easy way to disable a third party and all its dependees
+\item Is evaluated after the first
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What does a module look like ?}
+A directory in the Modules subdir :
+\begin{itemize}
+\item otb-module.cmake and CMakeLists.txt file
+\item include subdir : for .hxx files
+\item src subdir : for .cxx files and a CMakeLists.txt. headers in here are not installed
+\item test subdir : for tests
+\item app subdir : for applications
+\end{itemize}
+
+See the Remote Module presentation for building a module from scratch in 5 minutes.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Hey wait !}
+\begin{itemize}
+\item I don't care about your dependency hell, just build me the damned thing : Superbuild (in a few minutes)
+\item Can I reuse this for my work : Remote modules  (in a few minutes)
+\end{itemize}
 \end{frame}
 
 \end{document}
