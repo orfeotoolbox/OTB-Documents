@@ -1,0 +1,80 @@
+<VRTDataset rasterXSize="400" rasterYSize="400">
+	<VRTRasterBand dataType="UInt16" band="1">
+		<SimpleSource>
+			<SourceFilename>input_R1C1.tif</SourceFilename>
+			<SourceBand>1</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R1C2.tif</SourceFilename>
+			<SourceBand>1</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="200" yOff="0" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R2C1.tif</SourceFilename>
+			<SourceBand>1</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="0" yOff="200" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R2C2.tif</SourceFilename>
+			<SourceBand>1</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="200" yOff="200" xSize="200" ySize="200"/>
+		</SimpleSource>
+	</VRTRasterBand>
+	<VRTRasterBand dataType="UInt16" band="2">
+		<SimpleSource>
+			<SourceFilename>input_R1C1.tif</SourceFilename>
+			<SourceBand>2</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R1C2.tif</SourceFilename>
+			<SourceBand>2</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="200" yOff="0" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R2C1.tif</SourceFilename>
+			<SourceBand>2</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="0" yOff="200" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R2C2.tif</SourceFilename>
+			<SourceBand>2</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="200" yOff="200" xSize="200" ySize="200"/>
+		</SimpleSource>
+	</VRTRasterBand>
+	<VRTRasterBand dataType="UInt16" band="3">
+		<SimpleSource>
+			<SourceFilename>input_R1C1.tif</SourceFilename>
+			<SourceBand>3</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R1C2.tif</SourceFilename>
+			<SourceBand>3</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="200" yOff="0" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R2C1.tif</SourceFilename>
+			<SourceBand>3</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="0" yOff="200" xSize="200" ySize="200"/>
+		</SimpleSource>
+		<SimpleSource>
+			<SourceFilename>input_R2C2.tif</SourceFilename>
+			<SourceBand>3</SourceBand>
+			<SrcRect xOff="0" yOff="0" xSize="200" ySize="200"/>
+			<DstRect xOff="200" yOff="200" xSize="200" ySize="200"/>
+		</SimpleSource>
+	</VRTRasterBand>
+</VRTDataset>
