@@ -10,8 +10,6 @@
 \usetheme{Vilanova}
 }
 
-
-
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{array}
@@ -117,14 +115,14 @@
 \end{tabular}
 \end{center}
 \begin{center} 
-\caption{Neighborhood of 3x5. k/p = horizontal/vertical direction. k and p must be odd numbers.}
+Neighborhood of 3x5. k/p = horizontal/vertical direction. k and p must be odd numbers.
 \end{center}
 
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Some examples #1}
+\frametitle{Some examples \#1}
 
 \begin{itemize}
 \item Always keep in mind that a pixel of an otb::VectorImage is always represented as a row vector inside the muParserX framework
@@ -150,7 +148,7 @@ im1 + \{1,1,1,...,1\} & correct if im1 is made of n bands \\
 \end{frame}
 
 \begin{frame}
-\frametitle{Some examples #2}
+\frametitle{Some examples \#2}
 
 
 \begin{itemize}
@@ -177,7 +175,7 @@ im1 + \{im2b1,im2b2\}  &  correct if im1 represents a pixel of two components \\
 
 
 \begin{frame}
-\frametitle{Some examples #3}
+\frametitle{Some examples \#3}
 
 
 \begin{itemize}
@@ -210,13 +208,6 @@ New operators and functions have been implemented within BandMathX application. 
 \item adaptation of existing operators/functions, that were not originally defined for vectors and matrices (for instance cos, sin, ...). These new operators/ functions keep the original names to which we add the prefix ”v” for vector (vcos, vsin, ...). 
 \item truly new operators/functions.
 \end{itemize}
-
-
-
-\end{frame}
-
-
-
 \end{frame}
 
 
@@ -227,7 +218,7 @@ New operators and functions have been implemented within BandMathX application. 
 \begin{itemize}
 \item div (element-wise division) and dv (division by a scalar)
 \item mult (element-wise multiplication) and mlt (multiplication by a scalar)
-\item pow (element-wise exponentiation) and ŵ (exponentiation by a scalar)
+\item pow (element-wise exponentiation) and w (exponentiation by a scalar)
 \end{itemize}
 
 
@@ -250,13 +241,12 @@ pow and pw & im1 ~ pow ~ im2 & im1 ~ pw ~ 2.0
 
 
 \begin{itemize}
-\item dotpr : This function allows the dot product between two vectors or matrices (actually in our case, a kernel and a neighbourhood of pixels) : \sum_{(i,j)} m_1(i,j)*m_2(i,j)
+\item dotpr : This function allows the dot product between two vectors or matrices (actually in our case, a kernel and a neighbourhood of pixels) : $\sum_{(i,j)} m_1(i,j)*m_2(i,j)$
 
 
 \item For instance: dotpr(kernel1,im1b1N3x5) is correct provided that kernel1 and im1b1N3x5 have the same dimensions. 
 \item The function can take as many neighbourhoods as needed in inputs. Thus, if n neighbourhoods must be processed, the output will consist in a row vector of n values. This behaviour is typical of the functions implemented in the BandMathX application.
 \end{itemize}
-
 
 \end{frame}
 
@@ -321,9 +311,9 @@ The application will call the function 'cat' automatically.
 
 
 \begin{itemize}
-\item #include "otbBandMathXImageFilter.h"
+\item \#include "otbBandMathXImageFilter.h"
 \item ....
-\item typedef otb::BandMathXImageFilter\<ImageType\>  FilterType;
+\item typedef otb::BandMathXImageFilter<ImageType>  FilterType;
 \item ...
 \item FilterType::Pointer filter = FilterType::New();
 \item ...
@@ -384,8 +374,6 @@ For this purpose, use semi-colons (;) as separators between expressions.
 
 \end{frame}
 
-
-\end{frame}
 
 \begin{frame}
 \frametitle{Real life examples}
