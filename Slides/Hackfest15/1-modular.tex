@@ -75,11 +75,12 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Motivations : the status with OTB <= 4.0}
+\frametitle{Motivations : the status with OTB $<=$ 4.0}
 \begin{itemize}
 \item Code in directories but no real build dependency (cyclic dependencies between directories)
 \item Third parties : a maintainance hell (activation/deactivation, external/internal, interdependencies)
-\item Build system written in old CMake times (~ version 2.4), stayed more or less the same
+\item Build system written in ancient CMake times (~ version 2.4), no redesign since then
+\item Hard for newcomers to add new functionnalities without touching everything, even more when introducing new third parties
 \end{itemize}
 \end{frame}
 
@@ -110,7 +111,7 @@
 \begin{itemize}
 \item Still with CMake, but way easier.
 \item Less CMake options visible (unless you switch to advanced mode)
-\item Better option naming, systematic : OTB\_USE\_XXX for third parties
+\item Better option naming, systematic : \texttt{OTB\_USE\_XXX} for third parties
 \item Third parties are always external now. They can only be activated or not.
 \item A default set of modules is defined
 \end{itemize}
@@ -129,13 +130,13 @@
 
 
 \begin{itemize}
-\item BUILD\_DEFAULT\_MODULE
+\item \texttt{BUILD\_DEFAULT\_MODULE}
 \begin{itemize}
-\item ON = all modules activated, except Mapnik and its dependees
-\item OFF = you choose each enabled module with the Module\_XXX option
+\item \texttt{ON} = all modules activated, except Mapnik and its dependees
+\item \texttt{OFF} = you choose each enabled module with the \texttt{Module\_XXX} option
 \end{itemize}
 
-\item OTB\_USE\_XXX 
+\item \texttt{OTB\_USE\_XXX}
 \begin{itemize}
 \item Only for third parties
 \item Easy way to disable a third party and all its dependees
@@ -150,11 +151,11 @@
 \frametitle{What does a module look like ?}
 A directory in the Modules subdir :
 \begin{itemize}
-\item otb-module.cmake and CMakeLists.txt file
-\item include subdir : for .hxx files
-\item src subdir : for .cxx files and a CMakeLists.txt. headers in here are not installed
-\item test subdir : for tests
-\item app subdir : for applications
+\item \texttt{otb-module.cmake} and \texttt{CMakeLists.txt} file
+\item \texttt{include} subdir : for .hxx files
+\item \texttt{src} subdir : for .cxx files and a \texttt{CMakeLists.txt}. headers in here are not installed
+\item \texttt{test} subdir : for tests
+\item \texttt{app} subdir : for applications
 \end{itemize}
 
 See the Remote Module presentation for building a module from scratch in 5 minutes.
