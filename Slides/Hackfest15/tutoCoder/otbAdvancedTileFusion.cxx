@@ -93,13 +93,12 @@ private:
     vrtParts.push_back(vrtName.str());
     vrtOutputPath = itksys::SystemTools::JoinPath(vrtParts);
     
-    // check first image 
     // TODO : get image list
-    //   std::vector<std::string> pathList = this->GetParameterStringList("il");
     
-    
+    // check first image 
     ReaderType::Pointer reader = ReaderType::New();
-    reader->SetFileName(pathList[0]);
+    // TODO : fill with path of 1st image
+    // reader->SetFileName(); 
     reader->UpdateOutputInformation();
     
     unsigned int nbBands = reader->GetOutput()->GetNumberOfComponentsPerPixel();
