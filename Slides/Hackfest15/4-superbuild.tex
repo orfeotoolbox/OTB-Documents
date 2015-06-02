@@ -99,7 +99,7 @@
 \item "External" dependencies have to be installed by the user
 \item One module for each third party, containing a CMake call to \texttt{find\_package(\ldots)}
 \item Located in source directory \emph{OTB/Modules/ThirdParty}
-\item Optional third parties enabled / disabled using specific CMake options : OTB\_USE\_ \ldots
+\item Optional third parties enabled/disabled using specific CMake options : \texttt{OTB\_USE\_\ldots}
 \end{itemize}
 
 
@@ -152,9 +152,10 @@ corresponding dependencies.
 \item \texttt{USE\_SYSTEM\_\ldots} : when a third party is needed, user may choose to use a 
 version already installed on the system, or use the SuperBuild version.
 \item \texttt{DOWNLOAD\_LOCATION} : directory used to download source archives. When archives 
-are already present, no download is performed. An all-in-one archive is provided 
+are already present, no download is performed. An all-in-one archive is supplied 
 on OTB website for an offline compilation. Users should uncompress this archive 
-and set this variable in order to use the 'offline' mode.
+and set this variable in order to use the 'offline' mode : 
+\url{https://www.orfeo-toolbox.org/packages/SuperBuild-archives.tar.bz2}
 \end{itemize}
 
 \end{frame}

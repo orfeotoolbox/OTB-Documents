@@ -56,7 +56,7 @@
 %----------------------------------------------------------------------------------------
 \title{Orfeo ToolBox users meeting and hackfest 2015}
 \includexmp{images/cc}
-\subtitle{Welcome, agenda, useful information}
+\subtitle{Remote modules tutorial session}
 \author{OTB development team}% date and event here
 \date{3 - 5 june 2015, Toulouse}
 
@@ -77,9 +77,9 @@
 \titlepage
 \end{frame}
 
-\section{Organization of OTB sources} 
 \begin{frame}
-\frametitle{Using OTB 5.0.0}
+\frametitle{Organization of OTB sources}
+\framesubtitle{Using OTB 5.0.0}
 
 \begin{itemize}
 \item For most OTB consumers/users, the modularization of the toolkit is relatively transparent. 
@@ -90,69 +90,83 @@
 
 \end{frame}
 
-\section{Extend OTB with remote module} 
-
 \begin{frame}
-\frametitle{Remote module: steps}
+\frametitle{Extend OTB with remote module}
+\framesubtitle{Setup steps}
 \begin{itemize}
-\item Clone module template (\href{https://github.com/orfeotoolbox/otbExternalModuleTemplate.git})
-\item Module structure (CMake, sources, applications, tests
-\item Test the $otb_fetch_module()$ cmake macro
+\item Clone module template (\url{https://github.com/orfeotoolbox/otbExternalModuleTemplate.git})
+\item Module structure (CMake, sources, applications, tests)
+\item Test the \texttt{otb\_fetch\_module()} CMake macro
 \item Rename your external module (here : TutoHackfest)
   \begin{itemize}
   \item Update otb-module.cmake
-  \item Update CMakeLists.txt : also change lib $name = module name$
+  \item Update CMakeLists.txt : also change lib \texttt{name = module name}
   \end{itemize}
-\item How to compile a module?
-\item How to compile tests related to a module?
-\item How to launch tests related to a module
+\item How to compile a module? \\ \texttt{make TutoHackfest}
+\item How to compile tests and applications related to a module? \\ \texttt{make TutoHackfest-all}
+\item How to launch tests related to a module? \\ \texttt{ctest -L TutoHackfest}
 \end{itemize}
 
 \end{frame}
 
-\section{Write your  application}
 \begin{frame}
-\frametitle{Tutorial: new application for tile fusion}
+\frametitle{Write your  application}
+\framesubtitle{Tile fusion in OTB}
 \begin{itemize}
-\item Explain why this application, show code of TileFusion, show bugs 
-\item Explain the logic : write 
-\item Show an example of a VRT file
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Tile fusion in OTB}
-\begin{itemize}
-\item Explain why this application, show code of TileFusion, show bugs
-\item href{ http://www.orfeo-toolbox.org/Applications/TileFusion.html}
+\item Existing application has limitations regarding the number of tiles handled
+\item \url{http://www.orfeo-toolbox.org/Applications/TileFusion.html}
 \item Problem: number of reader instances
-\item href{https://bugs.orfeo-toolbox.org/view.php?id=1036}
+\item \url{https://bugs.orfeo-toolbox.org/view.php?id=1036}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Enhanced Tile fusion application (gourou)}
+\frametitle{Write your  application}
+\framesubtitle{Tutorial: new application for tile fusion}
 \begin{itemize}
-\item todo
+\item New tile fusion application with a different mechanism :
+\begin{itemize}
+\item Parse each tile separately
+\item Write a VRT file that represent the mosaic
+\item Instanciate a reader (using GDAL) and a writer to convert mosaic into plain image file
+\end{itemize}
+\item No more limitations regarding the number of reader instances
+\item The VRT format from GDAL is powerful
+\item Tutorial resources located in \texttt{OTB-Documents/Slides/Hackfest15/tutoCoder}
+\item Example of a VRT file : \texttt{fusion.vrt}
 \end{itemize}
 \end{frame}
 
-\section{Write your application (advanced)}
-%% \begin{frame}
-%% \frametitle{Tutorial : AdvancedTileFusion}
+\begin{frame}
+\frametitle{Write your  application}
+\framesubtitle{Standard tile fusion application}
+\begin{itemize}
+\item Copy \texttt{tutoCoder/otbAdvancedTileFusion.cxx} to \texttt{OTB/Modules/Remote/yourRemoteModule/app}
+\item Edit \texttt{app/CMakeLists.txt}
+\item Edit \texttt{test/CMakeLists.txt} : change app name in \texttt{otb\_test\_application}
+\item Try to compile \ldots
+\item Fill the TODO's in the application code
+\item Usefull links :
+\begin{itemize}
+\item \href{https://www.orfeo-toolbox.org/doxygen/classotb_1_1Wrapper_1_1Application.html}{otb::Wrapper::Application doxygen page}
+\item \href{https://www.orfeo-toolbox.org/doxygen/classotb_1_1ImageFileReader.html}{otb::ImageFileReader doxygen page}
+\item \href{http://www.gdal.org/gdal_vrttut.html}{VRT format tutorial}
+\end{itemize}
+\end{itemize}
+\end{frame}
 
-%% Copy otbAdvancedTileFusion.cxx to OTB/Modules/Remote/tutoRemoteModule/app
-%% Edit file : change class name and SetName() in DoInit().
-%% Edit app/CMakeLists.txt
-%% Edit test/CMakeLists.txt : change app name in otb_test_application
+\begin{frame}
+\frametitle{Write your  application}
+\framesubtitle{Enhanced tile fusion application (gourou)}
+\begin{itemize}
+\item Mosaic images with a different dynamic (dataset \texttt{scaled\_R*C*.tif})
+\item Use the otb::StreamingStatisticsVectorImageFilter to extract stats on each tile (you may need to add dependencies to your module)
+\item In order to apply a rescaling on each tile, use \texttt{ComplexSource} type in the VRT
+\item Use \texttt{ScaleOffset} and \texttt{ScaleRatio} for each tile 
+\item Create a parameter in the application to enable/disable the dynamic adaptation
+\item Usefull link : \href{https://www.orfeo-toolbox.org/doxygen/classotb_1_1StreamingStatisticsVectorImageFilter.html}{otb::StreamingStatisticsVectorImageFilter doxygen page}
+\end{itemize}
+\end{frame}
 
-%% Try to compile
-%%    - add modules dependencies if needed
-
-
-%% Use StreamingStatisticsVectorImageFilter to compute ratio and offsets between tiles
-%% Switch the SimpleSource section into ComplexSource.
-
-%% \end{frame}
 
 \end{document}
