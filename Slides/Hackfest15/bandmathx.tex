@@ -218,7 +218,7 @@ New operators and functions have been implemented within BandMathX application. 
 \begin{itemize}
 \item div (element-wise division) and dv (division by a scalar)
 \item mult (element-wise multiplication) and mlt (multiplication by a scalar)
-\item pow (element-wise exponentiation) and w (exponentiation by a scalar)
+\item pow (element-wise exponentiation) and pw (exponentiation by a scalar)
 \end{itemize}
 
 
@@ -286,9 +286,10 @@ vmin and vmax (one input) & (vmax(im3b1N3x5)+vmin(im3b1N3x5)) ~ div ~ \{2.0\} \\
 
 
 \begin{itemize}
-\item cat    : This function allows to concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the function can take
+\item cat    : Concatenate the results of several expressions into a multidimensional vector, whatever their respective dimensions (the function can take
 as many inputs as needed)
-\item band   : This function allows to select specific bands from an image, and/or to rearrange them in a new vector.
+\item bands   : Select specific bands from an image, and/or to rearrange them in a new vector.
+\item vect2scal   : Make a one dimensional vector become a scalar.
 \end{itemize}
 
 
@@ -298,7 +299,7 @@ Operator/function & example \\
 \hline \\
 cat & cat(im3b1,vmin(im3b1N3x5),median(im3b1N3x5),vmax(im3b1N3x5)) \\
 bands & bands(im1,\{1,2,1,1\}) \\
-vect2scal & vect2scal({0.5}) \\
+vect2scal & vect2scal(\{0.5\}) \\
 \end{tabular}
 \end{center}
 
