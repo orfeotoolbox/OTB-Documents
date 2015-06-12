@@ -1,4 +1,4 @@
-% Created 2015-05-28 Thu 09:36
+% Created 2015-06-03 mer. 10:43
 \documentclass[8pt]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -50,20 +50,20 @@
 \setbeamertemplate{background}{\pgfuseimage{background}}
 \pgfdeclareimage[height=0.6cm]{logoIncrust}{images/logoIncrust}
 \logo{  \begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}   \href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}}    & \vspace{-0.03\textwidth} \scriptsize{}     &  & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\\end{tabular} }
+\usetheme{default}
 \author{OTB development team}
 \date{3 - 5 june 2015, Toulouse}
 \title{Orfeo ToolBox users meeting and hackfest 2015}
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 25.0.50.1 (Org mode 8.2.10)}}
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.4)}}
 \begin{document}
 
 \maketitle
 
 
-\section{ORFEO: the original OTB road-map}
-\label{sec-1}
+\begin{frame}[label=sec-1]{ORFEO: the original OTB road-map}
 \begin{itemize}
 \item OTB was initially a means to prepare the use of the imagery provided
 by the ORFEO (Pléiades HR + Cosmo Skymed) programme
@@ -83,9 +83,8 @@ extraction} pipeline
 \end{itemize}
 \end{enumerate}
 \end{itemize}
-
-\section{Themes in the first road-map}
-\label{sec-2}
+\end{frame}
+\begin{frame}[label=sec-2]{Themes in the first road-map}
 \begin{itemize}
 \item Pre-processing : geometry, radiometry
 \item 2D information extraction (surfaces, networks, etc.)
@@ -95,8 +94,9 @@ extraction} pipeline
 \item Image fusion and synthesis
 \item Product delivery and display (GIS formats, visualisation)
 \end{itemize}
-\section{Example of item in the road-map}
-\label{sec-3}
+\end{frame}
+
+\begin{frame}[label=sec-3]{Example of item in the road-map}
 \begin{center}
 \begin{tabular}{ll}
 Sujet & 6.1 Détection de changements : approches objet\\
@@ -116,10 +116,9 @@ Contexte de réalisation & Orfeo Toolbox + études internes (stage V. Poulain) +
 \hline
 \end{tabular}
 \end{center}
+\end{frame}
 
-
-\section{Need for a new road-map}
-\label{sec-4}
+\begin{frame}[label=sec-4]{Need for a new road-map}
 \begin{itemize}
 \item The ORFEO programme has come to an end
 \item Upcoming EO missions
@@ -139,9 +138,8 @@ Contexte de réalisation & Orfeo Toolbox + études internes (stage V. Poulain) +
 \item Not 1 but 3 road-maps: features + technical + infrastructure
 \end{itemize}
 \end{itemize}
-
-\section{Interlude: OTB's Mission Statement proposal}
-\label{sec-5}
+\end{frame}
+\begin{frame}[label=sec-5]{Interlude: OTB's Mission Statement proposal}
 \begin{quote}
 Provide a Free Software end-to-end solution for the Earth Observation
 image information extraction pipeline based on a generic, high
@@ -149,9 +147,8 @@ performance C++ library upon which applications and processing chains
 can be built to fulfil the needs of users from ground segment
 processing chains to single user desktop applications.
 \end{quote}
-
-\section{What is a road-map for?}
-\label{sec-6}
+\end{frame}
+\begin{frame}[label=sec-6]{What is a road-map for?}
 \begin{itemize}
 \item Declination of the Mission Statement down to concrete milestones
 \item Communicates the project plan to users and stakeholders
@@ -167,9 +164,10 @@ available or disappear, opportunities emerge
 \item Difference between road-map and objectives of a release : mid-term
 vs long-term
 \end{itemize}
-\section{The 3 OTB road-maps}
-\label{sec-7}
-\begin{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-7]{The 3 OTB road-maps}
+ \begin{enumerate}
 \item Features
 \begin{itemize}
 \item Library
@@ -200,9 +198,8 @@ vs long-term
 \item Build/packaging resources
 \end{itemize}
 \end{enumerate}
-
-\section{How to efficiently maintain and use the road-maps}
-\label{sec-8}
+\end{frame}
+\begin{frame}[label=sec-8]{How to efficiently maintain and use the road-maps}
 \begin{itemize}
 \item Maintaining
 \begin{itemize}
@@ -225,9 +222,8 @@ vs long-term
 \end{itemize}
 \end{itemize}
 \end{itemize}
-
-\section{Contributions to the road-maps}
-\label{sec-9}
+\end{frame}
+\begin{frame}[label=sec-9]{Contributions to the road-maps}
 \begin{itemize}
 \item How ideas are collected currently
 \begin{itemize}
@@ -246,5 +242,6 @@ OTB web site
 \item Not on the wiki, since they have to be validated by the PSC
 \end{itemize}
 \end{itemize}
-% Emacs 25.0.50.1 (Org mode 8.2.10)
+\end{frame}
+% Emacs 24.3.1 (Org mode 8.2.4)
 \end{document}
