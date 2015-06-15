@@ -138,6 +138,7 @@
 \section{About the data and software}
 \subsection{Data}
 \begin{frame}
+
 \frametitle{Spot4Take5 data and upcoming Sentinel 2 data}
 
 \begin{columns}[t]
@@ -390,6 +391,7 @@ To get OpenStreetMap data ready for classification, we will do the following:
 \item Use the ImageEnvelope application
 \item Output a shapefile or sqlite file
 \item Control results in Qgis
+\item For a more accurate result, you can also draw the envelope by hand in Qgis
 \end{enumerate}
 \end{block}
 
@@ -522,7 +524,7 @@ $ ogr2ogr -append -sql "select * from landuse_l93 where type in \
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Final step: add class label and merge in one layer}
+\frametitle{Final steps (1/2): add class label, exclude overlaps}
 
 \begin{block}{Add class labels}
 \begin{itemize}
@@ -532,17 +534,41 @@ $ ogr2ogr -append -sql "select * from landuse_l93 where type in \
 \end{itemize}
 \end{block}
 
-\begin{block}{Merge all layers}
+\begin{block}{Exclude overlaps}
+\begin{itemize}
+\item Overlapping polygons of different classes confuses training and evaluation
+\item We will therefore ignore those areas
+\item To do so, we will use the \textit{Vector/Geoprocessing tools/Differentiate} tool in Qgis
+\item Twice for each layer, e.g. Builtup vs. water then vs. vegetation \ldots
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Final steps (2/2): build separate sets for training and validation, merge}
+
+\begin{block}{Build separate sets for training and validation}
 \begin{scriptsize}
 \begin{verbatim}
-$ ogr2ogr -append training_set.shp water.shp
-$ ogr2ogr -append training_set.shp forest.shp
-$ ogr2ogr -append training_set.shp builtup.shp
+$ ogr2ogr -append -dialect SQLITE -sql "select * from forest order by osm_id limit 250" training.shp forest.shp
+$ ogr2ogr -append -dialect SQLITE -sql "select * from water order by osm_id limit 250" training.shp water.shp
+$ ogr2ogr -append -dialect SQLITE -sql "select * from builtup order by osm_id limit 250" training.shp builtup.shp
+$ ogr2ogr -append -dialect SQLITE -sql "select * from forest order by osm_id limit 250,1000000" validation.shp forest.shp
+$ ogr2ogr -append -dialect SQLITE -sql "select * from water order by osm_id limit 250,1000000" validation.shp water.shp
+$ ogr2ogr -append -dialect SQLITE -sql "select * from builtup order by osm_id limit 250,100000" validation.shp builtup.shp
 \end{verbatim}
 \end{scriptsize}
 \end{block}
 
-You can display the final training layer in Qgis with a color mapping of classes.
+\begin{block}{Merge all layers}
+\begin{scriptsize}
+\begin{verbatim}
+$ ogr2ogr -append all.shp water.shp
+$ ogr2ogr -append all.shp forest.shp
+$ ogr2ogr -append all.shp builtup.shp
+\end{verbatim}
+\end{scriptsize}
+\end{block}
 \end{frame}
 
 \section{Image Classification}
@@ -609,29 +635,29 @@ Look  at the \texttt{stats.xml} file. Does it look correct?
 
 \begin{scriptsize}
 \begin{verbatim}
-$ otbcli_TrainImagesClassifier -io.il im4classif.tif -io.vd training_set.shp -io.out model.svm \
+$ otbcli_TrainImagesClassifier -io.il im4classif.tif -io.vd training.shp -io.out model.svm \
   -classifier libsvm -classifier.libsvm.k rbf -sample.mt 1000  -sample.mv 2000 \
   -sample.vfn "class" -io.imstat stats.xml
 
-...
-
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Confusion matrix (rows = reference labels, columns = produced labels):
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Confusion matrix (rows = reference labels, columns = produced labels):
      [1] [2] [3] 
-[ 1] 1609  190  178 
-[ 2]   84 1698  211 
-[ 3]   60  148 1771 
+[ 1] 1668  278   73 
+[ 2]   46 1773  146 
+[ 3]   52  208 1772 
 
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Precision of class [1] vs all: 0.917855
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Recall of class    [1] vs all: 0.813859
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) F-score of class   [1] vs all: 0.862735
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Precision of class [1] vs all: 0.944507
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Recall of class    [1] vs all: 0.826152
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) F-score of class   [1] vs all: 0.881374
 
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Precision of class [2] vs all: 0.833988
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Recall of class    [2] vs all: 0.851982
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) F-score of class   [2] vs all: 0.842889
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Precision of class [2] vs all: 0.784861
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Recall of class    [2] vs all: 0.90229
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) F-score of class   [2] vs all: 0.839489
 
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Precision of class [3] vs all: 0.819907
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) Recall of class    [3] vs all: 0.894896
-2015 Jun 12 14:25:29  :  Application.logger  (INFO) F-score of class   [3] vs all: 0.855762
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Precision of class [3] vs all: 0.890005
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Recall of class    [3] vs all: 0.872047
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) F-score of class   [3] vs all: 0.880935
+
+2015 Jun 15 13:56:21  :  Application.logger  (INFO) Global performance, Kappa index: 0.799899
 
 \end{verbatim}
 \end{scriptsize}
@@ -695,6 +721,88 @@ Load the cleaned map into QGis as well.
 
 \section{Getting back to OpenStreetMap}
 
+\subsection{Accuracy assesment}
 
+\begin{frame}
+\frametitle{Getting a better idea of our land cover accuracy}
+
+\begin{itemize}
+\item What is our final accuracy after regularization (e.g. denoising)?
+\item What is our final accuracy wrt. our validation layer?
+\item We will find out with the \texttt{ComputeConfusionMatrix} application
+\item Which can cross-compare our land-cover map with our validation layer
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Accuracy assesment (solution)}
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector -ref.vector.in validation.shp -ref.vector.field "class" -nodatalabel 0 -out conf.txt
+
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Confusion matrix (rows = reference labels, columns = produced labels):
+        [    1] [    2] [    3] 
+[    1]   24532    4491    1258 
+[    2]    8903 1761939  141961 
+[    3]    2830   36018  573860 
+
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Precision of class [1] vs all: 0.676465
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Recall of class [1] vs all: 0.810145
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) F-score of class [1] vs all: 0.737295
+
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Precision of class [2] vs all: 0.977526
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Recall of class [2] vs all: 0.921129
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) F-score of class [2] vs all: 0.94849
+
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Precision of class [3] vs all: 0.800274
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Recall of class [3] vs all: 0.936596
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) F-score of class [3] vs all: 0.863086
+
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Precision of the different classes: [0.676465, 0.977526, 0.800274]
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Recall of the different classes: [0.810145, 0.921129, 0.936596]
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) F-score of the different classes: [0.737295, 0.94849, 0.863086]
+
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Kappa index: 0.811052
+2015 Jun 15 17:36:11  :  Application.logger  (INFO) Overall accuracy index: 0.923522
+
+\end{verbatim}
+\end{scriptsize}
+
+\end{frame}
+
+\subsection{Where do OSM and Land Cover differs}
+
+\begin{frame}
+\frametitle{Where do OSM and Land Cover differs?}
+
+\begin{itemize}
+\item We can use the \texttt{Rasterization} application to make a raster out of our layer
+\item And then use the \texttt{BandMath} to make a raster of the disagreements between landcover and OSM
+\item Write the proper expression so that the raster is null or bears the land cover class if it differs from OSM
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Where do OSM and Land Cover differs? (Solution)}
+
+\begin{block}{Rasterize our layer}
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_Rasterization -in all.shp -out all.tif -im im2classif.tif \
+  -mode attribute -mode.attribute.field "class" -background 0
+\end{verbatim}
+\end{scriptsize}
+\end{block}
+\begin{block}{Compute the difference map}
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_BandMath -il classif_reg.tif all.tif -out errors.tif \
+  -exp "im2b1>0?(im1b1!=im2b1?im1b1:0):0"
+\end{verbatim}
+\end{scriptsize}
+\end{block}
+\end{frame}
 
 \end{document}
