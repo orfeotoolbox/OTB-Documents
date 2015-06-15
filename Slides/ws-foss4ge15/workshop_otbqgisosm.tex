@@ -236,6 +236,17 @@ We will be using the OSgeoLive 8.5 (Orfeo ToolBox 4.2.1, Gdal 1.11.0, Qgis 2.4.0
 
 \subsection{Image preprocessing}
 
+\begin{frame}
+\frametitle{Objectives of this section}
+
+\begin{enumerate}
+\item Pre-process image to get it ready for visualisation and classification
+\item Learn some basis on command-line OTB processing
+\end{enumerate}
+
+\end{frame}
+
+
 \begin{frame}[fragile]
 
 \frametitle{A first glimpse at the image}
@@ -335,6 +346,22 @@ $ otbcli_ConcatenateImages -il im.tif ndvi.tif ndwi.tif -out im4classif.tif
 \end{frame}
 
 \subsection{OpenStreetMap preprocessing}
+
+\begin{frame}
+\frametitle{Objectives of this section}
+
+\begin{enumerate}
+\item Turn OSM data into a vector layer suitable for classifier training:
+\begin{enumerate}
+\item Filter and join features to get a limited number of well-defined classes (in the sense of classification)
+\item Build a single layer with polygon feature bearing an integer class attribute
+\end{enumerate}
+\item Learn how training polygons should be and which features of OSM are suitable
+\end{enumerate}
+
+\end{frame}
+
+
 \begin{frame}[fragile]
 \frametitle{Pre-processing OpenStreetMap data}
 
@@ -521,29 +548,150 @@ You can display the final training layer in Qgis with a color mapping of classes
 \section{Image Classification}
 
 \begin{frame}
-\frametitle{Estimation of image statistics}
+\frametitle{Objectives of this section}
+
+\begin{enumerate}
+\item Learn the steps of supervised classification processing with Orfeo ToolBox
+\item Perform the classification based on the OSM pre-processed data
+\end{enumerate}
 
 \end{frame}
+
+\subsection{Estimation of image statistics}
 
 \begin{frame}
-\frametitle{Training the classification algorithm}
+\frametitle{Step 1: Estimation of image statistics}
+
+\begin{itemize}
+\item Some machine learning algorithm requires the input features to have similar ranges
+\item Also, the SVM algorithm will converge faster if this range is $[-1,1]$
+\item We will therefore center and reduce all image bands prior to classification
+\item For this, we need to estimate the mean and variance of each band
+\item Which is what this step is about
+\end{itemize}
+
+For this we will use the \texttt{EstimateImagesStatistics} application. Do not forget to set the background value (-10 000)!
 
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Step 1: Estimation of image statistics (solution)}
+
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_ComputeImagesStatistics -il im4classif.tif -out stats.xml -bv -10000
+\end{verbatim}
+\end{scriptsize}
+
+Look  at the \texttt{stats.xml} file. Does it look correct?
+
+\end{frame}
+
+\subsection{Training of the classification algorithm}
 
 \begin{frame}
-\frametitle{Classifying the image}
+\frametitle{Step 2: Training the classification algorithm}
+
+\begin{itemize}
+\item We will be using the \texttt{TrainImagesClassifier} application
+\item The application should receive the image, the training layer and the xml stats file,
+\item We will use the libsvm implementation, with a RBF kernel,
+\item We will select at most 1000 random samples per class (2000 for validation),
+\item You also need to set the name of the class field in the training layer.
+\end{itemize}
+
 
 \end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Step 2: Training the classification algorithm (solution)}
+
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_TrainImagesClassifier -io.il im4classif.tif -io.vd training_set.shp -io.out model.svm \
+  -classifier libsvm -classifier.libsvm.k rbf -sample.mt 1000  -sample.mv 2000 \
+  -sample.vfn "class" -io.imstat stats.xml
+
+...
+
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Confusion matrix (rows = reference labels, columns = produced labels):
+     [1] [2] [3] 
+[ 1] 1609  190  178 
+[ 2]   84 1698  211 
+[ 3]   60  148 1771 
+
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Precision of class [1] vs all: 0.917855
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Recall of class    [1] vs all: 0.813859
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) F-score of class   [1] vs all: 0.862735
+
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Precision of class [2] vs all: 0.833988
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Recall of class    [2] vs all: 0.851982
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) F-score of class   [2] vs all: 0.842889
+
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Precision of class [3] vs all: 0.819907
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) Recall of class    [3] vs all: 0.894896
+2015 Jun 12 14:25:29  :  Application.logger  (INFO) F-score of class   [3] vs all: 0.855762
+
+\end{verbatim}
+\end{scriptsize}
+
+\end{frame}
+
+\subsection{Classifying the image}
 
 \begin{frame}
-\frametitle{Classification noise cleaning}
+\frametitle{Step 3: Classifying the image}
+
+\begin{itemize}
+\item Now that we trained a classifier with a satisfactory level of performance, lets classify the image,
+\item We will use the \texttt{ImageClassifier} application,
+\item It should receive the input image, the model and the stats files,
+\item We will also build a mask of no data pixels, so that they will be ignored during classification (use the \texttt{BandMath} app for this)
+\end{itemize}
 
 \end{frame}
 
 
+\begin{frame}[fragile]
+\frametitle{Step 3: Classifying the image (solution)}
 
-\section{Classification map regularization and fusion}
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_BandMath -il im4classif.tif -out mask.tif uint8 -exp "im1b1>-10000?255:0"
+$ otbcli_ImageClassifier -in im4classif.tif -mask mask.tif -model model.svm -imstat stats.xml -out classif.tif uint8
+\end{verbatim}
+\end{scriptsize}
+Open the resulting land cover map in Qgis. Set the rendering to color each class with a discriminative color. Does the classification map look correct?
+\end{frame}
+
+
+\subsection{Noise cleaning}
+
+\begin{frame}
+\frametitle{Step 4: Classification noise cleaning}
+
+\begin{itemize}
+\item Classification maps often suffer from salt and pepper noise (isolated pixels with class different from neighborhood)
+\item We can filter that with the \texttt{ClassificationMapRegularization} application
+\item It will perform a majority voting of classified pixels in a fixed neighborhood (radius = 2 for instance)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Step 4: Classification noise cleaning}
+\begin{scriptsize}
+\begin{verbatim}
+$ otbcli_ClassificationMapRegularization -io.in classif.tif -io.out classif_reg.tif -ip.radius 2
+\end{verbatim}
+\end{scriptsize}
+
+Load the cleaned map into QGis as well.
+
+\end{frame}
+
+% Add a step to estimate the final accuracy ?
 
 \section{Getting back to OpenStreetMap}
 
