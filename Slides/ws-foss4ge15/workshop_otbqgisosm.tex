@@ -103,7 +103,7 @@
 \title{Land cover mapping with high resolution satellite images using Orfeo Toolbox, QGIS and OSM}
 \includexmp{images/cc}
 \subtitle{Workshop - W04}
-\author{Jordi Inglada (CNES/CESBIO), Julien Michel (CNES), Manuel Grizonnet (CNES)}% date and event here
+\author{Julien Michel (CNES), Jordi Inglada (CNES/CESBIO), Manuel Grizonnet (CNES)}% date and event here
 \date{July 14th 2015 - FOSS4GE, Como, Italy}
 
 \pgfdeclareimage[height=96mm,width=128mm]{background}{../OTB-General/images/fondsClairSansLogo}
@@ -204,6 +204,7 @@
   \begin{itemize}
   \item may be out of date in many places
   \item polygons of one class may contain objects of other classes
+  \item May have improper classes for land-cover mapping (e.g. land use)
   \end{itemize}
 \end{itemize}
 
@@ -272,11 +273,17 @@
 
 \begin{frame}
 \frametitle{Images overview (SPOT4 (Take5) Ardeche site, France)}
-
+\begin{center}
+\includegraphics[width=0.9\textwidth]{images/spot4t5.png}
+\end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{OpenStreetMap data}
+\frametitle{OpenStreetMap data (exports from geofabrick.de)}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/osm.png}\\
+Land use, natural and waterways layers
+\end{center}
 \end{frame}
 
 \subsection{Software}
@@ -353,12 +360,13 @@ We will be using the OSgeoLive 8.5 (Orfeo ToolBox 4.2.1, Gdal 1.11.0, Qgis 2.4.0
 \frametitle{A first glimpse at the image}
 
 The image is located here :
-\begin{scriptsize}
+
 \begin{itemize}
-\item Folder: \begin{verbatim}raw_data/spot4t5/SPOT4_HRVIR1_XS_20130607_N2A_CArdecheD0000B0000/\end{verbatim}
-\item Image file: \begin{verbatim}SPOT4_HRVIR1_XS_20130607_N2A_ORTHO_SURF_CORR_PENTE_CArdecheD0000B0000.TIF\end{verbatim}
+\item Folder: \begin{scriptsize}\begin{verbatim}raw_data/spot4t5/SPOT4_HRVIR1_XS_20130607_N2A_CArdecheD0000B0000/\end{verbatim}\end{scriptsize}
+\item Image file: \begin{scriptsize}\begin{verbatim}SPOT4_HRVIR1_XS_20130607_N2A_ORTHO_SURF_CORR_PENTE_CArdecheD0000B0000.TIF\end{verbatim}\end{scriptsize}
 \end{itemize}
-\end{scriptsize}
+
+In the following slides, it will be refered to as \texttt{im.tif}.
 
 \begin{enumerate}
 \item Open the image in Qgis
@@ -390,22 +398,29 @@ We are going to use the BandMath application, as well as the ConcatenateImages a
 \begin{frame}[fragile]
 \frametitle{Natural colors synthetis (Solution)}
 Extract red band:
+\begin{scriptsize}
 \begin{verbatim}
 $ otbcli_BandMath -il im.tif -out red.tif int16 -exp "im1b2"
 \end{verbatim}
+\end{scriptsize}
 Extract green band:
+\begin{scriptsize}
 \begin{verbatim}
 $ otbcli_BandMath -il im.tif -out green.tif int16 -exp "im1b1"
 \end{verbatim}
+\end{scriptsize}
 Compute synthetic blue band:
+\begin{scriptsize}
 \begin{verbatim}
-$ otbcli_BandMath -il im.tif -out blue.tif int16 \
- -exp "im1b1==-10000?-10000:0.7*im1b1+0.24*im1b2-0.14*im1b3"
+$ otbcli_BandMath -il im.tif -out blue.tif int16 -exp "im1b1==-10000?-10000:0.7*im1b1+0.24*im1b2-0.14*im1b3"
 \end{verbatim}
+\end{scriptsize}
 Concatenate all bands:
+\begin{scriptsize}
 \begin{verbatim}
 $ otbcli_ConcatenateImages -il red.tif green.tif blue.tif -out rgb.tif int16
 \end{verbatim}
+\end{scriptsize}
 
 Open resulting image in qgis, and set the rendering option likewise.
 
@@ -466,6 +481,8 @@ $ otbcli_ConcatenateImages -il im.tif ndvi.tif ndwi.tif -out im4classif.tif
 \begin{frame}[fragile]
 \frametitle{Pre-processing OpenStreetMap data}
 
+The data are located in the \texttt{raw\_data/osm/} folder.
+
 For each region, open the following files on top of the image in Qgis:
 \begin{itemize}
 \item \begin{verbatim}landuse.hsp\end{verbatim}
@@ -479,7 +496,7 @@ To get OpenStreetMap data ready for classification, we will do the following:
 \item Reproject all geometries in the image SRS
 \item Filter OSM classes to build a set of 3 classes suitable for supervised classification
 \item Process waterways to turn polylines into polygons with buffers
-\item Randomly extract a limited number of features for each class.
+\item Separate our set of polygons between a training set and a validation set
 \end{enumerate}
 \end{frame}
 
@@ -500,7 +517,7 @@ To get OpenStreetMap data ready for classification, we will do the following:
 \item For each region and each layer
 \item Use \texttt{ogr2ogr}
 \item Use the \texttt{-clipsrc} option to filter by image footprint
-\item Use the \texttt{-t\_srs} option to define the output SRS using the \texttt{l93.wkt} file
+\item Use the \texttt{-t\_srs} option to define the output SRS using the \texttt{raw\_data/l93.wkt} file
 \item Use the \texttt{-append} option to merge both regions for each layer
 \end{enumerate}
 \end{block}
@@ -555,12 +572,12 @@ Open the three new layers in Qgis.
 \begin{itemize}
 \item \textbf{Water:} 
   \begin{itemize}
-  \item basin, pond, reservoir, salt pond, water, wetland larger than 1000 squared meters from land use layer
+  \item basin, pond, reservoir, salt pond, water larger than 1000 squared meters from land use layer
   \item water larger than 1000 squared meters from natural layer
   \item main rivers (Loire, Rhone) from waterways layer, buffered with 25 meters
   \end{itemize}
 \item \textbf{Vegetation:} forest from natural layer
-\item \textbf{Built-up:} residential, commercial, cemetery, construction, industrial, recreational, harbour, allotments, yard, brownfield, vine from land use layer
+\item \textbf{Built-up:} residential, commercial, cemetery, construction, industrial, recreational, harbour, allotments, yard, brownfield, from land use layer
 \end{itemize}
 \end{block}
 
@@ -583,7 +600,7 @@ $ ogr2ogr -append -sql "select * from waterways_l93 where name in \
 \begin{scriptsize}
 \begin{verbatim}
 $ ogr2ogr -append -sql "select * from landuse_l93 where type in \ 
-  (\"basin\",\"pond\",\"reservoir\",\"salt_pond\",\"water\",\"wetland\") \
+  (\"basin\",\"pond\",\"reservoir\",\"salt_pond\",\"water\") \
   and OGR_GEOM_AREA > 10000" water.shp landuse_l93.shp
 \end{verbatim}
 \end{scriptsize}
@@ -616,8 +633,8 @@ Extract selected features from land use layer:
 \begin{verbatim}
 $ ogr2ogr -append -sql "select * from landuse_l93 where type in \
   (\"residential\",\"commercial\",\"cemetery\",\"construction\",\
-  \"industrial\",\"résidential\",\"recreational\",\"harbour\",  \
-  \"allotments\",\"vineyard\",\"brownfield\")" builtup.shp landuse_l93.shp
+  \"industrial\", \"recreational\",\"harbour\",  \
+  \"allotments\",\"brownfield\")" builtup.shp landuse_l93.shp
 \end{verbatim}
 \end{scriptsize}
 \end{block}
@@ -647,7 +664,7 @@ $ ogr2ogr -append -sql "select * from landuse_l93 where type in \
 \begin{frame}[fragile]
 \frametitle{Final steps (2/2): build separate sets for training and validation, merge}
 
-\begin{block}{Build separate sets for training and validation}
+\begin{block}{Build separate sets for training (250 polygons of each class) and validation (the remaining)}
 \begin{scriptsize}
 \begin{verbatim}
 $ ogr2ogr -append -dialect SQLITE -sql "select * from forest order by osm_id limit 250" training.shp forest.shp
@@ -660,7 +677,7 @@ $ ogr2ogr -append -dialect SQLITE -sql "select * from builtup order by osm_id li
 \end{scriptsize}
 \end{block}
 
-\begin{block}{Merge all layers}
+\begin{block}{Also merge everything in a single layer}
 \begin{scriptsize}
 \begin{verbatim}
 $ ogr2ogr -append all.shp water.shp
@@ -839,7 +856,8 @@ Load the cleaned map into QGis as well.
 \frametitle{Accuracy assesment (solution)}
 \begin{scriptsize}
 \begin{verbatim}
-$ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector -ref.vector.in validation.shp -ref.vector.field "class" -nodatalabel 0 -out conf.txt
+$ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector -ref.vector.in validation.shp \
+  -ref.vector.field "class" -nodatalabel 0 -out conf.txt
 
 2015 Jun 15 17:36:11  :  Application.logger  (INFO) Confusion matrix (rows = reference labels, columns = produced labels):
         [    1] [    2] [    3] 
@@ -876,6 +894,9 @@ $ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector -ref.vector.in v
 \begin{frame}
 \frametitle{Where do OSM and Land Cover differs?}
 
+Now that we have a rough idea of the level of agreement between our
+land cover map and the OSM layer, it would be useful to see where the differences are.
+
 \begin{itemize}
 \item We can use the \texttt{Rasterization} application to make a raster out of our layer
 \item And then use the \texttt{BandMath} to make a raster of the disagreements between landcover and OSM
@@ -903,6 +924,40 @@ $ otbcli_BandMath -il classif_reg.tif all.tif -out errors.tif \
 \end{verbatim}
 \end{scriptsize}
 \end{block}
+Display the difference map in Qgis, and superimpose the original OSM layers. Find evidence of:
+\begin{itemize}
+\item Forest areas that are endangered by urban growth,
+\item Parks and other green areas in residential neighborhood that are not referenced in OSM,
+\item Water bodies that are not referenced as well.
+\end{itemize}
+\end{frame}
+
+\section*{Conclusion}
+
+\begin{frame}
+\frametitle{Conclusion}
+\begin{block}{Time for a talk}
+According to what you did in this workshop, do you think OpenStreetMap
+can be used for S2 land-cover applications? And vice-versa?
+\end{block}
+
+\begin{block}{To go further}
+\begin{itemize}
+\item How well does the trained model generalize to other dates / areas?
+\item Can we add new classes for a more detailed map?
+\item Can we set-up automatic alerts on some features (e.g. forest polygons that do not seem to contain a lot of forest) ?
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Thank you for attending this workshop! Any questions?}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{../OTB-General/images/LOGOTB_blackbox.png}
+\end{center}
+\end{minipage}
 \end{frame}
 
 \end{document}
