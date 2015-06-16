@@ -28,7 +28,7 @@
 \usepackage{textpos}
 \usepackage{tikz}
 \usepackage{xmpincl}
-\usetikzlibrary{arrows}
+\usetikzlibrary{arrows,shadows}
 \usepackage{pifont}
 
 \usepackage{listings,color}
@@ -38,6 +38,47 @@
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+ 
+% Define block styles  
+\tikzstyle{bblock}=[draw, text width=8.0em, text centered,
+  minimum height=1.8em,drop shadow]
+\tikzstyle{datanode} = [bblock, fill=blue!20, text width=8em, minimum width=10em,
+  minimum height=4em, drop shadow]
+\tikzstyle{process} = [bblock, fill=green!20, text width=8em, minimum width=10em,
+  minimum height=4em, rounded corners, drop shadow]
+\tikzstyle{texto} = [above, text width=10em, text centered]
+\tikzstyle{linepart} = [draw, thick, color=black!50, -latex', dashed]
+\tikzstyle{line} = [draw, thick, color=black!50, -latex']
+\tikzstyle{ur}=[draw, text centered, minimum height=0.01em]
+ 
+% Define distances for bordering
+\newcommand{\blockdist}{1.3}
+\newcommand{\edgedist}{1.5}
+
+\newcommand{\process}[3]{node (#1) [process]
+  {#2\\{\scriptsize\textit{#3}}}}
+
+\newcommand{\datanode}[2]{node (#1) [datanode] {#2}}
+
+% Draw background
+\newcommand{\background}[5]{%
+  \begin{pgfonlayer}{background}
+    % Left-top corner of the background rectangle
+    \path (#1.west |- #2.north)+(-0.5,0.5) node (a1) {};
+    % Right-bottom corner of the background rectanle
+    \path (#3.east |- #4.south)+(+0.5,-0.25) node (a2) {};
+    % Draw the background
+    \path[fill=yellow!20,rounded corners, draw=black!50, dashed]
+      (a1) rectangle (a2);
+    \path (a1.east |- a1.south)+(0.8,-0.3) node (u1)[texto]
+      {\scriptsize\textit{#5}};
+  \end{pgfonlayer}}
 
 
 %% \setbeamertemplate{background canvas}{\includegraphics
@@ -99,13 +140,72 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{About land Cover mapping and supervised classification}
+\frametitle{About land cover mapping and supervised classification}
+\begin{itemize}
+\item Land cover maps are produced using supervised classification
+\item A supervised classifier is trained to assign class labels to input features
+\item Reference data is used for training and validation
+\end{itemize}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.5, transform shape]
+      \path \datanode{inref}{Reference Data};
+      \path (inref.east)+(2.5,0.0) \process{sample}{Sample Selection}{sample\_ratio};
+      \path (sample.east)+(3.0,0.0) \datanode{tsamples}{Training Samples};
+      \path (sample.east)+(3.0,-1.5) \datanode{vsamples}{Validation Samples};
+      \path (inref.south)+(0.0,-2.75) \datanode{inimages}{Input Images};
+      \path (inimages.east)+(2.5,0.0)  \process{fex}{Feature Extraction}{Radiances, NDVI, NDWI};
+      \path (fex.east)+(3.5,0.0) \process{train}{Training}{SVM, RF};
+      \path (train.east)+(2.5,0.0) \datanode{model}{Classification Model};
+      \path (fex.south)+(0.0,-2.5) \process{classif}{Classification}{};
+      \path (classif.east)+(2.5,0.0) \datanode{map}{Land Cover Map};
+      \path (map.east)+(2.5,0.0) \process{valid}{Validation}{};
+      \path (valid.east)+(2.5,0.0) \datanode{stats}{OA, FScore};
 
+
+      %% arrows
+      \path [line] (inref.east) -- node [left] {} (sample);
+      \path [line] (sample.east) -- node [left, midway] {} (tsamples);
+      \path [line] (sample.east) -- +(0.25,-1.5) -- node [left, midway] {} (vsamples);
+      \path [line] (tsamples.east) -- +(1.5,0.0) -- +(1.5, -2.25) -- node [above, midway] {} (train);
+      \path [line] (vsamples.east) -- +(0.75, 0.0) -- +(0.75, -3.25) -- node [above, midway] {} (valid);
+      \path [line] (inimages.east) -- node [left] {} (fex);
+      \path [line] (fex.east) -- node [left] {} (train);
+      \path [line] (train.east) -- node [left] {} (model);
+      \path [line] (fex.south) -- +(0.0,-0.75) -- +(-3.65,-0.75) -- +(-3.65,-2.75) -- node [right, midway] {} (classif);
+      \path [line] (model.south) -- +(0.0, -1.25) -- +(-11.5, -1.25) -- +(-11.5, -2.25) -- node [above, midway] {} (classif);
+      \path [line] (classif.east) -- node [left] {} (map);
+      \path [line] (map.east) -- node [left] {} (valid);
+      \path [line] (valid.east) -- node [left] {} (stats);
+
+      % background
+      \background{sample}{tsamples}{fex}{fex}{Data Preparation}
+      \background{train}{train}{model}{model}{Supervised Learning}
+      \background{classif}{classif}{stats}{map}{Map Production}
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
 \frametitle{Can we use OpenStreetMap as reference data?}
-
+\begin{itemize}
+\item Reference data has to:
+  \begin{itemize}
+  \item represent the land cover classes of interest
+  \item be spatially coherent with the input images
+  \item contain few errors
+  \end{itemize}
+\item OSM pros:
+  \begin{itemize}
+  \item available everywhere
+  \item rich nomenclature
+  \item good geometric quality
+  \end{itemize}
+\item OSM cons:
+  \begin{itemize}
+  \item may be out of date in many places
+  \item polygons of one class may contain objects of other classes
+  \end{itemize}
+\end{itemize}
 
 
 \end{frame}
