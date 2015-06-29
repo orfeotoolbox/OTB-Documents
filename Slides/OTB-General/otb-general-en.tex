@@ -67,17 +67,17 @@
 {
 \addtocounter{framenumber}{-1}
 \begin{frame}
-\frametitle{Sommaire}
+\frametitle{Outline}
 \tableofcontents[currentsection]
 \end{frame}}
 
 %----------------------------------------------------------------------------------------
 %	PAGE TITRE
 %----------------------------------------------------------------------------------------
-\title{L'Orfeo ToolBox}
+\title{The Orfeo ToolBox}
 \includexmp{images/cc}
-\subtitle{un logiciel libre pour la télédétection}
-\author{\textbf{Julien Michel (CNES)}, Manuel Grizonnet (CNES)}% date and event here
+\subtitle{Open source library for remote sensing image processing}
+\author{Julien Michel (CNES), \textbf{Manuel Grizonnet (CNES)}}% date and event here
 \date{}
 
 \pgfdeclareimage[height=96mm,width=128mm]{background}{images/fondsClairSansLogo}
@@ -104,11 +104,11 @@
 \frametitle{Introduction}
 \begin{columns}
 \column{0.5\textwidth}
-L'objectif de la présentation est de donner à l'audience:
+Aim of this presentation:
 \begin{itemize}
-\item Un aperçu de l'ensemble des composantes du projet,
-\item Des bonnes pratiques pour aiguiller les débutants vers une utilisation optimale,
-\item Des pointeurs pour aller plus loin.
+\item Insight of project components 
+\item Good practises to help starters to use the library
+\item to go further and advanced use.
 \end{itemize}
 \column{0.5\textwidth}
 \includegraphics[width=0.9\textwidth]{images/LOGOTB_blackbox.png}
@@ -116,21 +116,25 @@ L'objectif de la présentation est de donner à l'audience:
 \begin{center}
 {\huge \color{red}{Orfeo ToolBox is not a black box \ldots}}
 
-Commençons donc l'ouverture de la boite !
+Let's start by opening the box!
 \end{center}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Si vous ne retenez qu'une planche\ldots}
-\begin{block}{L'Orfeo ToolBox est:}
+\frametitle{Things to know about OTB\ldots}
+\begin{block}{The Orfeo ToolBox is:}
 \begin{itemize}
-\item Une \textbf{librairie de traitement d'images} dédiées à la télédétection,
-\item \textbf{Un logiciel libre} diffusé sous licence CeCILL-v2 (équivalent à la GPL),
-\item \textbf{Financée et développée par le CNES} dans le cadre du programme préparatoire à Pléiades Orfeo (et au delà),
-\item Ecrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (librairie libre de traitement d'images médicales),
-\item Interfacée avec de nombreux autres logiciels libres de traitement d'images et de télédétection, tels que Gdal, OSSIM ou OpenCV,
-\item Conçue pour traiter de \textbf{gros volumes de données} de manière transparente grâce au traitement par morceaux et à la parallélisation.
+\item A (The) \textbf{image processing library} dedicated to remote sensing,
+\item \textbf{Free and open source software} under CeCILL-v2 license(equivalent to GPL),
+\item \textbf{Funded and developed by CNES (French Space Agency)} in the frame
+  of the ORFEO Pléiade program Orfeo (and beyond),
+\item Written in \textbf{C++} on top of \href{www.itk.org}{ITK} (medical image
+  processing),
+\item Interfaces seamlessly with other IP and RS open-source software, like GDAL, OSSIM, OpenCV \ldots
+\item Conçue pour traiter de \textbf{gros volumes de données} de manière
+  transparente grâce au traitement par morceaux et à la parallélisation.
+\item Concue to process \textbf{large data} thanks to parallel and on the flow processing
 \end{itemize}
 \end{block}
 
@@ -140,53 +144,55 @@ Commençons donc l'ouverture de la boite !
 
 \end{frame}
 
-\section{Motivations et historique de l'Orfeo ToolBox}
+\section{Back in 2006\ldots}
 
 \begin{frame}
-\frametitle{La genèse de l'Orfeo ToolBox (OTB)}
+\frametitle{How it starts?}
 
-\begin{block}{Le programme CNES Orfeo  (2006-2014)}
+\begin{block}{CNES Orfeo accompaniement program (2006-2014)}
 \begin{itemize}
 \item Constat: Le saut en résolution spatial de Pléiades par rapport à SPOT5 conduit à de nouveaux usages
-\item Objectif: préparer, accompagner et promouvoir l'utilisation et l'exploitation des images Pléiades (et CosmoSkymed)
-\item Une phase préparatoire de 2006 à 2012,
-\item Une phase de recette (Recette Thématique Utilisateurs) de 2012 à 2014.
+\item Goals: prepare, accompany and promote the use and the exploitation of the images derived from Pléiades satellites (and CosmoSkymed)
+\item Preparatory phase from 2006 to 2012,
+\item Thematic Commissioning activities from 2012 to 2014.
 \end{itemize}
 \end{block}
 
-\begin{block}{L'OTB dans Orfeo}
+\begin{block}{OTB in the Orfeo program}
 \begin{itemize}
-\item Répondre au besoin des groupes thématiques Orfeo
-\item Capitaliser la R\&D du CNES en extraction d'information
-\item Fournir des outils génériques aux utilisateurs Pléiades (pour faciliter l'utilisation des images)
+\item Answer to ORFEO user groups needs
+\item Capitalize CNES R\&D in extraction of information
+\item Deliver generic tools for Pleiades users
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}
-\frametitle{Pourquoi un logiciel libre ?}
+\begin{frame}[fragile]
+\frametitle{Why is it Open source?}
 
 \begin{block}{Diffusion maximale}
-L'OTB est un logiciel à destination de tous les utilisateurs de Pléiades. Sa diffusion large contribue au rayonnement de la mission.
+Image processing library dedicated to remote sensing for Pleaides users.Its wide
+dissemination contributes to the mission valorization.
 \end{block}
 
-\begin{block}{Qualité et efficacité}
-Le domaine fonctionnel de l'OTB est vaste, son développement nécessite du temps et de l'expertise. L'ouverture des sources:
+\begin{block}{Quality and powerful}
+OTB covers a vast panel of applciations and domains. Openess allows:
 \begin{itemize}
-\item Favorise l'appropriation et la validation par la communauté des utilisateurs,
-\item Favorise les contributions et les corrections de bugs par les utilisateurs,
-\item Favorise la dissémination sur de multiples plate-formes.  
+\item Facilitate appropriation and validation for users,
+\item Encourage contributions and bug reports,
+\item Available on multiple platforms
+\item The Cathedral and the Bazaar
 \end{itemize}
 \end{block}
 
-\begin{block}{Démarche scientifique}
-Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ouverture des sources permet une démarche de \textbf{recherche reproductible}.
+\begin{block}{Reproducible research}
+OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  transparent, reproducible and transdisciplinary research.
 \end{block}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{History \ldots}
 
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
@@ -194,16 +200,16 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{chronology}
 
 \begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
+\begin{block}{Key steps}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
+\item[1.0.0] Architecture, compilation and documentation, few functions and applications
 \end{description}
 \end{block}
 \end{minipage}
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{OTB history \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 \event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
@@ -214,10 +220,10 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{chronology}
 
 \begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
+\begin{block}{Key steps}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
+\item[1.0.0] Architecture, compilation and documentation, few functions and applications
+\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization \ldots)
 \end{description}
 \end{block}
 \end{minipage}
@@ -225,7 +231,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{OTB history\ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 \event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
@@ -241,11 +247,12 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{chronology}
 
 \begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
+\begin{block}{Key steps}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
+\item[1.0.0] Architecture, compilation and documentation, few functions and applications
+\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization \ldots)
+\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
+  map  \ldots) and more applications for demonstration (with GUI)
 \end{description}
 \end{block}
 \end{minipage}
@@ -253,7 +260,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{OTB history \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 \event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
@@ -270,12 +277,13 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{chronology}
 
 \begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
+\begin{block}{Key steps}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
+\item[1.0.0] Architecture, compilation and documentation, few functions and applications
+\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization \ldots)
+\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
+  map  \ldots) and more applications for demonstration (with GUI)
+\item[3.2.0] First version of Monteverdi, continue to enrich the library
 
 \end{description}
 \end{block}
@@ -283,7 +291,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{History \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 \event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
@@ -307,18 +315,20 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{block}{\'Etapes clés}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de l'imagerie Pléiades, nouvelles fonctions,
+\item[1.0.0] Architecture, compilation and documentation, few functions and applications
+\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization \ldots)
+\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
+  map  \ldots) and more applications for demonstration (with GUI)
+\item[3.2.0] First version of Monteverdi, continue to enrich the library
+\item[3.12.0] New applications mechanisms, complete support for Pleiades
+  imagery, new functions\ldots
 \end{description}
 \end{block}
 \end{minipage}
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{History \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 \event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
@@ -344,12 +354,14 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{block}{\'Etapes clés}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de l'imagerie Pléiades, nouvelles fonctions,
-\item[3.16.0] Première version de Monteverdi2, et nouvelles fonctions,
+\item[1.0.0] Architecture, compilation and documentation, few functions and applications
+\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization \ldots)
+\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
+  map  \ldots) and more applications for demonstration (with GUI)
+\item[3.2.0] First version of Monteverdi, continue to enrich the library
+\item[3.12.0] New applications mechanisms, complete support for Pleiades
+  imagery, new functions\ldots
+\item[3.16.0] Revamp of Monteverdi in \textbf{Monteverdi2}
 \end{description}
 \end{block}
 \end{minipage}
@@ -386,13 +398,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{block}{\'Etapes clés}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de l'imagerie Pléiades, nouvelles fonctions,
-\item[3.16.0] Première version de Monteverdi2, et nouvelles fonctions,
-\item[4.0.0] Compatibilité avec ITK 4.0, et nouvelles fonctions.
+\item[4.0.0] Compatible with ITK 4.0, and more functions.
 \end{description}
 \end{block}
 \end{minipage}
@@ -400,7 +406,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{A bit of history \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 %2 days ago 	4.0.0
@@ -445,7 +451,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{A bit of history \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 %2 days ago 	4.0.0
@@ -487,7 +493,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{A bit of history \ldots}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 %2 days ago 	4.0.0
@@ -534,19 +540,21 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \frametitle{Construite sur des logiciels libres tiers performants}
 \begin{block}{Motivations}
 \begin{itemize}
-\item A chaque fois que c'est possible, l'Orfeo ToolBox s'appuie sur des logiciels libres tiers
+\item Interfaces seamlessly with other IP and RS open-source software\ldots
 \item Cette position d'intégrateur permet d'accroître rapidement le nombre de fonctions tout en assurant leurs validité
-\item Elle permet également de créer de nouvelles fonctionnalités par hybridation
+\item Combine tools to create hybrid processing chain
 \end{itemize} 
 \end{block}
 
-\begin{block}{Les logiciels tiers principaux}
+\begin{block}{OTb backbone}
 \begin{itemize}
-\item \href{www.itk.org}{ITK} dépendance principale, fournit la modélisation du \emph{pipeline} de traitement
-\item \href{www.gdal.org}{GDAL} gère toutes les accès aux données images et vecteurs,
-\item \href{www.ossim.org}{OSSIM} contient toute la modélisation géométrique des prises de vues, 
-\item \href{www.opencv.org}{OpenCV} et \href{www.libsvm.org}{LibSVM} pour les fonctionnalités de classification supervisée,
-\item \href{www.muparser.org}{MuParser} et \href{www.muparserx.org}{MuParserX} l'analyse dynamique d'expressions mathématiques ...
+\item \href{www.itk.org}{ITK} data processing schema based on ITK \emph{pipeline}
+\item \href{www.gdal.org}{GDAL} to read/write raster/vector data,
+\item \href{www.ossim.org}{OSSIM} sensor modelling and metadata support, 
+\item \href{www.opencv.org}{OpenCV} et \href{www.libsvm.org}{LibSVM} provide
+  machine learning algorithms,
+\item \href{www.muparser.org}{MuParser} et \href{www.muparserx.org}{MuParserX}
+  powerful parsing of mathematical expression (band math)\ldots
 \end{itemize}
 \end{block}
 
@@ -554,37 +562,39 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Compatible (et disponible) pour un maximum de plateformes}
+\frametitle{Compatible (and available) on multiple plateforms}
 \begin{columns}
 \column{0.5\textwidth}
-\begin{block}{Objectif multi-plateforme}
+\begin{block}{Goal}
 \begin{itemize}
-\item Compiler avec les versions récentes de:
+\item Compile with recent versions of:
 \begin{itemize}
 \item gcc,
-\item clang, 
+\item clang,
+\item mingw
 \item visual studio\ldots
 \end{itemize}
-\item Des paquets binaires sont disponibles en fonction de la plateforme:
+\item Binary packages available:
 \begin{itemize}
-\item Dépôt ubuntugis pour Ubuntu,
-\item Intégration à OSGeo4W et paquets indépendants pour windows,
-\item Paquets MacPort et image dmg pour Mac OSX\ldots
+\item Ubuntugis repository (GIS and IP software for Ubuntu),
+\item Experimental Debian packages 
+\item Available in  OSGeo4W (OSGeo tools on Windows),
+\item Binary installers and Port for Mac OSX\ldots
 \end{itemize}
 \end{itemize}
 \end{block}
 \column{0.5\textwidth}
 \includegraphics[width=\textwidth]{images/OTB4_download_sourceforge_os_crop.png}
 \begin{center}
-\tiny{Système d'exploitation des téléchargements sur Sourceforge (ne tient pas compte des autres dépôt)}
+\tiny{OS of users which download OTB on Sourceforge}
 \end{center}
 \end{columns}
 \end{frame}
 
 \begin{frame}
-\frametitle{Flexibilité, passage à l'échelle: \textit{Pipeline}, \textit{Streaming} et \textit{multithreading}}
+\frametitle{Flexibility, scalability: \textit{Pipeline}, \textit{Streaming} et \textit{multithreading}}
 
-\begin{block}{Le modèle de \textit{Pipeline}}
+\begin{block}{\textit{Pipeline} data model}
 \begin{center}
 \includegraphics[width=0.7\textwidth]{images/ProcessObjectDataObject.png}
 \end{center}
@@ -602,7 +612,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Flexibilité, passage à l'échelle: en coulisse ...}
+\frametitle{Scalability backstage \dots}
 \begin{center}
 \includegraphics[width=0.6\textwidth]{images/ProcessObjectDataObjectInteractionUML.png}\\
 \tiny{source: http://www.aosabook.org/en/itk.html}
@@ -610,66 +620,68 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Proche de l'état de l'art}
+\frametitle{(Near) bleeding-edge techniques}
 \begin{itemize}
-\item Veille technologique de l'équipe de développement
-\item Implémentations d'algorithmes récents d'après publication. Ex.: profils morphologiques, segmentation MeanShift, textures de Haralick, points d'intérêt SURF \ldots
-\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift, fusion bayesienne, détection d'objets \ldots
-\item Veille pour bénéficier des avancées des logiciels tiers. Ex.: algorithmes de \textit{machine learning} d'OpenCV,
-\item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une meme interface.
+\item Technology intelligence of the development team
+\item Reference implementation of algorithms based on publications. e.g.:
+  morphological profil, MeanShift segmentation, Haralick textures, SURF keypoints \ldots
+\item Reference implementation contributes by authors with their
+  publications. Ex.: Large Scale MeanShift, bayesian fusion, object detection \ldots
+\item Veille pour bénéficier des avancées des logiciels tiers. e.g.:
+  \textit{machine learning} module in OpenCV,
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Un mot concernant le développement du logiciel}
+\frametitle{How OTB is develop?}
 \vspace{-0.5cm}
 \begin{itemize}
-\item Gestion de code source décentralisée: Mercurial (changement pour Git envisagé)
-\item C++ et suite CMake (ctest, cdash)
-\item Développement guidé par les tests (TDD)
-\item Gestion Agile
-\item Intégration continue et packaging automatisé
+\item Distributed version control: Mercurial (Git migration)
+\item C++ and CMake (CTest, CDash)
+\item Test driven development (TDD)
+\item Agile (scrum)
+\item Continuous integration and packaging
 \end{itemize}
-Tout les jours, environ 3000 tests sont compilés et rejoués sur 16 configurations différentes!
+Every day, almost 3000 tests are compiled, launched on 16 different configurations!
 \begin{center}
 \includegraphics[width=\textwidth,trim=0 250 0 0,clip=true]{images/dashboard.png}
 \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Comment utiliser l'OTB?}
+\frametitle{How to eat the OTB sandwich?}
 \vspace{-0.5cm}
 \begin{center}
 \includegraphics[width=\textwidth]{images/sandwich.pdf}
 \end{center}
 \vspace{-0.5cm}
-\begin{block}{Écrire son propre code}
- Flexible, accès à l'API complète, demande une connaissance en C++
+\begin{block}{Write your own code}
+ Flexible, access to full API, requires C++ knwoledge
 \end{block}
-\begin{block}{Utiliser les applications}
- Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis python. Peut être étendue (création d'applications)
+\begin{block}{Use the applications}
+ High level functions (e.g. segmentation), callable from CLI, Qt, Python, can be extended
 \end{block}
-\begin{block}{Utiliser Monteverdi2}
-Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
+\begin{block}{Use Monteverdi2}
+Visualization, data management, \textcolor{red}{Access to all applications}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Les applications: codées une fois, utilisables partout}
+\frametitle{The applications: write it once, use everywhere}
 \begin{columns}
 \column{0.5\textwidth}
 \begin{itemize}
-\item 80 applications sont livrées avec l'OTB
-\item 1 application $=$ 1 librairie dynamique (plugin)
-\item Les applications sont auto-descriptives et auto-documentées,
-\item Les applications peuvent etre étendues en dehors de l'OTB
-\item Plusieurs interfaces sont disponibles pour utiliser les plugins:
+\item 75 applications are shipped with OTB
+\item 1 application $=$ 1 dynamic library (plugin)
+\item Applications are auto-descriptive and auto-documented
+\item Applications can be extended outside of OTB
+\item Several plugins players:
 \begin{itemize}
-  \item Ligne de commande,
-  \item Interface QT auto-générée,
+  \item Command-line
+  \item Qt auto-generated
   \item Python
 \end{itemize}
-\item Les applications sont conçues pour une intégration facilitée dans des systèmes externes
+\item Applications are meant for integration in external systems
 \end{itemize}
 \column{0.5\textwidth}
 \includegraphics[width=\textwidth]{images/cloud_applications.png}
@@ -679,13 +691,13 @@ Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ens
 
 
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis la ligne de commande}
+\frametitle{Applications: command-line invocation}
 \begin{scriptsize}
 \vspace{-0.5cm}\begin{verbatim}
 $ otbcli_OrthoRectification 
 
 ERROR: Waiting for at least one parameter...
-This is the OrthoRectification application, version 4.1.0
+This is the OrthoRectification application, version 5.0.0
 This application allows to ortho-rectify optical images from supported sensors.
 
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
@@ -718,8 +730,9 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 \end{scriptsize}
 \end{frame}
 
+
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface QT auto-générée (paramètres)}
+\frametitle{Applications: auto-generated Qt invocation (parameters)}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/app_parameters.png}
 \end{center}
@@ -727,14 +740,14 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 
 
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface QT auto-générée (documentation)}
+\frametitle{Applications: auto-generated Qt invocation (documentation)}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/app_doc.png}
 \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface python}
+\frametitle{Applications: Python wrapping}
 \begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
 #!/usr/bin/python 
  
@@ -756,7 +769,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 
 \begin{frame}
-\frametitle{Monteverdi2: visualisation}
+\frametitle{Monteverdi2: visualization}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/monteverdi2-loupe.png}
@@ -765,7 +778,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 \begin{frame}
 
-\frametitle{Monteverdi2: traitement}
+\frametitle{Monteverdi2: processing}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/monteverdi2-haralick.png}
@@ -774,73 +787,74 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 
-\section{Fonctionnalités}
+\section{Features}
 
 \begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplètes)}
+\frametitle{Incomplete list of OTB functions}
 
-\begin{block}{Pré-traitements}
+\begin{block}{Pre-processing}
 \begin{itemize}
-\item Calibration radiométrique, ortho-rectification, reprojection (raster et vecteur), pan-sharpening, stéréo-rectification,
-\item Capteurs supportés: Pléiades, SPOT6, SPOT5, capteurs DigitalGlobe
-\item Modélisation géométrique fournie par OSSIM, support de MNT SRTM ou GeoTIFF
+\item Radiometric calibration, orthorectification, resampling (raster and
+  vector), pan-sharpening, stereo rectification,
+\item Sensor supported: Pléiades, SPOT6, SPOT5, DigitalGlobe satellites
+\item Geometric models (thanks to OSSIM), support for DEM (SRTM or GeoTIFF)
 \end{itemize}
 \end{block}
 
-\begin{block}{Manipulation d'images et de vecteurs}
+\begin{block}{Images and vector manipulation}
 \begin{itemize}
-\item Formats supportés par Gdal (raster et vecteur), conversion raster/vecteur
-\item Extraction de ROI, de bandes spectrales, concaténation ou séparation des bandes spectrales,
-\item calcul mathématiques entre bandes, color mapping, optimisation du contraste
-\item Filtrage linéaire, morphologie mathématique,
+\item Formats supported by Gdal (raster and vector), conversion raster/vector
+\item Region of interest extraction, of spectral bands, concatenation or splitting\ldots
+\item Band math, color mapping, contrast enhancement
+\item Linear filtering, Mathematical morphology,
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+\frametitle{Incomplete list of OTB functions}
 
-\begin{block}{Détection d'éléments saillants et calcul de primitives}
+\begin{block}{Feature extraction}
 \begin{itemize}
-\item Détection de contours, points d'intérêt SIFT et SURF, lignes, angles droits
-\item Indices radiométriques, indices de textures (Haralick, SFS, PanTex)
-\item Descripteurs statistiques locaux (moments de Flusser, HOG)
-\item Matching de points d'intérêts
+\item Edge detection, scale-invariant feature transform, lines, corners
+\item Radiometric indices, textures (Haralick, SFS, PanTex)
+\item Local statistics (Flusser moments, Histogram of Oriented Gradient)
+\item Keypoints matching
 \end{itemize}
 \end{block}
 
-\begin{block}{Détection de changement}
+\begin{block}{Change detection}
 \begin{itemize}
-\item Algorithme classique avec métrique de comparaison d'image,
-\item Algorithme MAD (Multivariate Alteration Detector)
+\item Classic methods with image metrics comparaison,
+\item Multivariate Alteration Detector
 \end{itemize}
 \end{block}
 
-\begin{block}{Réduction de la dimension, traitement hyperspectraux}
+\begin{block}{Dimensionality reduction, hyperspectral processing}
 \begin{itemize}
-\item Réduction de la dimension: PCA, NAPCA, ICA, MAF \ldots
-\item Estimation de la dimension et extraction des pixels purs: algorithme VCA
+\item PCA, NAPCA, ICA, MAF \ldots
+\item Dimension estimation, endmembers extraction, Vertex Component analysis (VCA)
 \end{itemize}
 \end{block}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+\frametitle{Incomplete list of OTB functions}
 \begin{block}{Segmentation}
 \begin{itemize}
-\item Algorithmes de segmentation Connected Components, MeanShift, Ligne de partage des eaux
-\item Méthodologie pour une application large échelle,
-\item Représentation vectorielles et raster des résultats, avec capacités d'analyse objet
+\item Segmentation algorithms: Connected Components, MeanShift,Watershed
+\item Méthods to apply those method on large dataset,
+\item Vector or raster representation which allow Object Based Image Analysis
 \end{itemize}
 \end{block}
 
 \begin{block}{Classification}
 \begin{itemize}
-\item Supervision et classification d'images avec 9 algorithmes au choix (dont SVM et Random Forest)
-\item Fusion et régularisation de cartes de classification
-\item Clustering de type K-Means ou carte de Kogonen
-\item Classification objets (segments issus d'une segmentation)
+\item 9 supervised methods available (including SVM and Random Forest)
+\item Fusion and regularization of classifications
+\item K-Means clustering or Kohonen maps
+\item Object classification (from a segmentation)
 \end{itemize}
 \end{block}
 
@@ -888,47 +902,50 @@ OrthoRectification.ExecuteAndWriteOutput()
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame} 
 
-\section{Quoi de neuf dans l'OTB 5.0 ?}
+\section{What's new in OTB 5.0?}
 
 \begin{frame}
-\frametitle{Modularité (inspirée de l'organisation du code ITK 4.x)}
+\frametitle{Modularity (inspired by ITK 4.x)}
 \begin{block}{Qu'est ce qui change?}
 \begin{itemize}
-\item Une meilleure organisation du code, en modules cohérents:
+\item  Organize the code into conceptual cohesive groups:
   \begin{itemize}
-    \item OTB 4.4.0: 1672 fichiers dans 26 répertoires
-    \item OTB 5.0: 1627 fichiers dans 124 modules répartis en 16 groupes
+    \item OTB 4.4: 1672 files in 26 directories
+    \item OTB 5.0: 1627 files in 124 \textbf{modules} divided in 16 groups
   \end{itemize}
-\item Les modules sont complets: tests, code source, applications sont regroupés
-\item Chaque module peut etre activé ou non, avec gestion des dépendances
+\item Modules contain: tests, source code, applications are grouped
+\item Each module can be (de)activate, with automatic dependencies resolutions
 \end{itemize}
 \end{block}
 
-\begin{block}{Quels sont les avantages?}
+\begin{block}{Advantages?}
 \begin{itemize}
-\item Les logiciels tiers sont importés dans des modules désactivables comme les autres
-\item Beaucoup de magie CMake (moins de code cmake, plus de choses automatisées)
-\item La documentation doxygen reflète l'organisation en groupes/modules
-\item Les contributions sont facilitées, notamment avec le mécanisme de \textit{remote module}
+\item Third part dependencies are integrated as modules and can be excluded
+\item Lots of CMake magic (less code for configuration, better support)
+\item Doxygen API documentation follows the new code organization (easier to
+  find class info)
+\item Facilitate external contributions with powerful mechanisms call \textit{remote module}
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
 \frametitle{Superbuild}
-\begin{block}{Avant OTB 4.4.0}
+\begin{block}{Before in OTB 4.4}
 \begin{itemize}
-\item Certaines dépendances (mais pas toutes) peuvent etre compilée en interne
-\item Leur code source est intégré à celui de l'Orfeo ToolBox (pas une bonne pratique en général)
+\item Some of the OTB third part dependencies could be build internally
+\item Their source code were integrated in OTB source tree (not a good idea)
 \end{itemize}
 \end{block}
 
-\begin{block}{Dans OTB 5.0, on Superbuild!}
+\begin{block}{In OTB 5.0, on Superbuild!}
 \begin{itemize}
-\item Il n'y a plus de logiciels tiers dans l'OTB
-\item Il existe un projet séparé appelé Superbuild, qui télécharge, configure, compile et installe chaque dépendance dans sa bonne version
-\item On peut ainsi compiler une OTB complète avec très peu de pré-requis (cmake, gcc, zlib, curl), et totalement automatiquement
-\item Il existe également un mode offline pour compiler l'OTB en avion (ou toute autre situation sans accès internet)
+\item No more third party library sources integrated in OTB
+\item External project called superbuild which allow to
+  download/configure/build/install OTB and all dependencies in one pass!
+\item Allow to build OTB on an (almost) empty platform (CMake, gcc, zlib, curl),
+  and everything is automatic\ldots
+\item There is also an \textit{offline} mode which does not require network
 \end{itemize}
 \end{block}
 \end{frame}
@@ -936,29 +953,29 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{frame}
 \frametitle{Project Steering Committee}
 \begin{itemize}
-\item Le PSC est un système de gouvernance ouverte
-\item Il s'agit d'une entité de coordination plus qu'un organisme de décision
+\item Open gouvernance
+\item High level guidance and coordination for the ORFEO ToolBox
 \item Animation de la communauté, et grandes orientations du projet
 \item Tout le monde peut en devenir membre (nouveau membre = vote)
 \item Les décisions et les débats sont publics (sur la liste de diffusion pour les développeurs)
-\item Les status sont publics\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
+\item Status and decision process are public\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
 \end{itemize}
 \end{frame}
 
 
 \section{Conclusion et perspectives}
 \begin{frame}
-\frametitle{Combien d'utilisateurs ?}
+\frametitle{How many users?}
 \begin{columns}[c]
 \column{0.5\textwidth}
-\begin{block}{Difficile à dire \ldots}
+\begin{block}{Hard to tell\ldots}
 \begin{itemize}
-    \item 577 membres sur la liste utilisateurs
-    \item Entre 100 et 150 messages par mois
-    \item 89 membres sur la liste développeurs
-    \item 118 comptes sur le système de gestion des bugs
-    \item 52 contributeurs à la documentation
-    \item 864 téléchargements for OTB 4.0.0
+    \item 577 members on the otb-users list
+    \item Between 100 and 150 mails by months
+    \item 89 members on the developers list
+    \item 118 user accounts on the bug tracker
+    \item 52 contributors in the documentation
+    \item 864 downloads for OTB 4.0
   \end{itemize}
 \end{block}
 \column{0.5\textwidth}
@@ -967,12 +984,13 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-\frametitle{Les réussites de l'OTB}
+\frametitle{Success stories}
 \vspace{-0.5cm}
 \begin{columns}
 \column{0.6\textwidth}
 \begin{itemize}
-\item l'OTB a été utile à (certains) des utilisateurs ORFEO/RTU
+\item OTB useful for some of the ORFEO users
+\item Used in a large variety of contexts beyond ORFEO now
 \item L'OTB a traité avec succès plus de 619 images Pléiades pour le site web RTU,
 \item L'OTB fournit beaucoup de fonctions utiles pour la télédétection dans un \textbf{unique outil}
 \item L'OTB est (a été) l'unique logiciel open-source compatible avec les images Pléiades (grâce à OpenJPEG)
@@ -992,38 +1010,36 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-\frametitle{Projets et logiciels utilisant l'OTB}
+\frametitle{Projects and software using OTB}
 \begin{columns}
   \column{0.5\textwidth}
   \begin{itemize}
-    \item Le logiciel Gnorasi (National Technical University of Athens)
-    \item Le projet Vahine (traitement d'images hyperspectrales pour l'astrophysique), IPAG
-    \item Projet SEAS (IRD)
-    \item L'OTB est utilisée dans certains composant des segments sols S2 et Venus (CNES et ESA)
-    \item Le programme de recherche TCM (ETS Quebec)
-    \item Le projet de recherche FP7 Tolomeo (CESBIO)
-    \item Les applications OTB applications sont disponibles dans le module de traitement de QGis
+    \item Gnorasi Software (National Technical University of Athens)
+    \item Vahine project (hyperspectral processing of astrophysics), IPAG
+    \item SEAS project (IRD)
+    \item OTB is part of some components for Sentinel-2 and Venus ground segment (CNES and ESA)
+    \item TCM research program (ETS Quebec)
+    \item Tolomeo FP7 research project (CESBIO)
+    \item OTB applications are available through QGIS processing framework
   \end{itemize}
   \column{0.5\textwidth}
-\begin{center}
   \includegraphics[width=\textwidth]{images/gnorasi2.png}\\
-  \tiny{Le logiciel Gnorasi}
-\end{center}
+  \tiny{The Gnorasi software}
 \end{columns}
 \end{frame}
 
 \begin{frame}
-\frametitle{Un système complexe: chaos et effets de bord}
+\frametitle{A complex system for complex tasks: chaos and side effects}
 \begin{center}
 \includegraphics[width=\textwidth]{images/Writing.png}\\
-\tiny{Effets des paramètres d'encodage tif et du streaming sur les performances d'une chaîne de traitement}
+\tiny{Effect of image encoding on image processing}
 \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Demander du support / proposer son aide}
+\frametitle{Support / Help to contribute}
 \vspace{-0.2cm}
-\begin{block}{Ressources générales}
+\begin{block}{General ressources}
 \vspace{-0.2cm}
 \begin{description}
 \item[Site web] www.orfeo-toolbox.org
@@ -1032,11 +1048,11 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{description}
 \end{block}
 \vspace{-0.2cm}
-\begin{block}{Documentation et aide}
+\begin{block}{Documentation and help}
 \vspace{-0.2cm}
 \begin{description}
-\item[Doxygen] http://www.orfeo-toolbox.org/doxygen/
-\item[Guides] Software Guide (pour les utilisateurs C++) et CookBook (pour tous)
+\item[Doxygen] \url{http://www.orfeo-toolbox.org/doxygen/}
+\item[Guides] Software Guide and CookBook (remote sensing recipes)
 \item[Liste utilisateurs] otb-users@googlegroups.com
 \item[Liste développeurs] otb-developers@googlegroups.com
 \end{description}
@@ -1045,16 +1061,16 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{Suivi rapproché}
 \vspace{-0.2cm}
 \begin{description}
-\item[Que se passe-t-il ?] scrum.orfeo-toolbox.org
-\item[Quelle est la météo du projet?] dash.orfeo-toolbox.org
-\item[Un coup d'oeil au code?] hg.orfeo-toolbox.org
-\item[Vous avez trouvé un bug?] bugs.orfeo-toolbox.org
+\item[Que se passe-t-il ?] \url{scrum.orfeo-toolbox.org}
+\item[Weather?] \url{dash.orfeo-toolbox.org}
+\item[Look at the code?] \url{hg.orfeo-toolbox.org}
+\item[Find a bug?] \url{bugs.orfeo-toolbox.org}
 \end{description}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Merci pour votre attention. Des questions ?}
+\frametitle{Thank you! Any questions?}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=0.7\textwidth]{images/LOGOTB_blackbox.png}
