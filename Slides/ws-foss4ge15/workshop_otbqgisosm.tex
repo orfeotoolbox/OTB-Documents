@@ -372,7 +372,7 @@ In the following slides, it will be refered to as \texttt{im.tif}.
 \item Open the image in Qgis
 \item In layer properties:
   \begin{enumerate}
-    \item Set the no data value to -10 000 in the transparancy tab,
+    \item Set the no data value to -10 000 in the transparency tab,
     \item In the style tab, change color composition to r=b3,g=b2,b=b1,
     \item Reload statistics in the Style tab.
   \end{enumerate}
@@ -445,12 +445,12 @@ You can visualize the result in qgis, and concatenate these two bands with the o
 \begin{block}{Solution}
 \begin{scriptsize}
 \begin{verbatim}
-$ otbcli_BandMath -il im.tif -out ndvi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b2)/(im1b3+im1b2)"
+$ otbcli_BandMath -il im.tif -out ndvi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b2)/(im1b3+im1b2)*1000"
 \end{verbatim}
 \end{scriptsize}
 \begin{scriptsize}
 \begin{verbatim}
-$ otbcli_BandMath -il im.tif -out ndwi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b4)/(im1b3+im1b4)"
+$ otbcli_BandMath -il im.tif -out ndwi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b4)/(im1b3+im1b4)*1000"
 \end{verbatim}
 \end{scriptsize}
 \begin{scriptsize}
