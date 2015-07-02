@@ -706,7 +706,7 @@ $ ogr2ogr -append all.shp builtup.shp
 \frametitle{Step 1: Estimation of image statistics}
 
 \begin{itemize}
-\item Some machine learning algorithm requires the input features to have similar ranges
+\item Some machine learning algorithm require the input features to have similar ranges
 \item Also, the SVM algorithm will converge faster if this range is $[-1,1]$
 \item We will therefore center and reduce all image bands prior to classification
 \item For this, we need to estimate the mean and variance of each band
