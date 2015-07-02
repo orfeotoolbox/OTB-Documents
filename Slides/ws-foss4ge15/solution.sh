@@ -1,41 +1,47 @@
 #!/bin/bash
 
-WSROOTDIR=/home/otb/FOSS4G
-RAWDATADIR=${WSROOTDIR}/raw_data/spot4t5/SPOT4_HRVIR1_XS_20130607_N2A_CArdecheD0000B0000
-INPUTIMAGE=SPOT4_HRVIR1_XS_20130607_N2A_ORTHO_SURF_CORR_PENTE_CArdecheD0000B0000.TIF
-WORKINGDIR=${WSROOTDIR}/results
+export WSROOTDIR=/tmp/FOSS4G
+export RAWDATADIR=${WSROOTDIR}/raw_data/
+export INPUTIMAGEDIR=${RAWDATADIR}/spot4t5/SPOT4_HRVIR1_XS_20130607_N2A_CArdecheD0000B0000
+export INPUTIMAGE=SPOT4_HRVIR1_XS_20130607_N2A_ORTHO_SURF_CORR_PENTE_CArdecheD0000B0000.TIF
+export WORKINGDIR=${WSROOTDIR}/results
 
+# Create directories
+mkdir -p ${RAWDATADIR}
 mkdir -p ${WORKINGDIR}
+# Get the data
+wget -O ${WSROOTDIR}/raw_data.tar.gz https://www.orfeo-toolbox.org/packages/ws-foss4ge2015/raw_data.tar.gz
+tar -x -z -C ${WSROOTDIR} -f ${WSROOTDIR}/raw_data.tar.gz
 
 # Extract red band
-otbcli_BandMath -il ${RAWDATADIR}/${INPUTIMAGE} -out ${WORKINGDIR}/red.tif int16 -exp "im1b2"
+otbcli_BandMath -il ${INPUTIMAGEDIR}/${INPUTIMAGE} -out ${WORKINGDIR}/red.tif int16 -exp "im1b2"
 
 # Extract green band
-otbcli_BandMath -il ${RAWDATADIR}/${INPUTIMAGE} -out ${WORKINGDIR}/green.tif int16 -exp "im1b1"
+otbcli_BandMath -il ${INPUTIMAGEDIR}/${INPUTIMAGE} -out ${WORKINGDIR}/green.tif int16 -exp "im1b1"
 
 # Compute synthetic blue band
-otbcli_BandMath -il ${RAWDATADIR}/${INPUTIMAGE} -out ${WORKINGDIR}/blue.tif int16 -exp "im1b1==-10000?-10000:0.7*im1b1+0.24*im1b2-0.14*im1b3"
+otbcli_BandMath -il ${INPUTIMAGEDIR}/${INPUTIMAGE} -out ${WORKINGDIR}/blue.tif int16 -exp "im1b1==-10000?-10000:0.7*im1b1+0.24*im1b2-0.14*im1b3"
 
 # Concatenate all bands for visualization
-RGBIMAGE=SPOT4_HRVIR1_XS_20130607_rgb.tif
+export RGBIMAGE=SPOT4_HRVIR1_XS_20130607_rgb.tif
 otbcli_ConcatenateImages -il ${WORKINGDIR}/red.tif ${WORKINGDIR}/green.tif ${WORKINGDIR}/blue.tif -out ${WORKINGDIR}/${RGBIMAGE} int16
 
 # Compute radiometric indices
-otbcli_BandMath -il ${RAWDATADIR}/${INPUTIMAGE} -out ${WORKINGDIR}/ndvi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b2)/(im1b3+im1b2)"
-otbcli_BandMath -il ${RAWDATADIR}/${INPUTIMAGE} -out ${WORKINGDIR}/ndwi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b4)/(im1b3+im1b4)"
+otbcli_BandMath -il ${INPUTIMAGEDIR}/${INPUTIMAGE} -out ${WORKINGDIR}/ndvi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b2)/(im1b3+im1b2)*1000"
+otbcli_BandMath -il ${INPUTIMAGEDIR}/${INPUTIMAGE} -out ${WORKINGDIR}/ndwi.tif int16 -exp "im1b1==-10000?-10000:(im1b3-im1b4)/(im1b3+im1b4)*1000"
 
 # Concatenate image and indices
-otbcli_ConcatenateImages -il ${RAWDATADIR}/${INPUTIMAGE} ndvi.tif ndwi.tif -out ${WORKINGDIR}/im4classif.tif
+otbcli_ConcatenateImages -il ${INPUTIMAGEDIR}/${INPUTIMAGE} ${WORKINGDIR}/ndvi.tif ${WORKINGDIR}/ndwi.tif -out ${WORKINGDIR}/im4classif.tif
 
 
 
 # Extract geometries
 ## Extract image enveloppe
-otbcli_ImageEnvelope -in ${RGBIMAGE} -proj "EPSG:32631" -out ${WORKINGDIR}/env.shp
+otbcli_ImageEnvelope -in ${WORKINGDIR}/${RGBIMAGE} -proj "EPSG:32631" -out ${WORKINGDIR}/env.shp
 
 ## Clipping, reprojecting and merging land use layers:
-ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc env.shp ${WORKINGDIR}/landuse_l93.shp ${RAWDATADIR}/osm/auvergne/landuse.shp
-ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc env.shp ${WORKINGDIR}/landuse_l93.shp ${RAWDATADIR}/osm/rhone-alpes/landuse.shp
+ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc ${WORKINGDIR}/env.shp ${WORKINGDIR}/landuse_l93.shp ${RAWDATADIR}/osm/auvergne/landuse.shp
+ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc ${WORKINGDIR}/env.shp ${WORKINGDIR}/landuse_l93.shp ${RAWDATADIR}/osm/rhone-alpes/landuse.shp
 
 ## Clipping, reprojecting and merging natural layers:
 ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc ${WORKINGDIR}/env.shp ${WORKINGDIR}/natural_l93.shp ${RAWDATADIR}/osm/auvergne/natural.shp
@@ -50,6 +56,9 @@ ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc ${WORKINGDIR}/env.shp ${WO
 ogr2ogr -append -sql "select * from waterways_l93 where name in (\"La Loire\", \"Le Rhone\")" ${WORKINGDIR}/large_rivers.shp ${WORKINGDIR}/waterways_l93.shp
 
 ## In Qgis, use the \textit{vector/geoprocessing/buffer} tool to build a 25m buffer around, and save it to \texttt{water.shp}.
+echo "In Qgis, use the vector/geoprocessing/buffer tool to build a 25m buffer around, and save it to water.shp"
+echo "Press a key when done"
+read -n 1 -s
 
 ## Append selected features from land use layer:
 ogr2ogr -append -sql "select * from landuse_l93 where type in (\"basin\",\"pond\",\"reservoir\",\"salt_pond\",\"water\") and OGR_GEOM_AREA > 10000" ${WORKINGDIR}/water.shp ${WORKINGDIR}/landuse_l93.shp
@@ -64,6 +73,8 @@ ogr2ogr -append -sql "select * from natural_l93 where type in (\"forest\")" ${WO
 ogr2ogr -append -sql "select * from landuse_l93 where type in (\"residential\",\"commercial\",\"cemetery\",\"construction\", \"industrial\", \"recreational\",\"harbour\", \"allotments\",\"brownfield\")" ${WORKINGDIR}/builtup.shp ${WORKINGDIR}/landuse_l93.shp
 
 # Add class label, exclude overlaps in QGis (see slides)
+echo "Add class label, exclude overlaps in QGis (see slides)"
+read -n 1 -s
 
 # Build separate sets for training (250 polygons of each class) and validation (the remaining)
 ogr2ogr -append -dialect SQLITE -sql "select * from forest order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/forest.shp
@@ -74,9 +85,9 @@ ogr2ogr -append -dialect SQLITE -sql "select * from water order by osm_id limit 
 ogr2ogr -append -dialect SQLITE -sql "select * from builtup order by osm_id limit 250,100000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/builtup.shp
 
 # Merge everything in a single layer
-$ ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/water.shp
-$ ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/forest.shp
-$ ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/builtup.shp
+ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/water.shp
+ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/forest.shp
+ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/builtup.shp
 
 # Image Classification
 
