@@ -30,6 +30,7 @@
 \usepackage{xmpincl}
 \usetikzlibrary{arrows,shadows}
 \usepackage{pifont}
+\usepackage{alltt}
 
 \usepackage{listings,color}
 
@@ -574,7 +575,7 @@ Open the three new layers in Qgis.
   \begin{itemize}
   \item basin, pond, reservoir, salt pond, water larger than 1000 squared meters from land use layer
   \item water larger than 1000 squared meters from natural layer
-  \item main rivers (Loire, Rhone) from waterways layer, buffered with 25 meters
+  \item main rivers (Loire, Rhône) from waterways layer, buffered with 25 meters
   \end{itemize}
 \item \textbf{Vegetation:} forest from natural layer
 \item \textbf{Built-up:} residential, commercial, cemetery, construction, industrial, recreational, harbour, allotments, yard, brownfield, from land use layer
@@ -588,10 +589,10 @@ Open the three new layers in Qgis.
 \begin{enumerate}
 \item Extract the two large rivers covering the image:
 \begin{scriptsize}
-\begin{verbatim}
+\begin{alltt}
 $ ogr2ogr -append -sql "select * from waterways_l93 where name in \
   ("La Loire", "Le Rhône")" large_rivers.shp waterways_l93.shp
-\end{verbatim}
+\end{alltt}
 \end{scriptsize}
 
 \item In Qgis, use the \textit{vector/geoprocessing/buffer} tool to build a 25m buffer around, and save it to \texttt{water.shp}.
