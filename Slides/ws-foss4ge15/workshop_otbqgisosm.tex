@@ -508,7 +508,7 @@ To get OpenStreetMap data ready for classification, we will do the following:
 \item Use the ImageEnvelope application
 \item Output a shapefile or sqlite file
 \item Control results in Qgis
-\item For a more accurate result, you can also draw the envelope by hand in Qgis
+\item For a more accurate result, draw the envelope by hand in Qgis
 \end{enumerate}
 \end{block}
 
@@ -590,7 +590,7 @@ Open the three new layers in Qgis.
 \begin{scriptsize}
 \begin{verbatim}
 $ ogr2ogr -append -sql "select * from waterways_l93 where name in \
-  ("La Loire", "Le Rhone")" large_rivers.shp waterways_l93.shp
+  ("La Loire", "Le Rhône")" large_rivers.shp waterways_l93.shp
 \end{verbatim}
 \end{scriptsize}
 
