@@ -33,11 +33,13 @@ otbcli_BandMath -il ${INPUTIMAGEDIR}/${INPUTIMAGE} -out ${WORKINGDIR}/ndwi.tif i
 # Concatenate image and indices
 otbcli_ConcatenateImages -il ${INPUTIMAGEDIR}/${INPUTIMAGE} ${WORKINGDIR}/ndvi.tif ${WORKINGDIR}/ndwi.tif -out ${WORKINGDIR}/im4classif.tif
 
-
+echo "In Qgis, draw the image enveloppe and save it to env.shp (projref WGS84, EPSG 4326)"
+echo "Press a key when done"
+read -n 1 -s
 
 # Extract geometries
 ## Extract image enveloppe
-otbcli_ImageEnvelope -in ${WORKINGDIR}/${RGBIMAGE} -proj "EPSG:32631" -out ${WORKINGDIR}/env.shp
+#otbcli_ImageEnvelope -in ${WORKINGDIR}/${RGBIMAGE} -proj "EPSG:32631" -out ${WORKINGDIR}/env.shp
 
 ## Clipping, reprojecting and merging land use layers:
 ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc ${WORKINGDIR}/env.shp ${WORKINGDIR}/landuse_l93.shp ${RAWDATADIR}/osm/auvergne/landuse.shp
@@ -53,7 +55,7 @@ ogr2ogr -append -t_srs ${RAWDATADIR}/l93.wkt -clipsrc ${WORKINGDIR}/env.shp ${WO
 
 # Build the reference data set with consistent classes
 ## Extract the two large rivers covering the image:
-ogr2ogr -append -sql "select * from waterways_l93 where name in (\"La Loire\", \"Le Rhone\")" ${WORKINGDIR}/large_rivers.shp ${WORKINGDIR}/waterways_l93.shp
+ogr2ogr -append -sql "select * from waterways_l93 where name in (\"La Loire\", \"Le Rhône\")" ${WORKINGDIR}/large_rivers.shp ${WORKINGDIR}/waterways_l93.shp
 
 ## In Qgis, use the \textit{vector/geoprocessing/buffer} tool to build a 25m buffer around, and save it to \texttt{water.shp}.
 echo "In Qgis, use the vector/geoprocessing/buffer tool to build a 25m buffer around, and save it to water.shp"
@@ -73,21 +75,22 @@ ogr2ogr -append -sql "select * from natural_l93 where type in (\"forest\")" ${WO
 ogr2ogr -append -sql "select * from landuse_l93 where type in (\"residential\",\"commercial\",\"cemetery\",\"construction\", \"industrial\", \"recreational\",\"harbour\", \"allotments\",\"brownfield\")" ${WORKINGDIR}/builtup.shp ${WORKINGDIR}/landuse_l93.shp
 
 # Add class label, exclude overlaps in QGis (see slides)
-echo "Add class label, exclude overlaps in QGis (see slides)"
+echo "Add class label, exclude overlaps in QGis (see slides). Final shapefiles should be named forest2.shp, builtup2.shp, water2.shp"
+echo "Press a key when done"
 read -n 1 -s
 
 # Build separate sets for training (250 polygons of each class) and validation (the remaining)
-ogr2ogr -append -dialect SQLITE -sql "select * from forest order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/forest.shp
-ogr2ogr -append -dialect SQLITE -sql "select * from water order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/water.shp
-ogr2ogr -append -dialect SQLITE -sql "select * from builtup order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/builtup.shp
-ogr2ogr -append -dialect SQLITE -sql "select * from forest order by osm_id limit 250,1000000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/forest.shp
-ogr2ogr -append -dialect SQLITE -sql "select * from water order by osm_id limit 250,1000000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/water.shp
-ogr2ogr -append -dialect SQLITE -sql "select * from builtup order by osm_id limit 250,100000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/builtup.shp
+ogr2ogr -append -dialect SQLITE -sql "select * from forest2 order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/forest2.shp
+ogr2ogr -append -dialect SQLITE -sql "select * from water2 order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/water2.shp
+ogr2ogr -append -dialect SQLITE -sql "select * from builtup2 order by osm_id limit 250" ${WORKINGDIR}/training.shp ${WORKINGDIR}/builtup2.shp
+ogr2ogr -append -dialect SQLITE -sql "select * from forest2 order by osm_id limit 250,1000000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/forest2.shp
+ogr2ogr -append -dialect SQLITE -sql "select * from water2 order by osm_id limit 250,1000000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/water2.shp
+ogr2ogr -append -dialect SQLITE -sql "select * from builtup2 order by osm_id limit 250,100000" ${WORKINGDIR}/validation.shp ${WORKINGDIR}/builtup2.shp
 
 # Merge everything in a single layer
-ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/water.shp
-ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/forest.shp
-ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/builtup.shp
+ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/water2.shp
+ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/forest2.shp
+ogr2ogr -append ${WORKINGDIR}/all.shp ${WORKINGDIR}/builtup2.shp
 
 # Image Classification
 
@@ -112,5 +115,5 @@ otbcli_ComputeConfusionMatrix -in ${WORKINGDIR}/classif_reg.tif -ref vector -ref
 ## Rasterize our layer
 otbcli_Rasterization -in ${WORKINGDIR}/all.shp -out ${WORKINGDIR}/all.tif -im ${WORKINGDIR}/im4classif.tif -mode attribute -mode.attribute.field "class" -background 0
 
-## Compute the difference map
+## Compute the difference map (projection might be lost due to a bug fixed in more recent OTB). Use Qgis to define the layer projection properly
 otbcli_BandMath -il ${WORKINGDIR}/classif_reg.tif ${WORKINGDIR}/all.tif -out ${WORKINGDIR}/errors.tif -exp "im2b1>0?(im1b1!=im2b1?im1b1:0):0"
