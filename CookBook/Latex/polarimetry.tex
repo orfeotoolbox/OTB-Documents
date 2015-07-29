@@ -22,178 +22,218 @@ For instance, the coherency matrix size is 3x3 in the monostatic case, and 4x4 i
 
 The Sinclair matrix is a special case : it is always represented as 3 or 4 one-band complex images (for mono- or bistatic case).
 
-There are 13 available conversions, each one being related to the following  parameters: \newline
-    0. msinclairtocoherency \newline
-    1. msinclairtocovariance \newline
-    2. msinclairtocircovariance \newline
-    3. mcoherencytomueller \newline
-    4. mcovariancetocoherencydegree \newline
-    5. mcovariancetocoherency \newline
-    6. mlinearcovariancetocircularcovariance \newline
-    7. bsinclairtocoherency \newline
-    8. bsinclairtocovariance \newline
-    9. bsinclairtocircovariance \newline
-    10. bsinclairtomueller \newline
-    11. bmuellertomcovariance \newline
-    12. bmuellertopoldegandpower \newline
-    
-
+There are 13 available conversions, each one being related to the following  parameters:
+\begin{enumerate}
+\item msinclairtocoherency
+\item msinclairtocovariance
+\item msinclairtocircovariance
+\item mcoherencytomueller
+\item mcovariancetocoherencydegree
+\item mcovariancetocoherency
+\item mlinearcovariancetocircularcovariance
+\item bsinclairtocoherency
+\item bsinclairtocovariance
+\item bsinclairtocircovariance
+\item bsinclairtomueller
+\item bmuellertomcovariance
+\item bmuellertopoldegandpower
+\end{enumerate}
 
 For each option parameter, the list below gives the formula used.
 
---- Monostatic case ---   \newline
-    
-0. msinclairtocoherency (SinclairToReciprocalCoherencyMatrixFunctor) \newline
-- channel #0 : \f$ (S_{hh}+S_{vv}).(S_{hh}+S_{vv})^{*} \f$ \newline
-- channel #1 : \f$ (S_{hh}+S_{vv}).(S_{hh}-S_{vv})^{*} \f$ \newline
-- channel #2 : \f$ (S_{hh}+S_{vv}).(2*S_{hv})^{*} \f$ \newline
-- channel #3 : \f$ (S_{hh}-S_{vv}).(S_{hh}-S_{vv})^{*} \f$ \newline
-- channel #4 : \f$ (S_{hh}-S_{vv}).(2*S_{hv})^{*} \f$ \newline
-- channel #5 : \f$ (2*S_{hv}).(2*S_{hv})^{*} \f$ \newline
- 
-1. msinclairtocovariance (SinclairToReciprocalCovarianceMatrixFunctor) \newline
-- channel #0 : \f$ S_{hh}.S_{hh}^{*} \f$ \newline
-- channel #1 : \f$ S_{hh}.S_{hv}^{*} \f$ \newline
-- channel #2 : \f$ S_{hh}.S_{vv}^{*} \f$ \newline
-- channel #3 : \f$ S_{hv}.S_{hv}^{*} \f$ \newline
-- channel #4 : \f$ S_{hv}.S_{vv}^{*} \f$ \newline
-- channel #5 : \f$ S_{vv}.S_{vv}^{*} \f$ \newline
- 
-2. msinclairtocircovariance (SinclairToReciprocalCircularCovarianceMatrixFunctor) \newline
-- channel #0 : \f$ S_{ll}.S_{ll}^{*} \f$ \newline
-- channel #1 : \f$ S_{ll}.S_{lr}^{*} \f$ \newline
-- channel #2 : \f$ S_{ll}.S_{rr}^{*} \f$ \newline
-- channel #3 : \f$ S_{lr}.S_{lr}^{*} \f$ \newline
-- channel #4 : \f$ S_{lr}.S_{rr}^{*} \f$ \newline
-- channel #5 : \f$ S_{rr}.S_{rr}^{*} \f$ \newline
- 
-3. mcoherencytomueller (ReciprocalCoherencyToReciprocalMuellerFunctor) \newline
-- channel #0 : \f$ 0.5*\mathcal{Re}( Coherency[0]+Coherency[3]+Coherency[5]) \f$ \newline
-- channel #1 : \f$ 0.5*\mathcal{Re}( Coherency[0]+Coherency[3]-Coherency[5]) \f$ \newline
-- channel #2 : \f$ 0.5*\mathcal{Re}( Coherency[0]-Coherency[3]+Coherency[5]) \f$ \newline
-- channel #3 : \f$ 0.5*\mathcal{Re}(-Coherency[0]+Coherency[3]+Coherency[5]) \f$ \newline
-- channel #4 : \f$ \mathcal{Re}(Coherency[1]) \f$ \newline
-- channel #5 : \f$ \mathcal{Re}(Coherency[2]) \f$ \newline
-- channel #6 : \f$ \mathcal{Im}(Coherency[4]) \f$ \newline
-- channel #7 : \f$ \mathcal{Re}(Coherency[4]) \f$ \newline
-- channel #8 : \f$ \mathcal{Im}(Coherency[2]) \f$ \newline
-- channel #9 : \f$ \mathcal{Im}(Coherency[1]) \f$ \newline
- 
-4. mcovariancetocoherencydegree (ReciprocalCovarianceToCoherencyDegreeFunctor) \newline
-- channel #0 : \f$ abs(S_{hh}*S_{vv}}^{*}) / sqrt(S_{hh}*S_{hh}}^{*}) / sqrt(S_{vv}*S_{vv}}^{*}) \f$ \newline
-- channel #1 : \f$ abs(S_{hv}*S_{vv}}^{*}) / sqrt(S_{hv}*S_{hv}}^{*}) / sqrt(S_{vv}*S_{vv}}^{*}) \f$ \newline
-- channel #2 : \f$ abs(S_{hh}*S_{hv}}^{*}) / sqrt(S_{hh}*S_{hh}}^{*}) / sqrt(S_{hv}*S_{hv}}^{*}) \f$ \newline
- 
-5. mcovariancetocoherency (ReciprocalCovarianceToReciprocalCoherencyFunctor) \newline
-- channel #0 : \f$ 0.5(S_{hh}+S_{vv}.(S_{hh}+S_{vv})^{*} \f$ \newline
-- channel #1 : \f$ 0.5(S_{hh}+S_{vv}.(S_{hh}-S_{vv})^{*} \f$ \newline
-- channel #2 : \f$ (S_{hh}+S_{vv}.(S_{hv})^{*} \f$ \newline
-- channel #3 : \f$ 0.5(S_{hh}-S_{vv}.(S_{hh}-S_{vv})^{*} \f$ \newline
-- channel #4 : \f$ (S_{hh}-S_{vv}.(S_{hv})^{*} \f$ \newline
-- channel #5 : \f$ 2.0*S_{hv}.S_{hv}^{*} \f$ \newline
- 
-6. mlinearcovariancetocircularcovariance (ReciprocalLinearCovarianceToReciprocalCircularCovarianceFunctor) \newline
-- channel #0 : \f$ 0.25(C_{1}+C_{3}+4*C_{2}-2*C_{6}-4*C_{5}-4*C_{9}) \f$ \newline
-- channel #1 : \f$ 0.25(C_{1}-C_{3}+2*C_{5}+2*C_{9} - 0.5\mathcal{i}.(C_{4}+C_{7}+C_{8}) \f$ \newline
-- channel #2 : \f$ 0.25(C_{1}+C_{3}-4*C_{2}-2*C_{6} - \mathcal{i}.(C_{4}+C_{8}) \f$ \newline
-- channel #3 : \f$ 0.25(C_{1}+C_{3}+2*C_{6} \f$ \newline
-- channel #4 : \f$ 0.25(C_{1}-C_{3}+2*C_{5}-2*C_{9} - 0.5\mathcal{i}.(C_{4}-C_{7}+C_{8}) \f$ \newline
-- channel #5 : \f$ 0.25(C_{1}+C_{3}+4*C_{2}-2*C_{6}+4*C_{5}+4*C_{9}) \f$ \newline
+\subsubsection{--- Monostatic case ---}
 
-Where: \newline
-- \f$ C_{1} = S_{hh}*S_{hh}}^{*} = \mathcal{Re}(input[0]) \f$ \newline
-- \f$ C_{2} = S_{hv}*S_{hv}}^{*} = \mathcal{Re}(input[3]) \f$ \newline
-- \f$ C_{3} = S_{vv}*S_{vv}}^{*} = \mathcal{Re}(input[5]) \f$ \newline
-- \f$ C_{4} = \mathcal{Re}(S_{hh}*S_{hv}}^{*}) = \mathcal{Re}(input[1]) \f$ \newline
-- \f$ C_{5} = \mathcal{Im}(S_{hh}*S_{hv}}^{*}) = \mathcal{Im}(input[1]) \f$ \newline
-- \f$ C_{6} = \mathcal{Re}(S_{hh}*S_{vv}}^{*}) = \mathcal{Re}(input[2]) \f$ \newline
-- \f$ C_{7} = \mathcal{Im}(S_{hh}*S_{vv}}^{*}) = \mathcal{Im}(input[2]) \f$ \newline
-- \f$ C_{8} = \mathcal{Re}(S_{hv}*S_{vv}}^{*}) = \mathcal{Re}(input[4]) \f$ \newline
-- \f$ C_{9} = \mathcal{Im}(S_{hv}*S_{vv}}^{*} = \mathcal{Im}(input[4])) \f$ \newline
+\begin{enumerate}
+\renewcommand{\labelenumii}{Channel \arabic{enumii} : }
+\item msinclairtocoherency (SinclairToReciprocalCoherencyMatrixFunctor)
+\begin{enumerate}
+\item $ (S_{hh}+S_{vv}).(S_{hh}+S_{vv})^{*} $
+\item $ (S_{hh}+S_{vv}).(S_{hh}-S_{vv})^{*} $
+\item $ (S_{hh}+S_{vv}).(2 S_{hv})^{*} $
+\item $ (S_{hh}-S_{vv}).(S_{hh}-S_{vv})^{*} $
+\item $ (S_{hh}-S_{vv}).(2 S_{hv})^{*} $
+\item $ (2 S_{hv}).(2 S_{hv})^{*} $
+\end{enumerate}
  
+\item msinclairtocovariance (SinclairToReciprocalCovarianceMatrixFunctor)
+\begin{enumerate}
+\item $ S_{hh}.S_{hh}^{*} $ 
+\item $ S_{hh}.S_{hv}^{*} $ 
+\item $ S_{hh}.S_{vv}^{*} $ 
+\item $ S_{hv}.S_{hv}^{*} $ 
+\item $ S_{hv}.S_{vv}^{*} $ 
+\item $ S_{vv}.S_{vv}^{*} $
+\end{enumerate}
  
---- Bistatic case --- \newline 
+\item msinclairtocircovariance (SinclairToReciprocalCircularCovarianceMatrixFunctor)
+\begin{enumerate}
+\item $ S_{ll}.S_{ll}^{*} $ 
+\item $ S_{ll}.S_{lr}^{*} $ 
+\item $ S_{ll}.S_{rr}^{*} $ 
+\item $ S_{lr}.S_{lr}^{*} $ 
+\item $ S_{lr}.S_{rr}^{*} $ 
+\item $ S_{rr}.S_{rr}^{*} $
+\end{enumerate}
+ 
+\item mcoherencytomueller (ReciprocalCoherencyToReciprocalMuellerFunctor)
+\begin{enumerate}
+\item $ 0.5 Re( Coherency[0]+Coherency[3]+Coherency[5]) $ 
+\item $ 0.5 Re( Coherency[0]+Coherency[3]-Coherency[5]) $ 
+\item $ 0.5 Re( Coherency[0]-Coherency[3]+Coherency[5]) $ 
+\item $ 0.5 Re(-Coherency[0]+Coherency[3]+Coherency[5]) $ 
+\item $ Re(Coherency[1]) $ 
+\item $ Re(Coherency[2]) $ 
+\item $ Im(Coherency[4]) $ 
+\item $ Re(Coherency[4]) $ 
+\item $ Im(Coherency[2]) $ 
+\item $ Im(Coherency[1]) $
+\end{enumerate}
+ 
+\item mcovariancetocoherencydegree (ReciprocalCovarianceToCoherencyDegreeFunctor)
+\begin{enumerate}
+\item $ abs(S_{hh}.S_{vv}^{*}) / sqrt(S_{hh}.S_{hh}^{*}) / sqrt(S_{vv}.S_{vv}^{*}) $ 
+\item $ abs(S_{hv}.S_{vv}^{*}) / sqrt(S_{hv}.S_{hv}^{*}) / sqrt(S_{vv}.S_{vv}^{*}) $ 
+\item $ abs(S_{hh}.S_{hv}^{*}) / sqrt(S_{hh}.S_{hh}^{*}) / sqrt(S_{hv}.S_{hv}^{*}) $
+\end{enumerate}
+ 
+\item mcovariancetocoherency (ReciprocalCovarianceToReciprocalCoherencyFunctor)
+\begin{enumerate}
+\item $ 0.5(S_{hh}+S_{vv}.(S_{hh}+S_{vv})^{*}) $ 
+\item $ 0.5(S_{hh}+S_{vv}.(S_{hh}-S_{vv})^{*}) $ 
+\item $ (S_{hh}+S_{vv}.(S_{hv})^{*}) $ 
+\item $ 0.5(S_{hh}-S_{vv}.(S_{hh}-S_{vv})^{*}) $ 
+\item $ (S_{hh}-S_{vv}.(S_{hv})^{*}) $ 
+\item $ 2.0 S_{hv}.S_{hv}^{*} $
+\end{enumerate}
+ 
+\item mlinearcovariancetocircularcovariance (ReciprocalLinearCovarianceToReciprocalCircularCovarianceFunctor)
+\begin{enumerate}
+\item $ 0.25(C_{1}+C_{3}+4 C_{2}-2 C_{6}-4 C_{5}-4 C_{9}) $ 
+\item $ 0.25(C_{1}-C_{3}+2 C_{5}+2 C_{9} - 0.5\imath (C_{4}+C_{7}+C_{8})) $ 
+\item $ 0.25(C_{1}+C_{3}-4 C_{2}-2 C_{6} - \imath (C_{4}+C_{8})) $ 
+\item $ 0.25(C_{1}+C_{3}+2 C_{6}) $ 
+\item $ 0.25(C_{1}-C_{3}+2 C_{5}-2 C_{9} - 0.5\imath (C_{4}-C_{7}+C_{8})) $ 
+\item $ 0.25(C_{1}+C_{3}+4 C_{2}-2 C_{6}+4 C_{5}+4 C_{9}) $
+\end{enumerate}
 
-7. bsinclairtocoherency (SinclairToCoherencyMatrixFunctor) \newline
- - channel #0 : \f$ (S_{hh}+S_{vv}).(S_{hh}+S_{vv})^{*} \f$ \newline
- - channel #1 : \f$ (S_{hh}+S_{vv}).(S_{hh}-S_{vv})^{*} \f$ \newline
- - channel #2 : \f$ (S_{hh}+S_{vv}).(S_{hv}+S_{vh})^{*} \f$ \newline
- - channel #3 : \f$ (S_{hh}+S_{vv}).(j(S_{hv}-S_{vh}))^{*} \f$ \newline
- - channel #4 : \f$ (S_{hh}-S_{vv}).(S_{hh}-S_{vv})^{*} \f$ \newline
- - channel #5 : \f$ (S_{hh}-S_{vv}).(S_{hv}+S_{vh})^{*} \f$ \newline
- - channel #6 : \f$ (S_{hh}-S_{vv}).(j(S_{hv}-S_{vh}))^{*} \f$ \newline
- - channel #7 : \f$ (S_{hv}+S_{vh}).(S_{hv}+S_{vh})^{*} \f$ \newline
- - channel #8 : \f$ (S_{hv}+S_{vh}).(j(S_{hv}-S_{vh}))^{*} \f$ \newline
- - channel #9 : \f$ j(S_{hv}-S_{vh}).(j(S_{hv}-S_{vh}))^{*} \f$ \newline
+Where:
+\begin{itemize}
+\item $ C_{1} = S_{hh}.S_{hh}^{*} = Re(input[0]) $ 
+\item $ C_{2} = S_{hv}.S_{hv}^{*} = Re(input[3]) $ 
+\item $ C_{3} = S_{vv}.S_{vv}^{*} = Re(input[5]) $ 
+\item $ C_{4} = Re(S_{hh}.S_{hv}^{*}) = Re(input[1]) $ 
+\item $ C_{5} = Im(S_{hh}.S_{hv}^{*}) = Im(input[1]) $ 
+\item $ C_{6} = Re(S_{hh}.S_{vv}^{*}) = Re(input[2]) $ 
+\item $ C_{7} = Im(S_{hh}.S_{vv}^{*}) = Im(input[2]) $ 
+\item $ C_{8} = Re(S_{hv}.S_{vv}^{*}) = Re(input[4]) $ 
+\item $ C_{9} = Im(S_{hv}.S_{vv}^{*}) = Im(input[4]) $ 
+\end{itemize}
  
-8. bsinclairtocovariance (SinclairToCovarianceMatrixFunctor) \newline
-- channel #0 : \f$ S_{hh}.S_{hh}^{*} \f$ \newline
-- channel #1 : \f$ S_{hh}.S_{hv}^{*} \f$ \newline
-- channel #2 : \f$ S_{hh}.S_{vh}^{*} \f$ \newline
-- channel #3 : \f$ S_{hh}.S_{vv}^{*} \f$ \newline
-- channel #4 : \f$ S_{hv}.S_{hv}^{*} \f$ \newline
-- channel #5 : \f$ S_{hv}.S_{vh}^{*} \f$ \newline
-- channel #6 : \f$ S_{hv}.S_{vv}^{*} \f$ \newline
-- channel #7 : \f$ S_{vh}.S_{vh}^{*} \f$ \newline
-- channel #8 : \f$ S_{vh}.S_{vv}^{*} \f$ \newline
-- channel #9 : \f$ S_{vv}.S_{vv}^{*} \f$ \newline
- 
-9. bsinclairtocircovariance (SinclairToCircularCovarianceMatrixFunctor) \newline
-- channel #0 : \f$ S_{ll}.S_{ll}^{*} \f$ \newline
-- channel #1 : \f$ S_{ll}.S_{lr}^{*} \f$ \newline
-- channel #2 : \f$ S_{ll}.S_{rl}^{*} \f$ \newline
-- channel #3 : \f$ S_{ll}.S_{rr}^{*} \f$ \newline
-- channel #4 : \f$ S_{lr}.S_{lr}^{*} \f$ \newline
-- channel #5 : \f$ S_{lr}.S_{rl}^{*} \f$ \newline
-- channel #6 : \f$ S_{lr}.S_{rr}^{*} \f$ \newline
-- channel #7 : \f$ S_{rl}.S_{rl}^{*} \f$ \newline
-- channel #8 : \f$ S_{rl}.S_{rr}^{*} \f$ \newline
-- channel #9 : \f$ S_{rr}.S_{rr}^{*} \f$ \newline
-With: \newline
-- \f$ S_{ll} = 0.5(-S_{hh}-i*S_{hv}-i*S_{vh}+S_{vv}) \f$ \newline
-- \f$ S_{lr} = 0.5(-S_{hh}+i*S_{hv}-i*S_{vh}+S_{vv}) \f$ \newline
-- \f$ S_{rl} = 0.5(-S_{hh}-i*S_{hv}+i*S_{vh}-S_{vv}) \f$ \newline
-- \f$ S_{rr} = 0.5(-S_{hh}+i*S_{hv}+i*S_{vh}+S_{vv}) \f$ \newline
- 
-10. bsinclairtomueller (SinclairToMueller) \newline
-- channel #0  : \f$ 0.5\mathcal{Re}( T_{xx}.T_{xx}^{*} + T_{xy}.T_{xy}^{*} + T_{yx}.T_{yx}^{*} + T_{yy}.T_{yy}^{*} ) \f$ \newline
-- channel #1  : \f$ 0.5\mathcal{Re}( T_{xx}.T_{xx}^{*} - T_{xy}.T_{xy}^{*} + T_{yx}.T_{yx}^{*} - T_{yy}.T_{yy}^{*} ) \f$ \newline
-- channel #2  : \f$ \mathcal{Re}( T_{xx}.T_{xy}^{*} + T_{yx}.T_{yy}^{*} ) \f$ \newline
-- channel #3  : \f$ \mathcal{Im}( T_{xx}.T_{xy}^{*} + T_{yx}.T_{yy}^{*} ) \f$ \newline
-- channel #4  : \f$ 0.5\mathcal{Re}( T_{xx}.T_{xx}^{*} + T_{xy}.T_{xy}^{*} - T_{yx}.T_{yx}^{*} - T_{yy}.T_{yy}^{*} ) \f$ \newline
-- channel #5  : \f$ 0.5\mathcal{Re}( T_{xx}.T_{xx}^{*} - T_{xy}.T_{xy}^{*} - T_{yx}.T_{yx}^{*} + T_{yy}.T_{yy}^{*} ) \f$ \newline
-- channel #6  : \f$ \mathcal{Re}( T_{xx}.T_{xy}^{*} - T_{yx}.T_{yy}^{*} ) \f$ \newline
-- channel #7  : \f$ \mathcal{Im}( T_{xx}.T_{xy}^{*} - T_{yx}.T_{yy}^{*} ) \f$ \newline
-- channel #8  : \f$ \mathcal{Re}( T_{xx}.T_{yx}^{*} + T_{xy}.T_{yy}^{*} ) \f$ \newline
-- channel #9  : \f$ \mathcal{Im}( T_{xx}.T_{yx}^{*} - T_{xy}.T_{yy}^{*} ) \f$ \newline
-- channel #10 : \f$ \mathcal{Re}( T_{xx}.T_{yy}^{*} + T_{xy}.T_{yx}^{*} ) \f$ \newline
-- channel #11 : \f$ \mathcal{Im}( T_{xx}.T_{yy}^{*} - T_{xy}.T_{yx}^{*} ) \f$ \newline
-- channel #12 : \f$ \mathcal{Re}( T_{xx}.T_{yx}^{*} + T_{xy}.T_{yy}^{*} ) \f$ \newline
-- channel #13 : \f$ \mathcal{Im}( T_{xx}.T_{yx}^{*} - T_{xy}.T_{yy}^{*} ) \f$ \newline
-- channel #14 : \f$ \mathcal{Re}( T_{xx}.T_{yy}^{*} + T_{xy}.T_{yx}^{*} ) \f$ \newline
-- channel #15 : \f$ \mathcal{Im}( T_{xx}.T_{yy}^{*} - T_{xy}.T_{yx}^{*} ) \f$ \newline
+\end{enumerate}
 
-With :\newline
-- \f$ T_{xx} = -S_{hh} \f$ \newline
-- \f$ T_{xy} = -S_{hv} \f$ \newline
-- \f$ T_{yx} = -S_{vh} \f$ \newline
-- \f$ T_{yy} = -S_{vv} \f$ \newline
- 
- 
-11. bmuellertomcovariance (MuellerToReciprocalCovarianceFunctor) \newline
-- channel #0 : \f$ 0.5*(M_{11} + M_{22} + 2*M_{12}) \f$ \newline
-- channel #1 : \f$ 0.5*(M_{11} - M_{22}) \f$ \newline
-- channel #2 : \f$ 0.5*(M_{11} + M_{22} - 2*M_{12}) \f$ \newline
-- channel #3 : \f$ 0.5*(M_{13} + M_{23} + i*(M_{14}+M_{24})) \f$ \newline
-- channel #4 : \f$ 0.5*(M_{33} - M_{44} - 2*i*M_{34}) \f$ \newline
-- channel #5 : \f$ 0.5*(M_{13} - M_{23} - i*(M_{14}-M_{24})) \f$ \newline
- 
-12. bmuellertopoldegandpower (MuellerToPolarisationDegreeAndPowerFunctor) \newline
-- channel #0 : \f$ P_{min} \f$ \newline
-- channel #1 : \f$ P_{max} \f$ \newline
-- channel #2 : \f$ DegP_{min} \f$ \newline
-- channel #3 : \f$ DegP_{max} \f$ \newline
+\subsubsection{--- Bistatic case ---}
 
+\begin{enumerate}
+\renewcommand{\labelenumii}{Channel \arabic{enumii} : }
+\setcounter{enumi}{7}
+
+\item bsinclairtocoherency (SinclairToCoherencyMatrixFunctor)
+\begin{enumerate}
+\item $ (S_{hh}+S_{vv}).(S_{hh}+S_{vv})^{*} $ 
+\item $ (S_{hh}+S_{vv}).(S_{hh}-S_{vv})^{*} $ 
+\item $ (S_{hh}+S_{vv}).(S_{hv}+S_{vh})^{*} $ 
+\item $ (S_{hh}+S_{vv}).( j (S_{hv}-S_{vh}))^{*} $ 
+\item $ (S_{hh}-S_{vv}).(S_{hh}-S_{vv})^{*} $ 
+\item $ (S_{hh}-S_{vv}).(S_{hv}+S_{vh})^{*} $ 
+\item $ (S_{hh}-S_{vv}).( j (S_{hv}-S_{vh}))^{*} $ 
+\item $ (S_{hv}+S_{vh}).(S_{hv}+S_{vh})^{*} $ 
+\item $ (S_{hv}+S_{vh}).( j (S_{hv}-S_{vh}))^{*} $ 
+\item $ j (S_{hv}-S_{vh}).( j (S_{hv}-S_{vh}))^{*} $
+\end{enumerate}
+ 
+\item bsinclairtocovariance (SinclairToCovarianceMatrixFunctor)
+\begin{enumerate}
+\item $ S_{hh}.S_{hh}^{*} $ 
+\item $ S_{hh}.S_{hv}^{*} $ 
+\item $ S_{hh}.S_{vh}^{*} $ 
+\item $ S_{hh}.S_{vv}^{*} $ 
+\item $ S_{hv}.S_{hv}^{*} $ 
+\item $ S_{hv}.S_{vh}^{*} $ 
+\item $ S_{hv}.S_{vv}^{*} $ 
+\item $ S_{vh}.S_{vh}^{*} $ 
+\item $ S_{vh}.S_{vv}^{*} $ 
+\item $ S_{vv}.S_{vv}^{*} $
+\end{enumerate}
+ 
+\item bsinclairtocircovariance (SinclairToCircularCovarianceMatrixFunctor)
+\begin{enumerate}
+\item $ S_{ll}.S_{ll}^{*} $ 
+\item $ S_{ll}.S_{lr}^{*} $ 
+\item $ S_{ll}.S_{rl}^{*} $ 
+\item $ S_{ll}.S_{rr}^{*} $ 
+\item $ S_{lr}.S_{lr}^{*} $ 
+\item $ S_{lr}.S_{rl}^{*} $ 
+\item $ S_{lr}.S_{rr}^{*} $ 
+\item $ S_{rl}.S_{rl}^{*} $ 
+\item $ S_{rl}.S_{rr}^{*} $ 
+\item $ S_{rr}.S_{rr}^{*} $ 
+\end{enumerate}
+
+With:
+\begin{itemize} 
+\item $ S_{ll} = 0.5(-S_{hh}-\imath S_{hv}-\imath S_{vh}+S_{vv}) $ 
+\item $ S_{lr} = 0.5(-S_{hh}+\imath S_{hv}-\imath S_{vh}+S_{vv}) $ 
+\item $ S_{rl} = 0.5(-S_{hh}-\imath S_{hv}+\imath S_{vh}-S_{vv}) $ 
+\item $ S_{rr} = 0.5(-S_{hh}+\imath S_{hv}+\imath S_{vh}+S_{vv}) $ 
+\end{itemize}
+ 
+\item bsinclairtomueller (SinclairToMueller)
+\begin{enumerate} 
+\item $ 0.5 Re( T_{xx}.T_{xx}^{*} + T_{xy}.T_{xy}^{*} + T_{yx}.T_{yx}^{*} + T_{yy}.T_{yy}^{*} ) $ 
+\item $ 0.5 Re( T_{xx}.T_{xx}^{*} - T_{xy}.T_{xy}^{*} + T_{yx}.T_{yx}^{*} - T_{yy}.T_{yy}^{*} ) $ 
+\item $ Re( T_{xx}.T_{xy}^{*} + T_{yx}.T_{yy}^{*} ) $ 
+\item $ Im( T_{xx}.T_{xy}^{*} + T_{yx}.T_{yy}^{*} ) $ 
+\item $ 0.5 Re( T_{xx}.T_{xx}^{*} + T_{xy}.T_{xy}^{*} - T_{yx}.T_{yx}^{*} - T_{yy}.T_{yy}^{*} ) $ 
+\item $ 0.5 Re( T_{xx}.T_{xx}^{*} - T_{xy}.T_{xy}^{*} - T_{yx}.T_{yx}^{*} + T_{yy}.T_{yy}^{*} ) $ 
+\item $ Re( T_{xx}.T_{xy}^{*} - T_{yx}.T_{yy}^{*} ) $ 
+\item $ Im( T_{xx}.T_{xy}^{*} - T_{yx}.T_{yy}^{*} ) $ 
+\item $ Re( T_{xx}.T_{yx}^{*} + T_{xy}.T_{yy}^{*} ) $ 
+\item $ Im( T_{xx}.T_{yx}^{*} - T_{xy}.T_{yy}^{*} ) $ 
+\item $ Re( T_{xx}.T_{yy}^{*} + T_{xy}.T_{yx}^{*} ) $ 
+\item $ Im( T_{xx}.T_{yy}^{*} - T_{xy}.T_{yx}^{*} ) $ 
+\item $ Re( T_{xx}.T_{yx}^{*} + T_{xy}.T_{yy}^{*} ) $ 
+\item $ Im( T_{xx}.T_{yx}^{*} - T_{xy}.T_{yy}^{*} ) $ 
+\item $ Re( T_{xx}.T_{yy}^{*} + T_{xy}.T_{yx}^{*} ) $ 
+\item $ Im( T_{xx}.T_{yy}^{*} - T_{xy}.T_{yx}^{*} ) $
+\end{enumerate}
+
+With :
+\begin{itemize}
+\item $ T_{xx} = -S_{hh} $ 
+\item $ T_{xy} = -S_{hv} $ 
+\item $ T_{yx} = -S_{vh} $ 
+\item $ T_{yy} = -S_{vv} $ 
+\end{itemize}
+ 
+\item bmuellertomcovariance (MuellerToReciprocalCovarianceFunctor)
+\begin{enumerate}
+\item $ 0.5 (M_{11} + M_{22} + 2 M_{12}) $ 
+\item $ 0.5 (M_{11} - M_{22}) $ 
+\item $ 0.5 (M_{11} + M_{22} - 2 M_{12}) $ 
+\item $ 0.5 (M_{13} + M_{23} + \imath (M_{14}+M_{24})) $ 
+\item $ 0.5 (M_{33} - M_{44} - 2 \imath M_{34}) $ 
+\item $ 0.5 (M_{13} - M_{23} - \imath (M_{14}-M_{24})) $
+\end{enumerate}
+ 
+\item bmuellertopoldegandpower (MuellerToPolarisationDegreeAndPowerFunctor)
+\begin{enumerate}
+\item $ P_{min} $ 
+\item $ P_{max} $ 
+\item $ DegP_{min} $ 
+\item $ DegP_{max} $
+\end{enumerate}
+
+\end{enumerate}
 
 \subsection{Polarimetric decompositions}\label{ssec:poldecomp}
 
@@ -205,39 +245,49 @@ The applications returns a float vector image, made of three channels : H (entro
 In order to do so, the complex coherency matrix (size 3*3) must be diagonalized.
 The H-alpha-A decomposition thus uses the following filters : SinclairToReciprocalCoherencyMatrixFunctor and ReciprocalHAlphaImageFilter.
 Here are the formula used (refer to the previous section about how the covariance matrix is obtained from the sinclair one):
+\begin{enumerate}
+\renewcommand{\labelenumi}{Channel \arabic{enumi} : }
+\item $ entropy = -\sum_{i=0}^{2} \frac{p[i].\log{p[i]}}{\log{3}} $
+\item $ \alpha = \sum_{i=0}^{2} p[i].\alpha_{i} $
+\item $ anisotropy = \frac {SortedEigenValues[1] - SortedEigenValues[2]}{SortedEigenValues[1] + SortedEigenValues[2]} $
+\end{enumerate}
 
-- channel #0 : \f$ entropy = -\sum_{i=0}^{2}{p[i].\log{p[i]}} / \log{3} \f$ \newline
-- channel #1 : \f$ \alpha = \sum_{i=0}^{2}{p[i].\alpha_{i} \f$ \newline
-- channel #2 : \f$ anisotropy = \frac {SortedEigenValues[1] - SortedEigenValues[2]}{SortedEigenValues[1] + SortedEigenValues[2]} \f$ \newline
+Where:
+\begin{itemize}
+\item $ p[i] = max(SortedEigenValues[i], 0) / \sum_{i=0}^{2, SortedEigenValues[i]>0} SortedEigenValues[i] $
+\item $ \alpha_{i} = \left| SortedEigenVector[i] \right|* \frac{180}{\pi}$
+\end{itemize}
 
-Where: \newline
-- \f$ p[i] = max(SortedEigenValues[i], 0) / \sum_{i=0}^{2, SortedEigenValues[i]>0}{SortedEigenValues[i]} \f$ \newline
-- \f$ \alpha_{i} = \left| SortedEigenVector[i] \right|* \frac{180}{\pi}\f$ \newline
-
-With: \newline
-- \f$ if p[i] < 0, p[i]=0 \f$ \newline
-- \f$ if p[i] > 1, p[i]=1 \f$ \newline
-- \f$ if \alpha_{i} > 90, \alpha_{i}=90 \f$ \newline
+With:
+\begin{itemize}
+\item $ \text{if} p[i] < 0, p[i]=0 $
+\item $ \text{if} p[i] > 1, p[i]=1 $
+\item $ \text{if} \alpha_{i} > 90, \alpha_{i}=90 $
+\end{itemize}
 
 \subsection{Polarimetric synthetis}\label{ssec:polsynth}
 
 This application gives, for each pixel, the power that would have been received by a SAR system with a basis different from the classical (H,V) one (polarimetric synthetis). 
 The new basis are indicated through two Jones vectors, defined by the user thanks to orientation (psi) and ellipticity (khi) parameters.
 These parameters are namely psii, khii, psir and khir. The suffixes (i) and (r) refer to the transmiting antenna and the receiving antenna respectively.
-Orientations and ellipticities are given in degrees, and are between -90/90 degrees and -45/45 degrees respectively.\n " 
+Orientations and ellipticities are given in degrees, and are between -90/90 degrees and -45/45 degrees respectively. 
 
-Four polarization architectures can be processed : \newline
-1) HH\_HV\_VH\_VV : full polarization, general bistatic case. \newline
-2) HH\_HV\_VV or HH\_VH\_VV : full polarization, monostatic case (transmitter and receiver are co-located). \newline
-3) HH\_HV : dual polarization. \newline
-4) VH\_VV : dual polarization. \newline
+Four polarization architectures can be processed :
+\begin{enumerate}
+\item HH\_HV\_VH\_VV : full polarization, general bistatic case.
+\item HH\_HV\_VV or HH\_VH\_VV : full polarization, monostatic case (transmitter and receiver are co-located).
+\item HH\_HV : dual polarization.
+\item VH\_VV : dual polarization.
+\end{enumerate}
 The application takes a complex vector image as input, where each band correspond to a particular emission/reception polarization scheme.
 User must comply with the band order given above, since the bands are used to build the Sinclair matrix.
 
-In order to determine the architecture, the application first relies on the number of bands of the input image. \newline
-1) Architecture HH\_HV\_VH\_VV is the only one with four bands, there is no possible confusion. \newline
-2) Concerning HH\_HV\_VV and HH\_VH\_VV architectures, both correspond to a three channels image. But they are processed in the same way, as the Sinclair matrix is symetric in the monostatic case. \newline
-3) Finally, the two last architectures (dual polarizations), can't be distinguished only by the number of bands of the input image. User must then use the parameters emissionh and emissionv to indicate the architecture of the system : emissionh=1 and emissionv=0 for HH\_HV,  emissionh=0 and emissionv=1 for VH\_VV. \newline
+In order to determine the architecture, the application first relies on the number of bands of the input image.
+\begin{enumerate}
+\item Architecture HH\_HV\_VH\_VV is the only one with four bands, there is no possible confusion.
+\item Concerning HH\_HV\_VV and HH\_VH\_VV architectures, both correspond to a three channels image. But they are processed in the same way, as the Sinclair matrix is symetric in the monostatic case.
+\item Finally, the two last architectures (dual polarizations), can't be distinguished only by the number of bands of the input image. User must then use the parameters emissionh and emissionv to indicate the architecture of the system : emissionh=1 and emissionv=0 for HH\_HV,  emissionh=0 and emissionv=1 for VH\_VV.
+\end{enumerate}
 Note : if the architecture is HH\_HV, khii and psii are automatically set to 0/0 degrees; if the architecture is VH\_VV, khii and psii are automatically set to 0/90 degrees.
 
 It is also possible to force the calculation to co-polar or cross-polar modes.
@@ -245,12 +295,10 @@ In the co-polar case, values for psir and khir will be ignored and forced to psi
 
 Finally, the result of the polarimetric synthetis is expressed in the power domain, through a one-band scalar image. \newline
 Note: this application doesn't take into account the terms which do not depend on the polarization of the antennas. 
-The parameter gain can be used for this purpose. \newline
+The parameter gain can be used for this purpose.
 
  
-The final formula is thus : \begin{verbatim} P = gain x | B^T . [S] . A |^2 \end{verbatim}, where A ans B are two Jones vectors and S is a Sinclair matrix."
-
- \newline
+The final formula is thus : \begin{verbatim} P = gain x | B^T . [S] . A |^2 \end{verbatim}, where A ans B are two Jones vectors and S is a Sinclair matrix.
  
 The two figures below (\ref{fig:polsynthll} and \ref{fig:polsynthlr}) show the two images obtained with the basis LL and LR (L for left circular polarization and R for right polarization),
 from a Radarsat 2 image taken over Vancouver. Once the four two-band images imagery\_HH imagery\_HV imagery\_VH imagery\_VV were merged 
@@ -276,6 +324,6 @@ The produced images were then rescaled to intensities ranging from 0 to 255 in o
    \centering
     \includegraphics[width=\textwidth]{../Art/test-left-cross-2.png}
     \itkcaption[SAR polarimetry conversion]{Image LR}
-    \label{fig:polsynthll}
+    \label{fig:polsynthlr}
    \end{subfigure}
 \end{figure}
