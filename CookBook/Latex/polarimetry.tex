@@ -298,7 +298,7 @@ Note: this application doesn't take into account the terms which do not depend o
 The parameter gain can be used for this purpose.
 
  
-The final formula is thus : \begin{verbatim} P = gain x | B^T . [S] . A |^2 \end{verbatim}, where A ans B are two Jones vectors and S is a Sinclair matrix.
+The final formula is thus : \begin{verbatim} P = gain x | B^T . [S] . A |^2 \end{verbatim} , where A ans B are two Jones vectors and S is a Sinclair matrix.
  
 The two figures below (\ref{fig:polsynthll} and \ref{fig:polsynthlr}) show the two images obtained with the basis LL and LR (L for left circular polarization and R for right polarization),
 from a Radarsat 2 image taken over Vancouver. Once the four two-band images imagery\_HH imagery\_HV imagery\_VH imagery\_VV were merged 
@@ -313,15 +313,13 @@ The produced images were then rescaled to intensities ranging from 0 to 255 in o
 
 \begin{figure}
   \centering
-  \begin{subfigure}
-   \centering
+  \begin{subfigure}[t]{\textwidth}
     \includegraphics[width=\textwidth]{../Art/test-left-co-2.png}
     \itkcaption[SAR polarimetry conversion]{Image LL}
     \label{fig:polsynthll}
    \end{subfigure}
    
-   \begin{subfigure}
-   \centering
+   \begin{subfigure}[b]{\textwidth}
     \includegraphics[width=\textwidth]{../Art/test-left-cross-2.png}
     \itkcaption[SAR polarimetry conversion]{Image LR}
     \label{fig:polsynthlr}

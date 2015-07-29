@@ -15,7 +15,8 @@ possibility to change this default behaviour by setting its own prefix.
 In this document, we will keep the default convention. Following list 
 summaries the available variables for input \#0 (and so on for every input).
 
-\begin{center} 
+\begin{center}
+\begin{table}
 \begin{tabular}{||l|l|l||}
 \hline
 \bf Variables & \bf Description & \bf Type \\
@@ -31,9 +32,10 @@ im1bjVar & global statistic : variance of the jth band from first input & Scalar
 im1PhyX and im1PhyY & spacing of first input in X and Y directions & Scalar \\
 \hline
 \end{tabular}
-\end{center}
 \caption{Variables and their descriptions.}
 \label{variables}
+\end{table}
+\end{center}
 
 Moreover, we also have the generic variables idxX and idxY that represent 
 the indices of the current pixel (scalars). 
@@ -79,7 +81,8 @@ if im1 is made of n components.
 On the other hand, the variable im1b1 for instance is represented as a 
 scalar; so we have the following different possibilities:
 
-\begin{center} 
+\begin{center}
+\begin{table}
 \begin{tabular}{||c|c||}
 \hline
 \bf Expression & \bf Status \\
@@ -91,9 +94,10 @@ im1b1 + \{1\} & incorrect \\
 im1 + \{im2b1,im2b2\} & correct if im1 represents a pixel of two components (equivalent to  im1 + im2) \\
 \hline
 \end{tabular}
-\end{center}
 \caption{Correct / incorrect expressions.}
 \label{correctness}
+\end{table}
+\end{center}
 
 
 Similar remarks can be made for the multiplication/division; 
@@ -140,7 +144,8 @@ x direction (number of columns), and p the dimension in the y direction
 (number of rows). For instance, im1b3N3x5 represents the following 
 neighbourhood: 
 
-\begin{center} 
+\begin{center}
+\begin{table}
 \begin{tabular}{|c|c|c|}
 \hline
 .	& .	& . \\
@@ -154,9 +159,10 @@ neighbourhood:
 .	& .	& . \\
 \hline
 \end{tabular}
-\end{center}
 \caption{Neighborhood of 3x5.}
 \label{correctness}
+\end{table}
+\end{center}
 
 Fundamentally, a neighbourhood is represented as a matrix inside the 
 muParserX framework; so the remark about mathematically well-defined 
@@ -331,7 +337,8 @@ First argument is related to the visible red band, and the second one to the nea
 The table below summarises the different functions and operators.
 
 
-\begin{center} 
+\begin{center}
+\begin{table}
 \begin{tabular}{||l|l||}
 \hline
 \bf Variables & \bf Remark \\
@@ -364,9 +371,10 @@ vexp   & adapation of an existing function to vectors : one input \\
 vsqrt  & adapation of an existing function to vectors : one input \\
 \hline
 \end{tabular}
-\end{center}
 \caption{Functions and operators summary.}
-\label{variables}
+\label{bandmathOperators}
+\end{table}
+\end{center}
 
 
 
