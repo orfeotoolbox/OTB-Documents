@@ -137,6 +137,7 @@ def GenerateParameterType(app,param):
 def GenerateParametersTable(app,paramlist,label):
     output = "\\begin{center}" + linesep
     output += "\\begin{small}" + linesep
+    output += "\\begin{table}" + linesep
     output += "\\begin{longtable}{|p{0.4\\textwidth}|l|p{0.4\\textwidth}|}" + linesep
     output += "\\hline" + linesep
     output += "Parameter key & Parameter type & Parameter description \\endfirsthead" + linesep
@@ -160,11 +161,13 @@ def GenerateParametersTable(app,paramlist,label):
         if app.GetParameterType(param) ==  otbApplication.ParameterType_Choice:
             for (choicekey,choicename) in zip(app.GetChoiceKeys(param),app.GetChoiceNames(param)):
                 output +="\\verb|" + param + " " + choicekey +"| & \\emph{Choice} & " + choicename + "\\\\" + linesep
+    output += "\\hline" + linesep
     output += "\\end{longtable}" + linesep
+    output += "\\caption{Parameters table for " + ConvertString(app.GetDocName()) + ".} "
+    output += "\\label{" + label + "}" +linesep
+    output += "\\end{table}" + linesep
     output += "\\end{small}" + linesep
     output += "\\end{center}" + linesep
-    output += "\\caption{Parameters table for " + ConvertString(app.GetDocName()) + ".} "
-    output += "\\label{" + label + "}" + linesep
     return output
 
 def unique(seq): 
