@@ -74,7 +74,7 @@
 %----------------------------------------------------------------------------------------
 %	PAGE TITRE
 %----------------------------------------------------------------------------------------
-\title{The Orfeo ToolBox}
+\title{State of the Orfeo ToolBox}
 \includexmp{images/cc}
 \subtitle{Open source library for remote sensing image processing}
 \author{Julien Michel (CNES), \textbf{Manuel Grizonnet (CNES)}}% date and event here
@@ -149,8 +149,8 @@ Goal of this presentation:
 
 \begin{block}{CNES Orfeo accompaniment program (2006-2014)}
 \begin{itemize}
-\item Gap in resolution with Pléiades compare with SPOT5 which leads to new usages
-\item Goals: prepare, accompany and promote the use and the exploitation of the images derived from Pléiades satellites (and COSMO-SkyMed)
+\item Pléiades: gap in resolution comparing with SPOT5 which leads to new usages
+\item Goals: prepare, accompany and promote the use and the exploitation of the images derived from Pléiades/COSMO-SkyMed satellites
 \item Preparatory phase from 2006 to 2012
 \item Thematic Commissioning activities from 2012 to 2014
 \end{itemize}
@@ -677,7 +677,9 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item Reference implementation of algorithms based on publications
 \item e.g.: morphological profil,MeanShift segmentation,Haralick textures,SURF keypoints\ldots
 \item Reference implementation contributes by authors with their
-  publications. e.g.: Large Scale MeanShift, bayesian fusion, object detection \ldots
+  publications. e.g.: Large Scale MeanShift\footnote{Michel, J.; Youssefi, D.; Grizonnet, M., "Stable Mean-Shift Algorithm and Its Application to the Segmentation of Arbitrarily Large Remote Sensing Images," Geoscience and Remote Sensing, IEEE Transactions on , vol.53, no.2, pp.952,964, Feb. 2015}, bayesian fusion\footnote{J. R. Dominique Fasbender and P. Bogaert. Bayesian data fusion for adaptable image pan-
+sharpening. IEEE Transactions on Geoscience and Remote Sensing, 46(6):1847–1857, 2007.
+13.2}, object detection \ldots
 \end{itemize}
 \end{frame}
 
@@ -685,7 +687,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \frametitle{How OTB is develop?}
 \vspace{-0.5cm}
 \begin{itemize}
-\item Distributed version control: Git (migration from Mercurial in July)
+\item Distributed version control: Git (migration from Mercurial in July 2015)
 \item C++ and CMake(CTest, CDash)
 \item Test driven development (TDD)
 \item Agile (scrum)
@@ -1044,12 +1046,12 @@ Good start! Already 5 remote modules contributed see \url{https://www.orfeo-tool
 \column{0.5\textwidth}
 \begin{block}{Hard to tell\ldots}
 \begin{itemize}
-    \item 577 members on the otb-users list
+    \item $\approx$ 600 members on the otb-users list
     \item Between 100 and 150 mails by months
-    \item 89 members on the developers list
-    \item 118 user accounts on the bug tracker
-    \item 52 contributors in the documentation
-    \item 864 downloads for OTB 4.0
+    \item $\approx$ 100 members on the developers list
+    \item $\approx$ 118 user accounts on the bug tracker
+    \item $\approx$ 50 contributors in the documentation
+    \item $\approx$ 3400 downloads for OTB 5.0 on SourceForge(released June 1, 2015).
   \end{itemize}
 \end{block}
 \column{0.5\textwidth}
@@ -1077,6 +1079,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
   \item bridges between RS and SIG \ldots
   \end{itemize}
 \item Beyond Orfeo, OTB is already used in several projects and software
+\item OSGeo incubation in progress
 \end{itemize}
 \column{0.4\textwidth}
 \includegraphics[width=0.9\textwidth]{images/resultats_ird.png}\\
@@ -1093,10 +1096,10 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
     \item TerreImage: Educational software for satellite image analysis
     \item Gnorasi Software (National Technical University of Athens)
     \item Vahine project (hyperspectral processing of astrophysics),IPAG
-    \item SEAS project(IRD)
+    \item Geosud project(IRSTEA)
     \item OTB is part of some components for \alert{Sentinel-2} and Venus ground segment (CNES and ESA)
     \item TCM research program (ETS Quebec)
-    \item Tolomeo FP7 research project (CESBIO)
+    \item ESA Sentinel2 agri
   \end{itemize}
   \column{0.5\textwidth}
   \includegraphics[width=\textwidth]{images/gnorasi2.png}\\
@@ -1104,13 +1107,13 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \end{columns}
 \end{frame}
 
-\begin{frame}
-\frametitle{A complex system for complex tasks: chaos and side effects}
-\begin{center}
-\includegraphics[width=\textwidth]{images/Writing.png}\\
-\tiny{Effect of image encoding on image processing}
-\end{center}
-\end{frame}
+%% \begin{frame}
+%% \frametitle{A complex system for complex tasks: chaos and side effects}
+%% \begin{center}
+%% \includegraphics[width=\textwidth]{images/Writing.png}\\
+%% \tiny{Effect of image encoding on image processing}
+%% \end{center}
+%% \end{frame}
 
 \begin{frame}
 \frametitle{Support/Help/Contribute}
