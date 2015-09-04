@@ -47,21 +47,21 @@ For each option parameter, the list below gives the formula used.
 \renewcommand{\labelenumii}{Channel \arabic{enumii} : }
 \item msinclairtocoherency (SinclairToReciprocalCoherencyMatrixFunctor)
 \begin{enumerate}
-\item $ (S_{hh}+S_{vv}).(S_{hh}+S_{vv})^{*} $
-\item $ (S_{hh}+S_{vv}).(S_{hh}-S_{vv})^{*} $
-\item $ (S_{hh}+S_{vv}).(2 S_{hv})^{*} $
-\item $ (S_{hh}-S_{vv}).(S_{hh}-S_{vv})^{*} $
-\item $ (S_{hh}-S_{vv}).(2 S_{hv})^{*} $
-\item $ (2 S_{hv}).(2 S_{hv})^{*} $
+\item $ 0.5 . (S_{hh}+S_{vv}).(S_{hh}+S_{vv})^{*} $
+\item $ 0.5 . (S_{hh}+S_{vv}).(S_{hh}-S_{vv})^{*} $
+\item $ 0.5 . (S_{hh}+S_{vv}).(2 S_{hv})^{*} $
+\item $ 0.5 . (S_{hh}-S_{vv}).(S_{hh}-S_{vv})^{*} $
+\item $ 0.5 . (S_{hh}-S_{vv}).(2 S_{hv})^{*} $
+\item $ 0.5 . (2 S_{hv}).(2 S_{hv})^{*} $
 \end{enumerate}
  
 \item msinclairtocovariance (SinclairToReciprocalCovarianceMatrixFunctor)
 \begin{enumerate}
 \item $ S_{hh}.S_{hh}^{*} $ 
-\item $ S_{hh}.S_{hv}^{*} $ 
+\item $ \sqrt{2}.S_{hh}.S_{hv}^{*} $ 
 \item $ S_{hh}.S_{vv}^{*} $ 
-\item $ S_{hv}.S_{hv}^{*} $ 
-\item $ S_{hv}.S_{vv}^{*} $ 
+\item $ 2.S_{hv}.S_{hv}^{*} $ 
+\item $ \sqrt{2}.S_{hv}.S_{vv}^{*} $ 
 \item $ S_{vv}.S_{vv}^{*} $
 \end{enumerate}
  
@@ -98,36 +98,27 @@ For each option parameter, the list below gives the formula used.
  
 \item mcovariancetocoherency (ReciprocalCovarianceToReciprocalCoherencyFunctor)
 \begin{enumerate}
-\item $ 0.5(S_{hh}+S_{vv}.(S_{hh}+S_{vv})^{*}) $ 
-\item $ 0.5(S_{hh}+S_{vv}.(S_{hh}-S_{vv})^{*}) $ 
-\item $ (S_{hh}+S_{vv}.(S_{hv})^{*}) $ 
-\item $ 0.5(S_{hh}-S_{vv}.(S_{hh}-S_{vv})^{*}) $ 
-\item $ (S_{hh}-S_{vv}.(S_{hv})^{*}) $ 
-\item $ 2.0 S_{hv}.S_{hv}^{*} $
+\item $ 0.5 . ( C33 + C13 + C13^{*} + C11 ) $ 
+\item $ 0.5 . ( -C33 - C13 + C13^{*} + C11 ) $ 
+\item $ 0.5 . ( \sqrt{2}.C12 + \sqrt{2}.C23^{*} ) $ 
+\item $ 0.5 . ( C33 - C13 - C13^{*} + C11 ) $ 
+\item $ 0.5 . ( \sqrt{2}.C12 - \sqrt{2}.C23^{*} ) $ 
+\item $ 0.5 . ( 2 . C22 ) $
 \end{enumerate}
+
+Where Cij are related to the elements of the reciprocal linear covariance matrix.
  
 \item mlinearcovariancetocircularcovariance (ReciprocalLinearCovarianceToReciprocalCircularCovarianceFunctor)
 \begin{enumerate}
-\item $ 0.25(C_{1}+C_{3}+4 C_{2}-2 C_{6}-4 C_{5}-4 C_{9}) $ 
-\item $ 0.25(C_{1}-C_{3}+2 C_{5}+2 C_{9} - 0.5\imath (C_{4}+C_{7}+C_{8})) $ 
-\item $ 0.25(C_{1}+C_{3}-4 C_{2}-2 C_{6} - \imath (C_{4}+C_{8})) $ 
-\item $ 0.25(C_{1}+C_{3}+2 C_{6}) $ 
-\item $ 0.25(C_{1}-C_{3}+2 C_{5}-2 C_{9} - 0.5\imath (C_{4}-C_{7}+C_{8})) $ 
-\item $ 0.25(C_{1}+C_{3}+4 C_{2}-2 C_{6}+4 C_{5}+4 C_{9}) $
+\item $ 0.25 . ( C33-i.\sqrt{2}.C23-C13+i.\sqrt{2}.C23^{*}-C13^{*}+2.C22-i.\sqrt{2}.C12+i.\sqrt{2}.C12^{*}+C11 ) $ 
+\item $ 0.25 . ( i.\sqrt{2}.C33+2.C23-i.\sqrt{2}.C13+i.\sqrt{2}.C13^{*}+2.C12^{*}-i.\sqrt{2}.C11 ) $ 
+\item $ 0.25 . ( -C33+i.\sqrt{2}.C23+C13+i.\sqrt{2}.C23^{*}+C13^{*}+2.C22-i.\sqrt{2}.C12-i.\sqrt{2}.C12^{*}-C11 ) $ 
+\item $ 0.25 . ( 2.C33+2.C13+2.C13^{*}+2.C11 ) $ 
+\item $ 0.25 . ( i.\sqrt{2}.C33+i.\sqrt{2}.C13+2.C23^{*}-i.\sqrt{2}.C13^{*}+2.C12-i.\sqrt{2}.C11 ) $ 
+\item $ 0.25 . ( C33+i.\sqrt{2}.C23-C13-i.\sqrt{2}.C23^{*}-C13^{*}+2.C22+i.\sqrt{2}.C12-i.\sqrt{2}.C12^{*}+C11 ) $
 \end{enumerate}
 
-Where:
-\begin{itemize}
-\item $ C_{1} = S_{hh}.S_{hh}^{*} = Re(input[0]) $ 
-\item $ C_{2} = S_{hv}.S_{hv}^{*} = Re(input[3]) $ 
-\item $ C_{3} = S_{vv}.S_{vv}^{*} = Re(input[5]) $ 
-\item $ C_{4} = Re(S_{hh}.S_{hv}^{*}) = Re(input[1]) $ 
-\item $ C_{5} = Im(S_{hh}.S_{hv}^{*}) = Im(input[1]) $ 
-\item $ C_{6} = Re(S_{hh}.S_{vv}^{*}) = Re(input[2]) $ 
-\item $ C_{7} = Im(S_{hh}.S_{vv}^{*}) = Im(input[2]) $ 
-\item $ C_{8} = Re(S_{hv}.S_{vv}^{*}) = Re(input[4]) $ 
-\item $ C_{9} = Im(S_{hv}.S_{vv}^{*}) = Im(input[4]) $ 
-\end{itemize}
+Where Cij are related to the elements of the reciprocal linear covariance matrix.
  
 \end{enumerate}
 
@@ -298,7 +289,7 @@ Note: this application doesn't take into account the terms which do not depend o
 The parameter gain can be used for this purpose.
 
  
-The final formula is thus : \begin{verbatim} P = gain x | B^T . [S] . A |^2 \end{verbatim} , where A ans B are two Jones vectors and S is a Sinclair matrix.
+The final formula is thus : \begin{verbatim} P = | B^T . [S] . A |^2 \end{verbatim} , where A ans B are two Jones vectors and S is a Sinclair matrix.
  
 The two figures below (\ref{fig:polsynthll} and \ref{fig:polsynthlr}) show the two images obtained with the basis LL and LR (L for left circular polarization and R for right polarization),
 from a Radarsat 2 image taken over Vancouver. Once the four two-band images imagery\_HH imagery\_HV imagery\_VH imagery\_VV were merged 
