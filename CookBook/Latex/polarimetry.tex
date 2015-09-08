@@ -172,10 +172,10 @@ Where Cij are related to the elements of the reciprocal linear covariance matrix
 
 With:
 \begin{itemize} 
-\item $ S_{ll} = 0.5(-S_{hh}-\imath S_{hv}-\imath S_{vh}+S_{vv}) $ 
-\item $ S_{lr} = 0.5(-S_{hh}+\imath S_{hv}-\imath S_{vh}+S_{vv}) $ 
-\item $ S_{rl} = 0.5(-S_{hh}-\imath S_{hv}+\imath S_{vh}-S_{vv}) $ 
-\item $ S_{rr} = 0.5(-S_{hh}+\imath S_{hv}+\imath S_{vh}+S_{vv}) $ 
+\item $ S_{ll} = 0.5(-S_{hh}-j S_{hv}-j S_{vh}+S_{vv}) $ 
+\item $ S_{lr} = 0.5(-S_{hh}+j S_{hv}-j S_{vh}+S_{vv}) $ 
+\item $ S_{rl} = 0.5(-S_{hh}-j S_{hv}+j S_{vh}-S_{vv}) $ 
+\item $ S_{rr} = 0.5(-S_{hh}+j S_{hv}+j S_{vh}+S_{vv}) $ 
 \end{itemize}
  
 \item bsinclairtomueller (SinclairToMueller)
@@ -208,12 +208,12 @@ With :
  
 \item bmuellertomcovariance (MuellerToReciprocalCovarianceFunctor)
 \begin{enumerate}
-\item $ 0.5 (M_{11} + M_{22} + 2 M_{12}) $ 
-\item $ 0.5 (M_{11} - M_{22}) $ 
-\item $ 0.5 (M_{11} + M_{22} - 2 M_{12}) $ 
-\item $ 0.5 (M_{13} + M_{23} + \imath (M_{14}+M_{24})) $ 
-\item $ 0.5 (M_{33} - M_{44} - 2 \imath M_{34}) $ 
-\item $ 0.5 (M_{13} - M_{23} - \imath (M_{14}-M_{24})) $
+\item $ 0.5.(M_{11}+M_{22}+2.M_{12}) $ 
+\item $ 0.5.\sqrt{2}.[(M_{13}+M_{23}) + j.(M_{14}+M_{24})] $ 
+\item $ -0.5.(M_{33}+M_{44}) - j.M_{34} $ 
+\item $ M_{11}-M_{22} $ 
+\item $ 0.5.\sqrt{2}.[(M_{13}-M_{23}) + j.(M_{14}-M_{24})] $ 
+\item $ 0.5.(M_{11}+M_{22}-2.M_{12}) $
 \end{enumerate}
  
 \item bmuellertopoldegandpower (MuellerToPolarisationDegreeAndPowerFunctor)
