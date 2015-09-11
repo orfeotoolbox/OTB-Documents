@@ -77,17 +77,32 @@ For each option parameter, the list below gives the formula used.
  
 \item mcoherencytomueller (ReciprocalCoherencyToReciprocalMuellerFunctor)
 \begin{enumerate}
-\item $ 0.5 Re( Coherency[0]+Coherency[3]+Coherency[5]) $ 
-\item $ 0.5 Re( Coherency[0]+Coherency[3]-Coherency[5]) $ 
-\item $ 0.5 Re( Coherency[0]-Coherency[3]+Coherency[5]) $ 
-\item $ 0.5 Re(-Coherency[0]+Coherency[3]+Coherency[5]) $ 
-\item $ Re(Coherency[1]) $ 
-\item $ Re(Coherency[2]) $ 
-\item $ Im(Coherency[4]) $ 
-\item $ Re(Coherency[4]) $ 
-\item $ Im(Coherency[2]) $ 
-\item $ Im(Coherency[1]) $
+\item $ 0.5*( C_{11}+C_{22}+C_{33} ) $ 
+\item $ Re(C_{12}) + Im(C_{22}) $ 
+\item $ Re(C_{13}) $ 
+\item $ Im(C_{23}) $ 
+\item $ Re(C_{12}) $ 
+\item $ 0.5*( C_{11}+C_{22}-C_{33} ) $ 
+\item $ Re(C_{23}) $ 
+\item $ Im(C_{13}) $ 
+\item $ -Re(C_{13}) $ 
+\item $ -Re(C_{23}) $
+\item $ 0.5.Re(VAL1) $
+\item $ 0.5.Im(VAL0) $
+\item $ Im(C_{23}) $
+\item $ Im(C_{13}) $
+\item $ 0.5.Im(VAL1^{*}) $
+\item $ 0.5.Re(VAL0) $
 \end{enumerate}
+
+With:
+\begin{itemize} 
+\item $ VAL0 = C_{33}+C_{12}-C_{11}-(C_{12}-C_{22})^{*}  $ 
+\item $ VAL1 = -C_{33}+C_{12}-C_{11}-(C_{12}-C_{22})^{*} $ 
+\end{itemize}
+
+Where Cij are related to the elements of the reciprocal coherence matrix.
+ 
  
 \item mcovariancetocoherencydegree (ReciprocalCovarianceToCoherencyDegreeFunctor)
 \begin{enumerate}
