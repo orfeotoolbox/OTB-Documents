@@ -1,0 +1,272 @@
+
+* Intro
+- Feature roadmap
+- Technical roadmap (developer and coding guidelines and workflows, target systems, packaging ...)
+- Infrastructure roadmap (SCM, wiki, dashboard ...) 
+* Features
+** Core
+*** Support du "no-data" et du "NaN"
+** IO
+*** extended file names
+**** box input parameter (region processing)
+**** bands input/output parameters (similar to the box parameter)
+**** support for vector data
+*** parallel writer with MPI
+** Sensor support (I/O, metadata)
+*** Sentinel-1                                                        
+*** Sentinel-2                                                        
+*** Faire le point sur les SPOT6-7
+*** Rigidité d'OSSIM pour la reconnaissance des formats
+*** Band description (jira OTB-645)
+** Geometry
+*** DSM extraction
+**** MARC-2 (jira OTB-236)
+*** multi-image registration
+*** Extend homologous point extraction to the multi-image case
+*** Expose OSSIM bundle block adjustment
+** Radiometry
+*** SMAC
+** SAR
+*** Speckle filtering
+**** Gamma-Gamma MAP
+*** Interferometry (jira OTB-42)                                      
+**** integration of ESA-SOCIS otb-insar code
+*** Polarimetry
+*** Tomography
+** Lidar
+** Vector data
+*** I/O
+*** Processing
+*** Use for classification (jira OTB-549)
+** GIS
+** Biophysical parameters
+*** Optical
+**** Vegetation
+*** Radar
+** Hyperspectral
+** Fusion
+*** S2/S3
+** EVHR
+- retinex, ombres, amélioration de contraste
+** Time series
+** Data assimilation
+*** Kalman and co
+*** Particle filtering
+** Feature extraction
+*** Refactor feature extraction mechanisms to work with pixels, regions and vector data
+*** WLD texture
+*** multiscale HOG
+*** DEM descriptors
+**** slope
+**** aspect
+**** ridge lines
+**** valleys
+*** on vector data
+**** perimeter, surface, compacity, roundness, excentricity
+*** FLST
+*** Feature regularization with respect to a model
+**** match vector features to the regions of an image
+*** Adjacency graph of a vector data
+*** fusion of geometrical entities wrt an image-dependent criterion
+**** links wit segmentation
+*** circle detection
+**** extend to other homomorphic transforms
+** Machine Learning
+*** Integrate cross validation in ML framework (jira OTB-466)
+*** Feature selection
+**** univariate
+**** wrappers (using classfiers)
+*** Data normalization
+**** min-max
+**** standardisation
+**** histogram clipping
+*** Sample densification/generation
+**** spatial interpolation
+**** sample jittering
+**** sample combination
+**** missing values
+***** imputation
+***** censored data
+*** Classification
+**** Refactor the classification framework                           
+https://groups.google.com/forum/#!search/classification$20samples$20jordi/otb-developers/VpWIcmhmIBU/antxtlSitKcJ
+***** Sampling (stratification, independent training and validation sets)
+***** Validation
+****** metrics
+
+***** Make applications work with pixels, regions (raster), polygons (vector), tables (csv, sqlite)
+***** Interoperability with SIG and statistics software
+through formats using tables and vector data?
+**** Deep learning
+**** Regularization using a segmentation
+**** Parallel learning
+**** Confidence maps
+***** margin, conflict, etc.
+*** Regression
+**** take into account also the features planned for the classification since most of them are also useful here
+**** jira OTB-434
+*** Clustering
+**** Create a framework for unsupervised learning (jira OTB-490)     
+*** Metrics
+**** confidence intervals and p-values
+http://www.css.cornell.edu/faculty/dgr2/teach/R/R_ac.pdf
+** Segmentation
+*** SLIC (jira OTB-631)
+** Geostatistics
+** OBIA
+*** Segmentation based reasoning (jira OTB-247)
+*** Object recognition
+*** Object counting
+** Signal processing
+*** Compressed sensing (jira OTB-237)
+** Data mining
+*** FLANN via opencv
+** Visualization
+*** Ice
+*** 3D (DEM+images)
+*** Z-profiles                                                        
+- spectral
+- temporal
+- has to correctly deal with irregular sampling (dates, spectral bands)
+** Applications
+Packaged processing chains.
+*** VRT generation (jira OTB-629)
+*** Dans les gui, proposer des extensions par défaut pour les formats (.tif)
+*** Pouvoir appliquer le traitement d'une appli sur une zone définie (masque)
+*** Appli spécifique pour manipuler les "no-data" et "NaN"
+*** Appli textures
+- choix individuel et non par famille
+*** Orthos SAR Sentinel-1
+** Monteverdi2
+*** OBIA with active learning
+*** Vector layer editing
+*** Deletion of datasets (jira MVDX-210)
+*** Complex SAR data (jira MVDX-100)                                  
+*** Logging system (jira MVDX-7)
+** Monteverdi1
+*** kill it
+* Technical
+** Optimizations
+*** search/load applications (jira OTB-737)                           
+*** reduce useless includes (jira OTB-177)                            
+*** chasser le code déclaré dans les headers pour les classes non template
+** Refactorings
+*** replace otb::VectorData with OGRVectorData (jira OTB-458)
+*** use the GDAL C API (jira OTB-330) (tâce à renommer)
+pour ne pas souffrir des changements liés à gdal 2.0
+*** guidelines for code organization between OTB, MVD, Ice, remote modules, etc. 
+c'est plutôt écrire une doc qui explique ça
+*** refactoring de tests
+se donner un objectif par release
+*** cohérence de fonctionnalités entre les applis
+- convert, et ?
+- ortho, sensor model
+- ensemble d'applis de segmentation
+- quelles applications pour faire quoi?
+  - quelles applications pour quoi faire
+** GPU support
+** MPI support
+** Modularisation
+- est-ce qu'il y a encore besoin de réorganisation?
+- c'est facile à faire
+** Developer guidelines
+*** TDD
+*** Git workflow
+- réflexion à mener (gitflow)
+- doc à écrire
+*** 
+*** Use STL as much as possible otherwise, boost
+*** Define Jira guidelines (jira OTB-62)
+et en général, comment utiliser le wiki, le bugtracker, etc.
+le backlog du wiki est deprecated
+*** Quit Jira for an opensource solution?
+*** Commit messages
+*** test name stadardisation
+** Dev utils
+*** automated source code formatting (jira OTB-10)
+*** Emacs mode
+** Target systems
+*** OS
+*** Compilers
+**** Move to C++11                                                   
+** Install process
+*** Superbuild
+*** MXE
+** Internationalisation (jira OTB-368)
+- mvd est internationalisé, mais pas les applis
+- regarder ce qui existe dans le c++ standard pour ne pas dépendre de qt
+** Bindings
+*** Target languages
+**** Python
+***** PyPi
+***** Numpy integration
+*** Applications
+*** SimpleOTB
+** Integration with other systems
+*** QGis
+- pbs d'interface et la responsabilité de la couche CS
+*** Zoo
+** External dependencies
+*** what if one wants to use GPL code (ex. GSL)
+*** follow evolution of external libs (gdal, itk, etc.)
+** GUI testing (jira MVDX-98)
+** Internationalisation of the applications which is compatible with QGis
+** mark applications as deprecated
+** meta-application creation mechanism
+*** and a wizard
+*** also through the SWIG bindings
+** application bindings for other languages
+** SimpleITK
+* Infrastructure
+** CMS
+** Wiki
+** Dashboard
+*** Have enough machines and configurations
+*** Continuous builds
+**** Hudson?
+*** Coverage
+*** Callgrind
+** Packaging
+*** Clarifier pour les utilisateurs et pour les gens qui veulent faire des paquets
+*** Tout automatiser
+- faire des paquets quand une release de linux sort et non seulement
+  quand la release OTB sort
+*** Il faut documenter les procédures
+*** Packages for major linux distros
+- Maintenir à jour la page du wiki sur les paquets binaires disponibles
+**** Debian stable and testing
+**** Ubuntu LTS and current (3 dernières)
+**** RHEL/CentOS current
+**** Fedora current
+**** OSGeoLive 
+**** Standalone (?)
+- ce serait faisable grace au SuperBuild
+*** Windows
+**** osgeo4w
+**** exe standalone pour mvd
+**** paquet de dev?
+**** il faut avoir des compilateurs windows récents
+*** MacOS
+**** macports
+**** homebrew
+*** App store (jira MVDX-129)                              :nonprioritaire:
+*** Docker containers
+*** MXE
+*** Exemples compilés avec les paquets de la lib
+*** Service d'hébergement, compilation et test des applications
+* En vrac
+** patrimoine à valoriser
+- exemples du SG à distribuer sous forme d'appli
+- faire des applis avec des fonctionnalités de la lib (ex. polar,
+  profils morpho)
+** enrichir le CookBook avec d'autres exemples
+** améliorer la doc des paramètres des applications
+** Critères de priorité (??)
+1. Besoins "niche"
+2. Il y a un autre logiciel qui le propose déjà
+3. A quel point la fonctionnalité arrive dans le pipeline (pré/post
+   traitement, ou milieu du traitement)
+4. Prospective, anticipation des besoins, opportunité
+   - données disponibles et utilisateurs susceptibles d'utiliser l'OTB
+5. TRL
+** Cartographie des priorités et du degré de couverture des besoins par domaine applicatif
