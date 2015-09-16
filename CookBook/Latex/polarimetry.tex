@@ -31,12 +31,12 @@ There are 13 available conversions, each one being related to the following  par
 \item mcovariancetocoherencydegree
 \item mcovariancetocoherency
 \item mlinearcovariancetocircularcovariance
+\item muellertomcovariance
 \item bsinclairtocoherency
 \item bsinclairtocovariance
 \item bsinclairtocircovariance
-\item bsinclairtomueller
-\item bmuellertomcovariance
-\item bmuellertopoldegandpower
+\item sinclairtomueller
+\item muellertopoldegandpower
 \end{enumerate}
 
 For each option parameter, the list below gives the formula used.
@@ -113,28 +113,38 @@ Where Cij are related to the elements of the reciprocal coherence matrix.
  
 \item mcovariancetocoherency (ReciprocalCovarianceToReciprocalCoherencyFunctor)
 \begin{enumerate}
-\item $ 0.5 . ( C33 + C13 + C13^{*} + C11 ) $ 
-\item $ 0.5 . ( -C33 - C13 + C13^{*} + C11 ) $ 
-\item $ 0.5 . ( \sqrt{2}.C12 + \sqrt{2}.C23^{*} ) $ 
-\item $ 0.5 . ( C33 - C13 - C13^{*} + C11 ) $ 
-\item $ 0.5 . ( \sqrt{2}.C12 - \sqrt{2}.C23^{*} ) $ 
-\item $ 0.5 . ( 2 . C22 ) $
+\item $ 0.5 . ( C_{33} + C_{13} + C_{13}^{*} + C_{11} ) $ 
+\item $ 0.5 . ( -C_{33} - C_{13} + C_{13}^{*} + C_{11} ) $ 
+\item $ 0.5 . ( \sqrt{2}.C_{12} + \sqrt{2}.C_{23}^{*} ) $ 
+\item $ 0.5 . ( C_{33} - C_{13} - C_{13}^{*} + C_{11} ) $ 
+\item $ 0.5 . ( \sqrt{2}.C_{12} - \sqrt{2}.C_{23}^{*} ) $ 
+\item $ 0.5 . ( 2 . C_{22} ) $
 \end{enumerate}
 
 Where Cij are related to the elements of the reciprocal linear covariance matrix.
  
 \item mlinearcovariancetocircularcovariance (ReciprocalLinearCovarianceToReciprocalCircularCovarianceFunctor)
 \begin{enumerate}
-\item $ 0.25 . ( C33-i.\sqrt{2}.C23-C13+i.\sqrt{2}.C23^{*}-C13^{*}+2.C22-i.\sqrt{2}.C12+i.\sqrt{2}.C12^{*}+C11 ) $ 
-\item $ 0.25 . ( i.\sqrt{2}.C33+2.C23-i.\sqrt{2}.C13+i.\sqrt{2}.C13^{*}+2.C12^{*}-i.\sqrt{2}.C11 ) $ 
-\item $ 0.25 . ( -C33+i.\sqrt{2}.C23+C13+i.\sqrt{2}.C23^{*}+C13^{*}+2.C22-i.\sqrt{2}.C12-i.\sqrt{2}.C12^{*}-C11 ) $ 
-\item $ 0.25 . ( 2.C33+2.C13+2.C13^{*}+2.C11 ) $ 
-\item $ 0.25 . ( i.\sqrt{2}.C33+i.\sqrt{2}.C13+2.C23^{*}-i.\sqrt{2}.C13^{*}+2.C12-i.\sqrt{2}.C11 ) $ 
-\item $ 0.25 . ( C33+i.\sqrt{2}.C23-C13-i.\sqrt{2}.C23^{*}-C13^{*}+2.C22+i.\sqrt{2}.C12-i.\sqrt{2}.C12^{*}+C11 ) $
+\item $ 0.25 . ( C_{33}-i.\sqrt{2}.C_{23}-C_{13}+i.\sqrt{2}.C_{23}^{*}-C_{13}^{*}+2.C_{22}-i.\sqrt{2}.C_{12}+i.\sqrt{2}.C_{12}^{*}+C_{11} ) $ 
+\item $ 0.25 . ( i.\sqrt{2}.C_{33}+2.C_{23}-i.\sqrt{2}.C_{13}+i.\sqrt{2}.C_{13}^{*}+2.C_{12}^{*}-i.\sqrt{2}.C_{11} ) $ 
+\item $ 0.25 . ( -C_{33}+i.\sqrt{2}.C_{23}+C_{13}+i.\sqrt{2}.C_{23}^{*}+C_{13}^{*}+2.C_{22}-i.\sqrt{2}.C_{12}-i.\sqrt{2}.C_{12}^{*}-C_{11} ) $ 
+\item $ 0.25 . ( 2.C_{33}+2.C_{13}+2.C_{13}^{*}+2.C_{11} ) $ 
+\item $ 0.25 . ( i.\sqrt{2}.C_{33}+i.\sqrt{2}.C_{13}+2.C_{23}^{*}-i.\sqrt{2}.C_{13}^{*}+2.C_{12}-i.\sqrt{2}.C_{11} ) $ 
+\item $ 0.25 . ( C_{33}+i.\sqrt{2}.C_{23}-C_{13}-i.\sqrt{2}.C_{23}^{*}-C_{13}^{*}+2.C_{22}+i.\sqrt{2}.C_{12}-i.\sqrt{2}.C_{12}^{*}+C_{11} ) $
 \end{enumerate}
 
 Where Cij are related to the elements of the reciprocal linear covariance matrix.
- 
+
+\item muellertomcovariance (MuellerToReciprocalCovarianceFunctor)
+\begin{enumerate}
+\item $ 0.5.(M_{11}+M_{22}+2.M_{12}) $ 
+\item $ 0.5.\sqrt{2}.[(M_{13}+M_{23}) + j.(M_{14}+M_{24})] $ 
+\item $ -0.5.(M_{33}+M_{44}) - j.M_{34} $ 
+\item $ M_{11}-M_{22} $ 
+\item $ 0.5.\sqrt{2}.[(M_{13}-M_{23}) + j.(M_{14}-M_{24})] $ 
+\item $ 0.5.(M_{11}+M_{22}-2.M_{12}) $
+\end{enumerate}
+
 \end{enumerate}
 
 \subsubsection{--- Bistatic case ---}
@@ -193,7 +203,11 @@ With:
 \item $ S_{rr} = 0.5(-S_{hh}+j S_{hv}+j S_{vh}+S_{vv}) $ 
 \end{itemize}
  
-\item bsinclairtomueller (SinclairToMueller)
+
+
+\subsubsection{--- Both cases ---}
+
+\item sinclairtomueller (SinclairToMueller)
 \begin{enumerate} 
 \item $ 0.5 Re( T_{xx}.T_{xx}^{*} + T_{xy}.T_{xy}^{*} + T_{yx}.T_{yx}^{*} + T_{yy}.T_{yy}^{*} ) $ 
 \item $ 0.5 Re( T_{xx}.T_{xx}^{*} - T_{xy}.T_{xy}^{*} + T_{yx}.T_{yx}^{*} - T_{yy}.T_{yy}^{*} ) $ 
@@ -220,18 +234,9 @@ With :
 \item $ T_{yx} = S_{vh} $ 
 \item $ T_{yy} = S_{vv} $ 
 \end{itemize}
+
  
-\item bmuellertomcovariance (MuellerToReciprocalCovarianceFunctor)
-\begin{enumerate}
-\item $ 0.5.(M_{11}+M_{22}+2.M_{12}) $ 
-\item $ 0.5.\sqrt{2}.[(M_{13}+M_{23}) + j.(M_{14}+M_{24})] $ 
-\item $ -0.5.(M_{33}+M_{44}) - j.M_{34} $ 
-\item $ M_{11}-M_{22} $ 
-\item $ 0.5.\sqrt{2}.[(M_{13}-M_{23}) + j.(M_{14}-M_{24})] $ 
-\item $ 0.5.(M_{11}+M_{22}-2.M_{12}) $
-\end{enumerate}
- 
-\item bmuellertopoldegandpower (MuellerToPolarisationDegreeAndPowerFunctor)
+\item muellertopoldegandpower (MuellerToPolarisationDegreeAndPowerFunctor)
 \begin{enumerate}
 \item $ P_{min} $ 
 \item $ P_{max} $ 
@@ -239,6 +244,51 @@ With :
 \item $ DegP_{max} $
 \end{enumerate}
 
+\end{enumerate}
+
+Examples :
+
+\begin{enumerate}
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+									  -conv msinclairtocoherency -outc coherency.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+									  -conv msinclairtocovariance -outc covariance.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+									  -conv msinclairtocircovariance -outc circ_covariance.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inc coherency.tif 
+									  -conv mcoherencytomueller -outf mueller.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inc covariance.tif 
+									  -conv mcovariancetocoherencydegree -outc coherency_degree.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inc covariance.tif 
+									  -conv mcovariancetocoherency -outc coherency.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inc covariance.tif 
+									  -conv mlinearcovariancetocircularcovariance -outc circ_covariance.tif \end{verbatim}	
+									  			
+\item \begin{verbatim} otbcli_SARConvert -inf mueller.tif 
+									  -conv muellertomcovariance -outc covariance.tif \end{verbatim}	
+									  								  
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
+									  -conv bsinclairtocoherency -outc bcoherency.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
+									  -conv bsinclairtocovariance -outc bcovariance.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
+									  -conv bsinclairtocircovariance -outc circ_bcovariance.tif \end{verbatim}
+									  
+									  
+\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
+									  -conv sinclairtomueller -outf mueller.tif \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_SARConvert -inf mueller.tif 
+									  -conv muellertopoldegandpower -outf degreepower.tif \end{verbatim}
+									  
 \end{enumerate}
 
 \subsection{Polarimetric decompositions}\label{ssec:poldecomp}
@@ -271,6 +321,12 @@ With:
 \item $ \text{if} \alpha_{i} > 90, \alpha_{i}=90 $
 \end{itemize}
 
+Example :
+
+\item \begin{verbatim} otbcli_SARDecompositions -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif 
+									  -decomp haa -out HaA.tif \end{verbatim}
+
+
 \subsection{Polarimetric synthetis}\label{ssec:polsynth}
 
 This application gives, for each pixel, the power that would have been received by a SAR system with a basis different from the classical (H,V) one (polarimetric synthetis). 
@@ -300,8 +356,7 @@ It is also possible to force the calculation to co-polar or cross-polar modes.
 In the co-polar case, values for psir and khir will be ignored and forced to psii and khii; same as the cross-polar mode, where khir and psir will be forced to psii + 90 degrees and -khii.
 
 Finally, the result of the polarimetric synthetis is expressed in the power domain, through a one-band scalar image. \newline
-Note: this application doesn't take into account the terms which do not depend on the polarization of the antennas. 
-The parameter gain can be used for this purpose.
+
 
  
 The final formula is thus : \begin{verbatim} P = | B^T . [S] . A |^2 \end{verbatim} , where A ans B are two Jones vectors and S is a Sinclair matrix.
