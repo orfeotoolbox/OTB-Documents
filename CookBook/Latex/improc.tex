@@ -21,6 +21,38 @@ The \application{BandMath} application embeds built-in operators and functions
 (listed \href{http://muparser.sourceforge.net/mup_features.html#idDef2}{here}),
 allowing a vast choice of possible operations.
 
+\subsection{Images with no-data values}\label{ssec:nodata}
+
+Image files can contain a no-data value in their metadata. It represents a
+special pixel value that should be treated as "no data available for this pixel".
+For instance, SRTM tiles use a particular no-data value of -32768 (usually
+found on sea areas).
+
+On multiband images, the no-data values are handled independently for each band.
+The case of an image with no-data values defined only for a subset of its bands
+is supported.
+
+This metadata is now handled by OTB image readers and writer (using the GDAL
+driver). The no-data value can be read from an image files and stored in the
+image metadata dictionary. It can also be exported by image writers. The OTB
+filters that produce a no-data value are able to export this value so that the
+output file will store it.
+
+An application has been created to manage the no-data value. The
+\application{NoDataMask} application has the following features :
+\begin{itemize}
+\item Build a mask corresponding to the no-data pixels in the input image
+\item Change the no-data value of the input image
+\end{itemize}
+
+For instance :
+\begin{verbatim}
+otbcli_NoDataMask -in input_image.tif
+                  -out output_image.tif
+                  -mode changevalue
+                  -mode.changevalue.newv -32768
+\end{verbatim}
+
 \subsection{Segmentation}\label{ssec:segmentation}
 
 Segmenting objects across a very high resolution scene and with a controlled
