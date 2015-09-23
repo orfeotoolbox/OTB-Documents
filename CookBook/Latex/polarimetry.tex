@@ -74,6 +74,13 @@ For each option parameter, the list below gives the formula used.
 \item $ S_{lr}.S_{rr}^{*} $ 
 \item $ S_{rr}.S_{rr}^{*} $
 \end{enumerate}
+
+With:
+\begin{itemize} 
+\item $ S_{ll} = 0.5(S_{hh}+2j S_{hv}-S_{vv}) $ 
+\item $ S_{lr} = 0.5(j S_{hh}+j S_{vv}) $  
+\item $ S_{rr} = 0.5(-S_{hh}+2j S_{hv}+S_{vv}) $ 
+\end{itemize}
  
 \item mcoherencytomueller (ReciprocalCoherencyToReciprocalMuellerFunctor)
 \begin{enumerate}
@@ -197,9 +204,9 @@ Where Cij are related to the elements of the reciprocal linear covariance matrix
 
 With:
 \begin{itemize} 
-\item $ S_{ll} = 0.5(-S_{hh}-j S_{hv}-j S_{vh}+S_{vv}) $ 
-\item $ S_{lr} = 0.5(-S_{hh}+j S_{hv}-j S_{vh}+S_{vv}) $ 
-\item $ S_{rl} = 0.5(-S_{hh}-j S_{hv}+j S_{vh}-S_{vv}) $ 
+\item $ S_{ll} = 0.5(S_{hh}+j S_{hv}+j S_{vh}-S_{vv}) $ 
+\item $ S_{lr} = 0.5(j S_{hh}+S_{hv}-S_{vh}+j S_{vv}) $ 
+\item $ S_{rl} = 0.5(j S_{hh}-S_{hv}+ S_{vh}+j S_{vv}) $ 
 \item $ S_{rr} = 0.5(-S_{hh}+j S_{hv}+j S_{vh}+S_{vv}) $ 
 \end{itemize}
  
