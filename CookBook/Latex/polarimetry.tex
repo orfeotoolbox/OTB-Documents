@@ -1,9 +1,82 @@
 \newpage
-\section{SAR polarimetry applications}\label{sec:polarimetry}
-%add intro
-This section describes how to use the applications related to SAR polarimetry.
+\section{Specific SAR functionnalities}
 
-\subsection{Matrices conversions}\label{ssec:polconv}
+This section describes how to use the applications related to SAR processing.
+
+\subsection{Calibration}
+
+The application SarRadiometricCalibration can deal with the calibration of data from four radar sensors:
+RadarSat2, Sentinel1, COSMO-SkyMed and TerraSAR-X.
+
+Examples :
+
+If SARimg.tif is a TerraSAR-X or a COSMO-SkyMed image :
+
+\begin{verbatim} otbcli_SarRadiometricCalibration -in SARimg.tif
+									  -out SARimg-calibrated.tif \end{verbatim}
+									  
+If SARimg.tif is a RadarSat2 or a Sentinel1 image, it 's possible to specify the look-up table 
+(automatically found in the metadata provided with such image) :
+
+\begin{verbatim} otbcli_SarRadiometricCalibration -in SARimg.tif -lut gamma
+									  -out SARimg-calibrated.tif \end{verbatim}
+
+For TerraSAR-X (and soon for RadarSat2 and Sentinel1), it is also possible
+to use a noise LUT to derive calibrated noise profiles :
+
+\begin{verbatim} otbcli_SarRadiometricCalibration -in SARimg.tif -lut gamma -noise 1
+									  -out SARimg-calibrated.tif \end{verbatim}
+
+\subsection{Despeckle}
+SAR images are generally corrupted by speckle noise. To suppress 
+speckle and improve the radar image interpretability lots of filtering 
+techniques have been proposed.  The module implements to well-known 
+despeckle methods: Frost, Lee, Gamma-MAP and kuan.
+
+The two figures below (\ref{fig:S1VVextractint} and \ref{fig:S1VVdespeckledextract}) show an extract of a SLC Sentinel1 image, band VV, taken over Cabo Verde.
+The following commands were used to produce the despeckled extract :
+
+First, the original image is converted into an intensity one (real part corresponds to band 1, and imaginary part to band 2):
+
+\begin{verbatim} otbcli_BandMath -il S1-VV-extract.tif -exp im1b1^2+im1b2^2 -out S1-VV-extract-int.tif \end{verbatim}
+
+Then the intensity image is despeckled with the Gamma-MAP filter :
+
+\begin{verbatim} otbcli_Despeckle -in S1-VV-extract-int.tif -filter.gammamap.rad 5
+									   -filter.gammamap.nblooks 1 -out S1-VV-despeckled-extract.tif \end{verbatim}
+
+The produced images were then rescaled to intensities ranging from 0 to 255 in order to be displayed.
+
+\begin{center}
+  \begin{figure}[h]
+    \includegraphics[width=\textwidth]{../Art/S1-VV-extract-int.png}
+    \itkcaption[SAR despeckling]{Intensity image from a SLC-VV Sentinel1 image.}
+    \label{fig:S1VVextractint}
+   \end{figure}
+   
+   \begin{figure}[h]
+    \includegraphics[width=\textwidth]{../Art/S1-VV-despeckled-extract.png}
+    \itkcaption[SAR despeckling]{After despeckling with Gamma-Map filter.}
+    \label{fig:S1VVdespeckledextract}
+   \end{figure}
+\end{center}
+
+
+\subsection{Polarimetry}
+
+In conventional imaging radar the measurement is a scalar which is 
+proportional to the received backscattered power at a particular combination 
+of linear polarization (HH, HV, VH or VV). 
+Polarimetry is the measurement and interpretation of the polarization of this measurement which
+allows to measure various optical properties of a material.
+In polarimetry the basic measurement is a $2x2$ complex scattering
+matrix yielding an eight dimensional measurement space (Sinclair
+matrix). For reciprocal targets where $HV=VH$, this space is
+compressed to five dimensions: three amplitudes ($|HH|$, $|HV|$, and
+$|VV|$); and two phase measurements, (co-pol: HH-VV, and cross-pol:
+HH-HV). (see \href{http://www.grss-ieee.org/technical-briefs/imaging-radar-polarimetry}{grss-ieee}).
+
+\subsubsection{Matrices conversions}
 
 This applications allows converting classical polarimetric matrices to each other.
 For instance, it is possible to get the coherency matrix from the Sinclar one, or the Mueller matrix from the coherency one.
@@ -41,7 +114,7 @@ There are 13 available conversions, each one being related to the following  par
 
 For each option parameter, the list below gives the formula used.
 
-\subsubsection{--- Monostatic case ---}
+--- Monostatic case ---
 
 \begin{enumerate}
 \renewcommand{\labelenumii}{Channel \arabic{enumii} : }
@@ -154,11 +227,11 @@ Where Cij are related to the elements of the reciprocal linear covariance matrix
 
 \end{enumerate}
 
-\subsubsection{--- Bistatic case ---}
+--- Bistatic case ---
 
 \begin{enumerate}
 \renewcommand{\labelenumii}{Channel \arabic{enumii} : }
-\setcounter{enumi}{7}
+\setcounter{enumi}{8}
 
 \item bsinclairtocoherency (SinclairToCoherencyMatrixFunctor)
 \begin{enumerate}
@@ -212,7 +285,7 @@ With:
  
 
 
-\subsubsection{--- Both cases ---}
+--- Both cases ---
 
 \item sinclairtomueller (SinclairToMueller)
 \begin{enumerate} 
@@ -298,18 +371,18 @@ Examples :
 									  
 \end{enumerate}
 
-\subsection{Polarimetric decompositions}\label{ssec:poldecomp}
+\subsubsection{Polarimetric decompositions}
 
 From one-band complex images (HH, HV, VH, VV), returns the selected decomposition.
 The H-alpha-A decomposition is currently the only one available; it is implemented for the monostatic case (transmitter and receiver are co-located).
 User must provide three one-band complex images HH, HV or VH, and VV (HV = VH in monostatic case).
+The H-alpha-A decomposition consists in averaging 3x3 complex coherency matrices (incoherent analysis) : 
+The user must provide the size of the averaging window, thanks to the parameter inco.kernelsize.
 The applications returns a float vector image, made of three channels : H (entropy), Alpha, A (Anisotropy).
 
-In order to do so, the complex coherency matrix (size 3*3) must be diagonalized.
-The H-alpha-A decomposition thus uses the following filters : SinclairToReciprocalCoherencyMatrixFunctor and ReciprocalHAlphaImageFilter.
-Here are the formula used (refer to the previous section about how the covariance matrix is obtained from the sinclair one):
+Here are the formula used (refer to the previous section about how the coherence matrix is obtained from the sinclair one):
 \begin{enumerate}
-\renewcommand{\labelenumi}{Channel \arabic{enumi} : }
+\renewcommand{\labelenumii}{Channel \arabic{enumii} : }
 \item $ entropy = -\sum_{i=0}^{2} \frac{p[i].\log{p[i]}}{\log{3}} $
 \item $ \alpha = \sum_{i=0}^{2} p[i].\alpha_{i} $
 \item $ anisotropy = \frac {SortedEigenValues[1] - SortedEigenValues[2]}{SortedEigenValues[1] + SortedEigenValues[2]} $
@@ -321,21 +394,74 @@ Where:
 \item $ \alpha_{i} = \left| SortedEigenVector[i] \right|* \frac{180}{\pi}$
 \end{itemize}
 
-With:
-\begin{itemize}
-\item $ \text{if} p[i] < 0, p[i]=0 $
-\item $ \text{if} p[i] > 1, p[i]=1 $
-\item $ \text{if} \alpha_{i} > 90, \alpha_{i}=90 $
-\end{itemize}
 
 Example :
 
+We first extract a ROI from the original image (not required). 
+Here imagery\_HH.tif represents the element HH of the Sinclair matrix (and so forth).
+
 \begin{itemize}
-\item \begin{verbatim} otbcli_SARDecompositions -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif 
-									  -decomp haa -out HaA.tif \end{verbatim}
+\item \begin{verbatim} otbcli_ExtractROI -in imagery_HH.tif -out imagery_HH_extract.tif  
+									  -startx 0 -starty 0 -sizex 1000 -sizey 1000 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_ExtractROI -in imagery_HV.tif -out imagery_HV_extract.tif  
+									  -startx 0 -starty 0 -sizex 1000 -sizey 1000 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_ExtractROI -in imagery_VV.tif -out imagery_VV_extract.tif  
+									  -startx 0 -starty 0 -sizex 1000 -sizey 1000 \end{verbatim}
 \end{itemize}
 
-\subsection{Polarimetric synthetis}\label{ssec:polsynth}
+Next we apply the H-alpha-A decomposition :
+
+\begin{verbatim} otbcli_SARDecompositions -inhh imagery_HH_extract.tif -inhv imagery_HV_extract.tif -invv imagery_VV_extract.tif 
+					-decomp haa -inco.kernelsize 5 -out haa_extract.tif \end{verbatim}
+
+The result is made uo of 3 bands : entropy (0..1) - alpha (0..90) - anisotropy. 
+It is splitted into 3 mono-band images thanks to following command :
+
+\begin{verbatim} otbcli_SplitImage -in haa_extract.tif -out haa_extract_splitted.tif \end{verbatim}
+
+Each image is then colored thanks to a color look-up table 'hot'. 
+Notice the way extremal values are provided for each polarimetric variable.
+
+\begin{itemize}
+\item \begin{verbatim} otbcli_ColorMapping in haa_extract_splitted_0.tif -method continuous 
+    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1 -out entropy_hot.tif uint8 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_1.tif -method continuous 
+    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 90 -out alpha_hot.tif uint8 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_2.tif -method continuous 
+    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1 -out anisotropy_hot.tif uint8 \end{verbatim}
+\end{itemize}
+
+The results are shown in the figures below (\ref{fig:entropyimage} , \ref{fig:alphaimage} and \ref{fig:anisotropyimage}).
+
+\begin{center}
+  \begin{figure}[h]
+    \includegraphics[width=\textwidth]{../Art/entropyhot.png}
+    \itkcaption[SAR decomp]{Entropy image.}
+    \label{fig:entropyimage}
+   \end{figure}
+   
+   \begin{figure}[h]
+    \includegraphics[width=\textwidth]{../Art/alphahot.png}
+    \itkcaption[SAR decomp]{Alpha image.}
+    \label{fig:alphaimage}
+   \end{figure}
+   
+    \begin{figure}[h]
+    \includegraphics[width=\textwidth]{../Art/anisotropyhot.png}
+    \itkcaption[SAR decomp]{Anisotropy image.}
+    \label{fig:anisotropyimage}
+   \end{figure}
+   
+\end{center}
+
+
+
+
+\subsubsection{Polarimetric synthetis}
 
 This application gives, for each pixel, the power that would have been received by a SAR system with a basis different from the classical (H,V) one (polarimetric synthetis). 
 The new basis are indicated through two Jones vectors, defined by the user thanks to orientation (psi) and ellipticity (khi) parameters.

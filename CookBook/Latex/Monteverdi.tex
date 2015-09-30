@@ -432,18 +432,6 @@ to retrieve reflectance of the observed physical objects. The process can be spl
   the optical calibration module.
 \end{itemize}
 
-
-\subsubsection{SAR calibration}
-
-The calibration and validation of the measurement systems are
-important to maintain the reliability and reproducibility of the SAR
-measurements, but the establishment of correspondence between
-quantities measured by SAR and physical measure requires
-scientific background. The SAR calibration module allows to estimate
-quantitative accuracy. For now only calibration of TerraSARX data is
-available.
-%//TODO add description of outputs
-
 \subsection{Filtering Operations}
 \subsubsection{Band Math}
 \label{Band_math module}
@@ -607,78 +595,3 @@ classify each pixel of the input image in one of the defined class.
 The non supervised classification module is based on the Kmeans
 algorithm.  The GUI allows to modify parameters of the algorithm and
 produce a label image.
-
-\subsection{Specific SAR functionnalities}
-This section give access to specific treatments related to the SAR
-(Synthetic Aperture Radar) functionnalities.
-
-\subsubsection{Despeckle}
-SAR images are generally corrupted by speckle noise. To suppress 
-speckle and improve the radar image interpretability lots of filtering 
-techniques have been proposed.  The module implements to well-known 
-despeckle methods: Frost and Lee.
-
-\subsubsection{Compute intensity and log-intensity}
-Compute the derived intensity and log-intensity from the input SAR imagery.
-
-\subsubsection{Polarimetry}
-In conventional imaging radar the measurement is a scalar which is 
-proportional to the received backscattered power at a particular combination 
-of linear polarization (HH, HV, VH or VV). 
-Polarimetry is the measurement and interpretation of the polarization of this measurement which
-allows to measure various optical properties of a material.
-In polarimetry the basic measurement is a $2x2$ complex scattering
-matrix yielding an eight dimensional measurement space (Sinclair
-matrix). For reciprocal targets where $HV=VH$, this space is
-compressed to five dimensions: three amplitudes ($|HH|$, $|HV|$, and
-$|VV|$); and two phase measurements, (co-pol: HH-VV, and cross-pol:
-HH-HV). (see 
-\href{http://www.grss-ieee.org/technical-briefs/imaging-radar-polarimetry}{grss-ieee}).
- 
-\paragraph{Synthesis}
-
-Allow to construct an image that would be received from a polarimetric radar 
-having selected transmit and receive polarizations.
-The Synthesis module waits for real and imaginary part (real images) of the HH, VV, VH and HV images.
-The reciprocal case where case $VH=HV$, is not properly handled yet, for now the user
-has to set the same input for the two HV and VH.
-
-\paragraph{Conversion}
-
-As we saw in the previous main section, the basic 
-measurement is a $2x2$ complex scattering matrix yielding an eight dimensional 
-measurement space. But other measurements exist:
-\begin{itemize}
-\item covariance matrix and with its reciprocal specific case
-\item coherency matrix and with its reciprocal specific case
-\item circular coherency matrix and with its reciprocal specific case
-\item Mueller matrix and with its reciprocal specific case...
-\end{itemize}
-
-Modules in the Conversion subsection allow to proceed these conversions between matrix representations.
-Allowed conversion and input images types are described in the following figure ~\ref{fig:sarpolconv}.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_sarpol_conversion_schema.png}
-  \itkcaption[SAR polarimetry conversion]{SAR polarimetry conversion module.}
-  \label{fig:sarpolconv}
-\end{figure}
-
-\paragraph{Analysis}
-
-This module allows to perform some of classical polarimetric analysis methods. It allows to compute:
-\begin{itemize}
-\item The polarimetric synthesis:
-\begin{itemize}
-\item input: 4 bands complex image
-\item output: mono channel real image 
-\item parameters: the synthesis parameters (incident and reflected $\psi$ and $\chi$ angles)
-\end{itemize}
-\item The reciprocal H alpha image:
-\begin{itemize}
-\item input: 6 bands complex image
-\item output: 3 bands real image 
-\end{itemize}
-\end{itemize}
-
