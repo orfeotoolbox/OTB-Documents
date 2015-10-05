@@ -48,13 +48,13 @@ Then the intensity image is despeckled with the Gamma-MAP filter :
 The produced images were then rescaled to intensities ranging from 0 to 255 in order to be displayed.
 
 \begin{center}
-  \begin{figure}[h]
+  \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/S1-VV-extract-int.png}
     \itkcaption[SAR despeckling]{Intensity image from a SLC-VV Sentinel1 image.}
     \label{fig:S1VVextractint}
    \end{figure}
    
-   \begin{figure}[h]
+   \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/S1-VV-despeckled-extract.png}
     \itkcaption[SAR despeckling]{After despeckling with Gamma-Map filter.}
     \label{fig:S1VVdespeckledextract}
@@ -82,7 +82,7 @@ This applications allows converting classical polarimetric matrices to each othe
 For instance, it is possible to get the coherency matrix from the Sinclar one, or the Mueller matrix from the coherency one.
 The figure below (\ref{fig:polconv}) shows the workflow used in this application.
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
    \includegraphics[width=\textwidth]{../Art/sarpol_conversion_schema.png}
   \itkcaption[SAR polarimetry conversion]{SAR polarimetry conversion application.}
@@ -438,19 +438,19 @@ Notice the way extremal values are provided for each polarimetric variable.
 The results are shown in the figures below (\ref{fig:entropyimage} , \ref{fig:alphaimage} and \ref{fig:anisotropyimage}).
 
 \begin{center}
-  \begin{figure}[h]
+  \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/entropyhot.png}
     \itkcaption[SAR decomp]{Entropy image.}
     \label{fig:entropyimage}
    \end{figure}
    
-   \begin{figure}[h]
+   \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/alphahot.png}
     \itkcaption[SAR decomp]{Alpha image.}
     \label{fig:alphaimage}
    \end{figure}
    
-    \begin{figure}[h]
+    \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/anisotropyhot.png}
     \itkcaption[SAR decomp]{Anisotropy image.}
     \label{fig:anisotropyimage}
@@ -507,15 +507,15 @@ The produced images were then rescaled to intensities ranging from 0 to 255 in o
 
 
 \begin{center}
-  \begin{figure}[h]
+  \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/test-left-co-2.png}
-    \itkcaption[SAR polarimetry conversion]{Image LL}
+    \itkcaption[SAR polarimetry conversion]{Image LL (sensor : RADARSAT2).}
     \label{fig:polsynthll}
    \end{figure}
    
-   \begin{figure}[h]
+   \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../Art/test-left-cross-2.png}
-    \itkcaption[SAR polarimetry conversion]{Image LR}
+    \itkcaption[SAR polarimetry conversion]{Image LR (sensor : RADARSAT2).}
     \label{fig:polsynthlr}
    \end{figure}
 \end{center}
