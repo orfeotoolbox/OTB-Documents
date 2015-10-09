@@ -76,7 +76,7 @@ compressed to five dimensions: three amplitudes ($|HH|$, $|HV|$, and
 $|VV|$); and two phase measurements, (co-pol: HH-VV, and cross-pol:
 HH-HV). (see \href{http://www.grss-ieee.org/technical-briefs/imaging-radar-polarimetry}{grss-ieee}).
 
-\subsubsection{Matrices conversions}
+\subsubsection{Matrix conversions}
 
 This applications allows converting classical polarimetric matrices to each other.
 For instance, it is possible to get the coherency matrix from the Sinclar one, or the Mueller matrix from the coherency one.
@@ -329,44 +329,44 @@ With :
 Examples :
 
 \begin{enumerate}
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
 									  -conv msinclairtocoherency -outc coherency.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
 									  -conv msinclairtocovariance -outc covariance.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
 									  -conv msinclairtocircovariance -outc circ_covariance.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inc coherency.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc coherency.tif 
 									  -conv mcoherencytomueller -outf mueller.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inc covariance.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc covariance.tif 
 									  -conv mcovariancetocoherencydegree -outc coherency_degree.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inc covariance.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc covariance.tif 
 									  -conv mcovariancetocoherency -outc coherency.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inc covariance.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc covariance.tif 
 									  -conv mlinearcovariancetocircularcovariance -outc circ_covariance.tif \end{verbatim}	
 									  			
-\item \begin{verbatim} otbcli_SARConvert -inf mueller.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inf mueller.tif 
 									  -conv muellertomcovariance -outc covariance.tif \end{verbatim}	
 									  								  
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
 									  -conv bsinclairtocoherency -outc bcoherency.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
 									  -conv bsinclairtocovariance -outc bcovariance.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
 									  -conv bsinclairtocircovariance -outc circ_bcovariance.tif \end{verbatim}
 									  
 									  
-\item \begin{verbatim} otbcli_SARConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
 									  -conv sinclairtomueller -outf mueller.tif \end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARConvert -inf mueller.tif 
+\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inf mueller.tif 
 									  -conv muellertopoldegandpower -outf degreepower.tif \end{verbatim}
 									  
 \end{enumerate}
@@ -416,7 +416,7 @@ Next we apply the H-alpha-A decomposition :
 \begin{verbatim} otbcli_SARDecompositions -inhh imagery_HH_extract.tif -inhv imagery_HV_extract.tif -invv imagery_VV_extract.tif 
 					-decomp haa -inco.kernelsize 5 -out haa_extract.tif \end{verbatim}
 
-The result is made uo of 3 bands : entropy (0..1) - alpha (0..90) - anisotropy. 
+The result is made uo of 3 bands : entropy (0..1) - alpha (0..90) - anisotropy (0..1). 
 It is splitted into 3 mono-band images thanks to following command :
 
 \begin{verbatim} otbcli_SplitImage -in haa_extract.tif -out haa_extract_splitted.tif \end{verbatim}
@@ -425,7 +425,7 @@ Each image is then colored thanks to a color look-up table 'hot'.
 Notice the way extremal values are provided for each polarimetric variable.
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_ColorMapping in haa_extract_splitted_0.tif -method continuous 
+\item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_0.tif -method continuous 
     -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1 -out entropy_hot.tif uint8 \end{verbatim}
 									  
 \item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_1.tif -method continuous 
@@ -517,5 +517,120 @@ The produced images were then rescaled to intensities ranging from 0 to 255 in o
     \includegraphics[width=\textwidth]{../Art/test-left-cross-2.png}
     \itkcaption[SAR polarimetry conversion]{Image LR (sensor : RADARSAT2).}
     \label{fig:polsynthlr}
+   \end{figure}
+\end{center}
+
+
+\subsubsection{Polarimetric data visualization}
+
+Finally, let's talk about polarimetric data visualization. There is a strong link between polarimetric data visualization and the way they can be decomposed into significant physical processes.
+Indeed, by setting the results (or combinations) of such decompositions to RGB channels, it is possible to obtain nice colorations that help in interpreting SAR polarimetric images.
+
+There is no specific dedicated application yet, but it is possible to use a combination of different applications as a replacement.
+Let's do it with a RADARSAT2 acquisition over the famous place of the Golden Gate Bridge, San Francisco, California.
+
+We first extract a ROI from the original image (not required). 
+
+
+\begin{itemize}
+\item \begin{verbatim} otbcli_ExtractROI -in imagery_HH.tif -out imagery_HH_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_ExtractROI -in imagery_HV.tif -out imagery_HV_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_ExtractROI -in imagery_VV.tif -out imagery_VV_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 \end{verbatim}
+\end{itemize}
+
+Then we need to obtain the amplitude of each band; BandMath is the application we want :
+
+\begin{itemize}
+\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif -out HH.tif -exp "sqrt(im1b1^2+im1b2^2)" \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_BandMath -il imagery_HV_extract.tif -out HV.tif -exp "sqrt(im1b1^2+im1b2^2)" \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_BandMath -il imagery_VV_extract.tif -out VV.tif -exp "sqrt(im1b1^2+im1b2^2)" \end{verbatim}
+\end{itemize}
+
+Note that BandMath application interprets the image 'imagery\_XX\_extract.tif' as an image made of two bands, where the first one is related to the real part of the signal,
+and where the second one is related to the imaginary part (that's why the modulus is obtained by the expressions $im1b1^2+im1b2^2$).
+
+
+We then rescale the produced images to intensities ranging from 0 to 255 :
+
+\begin{itemize}
+\item \begin{verbatim} otbcli_Rescale -in HH.tif -out HH_res.png uint8 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_Rescale -in HV.tif -out HV_res.png uint8 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_Rescale -in VV.tif -out VV_res.png uint8 \end{verbatim}
+\end{itemize}
+
+The three figures below (\ref{fig:hhfrisco} , \ref{fig:hvfrisco} and \ref{fig:vvfrisco}) show the images obtained :
+
+\begin{center}
+  \begin{figure}[h!]
+    \includegraphics[width=\textwidth]{../Art/RSAT2_HH_Frisco.png}
+    \itkcaption[SAR polarimetry visu]{Band HH in amplitude (sensor : RADARSAT2).}
+    \label{fig:hhfrisco}
+   \end{figure}
+   
+   \begin{figure}[h!]
+    \includegraphics[width=\textwidth]{../Art/RSAT2_HV_Frisco.png}
+    \itkcaption[SAR polarimetry visu]{Band HV in amplitude (sensor : RADARSAT2).}
+    \label{fig:hvfrisco}
+   \end{figure}
+      
+   \begin{figure}[h!]
+    \includegraphics[width=\textwidth]{../Art/RSAT2_VV_Frisco.png}
+    \itkcaption[SAR polarimetry visu]{Band VV in amplitude (sensor : RADARSAT2).}
+    \label{fig:vvfrisco}
+   \end{figure}
+\end{center}
+
+
+Now the most interesting step. In order to get a friendly coloration of these data, we are going to use the Pauli decomposition,
+defined as follows :
+
+\begin{itemize}
+\item  $a=\frac{|S_{HH}-S_{VV}|}{\sqrt{2}}$ 
+									  
+\item  $b=\sqrt{2}.|S_{HV}|$ 
+									  
+\item  $c=\frac{|S_{HH}+S_{VV}|}{\sqrt{2}}$ 
+\end{itemize}
+
+We use the BandMath application one again :
+
+\begin{itemize}
+\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif imagery_VV_extract.tif -out Channel1.tif -exp "sqrt(((im1b1-im3b1)^2+(im1b2-im3b2)^2))" \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif imagery_VV_extract.tif -out Channel2.tif -exp "sqrt(im2b1^2+im2b2^2)" \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif imagery_VV_extract.tif -out Channel3.tif -exp "sqrt(((im1b1+im3b1)^2+(im1b2+im3b2)^2))" \end{verbatim}
+\end{itemize}
+
+Note that sqrt(2) factors have been omitted purposely, since their effects will be canceled by the rescaling step.
+
+
+We then rescale the produced images to intensities ranging from 0 to 255 :
+
+\begin{itemize}
+\item \begin{verbatim} otbcli_Rescale -in Channel1.tif -out Channel1_res.tif uint8 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_Rescale -in Channel2.tif -out Channel2_res.tif uint8 \end{verbatim}
+									  
+\item \begin{verbatim} otbcli_Rescale -in Channel3.tif -out Channel3_res.tif uint8 \end{verbatim}
+\end{itemize}
+
+And finally, we merge the three bands into a single RGB image.
+
+\begin{verbatim} otbcli_ConcatenateImages -il Channel1_res.tif Channel2_res.tif Channel3_res.tif -out visuPauli.png \end{verbatim}
+
+The result is shown in the figure below (\ref{fig:colorfrisco}).
+
+\begin{center}
+  \begin{figure}[h!]
+    \includegraphics[width=\textwidth]{../Art/visuPauli.png}
+    \itkcaption[SAR polarimetry visu]{RGB image obtained from Pauli decomposition (sensor : RADARSAT2).}
+    \label{fig:colorfrisco}
    \end{figure}
 \end{center}
