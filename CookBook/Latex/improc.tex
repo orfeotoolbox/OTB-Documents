@@ -39,18 +39,43 @@ filters that produce a no-data value are able to export this value so that the
 output file will store it.
 
 An application has been created to manage the no-data value. The
-\application{NoDataMask} application has the following features :
+\application{ManageNoData} application has the following features :
 \begin{itemize}
-\item Build a mask corresponding to the no-data pixels in the input image
-\item Change the no-data value of the input image
+\item Build a mask corresponding to the no-data pixels in the input image : it gives you
+a binary image of the no-data pixels in your input image.
+\item Change the no-data value of the input image : it will change all pixels that carry
+the old no-data value to the new one and update the metadata
+\item Apply an external mask to the input image as no-data : all the pixels that
+corresponds have a null mask value are flagged as no-data in the output image.
 \end{itemize}
 
-For instance :
+For instance, the following command converts the no-data value of the input
+image to the default value for DEM (which is -32768) :
 \begin{verbatim}
-otbcli_NoDataMask -in input_image.tif
-                  -out output_image.tif
-                  -mode changevalue
-                  -mode.changevalue.newv -32768
+otbcli_ManageNoData -in input_image.tif
+                    -out output_image.tif
+                    -mode changevalue
+                    -mode.changevalue.newv -32768
+\end{verbatim}
+
+The third mode "apply" can be useful if you apply a formula to the entire image.
+This will likely change the values of pixels flagged as no-data, but the no-data
+value in the image metadata doesn't change. If you want to
+fix all no-data pixels to their original value, you can extract the mask of the
+original image and apply it on the output image. For instance:
+\begin{verbatim}
+otbcli_ManageNoData -in input_image.tif
+                    -out mask.tif
+                    -mode buildmask
+
+otbcli_BandMath -il input_image.tif
+                -out filtered_image.tif
+                -exp "2*im1b1-4"
+
+otbcli_ManageNoData -in filtered_image.tif
+                    -out output_image.tif
+                    -mode apply
+                    -mode.apply.mask mask.tif
 \end{verbatim}
 
 \subsection{Segmentation}\label{ssec:segmentation}
