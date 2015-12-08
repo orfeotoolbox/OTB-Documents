@@ -157,34 +157,20 @@ The dock on the right side is divided into four tabs :
 \item Color dynamics : lets the user change the displaying dynamics of a selected image. For each RGB channel (each mapped to an image channel), the user can decide how the pixel range of a selected image will be shortcut before being rescaled to 0-255 : either by setting the extremal values, or by setting the extremal quantiles.
 \end{itemize}
 
-Each tab is represented by the figures below (~\ref{fig:quicklook} ~\ref{fig:histo} ~\ref{fig:colorset} ~\ref{fig:coldyn}).
+Each tab is represented by the figures below (~\ref{fig:quickhisto} ~\ref{fig:colorsetdyn}).
 
 \begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/quicklook.png}
-  \itkcaption[Monteverdi quicklook tab]{Quicklook tab.}
-  \label{fig:quicklook}
+  \includegraphics[width=0.8\textwidth]{../Art/MonteverdiImages/quickhisto.png}
+  \itkcaption[Monteverdi quicklook tab]{Quicklook tab (op), histogram tab (bottom).}
+  \label{fig:quickhisto}
 \end{figure}
 
 \begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/histo.png}
-  \itkcaption[Monteverdi histogram tab]{Histogram tab.}
-  \label{fig:histo}
-\end{figure}
-
-\begin{figure}[!h] 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/colset.png}
-  \itkcaption[Monteverdi color setup tab]{Color setup tab.}
-  \label{fig:colorset}
-\end{figure}
-
-\begin{figure}[!h] 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/coldyn.png}
-  \itkcaption[Monteverdi color dyn tab]{Color dynamics tab.}
-  \label{fig:coldyn}
+  \includegraphics[width=0.66\textwidth]{../Art/MonteverdiImages/colsetdyn.png}
+  \itkcaption[Monteverdi color setup tab]{Color setup tab (top), color dynamics tab (bottom).}
+  \label{fig:colorsetdyn}
 \end{figure}
 
 
@@ -251,7 +237,7 @@ In the figure below (~\ref{fig:OC}), by taking a look at the layer stack, one ca
 
 \begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/OC.png}
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/OC.png}
   \itkcaption[Monteverdi OC]{Before and after calibration.}
   \label{fig:OC}
 \end{figure}
@@ -262,22 +248,15 @@ In the figure below (~\ref{fig:OC}), by taking a look at the layer stack, one ca
 
 BandMath application is intented to apply mathematical operations on pixels (launch it with shortcut CTRL+A). In this example, we are going to use this application to change the dynamics of an image,
 and check the result by looking at histogram tab, in the right side dock. The formula used is the following : im1b1*1000.
-In the figures below (~\ref{fig:BM1}, ~\ref{fig:BM2}), one can notice that the mode of the distribution is located at position 356.0935, whereas in the transformed image,
+In the figures below (~\ref{fig:BM}), one can notice that the mode of the distribution is located at position 356.0935, whereas in the transformed image,
 the mode is located at position 354737.1454, that's to say 1000 times farther away approximatelly (the cursors weren't placed exactly at the same position during screenshots).
 
 
 \begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/BM1.png}
-  \itkcaption[Monteverdi BM1]{Before applying BandMath.}
-  \label{fig:BM1}
-\end{figure}
-
-\begin{figure}[!h] 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/BM2.png}
-  \itkcaption[Monteverdi BM2]{After applying BandMath.}
-  \label{fig:BM2}
+  \includegraphics[width=0.5\textwidth]{../Art/MonteverdiImages/BM.png}
+  \itkcaption[Monteverdi BM1]{Before/after applying BandMath (top/bottom).}
+  \label{fig:BM}
 \end{figure}
 
 
@@ -286,21 +265,15 @@ the mode is located at position 354737.1454, that's to say 1000 times farther aw
 Now, let's use the segmentation application (launch it with shortcut CTRL+A). 
 We let the user take a look at the application's documentation; let's simply say that as we wish we could display the segmentation with \mont,
 we must tell the application to output the segmentation in raster format. Thus, the value of the mode option must be set to raster.
-The two following figures (~\ref{fig:seg1} and ~\ref{fig:seg2}) show the original image and the labels image.
+The following figure (~\ref{fig:seg12}) shows the original image and the labels image.
 
 \begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/seg1.png}
-  \itkcaption[Monteverdi seg1]{Original image.}
-  \label{fig:seg1}
+  \includegraphics[width=0.45\textwidth]{../Art/MonteverdiImages/seg1-2.png}
+  \itkcaption[Monteverdi seg12]{Original image and labels image.}
+  \label{fig:seg12}
 \end{figure}
 
-\begin{figure}[!h] 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/seg2.png}
-  \itkcaption[Monteverdi seg2]{Labels image.}
-  \label{fig:seg2}
-\end{figure}
 
 Gray colors aren't very convenient for visualizing a segmentation. That's why we are going to use another application, the ColorMapping one (launch it with the sortcut CTRL+A as usual).
 There are many ways to use this application (see the documentation for more details). We wish we could colour the segmentation so that color difference between adjacent regions is maximized.
@@ -353,20 +326,13 @@ In the figure below (~\ref{fig:pol1}), we show the obtained result, with the loc
 \subsection{Pansharpening}\label{ssec:monpansh}
 Finally, let's try a last example with the Pansharpening application (launch it with shortcut CTRL+A).
 The fields are quite easy to fill in : this application needs a panchromatic image, a XS image, and an output image.
-These images are represented in the figures below (~\ref{fig:ps1}, ~\ref{fig:ps2} and ~\ref{fig:ps3}):
+These images are represented in the figures below (~\ref{fig:ps12} and ~\ref{fig:ps3}):
 
 \begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/ps1.png}
-  \itkcaption[Monteverdi ps1]{Panchromatic image.}
-  \label{fig:ps1}
-\end{figure}
-
-\begin{figure}[!h] 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/ps2.png}
-  \itkcaption[Monteverdi ps2]{XS image.}
-  \label{fig:ps2}
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/ps1-2.png}
+  \itkcaption[Monteverdi ps12]{Panchromatic and XS images.}
+  \label{fig:ps12}
 \end{figure}
 
 \begin{figure}[!h] 
@@ -393,9 +359,20 @@ The pansharpened image is placed to the top of the stack layer, and different la
 \begin{figure}[!h] 
   \center
   \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/ps5.png}
-  \itkcaption[Monteverdi ps5]{Pansharpened image with panchromatic image; translucency layer effect.}
+  \itkcaption[Monteverdi ps5]{Pansharpened image with panchromatic image; translucency layer effect (see the Capitol Square at the top right corner).}
   \label{fig:ps5}
 \end{figure}
 
 
+\subsection{Conclusion}\label{ssec:moncon}
+The images used in this documentation can be found in the OTB-Data repository (https://git.orfeo-toolbox.org/otb-data.git):
+\begin{itemize}
+\item in OTB-Data/Input : 
+\begin{itemize}
+\item QB\_TOULOUSE\_MUL\_Extract\_500\_500.tif and QB\_Toulouse\_Ortho\_XS\_ROI\_170x230.tif (GUI presentation)
+\item RSAT\_imagery\_HH.tif RSAT\_imagery\_HV.tif RSAT\_imagery\_VV.tif (polarimetry example)
+\item QB\_Toulouse\_Ortho\_PAN.tif QB\_Toulouse\_Ortho\_XS.tif (pansharpening example)
+\end{itemize}
 
+\item in OTB-Data/Input/mv2-test : QB\_1\_ortho.tif
+\end{itemize}
