@@ -244,10 +244,10 @@ to pass to the launcher a path where the shared library (or plugin)
 corresponding to \verb?module_name? is.
 
 It is also possible to set this path with the environment variable 
-\verb?ITK_AUTOLOAD_PATH?, making the \verb?[MODULEPATH]? optional.
+\verb?OTB_APPLICATION_PATH?, making the \verb?[MODULEPATH]? optional.
 This variable is checked by default when 
 no \verb?[MODULEPATH]? argument is given.
-When using multiple paths in \verb?ITK_AUTOLOAD_PATH?, one must make sure to use
+When using multiple paths in \verb?OTB_APPLICATION_PATH?, one must make sure to use
 the standard path separator of the target system, which is \verb?:? on Unix, and \verb?;? on Windows.
 
 
@@ -255,12 +255,12 @@ An error in the application name (i.e. in parameter
 \verb?module_name?) will make the
 \verb?otbApplicationLauncherCommandLine? lists the name of all
 applications found in the available path (either \verb?[MODULEPATH]? 
-and/or \verb?ITK_AUTOLOAD_PATH?).
+and/or \verb?OTB_APPLICATION_PATH?).
 
 To ease the use of the applications, and try avoiding extensive environment
 customization, ready-to-use scripts are provided by the OTB installation
 to launch each application, and takes care of adding the standard application
-installation path to the \verb?ITK_AUTOLOAD_PATH? environment variable.
+installation path to the \verb?OTB_APPLICATION_PATH? environment variable.
 
 These scripts are named \verb?otbcli_<ApplicationName>? and do not need any path
 settings. For example you can start the Orthorectification application
@@ -340,7 +340,7 @@ This launcher needs the same two arguments as the command line launcher :
 $ otbApplicationLauncherQt module_name [MODULEPATH]
 \end{verbatim}
 
-The application paths can be set with the \verb?ITK_AUTOLOAD_PATH? environment variable,
+The application paths can be set with the \verb?OTB_APPLICATION_PATH? environment variable,
 as for the command line launcher.
 Also, as for the command-line application, a more simple script is generated and installed by OTB
 to ease the configuration of the module path : to launch the \application{Rescale} graphical user interface,
@@ -415,10 +415,10 @@ In this module, two main classes can be manipulated :
 \end{itemize}
 
 As for the command line and GUI launchers, the path to the application modules needs to
-be properly set with the \verb?ITK_AUTOLOAD_PATH? environment variable.
+be properly set with the \verb?OTB_APPLICATION_PATH? environment variable.
 The standard location on Unix systems is \verb?/usr/lib/otb/applications?.
 On Windows, the applications are available in the \verb?otb-bin? OSGeo4W package, and
-the environment is configured automatically so you don't need to tweak \verb?ITK_AUTOLOAD_PATH?.
+the environment is configured automatically so you don't need to tweak \verb?OTB_APPLICATION_PATH?.
 
 Here is one example of how to use Python to run the \verb?Smoothing? application, changing the algorithm
 at each iteration.
