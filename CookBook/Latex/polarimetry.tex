@@ -1,5 +1,5 @@
 \newpage
-\section{Specific SAR functionnalities}
+\section{SAR processing}
 
 This section describes how to use the applications related to SAR processing.
 
@@ -12,20 +12,28 @@ Examples :
 
 If SARimg.tif is a TerraSAR-X or a COSMO-SkyMed image :
 
-\begin{verbatim} otbcli_SarRadiometricCalibration -in SARimg.tif
-									  -out SARimg-calibrated.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_SarRadiometricCalibration -in SARimg.tif -out
+  SARimg-calibrated.tif 
+\end{verbatim}
 									  
 If SARimg.tif is a RadarSat2 or a Sentinel1 image, it 's possible to specify the look-up table 
 (automatically found in the metadata provided with such image) :
 
-\begin{verbatim} otbcli_SarRadiometricCalibration -in SARimg.tif -lut gamma
-									  -out SARimg-calibrated.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_SarRadiometricCalibration -in SARimg.tif -lut gamma
+									  -out
+SARimg-calibrated.tif 
+\end{verbatim}
 
 For TerraSAR-X (and soon for RadarSat2 and Sentinel1), it is also possible
 to use a noise LUT to derive calibrated noise profiles :
 
-\begin{verbatim} otbcli_SarRadiometricCalibration -in SARimg.tif -lut gamma -noise 1
-									  -out SARimg-calibrated.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_SarRadiometricCalibration -in SARimg.tif -lut gamma -noise 1
+									  -out
+SARimg-calibrated.tif 
+\end{verbatim}
 
 \subsection{Despeckle}
 SAR images are generally corrupted by speckle noise. To suppress 
@@ -38,12 +46,18 @@ The following commands were used to produce the despeckled extract :
 
 First, the original image is converted into an intensity one (real part corresponds to band 1, and imaginary part to band 2):
 
-\begin{verbatim} otbcli_BandMath -il S1-VV-extract.tif -exp im1b1^2+im1b2^2 -out S1-VV-extract-int.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_BandMath -il S1-VV-extract.tif -exp im1b1^2+im1b2^2 -out
+S1-VV-extract-int.tif 
+\end{verbatim}
 
 Then the intensity image is despeckled with the Gamma-MAP filter :
 
-\begin{verbatim} otbcli_Despeckle -in S1-VV-extract-int.tif -filter.gammamap.rad 5
-									   -filter.gammamap.nblooks 1 -out S1-VV-despeckled-extract.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_Despeckle -in S1-VV-extract-int.tif -filter.gammamap.rad 5
+									   -filter.gammamap.nblooks
+1 -out S1-VV-despeckled-extract.tif 
+\end{verbatim}
 
 The produced images were then rescaled to intensities ranging from 0 to 255 in order to be displayed.
 
@@ -329,45 +343,123 @@ With :
 Examples :
 
 \begin{enumerate}
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
-									  -conv msinclairtocoherency -outc coherency.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+									  -conv
+                                                                          msinclairtocoherency
+                                                                          -outc
+                                                                          coherency.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
-									  -conv msinclairtocovariance -outc covariance.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+									  -conv
+                                                                          msinclairtocovariance
+                                                                          -outc
+                                                                          covariance.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
-									  -conv msinclairtocircovariance -outc circ_covariance.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invv imageryC_VV.tif
+									  -conv
+                                                                          msinclairtocircovariance
+                                                                          -outc
+                                                                          circ_covariance.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc coherency.tif 
-									  -conv mcoherencytomueller -outf mueller.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inc coherency.tif 
+									  -conv
+                                                                          mcoherencytomueller
+                                                                          -outf
+                                                                          mueller.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc covariance.tif 
-									  -conv mcovariancetocoherencydegree -outc coherency_degree.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inc covariance.tif 
+									  -conv
+                                                                          mcovariancetocoherencydegree
+                                                                          -outc
+                                                                          coherency_degree.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc covariance.tif 
-									  -conv mcovariancetocoherency -outc coherency.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inc covariance.tif 
+									  -conv
+                                                                          mcovariancetocoherency
+                                                                          -outc
+                                                                          coherency.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inc covariance.tif 
-									  -conv mlinearcovariancetocircularcovariance -outc circ_covariance.tif \end{verbatim}	
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inc covariance.tif 
+									  -conv
+                                                                          mlinearcovariancetocircularcovariance
+                                                                          -outc
+                                                                          circ_covariance.tif 
+\end{verbatim}	
 									  			
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inf mueller.tif 
-									  -conv muellertomcovariance -outc covariance.tif \end{verbatim}	
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inf mueller.tif 
+									  -conv
+                                                                          muellertomcovariance
+                                                                          -outc
+                                                                          covariance.tif 
+\end{verbatim}	
 									  								  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
-									  -conv bsinclairtocoherency -outc bcoherency.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
+									  -conv
+                                                                          bsinclairtocoherency
+                                                                          -outc
+                                                                          bcoherency.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
-									  -conv bsinclairtocovariance -outc bcovariance.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
+									  -conv
+                                                                          bsinclairtocovariance
+                                                                          -outc
+                                                                          bcovariance.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
-									  -conv bsinclairtocircovariance -outc circ_bcovariance.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif
+									  -conv
+                                                                          bsinclairtocircovariance
+                                                                          -outc
+                                                                          circ_bcovariance.tif 
+\end{verbatim}
 									  
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
-									  -conv sinclairtomueller -outf mueller.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inhh imageryC_HH.tif -inhv imageryC_HV.tif -invh imageryC_VH.tif -invv imageryC_VV.tif 
+									  -conv
+                                                                          sinclairtomueller
+                                                                          -outf
+                                                                          mueller.tif 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_SARPolarMatrixConvert -inf mueller.tif 
-									  -conv muellertopoldegandpower -outf degreepower.tif \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_SARPolarMatrixConvert -inf mueller.tif 
+									  -conv
+                                                                          muellertopoldegandpower
+                                                                          -outf
+                                                                          degreepower.tif 
+\end{verbatim}
 									  
 \end{enumerate}
 
@@ -401,38 +493,80 @@ We first extract a ROI from the original image (not required).
 Here imagery\_HH.tif represents the element HH of the Sinclair matrix (and so forth).
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_ExtractROI -in imagery_HH.tif -out imagery_HH_extract.tif  
-									  -startx 0 -starty 0 -sizex 1000 -sizey 1000 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ExtractROI -in imagery_HH.tif -out imagery_HH_extract.tif  
+									  -startx
+0 -starty 0 -sizex 1000 -sizey 1000 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_ExtractROI -in imagery_HV.tif -out imagery_HV_extract.tif  
-									  -startx 0 -starty 0 -sizex 1000 -sizey 1000 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ExtractROI -in imagery_HV.tif -out imagery_HV_extract.tif  
+									  -startx
+                                                                          0
+                                                                          -starty
+                                                                          0
+                                                                          -sizex
+                                                                          1000
+                                                                          -sizey
+                                                                          1000 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_ExtractROI -in imagery_VV.tif -out imagery_VV_extract.tif  
-									  -startx 0 -starty 0 -sizex 1000 -sizey 1000 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ExtractROI -in imagery_VV.tif -out imagery_VV_extract.tif  
+									  -startx
+                                                                          0
+                                                                          -starty
+                                                                          0
+                                                                          -sizex
+                                                                          1000
+                                                                          -sizey
+                                                                          1000 
+\end{verbatim}
 \end{itemize}
 
 Next we apply the H-alpha-A decomposition :
 
-\begin{verbatim} otbcli_SARDecompositions -inhh imagery_HH_extract.tif -inhv imagery_HV_extract.tif -invv imagery_VV_extract.tif 
-					-decomp haa -inco.kernelsize 5 -out haa_extract.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_SARDecompositions -inhh imagery_HH_extract.tif -inhv imagery_HV_extract.tif -invv imagery_VV_extract.tif 
+					-decomp haa -inco.kernelsize 5 -out
+haa_extract.tif 
+\end{verbatim}
 
 The result is made uo of 3 bands : entropy (0..1) - alpha (0..90) - anisotropy (0..1). 
 It is splitted into 3 mono-band images thanks to following command :
 
-\begin{verbatim} otbcli_SplitImage -in haa_extract.tif -out haa_extract_splitted.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_SplitImage -in haa_extract.tif -out
+  haa_extract_splitted.tif 
+\end{verbatim}
 
 Each image is then colored thanks to a color look-up table 'hot'. 
 Notice the way extremal values are provided for each polarimetric variable.
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_0.tif -method continuous 
-    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1 -out entropy_hot.tif uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ColorMapping -in haa_extract_splitted_0.tif -method continuous 
+    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1
+-out entropy_hot.tif uint8 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_1.tif -method continuous 
-    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 90 -out alpha_hot.tif uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ColorMapping -in haa_extract_splitted_1.tif -method continuous 
+    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max
+    90 -out alpha_hot.tif uint8 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_ColorMapping -in haa_extract_splitted_2.tif -method continuous 
-    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1 -out anisotropy_hot.tif uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ColorMapping -in haa_extract_splitted_2.tif -method continuous 
+    -method.continuous.lut hot -method.continuous.min 0 -method.continuous.max 1
+    -out anisotropy_hot.tif uint8 
+\end{verbatim}
 \end{itemize}
 
 The results are shown in the figures below (\ref{fig:entropyimage} , \ref{fig:alphaimage} and \ref{fig:anisotropyimage}).
@@ -492,16 +626,22 @@ Finally, the result of the polarimetric synthetis is expressed in the power doma
 
 
  
-The final formula is thus : \begin{verbatim} P = | B^T . [S] . A |^2 \end{verbatim} , where A ans B are two Jones vectors and S is a Sinclair matrix.
+The final formula is thus : $P=\mid B^T.[S].A\mid^2$ , where A ans B are two Jones vectors and S is a Sinclair matrix.
  
 The two figures below (\ref{fig:polsynthll} and \ref{fig:polsynthlr}) show the two images obtained with the basis LL and LR (L for left circular polarization and R for right polarization),
 from a Radarsat 2 image taken over Vancouver. Once the four two-band images imagery\_HH imagery\_HV imagery\_VH imagery\_VV were merged 
 into a single four complex band image imageryC\_HH\_HV\_VH\_VV.tif, the following commands were used to produce the LL and LR images :
 
-\begin{verbatim} otbcli_SARPolarSynth -in imageryC_HH_HV_VH_VV.tif 
-									  -psii 0 -khii 45 -mode co -out test-LL.tif \end{verbatim}
-\begin{verbatim} otbcli_SARPolarSynth -in imageryC_HH_HV_VH_VV.tif 
-									  -psii 0 -khii 45 -mode cross -out test-LR.tif \end{verbatim}
+\begin{verbatim} 
+otbcli_SARPolarSynth -in imageryC_HH_HV_VH_VV.tif 
+									  -psii
+0 -khii 45 -mode co -out test-LL.tif 
+\end{verbatim}
+\begin{verbatim} 
+otbcli_SARPolarSynth -in imageryC_HH_HV_VH_VV.tif 
+									  -psii
+0 -khii 45 -mode cross -out test-LR.tif 
+\end{verbatim}
 
 The produced images were then rescaled to intensities ranging from 0 to 255 in order to be displayed.
 
@@ -533,21 +673,45 @@ We first extract a ROI from the original image (not required).
 
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_ExtractROI -in imagery_HH.tif -out imagery_HH_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ExtractROI -in imagery_HH.tif -out
+  imagery_HH_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_ExtractROI -in imagery_HV.tif -out imagery_HV_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ExtractROI -in imagery_HV.tif -out
+  imagery_HV_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_ExtractROI -in imagery_VV.tif -out imagery_VV_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_ExtractROI -in imagery_VV.tif -out
+  imagery_VV_extract.tif -startx 0 -starty 6300 -sizex 2790 -sizey 2400 
+\end{verbatim}
 \end{itemize}
 
 Then we need to obtain the amplitude of each band; BandMath is the application we want :
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif -out HH.tif -exp "sqrt(im1b1^2+im1b2^2)" \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_BandMath -il imagery_HH_extract.tif -out HH.tif -exp
+"sqrt(im1b1^2+im1b2^2)" 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_BandMath -il imagery_HV_extract.tif -out HV.tif -exp "sqrt(im1b1^2+im1b2^2)" \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_BandMath -il imagery_HV_extract.tif -out HV.tif
+  -exp "sqrt(im1b1^2+im1b2^2)" 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_BandMath -il imagery_VV_extract.tif -out VV.tif -exp "sqrt(im1b1^2+im1b2^2)" \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_BandMath -il imagery_VV_extract.tif -out VV.tif
+  -exp "sqrt(im1b1^2+im1b2^2)" 
+\end{verbatim}
 \end{itemize}
 
 Note that BandMath application interprets the image 'imagery\_XX\_extract.tif' as an image made of two bands, where the first one is related to the real part of the signal,
@@ -557,11 +721,20 @@ and where the second one is related to the imaginary part (that's why the modulu
 We then rescale the produced images to intensities ranging from 0 to 255 :
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_Rescale -in HH.tif -out HH_res.png uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_Rescale -in HH.tif -out HH_res.png uint8 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_Rescale -in HV.tif -out HV_res.png uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_Rescale -in HV.tif -out HV_res.png uint8 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_Rescale -in VV.tif -out VV_res.png uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_Rescale -in VV.tif -out VV_res.png uint8 
+\end{verbatim}
 \end{itemize}
 
 The three figures below (\ref{fig:hhfrisco} , \ref{fig:hvfrisco} and \ref{fig:vvfrisco}) show the images obtained :
@@ -601,11 +774,26 @@ defined as follows :
 We use the BandMath application one again :
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif imagery_VV_extract.tif -out Channel1.tif -exp "sqrt(((im1b1-im3b1)^2+(im1b2-im3b2)^2))" \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_BandMath -il imagery_HH_extract.tif
+  imagery_HV_extract.tif imagery_VV_extract.tif -out Channel1.tif -exp
+  "sqrt(((im1b1-im3b1)^2+(im1b2-im3b2)^2))" 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif imagery_VV_extract.tif -out Channel2.tif -exp "sqrt(im2b1^2+im2b2^2)" \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_BandMath -il imagery_HH_extract.tif
+  imagery_HV_extract.tif imagery_VV_extract.tif -out Channel2.tif -exp
+  "sqrt(im2b1^2+im2b2^2)" 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif imagery_VV_extract.tif -out Channel3.tif -exp "sqrt(((im1b1+im3b1)^2+(im1b2+im3b2)^2))" \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_BandMath -il imagery_HH_extract.tif imagery_HV_extract.tif
+imagery_VV_extract.tif -out Channel3.tif -exp
+"sqrt(((im1b1+im3b1)^2+(im1b2+im3b2)^2))" 
+\end{verbatim}
 \end{itemize}
 
 Note that sqrt(2) factors have been omitted purposely, since their effects will be canceled by the rescaling step.
@@ -614,16 +802,28 @@ Note that sqrt(2) factors have been omitted purposely, since their effects will 
 We then rescale the produced images to intensities ranging from 0 to 255 :
 
 \begin{itemize}
-\item \begin{verbatim} otbcli_Rescale -in Channel1.tif -out Channel1_res.tif uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_Rescale -in Channel1.tif -out Channel1_res.tif uint8 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_Rescale -in Channel2.tif -out Channel2_res.tif uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_Rescale -in Channel2.tif -out Channel2_res.tif uint8 
+\end{verbatim}
 									  
-\item \begin{verbatim} otbcli_Rescale -in Channel3.tif -out Channel3_res.tif uint8 \end{verbatim}
+\item 
+\begin{verbatim} 
+otbcli_Rescale -in Channel3.tif -out Channel3_res.tif uint8 
+\end{verbatim}
 \end{itemize}
 
 And finally, we merge the three bands into a single RGB image.
 
-\begin{verbatim} otbcli_ConcatenateImages -il Channel1_res.tif Channel2_res.tif Channel3_res.tif -out visuPauli.png \end{verbatim}
+\begin{verbatim} 
+otbcli_ConcatenateImages -il Channel1_res.tif Channel2_res.tif Channel3_res.tif
+-out visuPauli.png 
+\end{verbatim}
 
 The result is shown in the figure below (\ref{fig:colorfrisco}).
 
