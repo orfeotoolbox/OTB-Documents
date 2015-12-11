@@ -31,24 +31,12 @@ The features statistics XML file will be an input of the following tools.
 \subsubsection{Building the training data set}
 
 As the chain is supervised, we first need to build a training set with
-positive examples of different objects of interest. This can be done
-with Monteverdi Vectorization module
-(Fig.\ref{fig:vectoModuleDataSetCreation}).
-These polygons must be saved in OGR vector format supported
-by GDAL like ESRI shapefile for example.
-
-This operation will be reproduced on each image used as input of the training
-function.
+positive examples of different objects of interest. These polygons
+must be saved in OGR vector format supported by GDAL like ESRI
+shapefile for example.
 
 Please note that the positive examples in the vector data should have a ``Class``
 field with a label value higher than 1 and coherent in each images.
-
-\begin{figure}
-  \center
-  \includegraphics[width=1\textwidth]{../Art/MonteverdiImages/monteverdi_vectorization_module_for_classification.png}
-  \itkcaption[GUI of the vectorization module with data for classification chain]{A training data set builded with the vectorization monteverdi module.}
-  \label{fig:vectoModuleDataSetCreation}
-\end{figure}
 
 You can generate the vector data set with \qgis software for
 example and save it in an OGR vector format supported by \gdal (ESRI

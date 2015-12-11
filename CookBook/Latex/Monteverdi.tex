@@ -1,62 +1,69 @@
-\chapter{A brief tour of Monteverdi}\label{chap:Monteverdi} 
+\chapter{A brief tour of \mont}\label{chap:Monteverdi} 
 
 \section{Introduction}\label{sec:montintro}
 The \app package makes available a set of simple software
-tools, which were designed to demonstrate what can be done with
+tools, designed to demonstrate what can be done with
 \otb. Many users started using these applications for real processing
 tasks, so we tried to make them more generic, more robust and easy to
 use. \otb users have been asking for an integrated application for a
 while, since using several applications for a complete processing
 (ortho-rectification, segmentation, classification, etc.) can be a
-burden. Recently, the OTB team received a request from CNES' Strategy
+burden. The OTB team received a request from CNES' Strategy
 and Programs Office in order to provide an integrated application for
 capacity building activities (teaching, simple image manipulation,
 etc.). The specifications included ease of integration of new
 processing modules.  
 
-\section{Installation}\label{sec:montinstall} 
+
+\section{Installation}\label{sec:montinstall}
+
 The application is called \mont, since this is the name of the Orfeo
-composer. The application allows you to build interactivelly remote
+composer. The application allows you to build interactively remote
 sensing processes based on the \otb. This is also in
 remembering of the great (and once open source) Khoros/Cantata
 software.
   
-Installation of \mont is very simple. Standard installer packages are available on the main platforms thanks to OTB-Developpers and external users. These packages are available few days after the release. Get the latest information on binary packages on the \website in the section download.
+Installation of \mont is very simple. Standard installer packages are available on the main platforms thanks to OTB-Developpers and external users. 
+These packages are available few days after the release. Get the latest information on binary packages on the \website in the section download.
 
-We will discribe in the following sections the way to install monteverdi on:
+We will describe in the following sections the way to install \mont on:
 \begin{itemize}
 \item Windows platform (XP/Seven)
-\item Ubuntu 12.04 and higher
-\item OpenSuse 12.X and higher
-\item MacOSX 10.8
+\item Ubuntu 14.X and higher
+\item MacOSX 10.10
 \end{itemize}
 
-If you want build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source)
+If you want to build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source).
+Note that the git repository of \mont is located here : https://git.orfeo-toolbox.org/monteverdi2.git.
+In order to get the source of \mont, you will have to be placed on the right branch : git checkout 3.0.0-rc1
+
 
 \subsection{Windows XP/Seven/8.1}
-For Windows XP/Seven/8.1 users, there is a classical standalone installation program for Monteverdi, available from the \download after each release. 
+For Windows XP/Seven/8.1 users, there is a classical standalone installation program for \mont, available from the \download after each release. 
 
-Since version 1.12, it is also possible to get Monteverdi package through \osgeow for Windows XP/Seven users. Package for Monteverdi is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. The installer will proceed with the installation of the package and all its dependencies. Monteverdi will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). You can now use directly Monteverdi from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. Currently, you should use the 32bit OSGeo4W installer but we will soon distribute monteverdi package for 64 bit installer. 
+It is also possible to get \mont package through \osgeow for Windows XP/Seven users. 
+Package for \mont is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. 
+Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. 
+The installer will proceed with the installation of the package and all its dependencies. 
+\mont will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). 
+You can now use directly \mont from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. 
+Currently, you should use the 32bit OSGeo4W installer but we will soon distribute \mont package for 64 bit installer. 
 
 \subsection{MacOS X}
-A standard DMG package is available for Monteverdi for MacOS X 10.8. Please go the \download.
-Click on the file to launch Monteverdi. This DMG file is also compatible with MacOSX 10.9.
+A standard DMG package is available for \mont for MacOS X 10.10. Please go the \download.
+Click on the file to launch \mont. 
 
-\subsection{Ubuntu 12.04 and higher}
-For Ubuntu 12.04 and higher, Monteverdi package may be available as Debian package through APT repositories.
-
-Since release 1.14, Monteverdi packages are available in the
-\href{https://launchpad.net/~ubuntugis/+archive/ubuntugis-unstable}{ubuntugis-unstable} repository.
-
+\subsection{Ubuntu 14.x and higher}
+For Ubuntu 14.x and higher, \mont package may be available as Debian package through APT repositories.
 You can add it by using these command-lines:
 \begin{verbatim}
-sudo aptitude install add-apt-repository
+sudo apt-get install add-apt-repository
 sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
 \end{verbatim}
 
 Now run:
 \begin{verbatim}
-sudo aptitude install monteverdi
+sudo apt-get install monteverdi
 \end{verbatim}
 
 If you are using \emph{Synaptic}, you can add the repository, update and install the package through the
@@ -69,529 +76,302 @@ quit. You can temporarily ignore this error and proceed with the update
 step. Following this, aptitude update will issue a warning about a signature
 problem. This warning won't prevent you from installing the packages.
 
-\subsection{OpenSuse 11.X and higher}
-\label{ssec:opensuse_binaries}
 
-For OpenSuse 12.X and higher, Monteverdi packages is available through
-\emph{zypper}.
+\section{GUI : what does it look like ?}\label{sec:mongui}
 
-First, you need to add the appropriate repositories with these command-lines (please replace $11.4$ by your OpenSuse version):
-\begin{verbatim}
-sudo zypper ar
-http://download.opensuse.org/repositories/games/openSUSE_11.4/ Games
-sudo zypper ar
-http://download.opensuse.org/repositories/Application:/Geo/openSUSE_11.4/ GEO
-sudo zypper ar
-http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_11.4/ tzotsos
-\end{verbatim}
 
-Now run:
-\begin{verbatim}
-sudo zypper refresh
-sudo zypper install Monteverdi
-\end{verbatim}
-
-Alternatively you can use the One-Click Installer from the \href{http://software.opensuse.org/search?q=Orfeo&baseproject=openSUSE\%3A11.4&lang=en&include_home=true&exclude_debug=true}{openSUSE Download page} or add the above repositories and install through Yast Package Management.
-
-There is also support for the recently introduced 'rolling' openSUSE distribution named 'Tumbleweed'.
-For Tumbleweed you need to add the following repositories with these command-lines:
-\begin{verbatim}
-sudo zypper ar
-http://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/ Games
-sudo zypper ar
-http://download.opensuse.org/repositories/Application:/Geo/openSUSE_Tumbleweed/ GEO
-sudo zypper ar
-http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_Tumbleweed/ tzotsos
-\end{verbatim}
-and then add the monteverdi packages as shown above.
-
-\section{Anatomy of the applications}\label{sec:anatomy}
-
-\subsection{What does it look like?}
-
-\begin{figure}
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_mainwindow.png}
-  \itkcaption[Monteverdi main window]{Monteverdi main window.}
-  \label{fig:mainwindow}
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/gui.png}
+  \itkcaption[Monteverdi main window]{\mont's main window.}
+  \label{fig:mongui}
 \end{figure}
 
-This is Monteverdi's main window (figure ~\ref{fig:mainwindow}) where the
-menus are available and where you can see the different modules, which
-have been set up for the processing. Input data are obtained by
-readers. When you choose to use a new module, you select its input
-data, and therefore, you build a processing pipeline sequentially.
-Figure ~\ref{fig:inputswindow} shows the generic window which allows to
-specify output(s) of Monteverdi's modules.  
-
-\begin{figure} 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_inputs_window.png}
-  \itkcaption[Monteverdi main window]{Monteverdi inputs selection
-    generic window.}  \label{fig:inputswindow} 
-\end{figure} 
-
-Let's have a look at the different menus. The first one is of course
-the "File" menu. This menu allows you to open a data set, to save it
-and to cache it. The "data set" concept is interesting, since you
-don't need to define by hand if you are looking for an image or a
-vector file. Of course, you don't need to do anything special for any
-particular file format. So opening a data set will create a "reader"
-which will appear in the main window. At any time, you can use the
-"save data set" option in order to store to a file the result of any
-processing module.
-
-
-\subsection{Open an image with \mont}
-The application allows to interactively select raster/vector dataset
-by browsing your computer. Monteverdi takes advantage of the automatic
-detection of images' extensions to indicate the dataset type (optical,
-SAR or vector data).
-
-The input dataset is added to the "Data and Process" tree, which
-describes the dataset content and each node corresponds to a layer.
-
-\subsection{Visualize an image with \mont}
-This module allows to visualize raster or vector data. It allows to
-create RGB composition from the input rasters. It is also possible to
-add vector dataset which are automatically reprojected in the same
-projection of the input image or Digital Elevation informations.
-
-The viewer offers three types of data visualisation: 
+This is \mont's main window (figure ~\ref{fig:mongui}) where the
+different functionalities are reachable:
 
 \begin{itemize}
-\item The Scroll window : to navigate quickly inside the entire scene
-\item The Full resolution window: the view of the region of interest
-  selected in the scroll window
-\item The Zoom window
-\item The Pixel description: give access to dynamic informations on
-  the current pixel pointed. Informations display are:
-  \begin{itemize}
-  \item The current index
-  \item The pixel value 
-  \item The computed value (the dynamic of hte input image is modified
-    to get a proper visualization
-  \item The coordinates of the current pixel (longitude and latitude)
-  \item In case where there is a Internet connection available,
-    Monteverdi displays the estimate location of the current pixel
-    (country + city)
-  \end{itemize} 
+\item 1. Main menu
+\item 2. Top toolbar
+\item 3. Image displaying
+\item 4. Right side dock
+\item 5. Stack layer 
 \end{itemize}
 
-\begin{figure} 
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_viewer_pixel_description.png}
-  \itkcaption[Monteverdi main window]{Monteverdi pixel description box.}
-  \label{fig:viewerpixeldescription}
-\end{figure}
+\subsection{Main menu}
+The main menu is made up of four items.
+The main one is the File item, from which you can : open a image, load the otb applications, and finally quit \mont.
+The Edit item lets the user change his/her preferences. The view item is intended to let the user display or hide different parts of the main window.
+Finally, the Help item lets the user know the 'About' information of the software, and also can display an useful keymap.
 
-The Visualization offers others great functionnalities which are
-available in the detached window.  It is for example possible to
-superpose vector dataset to the input image (see figure
-~\ref{fig:viewervectordata}).
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_viewer_vector_data.png}
-  \itkcaption[Vector Data visualization]{Monteverdi pixel description box.}
-  \label{fig:viewervectordata}
-\end{figure}
-
-The "Setup Tab" allows to modify the RGB composition or use the
-grayscale mode to display only one layer.
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_viewer_rgb_composition.png}
-  \itkcaption[Manage RGB composition]{Manage RGB composition.}
-  \label{fig:rgbcomposition}
-\end{figure}
-
-The "Histogram Tab" get access to the dynamic of the displayed
-layers. The basic idea is to convert the output of the pixel
-representation to a RGB pixel for rendering on conventional displays.
-Values are constrained to 0-255 with a transfer function and a clamping
-operation.  By default, the dynamic of each layer is modified by
-clamping the histogram at $min + 2\%$ and $max - 2\%$.
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_viewer_histogram.png}
-  \itkcaption[Manage the dynamic of each layer]{Manage the dynamic.}
-  \label{fig:histogram}
-\end{figure}
-
-There is also possible to select pixel coordinates and get access to all the informations available in the ``Pixel description 
-Box''.
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_viewer_pixel_description.png}
-  \itkcaption[Pixel description via index selection]{Index description via index selection.}
-  \label{fig:pixeldescriptioninformations}
-\end{figure}
-
-\subsection{Cache dataset}
-The "cache data set" (see figure ~\ref{fig:cachingmodule}) is a very
-interesting functionality. As you know, \otb implements processing on
-demand, so when you build a processing pipeline, no processing takes
-place unless you ask for it explicitly. That means that you can plug
-together the opening of a data set, an orthorectification and a
-spleckle filter, for example, but nothing will really be computed
-until you trigger the pipeline execution. This is very convenient,
-since you can quickly build a processing pipeline and let it execute
-afterwards while you have a coffee. In \mont, the process is executed
-by saving the result of the last module of a pipeline. However,
-sometimes, you may want to execute a part of the pipeline without
-having to set the file name to the obtained result. You can do this by
-caching a data set. That is, the result will be stored in a temporary
-file which will be created in the "Caching" directory created by the
-application. Another situation in which you may need to cache a data
-set is when you need that the input of a module exists when you set
-its parameters. This is nor a real requirement, since Monteverdi will
-generate the needed data by streaming it, but this can be
-inefficient. This for instance about visualization of the result of a
-complex processing. Using streaming for browsing through the result
-image means processing the visible part every time you move inside the
-image. Caching the data before visualization will generate the whole
-data set in advance allowing for a more swift display. All modules
-allow you to cache their input data sets.
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_caching_module.png}
-  \itkcaption[Cache operation on the panchromatic image in progress]{Cached and streamed dataset.}
-  \label{fig:cachingmodule}
-\end{figure}
-
-%Section describing the monteverdi architecture of the application (perhap's not relevant in the cookbook)
-
-\subsection{Dynamic GUI definition}
-The aim of \mont is to provide a generic interface which is based on
-the definition of the internal processes.  In this frame, the way that you have to manage modules are identical during the definition of
-a new process.  Selecting a module on the upper main window, open
-automatically the "Inputs definition Window" wich allows to select
-data which are inputs of the current module. \mont module can manage
-single or multiple inputs and these inputs can be images on your
-computer or results of previous module already registered in the "Data
-and Process" tree.
-    
-\subsection{Dynamic I/O definition}
-Management of image formats in \mont works in the same manner as in
-the \otb.  The principle is that the software automatically recognize
-the image format.  Communication between modules follow also the same
-principle and the Input definition of modules request to all available
-outputs of the same type in the "Data and process" tree.  Internally,
-all the treatments in \mont are computed in float precision by
-default. It is also possible to switch to double precision by
-compiling the application from source and set the CMAKE option compile
-float to ON.
-
-%Section describing some available modules in the application
-\section{Available modules}\label{sec:modules} 
-\subsection{I/O operations}
-\subsubsection{Extract region of interest}
-It allows to extract regions of interest (ROI) from an image. There
-are two ways to select the region:
+\subsection{Top toolbar}
+The top toolbar is made up of ten icons; from left to right:
 \begin{itemize}
-\item By indicating the X and Y coordinatres of the upper-left
-  coordinates and the X-Y size of the regions.
-\item By interactivelly selecting the region of interest in the input image.
+\item 1st : open one or more image(s)
+\item 2nd : zoom in
+\item 3rd : zoom out
+\item 4th : zoom to full extent
+\item 5th : zoom to layer extent
+\item 6th : zoom to full resolution
+\item 7th : gives/changes the current projection, used as reference of the view 
+\item 8th : selects the effect to be applied to the selected layer : chessboard, local constrast, local translucency, normal, spectral angle, swipe (horizontal and vertical)
+\item 9th : a parameter used for the following effects : chessboard, local contrast, local translucency, spectral angle
+\item 10th : a parameter used for the following effects :  local constrast, spectral angle
 \end{itemize}
 
-\subsubsection{Concatenate image bands}
-With \mont, you could generate a large scale of value added
-informations from lots of inputs data. One of the basic functionnality
-is to be able to superpose result's layers into the same dataset.
-Concatenating images into one single multiple-bands image (they need
-to have the same size), and to be able to create for example RGB
-composition with the inputs layer.
+\subsection{Image displaying}
+This part of the main window is intented to display the images loaded by the user.
+There are many nice keyboard shortcuts or mouse tricks that let the user have a better experience in navigating throughout the loaded images.
+These shortcuts and tricks are given within the Help item of the main menu, by clicking Keymap; here is a short list of the most useful ones :
 
-\begin{figure}
+The classical ones:
+\begin{itemize}
+\item CTRL+O = Open file(s)
+\item CTRL+Q = Quit application
+\end{itemize}
+
+In the image displaying part:
+\begin{itemize}
+\item Mouse drag = Scroll view
+\item CTRL+Mouse drag = Quick scroll view (rending is done after releasing CTRL key)
+\item CTRL+Mouse wheel = Zoom in out
+\item + or - = Zoom in out
+\end{itemize}
+
+In the layer stack part:
+\begin{itemize}
+\item SHIFT+Page Up = Move layer to top of stack
+\item SHIFT+Page Down = Move layer to bottom of stack
+\item Delete = Delete selected layer
+\item SHIFT+Delete = Delete all layers
+\end{itemize}
+
+
+\subsection{Right side dock}
+The dock on the right side is divided into four tabs : 
+\begin{itemize}
+\item Quicklook : gives the user a degraded view of the whole extent, letting him/her easily select the area to be displayed 
+\item Histogram : gives the user information about the value distribution of the selected channels. By clicking the mouse's left button, user can sample their values.
+\item Color Setup : lets the user map the image channels to the RGB channels. Also lets him/her set the alpha parameter (translucency).
+\item Color dynamics : lets the user change the displaying dynamics of a selected image. For each RGB channel (each mapped to an image channel), the user can decide how the pixel range of a selected image will be shortcut before being rescaled to 0-255 : either by setting the extremal values, or by setting the extremal quantiles.
+\end{itemize}
+
+Each tab is represented by the figures below (~\ref{fig:quickhisto} ~\ref{fig:colorsetdyn}).
+
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_concatenate_before_after.png}
-  \itkcaption[Concatenation of multitemporal data]{Concatenation module.}
-  \label{fig:concatenate}
+  \includegraphics[width=0.8\textwidth]{../Art/MonteverdiImages/quickhisto.png}
+  \itkcaption[Monteverdi quicklook tab]{Quicklook tab (op), histogram tab (bottom).}
+  \label{fig:quickhisto}
 \end{figure}
 
-\subsubsection{Save dataset to file}
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.66\textwidth]{../Art/MonteverdiImages/colsetdyn.png}
+  \itkcaption[Monteverdi color setup tab]{Color setup tab (top), color dynamics tab (bottom).}
+  \label{fig:colorsetdyn}
+\end{figure}
 
-\mont allows to export raster or vector dataset to a file to your
-system.  In the case of raster images, it is possible to cast output
-pixel type. In \mont all the processes are done in floating point
-precision.  On large remote sensing dataset, saving your result in
-float data type could lead to file too large(more than 25 Go for
-pan-sharpened 8 bands WorldView2 with a resolution of $46$
-centimeters). Since the module allows to cast pixels in other types :
+
+\subsection{Layer stack}
+
+The layer stack is made up of one list of layers located beneath six icons.
+The list of layers gives the user some information about the loaded images:
+projection, resolution (if available), name, and effect applied to the images (see top toolbar subsection).
+If the user moves the mouse over the displayed images, they will get more information:
 
 \begin{itemize}
-\item unsigned char (8 bits) 
-\item short (16 bits)
-\item int (32 bits)
-\item float (32 bits)
-\item double (64 bits)
-\item unsigned short (16 bits)
-\item unsigned int (32 bits)
+\item (i,j) : pixel index
+\item (Red Green Blue) : original image pixel values from channel mapped to the RGB ones.
+\item (X,Y) : pixel position
 \end{itemize}
 
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_export_dataset.png}
-  \itkcaption[Export dataset]{Save dataset module.}
-  \label{fig:exportdataset}
-\end{figure}
-
-\subsection{Geometric process}
-In the frame of remote sensing process, one common operation is to be
-able to superpose and manipulate data which come from different
-sources.  This section gives access to a large set of geometric
-operations.  It performs re-projection and orthorectification
-operations on Optical or SAR dataset using the available sensor models
-(image informations available in the meta-data are automatically read
-by the application).  
-\subsubsection{Reprojection module}
-The application is derived from the otbOrthorectificationApplication
-in the \app package and allow to produce orthorectified imagery from
-level 1 product. The application is able to parse metadata
-informations and set default parameters. The application contains 4
-tabs:
-
+Concerning the six icons, from left to right:
 \begin{itemize}
-\item Coordinates: Define the center or upper-left pixel coordinates
-  of the orthorectified image (the longitude and latitude coordinates
-  are calculated through meta-data informations. It is also possible
-  to specify the map projection of the output.
-\item Output image: The module allows to only orthorectified a Region
-  Of interest inside the input dataset. This tab allows to set the size
-  of the ROI around the center pixel coordinate or from the upper
-  left index. The orthorectified imagery can also be resampled at any
-  resolution in the line or column directions by setting the "Spacing
-  X" and the "Spacing Y" respectively, and choosing interpolation method.
-\item DEM: Indicate path to a directory containing SRTM elevation
-  file. The application is able to detect inside the direcory which
-  DEM files are relevant in the process. You can find detailed
-  informations on how to get a usable DEM
-\item Image extent: Compare the initial image extension with the
-  preview the orthorectified result. This preview is automatically
-  updated if the user change the "Size X" or "Size Y" values in the
-  "Output Image" tab.
+\item 1st : moves the selected layer to the top of the stack
+\item 2nd : moves the selected layer up within the stack
+\item 3rd : moves the selected layer down within the stack
+\item 4th : moves the selected layer to the bottom of the stack
+\item 5th : use selected layer as projection reference
+\item 6th : applies all display settings (color-setup, color-dynamics, shader and so forth) of selected layer to all other layers
 \end{itemize}
 
-\begin{figure}
+The layer stack is represented in the figure below (~\ref{fig:layerstack}) :
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_ortho_extent.png}
-  \itkcaption[Preview of the orthorectified imagery]{Reprojection module. Quick Look tab.}
-  \label{fig:ortho}
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/layerstack.png}
+  \itkcaption[Monteverdi layerstack]{Layer stack.}
+  \label{fig:layerstack}
 \end{figure}
 
 
-\subsubsection{Estimating sensor model based on ground control points}
-This module allows to take ground control points on a raster image
-where no geographic informations are available.  This GCPs list is
-making correspondence between pixel coordinate in the input image and
-physical coordinates. The list allows to derive a general function
-which convert any pixel coordinates in physical positions. This
-function is based on a RPC transformation (Rational Polynomial
-Coefficients). As a consequence, the module enriches the output image
-with metadata informations defining a RPC sensor model associated with
-the input raster.  There are several ways to generate the GCPs:
+\section{Examples}\label{sec:monexamples}
 
+With \mont, it is also possible to interactively load otb-applications and use them to process images.
+For that purpose, the user just has to load otb-applications by clicking on the Main menu, File/Load OTB-Applications (or by simply using the shortcut CTRL+A).
+The figure below (~\ref{fig:applications}) represents the otb-applications loading window. The applications are arranged in thematic functionalities; the user can also quickly find the wanted application by typing its name in the dedicated field
+at the top of the loading window.
+
+
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/applications.png}
+  \itkcaption[Monteverdi app]{Applications window.}
+  \label{fig:applications}
+\end{figure}
+
+
+\subsection{Optical calibration}\label{ssec:monoptical}
+
+In order to perform an optical calibration, launch the Optical calibration application (shortcut CTRL+A). 
+We are going to use this application to perform a TOA (Top Of Atmosphere) conversion, which consists in converting the DN pixel values into spectral radiance (in W/m2/steradians/micrometers).
+Once the application is launched, the user must fill the required fields in
+(in, out, gainbias.txt -gain and bias values in a txt file-, solarillumination.txt -solar illumination values in watt/m2/micron for each band in a txt file-, and so on... refer to the documentation of the application).
 \begin{itemize}
-\item With Internet access: dynamically generate the correspondance on
-  the input image and Open Street Map layers.
-\item Without Internet access: Set manually Ground control points :
-  indicate index position and cartographic coordinates in the input
-  image.
+\item Note : if OTB (on which is based \mont) is able to parse the metadata of the image to be calibrated, then some of the fields will be automatically filled in.
 \end{itemize}
 
-It is also possible to import/export the list of Ground Control points
-from/to an XML file.
+In the figure below (~\ref{fig:OC}), by taking a look at the layer stack, one can notice that the values of the calibrated image are now expressed in spectral radiance.
 
-Moreover, if the input image has GCPs in its metadata, the
-module allows to add or remove points from the existing list, which is
-automatically loaded.
 
-\subsection{Calibration}
-In the solar spectrum, sensors on Earth remote sensing satellites
-measure the radiance reflected by the atmosphere-Earth surface system
-illuminated by the sun. This signal depends on the surface
-reflectance, but it is also perturbed by two atmospheric processes,
-the gaseous absorption and the scattering by molecules and aerosols.
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/OC.png}
+  \itkcaption[Monteverdi OC]{Before and after calibration.}
+  \label{fig:OC}
+\end{figure}
 
-\subsubsection{Optical calibration}
-In the case of the Optical calibration, the basic idea is to be able
-to retrieve reflectance of the observed physical objects. The process can be split in 3 main steps:
 
+
+\subsection{BandMath}\label{ssec:monbandmath}
+
+BandMath application is intended to apply mathematical operations on pixels (launch it with shortcut CTRL+A). In this example, we are going to use this application to change the dynamics of an image,
+and check the result by looking at histogram tab, in the right side dock. The formula used is the following : $\text{im1b1} \times 1000$.
+In the figures below (~\ref{fig:BM}), one can notice that the mode of the distribution is located at position $356.0935$, whereas in the transformed image,
+the mode is located at position $354737.1454$, that's to say 1000 times farther away approximately (the cursors aren't placed exactly at the same position in the screenshots).
+
+
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.5\textwidth]{../Art/MonteverdiImages/BM.png}
+  \itkcaption[Monteverdi BM1]{Before/after applying BandMath (top/bottom).}
+  \label{fig:BM}
+\end{figure}
+
+
+\subsection{Segmentation}\label{ssec:monseg}
+
+Now, let's use the segmentation application (launch it with shortcut CTRL+A). 
+We let the user take a look at the application's documentation; let's simply say that as we wish we could display the segmentation with \mont,
+we must tell the application to output the segmentation in raster format. Thus, the value of the mode option must be set to raster.
+The following figure (~\ref{fig:seg12}) shows the original image and the labels image.
+
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.45\textwidth]{../Art/MonteverdiImages/seg1-2.png}
+  \itkcaption[Monteverdi seg12]{Original image and labels image.}
+  \label{fig:seg12}
+\end{figure}
+
+
+Gray colors aren't very convenient for visualizing a segmentation. That's why we are going to use another application, the ColorMapping one (launch it with the shortcut CTRL+A as usual).
+There are many ways to use this application (see the documentation for more details). We wish we could colour the segmentation so that color difference between adjacent regions is maximized.
+For this purpose, we can use the method optimal (set the value of this option to optimal). The figure below (~\ref{fig:seg3}) shows the result of such colorization.
+
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/seg3.png}
+  \itkcaption[Monteverdi seg3]{Optimally colored labels image.}
+  \label{fig:seg3}
+\end{figure}
+
+Now it should be nice to superimpose this colorization with the original image to assess the quality of the segmentation.
+\mont provides the user a very simple way to do it. Once the two images are loaded in \mont and that the original image is placed on the top of the stack, 
+the user just has to select the translucency layer effect and set the size of the exploration circle to convenience.
+The figure below (~\ref{fig:seg4}) shows the result of such colorization. We encourage the reader to test the other layer effects.
+
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/seg4.png}
+  \itkcaption[Monteverdi seg4]{Nice layer effect, local translucency, to ease the comparison between the original image and its segmentation.}
+  \label{fig:seg4}
+\end{figure}
+
+\subsection{Polarimetry}\label{ssec:monpolar}
+In this example, we are going to use three applications : 
 \begin{itemize}
-\item Derived luminance from the raw value in the input image. 
-\item Convert the luminance to reflectance to produce the TOA
-  image(Top Of Atmosphere).
-\item Inverse a radiative transfer code, which simulates the reflection
-  of solar radiation by a coupled atmosphere-surface system. This step
-  produce the TOC (Top of Canopy) imagery, which is the final result of
-  the optical calibration module.
+\item the first one is SARDecompositions. This application is used to compute the HaA decomposition. It takes as inputs three complex channels from bands HH HV and VV.
+\item the second one is SplitImage. Indeed, the previous application had produced an output image made up of three channels, H a and A, and we wish to focus on the H parameter (entropy). 
+So we let this application split this image into three one-band-images.
+\item the last one is ColorMapping. The entropy image has values ranging from 0 to 1, and they can be easily displayed by \mont. But since we have a nice visualizing tool in hand, we wish we could go a little bit further.
+Here comes the application ColorMapping. It is going to be used with the following parameter settings:
+\begin{itemize}
+\item method = continuous. This parameters tells the application to use a gradient of colors to represent the entropy image.
+\item method.continuous.lut = hot. We specify here the kind of gradient to be used : low values in black, high ones in white, and intermediate ones in red/orange/yellow...
+\item method.continuous.min = 0 and method.continuous.max = 1. Here, the gradient of colors must be adjusted to the dynamic of the entropy image (note: it is theoretically known that in HaA decomposition, H ranges from 0 to 1. Generally speaking, the histogram of \mont can also be used for this purpose).
+\end{itemize}
 \end{itemize}
 
-\subsection{Filtering Operations}
-\subsubsection{Band Math}
-\label{Band_math module}
-The Band Math module allows to perform complex mathematical operations
-over images. It is based on the mathematical parser library muParser
-and comes with a bunch of build-in functions and operators (listed
-\href{http://muparser.sourceforge.net/mup_features.html#idDef2}{here}). This
-home-brewed digital calculator is also bundled with custom functions
-allowing to compute a full expression result simply and really quickly,
-since the filter supports streaming and multi-threading.  The \mont
-module provides an intuitive way to easily perform complex band computation. 
-The module also prevents error in the mathematical
-command by checking the expression as the user types it, and notifying
-information on the detected error:
+In the figure below (~\ref{fig:pol1}), we show the obtained result, with the local contrast layer effect.
 
-Figure ~\ref{fig:bandmathndviwithres} presents an example on how the band math
-can produce a threshold image on the NDVI value computed in one pass
-using built-in conditional operator ``if'' available in the parser.
-
-An other operational example, on how this simple module can produce
-reliable information.  Figure ~\ref{fig:ndwi2} shows the result of the
-subtraction of the Water indice on 2 images which was taken before and
-during the crisis event.  The difference was produced by the band math
-module and allows to get a reliable estimation of the flood events.
-
-
-\begin{figure}[!h]
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/monteverdi_band_math_ndvi_threshold.png}
-  \includegraphics[width=0.3\textwidth]{../Art/MonteverdiImages/monteverdi_band_math_result.png}
-  \itkcaption[Band math module]{Conditional operators using the band math module (on the left) to process a NDVI image threshold and the resulting image (on the right).}
-  \label{fig:bandmathndviwithres}
-\end{figure}
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_NDWI2_substraction.png}
-  \itkcaption[Difference of NDWI2 on 2 images]{Subtraction of NDWI2.}
-  \label{fig:ndwi2}
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/pol1.png}
+  \itkcaption[Monteverdi pol1]{Entropy image represented in temperature colors; layer effect : local contrast.}
+  \label{fig:pol1}
 \end{figure}
 
 
-\subsubsection{Connected Component Segmentation module}
+\subsection{Pansharpening}\label{ssec:monpansh}
+Finally, let's try a last example with the Pansharpening application (launch it with shortcut CTRL+A).
+The fields are quite easy to fill in : this application needs a panchromatic image, a XS image, and an output image.
+These images are represented in the figures below (~\ref{fig:ps12} and ~\ref{fig:ps3}):
 
-The Connected Component Segmentation module allows segmentation and object analysis using user defined criteria at each step. This module uses \href{http://muparser.sourceforge.net/}{muParser} library using the the same scheme as it is done in Band math module (see \ref{Band_math module} for a detailled explanation). It relies on three main steps process :
-
-\begin{description}
-\item[Mask definition :] This mask is used as support of Connected Component segmentation (CC) . i.e zeros pixels are not taken into account by CC algorithm. Binarization criteria is defined by user, via muparser. This step is optional, if no Mask is given, entire image is processed. The following example creates a mask using \emph{intensity} (mean of pixel values) parameter :
-
-\begin{verbatim}
-intensity > 200
-\end{verbatim}
-  
-\item[Segmentation :] Connected Component Segmentation driven by user defined criteria. Segmentation process can be followed by a small object rejection step. The following example use \emph{distance} (pixel intensity value difference ) parameter to define acception/rejection criteria between two adjacents pixels :
-
-\begin{verbatim}
-distance < 10
-\end{verbatim}
-  
-\item[Object analysis post processing :] This step consists in post processing on each detected area using shape and statistical object characterization. The following example use \emph{elongation} parameter to test labeled objects :
-
-\begin{verbatim}
-SHAPE_elongation > 2
-\end{verbatim}
- 
-\end{description}
-
- A detailled presentation of parameters and variables, can be found on the \href{http://wiki.orfeo-toolbox.org/index.php/Connected_component_segmentation_module}{wiki}. 
-
-Results are then exported in shape file format. Graphical user interface is presented on Figure \ref{fig:connected_component_module}. At each step intemerdiate output can be seen using \emph{Display} item list. Viewing windows are updated by clicking on \emph{Update} button. Available display outputs are :
-
-\begin{description}
-\item[Input image :] input image.
-\item[Mask Output :] mask image created using formula.
-\item[Masked Image :] input image multiplied by mask image.
-\item[Segmentation Output :] output of Connected Component segmentation filter.
-\item[Segmentation after small object rejection :] output of Connected Component segmentation after relabeling and small object rejection.
-\item[Filter Output :] final output after object based analysis opening post processing. 
-\end{description}
-
-\begin{figure}
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_connected_component_segmentation.png}
-  \itkcaption[Connected Component Segmentation]{connected component segmentation module.}
-  \label{fig:connected_component_module}
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/ps1-2.png}
+  \itkcaption[Monteverdi ps12]{Panchromatic and XS images.}
+  \label{fig:ps12}
 \end{figure}
 
-Available variables for each expression can be found using item list \emph{variables names}. available functions can  be found in help windows by clicking on \emph{Help} button. The module also prevents error in the mathematical command by checking the expression as the user types it. Background value is set to green if formula is right, in red otherwise. If mask expression is left blank entire image is processed. If \emph{Object Analysis} expression is left blank the whole set of label objects is considered.
-
-After segmentation step, too small objects can be rejected using \emph{Object min area} input. Eliminating too small objects at this step is needed to lighten further computation. min area is the pixel size of the label object. 
-
-When a first pass have been done, Specific label object properties can be displayed. Select the "Filter Output" visualization mode, Update the visualization. Then use right click on selected object in image to display object properties.
-
-Clicking on \emph{Save and Quit} button export output to Monteverdi in vector data format.
- 
-A detailled presentation of this module, and examples can be found on the \href{http://wiki.orfeo-toolbox.org/index.php/Connected_component_segmentation_module}{wiki}.
-
-A boat detection example is presented on Figure \ref{fig:boat detection}. Results can be seen on Figure \ref{fig:boat detection result}. 
-
-\begin{figure}
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_Capture_Boats.png}
-  \itkcaption[Example Boats]{Connected Component Segmentation module example : boat detection.}
-  \label{fig:boat detection}
+  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/ps3.png}
+  \itkcaption[Monteverdi ps3]{Pansharpened image.}
+  \label{fig:ps3}
 \end{figure}
 
-\begin{figure}
+Now, in order to inspect the result properly, these three images are loaded in \mont.
+The pansharpened image is placed to the top of the stack layer, and different layer effects are applied to it :
+\begin{itemize}
+\item in figure ~\ref{fig:ps4} : chessboard effect, to compare the result with the XS image.
+\item in figure ~\ref{fig:ps5} : translucency effect, to compare the result with the panchromatic image.
+\end{itemize}
+
+\begin{figure}[!h] 
   \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_Capture_Boats_CC.png}
-  \itkcaption[Example Boats result]{Boat detection example results.}
-  \label{fig:boat detection result}
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/ps4.png}
+  \itkcaption[Monteverdi ps4]{XS image with panchromatic image; chessboard layer effect.}
+  \label{fig:ps4}
+\end{figure}
+
+\begin{figure}[!h] 
+  \center
+  \includegraphics[width=0.95\textwidth]{../Art/MonteverdiImages/ps5.png}
+  \itkcaption[Monteverdi ps5]{Pansharpened image with panchromatic image; translucency layer effect (see the Capitol Square at the top right corner).}
+  \label{fig:ps5}
 \end{figure}
 
 
+\subsection{Conclusion}\label{ssec:moncon}
+The images used in this documentation can be found in the OTB-Data repository (https://git.orfeo-toolbox.org/otb-data.git):
+\begin{itemize}
+\item in OTB-Data/Input : 
+\begin{itemize}
+\item QB\_TOULOUSE\_MUL\_Extract\_500\_500.tif and QB\_Toulouse\_Ortho\_XS\_ROI\_170x230.tif (GUI presentation)
+\item RSAT\_imagery\_HH.tif RSAT\_imagery\_HV.tif RSAT\_imagery\_VV.tif (polarimetry example)
+\item QB\_Toulouse\_Ortho\_PAN.tif QB\_Toulouse\_Ortho\_XS.tif (pansharpening example)
+\end{itemize}
 
-
-\subsubsection{Feature extraction}
-
-Under the term Feature Extraction, it include several techniques
-aiming to detect or extract infor- mations of low level of abstraction
-from images. These features can be objects : points, lines, etc.They
-can also be measures : moments, textures, etc.
-
-\subsubsection{Mean-shift segmentation}
-
-For a given pixel, the Mean-shift algorithm will build a set of
-neighboring pixels within a given spatial radius and a color
-range. The spatial and color center of this set is then computed and
-the algorithm iterates with this new spatial and color center. The
-Mean-shift can be used for edge-preserving smoothing, or for
-clustering.
-
-\begin{figure}
-  \center
-  \includegraphics[width=0.6\textwidth]{../Art/MonteverdiImages/monteverdi_mean_shift.png}
-  \itkcaption[Mean-shift clustering]{Mean-shift module.}
-  \label{fig:meanshift}
-\end{figure}
-
-\subsection{Learning}
-\subsubsection{Supervised classification}
-Supervised classification is a procedure in which individual items are
-placed into groups based on quantitative information on one or more
-characteristics inherent in the items and based on a training set of
-previously labeled items.
-
-The supervised classification module is based on the Support Vector
-Machine method which consists in searching for the separating surface
-between 2 classes by the determination of the subset of training
-samples which best describes the boundary between the 2 classes. This
-method can be extended to be able to classify more than 2 classes.
-
-The module allows to interactivelly describe learnings samples which
-corresponds to polygons samples on the input images.
-
-Then a SVM model is derived from this learning sample which allows to
-classify each pixel of the input image in one of the defined class.
-
-
-\subsubsection{Non-supervised classification}
-The non supervised classification module is based on the Kmeans
-algorithm.  The GUI allows to modify parameters of the algorithm and
-produce a label image.
+\item in OTB-Data/Input/mv2-test : QB\_1\_ortho.tif
+\end{itemize}
