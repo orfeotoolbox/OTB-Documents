@@ -151,7 +151,14 @@ In the layer stack part:
 The dock on the right side is divided into four tabs : 
 \begin{itemize}
 \item Quicklook : gives the user a degraded view of the whole extent, letting him/her easily select the area to be displayed 
-\item Histogram : gives the user information about the value distribution of the selected channels. By clicking the mouse's left button, user can sample their values.
+\item Histogram : gives the user information about the values distribution of the selected channels. By clicking the mouse's left button, user can sample their values.
+In particular, in the figure ~\ref{fig:quickhisto}, we have:
+\begin{itemize}
+\item 1 : the x position pointed by the mouse
+\item 2 and 3 : the extrema values of the bin where x falls
+\item 4 : the value of the histogram at position x
+\end{itemize}
+The same values are displayed for each band.
 \item Color Setup : lets the user map the image channels to the RGB channels. Also lets him/her set the alpha parameter (translucency).
 \item Color dynamics : lets the user change the displaying dynamics of a selected image. For each RGB channel (each mapped to an image channel), the user can decide how the pixel range of a selected image will be shortcut before being rescaled to 0-255 : either by setting the extremal values, or by setting the extremal quantiles.
 \end{itemize}
@@ -362,6 +369,45 @@ The pansharpened image is placed to the top of the stack layer, and different la
   \label{fig:ps5}
 \end{figure}
 
+\subsection{Hints}\label{ssec:monhints}
+
+Let's finally give some hints about:
+
+\begin{itemize}
+\item projection mechanisms
+\item layer effects
+\item navigation performance
+\end{itemize}
+
+The projection mechanisms are quite important if having to display several images at the same time.
+Indeed, each time an image is loaded, \mont can detect if an EPSG code is available for this image (EPSG stands for European Petroleum Survey Group). 
+Each EPSG code simply maps to a spatial reference system (SRS) and can be used to identify the SRC of an image.
+So, if such an SRC is identified, it will be used to display an image at the correct position. As mentionned previously, if several images have different SRC,
+then the user can select the one to be used as reference, by simply using the wigdet provided for that purpose (see top toolbar subsection) : all images will be then projected regarding the reference SRC.
+If no SRC can be found when loading an image, then \mont will try to find a sensor model; if there is one, \mont will apply the correct tranformations so that this image still can be placed at the right position.
+Finally, if no SRC or sensor model can be found for a given image, then its projection status will be set to Unknown; the pixels will be located by using the origin and the spacing of the image:
+\begin{verbatim}
+Loc_X = origin+spacing_X*i
+Loc_Y = origin+spacing_Y*j
+\end{verbatim}
+If users try to load such images with images having a known projection at the same time, they will be warned by \mont.
+If users agree to continue, then \mont will use no projection at all, and the previous convention (using origin and spacing information) will be used instead.
+
+Concerning the layer effects, it was observed that they can be quite useful according to the tasks to be achieved.
+This kind of functionalities relies on the concept of shaders. In the fields of computer graphics, shaders calculate rendering effects on graphics hardware with a high degree of flexibility.
+They describe the traits of either a vertex (position, texture coordinates, colors...) or a pixel (color, z-depth, alpha value), and thus can produce the right levels of color within an image.
+In the case of \mont, they are used to produce the layer effects mentioned in the previous sections. 
+Note that they are not implemented within \mont directly, but within ICE-viewer, a light and powerfull tool developped by the CNES, and used to visualize remote sensing images.
+ICE-viewer is thus a dependency of \mont, and must be compiled and installed beforehand.
+
+A last word about navigation performance. When zooming out/in or dragging an image, 
+the displaying of the result is not exactly performed from the image itself, but :
+\begin{itemize}
+\item from subparts of the image, ie. tiles.
+\item from a multiresolution pyramid computed from the loaded tiles.
+\end{itemize}
+This mechanism allows a gain of performance which makes the experience of the user more pleasant.
+The user can change the settings of this mechanism from the Main menu, Edit, Preferences.
 
 \subsection{Conclusion}\label{ssec:moncon}
 The images used in this documentation can be found in the OTB-Data repository (https://git.orfeo-toolbox.org/otb-data.git):
