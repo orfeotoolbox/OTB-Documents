@@ -17,10 +17,12 @@ find ${HTML_OUTPUT} -name '*.html' | xargs sed -i "s/<\/body>/ <script type=\"te
 cp Art/logoVectoriel.pdf ${HTML_OUTPUT}/
 cp Art/MonteverdiImages/* ${HTML_OUTPUT}/
 cp Art/QtImages/* ${HTML_OUTPUT}/
+cp Art/SARImages/* ${HTML_OUTPUT}/
 
 # Change the ../Art into ""
 sed -i -e 's,\.\./Art/MonteverdiImages/,,' ${HTML_OUTPUT}/*.html
 sed -i -e 's,\.\./Art/QtImages/,,' ${HTML_OUTPUT}/*.html
+sed -i -e 's,\.\./Art/SARImages/,,' ${HTML_OUTPUT}/*.html
 sed -i -e 's,\.\./Art/,,' ${HTML_OUTPUT}/*.html
 
 cd ${HTML_OUTPUT}

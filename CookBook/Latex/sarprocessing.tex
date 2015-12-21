@@ -1,5 +1,5 @@
 \newpage
-\section{SAR processing}
+\section{SAR processing}\label{sec:sarprocessing}
 
 This section describes how to use the applications related to SAR processing.
 
@@ -68,8 +68,8 @@ order to be displayed.
 
 \begin{figure}[!h]
   \center
-  \includegraphics[width=0.45\textwidth]{../Art/S1-VV-extract-int.png}
-  \includegraphics[width=0.45\textwidth]{../Art/S1-VV-despeckled-extract.png}
+  \includegraphics[width=0.45\textwidth]{../Art/SARImages/S1-VV-extract-int.png}
+  \includegraphics[width=0.45\textwidth]{../Art/SARImages/S1-VV-despeckled-extract.png}
   \itkcaption[ExampleEpipolar]{Intensity image from a SLC-VV Sentinel1 image and
   result of Gamma filter.}
   \label{fig:S1VVdespeckledextract}
@@ -98,7 +98,7 @@ Sinclair one, or the Mueller matrix from the coherency one.  The figure below
 
 \begin{figure}[!h]
   \centering
-   \includegraphics[width=\textwidth]{../Art/sarpol_conversion_schema.png}
+   \includegraphics[width=\textwidth]{../Art/SARImages/sarpol_conversion_schema.png}
   \itkcaption[SAR polarimetry conversion]{SAR polarimetry conversion application.}
   \label{fig:polconv}
 \end{figure}
@@ -566,21 +566,21 @@ The results are shown in the figures below (\ref{fig:entropyimage}
 , \ref{fig:alphaimage} and \ref{fig:anisotropyimage}).
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/entropyhot.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/entropyhot.png}
 \itkcaption[SAR decomp]{Entropy image.}
 \label{fig:entropyimage}
 \end{figure}
 
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/alphahot.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/alphahot.png}
 \itkcaption[SAR decomp]{Alpha image.}
 \label{fig:alphaimage}
 \end{figure}
 
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/anisotropyhot.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/anisotropyhot.png}
 \itkcaption[SAR decomp]{Anisotropy image.}
 \label{fig:anisotropyimage}
 \end{figure}
@@ -662,14 +662,14 @@ order to be displayed.
 
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/test-left-co-2.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/test-left-co-2.png}
 \itkcaption[SAR polarimetry conversion]{Image LL (sensor : RADARSAT-2).}
 \label{fig:polsynthll}
 \end{figure}
 
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/test-left-cross-2.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/test-left-cross-2.png}
 \itkcaption[SAR polarimetry conversion]{Image LR (sensor : RADARSAT-2).}
 \label{fig:polsynthlr}
 \end{figure}
@@ -762,21 +762,21 @@ otbcli_Rescale -in VV.tif -out VV_res.png uint8
 Figures below (\ref{fig:hhfrisco} , \ref{fig:hvfrisco} and \ref{fig:vvfrisco}) show the images obtained :
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/RSAT2_HH_Frisco.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/RSAT2_HH_Frisco.png}
 \itkcaption[SAR polarimetry visu]{Band HH in amplitude (sensor : RADARSAT2).}
 \label{fig:hhfrisco}
 \end{figure}
 
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/RSAT2_HV_Frisco.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/RSAT2_HV_Frisco.png}
 \itkcaption[SAR polarimetry visu]{Band HV in amplitude (sensor : RADARSAT2).}
 \label{fig:hvfrisco}
 \end{figure}
 
 \begin{figure}[!h]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/RSAT2_VV_Frisco.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/RSAT2_VV_Frisco.png}
 \itkcaption[SAR polarimetry visu]{Band VV in amplitude (sensor : RADARSAT2).}
 \label{fig:vvfrisco}
 \end{figure}
@@ -852,7 +852,7 @@ The result is shown in the figure below (\ref{fig:colorfrisco}).
 
 \begin{figure}[h!]
 \center
-\includegraphics[width=0.7\textwidth]{../Art/visuPauli.png}
+\includegraphics[width=0.7\textwidth]{../Art/SARImages/visuPauli.png}
 \itkcaption[SAR polarimetry visu]{RGB image obtained from Pauli decomposition (sensor : RADARSAT2).}
 \label{fig:colorfrisco}
 \end{figure}
