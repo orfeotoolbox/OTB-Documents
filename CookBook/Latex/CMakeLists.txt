@@ -1,4 +1,10 @@
 # Auto-generate reference documentation in build directory
+if(DEFINED OTB_INSTALL_PREFIX)
+  set(OTB_PREFIX ${OTB_INSTALL_PREFIX})
+else()
+  set(OTB_PREFIX ${OTB_DIR})
+endif()
+
 CONFIGURE_FILE(${CookBook_SOURCE_DIR}/CMake/RunApplicationsDocGenerator.sh.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/RunApplicationsDocGenerator.sh
                @ONLY
