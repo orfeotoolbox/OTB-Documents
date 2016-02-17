@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{lmodern}
+\usepackage{hyperref}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{Guide d'installation OTB}
@@ -16,19 +17,40 @@
 
 \maketitle
 
-Guide d'installation OTB.
 \section{Windows}
 
-Installer QGIS
+\subsection{QGIS}
+Installer QGIS: \url{http://www.qgis.org/fr/site/forusers/download.html}.
 
-Installer une ligne de commande
+\subsection{Ligne de commande}
+Installer un environement minimal de ligne de commande pour Windows. Par exemple
+Git for Windows est assez facile à installer:
+\url{http://git-scm.com/download/win}.
 
-Télécharger les paquets.
+\subsection{OTB et Monteverdi}
 
-Liens vers les deux paquets autoportants
+Pour installer OTB 5.2.1 et Monteverdi 3.0.1, telecharger les paquets
+correspondants à votre architecture (32 ou 64 bits). Si votre machine est 32
+bits:
+\begin{verbatim}
+Monteverdi-3.0.1-win32.zip
+OTB-5.2.1-win32.zip
+\end{verbatim}
 
-Test final de l'installation
+Sinon si votre machine est 64 bits:
+\begin{verbatim}
+Monteverdi-3.0.1-win64.zip
+OTB-5.2.1-win64.zip
+\end{verbatim}
 
+Ces archives sont disponibles sur \url{https://www.orfeo-toolbox.org/packages/}.
+Extraire les deux archives zip dans votre repertoire personel, par exemple dans \texttt{C:{\textbackslash}Utilisateurs{\textbackslash}Martin{\textbackslash}OTB{\textbackslash}}.
+
+\subsection{Lier avec QGIS}
+
+\subsection{Tester l'installation}
+
+\clearpage
 \section{Ubuntu}
 
 \end{document}
