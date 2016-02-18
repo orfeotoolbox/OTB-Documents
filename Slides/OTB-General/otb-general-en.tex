@@ -137,7 +137,7 @@ Goal of this presentation:
 \end{block}
 
 \begin{center}
-{\huge\textcolor{red}{\url{www.orfeo-toolbox.org}}}
+{\huge\textcolor{red}{\href{http://www.orfeo-toolbox.org}{orfeo-toolbox.org}}}
 \end{center}
 
 \end{frame}
@@ -313,7 +313,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 
 \end{chronology}
 \begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{\'Etapes clés}
+\begin{block}{Key steps}
 \begin{description}
 \item[1.0.0] Architecture, compilation and documentation, few functions and applications
 \item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization\ldots)
@@ -712,10 +712,51 @@ Every day, almost 3000 tests are compiled, launched on 16 different configuratio
 \begin{block}{Use the applications}
  High level functions (e.g. segmentation), callable from CLI, Qt, Python, can be extended
 \end{block}
-\begin{block}{Use Monteverdi2}
+\begin{block}{Use Monteverdi}
 Visualization, data management, \textcolor{red}{Access to all applications}
 \end{block}
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Show me the code!}
+\begin{lstlisting}[language=c++,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 2pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#include "otbImage.h"
+#include "otbImageFileReader.h"
+#include "otbImageFileWriter.h"
+#include "itkCannyEdgeDetectionImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+
+int main(int argc, char * argv[])
+{
+  typedef double                      PixelType;
+  typedef otb::Image<PixelType>       ImageType;
+  
+  typedef unsigned char               OutputPixelType;
+  typedef otb::Image<OutputPixelType> OutputImageType;
+
+  typedef otb::ImageFileReader<ImageType> ReaderType;
+  ReaderType::Pointer reader = ReaderType::New();
+
+  reader->SetFileName(argv[1]);
+
+  typedef itk::CannyEdgeDetectionImageFilter
+  <ImageType, ImageType> FilterType;
+  FilterType::Pointer filter = FilterType::New();
+
+  filter->SetInput(reader->GetOutput());
+
+  typedef otb::ImageFileWriter<OutputImageType> WriterType;
+  WriterType::Pointer writer = WriterType::New();
+
+  writer->SetFileName(argv[2]);
+  
+  writer->SetInput(filter->GetOutput());
+
+  writer->Update();
+}
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{The applications: write it once, use everywhere}
@@ -974,6 +1015,7 @@ OrthoRectification.ExecuteAndWriteOutput()
   \end{itemize}
 \item Modules contain: tests, source code, applications are grouped
 \item Each module can be (de)activate, with automatic dependencies resolutions
+\item Good start! Already many remote modules contributed see \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{block}
 
@@ -1064,7 +1106,7 @@ Good start! Already 5 remote modules contributed see \url{https://www.orfeo-tool
 \begin{columns}
 \column{0.6\textwidth}
 \begin{itemize}
-\item OTB has been useful for (some) ORFEO/RTU users!
+\item OTB has been useful for (some) ORFEO users!
 \item Several training courses (3/5-day courses) given in France, Belgium,
 Madagascar, UNESCO, Hawaii,Finland\ldots
 \item OTB has successfully processed 619 Pléiades
@@ -1093,27 +1135,32 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
   \column{0.5\textwidth}
   \begin{itemize}
     \item OTB applications are available through QGIS processing framework
-    \item TerreImage: Educational software for satellite image analysis
+    \item OTB is a component of \alert{Sentinel-2} and Venus ground segment (CNES and ESA)
+    \item Terr'Image: Educational software for satellite image analysis
+    \item Use to prototype \alert{THEIA} products from the Scientific Expertise Centres
+    \item ESA Sentinel-2 for Agriculture 
     \item Gnorasi Software (National Technical University of Athens)
     \item Vahine project (hyperspectral processing of astrophysics),IPAG
     \item Geosud project(IRSTEA)
-    \item OTB is part of some components for \alert{Sentinel-2} and Venus ground segment (CNES and ESA)
     \item TCM research program (ETS Quebec)
-    \item ESA Sentinel2 agri
   \end{itemize}
-  \column{0.5\textwidth}
-  \includegraphics[width=\textwidth]{images/gnorasi2.png}\\
+  \column{0.65\textwidth}
+  \begin{center}
+  \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/Carte_17Classes.png}\\
+  \tiny{Protototype of THEIA Land cover product(CESBIO)}
+  \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/gnorasi2.png}\\
   \tiny{The Gnorasi software}
+  \end{center}
 \end{columns}
 \end{frame}
 
-%% \begin{frame}
-%% \frametitle{A complex system for complex tasks: chaos and side effects}
-%% \begin{center}
-%% \includegraphics[width=\textwidth]{images/Writing.png}\\
-%% \tiny{Effect of image encoding on image processing}
-%% \end{center}
-%% \end{frame}
+\begin{frame}
+\frametitle{A complex system for complex tasks: chaos and side effects}
+\begin{center}
+\includegraphics[width=\textwidth]{images/Writing.png}\\
+\tiny{Effect of image encoding on image processing}
+\end{center}
+\end{frame}
 
 \begin{frame}
 \frametitle{Support/Help/Contribute}
@@ -1121,16 +1168,16 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \begin{block}{General resources}
 \vspace{-0.2cm}
 \begin{description}
-\item[Site web] \url{www.orfeo-toolbox.org}
-\item[Wiki] \url{wiki.orfeo-toolbox.org}
-\item[Blog] \url{blog.orfeo-toolbox.org}
+\item[Site web] \href{http://www.orfeo-toolbox.org}{orfeo-toolbox.org}
+\item[Wiki] \href{http://wiki.orfeo-toolbox.org}{wiki.orfeo-toolbox.org}
+\item[Blog] \href{http://blog.orfeo-toolbox.org}{blog.orfeo-toolbox.org}
 \end{description}
 \end{block}
 \vspace{-0.2cm}
 \begin{block}{Documentation and help}
 \vspace{-0.2cm}
 \begin{description}
-\item[Doxygen] \url{http://www.orfeo-toolbox.org/doxygen/}
+\item[Doxygen] \href{http://www.orfeo-toolbox.org/doxygen/}{doxygen}
 \item[Guides] Software Guide and CookBook (remote sensing recipes)
 \item[Users mailing list] otb-users@googlegroups.com
 \item[Developers mailing list] otb-developers@googlegroups.com
@@ -1140,19 +1187,20 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \begin{block}{Follow-up}
 \vspace{-0.2cm}
 \begin{description}
-\item[Look at the code?] \url{git.orfeo-toolbox.org}
-\item[Find a bug?] \url{bugs.orfeo-toolbox.org}
-\item[Agile?] \url{scrum.orfeo-toolbox.org}
-\item[Weather?] \url{dash.orfeo-toolbox.org}
+\item[Look at the code?] \href{http://git.orfeo-toolbox.org}{git.orfeo-toolbox.org}
+\item[Find a bug?] \href{http://bugs.orfeo-toolbox.org}{bugs.orfeo-toolbox.org}
+\item[Agile?] \href{http://scrum.orfeo-toolbox.org}{scrum.orfeo-toolbox.org}
+\item[Weather?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
 \end{description}
 \end{block}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Thank you! Any questions?}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=0.7\textwidth]{images/LOGOTB_blackbox.png}
+\includegraphics[width=0.65\textwidth]{images/LOGOTB_blackbox.png}
 \end{center}
 \end{minipage}
 \end{frame}
