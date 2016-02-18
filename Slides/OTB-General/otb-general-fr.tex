@@ -135,7 +135,7 @@ Commençons donc l'ouverture de la boite !
 \end{block}
 
 \begin{center}
-{\huge\textcolor{red}{www.orfeo-toolbox.org}}
+{\huge\textcolor{red}{\href{http://www.orfeo-toolbox.org}{orfeo-toolbox.org}}}
 \end{center}
 
 \end{frame}
@@ -649,9 +649,49 @@ Tout les jours, environ 3000 tests sont compilés et rejoués sur 16 configurati
 \begin{block}{Utiliser les applications}
  Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis python. Peut être étendue (création d'applications)
 \end{block}
-\begin{block}{Utiliser Monteverdi2}
+\begin{block}{Utiliser Monteverdi}
 Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
 \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Show me the code!}
+\begin{lstlisting}[language=c++,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 2pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#include "otbImage.h"
+#include "otbImageFileReader.h"
+#include "otbImageFileWriter.h"
+#include "itkCannyEdgeDetectionImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+
+int main(int argc, char * argv[])
+{
+  typedef double                      PixelType;
+  typedef otb::Image<PixelType>       ImageType;
+  
+  typedef unsigned char               OutputPixelType;
+  typedef otb::Image<OutputPixelType> OutputImageType;
+
+  typedef otb::ImageFileReader<ImageType> ReaderType;
+  ReaderType::Pointer reader = ReaderType::New();
+
+  reader->SetFileName(argv[1]);
+
+  typedef itk::CannyEdgeDetectionImageFilter
+  <ImageType, ImageType> FilterType;
+  FilterType::Pointer filter = FilterType::New();
+
+  filter->SetInput(reader->GetOutput());
+
+  typedef otb::ImageFileWriter<OutputImageType> WriterType;
+  WriterType::Pointer writer = WriterType::New();
+
+  writer->SetFileName(argv[2]);
+  
+  writer->SetInput(filter->GetOutput());
+
+  writer->Update();
+}
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}
@@ -909,7 +949,9 @@ OrthoRectification.ExecuteAndWriteOutput()
 \item Les logiciels tiers sont importés dans des modules désactivables comme les autres
 \item Beaucoup de magie CMake (moins de code cmake, plus de choses automatisées)
 \item La documentation doxygen reflète l'organisation en groupes/modules
-\item Les contributions sont facilitées, notamment avec le mécanisme de \textit{remote module}
+\item Les contributions sont facilitées, notamment avec le mécanisme de
+  \textit{remote module}
+\item ça fonctionne! Déjà beaucoup de modules externes contribués, voir \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{block}
 \end{frame}
@@ -972,7 +1014,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{columns}
 \column{0.6\textwidth}
 \begin{itemize}
-\item l'OTB a été utile à (certains) des utilisateurs ORFEO/RTU
+\item l'OTB a été utile à (certains) des utilisateurs ORFEO
 \item L'OTB a traité avec succès plus de 619 images Pléiades pour le site web RTU,
 \item L'OTB fournit beaucoup de fonctions utiles pour la télédétection dans un \textbf{unique outil}
 \item L'OTB est (a été) l'unique logiciel open-source compatible avec les images Pléiades (grâce à OpenJPEG)
@@ -996,16 +1038,22 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{columns}
   \column{0.5\textwidth}
   \begin{itemize}
+    \item Les applications OTB applications sont disponibles dans le module de traitement de QGIS
+    \item L'OTB est utilisée dans certains composant des segments sols S2 et
+      Venus (CNES et ESA)
+    \item Logiciel educatif Terr'Image
+    \item Utiliser pour générer des produits à l'échelle nationale en France
+      dans THEIA
+    \item Projet EA S2 Agriculture
     \item Le logiciel Gnorasi (National Technical University of Athens)
     \item Le projet Vahine (traitement d'images hyperspectrales pour l'astrophysique), IPAG
-    \item Projet SEAS (IRD)
-    \item L'OTB est utilisée dans certains composant des segments sols S2 et Venus (CNES et ESA)
+    \item Projet GEOSUD (IRSTEA)
     \item Le programme de recherche TCM (ETS Quebec)
-    \item Le projet de recherche FP7 Tolomeo (CESBIO)
-    \item Les applications OTB applications sont disponibles dans le module de traitement de QGis
   \end{itemize}
-  \column{0.5\textwidth}
+  \column{0.65\textwidth}
 \begin{center}
+  \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/Carte_17Classes.png}\\
+  \tiny{Produit occupation du sol THEIA (CESBIO)}
   \includegraphics[width=\textwidth]{images/gnorasi2.png}\\
   \tiny{Le logiciel Gnorasi}
 \end{center}
@@ -1021,43 +1069,43 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-\frametitle{Demander du support / proposer son aide}
+\frametitle{Support/Help/Contribute}
 \vspace{-0.2cm}
-\begin{block}{Ressources générales}
+\begin{block}{General resources}
 \vspace{-0.2cm}
 \begin{description}
-\item[Site web] www.orfeo-toolbox.org
-\item[Wiki] wiki.orfeo-toolbox.org
-\item[Blog] blog.orfeo-toolbox.org
+\item[Site web] \href{http://www.orfeo-toolbox.org}{orfeo-toolbox.org}
+\item[Wiki] \href{http://wiki.orfeo-toolbox.org}{wiki.orfeo-toolbox.org}
+\item[Blog] \href{http://blog.orfeo-toolbox.org}{blog.orfeo-toolbox.org}
 \end{description}
 \end{block}
 \vspace{-0.2cm}
-\begin{block}{Documentation et aide}
+\begin{block}{Documentation and help}
 \vspace{-0.2cm}
 \begin{description}
-\item[Doxygen] http://www.orfeo-toolbox.org/doxygen/
-\item[Guides] Software Guide (pour les utilisateurs C++) et CookBook (pour tous)
-\item[Liste utilisateurs] otb-users@googlegroups.com
-\item[Liste développeurs] otb-developers@googlegroups.com
+\item[Doxygen] \href{http://www.orfeo-toolbox.org/doxygen/}{doxygen}
+\item[Guides] Software Guide and CookBook (remote sensing recipes)
+\item[Users mailing list] otb-users@googlegroups.com
+\item[Developers mailing list] otb-developers@googlegroups.com
 \end{description}
 \end{block}
 \vspace{-0.2cm}
-\begin{block}{Suivi rapproché}
+\begin{block}{Follow-up}
 \vspace{-0.2cm}
 \begin{description}
-\item[Que se passe-t-il ?] scrum.orfeo-toolbox.org
-\item[Quelle est la météo du projet?] dash.orfeo-toolbox.org
-\item[Un coup d'oeil au code?] hg.orfeo-toolbox.org
-\item[Vous avez trouvé un bug?] bugs.orfeo-toolbox.org
+\item[Look at the code?] \href{http://git.orfeo-toolbox.org}{git.orfeo-toolbox.org}
+\item[Find a bug?] \href{http://bugs.orfeo-toolbox.org}{bugs.orfeo-toolbox.org}
+\item[Agile?] \href{http://scrum.orfeo-toolbox.org}{scrum.orfeo-toolbox.org}
+\item[Weather?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
 \end{description}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Merci pour votre attention. Des questions ?}
+\frametitle{Merci pour votre attention. Des questions?}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=0.7\textwidth]{images/LOGOTB_blackbox.png}
+\includegraphics[width=0.65\textwidth]{images/LOGOTB_blackbox.png}
 \end{center}
 \end{minipage}
 \end{frame}
