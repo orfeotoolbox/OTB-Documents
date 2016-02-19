@@ -76,7 +76,8 @@
 %----------------------------------------------------------------------------------------
 \title{State of the Orfeo ToolBox}
 \includexmp{images/cc}
-\subtitle{Open source library for remote sensing image processing}
+\subtitle{Open source library for remote sensing image processing - Updated for
+  OTB 5.2}
 \author{Julien Michel (CNES), \textbf{Manuel Grizonnet (CNES)}}% date and event here
 \date{}
 
@@ -361,7 +362,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item[3.2.0] First version of Monteverdi, continue to enrich the library
 \item[3.12.0] New applications mechanisms, complete support for Pleiades
   imagery, new functions\ldots
-\item[3.16.0] Revamp of Monteverdi in \textbf{Monteverdi2}
+\item[3.16.0] Revamp of Monteverdi in \textbf{Monteverdi v2}
 \end{description}
 \end{block}
 \end{minipage}
@@ -413,6 +414,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \frametitle{A bit of history}
 
 \begin{chronology}[2]{2006}{2015}{\textwidth}
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
 \event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{13}{2}{2015}}{\tiny{4.4.0}}
 \event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
@@ -446,6 +448,9 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item[4.2.0] speed-up in Haralick textures calculation, enhancement of the
   optical calibration framework, RPC coefficients for sensor modeling can now be read and written from/to GeoTIFF RPC tags\ldots
 \item[5.0.0] In-dept changes in the way Orfeo ToolBox is organized and builds
+  (modularization)
+\item [5.2.0] Support partiel Sentinel-1, new SAR processing functions (specke,
+  polarimetry), regression mode for machine learning methods and \alert{Monveteverdi 3.0}
 \end{description}
 \end{block}
 \end{minipage}
@@ -461,6 +466,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 % months ago 	3.18.0 	
 %3 months ago 	3.16.0 	
 %0 months ago 	3.14.0 	
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
 \event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
@@ -507,6 +513,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 % months ago 	3.18.0 	
 %3 months ago 	3.16.0 	
 %0 months ago 	3.14.0 	
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
 \event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
@@ -550,6 +557,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 % months ago 	3.18.0 	
 %3 months ago 	3.16.0 	
 %0 months ago 	3.14.0 	
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
 \event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{4}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
@@ -630,7 +638,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item Ubuntugis repository (GIS and IP software for Ubuntu)
 \item Experimental Debian packages 
 \item Available in  OSGeo4W (OSGeo tools on Windows)
-\item Binary installers and Port for Mac OSX\ldots
+\item Binary installers, Port and Brew formule for Mac OSX\ldots
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -763,7 +771,7 @@ int main(int argc, char * argv[])
 \begin{columns}
 \column{0.5\textwidth}
 \begin{itemize}
-\item 75 applications are shipped with OTB
+\item 87 applications are shipped with OTB
 \item 1 application $=$ 1 dynamic library (plugin)
 \item Applications are auto-descriptive and auto-documented
 \item Applications can be extended outside of OTB
@@ -789,7 +797,7 @@ int main(int argc, char * argv[])
 $ otbcli_OrthoRectification 
 
 ERROR: Waiting for at least one parameter...
-This is the OrthoRectification application, version 5.0.0
+This is the OrthoRectification application, version 5.2.1
 This application allows to ortho-rectify optical images from supported sensors.
 
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
@@ -840,20 +848,30 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 
 \begin{frame}[fragile]
 \frametitle{Applications: Python wrapping}
-\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame
+    = tb,framerule =
+    0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle =
+    {\ttfamily\tiny},keywordstyle =
+    {\ttfamily\color{listkeyword}\textbf},identifierstyle =
+    {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle
+    = {\ttfamily},showstringspaces = false,showtabs = false,numbers =
+    none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize =
+    2]
 #!/usr/bin/python 
  
 # Import the otb applications package 
 import otbApplication 
  
 # The following line creates an instance of the OrthoRectification application 
-OrthoRectification = otbApplication.Registry.CreateApplication("OrthoRectification") 
+OrthoRectification = otb.Registry.CreateApplication("OrthoRectification") 
  
 # The following lines set all the application parameters: 
-OrthoRectification.SetParameterString("io.in", "QB_TOULOUSE_MUL_Extract_500_500.tif") 
+OrthoRectification.IO.IN = "QB_TOULOUSE_MUL_Extract_500_500.tif"
+OrthoRectification.IO.OUT = "QB_Toulouse_ortho.tif"
  
-OrthoRectification.SetParameterString("io.out", "QB_Toulouse_ortho.tif") 
- 
+app.MAP = 'epsg'
+app.MAP.EPSG.CODE = 32768
+
 # The following line execute the application 
 OrthoRectification.ExecuteAndWriteOutput()
 \end{lstlisting}
@@ -861,7 +879,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 
 \begin{frame}
-\frametitle{Monteverdi2: visualization}
+\frametitle{Monteverdi: visualization}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/monteverdi2-loupe.png}
@@ -870,7 +888,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-\frametitle{Monteverdi2: processing}
+\frametitle{Monteverdi: processing}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/monteverdi2-haralick.png}

@@ -76,7 +76,8 @@
 %----------------------------------------------------------------------------------------
 \title{L'Orfeo ToolBox}
 \includexmp{images/cc}
-\subtitle{un logiciel libre pour la télédétection}
+\subtitle{un logiciel libre pour le traitement d'images de télédétection - MAJ
+  pour OTB 5.2}
 \author{\textbf{Julien Michel (CNES)}, Manuel Grizonnet (CNES)}% date and event here
 \date{}
 
@@ -176,6 +177,10 @@ Le domaine fonctionnel de l'OTB est vaste, son développement nécessite du temp
 \item Favorise l'appropriation et la validation par la communauté des utilisateurs,
 \item Favorise les contributions et les corrections de bugs par les utilisateurs,
 \item Favorise la dissémination sur de multiples plate-formes.  
+\item ``The Cathedral \& the
+  Bazaar''\footnote{\url{http://www.catb.org/esr/writings/cathedral-bazaar/}}:
+  ``Publiez tôt, publiez souvent ``, ``s'appuyer sur la dynamique du projet''
+
 \end{itemize}
 \end{block}
 
@@ -186,10 +191,10 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 \event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
 \end{chronology}
 
@@ -203,9 +208,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 \event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
 \event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
 \event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
@@ -225,9 +230,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 \event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
 \event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
 \event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
@@ -253,9 +258,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 \event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
 \event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
 \event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
@@ -275,7 +280,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
 \item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
 \item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
+\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions\ldots
 
 \end{description}
 \end{block}
@@ -283,9 +288,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 \event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
 \event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
 \event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
@@ -305,22 +310,24 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 \end{chronology}
 \begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{\'Etapes clés}
+\begin{block}{Key steps}
 \begin{description}
 \item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
 \item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
 \item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
 \item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de l'imagerie Pléiades, nouvelles fonctions,
+\item[3.12.0] Nouveaux mécanismes OTB-Applications sous  la forme de
+  \alert{plugin}, support complet des images Pléiades (géométrie, radiométrie)\ldots
 \end{description}
 \end{block}
 \end{minipage}
 \end{frame}
 
-\begin{frame}
-\frametitle{Un peu d'histoire \ldots}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{frame}
+\frametitle{Un peu d'histoire}
+
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 \event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
 \event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
 \event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
@@ -348,17 +355,20 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
 \item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
 \item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de l'imagerie Pléiades, nouvelles fonctions,
-\item[3.16.0] Première version de Monteverdi2, et nouvelles fonctions,
+\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de
+  l'imagerie Pléiades, nouvelles fonctions,
+\item[3.16.0] Nouvelle version Monteverdi (v2), interface plus moderne,
+  intégration des applications
 \end{description}
 \end{block}
 \end{minipage}
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
+\event{\decimaldate{13}{2}{2015}}{\tiny{4.4.0}}
 \event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
 \event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
@@ -386,13 +396,58 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{block}{\'Etapes clés}
 \begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de l'imagerie Pléiades, nouvelles fonctions,
-\item[3.16.0] Première version de Monteverdi2, et nouvelles fonctions,
 \item[4.0.0] Compatibilité avec ITK 4.0, et nouvelles fonctions.
+\item[4.2.0] Méthode efficace pour le calcul des textures
+  d'Haralick,amélioration des techniques de calibration optique;
+  lecture/écriture de coefficients RPC à partir d'un fichier GeoTIFF\ldots
+\item[4.4.0] Calculatrice vectorielle sur les bandes ('ala' scilab)\ldots
+\end{description}
+\end{block}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Un peu d'histoire}
+
+\begin{chronology}[2]{2006}{2014}{\textwidth}
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
+\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
+\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
+\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
+\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
+\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
+\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
+\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
+\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
+\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
+\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
+\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
+\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
+\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
+\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
+\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
+\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
+\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
+\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
+\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
+\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
+\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
+\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
+\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
+
+\end{chronology}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{block}{\'Etapes clés}
+\begin{description}
+\item[4.0.0] Compatibilité avec ITK 4.0, et nouvelles fonctions.
+\item[4.2.0] Méthode efficace pour le calcul des textures
+  d'Haralick,amélioration des techniques de calibration optique;
+  lecture/écriture de coefficients RPC à partir d'un fichier GeoTIFF\ldots
+\item[5.0.0] Ré-organisation de l'architecture du code OTB et des outils pour le
+  configurer et l'installer (modularité)
+\item[5.2.0] Support Sentinel-1, nouvelles fonctionnalités de traitement SAR
+  (speckle, polarimétrie), mode régression pour certains algorithmes
+  d'apprentissage et \alert{Monveteverdi 3.0}
 \end{description}
 \end{block}
 \end{minipage}
@@ -400,14 +455,16 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 %2 days ago 	4.0.0
 % months ago 	3.20.0 	
 % months ago 	3.18.0 	
 %3 months ago 	3.16.0 	
 %0 months ago 	3.14.0 	
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
+\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
 \event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
@@ -445,7 +502,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
 \begin{chronology}[2]{2006}{2014}{\textwidth}
 %2 days ago 	4.0.0
@@ -453,6 +510,8 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 % months ago 	3.18.0 	
 %3 months ago 	3.16.0 	
 %0 months ago 	3.14.0 	
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
+\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
 \event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
@@ -487,14 +546,16 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \end{frame}
 
 \begin{frame}
-\frametitle{Un peu d'histoire \ldots}
+\frametitle{Un peu d'histoire}
 
-\begin{chronology}[2]{2006}{2014}{\textwidth}
+\begin{chronology}[2]{2006}{2015}{\textwidth}
 %2 days ago 	4.0.0
 % months ago 	3.20.0 	
 % months ago 	3.18.0 	
 %3 months ago 	3.16.0 	
 %0 months ago 	3.14.0 	
+\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
+\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
 \event{\decimaldate{4}{9}{2014}}{\tiny{4.2.0}}
 \event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
 \event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
@@ -534,7 +595,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \frametitle{Construite sur des logiciels libres tiers performants}
 \begin{block}{Motivations}
 \begin{itemize}
-\item A chaque fois que c'est possible, l'Orfeo ToolBox s'appuie sur des logiciels libres tiers
+\item A chaque fois que c'est possible, l'Orfeo ToolBox s'appuie sur des
+  logiciels libres tiers
+\item ``Reuse is powerful''
 \item Cette position d'intégrateur permet d'accroître rapidement le nombre de fonctions tout en assurant leurs validité
 \item Elle permet également de créer de nouvelles fonctionnalités par hybridation
 \end{itemize} 
@@ -561,15 +624,16 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{itemize}
 \item Compiler avec les versions récentes de:
 \begin{itemize}
-\item gcc,
-\item clang, 
+\item GCC
+\item Clang 
+\item MinGW
 \item visual studio\ldots
 \end{itemize}
 \item Des paquets binaires sont disponibles en fonction de la plateforme:
 \begin{itemize}
 \item Dépôt ubuntugis pour Ubuntu,
-\item Intégration à OSGeo4W et paquets indépendants pour windows,
-\item Paquets MacPort et image dmg pour Mac OSX\ldots
+\item Intégration à OSGeo4W et paquets indépendants pour Windows,
+\item Paquets MacPort, formule HomeBrew et image dmg pour Mac OSX\ldots
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -614,7 +678,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{itemize}
 \item Veille technologique de l'équipe de développement
 \item Implémentations d'algorithmes récents d'après publication. Ex.: profils morphologiques, segmentation MeanShift, textures de Haralick, points d'intérêt SURF \ldots
-\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift, fusion bayesienne, détection d'objets \ldots
+\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift\footnote{Michel, J.; Youssefi, D.; Grizonnet, M., "Stable Mean-Shift Algorithm and Its Application to the Segmentation of Arbitrarily Large Remote Sensing Images," Geoscience and Remote Sensing, IEEE Transactions on , vol.53, no.2, pp.952,964, Feb. 2015}, fusion bayesienne\footnote{J. R. Dominique Fasbender and P. Bogaert. Bayesian data fusion for adaptable image pan-
+sharpening. IEEE Transactions on Geoscience and Remote Sensing, 46(6):1847–1857, 2007.
+13.2}, détection d'objets \ldots
 \item Veille pour bénéficier des avancées des logiciels tiers. Ex.: algorithmes de \textit{machine learning} d'OpenCV,
 \item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une meme interface.
 \end{itemize}
@@ -625,9 +691,9 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \vspace{-0.5cm}
 \begin{itemize}
 \item Gestion de code source décentralisée: Mercurial (changement pour Git envisagé)
-\item C++ et suite CMake (ctest, cdash)
+\item C++ et suite CMake (CTest, CDash)
 \item Développement guidé par les tests (TDD)
-\item Gestion Agile
+\item Gestion Agile (scrum)
 \item Intégration continue et packaging automatisé
 \end{itemize}
 Tout les jours, environ 3000 tests sont compilés et rejoués sur 16 configurations différentes!
@@ -647,7 +713,7 @@ Tout les jours, environ 3000 tests sont compilés et rejoués sur 16 configurati
  Flexible, accès à l'API complète, demande une connaissance en C++
 \end{block}
 \begin{block}{Utiliser les applications}
- Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis python. Peut être étendue (création d'applications)
+ Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis Python. Peut être étendue (création d'applications)
 \end{block}
 \begin{block}{Utiliser Monteverdi}
 Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
@@ -699,14 +765,14 @@ int main(int argc, char * argv[])
 \begin{columns}
 \column{0.5\textwidth}
 \begin{itemize}
-\item 80 applications sont livrées avec l'OTB
+\item 87 applications sont livrées avec l'OTB
 \item 1 application $=$ 1 librairie dynamique (plugin)
-\item Les applications sont auto-descriptives et auto-documentées,
+\item Les applications sont auto-descriptives et auto-documentées
 \item Les applications peuvent etre étendues en dehors de l'OTB
 \item Plusieurs interfaces sont disponibles pour utiliser les plugins:
 \begin{itemize}
-  \item Ligne de commande,
-  \item Interface QT auto-générée,
+  \item Ligne de commande
+  \item Interface Qt auto-générée
   \item Python
 \end{itemize}
 \item Les applications sont conçues pour une intégration facilitée dans des systèmes externes
@@ -725,7 +791,7 @@ int main(int argc, char * argv[])
 $ otbcli_OrthoRectification 
 
 ERROR: Waiting for at least one parameter...
-This is the OrthoRectification application, version 4.1.0
+This is the OrthoRectification application, version 5.2.1
 This application allows to ortho-rectify optical images from supported sensors.
 
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
@@ -759,7 +825,7 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface QT auto-générée (paramètres)}
+\frametitle{Applications: appel depuis l'interface Qt auto-générée (paramètres)}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/app_parameters.png}
 \end{center}
@@ -767,14 +833,14 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 
 
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface QT auto-générée (documentation)}
+\frametitle{Applications: appel depuis l'interface Qt auto-générée (documentation)}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/app_doc.png}
 \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface python}
+\frametitle{Applications: appel depuis l'interface Python}
 \begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
 #!/usr/bin/python 
  
@@ -782,13 +848,15 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 import otbApplication 
  
 # The following line creates an instance of the OrthoRectification application 
-OrthoRectification = otbApplication.Registry.CreateApplication("OrthoRectification") 
+OrthoRectification = otb.Registry.CreateApplication("OrthoRectification") 
  
 # The following lines set all the application parameters: 
-OrthoRectification.SetParameterString("io.in", "QB_TOULOUSE_MUL_Extract_500_500.tif") 
+OrthoRectification.IO.IN = "QB_TOULOUSE_MUL_Extract_500_500.tif"
+OrthoRectification.IO.OUT = "QB_Toulouse_ortho.tif"
  
-OrthoRectification.SetParameterString("io.out", "QB_Toulouse_ortho.tif") 
- 
+app.MAP = 'epsg'
+app.MAP.EPSG.CODE = 32768
+
 # The following line execute the application 
 OrthoRectification.ExecuteAndWriteOutput()
 \end{lstlisting}
@@ -796,7 +864,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 
 \begin{frame}
-\frametitle{Monteverdi2: visualisation}
+\frametitle{Monteverdi: visualisation}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/monteverdi2-loupe.png}
@@ -813,6 +881,14 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{minipage}
 \end{frame}
 
+\begin{frame}
+\frametitle{OTB dans QGIS}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{images/otb_qgis.png}
+\end{center}
+\end{minipage}
+\end{frame}
 
 \section{Fonctionnalités}
 
@@ -851,7 +927,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \begin{block}{Détection de changement}
 \begin{itemize}
-\item Algorithme classique avec métrique de comparaison d'image,
+\item Algorithme classique avec métrique de comparaison d'images,
 \item Algorithme MAD (Multivariate Alteration Detector)
 \end{itemize}
 \end{block}
@@ -941,6 +1017,8 @@ OrthoRectification.ExecuteAndWriteOutput()
   \end{itemize}
 \item Les modules sont complets: tests, code source, applications sont regroupés
 \item Chaque module peut etre activé ou non, avec gestion des dépendances
+\item Ca fonctionne! Plusieurs contributions \url{https://www.orfeo-toolbox.org/external-projects/}
+
 \end{itemize}
 \end{block}
 
@@ -955,6 +1033,20 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{itemize}
 \end{block}
 \end{frame}
+
+\begin{frame}
+\frametitle{Contributer son module OTB}
+\begin{block}{Schéma ITK}
+\begin{center}
+ \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
+\end{center}
+
+\end{block}
+\begin{block}{Alors?}
+Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
+\end{block}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Superbuild}
