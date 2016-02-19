@@ -129,7 +129,7 @@ Commençons donc l'ouverture de la boite !
 \item Une \textbf{librairie de traitement d'images} dédiées à la télédétection,
 \item \textbf{Un logiciel libre} diffusé sous licence CeCILL-v2 (équivalent à la GPL),
 \item \textbf{Financée et développée par le CNES} dans le cadre du programme préparatoire à Pléiades Orfeo (et au delà),
-\item Ecrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (librairie libre de traitement d'images médicales),
+\item Écrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (librairie libre de traitement d'images médicales),
 \item Interfacée avec de nombreux autres logiciels libres de traitement d'images et de télédétection, tels que Gdal, OSSIM ou OpenCV,
 \item Conçue pour traiter de \textbf{gros volumes de données} de manière transparente grâce au traitement par morceaux et à la parallélisation.
 \end{itemize}
@@ -400,7 +400,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \item[4.2.0] Méthode efficace pour le calcul des textures
   d'Haralick,amélioration des techniques de calibration optique;
   lecture/écriture de coefficients RPC à partir d'un fichier GeoTIFF\ldots
-\item[4.4.0] Calculatrice vectorielle sur les bandes ('ala' scilab)\ldots
+\item[4.4.0] Calculatrice vectorielle sur les bandes ('ala' Scilab)\ldots
 \end{description}
 \end{block}
 \end{minipage}
@@ -447,7 +447,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
   configurer et l'installer (modularité)
 \item[5.2.0] Support Sentinel-1, nouvelles fonctionnalités de traitement SAR
   (speckle, polarimétrie), mode régression pour certains algorithmes
-  d'apprentissage et \alert{Monveteverdi 3.0}
+  d'apprentissage et \alert{Monteverdi 3.0}
 \end{description}
 \end{block}
 \end{minipage}
@@ -627,11 +627,11 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \item GCC
 \item Clang 
 \item MinGW
-\item visual studio\ldots
+\item Visual Studio\ldots
 \end{itemize}
 \item Des paquets binaires sont disponibles en fonction de la plateforme:
 \begin{itemize}
-\item Dépôt ubuntugis pour Ubuntu,
+\item Dépôt ubuntuGIS pour Ubuntu,
 \item Intégration à OSGeo4W et paquets indépendants pour Windows,
 \item Paquets MacPort, formule HomeBrew et image dmg pour Mac OSX\ldots
 \end{itemize}
@@ -678,11 +678,11 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{itemize}
 \item Veille technologique de l'équipe de développement
 \item Implémentations d'algorithmes récents d'après publication. Ex.: profils morphologiques, segmentation MeanShift, textures de Haralick, points d'intérêt SURF \ldots
-\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift\footnote{Michel, J.; Youssefi, D.; Grizonnet, M., "Stable Mean-Shift Algorithm and Its Application to the Segmentation of Arbitrarily Large Remote Sensing Images," Geoscience and Remote Sensing, IEEE Transactions on , vol.53, no.2, pp.952,964, Feb. 2015}, fusion bayesienne\footnote{J. R. Dominique Fasbender and P. Bogaert. Bayesian data fusion for adaptable image pan-
+\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift\footnote{Michel, J.; Youssefi, D.; Grizonnet, M., "Stable Mean-Shift Algorithm and Its Application to the Segmentation of Arbitrarily Large Remote Sensing Images," Geoscience and Remote Sensing, IEEE Transactions on , vol.53, no.2, pp.952,964, Feb. 2015}, fusion bayésienne\footnote{J. R. Dominique Fasbender and P. Bogaert. Bayesian data fusion for adaptable image pan-
 sharpening. IEEE Transactions on Geoscience and Remote Sensing, 46(6):1847–1857, 2007.
 13.2}, détection d'objets \ldots
 \item Veille pour bénéficier des avancées des logiciels tiers. Ex.: algorithmes de \textit{machine learning} d'OpenCV,
-\item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une meme interface.
+\item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une même interface.
 \end{itemize}
 \end{frame}
 
@@ -690,7 +690,8 @@ sharpening. IEEE Transactions on Geoscience and Remote Sensing, 46(6):1847–185
 \frametitle{Un mot concernant le développement du logiciel}
 \vspace{-0.5cm}
 \begin{itemize}
-\item Gestion de code source décentralisée: Mercurial (changement pour Git envisagé)
+\item Gestion de code source décentralisée: Git (migration depuis Mercurial en
+  Juillet 2015)
 \item C++ et suite CMake (CTest, CDash)
 \item Développement guidé par les tests (TDD)
 \item Gestion Agile (scrum)
@@ -1035,7 +1036,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-\frametitle{Contributer son module OTB}
+\frametitle{Contribuer son module OTB}
 \begin{block}{Schéma ITK}
 \begin{center}
  \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
@@ -1062,7 +1063,7 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \item Il n'y a plus de logiciels tiers dans l'OTB
 \item Il existe un projet séparé appelé Superbuild, qui télécharge, configure, compile et installe chaque dépendance dans sa bonne version
 \item On peut ainsi compiler une OTB complète avec très peu de pré-requis (cmake, gcc, zlib, curl), et totalement automatiquement
-\item Il existe également un mode offline pour compiler l'OTB en avion (ou toute autre situation sans accès internet)
+\item Il existe également un mode \textit{offline} pour compiler l'OTB en avion (ou toute autre situation sans accès internet)
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1075,7 +1076,7 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \item Animation de la communauté, et grandes orientations du projet
 \item Tout le monde peut en devenir membre (nouveau membre = vote)
 \item Les décisions et les débats sont publics (sur la liste de diffusion pour les développeurs)
-\item Les status sont publics\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
+\item Les statuts sont publics\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
 \end{itemize}
 \end{frame}
 
@@ -1087,12 +1088,12 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \column{0.5\textwidth}
 \begin{block}{Difficile à dire \ldots}
 \begin{itemize}
-    \item 577 membres sur la liste utilisateurs
-    \item Entre 100 et 150 messages par mois
-    \item 89 membres sur la liste développeurs
-    \item 118 comptes sur le système de gestion des bugs
-    \item 52 contributeurs à la documentation
-    \item 864 téléchargements for OTB 4.0.0
+    \item $\approx$ 600 membres sur la liste utilisateurs
+    \item $\approx$ Entre 100 et 150 messages par mois
+    \item $\approx$ 100 membres sur la liste développeurs
+    \item $\approx$ 118 comptes sur le système de gestion des bugs
+    \item $\approx$ 50 contributeurs (listé dans la documentation)
+    \item $\approx$ 3400 téléchargements for OTB 5.0
   \end{itemize}
 \end{block}
 \column{0.5\textwidth}
@@ -1106,7 +1107,7 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \begin{columns}
 \column{0.6\textwidth}
 \begin{itemize}
-\item l'OTB a été utile à (certains) des utilisateurs ORFEO
+\item l'OTB a été utile à (certains) des utilisateurs ORFEO!
 \item L'OTB a traité avec succès plus de 619 images Pléiades pour le site web RTU,
 \item L'OTB fournit beaucoup de fonctions utiles pour la télédétection dans un \textbf{unique outil}
 \item L'OTB est (a été) l'unique logiciel open-source compatible avec les images Pléiades (grâce à OpenJPEG)
@@ -1161,9 +1162,9 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{frame}
 
 \begin{frame}
-\frametitle{Support/Help/Contribute}
+\frametitle{Support/Aide/Contribution}
 \vspace{-0.2cm}
-\begin{block}{General resources}
+\begin{block}{Ressources}
 \vspace{-0.2cm}
 \begin{description}
 \item[Site web] \href{http://www.orfeo-toolbox.org}{orfeo-toolbox.org}
@@ -1172,23 +1173,23 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{description}
 \end{block}
 \vspace{-0.2cm}
-\begin{block}{Documentation and help}
+\begin{block}{Documentation et aide}
 \vspace{-0.2cm}
 \begin{description}
 \item[Doxygen] \href{http://www.orfeo-toolbox.org/doxygen/}{doxygen}
-\item[Guides] Software Guide and CookBook (remote sensing recipes)
-\item[Users mailing list] otb-users@googlegroups.com
-\item[Developers mailing list] otb-developers@googlegroups.com
+\item[Documentation] Software Guide et CookBook (remote sensing recipes)
+\item[Liste de diffusion utilisateurs] otb-users@googlegroups.com
+\item[Liste de diffusion développeurs] otb-developers@googlegroups.com
 \end{description}
 \end{block}
 \vspace{-0.2cm}
 \begin{block}{Follow-up}
 \vspace{-0.2cm}
 \begin{description}
-\item[Look at the code?] \href{http://git.orfeo-toolbox.org}{git.orfeo-toolbox.org}
-\item[Find a bug?] \href{http://bugs.orfeo-toolbox.org}{bugs.orfeo-toolbox.org}
+\item[Où se trouve le code?] \href{http://git.orfeo-toolbox.org}{git.orfeo-toolbox.org}
+\item[Vous avez trouvé un bug?] \href{http://bugs.orfeo-toolbox.org}{bugs.orfeo-toolbox.org}
 \item[Agile?] \href{http://scrum.orfeo-toolbox.org}{scrum.orfeo-toolbox.org}
-\item[Weather?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
+\item[Météo?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
 \end{description}
 \end{block}
 \end{frame}
