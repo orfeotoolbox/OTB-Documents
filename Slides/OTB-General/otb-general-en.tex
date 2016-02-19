@@ -448,7 +448,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item[4.2.0] speed-up in Haralick textures calculation, enhancement of the
   optical calibration framework, RPC coefficients for sensor modeling can now be read and written from/to GeoTIFF RPC tags\ldots
 \item[5.0.0] In-dept changes in the way Orfeo ToolBox is organized and builds
-  (modularization)
+  (\alert{modularization})
 \item [5.2.0] Support partiel Sentinel-1, new SAR processing functions (speckle,
   polarimetry), regression mode for machine learning methods and \alert{Monteverdi 3.0}
 \end{description}
@@ -638,7 +638,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item UbuntuGIS repository (GIS and IP software for Ubuntu)
 \item Experimental Debian packages 
 \item Available in  OSGeo4W (OSGeo tools on Windows)
-\item Binary installers, Port and Brew formula for Mac OSX\ldots
+\item Binary installers, Port and Brew formula for Mac OS X\ldots
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -914,7 +914,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{itemize}
 \item Radiometric calibration, orthorectification, resampling (raster and
   vector), pan-sharpening, stereo rectification\ldots
-\item Sensor supported: Pléiades, SPOT6, SPOT5, Digital Globe satellites
+\item Sensor supported: Sentinels, Pléiades, SPOT6, SPOT5, Digital Globe satellites
 \item Geometric models (thanks to OSSIM), support for DEM (SRTM or GeoTIFF)
 \end{itemize}
 \end{block}
@@ -969,7 +969,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \begin{block}{Classification}
 \begin{itemize}
-\item 9 supervised methods available (including SVM and Random Forest)
+\item 9 supervised methods available (including SVM and Random Forests)
 \item Fusion and regularization of classifications
 \item K-Means clustering or Kohonen maps
 \item Object classification (from a segmentation)
@@ -1020,7 +1020,7 @@ OrthoRectification.ExecuteAndWriteOutput()
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame} 
 
-\section{What's new in OTB 5.0?}
+\section{What's new in OTB?}
 
 \begin{frame}
 \frametitle{Modular architecture (inspired by ITK 4.x)}
@@ -1033,7 +1033,7 @@ OrthoRectification.ExecuteAndWriteOutput()
   \end{itemize}
 \item Modules contain: tests, source code, applications are grouped
 \item Each module can be (de)activate, with automatic dependencies resolutions
-\item Good start! Already many remote modules contributed see \url{https://www.orfeo-toolbox.org/external-projects/}
+\item Good start! Already many remote modules contributed by the community: \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{block}
 
@@ -1051,15 +1051,9 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \begin{frame}
 \frametitle{Contribute a module}
-\begin{block}{ITK schema}
 \begin{center}
  \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
 \end{center}
-
-\end{block}
-\begin{block}{How it works for us?}
-Good start! Already 5 remote modules contributed see \url{https://www.orfeo-toolbox.org/external-projects/}
-\end{block}
 \end{frame}
 
 \begin{frame}
@@ -1098,6 +1092,48 @@ Good start! Already 5 remote modules contributed see \url{https://www.orfeo-tool
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Contribute a module}
+\begin{block}{ITK schema}
+\begin{center}
+ \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
+\end{center}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Superbuild: installing OTB has never been so easy}
+\begin{block}{Before in OTB 4.4}
+\begin{itemize}
+\item Some of the OTB third part dependencies could be build internally
+\item External source code was integrated in OTB source tree (not a good idea)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{What's new in OTB 5.2?}
+\begin{block}{What has changed?}
+\begin{itemize}
+\item New applications for SAR processing (polarimetry)
+\item Basic support of Sentinel1 products
+\item Radiometric calibration of Sentinel1 and Radarsat2
+\item New methods for SAR Despeckle filtering (Frost, Lee, GammaMAP, Kuan)
+\item Regression mode in machine learning and confidence maps for classification
+\item Enhanced syntax of applications python API
+\item Compatibilty with Gdal 2.0 and support of Sentinel-2
+\end{itemize}
+\end{block}
+
+\begin{block}{Goodbye Monteverdi2, welcome Monteverdi 3.0}
+\begin{itemize}
+\item Light stack-layer model
+\item Display several images together, as a stack or as a mosaic
+\item Lots of nice rendering tools
+\item Access to OTB applications
+\end{itemize}
+\end{block}
+\end{frame}
 
 \section{Conclusion}
 \begin{frame}
@@ -1139,7 +1175,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
   \item bridges between RS and SIG \ldots
   \end{itemize}
 \item Beyond Orfeo, OTB is already used in several projects and software
-\item OSGeo incubation in progress
+\item OSGeo incubation
 \end{itemize}
 \column{0.4\textwidth}
 \includegraphics[width=0.9\textwidth]{images/resultats_ird.png}\\
@@ -1195,8 +1231,8 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \begin{block}{Documentation and help}
 \vspace{-0.2cm}
 \begin{description}
-\item[Doxygen] \href{http://www.orfeo-toolbox.org/doxygen/}{doxygen}
 \item[Guides] Software Guide and CookBook (remote sensing recipes)
+\item[Doxygen] \href{http://www.orfeo-toolbox.org/doxygen}{doxygen}
 \item[Users mailing list] otb-users@googlegroups.com
 \item[Developers mailing list] otb-developers@googlegroups.com
 \end{description}

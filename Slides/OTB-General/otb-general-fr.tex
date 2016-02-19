@@ -444,7 +444,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
   d'Haralick,amélioration des techniques de calibration optique;
   lecture/écriture de coefficients RPC à partir d'un fichier GeoTIFF\ldots
 \item[5.0.0] Ré-organisation de l'architecture du code OTB et des outils pour le
-  configurer et l'installer (modularité)
+  configurer et l'installer (\alert{modularité})
 \item[5.2.0] Support Sentinel-1, nouvelles fonctionnalités de traitement SAR
   (speckle, polarimétrie), mode régression pour certains algorithmes
   d'apprentissage et \alert{Monteverdi 3.0}
@@ -633,7 +633,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
 \begin{itemize}
 \item Dépôt ubuntuGIS pour Ubuntu,
 \item Intégration à OSGeo4W et paquets indépendants pour Windows,
-\item Paquets MacPort, formule HomeBrew et image dmg pour Mac OSX\ldots
+\item Paquets MacPort, formule HomeBrew et image dmg pour Mac OS X\ldots
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -899,7 +899,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{Pré-traitements}
 \begin{itemize}
 \item Calibration radiométrique, ortho-rectification, reprojection (raster et vecteur), pan-sharpening, stéréo-rectification,
-\item Capteurs supportés: Pléiades, SPOT6, SPOT5, capteurs DigitalGlobe
+\item Capteurs supportés: Sentinels, Pléiades, SPOT6, SPOT5, capteurs DigitalGlobe
 \item Modélisation géométrique fournie par OSSIM, support de MNT SRTM ou GeoTIFF
 \end{itemize}
 \end{block}
@@ -954,7 +954,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \begin{block}{Classification}
 \begin{itemize}
-\item Supervision et classification d'images avec 9 algorithmes au choix (dont SVM et Random Forest)
+\item Supervision et classification d'images avec 9 algorithmes au choix (dont SVM et forêts aléatoires)
 \item Fusion et régularisation de cartes de classification
 \item Clustering de type K-Means ou carte de Kogonen
 \item Classification objets (segments issus d'une segmentation)
@@ -1005,7 +1005,7 @@ OrthoRectification.ExecuteAndWriteOutput()
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame} 
 
-\section{Quoi de neuf dans l'OTB 5.0 ?}
+\section{Quoi de neuf dans l'OTB?}
 
 \begin{frame}
 \frametitle{Modularité (inspirée de l'organisation du code ITK 4.x)}
@@ -1030,7 +1030,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \item La documentation doxygen reflète l'organisation en groupes/modules
 \item Les contributions sont facilitées, notamment avec le mécanisme de
   \textit{remote module}
-\item ça fonctionne! Déjà beaucoup de modules externes contribués, voir \url{https://www.orfeo-toolbox.org/external-projects/}
+\item ça fonctionne! Déjà beaucoup de modules externes contribués: \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1041,10 +1041,6 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{center}
  \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
 \end{center}
-
-\end{block}
-\begin{block}{Alors?}
-Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{block}
 \end{frame}
 
@@ -1080,6 +1076,29 @@ Cela fonctionne bien! \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Quoi de neuf dans l'OTB 5.2?}
+\begin{block}{Quoi de neuf dans la version 5.2 (Déc 2015)?}
+\begin{itemize}
+\item Nouvelles applications pour le traitement SAR (polarimétrie)
+\item Support des produits Sentinel-1
+\item Calibration radiométrique image SAR (Sentinel1 et Radarsat2)
+\item Méthodes pour le filtrage du Speckle (Frost, Lee, GammaMAP, Kuan)
+\item Mode régression et carte de confiance pour la classification
+\item Amélioration accès OTB en Python
+\item Copmpatibilité avec Gdal 2.0 et support des images Sentinel-2
+\end{itemize}
+\end{block}
+
+\begin{block}{Goodbye Monteverdi2, welcome Monteverdi 3.0}
+\begin{itemize}
+\item Léger et performant
+\item Affichage mosaique d'images ou série multi-temporelle
+\item Outils de visualisation performants(contraste local, gradient\ldots)
+\item Accès aux applications OTB
+\end{itemize}
+\end{block}
+\end{frame}
 
 \section{Conclusion et perspectives}
 \begin{frame}
