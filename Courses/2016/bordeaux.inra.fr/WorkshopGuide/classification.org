@@ -4,10 +4,15 @@
 
 **** Pré-requis
 
-
+     
 **** Objectifs
 
 *** Étapes
 
+classif 1 date
+classif 1 date avec primitive
+classif 2 dates (2 stratégies)
+classif N dates
+classif N dates NDVI
 *** Solutions                                                     :solutions:
 

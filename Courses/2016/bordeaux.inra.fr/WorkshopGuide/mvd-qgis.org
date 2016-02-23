@@ -1,13 +1,42 @@
 ** Utiliser *Monteverdi* et *QGis*                                  :mvdapps:
 *** Description
 **** Résumé
+     Ce TP est l'occasion de découvrir et de prendre en main les
+     logiciels que nous utiliserons pour visualiser les données et
+     résultats produits. Ces logiciels sont, au choix, QGis ou
+     Monteverdi. Les données utilisées lors de ce TP sont les données
+     qui seront utilisées pour la suite de la formation.
 
 **** Pré-requis
 
+     - Installation des logiciels
+     - Téléchargement des données
 
 **** Objectifs
 
+     les objectifs de ce TP sont les suivants:
+     - Savoir visualiser une image et régler son rendu dans Monteverdi,
+     - Savoir visualiser une pile de données dans Monteverdi
+     - Savoir visualiser une image et régler son rendu dans Qgis,
+     - Savoir visualiser une données vecteur dans Qgis,
+     - Savoir visualiser une pile de données dans QGis,
+     - Echanger des trucs et astuces.
+
 *** Étapes
+
+    Pour cet exercice, il est proposé de travailler en binôme. A la
+    fin de l'exercice, chaque binôme présentera au reste du groupe une
+    astuce qu'il a découverte en manipulant les logiciels, ou posera
+    une question qui est restée sans réponse au terme de l'exercice.
+
+**** Visualiser une images dans Monteverdi
+**** Visualiser une pile d'images dans Monteverdi
+**** Visualiser une image dans Qgis
+**** Visualiser une données vecteur dans Qgis
+
+Repérer la liste des classes.
+
+**** Visualiser une pile de données dans Qgis 
 
 *** Solutions                                                     :solutions:
 

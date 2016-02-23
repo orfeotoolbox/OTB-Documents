@@ -1,6 +1,9 @@
-** le mécanisme des applications *Orfeo ToolBox*                    :mvdapps:
+** Le mécanisme des applications *Orfeo ToolBox*                    :mvdapps:
 *** Description
 **** Résumé
+     
+     Au cours de cette excerice, nous allons apprendre à utiliser les
+     applications de l'Orfeo ToolBox. 
 
 **** Pré-requis
 

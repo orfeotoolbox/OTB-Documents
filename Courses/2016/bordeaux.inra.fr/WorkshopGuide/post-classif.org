@@ -9,5 +9,11 @@
 
 *** Étapes
 
+Evaluer quantitativement la performance
+Vote majoritaire entre plusieurs classifieurs
+Régularisation de la carte de classification
+Colorisation avec l'application color-mapping
+Produire un vecteur d'une classe précise
+
 *** Solutions                                                     :solutions:
 
