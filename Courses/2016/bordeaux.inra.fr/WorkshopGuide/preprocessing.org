@@ -1,0 +1,13 @@
+** Pré-traitement de l'imagerie THR optique                         :mvdapps:
+*** Description
+**** Résumé
+
+**** Pré-requis
+
+
+**** Objectifs
+
+*** Étapes
+
+*** Solutions                                                     :solutions:
+

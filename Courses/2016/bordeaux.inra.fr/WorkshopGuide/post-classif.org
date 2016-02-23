@@ -1,0 +1,13 @@
+** Evaluer, nettoyer et valoriser une carte de classification       :mvdapps:
+*** Description
+**** Résumé
+
+**** Pré-requis
+
+
+**** Objectifs
+
+*** Étapes
+
+*** Solutions                                                     :solutions:
+

@@ -1,0 +1,13 @@
+** Réaliser une classification supervisée                           :mvdapps:
+*** Description
+**** Résumé
+
+**** Pré-requis
+
+
+**** Objectifs
+
+*** Étapes
+
+*** Solutions                                                     :solutions:
+

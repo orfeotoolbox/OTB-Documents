@@ -1,0 +1,13 @@
+** Segmentation et export vers un SIG                               :mvdapps:
+*** Description
+**** Résumé
+
+**** Pré-requis
+
+
+**** Objectifs
+
+*** Étapes
+
+*** Solutions                                                     :solutions:
+

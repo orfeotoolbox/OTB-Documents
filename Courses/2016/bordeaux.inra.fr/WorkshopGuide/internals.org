@@ -1,0 +1,13 @@
+** Les mécanismes internes de l'*Orfeo ToolBox*                     :mvdapps:
+*** Description
+**** Résumé
+
+**** Pré-requis
+
+
+**** Objectifs
+
+*** Étapes
+
+*** Solutions                                                     :solutions:
+

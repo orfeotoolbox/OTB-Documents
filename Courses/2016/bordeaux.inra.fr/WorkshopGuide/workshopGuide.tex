@@ -1,0 +1,241 @@
+% Created 2016-02-23 mar. 09:35
+\documentclass[a4paper,11pt,twoside,openright]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{a4wide}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\author{Manuel Grizonnet (CNES), Julien Michel (CNES), Victor Poughon (CNES)}
+\date{Décembre 2013}
+\title{Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.4.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../../Artwork/logoVectoriel.png}}
+\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
+\fancyfoot[C]{\vspace{2pt}\footnotesize{Formation Orfeo ToolBox - INRA 2016}}
+
+\section{Avant-propos}
+\label{sec-1}
+\subsection{Données}
+\label{sec-1-1}
+
+\subsection{Les logiciels}
+\label{sec-1-2}
+
+Afin de réaliser les exercices, les logiciels suivants sont
+nécessaires :
+
+\begin{itemize}
+\item \textbf{Orfeo ToolBox} 5.2 ou plus récent avec les applications
+\item \textbf{Monteverdi} 3.0 ou plus récent
+\item \textbf{QGis} 2.4 ou plus récent
+\end{itemize}
+
+Pour ce qui concerne l'installation de l'\textbf{Orfeo ToolBox} et
+de  \textbf{Monteverdi}, vous pouvez consulter l' \href{http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf}{Orfeo ToolBox Cookbook}.
+
+Pour installer \textbf{QGis} consultez la documentation du logiciel qui est
+disponible sur le  \href{http://www.qgis.org/}{site du projet}.
+
+\newpage
+
+\begin{center}
+\vspace*{10cm}
+\tiny Creative Commons Attribution-ShareAlike 3.0 Unported License\\
+\normalsize
+\includegraphics[width=0.1\textwidth]{Images/CC-licence.png}
+\end{center}
+\newpage
+
+\section{Généralités}
+\label{sec-2}
+\subsection{Utiliser \textbf{Monteverdi} et \textbf{QGis}}
+\label{sec-2-1}
+\subsubsection{Description}
+\label{sec-2-1-1}
+\paragraph{Résumé}
+\label{sec-2-1-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-2-1-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-2-1-1-3}
+
+\subsubsection{Étapes}
+\label{sec-2-1-2}
+
+\subsubsection{Solutions}
+\label{sec-2-1-3}
+\subsection{le mécanisme des applications \textbf{Orfeo ToolBox}}
+\label{sec-2-2}
+\subsubsection{Description}
+\label{sec-2-2-1}
+\paragraph{Résumé}
+\label{sec-2-2-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-2-2-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-2-2-1-3}
+
+\subsubsection{Étapes}
+\label{sec-2-2-2}
+
+\subsubsection{Solutions}
+\label{sec-2-2-3}
+\subsection{Les mécanismes internes de l'\textbf{Orfeo ToolBox}}
+\label{sec-2-3}
+\subsubsection{Description}
+\label{sec-2-3-1}
+\paragraph{Résumé}
+\label{sec-2-3-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-2-3-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-2-3-1-3}
+
+\subsubsection{Étapes}
+\label{sec-2-3-2}
+
+\subsubsection{Solutions}
+\label{sec-2-3-3}
+\section{Imagerie THR optique, des pré-traitements au SIG}
+\label{sec-3}
+\subsection{Pré-traitement de l'imagerie THR optique}
+\label{sec-3-1}
+\subsubsection{Description}
+\label{sec-3-1-1}
+\paragraph{Résumé}
+\label{sec-3-1-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-3-1-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-3-1-1-3}
+
+\subsubsection{Étapes}
+\label{sec-3-1-2}
+
+\subsubsection{Solutions}
+\label{sec-3-1-3}
+\subsection{Segmentation et export vers un SIG}
+\label{sec-3-2}
+\subsubsection{Description}
+\label{sec-3-2-1}
+\paragraph{Résumé}
+\label{sec-3-2-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-3-2-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-3-2-1-3}
+
+\subsubsection{Étapes}
+\label{sec-3-2-2}
+
+\subsubsection{Solutions}
+\label{sec-3-2-3}
+\section{Classification supervisée pour les séries multi-temporelles (Landsat 8)}
+\label{sec-4}
+\subsection{Réaliser une classification supervisée}
+\label{sec-4-1}
+\subsubsection{Description}
+\label{sec-4-1-1}
+\paragraph{Résumé}
+\label{sec-4-1-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-4-1-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-4-1-1-3}
+
+\subsubsection{Étapes}
+\label{sec-4-1-2}
+
+\subsubsection{Solutions}
+\label{sec-4-1-3}
+\subsection{Evaluer, nettoyer et valoriser une carte de classification}
+\label{sec-4-2}
+\subsubsection{Description}
+\label{sec-4-2-1}
+\paragraph{Résumé}
+\label{sec-4-2-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-4-2-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-4-2-1-3}
+
+\subsubsection{Étapes}
+\label{sec-4-2-2}
+
+\subsubsection{Solutions}
+\label{sec-4-2-3}
+\section{Traitements SAR pour l'imagerie Sentinel 1}
+\label{sec-5}
+\subsection{Calibration, débruitage et extraction de primitives pour les images SAR}
+\label{sec-5-1}
+\subsubsection{Description}
+\label{sec-5-1-1}
+\paragraph{Résumé}
+\label{sec-5-1-1-1}
+
+\paragraph{Pré-requis}
+\label{sec-5-1-1-2}
+
+
+\paragraph{Objectifs}
+\label{sec-5-1-1-3}
+
+\subsubsection{Étapes}
+\label{sec-5-1-2}
+
+\subsubsection{Solutions}
+\label{sec-5-1-3}
+% Emacs 24.4.1 (Org mode 8.2.10)
+\end{document}
