@@ -73,6 +73,9 @@
      faible dans l'image (encodée sur 12 bits pour rappel), afin de
      faire apparaître le message.
 
+     *Notes:* La fonction rint() permet d'arrondir à l'entier le plus
+     proche dans une expression de l'application *BandMath*.
+
 **** Message 5
 
      Dans l'image /message5.tif/, un message a été dissimulé en
