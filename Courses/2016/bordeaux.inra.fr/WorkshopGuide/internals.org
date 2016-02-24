@@ -19,5 +19,5 @@
 
 **** Les noms de fichier étendus
 
-*** Solutions                                                     :solutions:
+** Les mécanismes internes de l'*Orfeo ToolBox*                   :solutions:
 

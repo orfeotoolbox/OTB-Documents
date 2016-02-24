@@ -17,5 +17,5 @@ Régularisation de la carte de classification
 Colorisation avec l'application color-mapping
 Produire un vecteur d'une classe précise
 
-*** Solutions                                                     :solutions:
+** Evaluer, nettoyer et valoriser une carte de classification     :solutions:
 

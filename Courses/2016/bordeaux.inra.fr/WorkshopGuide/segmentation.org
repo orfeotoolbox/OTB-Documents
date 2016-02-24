@@ -21,5 +21,5 @@ Dire un mot de GRM.
 
 **** Filtrage polygones NDVI dans Qgis
 
-*** Solutions                                                     :solutions:
+** Segmentation et export vers un SIG                             :solutions:
 

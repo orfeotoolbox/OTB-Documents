@@ -1,4 +1,4 @@
-#+TITLE: Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques
+#+TITLE: Formation à l'Orfeo ToolBox: Solutions des Travaux Pratiques
 #+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Victor Poughon (CNES)
 #+DATE: 2016
 #+OPTIONS: H:4
@@ -13,8 +13,8 @@
 #+LATEX_HEADER: \usepackage{tikz}
 #+OPTIONS: tags:nil
 
-#+EXPORT_SELECT_TAGS:
-#+EXCLUDE_TAGS: solutions slides
+#+EXPORT_SELECT_TAGS: 
+#+EXCLUDE_TAGS: fw guide slides
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}
@@ -45,7 +45,7 @@ disponible sur le  [[http://www.qgis.org/][site du projet]].
 
 #+INCLUDE: "licence.org"
 
-* Généralités
+* Généralités                                                          
 #+INCLUDE: "mvd-qgis.org" :minlevel 2
 #+INCLUDE: "otb-apps.org" :minlevel 2
 #+INCLUDE: "internals.org" :minlevel 2

@@ -11,5 +11,4 @@
 
 *** Étapes                                                            :steps:
 
-*** Solutions                                                     :solutions:
-
+** Calibration, débruitage et extraction de primitives pour les images SAR :solutions:

@@ -40,5 +40,5 @@ Repérer la liste des classes.
 
 **** Visualiser une pile de données dans Qgis 
 
-*** Solutions                                                     :solutions:
+** Utiliser *Monteverdi* et *Qgis*                                :solutions:
 

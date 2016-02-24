@@ -23,5 +23,5 @@
 
      Sans DEM, avec DEM, régler la projection
 
-*** Solutions                                                     :solutions:
+** Pré-traitements de l'imagerie THR optique                      :solutions:
 

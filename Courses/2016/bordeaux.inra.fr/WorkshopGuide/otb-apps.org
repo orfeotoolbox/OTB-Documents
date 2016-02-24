@@ -113,5 +113,6 @@
     message sous la forme d'une image binaire (/message.tif/) vous
     sont fournies pour vous exercer.
 
-*** Solutions                                                     :solutions:
+** Le mécanisme des applications *Orfeo ToolBox*                  :solutions:
+
 
