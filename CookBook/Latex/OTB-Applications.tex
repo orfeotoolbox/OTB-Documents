@@ -509,4 +509,31 @@ otbApplicationLauncherCommandLine -inxml saved_applications_parameters.xml
 It will retrieve the application name and related parameters from the input xml
 file and launch in this case the BandMath applications.
 
- 
+\subsection{Using OTB from QGIS}
+\subsubsection{The processing toolbox}
+OTB applications are available from QGIS. Use them from the processing toolbox,
+which is accessible with Processing $\rightarrow$ Toolbox. Switch to "advanced interface"
+in the bottom of the application widget and OTB applications will be there.
+
+\begin{figure}[h]
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/QtImages/qgis-otb.png}
+  \itkcaption[]{Processing toolbox in QGIS}
+  \label{fig:otb-qgis}
+\end{figure}
+
+\subsubsection{Using a custom OTB}
+If QGIS cannot find OTB, the "applications folder" and "binaries folder" can be
+set from the settings in the Processing $\rightarrow$ Settings $\rightarrow$ "service provider".
+
+\begin{figure}[h]
+  \center
+  \includegraphics[width=0.6\textwidth]{../Art/QtImages/qgis-otb-settings.png}
+  \itkcaption[]{Processing toolbox in QGIS}
+  \label{fig:otb-qgis-settings}
+\end{figure}
+
+On some versions of QGIS, if an existing OTB installation is found, the
+textfield settings will not be shown. To use a custom OTB instead of the
+existing one, you will need to replace the otbcli,
+otbgui and library files in QGIS installation directly.
