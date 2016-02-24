@@ -1,5 +1,7 @@
-** Utiliser *Monteverdi* et *QGis*                                  :mvdapps:
-*** Description
+** Utiliser Monteverdi et QGis                                       :slides:
+*** Slide
+** Utiliser *Monteverdi* et *QGis*                                  :guide:
+*** Description                                                        :desc:
 **** Résumé
      Ce TP est l'occasion de découvrir et de prendre en main les
      logiciels que nous utiliserons pour visualiser les données et
@@ -22,7 +24,7 @@
      - Savoir visualiser une pile de données dans QGis,
      - Echanger des trucs et astuces.
 
-*** Étapes
+*** Étapes                                                            :steps:
 
     Pour cet exercice, il est proposé de travailler en binôme. A la
     fin de l'exercice, chaque binôme présentera au reste du groupe une

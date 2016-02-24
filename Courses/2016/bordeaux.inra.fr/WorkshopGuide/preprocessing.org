@@ -1,5 +1,7 @@
-** Pré-traitement de l'imagerie THR optique                         :mvdapps:
-*** Description
+** Pré-traitements de l'imagerie THR optique                         :slides:
+*** Slide
+** Pré-traitements de l'imagerie THR optique                          :guide:
+*** Description                                                        :desc:
 **** Résumé
 
 **** Pré-requis
@@ -7,7 +9,19 @@
 
 **** Objectifs
 
-*** Étapes
+*** Étapes                                                            :steps:
+
+**** Corrections atmosphériques
+
+     TOA puis TOC, regarder la différence
+
+**** Fusion P+XS
+
+     BundleToPerfectSensor puis différents algos de fusion
+
+**** Ortho-rectification
+
+     Sans DEM, avec DEM, régler la projection
 
 *** Solutions                                                     :solutions:
 

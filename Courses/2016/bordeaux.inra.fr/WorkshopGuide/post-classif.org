@@ -1,5 +1,7 @@
-** Evaluer, nettoyer et valoriser une carte de classification       :mvdapps:
-*** Description
+** Evaluer, nettoyer et valoriser une carte de classification        :slides:
+*** Slide
+** Evaluer, nettoyer et valoriser une carte de classification       :guide:
+*** Description                                                        :desc:
 **** Résumé
 
 **** Pré-requis
@@ -7,7 +9,7 @@
 
 **** Objectifs
 
-*** Étapes
+*** Étapes                                                            :steps:
 
 Evaluer quantitativement la performance
 Vote majoritaire entre plusieurs classifieurs

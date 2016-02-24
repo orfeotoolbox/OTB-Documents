@@ -3,18 +3,18 @@
 #+DATE: Décembre 2013
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,11pt,twoside,openright]
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
 #+LaTeX_HEADER: \usepackage{a4wide}
-#+LaTeX_HEADER: \usepackage[T1]{fontenc}
-#+LaTeX_HEADER: \usepackage{mathptmx}
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
-#+EXCLUDE_TAGS: solutions
+#+EXCLUDE_TAGS: solutions slides
 
 #+LATEX:\pagestyle{fancy}
 #+LATEX:\fancyhf{}

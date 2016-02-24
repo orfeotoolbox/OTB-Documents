@@ -1,5 +1,7 @@
-** Les mécanismes internes de l'*Orfeo ToolBox*                     :mvdapps:
-*** Description
+** Les mécanismes internes de l'Orfeo ToolBox                        :slides:
+*** Slide
+** Les mécanismes internes de l'*Orfeo ToolBox*                     :guide:
+*** Description                                                        :desc:
 **** Résumé
 
 **** Pré-requis
@@ -7,7 +9,15 @@
 
 **** Objectifs
 
-*** Étapes
+*** Étapes                                                            :steps:
+
+**** Les variables d'environnement
+
+**** Le paramètre RAM des applications
+
+**** Les fichiers geom
+
+**** Les noms de fichier étendus
 
 *** Solutions                                                     :solutions:
 

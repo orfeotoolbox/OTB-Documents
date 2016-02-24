@@ -1,5 +1,7 @@
-** Calibration, débruitage et extraction de primitives pour les images SAR :mvdapps:
-*** Description
+** Calibration, débruitage et extraction de primitives               :slides:
+*** Slide
+** Calibration, débruitage et extraction de primitives pour les images SAR :guide:
+*** Description                                                        :desc:
 **** Résumé
 
 **** Pré-requis
@@ -7,7 +9,7 @@
 
 **** Objectifs
 
-*** Étapes
+*** Étapes                                                            :steps:
 
 *** Solutions                                                     :solutions:
 

@@ -1,5 +1,7 @@
-** Segmentation et export vers un SIG                               :mvdapps:
-*** Description
+** Segmentation et export vers un SIG                               :slides:
+*** Slide
+** Segmentation et export vers un SIG                               :guide:
+*** Description                                                        :desc:
 **** Résumé
 
 **** Pré-requis
@@ -7,7 +9,17 @@
 
 **** Objectifs
 
-*** Étapes
+*** Étapes                                                            :steps:
+
+Dire un mot de GRM.
+
+**** LS segmentation
+
+**** Traitement des petites régions
+
+**** Vectorization
+
+**** Filtrage polygones NDVI dans Qgis
 
 *** Solutions                                                     :solutions:
 

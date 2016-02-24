@@ -1,5 +1,7 @@
-** Réaliser une classification supervisée                           :mvdapps:
-*** Description
+** Réaliser une classification supervisée                            :slides:
+*** Slide
+** Réaliser une classification supervisée                           :guide:
+*** Description                                                        :desc:
 **** Résumé
 
 **** Pré-requis
@@ -7,7 +9,7 @@
      
 **** Objectifs
 
-*** Étapes
+*** Étapes                                                            :steps:
 
 classif 1 date
 classif 1 date avec primitive

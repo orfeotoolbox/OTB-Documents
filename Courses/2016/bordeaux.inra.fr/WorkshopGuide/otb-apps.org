@@ -1,6 +1,5 @@
 ** Le mécanisme des applications Orfeo TooLBox                       :slides:
-*** Test1
-*** Test2
+*** Slides
 ** Le mécanisme des applications *Orfeo ToolBox*                      :guide:
 *** Description                                                        :desc:
 **** Résumé
