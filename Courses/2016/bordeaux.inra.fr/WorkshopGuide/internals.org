@@ -27,6 +27,28 @@
 
 *** Étapes                                                            :steps:
 
+**** Encodage des images
+
+     Dans l'Orfeo ToolBox, c'est l'utilisateurs qui choisit le type
+     d'encodage des images en fonction de ce que l'image
+     représente. Ainsi, on choisira en général:
+     - Un encodage entier sur 8 bits non-signés (plage de valeurs
+       [0,255]) pour des sorties destinées à un affichage ou des
+       rapports,
+     - Un encodage entietre sur 16 bits non signés pour représenter
+       des images satellites,
+     - Un encodage flottant (32 ou 64 bits) quand on représente le
+       résultat d'un calcul produisant des nombres réels (NDVI,
+       calibration radiométrique ...).
+
+       Dans les applications de l'Orfeo ToolBox, l'utilisateur peut
+       choisir simplement son encodage (menu déroulant dans les
+       interfaces graphiques ou paramètre additionnel en ligne de
+       commande).
+       
+       #TODO: A continuer
+       
+
 **** Les fichiers .geom
 
      Examinez le contenu du fichier /image.geom/. Que pouvez vous en
@@ -45,6 +67,8 @@
      fonctionnement en nous concentrant sur quelques options.
 
 ***** Les options de lecture
+
+      #TODO: Données à préparer
 
       Comparez les sorties des deux commandes suivantes:
 
@@ -69,6 +93,7 @@
 
 ***** Les options d'écriture
 
+      
       
 
 **** La gestion du streaming
