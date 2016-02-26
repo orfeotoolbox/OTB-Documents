@@ -3,21 +3,78 @@
 ** Les mécanismes internes de l'*Orfeo ToolBox*                     :guide:
 *** Description                                                        :desc:
 **** Résumé
+     
+     Cet exercice permet de se familiariser avec les mécanismes
+     internes de l'Orfeo ToolBox:
+     - Les noms de fichier étendus,
+     - Le streaming,
+     - Le multi-threading,
+     - Les variables d'environnements
+     - Les fichiers geom
 
+     
 **** Pré-requis
 
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Données téléchargées
+     - Connaisance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
 
 **** Objectifs
+     
+     - Comprendre les mécanismes transparents de l'Orfeo ToolBox
+     - Savoir influencer la manière dont l'Orfeo ToolBox exécute un traitement
+     - Savoir ou trouver des informations complémentaires
 
 *** Étapes                                                            :steps:
 
-**** Les variables d'environnement
+**** Les fichiers .geom
 
-**** Le paramètre RAM des applications
+     Examinez le contenu du fichier /image.geom/. Que pouvez vous en
+     conclure quand à son rôle? Quelles sont les opérations
+     nécessitant ce type d'informations ?
 
-**** Les fichiers geom
+**** Les noms de fichiers étendus
 
-**** Les noms de fichier étendus
+     Les noms de fichiers étendus permettent d'influencer la manière
+     dont l'Orfeo ToolBox lit ou écrit une image. Ils ne sont pas
+     spécifiques aux applications, mais peuvent être utiliser pour
+     n'importe quel logiciel construit autour de l'Orfeo ToolBox.
+     
+     L'ensemble des options disponibles sont listées dans la section
+     7.10 du Software Guide. Nous allons illustrer leurs
+     fonctionnement en nous concentrant sur quelques options.
+
+***** Les options de lecture
+
+      Comparez les sorties des deux commandes suivantes:
+
+      #+BEGIN_EXAMPLE
+      $ otbcli_ReadImageInfo -in "image1.tif"
+      $ otbcli_ReadImageInfo -in "image1.tif?&skipgeom=true"
+      #+END_EXAMPLE
+
+      Quel est l'effet du paramètre /skipgeom/ ? Notez son
+      équivalent /skicarto/, qui permet de s'affranchir de la
+      projection cartographique grossière dans le cas des produits de
+      type ortho-ready.
+
+      Comparez les sorties des deux commandes suivantes:
+      
+      #+BEGIN_EXAMPLE
+      $ otbcli_ReadImageInfo -in "image2.tif"
+      $ otbcli_ReadImageInfo -in "image2.tif?&geom=image1.geom"
+      #+END_EXAMPLE
+
+      Quel est l'effet du paramètres /geom/ ? Quel peut être son utilité ?
+
+***** Les options d'écriture
+
+      
+
+**** La gestion du streaming
+
+**** Le multi-threading
+
 
 ** Les mécanismes internes de l'*Orfeo ToolBox*                   :solutions:
 
