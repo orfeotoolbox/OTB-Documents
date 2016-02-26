@@ -27,6 +27,11 @@
      - Savoir utiliser plusieurs applications classiques
 
 *** Étapes                                                            :steps:
+
+    Pour chacun des messages, on observera d'abord l'image pour
+    essayer de décler le message, puis on cherchera à utiliser les
+    applications suggérées pour révéler le message.
+
 **** Message 1    
 
      Dans l'image /message1.tif/, une phrase a été encodée dans une
@@ -62,6 +67,9 @@
      $NDVI = \frac{NIR-RED}{NIR+RED}$
      \end{center}
 
+     Pour rappel, pour l'imagerie Pléiades la bande rouge est la
+     première bande, et la band proche infra-rouge la dernière.
+
 **** Message 4
 
      Dans l'image /message4.tif/, un message a été dissimulé dans les
@@ -94,9 +102,9 @@
 
      Dans l'image /message6.tif/, un message a été dissimulé en
      utilsant localement un opérateur morphologique en niveaux de gris
-     (ouverture). Il pourrait être révélé en utilisant la propriété
-     d'idempotence de cette transformation. Pour rappel, une fonction
-     $f$ est dite idempotente si:
+     (ouverture de rayon 1). Il pourrait être révélé en utilisant la
+     propriété d'idempotence de cette transformation. Pour rappel, une
+     fonction $f$ est dite idempotente si:
 
      \begin{center}
      $f(f(x))=f(x)$
@@ -117,5 +125,102 @@
     sont fournies pour vous exercer.
 
 ** Le mécanisme des applications *Orfeo ToolBox*                  :solutions:
+*** Message 1
+    
+    Pour faire apparître ce premier message, il suffit d'observer
+    qu'une image Pléiades est codée sur 12 bits, qu'il ne devrait donc
+    pas y avoir de valeurs de pixel supérieures à
+    $2^{12}-1=4095$. Nous allons donc utiliser l'application
+    *BandMath* pour seuiller les pixels au dessus de cette valeur:
 
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMath -il image1.tif 
+                      -out decoded1.tif uint8 
+                      -exp "im1b1>4095?255:0"
+    #+END_EXAMPLE
 
+    Le texte encodé apparaît alors en blanc sur fond noir.
+
+*** Message 2
+    
+    Pour décoder ce deuxième message nous allons calculer un gradient
+    en utilisant l'application *EdgeDetection*:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_EdgeExtraction -in message2.tif 
+                            -filter gradient 
+                            -out decoded2.tif
+    #+END_EXAMPLE
+
+*** Message 3
+
+    Pour décoder le troisième message, il suffit de calculer un indice
+    de végétation de type NDVI à l'aide de l'application
+    *RadiometricIndices*:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_RadiometricIndices -in message3.tif 
+                                -channels.red 1 
+                                -channels.nir 4 
+                                -list Vegetation:NDVI  
+                                -out decoded3.tif
+    #+END_EXAMPLE
+
+    Alternativement, il est également possible de calculer le NDVI
+    avec l'application *BandMath*:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMath -il image3.tif  
+                      -out decoded3.tif 
+                      -exp "(im1b4-im1b1)/(im1b4+im1b1)"
+    #+END_EXAMPLE
+
+*** Message 4
+    
+    Afin de faire apparaître le quatrième message, nous allons isoler
+    les 2 bits de poids faible en utilisant l'application *BandMath*:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMath -il image4.tif 
+                      -out decoded4.tif 
+                      -exp "im1b1-4*rint(im1b1/4)"
+    #+END_EXAMPLE
+    
+    L'expression $4*rint(im1b1/4)$ ne contient aucun des 2 bits de
+    poids faible, la différence avec l'image codée révèle donc le message.
+
+*** Message 5
+
+    Pour révéler le cinquième message, nous allons réaliser une
+    analyse en composante principale à l'aide de l'application
+    *DimensionalityReduction* et en extraire la dernière bande à
+    l'aide de l'application *ExtractROI*, ou
+    se concentre le bruit:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_DimensionalityReduction -in image5.tif 
+                                     -out pca6.tif 
+                                     -method pca
+    $ otbcli_ExtractROI -in pca6.tif 
+                        -out decoded6.tif 
+                        -cl Channel4
+    #+END_EXAMPLE
+
+*** Message 6
+
+    Pour révéler le sixème message, nous allons nous appuyer sur la
+    propriété d'idempotence. Si le message a été encodé à l'aide d'une
+    transformation idempotente, alors $f(message)=message$, et par
+    conséquent $f(message)-message=0$, tandis qu'ailleurs dans
+    l'image, on observera $f(image)$.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_GrayScaleMorphologicalOperation -in image6.tif 
+                                             -out ouverture6.tif 
+                                             -structype.ball.xradius 1 
+                                             -structype.ball.yradius 1 
+                                             -filter opening
+    $ otbcli_BandMath -il image6.tif ouverture6.tif 
+                      -out decoded6.tif 
+                      -exp "(im2b1-im1b1)"
+    #+END_EXAMPLE
