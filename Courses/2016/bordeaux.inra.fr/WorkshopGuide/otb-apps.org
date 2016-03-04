@@ -1,10 +1,63 @@
-** Le mécanisme des applications Orfeo TooLBox                       :slides:
-*** Slides
+** Le mécanisme des applications Orfeo ToolBox                       :slides:
+*** Rapide intro aux OTB-Applications
+    - Orfeo ToolBox est une *bibliothèque* offrant des fonctionnalités de télédétection
+    - Souvent nécessaire de combinant plusieurs fonctions (filtres) OTB dans une
+      chaine de traitements
+    - Besoin interface de plus haut niveau (paramètres, les données d'entrée et
+      de sortie, les logs...)
+    - Chaque application correspond à une fonctionnalité de "haut niveau"
+     (segmentation, orthorectification, segmentation, calculatrice sur les bandes...)
+    - Correspond à une classe C++ (/otb::Application/) $\rightarrow$  librairie
+    - Mécanisme de plugin
+    - Possibilité de développer et distribuer ces applications /homemade/
+*** Rapide intro aux OTB-Applications   
+    - En ligne de commande $\rightarrow$ otbcli\textunderscore{}Orthorectification
+    - Dans une interface graphique $\rightarrow$ otbgui\textunderscore{}Orthorectification
+    - En Python:
+#+begin_src python
+import otbApplication 
+orth=otb.Registry.CreateApplication("OrthoRectification") 
+#+end_src
+    - Intégré dans QGIS $\rightarrow$ Menu /processing/
+    - Intégré dans Monteverdi
+*** GUI
+    #+begin_center
+    #+ATTR_LaTeX: width=0.95\textwidth center  
+    [[file:../../../../Slides/OTB-General/images/app_parameters.png]]
+    #+end_center
+*** Paramétrage
+    - Afficher l'aide de l'application d'OrthoRectification (bon exemple)
+    - Notion de /groupe de paramètres/
+    - Notion de /paramètre obligatoire/
+    - Dépendance entre paramètre (dynamique)
+    - Valeur par défaut
+    - Type des images en sortie (par défaut flottant)
+*** Autre Exemple: BandMath
+    - Calculatrice raster
+    - Utilise la librairie MuParser
+    - Prend en entrée une liste d'images (paramètre /-il/)
+    - Codage des expressions mathématiques:
+      - imXbY:
+        - X: numéro de l'image dans la liste (de 1 à N)
+        - Y: numéro de la bande dans l'image X (de 1 à N)
+      - [[http://muparser.beltoforion.de/mup_features.html][Liste des opérateurs mathématiques disponibles]]
+    - Exemples:
+      - *-exp "(im1b4 - im1b1) / (im1b4 - im1b1))"
+      - *-exp "acos((123*im1b1+265*im1b2+652*im1b3) \\
+               / (sqrt(123*123+265*265+652*652)\\
+               *sqrt(im1b1*im1b1+im1b2*im1b2+im1b3*im1b3)))"
+      - *-exp "im1b1>0.5?255:0"*
+*** Liens utiles
+    - [[https://www.orfeo-toolbox.org/CookBook/CookBookse1.html#x7-60001.1][Introduction aux OTB applications]]
+    - [[https://www.orfeo-toolbox.org//Applications/][Documentation de référence des applications]]
+    - [[https://www.orfeo-toolbox.org/CookBook/CookBookch3.html#x38-370003][Exemples utilisation des OTB applications]]
+    - [[http://docs.qgis.org/2.8/en/docs/user_manual/processing/index.html][QGIS processing]]
+    - Aide d'une application: /otbcli\textunderscore{}XXX -help/
 ** Le mécanisme des applications *Orfeo ToolBox*                      :guide:
 *** Description                                                        :desc:
 **** Résumé
      
-     Au cours de cette excerice, nous allons apprendre à utiliser les
+     Au cours de cette exercice, nous allons apprendre à utiliser les
      applications de l'Orfeo ToolBox. Des images intégrants des
      messages codés par stéganographie vous sont proposées. A vous
      d'utiliser les applications de l'Orfeo ToolBox afin de révéler le
@@ -29,7 +82,7 @@
 *** Étapes                                                            :steps:
 
     Pour chacun des messages, on observera d'abord l'image pour
-    essayer de décler le message, puis on cherchera à utiliser les
+    essayer de déceler le message, puis on cherchera à utiliser les
     applications suggérées pour révéler le message.
 
 **** Message 1    
@@ -40,7 +93,7 @@
      sont codées sur des entiers de 12 bits non signés).
 
      Utilisez l'application *BandMath* pour détecter ces valeurs
-     abhérentes et ainsi révéler le message.
+     aberrantes et ainsi révéler le message.
 
 **** Message 2
 
@@ -55,7 +108,7 @@
 
      Dans l'image /message3.tif/, une phrase a été encodée en
      modifiant légèrement les valeurs des pixels des bandes rouge et
-     proche infra-rouge. Cette modification est invisile à l'oeil nu,
+     proche infra-rouge. Cette modification est invisible à l'oeil nu,
      mais peut être révélée en calculant l'indice de végétation NDVI.
 
      Utilisez l'application *RadiometricIndices* pour révéler le message.
@@ -68,13 +121,13 @@
      \end{center}
 
      Pour rappel, pour l'imagerie Pléiades la bande rouge est la
-     première bande, et la band proche infra-rouge la dernière.
+     première bande, et la bande proche infra-rouge la dernière.
 
 **** Message 4
 
      Dans l'image /message4.tif/, un message a été dissimulé dans les
      2 bits de poids faible de l'image. Cette transformation est
-     indétectable à l'oeil nu, mais pourrait être révélé en isolant la
+     non détectable à l'oeil nu, mais pourrait être révélé en isolant la
      valeur de ces 2 bits.
 
      Utilisez l'application *BandMath* pour isoler les 2 bits de poids
@@ -94,14 +147,14 @@
      Utiliser l'application *DimensionalityReduction* pour isoler le
      bruit de l'image et ainsi révéler le message.
 
-     Eventuellement, imaginer d'autres procédés utilisant les
+     Éventuellement, imaginer d'autres procédés utilisant les
      applications pour mettre en évidence cette modification locale du
      bruit.
 
 **** Message 6
 
      Dans l'image /message6.tif/, un message a été dissimulé en
-     utilsant localement un opérateur morphologique en niveaux de gris
+     utilisant localement un opérateur morphologique en niveaux de gris
      (ouverture de rayon 1). Il pourrait être révélé en utilisant la
      propriété d'idempotence de cette transformation. Pour rappel, une
      fonction $f$ est dite idempotente si:
@@ -127,7 +180,7 @@
 ** Le mécanisme des applications *Orfeo ToolBox*                  :solutions:
 *** Message 1
     
-    Pour faire apparître ce premier message, il suffit d'observer
+    Pour faire apparaître ce premier message, il suffit d'observer
     qu'une image Pléiades est codée sur 12 bits, qu'il ne devrait donc
     pas y avoir de valeurs de pixel supérieures à
     $2^{12}-1=4095$. Nous allons donc utiliser l'application
@@ -208,7 +261,7 @@
 
 *** Message 6
 
-    Pour révéler le sixème message, nous allons nous appuyer sur la
+    Pour révéler le sixième message, nous allons nous appuyer sur la
     propriété d'idempotence. Si le message a été encodé à l'aide d'une
     transformation idempotente, alors $f(message)=message$, et par
     conséquent $f(message)-message=0$, tandis qu'ailleurs dans
