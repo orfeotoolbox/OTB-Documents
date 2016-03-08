@@ -1,5 +1,9 @@
 ** Les mécanismes internes de l'Orfeo ToolBox                        :slides:
-*** Slide
+*** Encodage des images
+*** Fichiers geom
+*** Noms de fichiers étendus
+*** Streaming
+*** Multi-threading
 ** Les mécanismes internes de l'*Orfeo ToolBox*                     :guide:
 *** Description                                                        :desc:
 **** Résumé
@@ -139,7 +143,7 @@
      comportement en utilisant les noms de fichiers étendus à
      l'écriture.
 
-     utilisez l'application *LocalStatistics* pour filtrer la première
+     utilisez l'application *LocalStatisticsExtraction* pour filtrer la première
      bande de l'image /image1.tif/ avec un rayon de 9.
 
      Exécutez une seconde fois cette opération, cette fois en
@@ -164,7 +168,7 @@
      =ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=.
 
      Reprenez l'exemple de l'exercice précédent utilisant
-     l'application *LocalStatistics* en désactivant le
+     l'application *LocalStatisticsExtraction* en désactivant le
      streaming. Utilisez la variable d'environnement ITK pour diminuer
      puis augmenter le nombre de threads utilisés. Que constatez vous ?
 
@@ -172,4 +176,206 @@
 
 
 ** Les mécanismes internes de l'*Orfeo ToolBox*                   :solutions:
+
+*** Encodage des images
+
+    L'utilisation de *gdalinfo* pour l'image /image1.tif/ nous donne:
+
+    #+BEGIN_EXAMPLE
+    $ $ gdalinfo image1.tif 
+    Driver: GTiff/GeoTIFF
+    Files: image1.tif
+    Size is 2000, 2000
+    Coordinate System is `'
+    Origin = (5400.000000000000000,4300.000000000000000)
+    Pixel Size = (1.000000000000000,1.000000000000000)
+    Image Structure Metadata:
+    INTERLEAVE=PIXEL
+    Corner Coordinates:
+    Upper Left  (    5400.000,    4300.000) 
+    Lower Left  (    5400.000,    6300.000) 
+    Upper Right (    7400.000,    4300.000) 
+    Lower Right (    7400.000,    6300.000) 
+    Center      (    6400.000,    5300.000) 
+    Band 1 Block=2000x1 Type=Float32, ColorInterp=Gray
+    Band 2 Block=2000x1 Type=Float32, ColorInterp=Undefined
+    Band 3 Block=2000x1 Type=Float32, ColorInterp=Undefined
+    Band 4 Block=2000x1 Type=Float32, ColorInterp=Undefined
+    #+END_EXAMPLE
+
+    Les pixels sont donc encodés en nombres flottants de 32 bits. En
+    analysant les valeurs de l'image dans *monteverdi*, on constate
+    que les valeurs de pixels sont entières et comprise entre 100 et
+    1600 environ. L'encodage en flottants de 32 bits est donc
+    inutilement coûteux.
+
+    L'appel à l'application *Convert* permet de convertir le type de
+    pixel encodé:
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_Convert -in image1.tif -out image1_uint16.tif uint16
+    #+END_EXAMPLE
+
+    Nous pouvons maintenant comparer la taille des images, et
+    constater que l'image ainsi générée occupe seulement la moitié de
+    la place par rapport à l'image d'origine.
+
+    #+BEGIN_EXAMPLE
+    $ du -h image1.tif
+    62M	image1.tif
+
+    $ du -h image1_uint16.tif
+    31M	image1_uint16.tif
+    #+END_EXAMPLE
+
+    L'utilisation de l'application *CompareImages* nous montre par
+    ailleurs que le contenu des deux images est identique.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_CompareImages -ref.in image1.tif -meas.in image1_uint16.tif 
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) Using whole reference image 
+                             since the ROI contains no pixels or is not specified
+    2016 Mar 08 13:59:24  :  Application.logger  (DEBUG) Region of interest used 
+                             for comparison : ImageRegion (0x7ffcb6a6d930)
+    Dimension: 2
+    Index: [0, 0]
+    Size: [2000, 2000]
+    
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) reference image channel 1 
+                             is compared with measured image channel 1
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) MSE: 0
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) MAE: 0
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) PSNR: 0
+    Output parameters value:
+    mse: 0
+    mae: 0
+    psnr: 0
+    #+END_EXAMPLE
+
+    Pour calculer le NDVI, on utilise la commande suivantes :
+
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_RadiometricIndices -in image1.tif 
+                                -out image1_ndvi.tif uint16 
+                                -channels.red 1 
+                                -channels.green 2 
+                                -channels.blue 3 -channels.nir 4 
+                                -list Vegetation:NDVI
+    #+END_EXAMPLE
+
+    Si l'on ouvre l'image ainsi générée dans *monteverdi*, on constate
+    que l'image vaut 0 en tout point: l'encodage de la sortie ne
+    convient. Il faudrait utiliser un type flottant (comme celui par
+    défaut par exemple.
+
+*** Les fichiers .geom
+
+    Le fichier geom contient les informations nécessaires aux
+    opérations de corrections géométriques et radiométriques de
+    l'image.
+
+*** Les noms de fichiers étendus
+
+**** Les options de lecture
+     
+     L'utilisation du paramètre de nom de fichier étendu /skipgeom/
+     permet d'ignorer les informations contenue dans le fichier
+     /geom/. On constate que la taille du pixel au sol est erronée et
+     que les informations relatives à la date d'acquisition et au
+     capteur ont notamment disparu.
+     
+     Le paramètre de nom de fichier étendu /geom/ permet d'attacher un
+     fichier /geom/ à une image existante. C'est notamment utile pour
+     réaliser des traitements géométriques ou radiométriques pour une
+     image quelconque. Par défaut, l'Orfeo ToolBox (en fait OSSIM)
+     cherche un fichier /geom/ portant le même nom que l'image.
+
+**** Les options d'écriture
+
+     La ligne de commande suivante permet de réaliser l'opération
+     demandée:
+
+     #+BEGIN_EXAMPLE
+     $ otbcli_Convert -in image1.tif 
+       -out "image1_comp.tif?&gdal:co:NBITS=12&gdal:co:COMPRESS=LZW"  uint16
+     #+END_EXAMPLE
+     
+     La taille de l'image ainsi créée est :
+
+     #+BEGIN_EXAMPLE
+     $ du -h image1_comp.tif 
+     23M	image1_comp.tif
+     #+END_EXAMPLE
+
+     On gagne donc 8 Mo par rapport à l'image encodée sur 16 bits non
+     signés. Par ailleurs l'appel à l'application *CompareImages*
+     permet de constater que les images sont toujours de contenu
+     identique.
+
+     Le paramètre /box/ s'utilise de la manière suivante :
+
+     #+BEGIN_EXAMPLE
+     $ otbcli_Convert -in image1.tif 
+                      -out "image1_comp.tif?&box=1000:1000:100:100"  uint16
+     #+END_EXAMPLE
+
+     Après exécution de cette commande, l'image de sortie correspond
+     à un extrait de la sortie totale, commençant à l'index
+     $(1000,1000)$ et de taille 100x100 pixels. Cette option peut être
+     utile pour prévisualiser le résultat d'un traitement avant de
+     traiter l'image entière.
+
+*** La gestion du streaming
+
+    L'appel à l'application *LocalStatiticsExtraction* se fait comme
+    suit:
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_LocalStatisticExtraction -in image1.tif -out image1_ls.tif 
+                                      -radius 9
+    #+END_EXAMPLE
+
+    On constate que le calcul s'effectue en plusieurs phases (charge
+    des processeurs), entrecoupées de phase d'écriture sur le
+    disque. Par défaut, c'est l'Orfeo ToolBox qui détermine le
+    découpage optimal.
+
+    Pour désactiver complètement le streaming, il suffit d'utiliser
+    les options de noms de fichier étendus suivantes:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LocalStatisticExtraction -in image1.tif *
+             -out "image1_ls.tif?&streaming:type=none" -radius 9
+    #+END_EXAMPLE
+
+    On peut constater dans ce cas que le calcul s'effectue en une
+    seule fois, suivi d'une seule phase d'écriture sur le disque.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LocalStatisticExtraction -in image1.tif 
+      -out "image1_ls.tif?&streaming:type=stripped \
+      &streaming:sizemode=nbsplits&streaming:sizevalue=1000" 
+      -radius 9
+    #+END_EXAMPLE
+
+    Cette fois-ci, on observe de multiples phases de calcul suivi de
+    phases d'écriture. Le temps de calcul peut être quasiment deux
+    fois plus long, car un découpage trop important est sous optimal.
+
+*** Le multi-threading
+
+    Voici comment fixer le nombre de threads à 1 :
+
+    #+BEGIN_EXAMPLE
+    $ export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
+    $ otbcli_LocalStatisticExtraction -in image1.tif 
+                                      -out "image1_ls.tif?&streaming:type=none"
+                                      -radius 9
+    #+END_EXAMPLE
+
+    Dans ce cas, le temps de calcul est beaucoup plus important. On
+    peut également constater qu'augmenter le nombre de threads au delà
+    des capacités de la machine (nombre de coeurs du processeur) ne
+    permet pas d'améliorer les temps de calcul.
 
