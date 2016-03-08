@@ -1,5 +1,73 @@
 ** Utiliser Monteverdi et QGis                                       :slides:
-*** Slide
+*** Introduction
+    - Plusieurs logiciels qui partagent des fonctionnalités communes
+    - Mais des philo parfois différentes (Monteverdi orienté et centré "Image", QGIS
+      plateforme SIG)
+    - Plusieurs façon de faire la meme opération dans ces logiciels
+*** Monteverdi
+    - A l'origine c'est un outil simple de démonstration du potentiel de la librairie OTB
+    - Devenu un outil intégré de visualisation qui embarque toutes les
+      OTB-Applications 
+    - Interface graphique qui utilise la bibliothèque Qt
+    - le moteur de rendu utilise la librairie Ice (OpenGL+OTB)
+    - Effets tirant partie des capacités des cartes graphiques actuelles
+      (shader) pour effectuer des rendus à la volée (contraste local,
+      transparence, gradient...)
+*** Monteverdi
+      #+begin_center
+    #+ATTR_LaTeX: width=0.95\textwidth center  
+    [[file:../../../../Slides/OTB-General/images/monteverdi2-loupe.png]]
+    #+end_center
+*** Monteverdi
+    - Fenêtre principale découpée en plusieurs parties:
+      - Main menu (ouvrir image, fermer, préférences...)
+      - Top toolbar (raccourcis)
+      - Image displaying (vue principale)
+      - Right side dock (composition colorée, quicklook, 
+      - Stack layer (pile d'images)
+      - [[https://www.orfeo-toolbox.org/CookBook/CookBookch2.html#x19-180002][Voir A brief tour of Monteverdi]]
+*** Quantum GIS 
+    - système d'information géographique (SIG): stème d'information capable d'organiser et de présenter des données alphanumériques spatialement référencées
+    - Les principales fonctionnalités d'un SIG sont les suivantes :
+      - Affichage ou production de cartes
+      - Analyse des données pour créer une nouvelle information
+      - Acquisition des données
+      - Abstraction ou représentation des éléments choisis
+      - Archivage
+    - Beaucoup de support de formation, tutoriels disponibles (par exemple en français: Intro ENTE Aix - ENS - Licence ouverte)
+*** Quantum GIS processing (a partir de la version 2.0)
+    - Plateforme de traitements permettant d'intéragir avecinteragir avec GRASS,
+      SAGA-GIS, R et l'OTB!
+    - Historique: intégration dans QGIS du projet sextante (développée par Victor Olaya)
+    - Accès à toutes les applications OTB (certaines sont repackagées avec une
+      interface simplifiée)
+    - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
+*** Quantum GIS
+      #+begin_center
+    #+ATTR_LaTeX: width=0.5\textwidth center  
+    [[file:../../../../Slides/OTB-General/images/otb_qgis.png]]
+    #+end_center
+*** Données sur zone 'Sud-Ouest'
+    - LandSat-8: N dates concaténées, dénuagés (gap-filling) avec des données
+      terrains de référence au format ESRI Shapefile (pour le TP classification)
+    - Sentinel-1: Produit EW GRD
+    - Pléiades: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur le site
+      OSR MiPy (Novembre 2013)
+*** Données sur zone 'Sud-Ouest'
+    - TODO ajouter une capture des emprises des images (quel outil)?
+    - Ajouter capture produits PHR et Sentinel
+*** Principe
+    - Découverte du jeu de données et des logiciels
+    - Monteverdi:
+      - Savoir visualiser une image et régler son rendu
+      - Savoir visualiser une pile de données
+      - Explorer les "Effets" disponible
+    - QGIS:
+      - Savoir visualiser une image et régler son rendu
+      - Savoir visualiser une données vecteur
+      - Savoir visualiser une pile de données
+    - Travail 15 minutes en binome et en aveugle
+    - Tour de table (30 à 45 minutes), chaque binome passe devant les autres et propose une astuce ou pose une question
 ** Utiliser *Monteverdi* et *QGis*                                  :guide:
 *** Description                                                        :desc:
 **** Résumé
