@@ -11,7 +11,6 @@
      - Le multi-threading,
      - Les variables d'environnements
      - Les fichiers geom
-
      
 **** Pré-requis
 
@@ -45,13 +44,38 @@
        choisir simplement son encodage (menu déroulant dans les
        interfaces graphiques ou paramètre additionnel en ligne de
        commande).
-       
-       #TODO: A continuer
-       
+       |--------+----------------------------------------+------------------------+------------------|
+       | *type* | *plage de valeurs*                     | *entier ou flottant*   | *nombre de bits* |
+       |--------+----------------------------------------+------------------------+------------------|
+       | uint8  | [0,255]                                | entier non signé       | 8 bits           |
+       | int16  | [−32 767, +32 767 ]                    | entier signé           | 16 bits          |
+       | uint16 | [0, 65 535]                            | entier non signé       | 16 bits          |
+       | int32  | [−2 147 483 647, +2 147 483 647]       | entier signé           | 32 bits          |
+       | uint32 | [0, 4 294 967 294]                     | entier non signé       | 32 bits          |
+       | float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | flottant               | 32 bits          |
+       | double | [ -10^308, 10^308 ]                    | flottant (plus précis) | 64 bits          |
+       |--------+----------------------------------------+------------------------+------------------|
+
+     Utilisez *gdalinfo* pour connaître l'encodage des pixels de
+     l'image *image1.tif*. Analysez les valeurs des pixels de l'image
+     dans *monteverdi*. Que pouvez vous conclure ?
+
+     Utilisez l'application *Convert* pour convertir l'image
+     *image1.tif* dans un encodage entier sur 16 bits. Comparez la
+     taille de fichier des deux images. Utilisez l'application
+     *CompareImages* pour comparer le contenu des deux images. Que
+     pouvez vous en conclure ? Peut-on réduire encore la taille du
+     fichier image (voir paragraphe sur les noms de fichier étendus) ?
+
+     Utilisez l'application *RadiometricIndices* pour calculer un
+     indice de vegetation NDVI à partir de l'image en entier sur 16
+     bits ainsi créée. Conservez l'encodage de la sortie en entier sur
+     16 bits. Visualisez le résultat. Que constatez vous ? Quel
+     encodage faut-il utiliser pour stocker correctement cette image ?
 
 **** Les fichiers .geom
 
-     Examinez le contenu du fichier /image.geom/. Que pouvez vous en
+     Examinez le contenu du fichier /image1.geom/. Que pouvez vous en
      conclure quand à son rôle? Quelles sont les opérations
      nécessitant ce type d'informations ?
 
@@ -67,8 +91,6 @@
      fonctionnement en nous concentrant sur quelques options.
 
 ***** Les options de lecture
-
-      #TODO: Données à préparer
 
       Comparez les sorties des deux commandes suivantes:
 
@@ -93,12 +115,60 @@
 
 ***** Les options d'écriture
 
-      
-      
+      Parmi les options d'écriture accessibles à partir des noms de
+      fichier étendu, l'option /gdal:co/ permet de passer des options
+      de créations du fichier directement à gdal.
+
+      A l'aide de cette option, et en consultant les options de
+      créations de fichier disponible pour le format Tif dans gdal,
+      ré-encodez l'image /image1.tif/ en entier signé sur 12 bits,
+      avec une compression LZW. Comparez la taille des fichiers et le
+      contenu des image à l'aide de l'application *CompareImages*.
+
+      Une seconde option de nom de fichier étendue qui peut être utile
+      est l'option box. Utilisez l'option box pour n'écrire qu'un
+      carré de 100x100 pixels au centre de l'image d'entrée.
 
 **** La gestion du streaming
 
+     Par défaut, l'Orfeo ToolBox choisit le mode de découpage (tuile
+     ou bandeaux) le plus adapté à l'image d'entrée, et la taille de
+     bloc qui maximise l'occupation mémoire spécifiée dans
+     l'application (ou dans la variable d'environnement
+     =OTB_MAX_RAM_HINT=). Il est cependant possible de modifier ce
+     comportement en utilisant les noms de fichiers étendus à
+     l'écriture.
+
+     utilisez l'application *LocalStatistics* pour filtrer la première
+     bande de l'image /image1.tif/ avec un rayon de 9.
+
+     Exécutez une seconde fois cette opération, cette fois en
+     désactivant complètement le streaming à l'aide de l'option de nom
+     de fichier étendu /streaming:type/. Que constatez vous ?
+
+     Exécutez à nouveau cette opération, en spécifiant cette fois un
+     découpage en 1000 bandeaux, en utilisant les options
+     /streaming:type/, /streaming:sizemode/ et
+     /streaming:sizevalue/. Que constatez vous ?
+
+     Pour mieux observer les phénomènes, il est conseillé d'ouvrir un
+     moniteur système permettant de surveiller l'occuption des
+     processeurs et le débit instantané vers les disques durs.
+
 **** Le multi-threading
+
+     Par défaut, tout les filtres de l'Orfeo ToolBox qui en ont la
+     capacité vont automatiquement utiliser l'ensemble des coeurs
+     disponibles sur le processeur de la machine. Ce comportement peut
+     être modifié en utilisant la variable d'environnement
+     =ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=.
+
+     Reprenez l'exemple de l'exercice précédent utilisant
+     l'application *LocalStatistics* en désactivant le
+     streaming. Utilisez la variable d'environnement ITK pour diminuer
+     puis augmenter le nombre de threads utilisés. Que constatez vous ?
+
+     Vous pouvez utiliser la fonction /time/ pour mesurer le temps d'exécution.
 
 
 ** Les mécanismes internes de l'*Orfeo ToolBox*                   :solutions:
