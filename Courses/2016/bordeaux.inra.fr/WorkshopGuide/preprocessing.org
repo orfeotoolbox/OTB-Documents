@@ -1,27 +1,227 @@
 ** Pré-traitements de l'imagerie THR optique                         :slides:
-*** Slide
+*** Introduction
+    - Principe des corrections radiométriques et géométriques des images
+    - Utilisation des OTB-Applications
 ** Pré-traitements de l'imagerie THR optique                          :guide:
 *** Description                                                        :desc:
 **** Résumé
-
+     Cet exercice présente les corrections radiométriques et géométriques
+des images à l'aide d'*OTB applications*.
 **** Pré-requis
-
+     - Connaissances de base en traitement des images de télédétection.
+     - Notions d'utilisation d'applications en ligne de commande.
 
 **** Objectifs
 
 *** Étapes                                                            :steps:
-
+Dans cette partie de l'exercice, vous utiliserez les images
+~phr_xs_osr_mipy.tif~ et ~phr_pan_osr_mipy.tif~. Ce sont des extraits Pan et XS
+d'un produit Bundle Pléiades Primary (Niveau 1) sur le sud-ouest Toulousain. 
 **** Corrections atmosphériques
+Cette opération consiste à transformer les comptes numériques en
+réflectances (valeurs physiques). Elle comprend le passage de
+réflectance au sommet de l'atmosphère vers la réflectance de surface,
+dont l'objectif est de corriger les effets atmosphériques.
+     #+BEGIN_LaTeX
 
-     TOA puis TOC, regarder la différence
+
+     \begin{center}
+\begin{tikzpicture}[scale=0.18]
+   \tiny
+
+    \draw[->,thick] (0,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (4,-2) rectangle +(6,4);
+    \node[text width= 0.8cm] (SensorModel) at (7,0) {DN to Lum};
+%     \pause
+
+    \draw[->,thick] (11,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (16,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (19,0) {Lum to Refl};
+%     \pause
+
+
+    \draw[->,thick] (23,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (27,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (30,0) {TOA to TOC};
+%     \pause
+
+    \draw[->,thick] (34,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6.5,4);
+    \node[text width= 0.85cm] (SensorModel) at (41,0) {Adjacency};
+%     \pause
+
+    \draw[->,thick] (45,0) --  +(3,0);
+
+ \end{tikzpicture}
+\end{center}
+
+#+END_LaTeX 
+
+Pour l'image ~phr_xs_osr_mipy.tif~:
+
+1. Utilisez l'application *OpticalCalibration* pour calculer la
+   réflectance au sommet de l'atmosphère (top of atmosphere).
+2. Utilisez l'application *OpticalCalibration* pour calculer la
+   réflectance de surface (top of canopy).
+3. Comparez les 2 images en utilisant Monteverdi ou les applications
+   en ligne de commande (TOA-TOC). Comparez cette différence pour les bandes
+   rouge, verte et bleu (B0,B1,B2)
+4. Appliquez les opérations 1,2 et 3 à l'image ~phr_pan_osr_mipy.tif~
+
+
+_Trucs et astuces :_
+- Activez l'option '-milli' afin de générer les images de sortie en
+  millièmes de réflectance (entier 16 bits). Par défaut, les images de
+  réflectance sont sauvegardées en flottant (entre 0 et 1).
 
 **** Fusion P+XS
-
-     BundleToPerfectSensor puis différents algos de fusion
+     L'objectif de cet exercice est de créer une image fusionnée (/pan-sharpen/)
+     En raison des contraintes physiques sur la conception du capteur, il est
+     difficile d'obtenir la meilleure résolution spatiale et spectrale en même
+     temps. Pour cette raison la plupart des capteurs spatiaux THR délivrent 2
+     types d'images:
+     - 1 image multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
+       de résolution spectrale donnée. Pour Pléiades à une résolution de 2,8m
+       (rééchantillonné à 2m)
+     - Panchromatique (PAN): image en niveau de gris avec un détecteur couvrant
+       une plus large partie du spectre ce qui permet d'augmenter le flux et
+       d'améliorer la résolution. 0,7m dans le cas de Pléiades (rééchantillonné
+       à 0,5m)
+     
+     Pour cela:
+    
+     1. Utilisez l'application *BundleToPerfectSensor* pour superposer et
+        fusionner l'image PAN et XS. Notez que l'application possède un mode
+        /phr/ qui permet d'effectuer la superposition des 2 images sans utiliser
+        les modèles de capteurs respectifs des images pan et xs (mode par défaut). En effet les
+        produits bundle Pléiades ont la particularité d'etre sur 2 grilles
+        colocalisées.
+     2. Quel algorithme de fusion est utilisé dans l'application *BundleToPerfectSensor*?
+     3. (optionnel) Utilisez les applications *Superimpose* et *Pansharpening*
+        pour réaliser la meme opération en utilisant d'autres méthodes de fusion.  
 
 **** Ortho-rectification
+     Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
 
-     Sans DEM, avec DEM, régler la projection
+     #+BEGIN_LaTeX
+     \begin{center}
+     \begin{tikzpicture}[scale=0.2]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Input series};
+     %\pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     %%\pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
+     %\pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     %\pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     %\pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+%\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block Adjustement};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     %\pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
+     %\pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     %\pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     %\pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Map Projection};
+     %\pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+     \end{tikzpicture}
+     \end{center}
+     #+END_LaTeX
+     Utilisez l'application *Orthorectification* pour réaliser:
+        l'orthorectification de l'image fusionnée P+XS:
+        1. Sans DEM
+        2. Avec un DEM et un geoid (répertoire /SRTM/)
+        3. Tester plusieurs types de projection en sortie (wgs84, lambert 93)
 
 ** Pré-traitements de l'imagerie THR optique                      :solutions:
+*** Corrections atmosphériques
+     
+    Calcule réflectance TOA:
+     #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
+                                -out phr_xs_osr_mipy_toa.tif uint16
+                                -level toa
+                                -milli 1
+    #+END_EXAMPLE
 
+    Calcule réflectance TOC:
+     #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
+                                -out phr_xs_osr_mipy_toa.tif uint16 
+                                -level toc
+                                -milli 1
+    #+END_EXAMPLE
+
+    On peut utiliser le module *BandMath* pour calculer la différence
+entre les 2 images:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMathX -il phr_xs_osr_mipy_toa.tif phr_xs_osr_mipy_toc.tif 
+                      -out diff_toa_toc.tif int16 
+                      -exp "im1-im2"
+    #+END_EXAMPLE
+*** Fusion P+XS
+*** Ortho-rectification
