@@ -10,13 +10,13 @@ des images à l'aide d'*OTB applications*.
 **** Pré-requis
      - Connaissances de base en traitement des images de télédétection.
      - Notions d'utilisation d'applications en ligne de commande.
-
+       
 **** Objectifs
 
 *** Étapes                                                            :steps:
 Dans cette partie de l'exercice, vous utiliserez les images
 ~phr_xs_osr_mipy.tif~ et ~phr_pan_osr_mipy.tif~. Ce sont des extraits Pan et XS
-d'un produit Bundle Pléiades Primary (Niveau 1) sur le sud-ouest Toulousain. 
+d'un produit Bundle Pléiades Primary (Niveau 1) sur le sud-ouest de Toulouse. 
 **** Corrections atmosphériques
 Cette opération consiste à transformer les comptes numériques en
 réflectances (valeurs physiques). Elle comprend le passage de
@@ -65,7 +65,7 @@ dont l'objectif est de corriger les effets atmosphériques.
 
 #+END_LaTeX 
 
-Pour l'image ~phr_xs_osr_mipy.tif~:
+Avec l'image ~phr_xs_osr_mipy.tif~:
 
 1. Utilisez l'application *OpticalCalibration* pour calculer la
    réflectance au sommet de l'atmosphère (top of atmosphere).
@@ -74,8 +74,7 @@ Pour l'image ~phr_xs_osr_mipy.tif~:
 3. Comparez les 2 images en utilisant Monteverdi ou les applications
    en ligne de commande (TOA-TOC). Comparez cette différence pour les bandes
    rouge, verte et bleu (B0,B1,B2)
-4. Appliquez les opérations 1,2 et 3 à l'image ~phr_pan_osr_mipy.tif~
-
+4. Appliquez les opérations 1,2 et 3 à l'image panchromatique ~phr_pan_osr_mipy.tif~.
 
 _Trucs et astuces :_
 - Activez l'option '-milli' afin de générer les images de sortie en
@@ -83,18 +82,22 @@ _Trucs et astuces :_
   réflectance sont sauvegardées en flottant (entre 0 et 1).
 
 **** Fusion P+XS
-     L'objectif de cet exercice est de créer une image fusionnée (/pan-sharpen/)
+     L'objectif de cet exercice est de créer une image fusionnée (/Pan-Sharpening/).
      En raison des contraintes physiques sur la conception du capteur, il est
      difficile d'obtenir la meilleure résolution spatiale et spectrale en même
      temps. Pour cette raison la plupart des capteurs spatiaux THR délivrent 2
      types d'images:
-     - 1 image multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
-       de résolution spectrale donnée. Pour Pléiades à une résolution de 2,8m
-       (rééchantillonné à 2m)
+     - Multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
+       de résolution spectrale donnée. Pour Pléiades, 4 bandes (B,V,R,PIR) à une
+       résolution spatiale de 2,8m (rééchantillonné à 2m)
      - Panchromatique (PAN): image en niveau de gris avec un détecteur couvrant
        une plus large partie du spectre ce qui permet d'augmenter le flux et
-       d'améliorer la résolution. 0,7m dans le cas de Pléiades (rééchantillonné
-       à 0,5m)
+       d'améliorer la résolution par rapport à l'image multi-spectrale. 0,7m
+       dans le cas de Pléiades (rééchantillonné à 0,5m)
+     
+
+     Nous allons réaliser cette fusion à partir des extraits pan et xs en
+     réflectance au sommet de l'atmosphère ~phr_xs_osr_mipy_toa.tif~ et ~phr_xs_osr_mipy_toa.tif~: 
      
      Pour cela:
     
@@ -190,16 +193,19 @@ _Trucs et astuces :_
      \end{tikzpicture}
      \end{center}
      #+END_LaTeX
-     Utilisez l'application *Orthorectification* pour réaliser:
-        l'orthorectification de l'image fusionnée P+XS:
+     Utilisez l'application *Orthorectification* pour réaliser
+        l'orthorectification du produit fusionné:
         1. Sans DEM
-        2. Avec un DEM et un geoid (répertoire /SRTM/)
-        3. Tester plusieurs types de projection en sortie (wgs84, lambert 93)
+        2. Avec un DEM et un geoid (utilisé le répertoire /SRTM/)
+        3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
+        4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
+        5. Dans quelle zone UTM se trouve l'extrait PHR Pléiades?
+        6. Tester plusieurs types de projection en sortie (wgs84, lambert 93)
 
 ** Pré-traitements de l'imagerie THR optique                      :solutions:
 *** Corrections atmosphériques
      
-    Calcule réflectance TOA:
+    Calcul réflectance TOA:
      #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
                                 -out phr_xs_osr_mipy_toa.tif uint16
@@ -207,7 +213,7 @@ _Trucs et astuces :_
                                 -milli 1
     #+END_EXAMPLE
 
-    Calcule réflectance TOC:
+    Calcul réflectance TOC:
      #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
                                 -out phr_xs_osr_mipy_toa.tif uint16 
@@ -215,13 +221,55 @@ _Trucs et astuces :_
                                 -milli 1
     #+END_EXAMPLE
 
-    On peut utiliser le module *BandMath* pour calculer la différence
-entre les 2 images:
+    On peut utiliser le module *BandMathX* pour calculer la différence
+entre les 2 images multispectral:
 
     #+BEGIN_EXAMPLE
     $ otbcli_BandMathX -il phr_xs_osr_mipy_toa.tif phr_xs_osr_mipy_toc.tif 
-                      -out diff_toa_toc.tif int16 
+                      -out diff_xs_toa_toc.tif int16 
                       -exp "im1-im2"
     #+END_EXAMPLE
+
+    Pour l'image panchromatique:
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMath -il phr_pan_osr_mipy_toa.tif phr_pan_osr_mipy_toc.tif 
+                      -out diff_pan_toa_toc.tif int16 
+                      -exp "im1b1-im2b1"
+    #+END_EXAMPLE
+
 *** Fusion P+XS
+    #+BEGIN_EXAMPLE
+    $ otbcli_BundleToPerfectSensor -inp phr_pan_osr_mipy_toa.tif 
+                                   -inxs phr_xs_osr_mipy_toa.tif 
+                                   -mode phr 
+                                   -out phr_pxs_osr_mipy.tif uint16
+    #+END_EXAMPLE
 *** Ortho-rectification
+
+    1. Orthorectification sans DEM:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification -io.in phr_pxs_osr_mipy.tif 
+                                   -io.out phr_orthopxs_osr_mipy.tif uint16
+       #+END_EXAMPLE
+    2. Orthorectification avec DEM et geoid:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification -io.in phr_pxs_osr_mipy.tif 
+                                   -io.out phr_orthopxs_osr_mipy.tif uint16 
+                                   -elev.dem ../SRTM/ -elev.geoid ../Geoid/egm96.grd
+       #+END_EXAMPLE
+    3. La projection par defaut est UTM. Sur l'extrait Pléiades la zone UTM est
+       32 Nord. 
+    4. Orthorectification en WGS84 et en Lambert 93:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification -io.in phr_pxs_osr_mipy.tif 
+                                   -io.out phr_orthopxs_osr_mipy.tif uint16 
+                                   -elev.dem ../SRTM/ -elev.geoid ../Geoid/egm96.grd 
+                                   -map epsg -map.epsg.code 4326
+       #+END_EXAMPLE
+
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification -io.in phr_pxs_osr_mipy.tif 
+                                   -io.out phr_orthopxs_osr_mipy.tif uint16 
+                                   -elev.dem ../SRTM/ -elev.geoid ../Geoid/egm96.grd
+                                   -map lambert93
+       #+END_EXAMPLE
