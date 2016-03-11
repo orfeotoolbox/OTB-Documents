@@ -1,14 +1,128 @@
-** Calibration, débruitage et extraction de primitives               :slides:
+** Introduction au traitements des images RSO :slides:
 *** Slide
-** Calibration, débruitage et extraction de primitives pour les images SAR :guide:
+** Introduction au traitements des images RSO :guide:
 *** Description                                                        :desc:
 **** Résumé
+     Cet exercice constitue une introduction au traitement et à l'analyse des
+     images RSO (radar à synthèse d'ouverture) en utilisant l'Orfeo ToolBox:
+
+     - Manipulation des images 
+     - Filtrage du speckle avec différentes méthodes
+     - Extraction de primitives
+
+     Il existe par ailleurs d'autres outils et des tutoriaux disponibles
+     permettant de se familiariser avec les données radar.
 
 **** Pré-requis
 
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Données téléchargées
+     - Connaisance du mécanisme des applications de l'Orfeo ToolBox (voir
+       exercice correspondant)
 
 **** Objectifs
 
 *** Étapes                                                            :steps:
+**** Introduction à l'imagerie RSO
 
-** Calibration, débruitage et extraction de primitives pour les images SAR :solutions:
+Dans cette exercice nous utiliserons les extraits de l'image Sentinel 1 SLC HH
+et HV: ~s1_hh.tif~ et ~s1_hv.tif~. L'image se situe en Allemagne au sud de la
+ville d'Ulm près du lac Constance (47.456276, 9.638616).
+
+1. Ouvrir les images dans Monteverdi. Combien de bandes possède les images?
+2. A quoi corresponde ces bandes? 
+3. Utilisez l'application *BandMath* pour calculer l'image d'intensité à partir
+   des produits complexes  ~s1_hh.tif~ et ~s1_hv.tif~.
+
+**** Réduction du speckle
+     Les images SAR sont fortement affectées par le chatoiement (speckle) qui constitue un
+     type particulier de bruit présent dans tous les systèmes d'acquisition cohérent
+     (sonar, laser, etc.). Ce bruit est très fort et il a un effet multiplicatif.
+
+     Il existe plusieurs méthodes pour réduire ce bruit. Dans la suite nous
+     allons utiliser le filtre de /Frost/ qui possède 2 paramètres: rayon: taille de la fenetre
+     et /deramp/ qui controle la décroissance d'une fonction exponentiel qui est
+     utilisé pour pondéré la distance entre le pixel central et son voisinage. 
+
+     1. Quelle sont les méthodes de réduction du speckle disponible dans l'OTB?
+     2. Utilisez le filtre de Frost avec différents rayons (3,5 et 10) et
+       commentez l'effet sur l'image de sortie
+     3. Commentez la forme de l'histogramme des images filtrées comparé à
+        l'image d'intensité?
+     4. Utilisez le filtre de Frost avec un rayon ed 5 et différentes valeurs
+        du paramètre /deramp/ (00.5,0.2 et 0.8). Commentez l'effet de ce paramètre.
+
+**** Polarimétrie
+     Nous allons comparer de manière qualitative la différence entre les
+     observations des images en polarimétries HH et HV.
+
+     1. Calculez la différence entre l'image d'intensité HH et HV.
+     2. Effectuez une composition colorée avec les bandes HH, HV et HH-HV.
+     3. Affichez le résultat avec Monteverdi et commentez.
+**** 
+** Introduction au traitements des images RSO :solutions:
+**** Introduction à l'imagerie RSO
+1. deux bandes
+2. partie réelle et partie imaginaire?
+3. Il faut utiliser la commande suivante:
+
+   Pour HH:
+
+   #+BEGIN_EXAMPLE
+    $ otbcli_BandMath -il s1_hh.tif 
+                      -out intensity_hh.tif int32 
+                      -exp "im1b1*im1b1+im1b2*im1b2"
+   #+END_EXAMPLE
+
+   Pour HV:
+
+   #+BEGIN_EXAMPLE
+    $ otbcli_BandMath -il s1_hv.tif 
+                      -out intensity_hv.tif int32 
+                      -exp "im1b1*im1b1+im1b2*im1b2"
+   #+END_EXAMPLE
+
+**** Réduction du speckle
+
+     1. Les méthodes disponibles sont: lee, frost, kuan et gamma map. Quelque
+        soit la méthode utilisée on note une amélioration majeure de la qualité
+        de l'image filtrée qui permet d'identifier des structures difficilement
+        visible dans l'image d'intensité originale. 
+     2. Réduction du speckle avec l'algorithme de Frost:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_Despeckle -in intensity_hh.tif 
+                           -out intensity_hh_speckle.tif 
+                           -filter frost 
+                           -filter.frost.rad 3
+        #+END_EXAMPLE
+
+        L'augmentation du rayon a pour effet d'augmenter le lissage de l'image
+        fitlrée. Cela permet d'améliorer la qualité des images dans les zones
+        homogènes mais entraine également la perte d'information et de détail
+        sur des petites structures avec beaucoup de contraste. 
+
+     3. L'histogramme des images filtrées tend à devenir gaussien (en cloche) et
+        va progressivement différer de la distribution Gamma de l'image
+        originale (la loi Gamma se caractérise par une distribution en cloche
+        asymétrique avec une longue queue à droite) .
+     4. L'augmentation du paramètre /deramp/ diminue la décroissance de
+        l'atténuation exponentielle et à donc tendance à prendre plus en compte
+        les pixels éloignés du pixel central ce qui augmente l'effet de lissage
+        sur l'image filtrée.
+
+**** Polarimétrie
+     1. Calcul de la différence HH-HV:
+     #+BEGIN_EXAMPLE
+      $ otbcli_BandMath -il intensity_hh_speckle.tif intensity_hv_speckle.tif
+                        -out hh-hv_speckle.tif -exp "im1b1-im2b1"
+     #+END_EXAMPLE
+
+     On effectue ensuite la concaténation entre les polarisations croisées et la
+     différence des 2:
+     #+BEGIN_EXAMPLE
+      $ otbcli_ConcatenateImages -il intensity_hh_speckle.tif
+                                 intensity_hv_speckle.tif hh-hv_speckle.tif 
+                                 -out intensity_compo.tif 
+     #+END_EXAMPLE
+     2. Commentaire sur composition colorée, zone en violet (valeur HH elevé) 
