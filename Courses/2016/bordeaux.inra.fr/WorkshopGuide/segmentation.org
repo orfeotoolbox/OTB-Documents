@@ -3,19 +3,100 @@
 ** Segmentation et export vers un SIG                               :guide:
 *** Description                                                        :desc:
 **** Résumé
+     
+     Cet exercice permet de se familariser avec la segmentation large
+     échelle en utilisant les algorithmes MeanShift et GRM. On y
+     parcourt les différentes étapes jusqu'à l'export des polygones
+     segmentés dans un SIG.
 
 **** Pré-requis
-
+     
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Données issues du TP de pré-traitements pour l'imagerie THR optique
+     - Connaisance du mécanisme des applications de l'Orfeo ToolBox
+       (voir exercice correspondant)
 
 **** Objectifs
 
+     - Connaître les étapes pour réaliser une segmentation
+     - Savoir optimiser les paramètres de la segmentation
+     - Savoir exporter la segmentation vers un logiciel SIG
+
 *** Étapes                                                            :steps:
 
-Dire un mot de GRM.
+**** Lissage de l'image par l'algorithme MeanShift
 
-**** LS segmentation
+     L'algorithme du MeanShift réalise un lissage de l'image tout en
+     préservant ses contours. Il rend ainsi l'images plus homogène
+     tout en conservant des frontière franche entre les zones. Il
+     facilite ainsi la segmentation de l'image par des méthodes
+     simples, comme l'extraction des composantes
+     connexes. L'algorithme moyenne itérativement les pixels dans un
+     certain voisinnage spatial et spectral.
 
-**** Traitement des petites régions
+     Réaliser un lissage de l'image /myimage.tif/ en utilisant
+     l'application *MeanShiftSmoothing*.
+
+     Notes:
+     - L'option /modesearch/ permet d'accélérer le calcul au détriment
+       de la stabilité, et sera donc désactivée,
+     - Le rayon spatial (/spatialr/) et spectral (/ranger/) sont les
+       paramètres déterminants pour l'algorithme. Le premier s'exprime
+       en nombre de pixel, tandis que le second comme une distance
+       entre signatures spectrales des pixels.
+     - La sortie /foutpos/ code les position moyenne des pixels après
+       lissage, et sera utilisée dans la suite du TP.
+     - Le paramètre de nom de fichier étendu /box/ peut être utilisé
+       pour trouver la valeur de /ranger/ et /spatialr/ optimale sans
+       traiter toute l'image.
+
+**** Segmentation
+
+     Cette étape va produire une segmentation initiale à partir des
+     images écrites précédement (sorties /fout/ et /foutpos/). Les
+     pixels adjacents dont les valeurs dans l'image /fout/ sont
+     distantes de moins de /ranger/ et dont les positions estimées
+     dans l'image /foutpos/ sont distantes de moins de /spatialr/
+     seront groupés au sein de la même composante connexe.
+
+     Le calcul est fait par tuile, dont on peut fixer la taille au
+     moyen des paramètres /tilesizex/ et /tilesizey/.
+
+     Enfin, le paramètre /minsize/ permet d'éliminer toutes les
+     régions dont la taille produite est trop petite (seuil exprimé en
+     nombre de pixels).
+
+     Utilisez l'application *LSMSSegmentation* pour réaliser cette
+     étape. A noter:
+     - Utilisez un /minsize/ de 0 dans cette première étape,
+     - L'image de sortie sera une image étiquettée, dans laquelle
+       chaque pixel porte un label entier unique correspondant au
+       segment auquel il appartient. Il est recommandé d'encoder cette
+       sortie en /uint32/ afin de disposer de suffisament de labels
+       uniques.
+     - Les valeurs pour les paramètres /ranger/ et /spatialr/ doivent
+       être inférieures aux valeurs utilisées pour le lissage (étape
+       précédente).
+      
+    
+     Utilisez la méthode /optimal/ de l'application *ColorMapping*
+     afin de créer une carte contrastée des régions segmentées, qui
+     sera plus facile à analyser.
+
+**** Traitement des petites région
+
+     Une fois la segmentation intiale réalisée, il reste en général
+     beaucoup de régions de petite taille, qui ne correspondent à
+     aucun objet d'intérêt. L'application *LSMSSegmentation* permet de
+     les filtrer (paramètre /minsize/), mais il est également possible
+     de réaliser un post-traitement pour fusionner itérativement les
+     régions de taille trop faible avec les régions adjacentes dont la
+     radiométrie est la plus proche. C'est l'objet de l'application
+     *LSMSSmallRegionsMerging*.
+
+     Utilisez cette application pour retraiter la segmentation
+     initiale, en fusionnant toutes les régions dont la taille est
+     inférieure à 10 pixels.
 
 **** Vectorization
 
