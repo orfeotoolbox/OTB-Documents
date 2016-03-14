@@ -10,6 +10,7 @@
 \usepackage{lmodern}
 \usepackage{hyperref}
 \usepackage[left=3cm,right=3cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{verbatim}
 
 \title{Guide d'installation OTB\\
   {\small\url{https://www.orfeo-toolbox.org}}
@@ -18,6 +19,8 @@
 \begin{document}
 
 \maketitle
+
+\tableofcontents
 
 \section{Windows}
 
@@ -53,32 +56,38 @@ Extraire les deux archives zip dans votre répertoire personnel, par exemple dan
 
 \subsection{Tester l'installation}
 Une fois l'installation terminée, les applications OTB sont accessibles de
-plusieurs façons:
+plusieurs façons. Verifier que l'installation est fonctionelle avec les étapes
+suivantes:
 \begin{enumerate}
 
-  \item Lancer monteverdi en navigant dans le dossier \texttt{bin} de son répertoire
+\item Lancer monteverdi en navigant dans le dossier \texttt{bin} de son répertoire
 d'installation, par exemple:
 \texttt{Martin{\textbackslash}install{\textbackslash}Monteverdi-3.0.1-win32{\textbackslash}bin},
 puis double cliquer sur \textbf{\texttt{monteverdi.bat}} (et non pas
 \texttt{monteverdi.exe}).
-Puis charger les applications OTB avec "Fichier" $\rightarrow$ "Charger les
+
+\item Essayer d'ouvrir une image tif avec Monteverdi (voir
+  figure~\ref{fig:monteverdi}). Une image tif de démo est
+disponible ici: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
+
+\item Charger les applications OTB avec "Fichier" $\rightarrow$ "Charger les
 OTB-Applications".
 Le navigateur d'application est ensuite accessible depuis "Affichage"
 $\rightarrow$ "Navigateur d'OTB-Applications".
 (Voir figure \ref{fig:windows-mapla}).
 
-  \item Naviguer dans le dossier \texttt{bin} du répertoire d'installation OTB et double cliquer sur le
-  fichier \texttt{.bat} de l'application à lancer, par exemple:\\
-  \texttt{Martin{\textbackslash}install{\textbackslash}OTB-5.2.1-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
-  (Voir figure \ref{fig:windows-otbgui}).
+\item Naviguer dans le dossier \texttt{bin} du répertoire d'installation OTB et double cliquer sur le
+fichier \texttt{.bat} de l'application à lancer, par exemple:\\
+\texttt{Martin{\textbackslash}install{\textbackslash}OTB-5.2.1-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
+(Voir figure \ref{fig:windows-otbgui}).
 
 \end{enumerate}
 
 \begin{figure}[h]
   \center
-  \includegraphics[width=1\textwidth]{Art/windows-monteverdi.png}
+  \includegraphics[width=1\textwidth]{Art/monteverdi-tif.png}
   \caption[]{Monteverdi}
-  \label{fig:windows-monteverdi}
+  \label{fig:monteverdi}
 \end{figure}
 
 \begin{figure}[h]
@@ -95,6 +104,9 @@ $\rightarrow$ "Navigateur d'OTB-Applications".
   \label{fig:windows-otbgui}
 \end{figure}
 
+% En commentaire pour l'instant, c'est peut être un peu inutile puisqu'il n'y a
+% aucune action associée en terme d'installation
+\begin{comment}
 \subsection{OTB depuis QGIS}
 
 Les applications OTB sont disponibles depuis QGIS. Pour cela
@@ -111,6 +123,7 @@ ou écrasant les fichiers dans \texttt{}.
   \caption[]{Intégration QGIS - OTB}
   \label{fig:otb-qgis}
 \end{figure}
+\end{comment}
 
 \clearpage
 \section{Ubuntu}
