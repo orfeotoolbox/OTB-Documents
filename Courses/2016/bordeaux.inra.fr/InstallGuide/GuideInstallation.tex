@@ -20,7 +20,8 @@
     urlcolor={blue!80!black}
 }
 
-\title{Guide d'installation OTB\\
+\title{\includegraphics[scale=1]{Art/otb-logo.png}\\
+  Guide d'installation OTB\\
   {\small\url{https://www.orfeo-toolbox.org}}
 }
 
@@ -30,6 +31,7 @@
 
 \tableofcontents
 
+\clearpage
 \section{Windows}
 
 \subsection{QGIS}
@@ -137,9 +139,38 @@ ou écrasant les fichiers dans \texttt{}.
 \section{Ubuntu}
 
 \subsection{Installer les dépendences}
+Avant d'installer le paquet autoportant OTB, certaines dépendences système
+sont nécéssaires. Dans un terminal, taper:
+\begin{verbatim}
+sudo apt-get -y install ?? ??
+\end{verbatim}
 
 \subsection{Installer OTB et Monteverdi}
+Télécharger le paquet autoportant OTB pour linux (64 bits), disponible ici:
+\begin{center}
+\url{??}
+\end{center}
 
 \subsection{Tester l'installation}
+Une fois l'installation terminée, les applications OTB sont accessibles de
+plusieurs façons. Verifier que l'installation est fonctionelle avec les étapes
+suivantes:
+\begin{enumerate}
+
+\item Lancer monteverdi:  ??
+
+\item Essayer d'ouvrir une image tif avec Monteverdi (voir
+  figure~\ref{fig:monteverdi}). Une image tif de démo est
+disponible ici: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
+
+\item Charger les applications OTB avec "Fichier" $\rightarrow$ "Charger les
+OTB-Applications".
+Le navigateur d'application est ensuite accessible depuis "Affichage"
+$\rightarrow$ "Navigateur d'OTB-Applications".
+(Voir figure \ref{fig:windows-mapla}).
+
+\item Lancer une application OTB hors monteverdi: ?? (Voir figure \ref{fig:windows-otbgui}).
+
+\end{enumerate}
 
 \end{document}
