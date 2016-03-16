@@ -9,9 +9,10 @@
 \usepackage{graphicx}
 \usepackage{lmodern}
 \usepackage{hyperref}
-\usepackage[left=3cm,right=3cm,top=2cm,bottom=3cm]{geometry}
+\usepackage[left=2.7cm,right=2.7cm,top=2cm,bottom=3cm]{geometry}
 \usepackage{verbatim}
 \usepackage{xcolor}
+\usepackage{url}
 
 \hypersetup{
     colorlinks,
@@ -148,7 +149,7 @@ sudo apt-get -y install ?? ??
 \subsection{Installer OTB et Monteverdi}
 Télécharger le paquet autoportant OTB pour linux (64 bits), disponible ici:
 \begin{center}
-\url{??}
+\url{https://www.orfeo-toolbox.org/packages/OTB-5.2.1-Linux64.run}
 \end{center}
 
 \subsection{Tester l'installation}
@@ -157,11 +158,10 @@ plusieurs façons. Verifier que l'installation est fonctionelle avec les étapes
 suivantes:
 \begin{enumerate}
 
-\item Lancer monteverdi:  ??
-
-\item Essayer d'ouvrir une image tif avec Monteverdi (voir
-  figure~\ref{fig:monteverdi}). Une image tif de démo est
-disponible ici: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
+\item Lancer Monteverdi (taper "monteverdi" dans un terminal) et essayer
+d'ouvrir une image tif (voir figure~\ref{fig:monteverdi}). Une image tif de
+démo est disponible ici:
+\url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
 
 \item Charger les applications OTB avec "Fichier" $\rightarrow$ "Charger les
 OTB-Applications".
@@ -169,7 +169,8 @@ Le navigateur d'application est ensuite accessible depuis "Affichage"
 $\rightarrow$ "Navigateur d'OTB-Applications".
 (Voir figure \ref{fig:windows-mapla}).
 
-\item Lancer une application OTB hors monteverdi: ?? (Voir figure \ref{fig:windows-otbgui}).
+\item Ouvrir une application OTB via un terminal, par exemple
+\texttt{otbgui\_Rescale}. (Voir figure \ref{fig:windows-otbgui}).
 
 \end{enumerate}
 
