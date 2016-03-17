@@ -24,10 +24,6 @@
 
 \setlength{\parindent}{0pt}
 
-\newcommand{\answer}{
-\\ \quad $\square$ Oui. \quad $\square$ Non:\\
-}
-
 \begin{document}
 
 \begin{center}
@@ -42,12 +38,17 @@ Questionnaire d'évaluation de formation
 
 \begin{center}
 \begin{minipage}{.8\textwidth}
-Merci d'avoir participé à cette formation OTB ! Pour nous aider à améliorer
-nos futures prestations, merci de remplir ce questionnaire et de penser à
-ajouter un commentaire pour toute réponse négative. Toutes les remarques
-sont les bienvenues !
+Merci d'avoir participé à cette formation Orfeo Toolbox ! Pour nous aider à
+améliorer nos futures prestations, merci de remplir ce questionnaire et de
+penser à ajouter tout commentaire pertinent. Toutes les remarques sont les
+bienvenues !
 \end{minipage}
 \end{center}
+
+\newcommand{\answer}{
+\\ \quad $\square$ Oui. \quad $\square$ Non.\\
+\vspace{4em}
+}
 
 Vous êtes content d'avoir participé.
 \answer
@@ -85,9 +86,8 @@ prérequis).
   faire & $\square$ Manque de choses à faire\\
   Qualité du support: & $\square$ Bonne & $\square$ À améliorer: & \\
   Commentaire: &&&\\
-  &&&\\
-  &&&\\
 \end{tabular}
+\vspace{4em}
 }
 
 \textbf{Jour 1, matin.} Installation et configuration des logiciels:
@@ -99,7 +99,6 @@ prérequis).
 \textbf{Jour 1, après-midi.} Imagerie THR optique, prétraitements SIG:
 \moduleanswer
 
-\clearpage
 \textbf{Jour 2, matin.} Classification supervisée pour les séries multitemporelles Landsat 8:
 \moduleanswer
 
@@ -107,12 +106,11 @@ prérequis).
 \moduleanswer
 
 Est-ce qu'il vous a manqué quelque chose en particulier ?
-\vspace{10em}
+\vspace{6em}
 
 Il y avait-il des choses superflues, impertinentes ou en trop ?
-\vspace{10em}
+\vspace{6em}
 
 Autre commentaire:
-\vspace{10em}
 
 \end{document}
