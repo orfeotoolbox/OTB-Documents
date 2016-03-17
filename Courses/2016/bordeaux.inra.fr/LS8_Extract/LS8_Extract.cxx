@@ -4,6 +4,7 @@
 #include "otbMultiChannelExtractROI.h"
 #include <iostream>
 #include <string>
+#include <cstdint> // for int16_t
 
 int main(int argc, char * argv[])
 {
@@ -41,7 +42,7 @@ int main(int argc, char * argv[])
 
   // Load LS8 image
   typedef otb::VectorImage<float, 2> InputType;
-  typedef otb::VectorImage<int, 2> OutputType;
+  typedef otb::VectorImage<int16_t, 2> OutputType;
 
   typedef otb::ImageFileReader<InputType> ReaderType; 
   ReaderType::Pointer reader = ReaderType::New(); 

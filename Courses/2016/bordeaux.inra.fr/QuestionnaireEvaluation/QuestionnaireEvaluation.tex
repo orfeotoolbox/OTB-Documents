@@ -9,12 +9,108 @@
 \usepackage{graphicx}
 \usepackage{lmodern}
 \usepackage{hyperref}
-\usepackage[left=3cm,right=3cm,top=2cm,bottom=3cm]{geometry}
+\usepackage[left=2.0cm,right=2.7cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{booktabs}
 
-\title{Questionnaire d'évaluation -- Formation OTB}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
-\maketitle
+\begin{center}
+\includegraphics[scale=0.5]{Art/otb-logo.png}
+
+Questionnaire d'évaluation de formation
+
+{\small\url{https://www.orfeo-toolbox.org}}
+
+\today
+\end{center}
+
+\begin{center}
+\begin{minipage}{.8\textwidth}
+Merci d'avoir participé à cette formation Orfeo Toolbox ! Pour nous aider à
+améliorer nos futures prestations, merci de remplir ce questionnaire et de
+penser à ajouter tout commentaire pertinent. Toutes les remarques sont les
+bienvenues !
+\end{minipage}
+\end{center}
+
+\newcommand{\answer}{
+\\ \quad $\square$ Oui. \quad $\square$ Non.\\
+\vspace{4em}
+}
+
+Vous êtes content d'avoir participé.
+\answer
+
+Les objectifs annoncés sont atteinds.
+\answer
+
+Le niveau de difficulté est adapté.
+\answer
+
+Le rythme de la formation est adapté (temps par séquence, temps de pause,
+horaires).
+\answer
+
+Les formateurs sont disponibles et compétents.
+\answer
+
+La qualité du support est bonne (planches, guides de tp).
+\answer
+
+L'environement de travail est satisfaisant (locaux, matériel, nombre de
+participants).
+\answer
+
+La formation était bien planifiée (annonce des dates, informations pratiques,
+prérequis).
+\answer
+
+\newcommand{\moduleanswer}{
+\\
+\begin{tabular}{rlll}  
+  Difficultée:         & $\square$ Adaptée & $\square$ Difficile & $\square$
+  Facile\\
+  Temps alloué:       & $\square$ Adapté  & $\square$ Manque de temps pour tout
+  faire & $\square$ Manque de choses à faire\\
+  Qualité du support: & $\square$ Bonne & $\square$ À améliorer: & \\
+  Commentaire: &&&\\
+\end{tabular}
+\vspace{4em}
+}
+
+\textbf{Jour 1, matin.} Installation et configuration des logiciels:
+\moduleanswer
+
+\textbf{Jour 1, matin.} Présentation de Monteverdi, QGIS, applications et méchanismes interne de l'OTB:
+\moduleanswer
+
+\textbf{Jour 1, après-midi.} Imagerie THR optique, prétraitements SIG:
+\moduleanswer
+
+\textbf{Jour 2, matin.} Classification supervisée pour les séries multitemporelles Landsat 8:
+\moduleanswer
+
+\textbf{Jour 2, après-midi.} Traitement SAR pour l'imagerie Sentinel 1:
+\moduleanswer
+
+Est-ce qu'il vous a manqué quelque chose en particulier ?
+\vspace{6em}
+
+Il y avait-il des choses superflues, non pertinentes ou en trop ?
+\vspace{6em}
+
+Autre commentaire:
 
 \end{document}
