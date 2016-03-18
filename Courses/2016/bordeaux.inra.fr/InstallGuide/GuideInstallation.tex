@@ -139,11 +139,26 @@ ou écrasant les fichiers dans \texttt{}.
 \clearpage
 \section{Ubuntu}
 
+\subsection{QGis}
+QGis peut être installé via un gestionnaire de paquets graphique ou bien en 
+ligne de commande, le paquet à installer s'appelle simplement \textbf{qgis}.
+\begin{verbatim}
+sudo apt-get install qgis
+\end{verbatim}
+
 \subsection{Installer les dépendences}
 Avant d'installer le paquet autoportant OTB, certaines dépendences système
 sont nécéssaires. Dans un terminal, taper:
 \begin{verbatim}
-sudo apt-get -y install ?? ??
+sudo apt-get install libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
+\end{verbatim}
+
+Vous aurez en outre besoin des librairies libgl1 et libglu1, qui ont 
+différentes implémentations (MESA, FGLRX, NVIDIA, ...). Si vous n'avez pas 
+déjà ces librairies sur votre système, vous pouvez prendre une implémentation
+libre comme MESA :
+\begin{verbatim}
+sudo apt-get install libgl1-mesa-glx libglu1-mesa
 \end{verbatim}
 
 \subsection{Installer OTB et Monteverdi}
@@ -151,6 +166,27 @@ Télécharger le paquet autoportant OTB pour linux (64 bits), disponible ici:
 \begin{center}
 \url{https://www.orfeo-toolbox.org/packages/OTB-5.2.1-Linux64.run}
 \end{center}
+
+Il s'agit d'une archive auto-extractible, qui va se déployer dans le répertoire
+courant. Une fois rendue exécutable, l'archive peut être extraite. Les 
+exécutables sont dans le sous-dossier 'bin', vous pouvez les rendre facilement
+accessible en ajoutant ce chemin au PATH. Les commandes permettant de faire 
+ce déployement sont :
+\begin{verbatim}
+chmod +x OTB-5.2.1-Linux64.run
+./OTB-5.2.1-Linux64.run
+export PATH=$PATH:<votre-répertoire-OTB>/bin
+\end{verbatim}
+
+Ensuite, il y a quelques variables d'environnement nécessaire pour bénéficier de 
+toutes les fonctionnalités :
+\begin{verbatim}
+export GDAL_DATA=<votre-répertoire-OTB>/share/gdal
+export OTB_APPLICATIONS_PATH=<votre-répertoire-OTB>/lib/otb/applications
+\end{verbatim}
+
+Note: lorsque vous renseignez des chemins dans des variables d'environnement,
+utilisez des chemins absolus.
 
 \subsection{Tester l'installation}
 Une fois l'installation terminée, les applications OTB sont accessibles de
