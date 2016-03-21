@@ -1,4 +1,22 @@
 ** Les mécanismes internes de l'Orfeo ToolBox                        :slides:
+*** Objectifs et données
+**** Objectifs
+     - Comprendre les mécanismes transparents de l'Orfeo ToolBox
+     - Savoir influencer la manière dont l'Orfeo ToolBox exécute un traitement
+     - Savoir ou trouver des informations complémentaires
+
+**** Données
+     
+     Les données se trouvent dans le répertoire /Internals/
+
+*** Etapes
+    Le déroulement du TP est le suivant:
+    1. Encodage des images
+    2. Fichiers geom
+    3. Noms de fichiers étendus
+    4. Streaming
+    5. Multi-threading
+
 *** Encodage des images
 *** Fichiers geom
 *** Noms de fichiers étendus
