@@ -34,7 +34,7 @@
      connexes. L'algorithme moyenne itérativement les pixels dans un
      certain voisinnage spatial et spectral.
 
-     Réaliser un lissage de l'image /phr_orthopxs_osr_mipy_xt.tif/ en
+     Réaliser un lissage de l'image ~phr_orthopxs_osr_mipy_xt.tif~ en
      utilisant l'application *MeanShiftSmoothing*. Faites varier les
      paramètres /ranger/ et /spatialr/ pour observer leur influence.
 
