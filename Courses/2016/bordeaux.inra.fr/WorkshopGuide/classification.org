@@ -11,10 +11,131 @@
 
 *** Étapes                                                            :steps:
 
-classif 1 date
-classif 1 date avec primitive
-classif 2 dates (2 stratégies)
-classif N dates
-classif N dates NDVI
+    Introduction aux données LANDSAT 8
+
+    Dans l'archive de données, le dossier (TODO: ajouter chemin) contient neuf
+    images Landsat 8 aux dates suivantes:
+
+      2014-03-09
+      2014-04-01
+      2014-04-17
+      2014-05-28
+      2014-06-20
+      2014-07-31
+      2014-09-01
+      2014-10-03
+      2014-10-26
+
+    Ces images sont chacune multispectrales avec les septs bandes du capteur OLI:
+
+    0 - Coastal aerosol         
+    1 - Blue    
+    2 - Green      
+    3 - Red  
+    4 - Near Infrared (NIR)  
+    5 - SWIR 1     
+    6 - SWIR 2
+
+    Au total, c'est donc 63 bandes qui representent chaque pixel.
+    Les images sont encodés sur 16 bits.
+
+    Ouvrez une image dans monteverdi et régler les bandes pour un affichage en
+    vrais couleurs (rouge, vert, bleu).
+    Ouvrez les neuf images et remarquez les changements.
+
+    Les fichers (TODO LS8/training/training.shp) et (TODO
+    LS8/testing/testing.shp) contiennent des polygones qui définissent 11
+    classes sur l'ensemble de la scene. Ils sont répartis en deux ensemble:
+    apprentissage et validation.
+
+    Code  Nom
+    --------------------------
+    11    ete
+    12    hiver
+    31    foret feuilles caduques
+    32    foret feuilles persistantes
+    34    pelouses
+    36    lande ligneuse
+    41    bati
+    51    eau
+    211   prairie
+    221   verger
+    222   vigne
+
+    # Classification d'une date
+
+    Typiquement les étapes d'une procedure de classifiation sont:
+
+       1. Calcul des statistiques
+       2. Apprentissage du modèle
+       3. Utilisation du modèle (classification)
+       4. Validation
+       5. Visualisation
+
+    Dans la suite du TP, vous réalisez d'autres classifications sur d'autres
+    images. Un conseil est donc de travailler dans un répertoire par sous
+    partie, par exemple "classif1".
+
+    Creez un répertoire classif1.
+
+    ## Calcul des statistiques
+
+    Les variables doivent êtres comparables entre chaque image. La première
+    étape est le calcul de statistiques pour que les données puissent être
+    normalisés: moyenne null et écart-type de 1.
+    
+    Choisissez une image à classifier, puis utilisez l'application
+    ComputeImageStatistics:
+
+    otbcli_ComputeImagesStatistics -il image.tif
+                                   -out images_statistics.xml 
+
+
+    ## Apprentissage du modèle
+
+    L'application TrainImageClassifier permet d'apprendre un modèle pour
+    différentes méthodes de classifications. Regardez la documentation de cette
+    application et créez un modèle pour la méthode Random Forest. Les paramètres
+    à régler sont:
+
+    io.il # l'image d'entrée
+    io.vd # le fichier vectoriel d'apprentissage (training.shp)
+    io.imstat # le fichier xml de statistique calculé précédement
+    classifier # la méthode, ici utilisez "rf"
+    io.out # le nom du fichier modèle en sortie, par exemple "model.rf"
+
+    D'autres paramètres sont important aussi:
+    vfn
+    vtr
+
+
+    Regler le 
+    
+    Classification multidate
+      Principe
+      choix des dates à utiliser
+
+    Profil NDVI
+
+    commandes (ou livré ?)
+    visualiser dans QGIS
+
+    Regularisation par vote majoritaire
+
+    principe
+    commande
+
+    Fusion de classes
+
+    principe
+    comment décider quelle classe fusionner
+    commandes
+
+    Vectorisation
+
+    principe
+    commande
+*** 
+*** 
 ** Réaliser une classification supervisée                         :solutions:
 
