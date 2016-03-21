@@ -16,17 +16,17 @@
 #+LINK_HOME:
 
 #+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [bigger]
+#+LaTeX_CLASS_OPTIONS: [smaller]
 #+latex_header: \usepackage[T1]{fontenc}
 #+latex_header: \usepackage[french]{babel}
-#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Sommaire}\tableofcontents[currentsection]\end{frame}}
+#+latex_header: \AtBeginSubsection[]{\begin{frame}<beamer>\frametitle{Sommaire}\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/shaded/hide]\end{frame}}
 #+latex_header: \useoutertheme{infolines}
 #+latex_header: \mode<beamer>{\usetheme{Pittsburgh}}
 #+latex_header: \setbeamertemplate{navigation symbols}{} 
 #+latex_header: \setbeamerfont{structure}{series=\bfseries}
 #+latex_header: \setbeamertemplate{items}[triangle]
 #+latex_header: \setbeamercolor{block title}{fg=blue!40!black}
-#+latex_header: \newcommand{\shorttitle}{Revue OTB}
+#+latex_header: \newcommand{\shorttitle}{Slides formation OTB}
 #+latex_header: \newcommand{\shortauthor}{}
 #+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
 #+latex_header: \institute{ \includegraphics[width=0.6cm]{../../../../Artwork/logoVectoriel.png} \hspace{0.1cm} \includegraphics[width=1.5cm]{Images/logo_cnes.png}}
@@ -47,37 +47,54 @@
 #+EXCLUDE_TAGS: desc steps further solution
 
 
+* Introduction :slides:
+*** Bienvenue
+*** Planning de la formation: jour 1
+|-------+---------------+-------------------------|
+| 31.03 | 09:00 - 10:30 | Introduction            |
+| 31.03 | 10:30 - 10:40 | Pause                   |
+| 31.03 | 10:40 - 13:40 | TP1: Généralités        |
+|-------+---------------+-------------------------|
+| 31.03 | 13:40 - 15:10 | Pause déjeuner          |
+|-------+---------------+-------------------------|
+| 31.03 | 15:10 - 16:10 | TP2: Prétraitements THR |
+| 31.03 | 16:10 - 16:20 | Pause                   |
+| 31.03 | 16:20 - 17:50 | TP2: Segmentation       |
+| 31.03 | 17:50 - 18:00 | Conclusion jour 1       |
+|-------+---------------+-------------------------|
+
+*** Planning de la formation: jour 2
+|-------+---------------+------------------------|
+| 01.04 | 09:00 - 10:30 | TP3: Classification    |
+| 01.04 | 10:30 - 10:40 | Pause                  |
+| 01.04 | 10:40 - 12:10 | TP3: Classification    |
+|-------+---------------+------------------------|
+| 01.04 | 12:10 - 13:40 | Pause déjeuner         |
+|-------+---------------+------------------------|
+| 01.04 | 13:40 - 15:10 | TP4: Traitements Radar |
+| 01.04 | 15:10 - 15:20 | Pause                  |
+| 01.04 | 15:20 - 16:50 | Echanges libres        |
+| 01.04 | 16:50 - 17:20 | Conclusion générale    |
+|-------+---------------+------------------------|
+
+*** Contenu du kit de formation
 
 
-* Avant-propos                                                           :fw:
-** Données
+  
+*** Informations pratiques
+**** TODO: Repas
+**** TODO: Code Wifi
+**** TODO: Autre?
 
-** Les logiciels
-
-Afin de réaliser les exercices, les logiciels suivants sont
-nécessaires :
-
-- *Orfeo ToolBox* 5.2 ou plus récent avec les applications
-- *Monteverdi* 3.0 ou plus récent
-- *QGis* 2.4 ou plus récent
-
-Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
-de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
-
-Pour installer *QGis* consultez la documentation du logiciel qui est
-disponible sur le  [[http://www.qgis.org/][site du projet]].
-
-#+INCLUDE: "licence.org"
-
-* Généralités                                                          
+* TP1: Généralités                                                          
 #+INCLUDE: "mvd-qgis.org"
 #+INCLUDE: "otb-apps.org" :minlevel 2
 #+INCLUDE: "internals.org" :minlevel 2
-* Imagerie THR optique, des pré-traitements au SIG
+* TP2: Imagerie THR optique, des pré-traitements au SIG
 #+INCLUDE: "preprocessing.org" :minlevel 2
 #+INCLUDE: "segmentation.org" :minlevel 2
-* Classification supervisée pour les séries multi-temporelles
+* TP3: Classification supervisée pour les séries multi-t
 #+INCLUDE: "classification.org" :minlevel 2
 #+INCLUDE: "post-classif.org" :minlevel 2 
-* Traitements SAR pour l'imagerie Sentinel 1
+* TP4: Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar.org" :minlevel 2
