@@ -5,7 +5,7 @@
 **** Résumé
      
      Cet exercice permet de se familariser avec la segmentation large
-     échelle en utilisant les algorithmes MeanShift et GRM. On y
+     échelle en utilisant l'algorithme MeanShift. On y
      parcourt les différentes étapes jusqu'à l'export des polygones
      segmentés dans un SIG.
 
@@ -15,7 +15,7 @@
      - Données issues du TP de pré-traitements pour l'imagerie THR optique
      - Connaisance du mécanisme des applications de l'Orfeo ToolBox
        (voir exercice correspondant)
-
+       
 **** Objectifs
 
      - Connaître les étapes pour réaliser une segmentation
@@ -34,8 +34,9 @@
      connexes. L'algorithme moyenne itérativement les pixels dans un
      certain voisinnage spatial et spectral.
 
-     Réaliser un lissage de l'image /myimage.tif/ en utilisant
-     l'application *MeanShiftSmoothing*.
+     Réaliser un lissage de l'image /phr_orthopxs_osr_mipy_xt.tif/ en
+     utilisant l'application *MeanShiftSmoothing*. Faites varier les
+     paramètres /ranger/ et /spatialr/ pour observer leur influence.
 
      Notes:
      - L'option /modesearch/ permet d'accélérer le calcul au détriment
@@ -49,6 +50,10 @@
      - Le paramètre de nom de fichier étendu /box/ peut être utilisé
        pour trouver la valeur de /ranger/ et /spatialr/ optimale sans
        traiter toute l'image.
+
+     Pour la suite de l'exercice, utiliser une valeur de /ranger/
+     autour de 25 et une valeur de /spatialr/ autour de 3 (pour
+     limiter le temps de calcul).
 
 **** Segmentation
 
@@ -76,14 +81,14 @@
        uniques.
      - Les valeurs pour les paramètres /ranger/ et /spatialr/ doivent
        être inférieures aux valeurs utilisées pour le lissage (étape
-       précédente).
-      
-    
+       précédente). Des valeurs d'environ la moitié de celles utilisées
+       lors de l'étape précédente sont un bon point de départ.
+
      Utilisez la méthode /optimal/ de l'application *ColorMapping*
      afin de créer une carte contrastée des régions segmentées, qui
      sera plus facile à analyser.
 
-**** Traitement des petites région
+**** Traitement des petites régions
 
      Une fois la segmentation intiale réalisée, il reste en général
      beaucoup de régions de petite taille, qui ne correspondent à
@@ -96,11 +101,196 @@
 
      Utilisez cette application pour retraiter la segmentation
      initiale, en fusionnant toutes les régions dont la taille est
-     inférieure à 10 pixels.
+     inférieure à 50 pixels.
 
+     Utilisez à nouveau la méthode /optimal/ de l'application
+     *ColorMapping* afin de créer une carte contrastée des régions
+     segmentées, et comparer avec la carte de segmentation précédente.
+     
 **** Vectorization
+     
+     La dernière étape consiste à exporter les polygones ainsi créé
+     vers un fichier vectoriel. L'application *LSMSVectorization*
+     permet d'effectuer cette étape, en calculant au passage la
+     moyenne et la variance de chaque polygone en fonction d'une image
+     support.
 
-**** Filtrage polygones NDVI dans Qgis
+     Commencez par calculer une image de NDVI à l'aide de l'image
+     initiale (l'ordre des bandes est Rouge, Vert, Bleu, Proche
+     Infra-Rouge).
+
+     Utilisez ensuite l'application *ConcatenateImages* pour former
+     une image contenant les radiométries initiales ainsi que la bande
+     de NDVI. Prenez garde à l'encodage du fichier de sortie.
+
+     Utilisez l'application *LSMSVectorization* en utilisant l'image
+     ainsi créée et l'image de segmentation en entrée. Choisissez un
+     format /shapefile/ (extension shp) pour le fichier de sortie.
+
+     Ouvrez l'image initiale ainsi que le fichier vecteur ainsi créé
+     dans Qgis. Changez le style d'affichage de la couche vecteur pour
+     afficher la bordure des polygones en rouge et le corp
+     transparent. Analysez plus finement la segmentation ainsi
+     affichée.
+
+     Ouvrez la table des attributs de la données vectorielle. Que
+     constatez vous ?
+     
+**** Filtrage polygones dans Qgis
+     
+     Utilisez l'outil de sélection par une expression de la table des
+     attributs dans Qgis pour sélectionner les segments qui ne sont
+     pas des ombres, et copiez les dans une nouvelle couche vecteur.
+
+     Utilisez la calculatrice de champs de la table des attributs pour
+     créer un nouvel attribut représentant la compacité:
+     
+     \begin{center}
+     $compactness = \frac{\sqrt{area}}{perimeter}$
+     \end{center}
+
+     Utilisez l'outil de sélection par une expression de la table des
+     attributs dans Qgis pour sélectionner les petits objets compacts
+     dont la valeur moyenne du NDVI est forte (arbres ?). Copiez les
+     dans une nouvelle couche.     
 
 ** Segmentation et export vers un SIG                             :solutions:
+*** Lissage de l'image par l'algorithme MeanShift
 
+    L'étape de lissage se réalise de la manière suivante:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_MeanShiftSmoothing -in phr_orthopxs_osr_mipy_xt.tif 
+      -fout meanshift.tif 
+      -foutpos meanshift_pos.tif 
+      -ranger 25 
+      -spatialr 3 
+      -maxiter 10 -modesearch 0 
+    #+END_EXAMPLE
+
+    Le paramètre /spatialr/ correspond au rayon spatial du lissage. Une
+    valeur plus élevée provoquera un lissage plus fort, mais
+    également un temps de calcul supérieur.
+
+    Le paramètre /ranger/ correspond au rayon spectral du
+    lissage, c'est à dire dans quelle mesure les pixels à l'intérieur
+    du rayon spatial et de radiométrie similaire seront moyennés. Une
+    valeur plus élevée augmentera l'effet de lissage.
+
+    L'image /foutpos/ n'a pas de sens visuellement, et sera utilisée
+    pour la suite de l'exercice.
+
+*** Segmentation
+
+    L'étape de segmentation se réalise de la manière suivante:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LSMSSegmentation -in meanshift.tif 
+                              -inpos meanshift_pos.tif 
+                              -out init_seg.tif uint32
+                              -ranger 10  
+                              -spatialr 2
+    #+END_EXAMPLE
+
+    L'image de segmentation ainsi créée est difficilement
+    inteprétable à l'oeil nu. On peut la coloriser de la manière
+    suivante:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping -in init_seg.tif 
+                          -method optimal 
+                          -out init_seg_cm.tif uint8
+    #+END_EXAMPLE
+    
+    Cet algorithme de colorisation analyse les segments adjacents
+    pour maximiser leurs contraste lors de la colorisation.
+
+    L'image segmentée colorisée peut être analysée, et l'on constate
+    qu'il y a une grande quantité de petites régions qui ne
+    correspondent à aucun objet précis de la scène. A noter que ces
+    petites régions peuvent soit être filtrée en utilisant le
+    paramètre /minsize/ de l'application *LSMSSegmentation*, soit
+    être traité dans l'étape suivante.
+
+*** Traitement des petites régions
+
+    Le traitement des petites régions s'effectue comme suit:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LSMSSmallRegionsMerging -in meanshift.tif 
+                                     -inseg init_seg.tif 
+                                     -out final_seg.tif uint32 
+                                     -minsize 100
+    #+END_EXAMPLE
+
+    On peut ensuite coloriser à nouveau le résultat de la manière
+    suivante:
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping -in final_seg.tif 
+                          -method optimal 
+                          -out final_seg_cm.tif uint8
+    #+END_EXAMPLE
+    
+    En comparant les deux segmentations, on peut constater que les
+    régions de taille inférieur au paramètre spécifié ont été
+    fusionnée avec les régions voisines les plus pertinentes.
+
+*** Vectorization
+    
+    Pour commencer, on calcule l'indice NDVI pour l'image initiale:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_RadiometricIndices -in phr_orthopxs_osr_mipy_xt.tif 
+                                -out phr_ndvi.tif 
+                                -list Vegetation:NDVI 
+                                -channels.blue 3 
+                                -channels.red 1 
+                                -channels.green 2 
+                                -channels.nir 4 
+    #+END_EXAMPLE
+    
+    Ensuite, on peut concaténer l'image initiale avec l'image de
+    NDVI:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il phr_orthopxs_osr_mipy_xt.tif phr_ndvi.tif 
+                               -out phr_radio_ndvi.tif 
+    #+END_EXAMPLE
+
+    Enfin, on réaliser la vectorisation:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LSMSVectorization -in phr_radio_ndvi.tif 
+                               -inseg final_seg.tif -out segmentation.shp
+    #+END_EXAMPLE
+    
+    En ouvrant la table des attributs dans Qgis, on constate qu'on
+    peut accéder pour chaque polygone à la moyenne et à la variance
+    de chaque bande de l'image (incluant le NDVI).
+
+*** Filtrage polygones dans Qgis
+    
+    Pour sélectionner tout les segments qui ne sont pas des ombres à
+    l'aide de l'outil de sélection par expression, on peut utiliser
+    l'expression suivante:
+
+    #+BEGIN_EXAMPLE
+    meanB0 > 140 or meanB1 > 140 or meanB2 > 140 or meanB3 > 140
+    #+END_EXAMPLE
+
+    Ensuite, en utilisant la calculatrice de champ, on peut créer un
+    nouveau champ (virtuel) en réel, appelé /compac/ en utilisant la
+    formule suivante:
+
+    #+BEGIN_EXAMPLE
+    sqrt(area($geometry)/perimeter($geometry)
+    #+END_EXAMPLE
+
+    Enfin, pour sélectionner les petits objets compacts dont la
+    valeur moyenne de NDVI est forte, on peut utiliser l'expression
+    suivante dans l'outil de sélection par expression:
+
+    #+BEGIN_EXAMPLE
+    compac > 0.1 and nbPixels < 500 and meanB4 > 0.2
+    #+END_EXAMPLE
