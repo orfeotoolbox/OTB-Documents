@@ -1,35 +1,47 @@
 ** Introduction au traitements des images RSO :slides:
-*** Introduction
-**** RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
-**** Impulsions hyperfréquences et enregistrement des échos
-**** Quasi-transparence de l'atmosphère
+*** Objectifs et Données
+**** Objectifs
+     - Savoir manipuler des images
+     - Savoir réaliser une calibration radiométrique
+     - Savoir utiliser le filtrage du speckle
+     - Savoir réaliser une analyse polarimétrique simple
+     - Savoir réaliser une extraction de primitives simple
+
+**** Données
+     Les données pour cet exercice se trouvent dans le répertoire /sar/.
+
+*** Déroulement
+    1. Introduction à l'imagerie RSO
+    2. Calibration radiométrique
+    3. Filtrage du speckle
+    4. Polarimétrie
+    5. Extraction d'information
+
+*** Introduction SAR
+    - RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
+    - Impulsions hyperfréquences et enregistrement des échos
+    - Quasi-transparence de l'atmosphère
 *** Principe de fonctionnement
-**** 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
-**** Echo recueilli par la meme antenne
-**** Relfecteur sont localisés en fonction de leur eloignement (distance)
-**** Répétition des échos réalise la deuxième dimension (azimuth)
-**** signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
+    - 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
+    - Echo recueilli par la meme antenne
+    - Relfecteur sont localisés en fonction de leur eloignement (distance)
+    - Répétition des échos réalise la deuxième dimension (azimuth)
+    - signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
 *** Radiométrie
-**** comportement de la réflexion dépend des caractéristiques de la surface
-**** notamment de sa rugosité
-**** Notion de polarimétrie
-*** Objectifs de l'exercice
-**** Exercice est une simple introduction à l'imagerie SAR
-**** Pas aborder la complémentarité Optique/SAR (vaste sujet)
-**** Pour aller plus loin
-***** S1 ToolBox (SNAP)
-***** Polarimétrie: ESA PolSARPro
+    - comportement de la réflexion dépend des caractéristiques de la surface
+    - notamment de sa rugosité
+    - Notion de polarimétrie
+
+*** Pour aller plus loin
+    - S1 ToolBox (SNAP)
+    - Polarimétrie: ESA PolSARPro
+
+
 ** Introduction au traitements des images RSO :guide:
 *** Description                                                        :desc:
 **** Résumé
      Cet exercice constitue une introduction au traitement et à l'analyse des
-     images RSO (radar à synthèse d'ouverture) en utilisant l'Orfeo ToolBox:
-
-     - Manipulation des images
-     - Calibration radiométrique  
-     - Filtrage du speckle avec différentes méthodes
-     - Polarimétrie
-     - Extraction de primitives
+     images RSO (radar à synthèse d'ouverture) en utilisant l'Orfeo ToolBox.
 
 **** Pré-requis
 
@@ -39,6 +51,12 @@
        exercice correspondant)
 
 **** Objectifs
+     Les objectifs de cet exercice sont les suivants:
+     - Savoir manipuler des images
+     - Savoir réaliser une calibration radiométrique
+     - Savoir utiliser le filtrage du speckle
+     - Savoir réaliser une analyse polarimétrique simple
+     - Savoir réaliser une extraction de primitives simple
 
 *** Étapes                                                            :steps:
 **** Introduction à l'imagerie RSO
@@ -53,7 +71,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 2. A quoi correspondent ces bandes? 
 3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et ~s1_hv.tif~.
 
-**** Calibration SAR
+**** Calibration radiométrique
      Les valeurs des pixels dans les produits SAR comme Sentinel-1 sont sans
      unité (radar reflectivity or radar brightness).
 
@@ -79,7 +97,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         l'option de fichier étendu "&geom=" en entrée. 
      3. Convertir l'image gamma zero en dB.
 
-**** Réduction du speckle
+**** Filtrage du speckle
      Les images SAR sont fortement affectées par le chatoiement (speckle) qui constitue un
      type particulier de bruit présent dans tous les systèmes d'acquisition cohérent
      (sonar, laser, etc.). Ce bruit est très fort et il a un effet multiplicatif.
@@ -132,7 +150,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         -define quantum:format=floating-point 
         -flop output.tif
         #+END_EXAMPLE
-**** Extraction d'information dans les images SAR
+**** Extraction d'information
 
      Pour aller plus loin on pourra ensuite explorer les primitives et les
      algorithmes disponibles pour l'extraction de données dans les images SAR.
@@ -163,7 +181,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
                       -exp "im1b1*im1b1+im1b2*im1b2"
    #+END_EXAMPLE
 
-**** Calibration SAR
+**** Calibration radiométrique
      1. *SarCalibration*
      2. Pour Sentinel-1 les coefficients de calibration sont lus automatiquement
         dans les métadonnées du produit:
@@ -183,7 +201,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
                           -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
 
-**** Réduction du speckle
+**** Filtrage du speckle
 
      1. Les méthodes disponibles sont: lee, frost, kuan et gamma map. Quelque
         soit la méthode utilisée on note une amélioration majeure de la qualité

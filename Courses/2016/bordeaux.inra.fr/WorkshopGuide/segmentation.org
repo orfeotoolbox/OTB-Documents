@@ -1,5 +1,26 @@
 ** Segmentation et export vers un SIG                               :slides:
-*** Slide
+*** Objectifs et Données
+**** Objectifs
+     - Connaître les étapes pour réaliser une segmentation
+     - Savoir optimiser les paramètres de la segmentation
+     - Savoir exporter la segmentation vers un logiciel SIG
+
+**** Données
+     Les données pour cet exercice se trouvent dans le répertoire /segmentation/.
+
+*** Déroulement
+    Le déroulement du TP est le suivant:
+    1. Lissage de l'image par l'algorithme MeanShift
+    2. Segmentation
+    3. Traitement des petites régions
+    4. Vectorisation
+    5. Filtrage des polygones dans Qgis
+
+*** Introduction à l'algorithme MeanShift
+
+    TODO:
+
+
 ** Segmentation et export vers un SIG                               :guide:
 *** Description                                                        :desc:
 **** Résumé
@@ -107,7 +128,7 @@
      *ColorMapping* afin de créer une carte contrastée des régions
      segmentées, et comparer avec la carte de segmentation précédente.
      
-**** Vectorization
+**** Vectorisation
      
      La dernière étape consiste à exporter les polygones ainsi créé
      vers un fichier vectoriel. L'application *LSMSVectorization*
@@ -136,7 +157,7 @@
      Ouvrez la table des attributs de la données vectorielle. Que
      constatez vous ?
      
-**** Filtrage polygones dans Qgis
+**** Filtrage des polygones dans Qgis
      
      Utilisez l'outil de sélection par une expression de la table des
      attributs dans Qgis pour sélectionner les segments qui ne sont

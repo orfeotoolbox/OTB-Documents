@@ -1,5 +1,17 @@
 ** Réaliser une classification supervisée                            :slides:
-*** Slide
+*** Objectifs et Données
+**** Objectifs
+     TODO:
+**** Données
+     TODO:
+*** Déroulement
+
+*** Présentation des données
+    TODO:
+
+*** Classification supervisée
+    TODO:
+
 ** Réaliser une classification supervisée                           :guide:
 *** Description                                                        :desc:
 **** Résumé

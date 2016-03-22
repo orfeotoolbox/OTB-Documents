@@ -1,7 +1,7 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques
 #+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES)
 #+DATE: 2016
-#+OPTIONS: H:4
+#+OPTIONS: H:5
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
 #+LaTeX_HEADER: \usepackage{a4wide}

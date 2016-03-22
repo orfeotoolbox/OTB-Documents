@@ -1,33 +1,48 @@
 ** Pré-traitements de l'imagerie THR optique                         :slides:
-*** Introduction
-    - Principe des corrections radiométriques et géométriques des images
-    - Utilisation des OTB-Applications
-*** Objectifs
-    - Comprendre les principe de la calibration optique:
-      - Pouvoir inter-comparer les valeurs entre images pour le meme capteur
-        (multi-temp) et multi-capteurs
-      - Conversion en
-    - Fusion pan-sharpening
-      - Produit Pan (résolu) et XS (multi-spectral)
-      - Différentes techniques de fusion
-      - Voir les spécificités de la fusion en fonction du capteur (/mode Pléiades/)
-      - Visualisation des images et les effets par la fusion (objets mobiles,
-        indices radiométriques)
-    - Orthorectification
-      - Spatialiser l'image
-      - Associer une coordonnées géographique aux pixels
-      - Connaitre les pré-requis, les biais, les approximations réalisées
+*** Objectifs et Données
+**** Objectifs
+     - Savoir réaliser une calibration optique
+     - Savoir réaliser une fusion (pan-sharpening)
+     - Savoir réaliser une ortho-rectification
+**** Données
+     Les données se trouvent dans les répertoires /PHR/ et /SRTM/
+*** Déroulement
+    Le déroulement du TP est le suivant:
+    1. Corrections atmostphériques
+    2. Fusion P+XS
+    3. Ortho-rectification
+*** Calibration radiométrique
+    TODO:
+*** Fusion (pan-sharpening)
+    TODO:
+*** Ortho-rectification
+    TODO:
+
 ** Pré-traitements de l'imagerie THR optique                          :guide:
 *** Description                                                        :desc:
-**** Résumé
+**** [#B] Résumé
      Cet exercice présente les corrections radiométriques et géométriques
 des images à l'aide d'*OTB applications*.
+
 **** Pré-requis
      - Connaissances de base en traitement des images de télédétection.
      - Notions d'utilisation d'applications en ligne de commande.
        
 **** Objectifs
-
+***** Savoir réaliser une calibration optique
+      - Pouvoir inter-comparer les valeurs entre images pour le meme capteur
+         (multi-temp) et multi-capteurs
+       - Conversion en réflectance TOA (Top of Atmosphere) et TOC (Top of Canopy)
+***** Savoir réaliser une fusion (pan-sharpening)
+      - Produit Pan (résolu) et XS (multi-spectral)
+      - Tester différentes techniques de fusion
+      - Voir les spécificités de la fusion en fonction du capteur (/mode Pléiades/)
+      - Visualisation des images et les effets par la fusion (objets mobiles, indices radiométriques)
+***** Savoir réaliser une orthorectification
+      - Spatialiser l'image
+      - Associer une coordonnées géographique aux pixels
+      - Connaitre les pré-requis, les biais, les approximations réalisées
+       
 *** Étapes                                                            :steps:
 Dans cette partie de l'exercice, vous utiliserez les images
 ~phr_xs_osr_mipy.tif~ et ~phr_pan_osr_mipy.tif~. Ce sont des extraits Pan et XS

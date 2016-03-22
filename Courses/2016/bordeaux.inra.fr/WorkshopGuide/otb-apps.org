@@ -1,4 +1,21 @@
 ** Le mécanisme des applications Orfeo ToolBox                       :slides:
+*** Objectifs et données
+**** Objectifs
+     - Savoir rechercher une application dans la liste des
+       applications disponibles
+     - Savoir paramétrer une application
+     - Savoir trouver la documentation d'un application
+     - Savoir utiliser plusieurs applications classiques
+
+**** Données
+     
+     Les données se trouvent dans le répertoire /Stegano/
+
+*** Déroulement
+    Le TP consiste à décoder successivement 6 messages encodés par
+    stéganographie dans les images, en utilisant les applications OTB.
+
+
 *** Rapide intro aux OTB-Applications
     - Orfeo ToolBox est une *bibliothèque* offrant des fonctionnalités de télédétection
     - Souvent nécessaire de combinant plusieurs fonctions (filtres) OTB dans une
