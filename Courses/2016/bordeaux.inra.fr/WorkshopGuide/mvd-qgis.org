@@ -1,7 +1,7 @@
 ** Utiliser Monteverdi et QGis                                       :slides:
 *** Introduction
     - Plusieurs logiciels qui partagent des fonctionnalités communes
-    - Mais des philo parfois différentes (Monteverdi orienté et centré "Image", QGIS
+    - Mais des philosophies parfois différentes (Monteverdi orienté et centré "Image", QGIS
       plateforme SIG)
     - Plusieurs façon de faire la meme opération dans ces logiciels
 *** Monteverdi
@@ -47,15 +47,17 @@
     #+ATTR_LaTeX: width=0.5\textwidth center  
     [[file:../../../../Slides/OTB-General/images/otb_qgis.png]]
     #+end_center
-*** Données sur zone 'Sud-Ouest'
-    - LandSat-8: N dates concaténées, dénuagés (gap-filling) avec des données
+*** Données
+    - LandSat-8: plusieurs dates concaténées, dénuagés (gap-filling) avec des données
       terrains de référence au format ESRI Shapefile (pour le TP classification)
-    - Sentinel-1: Produit EW GRD
     - Pléiades: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur le site
       OSR MiPy (Novembre 2013)
-*** Données sur zone 'Sud-Ouest'
-    - TODO ajouter une capture des emprises des images (quel outil)?
-    - Ajouter capture produits PHR et Sentinel
+    - Sentinel-1: Produit SLC (complexe) SM (strip Map, les plus résolues),
+      bi-polarisation (HH et HV) sur le sud du lac Constance (Allemagne)
+*** Accès aux données
+    - LandSat-8: produit de niveau 2A disponible sur le site THEIA (https://www.theia-land.fr/)
+    - Pléiades: accès privilégié UIA (institutionnels français): http://professionnels.ign.fr/images-pleiades
+    - Sentinel-1: Données gratuites disponible sur ESA Hub(https://scihub.copernicus.eu/) ou sur le site CNES PEPS(https://peps.cnes.fr)
 *** Principe
     - Découverte du jeu de données et des logiciels
     - Monteverdi:
@@ -107,6 +109,6 @@
 Repérer la liste des classes.
 
 **** Visualiser une pile de données dans Qgis 
-
+     
 ** Utiliser *Monteverdi* et *Qgis*                                :solutions:
 
