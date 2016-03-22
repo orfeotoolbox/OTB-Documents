@@ -1,4 +1,22 @@
 ** Les mécanismes internes de l'Orfeo ToolBox                        :slides:
+*** Objectifs et données
+**** Objectifs
+     - Comprendre les mécanismes transparents de l'Orfeo ToolBox
+     - Savoir influencer la manière dont l'Orfeo ToolBox exécute un traitement
+     - Savoir ou trouver des informations complémentaires
+
+**** Données
+     
+     Les données se trouvent dans le répertoire /Internals/
+
+*** Etapes
+    Le déroulement du TP est le suivant:
+    1. Encodage des images
+    2. Fichiers geom
+    3. Noms de fichiers étendus
+    4. Streaming
+    5. Multi-threading
+
 *** Encodage des images
 *** Fichiers geom
 *** Noms de fichiers étendus
@@ -61,8 +79,9 @@
        |--------+----------------------------------------+------------------------+------------------|
 
      Utilisez *gdalinfo* pour connaître l'encodage des pixels de
-     l'image *image1.tif*. Analysez les valeurs des pixels de l'image
-     dans *monteverdi*. Que pouvez vous conclure ?
+     l'image *image1.tif* (vous pouvez également y accéder dans
+     Qgis). Analysez les valeurs des pixels de l'image dans
+     *monteverdi*. Que pouvez vous conclure ?
 
      Utilisez l'application *Convert* pour convertir l'image
      *image1.tif* dans un encodage entier sur 16 bits. Comparez la
