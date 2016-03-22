@@ -48,7 +48,19 @@
 
 
 * Introduction :slides:
-*** Bienvenue
+*** Objectifs de la formation
+**** Objectifs
+Présenter l'OTB et mettre en oeuvre les outils disponibles dans les OTB applications pour l'exploitation, la manipulation des images de télédection 
+
+**** Capacités acquises en fin de formation
+
+Mise en œuvre de chaine de traitements d'images en utilisant les applications OTB, incluant entre autre:
+- Extraction de primitives
+- Calibration
+- Classification
+- Segmentation
+- Traitements basiques radar
+
 *** Planning de la formation: jour 1
 |-------+---------------+-------------------------|
 | 31.03 | 09:00 - 10:30 | Introduction            |
@@ -80,7 +92,17 @@
 *** Contenu du kit de formation
 
 
-  
+**** Documents (forme électronique)
+     - Documentation de l'Orfe ToolBox (Software Guide, Cookbook)
+     - Guide de TP
+     - Planches (cette présentation)
+     - Solutions (distribuées à la fin)
+**** Données (spécifique à chaque TP)
+     LandSat8, Pléiades, Sentinel1, SRTM, Ad hoc ...
+**** Logiciels
+     - Orfeo ToolBox + Monteverdi
+     - Qgis
+     - Shell
 *** Informations pratiques
 **** TODO: Repas
 **** TODO: Code Wifi
@@ -95,6 +117,5 @@
 #+INCLUDE: "segmentation.org" :minlevel 2
 * TP3: Classification supervisée pour les séries multi-t
 #+INCLUDE: "classification.org" :minlevel 2
-#+INCLUDE: "post-classif.org" :minlevel 2 
 * TP4: Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar.org" :minlevel 2

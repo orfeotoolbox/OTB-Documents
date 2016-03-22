@@ -9,7 +9,7 @@
      
      Les données se trouvent dans le répertoire /Internals/
 
-*** Etapes
+*** Déroulement
     Le déroulement du TP est le suivant:
     1. Encodage des images
     2. Fichiers geom
@@ -18,10 +18,62 @@
     5. Multi-threading
 
 *** Encodage des images
+
+|--------+----------------------------------------+------------------|
+| *type* | *plage de valeurs*                     | *nombre de bits* |
+|--------+----------------------------------------+------------------|
+| uint8  | [0,255]                                | 8 bits           |
+| int16  | [−32 767, +32 767 ]                    | 16 bits          |
+| uint16 | [0, 65 535]                            | 16 bits          |
+| int32  | [−2 147 483 647, +2 147 483 647]       | 32 bits          |
+| uint32 | [0, 4 294 967 294]                     | 32 bits          |
+| float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | 32 bits          |
+| double | [ -10^308, 10^308 ]                    | 64 bits          |
+|--------+----------------------------------------+------------------|
+
 *** Fichiers geom
+
+    #+BEGIN_EXAMPLE
+    [...]
+    samp_num_coeff_15:  -8.69402623737171e-06
+    samp_num_coeff_16:  -2.52010136133467e-09
+    samp_num_coeff_17:  -5.70277370040739e-07
+    samp_num_coeff_18:  -2.67844954240191e-07
+    samp_num_coeff_19:  -7.80920276666093e-09
+    samp_off:  19999
+    samp_scale:  19999.5
+    sensor:  PHR 1A
+    [...]
+    support_data.image_date:  2012-11-15T11:05:04.4Z
+    support_data.image_id:  602631101-001
+    support_data.image_size:  38187 38890
+    support_data.instrument:  PHR
+    support_data.instrument_index:  1A
+    support_data.line_period:  0.0735
+    [...]
+    #+END_EXAMPLE
+
 *** Noms de fichiers étendus
-*** Streaming
-*** Multi-threading
+
+    Syntaxe comprise par tout code OTB lisant ou écrivant des images
+
+    #+BEGIN_EXAMPLE
+    "myImage.tif?&geom=mygeom.geom"
+    "myImage.tif?&gdal:co:TILED=yes&streaming:type=none"
+    #+END_EXAMPLE
+
+*** Streaming et multi-threading (1/2)
+
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
+    [[file:Images/StreamingImageDiagram.png]]
+
+
+*** Streaming et multi-threading (2/2)
+
+    #+ATTR_LATEX: :float t :width 0.6\textwidth
+    [[file:Images/ProcessObjectDataObjectInteractionUML.png]]
+    
+    
 ** Les mécanismes internes de l'*Orfeo ToolBox*                     :guide:
 *** Description                                                        :desc:
 **** Résumé
