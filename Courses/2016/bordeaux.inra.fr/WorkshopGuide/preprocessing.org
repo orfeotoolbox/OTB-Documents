@@ -2,6 +2,21 @@
 *** Introduction
     - Principe des corrections radiométriques et géométriques des images
     - Utilisation des OTB-Applications
+*** Objectifs
+    - Comprendre les principe de la calibration optique:
+      - Pouvoir inter-comparer les valeurs entre images pour le meme capteur
+        (multi-temp) et multi-capteurs
+      - Conversion en
+    - Fusion pan-sharpening
+      - Produit Pan (résolu) et XS (multi-spectral)
+      - Différentes techniques de fusion
+      - Voir les spécificités de la fusion en fonction du capteur (/mode Pléiades/)
+      - Visualisation des images et les effets par la fusion (objets mobiles,
+        indices radiométriques)
+    - Orthorectification
+      - Spatialiser l'image
+      - Associer une coordonnées géographique aux pixels
+      - Connaitre les pré-requis, les biais, les approximations réalisées
 ** Pré-traitements de l'imagerie THR optique                          :guide:
 *** Description                                                        :desc:
 **** Résumé
