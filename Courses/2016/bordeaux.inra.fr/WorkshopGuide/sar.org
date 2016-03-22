@@ -29,15 +29,14 @@
     - signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
 *** Radiométrie
     - comportement de la réflexion dépend des caractéristiques de la surface
-    - notamment de sa rugosité
+    - notamment de sa rugosité, de l'humidité des sols
     - Notion de polarimétrie
 
 *** Pour aller plus loin
     - S1 ToolBox (SNAP)
     - Polarimétrie: ESA PolSARPro
 
-
-** Introduction au traitements des images RSO :guide:
+** Introduction au traitements des images RSO                         :guide:
 *** Description                                                        :desc:
 **** Résumé
      Cet exercice constitue une introduction au traitement et à l'analyse des
