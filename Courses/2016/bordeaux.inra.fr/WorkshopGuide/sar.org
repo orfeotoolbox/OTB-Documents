@@ -1,24 +1,24 @@
 ** Introduction au traitements des images RSO :slides:
 *** Introduction
-**** RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
-**** Impulsions hyperfréquences et enregistrement des échos
-**** Quasi-transparence de l'atmosphère
+    - RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
+    - Impulsions hyperfréquences et enregistrement des échos
+    - Quasi-transparence de l'atmosphère
 *** Principe de fonctionnement
-**** 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
-**** Echo recueilli par la meme antenne
-**** Relfecteur sont localisés en fonction de leur eloignement (distance)
-**** Répétition des échos réalise la deuxième dimension (azimuth)
-**** signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
+    - 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
+    - Echo recueilli par la meme antenne
+    - Relfecteur sont localisés en fonction de leur eloignement (distance)
+    - Répétition des échos réalise la deuxième dimension (azimuth)
+    - signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
 *** Radiométrie
-**** comportement de la réflexion dépend des caractéristiques de la surface
-**** notamment de sa rugosité
-**** Notion de polarimétrie
+    - comportement de la réflexion dépend des caractéristiques de la surface
+    - Notamment de sa rugosité, de l'humidité des sols
+    - Notion de polarimétrie
 *** Objectifs de l'exercice
-**** Exercice est une simple introduction à l'imagerie SAR
-**** Pas aborder la complémentarité Optique/SAR (vaste sujet)
-**** Pour aller plus loin
-***** S1 ToolBox (SNAP)
-***** Polarimétrie: ESA PolSARPro
+    - Exercice est une simple introduction à l'imagerie SAR
+    - Pas aborder la complémentarité Optique/SAR (vaste sujet)
+    - Pour aller plus loin:
+      - S1 ToolBox (SNAP)
+      - Polarimétrie: ESA PolSARPro
 ** Introduction au traitements des images RSO :guide:
 *** Description                                                        :desc:
 **** Résumé
