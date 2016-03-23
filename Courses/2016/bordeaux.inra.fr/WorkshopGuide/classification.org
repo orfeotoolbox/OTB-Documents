@@ -216,17 +216,13 @@
 
   Puis effectuez les même étapes que précédement: ComputeImageStatistics,
   TrainImageClassifier, ImageClassifier, ColorMapping, ComputeConfusionMatrix.
-  *Mais* utilisez plutot la méthod Random Forest pour le modèle.
+  *Mais* utilisez plutot la méthod Random Forest pour le modèle qui est plus
+  rapide.
 
   + parametres noyau et optimisation des paremetres du noyau
 
-    on passe à random forest qui est plus rapide en tratements
-    random forest plus rapide 
-
-    optimisation des parametres du noyau
-    Regler 
-
-    comparer avec 1 date: matrice de confusion, image rgb
+  Comparez ensuite les resultats avec la classification à une date en utilisant
+  la matrice de confusion et l'image RGB.
 
 **** Profil NDVI
 
