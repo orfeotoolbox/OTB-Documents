@@ -57,28 +57,35 @@
 
     Ouvrez une image dans monteverdi et régler les bandes pour un affichage en
     vrais couleurs (rouge, vert, bleu).
+
     Ouvrez les neuf images et remarquez les changements.
 
-    Les fichers (TODO LS8/training/training.shp) et (TODO
+    Les fichiers (TODO LS8/training/training.shp) et (TODO
     LS8/testing/testing.shp) contiennent des polygones qui définissent 11
-    classes sur l'ensemble de la scene. Ils sont répartis en deux ensemble:
-    apprentissage et validation.
+    classes sur l'ensemble de la scène:
 
     |------+-----------------------------|
     | Code | Nom                         |
     |------+-----------------------------|
-    |   11 | ete                         |
-    |   12 | hiver                       |
-    |   31 | foret feuilles caduques     |
-    |   32 | foret feuilles persistantes |
-    |   34 | pelouses                    |
-    |   36 | lande ligneuse              |
-    |   41 | bati                        |
-    |   51 | eau                         |
-    |  211 | prairie                     |
-    |  221 | verger                      |
-    |  222 | vigne                       |
+    |   11 | Éte                         |
+    |   12 | Hiver                       |
+    |   31 | Foret feuilles caduques     |
+    |   32 | Foret feuilles persistantes |
+    |   34 | Pelouses                    |
+    |   36 | Lande ligneuse              |
+    |   41 | Bati                        |
+    |   51 | Eau                         |
+    |  211 | Prairie                     |
+    |  221 | Verger                      |
+    |  222 | Vigne                       |
     |------+-----------------------------|
+
+    Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
+    accessible depuis clic-droit sur la couche -> ouvrir la table des attributs.
+    Chaque label est visible et la liste est filtrable par expression SQL.
+
+    Les polygones sont répartis en deux ensembles: apprentissage (training) et
+    validation (testing).
 
 **** Classification d'une date
 
@@ -100,10 +107,11 @@
 
     Les variables doivent êtres comparables entre chaque image. La première
     étape est le calcul de statistiques pour que les données puissent être
-    normalisés: moyenne null et écart-type de 1.
+    normalisés: moyenne nulle et écart-type de 1.
     
-    Choisissez une image à classifier, puis utilisez l'application
-    ComputeImageStatistics:
+    Choisissez une image à classifier, puis, dans le répertoire classif1
+    utilisez l'application ComputeImageStatistics pour produire le fichier de
+    statistiques:
 
     otbcli_ComputeImagesStatistics -il image.tif
                                    -out images_statistics.xml 
@@ -112,47 +120,56 @@
 
     L'application TrainImageClassifier permet d'apprendre un modèle pour
     différentes méthodes de classifications. Regardez la documentation de cette
-    application et créez un modèle pour la méthode Random Forest. Les paramètres
+    application et créez un modèle pour la méthode "libsvm". Les paramètres
     à régler sont:
 
     - io.il # l'image d'entrée
     - io.vd # le fichier vectoriel d'apprentissage (training.shp)
     - io.imstat # le fichier xml de statistique calculé précédement
-    - classifier # la méthode, ici utilisez "rf"
+    - classifier # la méthode, ici utilisez "libsvm"
     - io.out # le nom du fichier modèle en sortie, par exemple "model.rf"
 
     D'autres paramètres sont important aussi:
     - vfn
     - vtr
 
-
-    Regler le 
+***** Utilisation du modèle
     
-    Classification multidate
-      Principe
+***** Validation
+
+***** Visualisation
+
+    identifiez les problemes
+
+**** Classification multidate
+
+    principe
       choix des dates à utiliser
 
-    Profil NDVI
+    on passe à random forest qui est plus rapide en tratements
+    random forest plus rapide 
+    Regler le 
+
+**** Profil NDVI
 
     commandes (ou livré ?)
     visualiser dans QGIS
 
-    Regularisation par vote majoritaire
+**** Regularisation par vote majoritaire
 
     principe
     commande
 
-    Fusion de classes
+**** Fusion de classes
 
     principe
     comment décider quelle classe fusionner
     commandes
 
-    Vectorisation
+**** Vectorisation
 
     principe
     commande
-*** 
-*** 
+
 ** Réaliser une classification supervisée                         :solutions:
 
