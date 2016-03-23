@@ -130,25 +130,103 @@
     - io.out # le nom du fichier modèle en sortie, par exemple "model.rf"
 
     D'autres paramètres sont important aussi:
-    - vfn
-    - vtr
+    - sample.vfn CODE # indique que la colonne SQL des labels porte le nom CODE
+    - sample.vtr 0 # Ratio de l'emsemble d'apprentissage sur l'ensemble de
+      validation. Zero ici car nous utilisons notre propre découpe.
+
+    La commande à utiliser est donc de ce type:
+
+        otbcli_TrainImagesClassifier -io.il \
+        ../../Data/LS8/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+        -io.vd ../../Data/LS8/training/training.shp \
+        -sample.vfn CODE \
+        -sample.vtr 0 \
+        -classifier libsvm \
+        -io.imstat images_statistics.xml \
+        -io.out model.svm
 
 ***** Utilisation du modèle
-    
-***** Validation
+
+   Une fois le modèle de classification appris, il peut être utilisé pour
+   classifier tout les pixels de l'image.
+
+   Utilisez l'application ImageClassifier, en specifiant le modèle créé dans
+   l'étape précédente.
 
 ***** Visualisation
 
-    identifiez les problemes
+   La sortie de l'étape précédente est une image .tif qui associe à chaque pixel
+   une classe. Pour visualiser cette image, l'application ColorMapping permet
+   d'associer à chaque label une couleur RGB et de générer une image de
+   visualisation.
+
+   Utilisez l'application ColorMapping avec la table de couleur fournie
+   (color_map.txt):
+
+    otbcli_ColorMapping -in                labeled_image.tif
+                        -method            custom
+                        -method.custom.lut color_map.txt
+                        -out               RGB_color_image.tif
+***** Validation
+
+  Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
+  des polygones. les 70% restant sont dans le fichier testing/testing.shp et
+  servent à evaluer les performances du modèle appris en calculant la matrice de
+  confusion.
+
+  Utilisez l'application ComputeConfusionMatrix avec le jeu de donnée de test
+  pour produire la matrice de confusion du modèle appris:
+
+    otbcli_ComputeConfusionMatrix \
+    -in labeled_image.tif \
+    -ref vector \
+    -ref.vector.in ../../Data/LS8/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix.csv
+
+  Le paramètre ref.vector.field CODE est nécéssaire. Il indique le nom du
+  champ contenant le numero de label.
+
+  Consultez la matrice de confusion et identifiez les classes bien différenciés.
+
+  A quel classe appartiennent le plus souvent les pixels mal classifiés ?
+  Pourquoi ?
+
+  Vous pouvez utiliser le squelette csv (template_confusion_matrix.csv)  pour
+  identifier les labels facilement.
 
 **** Classification multidate
 
-    principe
-      choix des dates à utiliser
+  Le principe de la classification multidate est d'utiliser pour chaque pixel,
+  toute les dates disponibles comme des bandes spectrales supplémentaire. Avec
+  les données LANDSAT 8, il s'agit donc d'utiliser 63 bandes par pixel.
+  Les dates ont été choisies de façon à être réparties temporellement sur une
+  année. Cela permet d'intégrer les variation saisonales qui apporte beaucoup
+  d'information pour la discrimination de certaines classes.
+
+  Avant tout, créez un repertoire "classif9" pour cette partie.
+
+  Les étapes sont les mêmes que précédement, mais il faut d'abord constituer une
+  image de 63 bandes en concatenant les 9 images.
+
+  Pour cela, utilisez l'application ConcatenateImages.
+
+  Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
+  63 bandes sur 16 bits avec gdalinfo.
+
+  Puis effectuez les même étapes que précédement: ComputeImageStatistics,
+  TrainImageClassifier, ImageClassifier, ColorMapping, ComputeConfusionMatrix.
+  *Mais* utilisez plutot la méthod Random Forest pour le modèle.
+
+  + parametres noyau et optimisation des paremetres du noyau
 
     on passe à random forest qui est plus rapide en tratements
     random forest plus rapide 
-    Regler le 
+
+    optimisation des parametres du noyau
+    Regler 
+
+    comparer avec 1 date: matrice de confusion, image rgb
 
 **** Profil NDVI
 
