@@ -1,25 +1,62 @@
 ** Réaliser une classification supervisée                            :slides:
 *** Objectifs et Données
 **** Objectifs
-     TODO:
+      Les objectifs sont les suivants:
+     - Connaître les différentes applications consistuant la procédure
+       de classification supervisée
+     - Utiliser différents algorithmes pour l'apprentissage
+     - Savoir mesurer les performances de la classification
+     - Connaître les post-traitements applicables à une classification
 **** Données
-     TODO:
+     Les données sont disponibles dans le répertoire /LS8/ (TODO: mettre à jour)
 *** Déroulement
-
+    les étapes de l'exercice sont les suivantes:
+    1. Introduction aux données landsat8
+    2. Classification mono-date
+    3. Classification multi-date
+    4. Classification avec profil de NDVI
+    5. Post-traitements de la classification
+    
 *** Présentation des données
     TODO:
 
 *** Classification supervisée
     TODO:
 
+*** Algorithme SVM
+    TODO:
+
+*** Algorithme RF
+    TODO:
+
+*** Matrice de confusion
+    TODO:
+
+
 ** Réaliser une classification supervisée                           :guide:
 *** Description                                                        :desc:
 **** Résumé
 
-**** Pré-requis
+     Cet exercice permet de se familiariser avec les applications de
+     classification supervisée pixellique de l'Orfeo ToolBox, en
+     utilisant une série multi-temporelle Landsat8 et un vrai jeu de
+     données de référence pour la supervision.
 
+**** Pré-requis
+     
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Données téléchargées
+     - Connaisance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
+     - Notions de classification supervisée
      
 **** Objectifs
+
+     Les objectifs sont les suivants:
+     - Connaître les différentes applications consistuant la procédure
+       de classification supervisée
+     - Utiliser différents algorithmes pour l'apprentissage
+     - Savoir mesurer les performances de la classification
+     - Connaître les post-traitements applicables à une classification
 
 *** Étapes                                                            :steps:
 
@@ -89,19 +126,20 @@
 
 **** Classification d'une date
 
-    Typiquement les étapes d'une procedure de classifiation sont:
+    Nous allons commencer par réaliser sur une seule date toutes les
+    étapes qui constituent la procédure de classification supervisée:
 
        1. Calcul des statistiques
        2. Apprentissage du modèle
        3. Utilisation du modèle (classification)
-       4. Validation
-       5. Visualisation
+       4. Rendu
+       5. Validation
 
     Dans la suite du TP, vous réalisez d'autres classifications sur d'autres
     images. Un conseil est donc de travailler dans un répertoire par sous
-    partie, par exemple "classif1".
+    partie, par exemple /classif1/.
 
-    Creez un répertoire classif1.
+    Créez un répertoire /classif1/.
 
 ***** Calcul des statistiques
 
@@ -110,63 +148,45 @@
     normalisés: moyenne nulle et écart-type de 1.
     
     Choisissez une image à classifier, puis, dans le répertoire classif1
-    utilisez l'application ComputeImageStatistics pour produire le fichier de
-    statistiques:
-
-    otbcli_ComputeImagesStatistics -il image.tif
-                                   -out images_statistics.xml 
+    utilisez l'application *ComputeImageStatistics* pour produire le fichier de
+    statistiques.
 
 ***** Apprentissage du modèle
 
-    L'application TrainImageClassifier permet d'apprendre un modèle pour
+    L'application *TrainImageClassifier* permet d'apprendre un modèle pour
     différentes méthodes de classifications. Regardez la documentation de cette
-    application et créez un modèle pour la méthode "libsvm". Les paramètres
+    application et créez un modèle pour la méthode /libsvm/. Les paramètres
     à régler sont:
 
-    - io.il # l'image d'entrée
-    - io.vd # le fichier vectoriel d'apprentissage (training.shp)
-    - io.imstat # le fichier xml de statistique calculé précédement
-    - classifier # la méthode, ici utilisez "libsvm"
-    - io.out # le nom du fichier modèle en sortie, par exemple "model.rf"
+    - io.il :: l'image d'entrée
+    - io.vd :: le fichier vectoriel d'apprentissage (training.shp)
+    - io.imstat :: le fichier xml de statistique calculé précédement
+    - classifier :: la méthode, ici utilisez /libsvm/
+    - io.out :: le nom du fichier modèle en sortie, par exemple /model.rf/
 
     D'autres paramètres sont important aussi:
-    - sample.vfn CODE # indique que la colonne SQL des labels porte le nom CODE
-    - sample.vtr 0 # Ratio de l'emsemble d'apprentissage sur l'ensemble de
+    - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
+    - sample.vtr 0 :: Ratio de l'emsemble d'apprentissage sur l'ensemble de
       validation. Zero ici car nous utilisons notre propre découpe.
-
-    La commande à utiliser est donc de ce type:
-
-        otbcli_TrainImagesClassifier -io.il \
-        ../../Data/LS8/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-        -io.vd ../../Data/LS8/training/training.shp \
-        -sample.vfn CODE \
-        -sample.vtr 0 \
-        -classifier libsvm \
-        -io.imstat images_statistics.xml \
-        -io.out model.svm
 
 ***** Utilisation du modèle
 
    Une fois le modèle de classification appris, il peut être utilisé pour
    classifier tout les pixels de l'image.
 
-   Utilisez l'application ImageClassifier, en specifiant le modèle créé dans
+   Utilisez l'application *ImageClassifier*, en specifiant le modèle créé dans
    l'étape précédente.
 
-***** Visualisation
+***** Rendu
 
    La sortie de l'étape précédente est une image .tif qui associe à chaque pixel
-   une classe. Pour visualiser cette image, l'application ColorMapping permet
+   une classe. Pour visualiser cette image, l'application *ColorMapping* permet
    d'associer à chaque label une couleur RGB et de générer une image de
    visualisation.
 
    Utilisez l'application ColorMapping avec la table de couleur fournie
-   (color_map.txt):
+   ~color_map.txt~.
 
-    otbcli_ColorMapping -in                labeled_image.tif
-                        -method            custom
-                        -method.custom.lut color_map.txt
-                        -out               RGB_color_image.tif
 ***** Validation
 
   Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
@@ -174,17 +194,10 @@
   servent à evaluer les performances du modèle appris en calculant la matrice de
   confusion.
 
-  Utilisez l'application ComputeConfusionMatrix avec le jeu de donnée de test
-  pour produire la matrice de confusion du modèle appris:
+  Utilisez l'application *ComputeConfusionMatrix* avec le jeu de donnée de test
+  pour produire la matrice de confusion du modèle appris.
 
-    otbcli_ComputeConfusionMatrix \
-    -in labeled_image.tif \
-    -ref vector \
-    -ref.vector.in ../../Data/LS8/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix.csv
-
-  Le paramètre ref.vector.field CODE est nécéssaire. Il indique le nom du
+  Le paramètre /ref.vector.field CODE/ est nécéssaire. Il indique le nom du
   champ contenant le numero de label.
 
   Consultez la matrice de confusion et identifiez les classes bien différenciés.
@@ -192,7 +205,7 @@
   A quel classe appartiennent le plus souvent les pixels mal classifiés ?
   Pourquoi ?
 
-  Vous pouvez utiliser le squelette csv (template_confusion_matrix.csv)  pour
+  Vous pouvez utiliser le squelette csv (~template_confusion_matrix.csv~) pour
   identifier les labels facilement.
 
 **** Classification multidate
@@ -204,19 +217,21 @@
   année. Cela permet d'intégrer les variation saisonales qui apporte beaucoup
   d'information pour la discrimination de certaines classes.
 
-  Avant tout, créez un repertoire "classif9" pour cette partie.
+  Avant tout, créez un repertoire /classif9/ pour cette partie.
 
   Les étapes sont les mêmes que précédement, mais il faut d'abord constituer une
   image de 63 bandes en concatenant les 9 images.
 
-  Pour cela, utilisez l'application ConcatenateImages.
+  Pour cela, utilisez l'application *ConcatenateImages*.
 
   Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
   63 bandes sur 16 bits avec gdalinfo.
 
-  Puis effectuez les même étapes que précédement: ComputeImageStatistics,
-  TrainImageClassifier, ImageClassifier, ColorMapping, ComputeConfusionMatrix.
-  *Mais* utilisez plutot la méthod Random Forest pour le modèle qui est plus
+  Puis effectuez les même étapes que précédement: *ComputeImageStatistics*,
+  *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
+ 
+
+  *Note* utilisez cette fois la méthode Random Forest pour le modèle qui est plus
   rapide.
 
   + parametres noyau et optimisation des paremetres du noyau
@@ -224,26 +239,63 @@
   Comparez ensuite les resultats avec la classification à une date en utilisant
   la matrice de confusion et l'image RGB.
 
-**** Profil NDVI
+**** Classification du profil de NDVI
 
     commandes (ou livré ?)
     visualiser dans QGIS
 
-**** Regularisation par vote majoritaire
+**** Post-traitements de la classification
 
-    principe
-    commande
+***** Régularisation
 
-**** Fusion de classes
+      principe
+      commande
 
-    principe
-    comment décider quelle classe fusionner
-    commandes
+***** Fusion de classes
 
-**** Vectorisation
+     principe
+     comment décider quelle classe fusionner
+     commandes
+     
+***** Vectorisation
 
-    principe
-    commande
+     principe
+     commande
 
 ** Réaliser une classification supervisée                         :solutions:
+*** Classification mono-date
 
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics -il image.tif
+                                   -out images_statistics.xml 
+    #+END_EXAMPLE
+    
+
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainImagesClassifier -io.il 
+        ../../Data/LS8/LANDSAT_MultiTempIm_clip_GapF_20141026.tif 
+        -io.vd ../../Data/LS8/training/training.shp 
+        -sample.vfn CODE 
+        -sample.vtr 0 
+        -classifier libsvm 
+        -io.imstat images_statistics.xml 
+        -io.out model.svm
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping -in              labeled_image.tif
+                        -method            custom
+                        -method.custom.lut color_map.txt
+                        -out               RGB_color_image.tif
+   #+END_EXAMPLE
+
+  #+BEGIN_EXAMPLE
+  $ otbcli_ComputeConfusionMatrix \
+    -in labeled_image.tif \
+    -ref vector \
+    -ref.vector.in ../../Data/LS8/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix.csv
+  #+END_EXAMPLE
