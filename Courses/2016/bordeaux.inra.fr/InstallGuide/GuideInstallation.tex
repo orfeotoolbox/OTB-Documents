@@ -43,23 +43,24 @@ Git for Windows est très facile à installer:
 \url{http://git-scm.com/download/win}.
 
 \subsection{OTB et Monteverdi}
-Pour installer OTB 5.2.1 et Monteverdi 3.0.1, télécharger les paquets
+Pour installer OTB et Monteverdi, télécharger les paquets
 correspondants à votre architecture (32 ou 64 bits). Si votre machine est 32
 bits:
 
-\begin{verbatim}
-Monteverdi-3.0.1-win32.zip
-OTB-5.2.1-win32.zip
-\end{verbatim}
+\begin{flushleft}
+\url{https://www.orfeo-toolbox.org/packages/nightly/2016-03-21/OTB-5.3.0-win32.zip}
+
+\url{https://www.orfeo-toolbox.org/packages/nightly/2016-03-21/Monteverdi-3.1.0-win32.zip}
+\end{flushleft}
 
 Sinon si votre machine est 64 bits:
 
-\begin{verbatim}
-Monteverdi-3.0.1-win64.zip
-OTB-5.2.1-win64.zip
-\end{verbatim}
+\begin{flushleft}
+\url{https://www.orfeo-toolbox.org/packages/nightly/2016-03-21/OTB-5.3.0-win64.zip}
 
-Ces archives sont disponibles sur \url{https://www.orfeo-toolbox.org/packages/}.
+\url{https://www.orfeo-toolbox.org/packages/nightly/2016-03-21/Monteverdi-3.1.0-win64.zip}
+\end{flushleft}
+
 Extraire les deux archives zip dans votre répertoire personnel, par exemple dans:\\
 \begin{centering}
 \texttt{C:{\textbackslash}Utilisateurs{\textbackslash}Martin{\textbackslash}install{\textbackslash}}.
@@ -89,7 +90,7 @@ $\rightarrow$ "Navigateur d'OTB-Applications".
 
 \item Naviguer dans le dossier \texttt{bin} du répertoire d'installation OTB et double cliquer sur le
 fichier \texttt{.bat} de l'application à lancer, par exemple:\\
-\texttt{Martin{\textbackslash}install{\textbackslash}OTB-5.2.1-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
+\texttt{Martin{\textbackslash}install{\textbackslash}OTB-5.3.0-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
 (Voir figure \ref{fig:windows-otbgui}).
 
 \end{enumerate}
@@ -164,7 +165,7 @@ sudo apt-get install libgl1-mesa-glx libglu1-mesa
 \subsection{Installer OTB et Monteverdi}
 Télécharger le paquet autoportant OTB pour linux (64 bits), disponible ici:
 \begin{center}
-\url{https://www.orfeo-toolbox.org/packages/OTB-5.2.1-Linux64.run}
+\url{https://www.orfeo-toolbox.org/packages/nightly/2016-03-21/OTB-5.3.0-Linux64.run}
 \end{center}
 
 Il s'agit d'une archive auto-extractible, qui va se déployer dans le répertoire
@@ -173,8 +174,8 @@ exécutables sont dans le sous-dossier 'bin', vous pouvez les rendre facilement
 accessible en ajoutant ce chemin au PATH. Les commandes permettant de faire 
 ce déployement sont :
 \begin{verbatim}
-chmod +x OTB-5.2.1-Linux64.run
-./OTB-5.2.1-Linux64.run
+chmod +x OTB-5.3.0-Linux64.run
+./OTB-5.3.0-Linux64.run
 export PATH=$PATH:<votre-répertoire-OTB>/bin
 \end{verbatim}
 
