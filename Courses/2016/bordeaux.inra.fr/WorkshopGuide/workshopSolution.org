@@ -60,6 +60,5 @@ paramètres dans l'interface graphique si besoin.
 #+INCLUDE: "segmentation.org" :minlevel 2
 * Classification supervisée pour les séries multi-temporelles
 #+INCLUDE: "classification.org" :minlevel 2
-#+INCLUDE: "post-classif.org" :minlevel 2 
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar.org" :minlevel 2
