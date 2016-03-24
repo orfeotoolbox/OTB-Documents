@@ -17,20 +17,86 @@
     4. Classification avec profil de NDVI
     5. Post-traitements de la classification
     
-*** Présentation des données
-    TODO:
+*** Présentation des données LandSat8
+
+**** Dates :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+
+|------------|
+| 2014-03-09 |
+| 2014-04-01 |
+| 2014-04-17 |
+| 2014-05-28 |
+| 2014-06-20 |
+| 2014-07-31 |
+| 2014-09-01 |
+| 2014-10-03 |
+| 2014-10-26 |
+|------------|
+
+**** Bandes :BMCOL:B_block:
+     :PROPERTIES: 
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+
+ |---+---------------------|
+ | 0 | Coastal aerosol     |
+ | 1 | Blue                |
+ | 2 | Green               |
+ | 3 | Red                 |
+ | 4 | Near Infrared (NIR) |
+ | 5 | SWIR 1              |
+ | 6 | SWIR 2              |
+ |---+---------------------|
+
+*** Présentation des données de référence
+
+|------+-----------------------------+------------|
+| Code | Nom                         | #polygones |
+|------+-----------------------------+------------|
+|   11 | Éte                         | 7898       |
+|   12 | Hiver                       | 8171       |
+|   31 | Foret feuilles caduques     | 867        |
+|   32 | Foret feuilles persistantes | 125        |
+|   34 | Pelouses                    | 45         |
+|   36 | Lande ligneuse              | 386        |
+|   41 | Bati                        | 4719       |
+|   51 | Eau                         | 1280       |
+|  211 | Prairie                     | 5647       |
+|  221 | Verger                      | 204        |
+|  222 | Vigne                       | 559        |
+|------+-----------------------------+------------|
 
 *** Classification supervisée
-    TODO:
-
+    #+ATTR_LATEX: :float t :width \textwidth
+    [[file:Images/classification.png]]
+   
 *** Algorithme SVM
-    TODO:
+    #+ATTR_LATEX: :float t :width 0.5\textwidth
+    [[file:Images/svm.png]]
 
 *** Algorithme RF
     TODO:
 
 *** Matrice de confusion
-    TODO:
+
+
+|-----------+--------------+--------------+--------------+
+|           | Préd. 1      | Préd. 2      | Préd. 3      | 
+|-----------+--------------+--------------+--------------+
+| Réf. 1    | Vrais pos. 1 |              |              |
+| Réf. 2    |              | Vrais pos. 2 |              |
+| Réf. 3    |              |              | Vrais pos. 3 |
+|-----------+--------------+--------------+--------------+
+
+- $precision = \frac{VP i}{\sum pred. i}$
+- $rappel = \frac{VP i}{T\sum ref. i}$
+- $Accuracy = \frac{\sum{VP i}}{Total}$
+- $Kappa = \frac{Accuracy - chance}{1-chance}$
 
 
 ** Réaliser une classification supervisée                           :guide:
@@ -101,21 +167,22 @@
     LS8/testing/testing.shp) contiennent des polygones qui définissent 11
     classes sur l'ensemble de la scène:
 
-    |------+-----------------------------|
-    | Code | Nom                         |
-    |------+-----------------------------|
-    |   11 | Éte                         |
-    |   12 | Hiver                       |
-    |   31 | Foret feuilles caduques     |
-    |   32 | Foret feuilles persistantes |
-    |   34 | Pelouses                    |
-    |   36 | Lande ligneuse              |
-    |   41 | Bati                        |
-    |   51 | Eau                         |
-    |  211 | Prairie                     |
-    |  221 | Verger                      |
-    |  222 | Vigne                       |
-    |------+-----------------------------|
+    |------+-----------------------------+------------|
+    | Code | Nom                         | #polygones |
+    |------+-----------------------------+------------|
+    |   11 | Éte                         |       7898 |
+    |   12 | Hiver                       |       8171 |
+    |   31 | Foret feuilles caduques     |        867 |
+    |   32 | Foret feuilles persistantes |        125 |
+    |   34 | Pelouses                    |         45 |
+    |   36 | Lande ligneuse              |        386 |
+    |   41 | Bati                        |       4719 |
+    |   51 | Eau                         |       1280 |
+    |  211 | Prairie                     |       5647 |
+    |  221 | Verger                      |        204 |
+    |  222 | Vigne                       |        559 |
+    |------+-----------------------------+------------|
+
 
     Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
     accessible depuis clic-droit sur la couche -> ouvrir la table des attributs.
