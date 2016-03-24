@@ -233,19 +233,45 @@
   Puis effectuez les même étapes que précédement: *ComputeImageStatistics*,
   *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
  
-
   *Note* utilisez cette fois la méthode Random Forest pour le modèle qui est plus
-  rapide.
+  rapide. Utilisez également les paramètres suivants qui offrent de bonnes
+  performances de classification:
 
-  + parametres noyau et optimisation des paremetres du noyau
+    Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
+    classe.
+    -sample.mt 2000 :: Le nombre maximum d'échantillons d'aprentissage par
+    classe.
+    -classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
+    -classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
 
   Comparez ensuite les resultats avec la classification à une date en utilisant
   la matrice de confusion et l'image RGB.
 
+**** Calcul d'un profil de NDVI
+  
+  Une image NDVI peut-être calculée pour chaque image de la série temporelle
+  pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
+  profil permetra d'améliorer les performance de classification.
+
+  Calculer une image de NDVI pour chaque image de la série temporelle en
+  utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
+
+  Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
+  temporelle.
+
+  Concatenez les neuf images d'indices en une seule pour constituer un profil
+  NDVI. Ouvrez le profil dans QGIS. Visualiser le profil NDVI temporellement
+  avec l'outil bouton identifier les entités, puis vue graphique.
+
 **** Classification du profil de NDVI
 
-    commandes (ou livré ?)
-    visualiser dans QGIS
+  Créez un répertoire /classifNDVI/ pour cette partie.
+
+  En suivant la même méthode que précédement, réaliser une classification de la
+  série temporelle augmentée du profil NDVI.
+
+  Les résultats sont ils améliorés par rapport à la classification multi date
+  sans l'indice NDVI ?
 
 **** Post-traitements de la classification
 
