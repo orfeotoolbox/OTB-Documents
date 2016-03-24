@@ -277,8 +277,19 @@
 
 ***** Régularisation
 
-      principe
-      commande
+  L'application /ClassificationMapRegularization/ filtre une image classifiée
+  en utilisant un vote majoritaire local.
+
+  Les paramètres à régler sont:
+
+  ip.radius 1 :: Rayon de la zone participant au vote
+  ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur
+  existante.
+
+  Filtrez le resultat de la classification précédente (neuf dates et profil
+  NDVI) puis comparer les resultats avec les images RGB (dans monteverdi) et
+  avec les matrices de confusions (avec un
+  tableur).
 
 ***** Fusion de classes
 
