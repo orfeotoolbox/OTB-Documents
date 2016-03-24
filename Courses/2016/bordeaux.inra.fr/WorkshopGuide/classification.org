@@ -168,6 +168,9 @@
     - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
     - sample.vtr 0 :: Ratio de l'emsemble d'apprentissage sur l'ensemble de
       validation. Zero ici car nous utilisons notre propre découpe.
+    - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
+      est 1000. La réduire permet d'accélérer significativement le temps
+      d'apprentissage.
 
 ***** Utilisation du modèle
 
