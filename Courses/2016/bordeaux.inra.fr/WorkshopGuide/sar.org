@@ -106,7 +106,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      et /deramp/ qui controle la décroissance d'une fonction exponentiel qui est
      utilisé pour pondéré la distance entre le pixel central et son voisinage.
 
-     Plus de détail sur le speckle et le filtre de Frost (http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf)
+     Plus de détail sur le speckle et le filtre de Frost [[http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf][ici]].
 
      1. Quelle sont les méthodes de réduction du speckle disponible dans l'OTB?
      2. Utilisez le filtre de Frost avec différents rayons (3,5 et 10) et
@@ -138,8 +138,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
           coordonnées (930,1170)?
 
         Vous pouvez pour faciliter l'analyse visualisez la zone d'étude dans
-        Google Maps:
-        https://www.google.fr/maps/place/47%C2%B027'51.0%22N+9%C2%B036'22.5%22E/@47.462655,9.5676349,18957m/data=!3m1!1e3!4m2!3m1!1s0x0:0x0
+        [[https://www.google.fr/maps/place/47%C2%B027'51.0%22N+9%C2%B036'22.5%22E/@47.462655,9.5676349,18957m/data=!3m1!1e3!4m2!3m1!1s0x0:0x0][Google Maps]].
 
         Et aussi remettre les images en Ouest/Est avec par exemple l'outil
         ImagMagick:
