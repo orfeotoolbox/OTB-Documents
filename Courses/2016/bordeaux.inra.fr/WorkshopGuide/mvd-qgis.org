@@ -17,7 +17,6 @@
     2. Visualiser une pile d'images dans Monteverdi
     3. Visualiser une image dans Qgis
     4. Visualiser une données vecteur dans Qgis
-    5. Visualiser une pile de données dans Qgis
 
 *** Introduction
     - Plusieurs logiciels qui partagent des fonctionnalités communes
@@ -103,7 +102,7 @@
 
      - Installation des logiciels
      - Téléchargement des données
-
+       
 **** Objectifs
 
      les objectifs de ce TP sont les suivants:
@@ -122,13 +121,74 @@
     une question qui est restée sans réponse au terme de l'exercice.
 
 **** Visualiser une images dans Monteverdi
+
+     Ouvrir l'image ~phr_xs_osr_mipy.tif~ du répertoire
+     /preprocessing/ dans Monteverdi.
+
+     L'ensemble des raccourcis clavier sont disponibles dans le menu
+     /Aide/.
+
+     Modifiez les bandes visualisées et les bornes de radiométrie
+     utilisées pour la visualisation.
+
+     Testez les effets /Contraste local/, /Gradient/ et /Angle
+     Spectral/. A quoi servent-ils ?
+
+     Modifiez le niveau de zoom en utilisant /CTRL + molette souris/,
+     les raccourcis de la barre d'outil ou en éditant directement
+     l'échelle dans la barre d'état en bas à droite.
+
+     Fermez Monteverdi.
+
 **** Visualiser une pile d'images dans Monteverdi
+
+     Ouvrez les 9 images Landsat8 présentes dans le dossier LS8 (TODO).
+
+     Modifiez les bandes visualisées pour afficher les couleurs
+     naturelles (rouge: Bande 3, vert: bande 2, bleu bande
+     1). Utilisez le bouton /Appliquer tous les paramètres aux autres
+     couches/ pour avoir un rendu uniforme des images.
+
+     Utilisez la molette de la souris pour faire défiler les différentes dates.
+
+     Testez les effets /Transparence local/, /Echiquier/ et
+     /Balayage/. A quoi servent-ils ?
+
+     Fermez Monteverdi.
+
 **** Visualiser une image dans Qgis
+
+     Ouvrir la première date LandSat8 dans Qgis. Utilisez le menu
+     contextuel de la couche pour aller dans /Propriétés/ puis dans
+     l'onglet /Style/ et régler l'affichage (dynamique et bandes) pour
+     le rendre équivalent à celui de /monteverdi/. Toujours avec le
+     menu contextuel, ajouter le style ainsi créé pour pouvoir
+     l'appliquer à d'autres images.
+
+     Naviguez en résolution.
+
+     Chargez les autres images LandSat8, et appliquez leurs le style ainsi créé.
+
+     Quelles sont les différences entre les fonctionnalités de
+     visualisation d'image offertes par Monteverdi et Qgis ?
+
 **** Visualiser une données vecteur dans Qgis
 
-Repérer la liste des classes.
+     Ouvrez la données vecteur ~training.shp~
 
-**** Visualiser une pile de données dans Qgis 
+     En utilisant le menu contextuel, ouvrez les /Propriétés/ puis
+     l'onglet /Style/. En utilisant un rendu /Catégorisé/ en fonction
+     de la colonne /LC/. Combien y a-t-il de classes différentes dans
+     le fichier ? Modifiez la table des couleurs pour qu'elles
+     correspondent aux classes.
+
+     Ouvrir la table des attributs à l'aide du menu
+     contextuel. Combien y a-t-il de polygones dans la classes
+     /pelouse/ ?
+
+     A l'aide de l'outil de sélection conditionel, sélectionnez
+     uniquement les polygônes correspondants à cette classe.
      
 ** Utiliser *Monteverdi* et *Qgis*                                :solutions:
 
+   Les manipulations demandées sont démontrées par le formateur à la fin de l'exercice.
