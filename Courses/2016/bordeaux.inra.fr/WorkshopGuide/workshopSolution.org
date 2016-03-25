@@ -58,7 +58,6 @@ paramètres dans l'interface graphique si besoin.
 * Imagerie THR optique, des pré-traitements au SIG
 #+INCLUDE: "preprocessing.org" :minlevel 2
 #+INCLUDE: "segmentation.org" :minlevel 2
-* Classification supervisée pour les séries multi-temporelles
-#+INCLUDE: "classification.org" :minlevel 2
+#+INCLUDE: "classification.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar.org" :minlevel 2
