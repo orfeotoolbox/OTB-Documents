@@ -19,6 +19,8 @@
     
 *** Présentation des données LandSat8
 
+    Résolution spatiale: 30 mètres
+
 **** Dates :BMCOL:B_block:
      :PROPERTIES:
      :BEAMER_col: 0.5
@@ -80,7 +82,18 @@
     [[file:Images/svm.png]]
 
 *** Algorithme RF
-    TODO:
+    Ensemble d'arbres de décision aléatoires
+
+**** Apprentissage
+     1. Séparer le jeu d'apprentissage en k ensembles $S_k$ aléatoires
+     2. Pour chaque $S_k$ choisir aléatoirement $F_k$ primitives
+     3. Construire un arbre de décision récursivement, pour chaque noeud:
+        1. Choisir $f \in F_k$ et le seuil $t_k$ qui sépare l'ensemble restant en 2 parties les plus pures
+        2. Arrêter quand l'ensemble restant devient trop petit
+ 
+**** Décision
+     Vote majoritaire de tous les arbres aléatoires
+
 
 *** Matrice de confusion
 
@@ -98,7 +111,7 @@
 - $Accuracy = \frac{\sum{VP i}}{Total}$
 - $Kappa = \frac{Accuracy - chance}{1-chance}$
 
-
+  
 ** Réaliser une classification supervisée                           :guide:
 *** Description                                                        :desc:
 **** Résumé
