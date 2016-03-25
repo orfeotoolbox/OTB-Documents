@@ -91,20 +91,23 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 
 *** Contenu du kit de formation
 
-**** Documents (forme électronique)
-     - Software Guide: Guide de l'API C++ (contient également des descriptions algorithmiques)
-     - CookBook: Guide pour les nons dévelopeurs (contient l'API complète des applications)
+**** Répertoire Data
+     - Contient les données nécessaires à chaque TP, dans des sous-répertoire séparés
+     - Le sous-répertoire nécessaire est indiqué au début de l'énoncé du TP
+
+**** Répertoire Documentation
+     - Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
+     - CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
+     - QGis User Guide :: Manuel d'utilisation de Qgis
+
+**** Répertoire Guide
      - Guide de TP
      - Planches (cette présentation)
+     - Guide d'installation
+     - Questionnaire d'évaluation
      - Solutions (distribuées à la fin)
-**** Données (spécifique à chaque TP)
-     LandSat8, Pléiades, Sentinel1, SRTM, Ad hoc ...
-**** Logiciels
-     - Orfeo ToolBox + Monteverdi
-     - Qgis
-     - Shell
 
-*** Données
+*** Origine des données
     - LandSat-8: plusieurs dates concaténées, dénuagés (gap-filling) avec des données
       terrains de référence au format ESRI Shapefile (pour le TP classification)
     - Pléiades: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur le site
