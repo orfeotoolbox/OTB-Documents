@@ -16,9 +16,33 @@
     4. Vectorisation
     5. Filtrage des polygones dans Qgis
 
-*** Introduction à l'algorithme MeanShift
+*** Algorithme MeanShift (1/4)
+    #+ATTR_LATEX: :float t :width 0.4\textwidth
+    [[file:Images/principe_mean_shift_1.pdf]]
+    #+BEGIN_CENTER
+    Recherche dans la fenêtre des pixels proches spectralement
+    #+END_CENTER
 
-    TODO:
+*** Algorithme MeanShift (2/4)
+    #+ATTR_LATEX: :float t :width 0.4\textwidth
+    [[file:Images/principe_mean_shift_2.pdf]]
+    #+BEGIN_CENTER
+    Moyennes spatiale et spectrale des pixels localisés dans la fenêtre
+    #+END_CENTER
+
+*** Algorithme MeanShift (3/4)
+    #+ATTR_LATEX: :float t :width 0.4\textwidth
+    [[file:Images/principe_mean_shift_3.pdf]]
+    #+BEGIN_CENTER
+    Déplacement du pixel vers le barycentre et affectation de la moyenne spectrale
+    #+END_CENTER
+
+*** Algorithme MeanShift (4/4)
+    #+ATTR_LATEX: :float t :width 0.4\textwidth
+    [[file:Images/principe_mean_shift_4.pdf]]
+    #+BEGIN_CENTER
+    Retour à l'étape 1 jusqu'à convergence
+    #+END_CENTER
 
 
 ** Segmentation et export vers un SIG                               :guide:

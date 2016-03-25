@@ -12,15 +12,113 @@
     2. Fusion P+XS
     3. Ortho-rectification
 *** Calibration radiométrique
-    TODO:
+**** Comptes numériques (DN)
+     Sortie du capteur (pas de grandeur physique)
+**** Luminance
+     Quantité de lumière en entrée de l'instrument
+**** Réflectance Top Of Atmosphere (TOA) 
+     Coefficient de réflexion de la lumière du soleil en haut de l'atmosphère (entre 0 et 1, sans unité)
+**** Réflectance Top Of Canopy (TOC) 
+     Coefficient de réflexion au sommet de la canopé (= TOA - effets atmosphériques)
+
 *** Fusion (pan-sharpening)
-    TODO:
-*** Ortho-rectification
-    TODO:
+    
+**** Pourquoi le pansharpening ?
+    - La plupart des capteurs THR sont consistutés de deux voix:
+      - Une voie panchromatique (une bande spectrale large) très résolue
+      - Une voie multi-spectrale (plusieurs bandes spectrales plus étroites) moins résolue (habitullement 4 fois moins)
+    - Pansharpening = image de synthèse avec la résolution du pancrho et la couleur du multi-spectral
+
+**** Principe:
+     1. Superposition fine des voies P et XS
+     2. Application d'un algorithme de fusion
+
+*** Orthorectification
+
+     #+BEGIN_LaTeX
+     \begin{center}
+     \begin{tikzpicture}[scale=0.2]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Input series};
+     %\pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     %%\pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
+     %\pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     %\pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     %\pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+%\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block Adjustement};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     %\pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
+     %\pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     %\pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     %\pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Map Projection};
+     %\pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+     \end{tikzpicture}
+     \end{center}
+     #+END_LaTeX
+    
 
 ** Pré-traitements de l'imagerie THR optique                          :guide:
 *** Description                                                        :desc:
-**** [#B] Résumé
+**** Résumé
      Cet exercice présente les corrections radiométriques et géométriques
 des images à l'aide d'*OTB applications*.
 

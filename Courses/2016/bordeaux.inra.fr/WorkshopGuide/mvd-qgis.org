@@ -62,21 +62,9 @@
       interface simplifiée)
     - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
 *** Quantum GIS
-      #+begin_center
-    #+ATTR_LaTeX: width=0.5\textwidth center  
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:../../../../Slides/OTB-General/images/otb_qgis.png]]
-    #+end_center
-*** Données
-    - LandSat-8: plusieurs dates concaténées, dénuagés (gap-filling) avec des données
-      terrains de référence au format ESRI Shapefile (pour le TP classification)
-    - Pléiades: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur le site
-      OSR MiPy (Novembre 2013)
-    - Sentinel-1: Produit SLC (complexe) SM (strip Map, les plus résolues),
-      bi-polarisation (HH et HV) sur le sud du lac Constance (Allemagne)
-*** Accès aux données
-    - LandSat-8: produit de niveau 2A disponible sur le site THEIA (https://www.theia-land.fr/)
-    - Pléiades: accès privilégié UIA (institutionnels français): http://professionnels.ign.fr/images-pleiades
-    - Sentinel-1: Données gratuites disponible sur ESA Hub(https://scihub.copernicus.eu/) ou sur le site CNES PEPS(https://peps.cnes.fr)
+
 *** Principe
     - Découverte du jeu de données et des logiciels
     - Monteverdi:
