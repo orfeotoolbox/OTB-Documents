@@ -185,8 +185,8 @@
 
     Ouvrez les neuf images et remarquez les changements.
 
-    Les fichiers ~Data/classification/training/training.shp~ et
-    ~Data/classification/testing/testing.shp~ contiennent des
+    Les fichiers ~training/training.shp~ et
+    ~testing/testing.shp~ contiennent des
     polygones qui définissent 11 classes sur l'ensemble de la scène:
 
     |------+-----------------------------+------------|
