@@ -1,4 +1,4 @@
-** Réaliser une classification supervisée                            :slides:
+** Classification supervisée pour les séries multi-temporelles       :slides:
 *** Objectifs et Données
 **** Objectifs
       Les objectifs sont les suivants:
@@ -19,7 +19,7 @@
     
 *** Présentation des données LandSat8
 
-    Résolution spatiale: 30 mètres
+    *Résolution spatiale:* 30 mètres
 
 **** Dates :BMCOL:B_block:
      :PROPERTIES:
@@ -112,7 +112,7 @@
 - $Kappa = \frac{Accuracy - chance}{1-chance}$
 
   
-** Réaliser une classification supervisée                           :guide:
+** Classification supervisée pour les séries multi-temporelles        :guide:
 *** Description                                                        :desc:
 **** Résumé
 
@@ -247,7 +247,7 @@
     D'autres paramètres sont important aussi:
     - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
     - sample.vtr 0 :: Ratio de l'emsemble d'apprentissage sur l'ensemble de
-      validation. Zero ici car nous utilisons notre propre découpe.
+      validation. 0 ici car nous utilisons notre propre découpe.
     - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
       est 1000. La réduire permet d'accélérer significativement le temps
       d'apprentissage.
@@ -273,7 +273,7 @@
 ***** Validation
 
   Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
-  des polygones. les 70% restant sont dans le fichier testing/testing.shp et
+  des polygones. les 70% restant sont dans le fichier ~testing/testing.shp~ et
   servent à evaluer les performances du modèle appris en calculant la matrice de
   confusion.
 
@@ -293,11 +293,17 @@
 
 **** Classification multidate
 
-  Le principe de la classification multidate est d'utiliser pour chaque pixel,
-  toute les dates disponibles comme des bandes spectrales supplémentaire. Avec
-  les données LANDSAT 8, il s'agit donc d'utiliser 63 bandes par pixel.
-  Les dates ont été choisies de façon à être réparties temporellement sur une
-  année. Cela permet d'intégrer les variation saisonales qui apporte beaucoup
+     Les performances de cette premières classification ne sont pas
+     très bonne: on va maintenant essayer d'améliorer la
+     discrimination des classes de végétation en utilisant plusieurs
+     dates.
+
+  Le principe de la classification multidate est d'utiliser pour
+  chaque pixel, toute les dates disponibles comme des bandes
+  spectrales supplémentaire. Avec les données LANDSAT 8, il s'agit
+  donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
+  façon à être réparties temporellement sur une année. Cela permet
+  d'intégrer les variation saisonales qui apporte beaucoup
   d'information pour la discrimination de certaines classes.
 
   Avant tout, créez un repertoire /classif9/ pour cette partie.
@@ -308,21 +314,21 @@
   Pour cela, utilisez l'application *ConcatenateImages*.
 
   Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
-  63 bandes sur 16 bits avec gdalinfo.
+  63 bandes sur 16 bits avec /gdalinfo/.
 
   Puis effectuez les même étapes que précédement: *ComputeImageStatistics*,
   *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
- 
-  *Note* utilisez cette fois la méthode Random Forest pour le modèle qui est plus
+  
+  Utilisez cette fois la méthode Random Forest pour le modèle qui est plus
   rapide. Utilisez également les paramètres suivants qui offrent de bonnes
   performances de classification:
 
-    Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
+   - sample.bm 0 :: Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
     classe.
-    -sample.mt 2000 :: Le nombre maximum d'échantillons d'aprentissage par
+   - sample.mt 2000 :: Le nombre maximum d'échantillons d'aprentissage par
     classe.
-    -classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
-    -classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
+   - classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
+   - classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
 
   Comparez ensuite les resultats avec la classification à une date en utilisant
   la matrice de confusion et l'image RGB.
@@ -355,67 +361,317 @@
 
 **** Post-traitements de la classification
 
-***** Régularisation
-
   L'application /ClassificationMapRegularization/ filtre une image classifiée
   en utilisant un vote majoritaire local.
 
   Les paramètres à régler sont:
 
-  ip.radius 1 :: Rayon de la zone participant au vote
-  ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur
+  - ip.radius 1 :: Rayon de la zone participant au vote
+  - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur
   existante.
 
-  Filtrez le resultat de la classification précédente (neuf dates et profil
-  NDVI) puis comparer les resultats avec les images RGB (dans monteverdi) et
-  avec les matrices de confusions (avec un
-  tableur).
+  Filtrez le resultat de la classification précédente (neuf dates et
+  profil NDVI) puis comparer les resultats avec les images RGB (dans
+  monteverdi) et avec les matrices de confusions (avec un tableur).
 
-***** Fusion de classes
+** Classification supervisée pour les séries multi-temporelles    :solutions:
 
-     principe
-     comment décider quelle classe fusionner
-     commandes
-     
-***** Vectorisation
+*Note: * Dans cette solution, la variable d'environnement ~${LS8DATA}~
+contient le chemin vers le répertoire /classification/ des données
+fournies avec le TP.
 
-     principe
-     commande
+*** Classification d'une date
 
-** Réaliser une classification supervisée                         :solutions:
-*** Classification mono-date
+    Premièrement, on calcule les statistiques de l'image à classer:
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics \
+    -il ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+                                     -out images_statistics.xml
+    #+END_EXAMPLE
 
+    On réalise ensuite l'apprentissage du modèle SVM.
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics -il image.tif
-                                   -out images_statistics.xml 
+    $ otbcli_TrainImagesClassifier \
+    -io.il ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+      -io.vd ${LS8DATA}/training/training.shp \
+      -sample.vfn CODE \
+      -sample.vtr 0 \
+      -classifier libsvm \
+      -io.imstat images_statistics.xml \
+      -io.out model.svm
+    #+END_EXAMPLE
+
+    Une fois le modèle appris, on l'utilise pour réaliser la classification:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier \
+    -in ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -imstat images_statistics.xml \
+    -model  model.svm \
+    -out    labeled_image.tif
+    #+END_EXAMPLE
+
+    On peut ensuite estimer les performances obtenues à l'aide du jeu de validation:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+      -in labeled_image.tif \
+      -ref vector \
+      -ref.vector.in ${LS8DATA}/testing/testing.shp \
+      -ref.vector.field CODE \
+      -out confusion_matrix.csv
+    #+END_EXAMPLE
+
+    Pour une meilleure visualisation des résultats, on réalise une
+    carte colorisée en fonction de la classe attribuée:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in labeled_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out RGB_color_image.tif
+   #+END_EXAMPLE
+
+    Les performances de cette premières classification ne sont pas
+    très bonne: on va maintenant essayer d'améliorer la discrimination
+    des classes de végétation en utilisant plusieurs dates.
+
+*** Classification multidate
+
+    Pour commencer, on va concaténer les images de l'ensemble des
+    dates en une seule image de $7x9=63$ bandes:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -out image_concat.tif int16
+    #+END_EXAMPLE
+    
+    Ensuite, on déroule le processus déjà réalisé lors de l'étape précédente.
+
+
+    Calcul des statistiques:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics -il \
+    image_concat.tif \
+    -out images_statistics.xml
+    #+END_EXAMPLE
+
+
+    Apprentissage du modèle (cette fois-ci, on utilise le classifieur random forests, avec plus d'échantillons):
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainImagesClassifier -io.il \
+    image_concat.tif \
+    -io.vd \
+    ${LS8DATA}/training/training.shp \
+    -sample.vfn CODE \
+    -sample.vtr 0 \
+    -classifier rf \
+    -sample.bm 0 \
+    -sample.mt 2000 \
+    -classifier.rf.max 25 \
+    -classifier.rf.min 25 \
+    -io.imstat images_statistics.xml \
+    -io.out model.rf
+    #+END_EXAMPLE
+
+
+    On réalise la carte de classification:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier -in \
+    image_concat.tif \
+    -imstat images_statistics.xml \
+    -model  model.rf \
+    -out    labeled_image.tif
+    #+END_EXAMPLE
+
+    Et l'étape de validation:
+
+     #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+    -in labeled_image.tif \
+    -ref vector \
+    -ref.vector.in ${LS8DATA}/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix.csv
+    #+END_EXAMPLE
+
+    Puis la création de la carte colorisée:
+ 
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in labeled_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out RGB_color_image.tif
+    #+END_EXAMPLE
+
+    Dans cette seconde version, les performances sont nettement
+    meilleures, mais il reste des confusions importantes, notamment
+    pour les classes vergers et vignes.
+
+*** Calcul d'un profil de NDVI
+
+    Pour réaliser le profil de NDVI, on va utiliser l'application *RadiometricIndices* pour chacune des dates:
+
+    #+BEGIN_EXAMPLE
+    $ for date in "20140309" "20140401" "20140417" "20140528" \
+    "20140620" "20140731" "20140901" "20141003" "20141026"; do \
+    otbcli_RadiometricIndices \
+    -in ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_${date}.tif \
+    -out ${date}-ndvi.tif \
+    -list Vegetation:NDVI \
+    -channels.red 3 \
+    -channels.nir 4 \
+    done
+    #+END_EXAMPLE
+    
+    Ensuite, on va concaténer l'ensemble des bandes NDVI en une seule image:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il \
+    20140309-ndvi.tif \
+    20140401-ndvi.tif \
+    20140417-ndvi.tif \
+    20140528-ndvi.tif \
+    20140620-ndvi.tif \
+    20140731-ndvi.tif \
+    20140901-ndvi.tif \
+    20141003-ndvi.tif \
+    20141026-ndvi.tif \
+    -out ndvi-profile.tif
+    #+END_EXAMPLE
+
+    Ce qui permet d'analyser le profil dans Qgis par exemple.
+
+*** Classification du profil de NDVI
+    
+    Pour la classification, on rajoute également les bandes spectrales intiales pour toutes les dates:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
+    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    20140309-ndvi.tif \
+    20140401-ndvi.tif \
+    20140417-ndvi.tif \
+    20140528-ndvi.tif \
+    20140620-ndvi.tif \
+    20140731-ndvi.tif \
+    20140901-ndvi.tif \
+    20141003-ndvi.tif \
+    20141026-ndvi.tif \
+    -out image_concat.tif
+    #+END_EXAMPLE
+
+    Nous déroulons ensuite les étapes classiques.
+
+    Calcul des statistiques:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics -il \
+    image_concat.tif \
+    -out images_statistics.xml
+    #+END_EXAMPLE
+
+    Apprentissage du modèle:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainImagesClassifier -io.il \
+    image_concat.tif \
+    -io.vd \
+    ${LS8DATA}/training/training.shp \
+    -sample.vfn CODE \
+    -sample.vtr 0 \
+    -classifier rf \
+    -sample.bm 0 \
+    -sample.mt 2000 \
+    -classifier.rf.max 25 \
+    -classifier.rf.min 25 \
+    -io.imstat images_statistics.xml \
+    -io.out model.rf
+    #+END_EXAMPLE
+
+    Utilisation du modèle (classification):
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier -in \
+    image_concat.tif \
+    -imstat images_statistics.xml \
+    -model  model.rf \
+    -out    labeled_image.tif
+    #+END_EXAMPLE
+
+    Validation:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+    -in labeled_image.tif \
+    -ref vector \
+    -ref.vector.in ${LS8DATA}/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix.csv
+    #+END_EXAMPLE
+
+    Visualisation:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in labeled_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out RGB_color_image.tif
+    #+END_EXAMPLE
+
+*** Post-traitements de la classification
+
+    Pour régulariser la classification, on utilise l'application suivante:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ClassificationMapRegularization \
+    -io.in labeled_image.tif \
+    -io.out regularized_image.tif \
+    -ip.radius 1 \
+    -ip.suvbool 0
     #+END_EXAMPLE
     
 
+    On peut ensuite rejouter les étapes de colorisation et de validation:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier -io.il 
-        ../../Data/LS8/LANDSAT_MultiTempIm_clip_GapF_20141026.tif 
-        -io.vd ../../Data/LS8/training/training.shp 
-        -sample.vfn CODE 
-        -sample.vtr 0 
-        -classifier libsvm 
-        -io.imstat images_statistics.xml 
-        -io.out model.svm
+    $ otbcli_ColorMapping \
+    -in regularized_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out rgb_regularized.tif
     #+END_EXAMPLE
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping -in              labeled_image.tif
-                        -method            custom
-                        -method.custom.lut color_map.txt
-                        -out               RGB_color_image.tif
-   #+END_EXAMPLE
-
-  #+BEGIN_EXAMPLE
-  $ otbcli_ComputeConfusionMatrix \
-    -in labeled_image.tif \
+    $ otbcli_ComputeConfusionMatrix \
+    -in regularized_image.tif \
     -ref vector \
-    -ref.vector.in ../../Data/LS8/testing/testing.shp \
+    -ref.vector.in ${LS8DATA}/testing/testing.shp \
     -ref.vector.field CODE \
-    -out confusion_matrix.csv
-  #+END_EXAMPLE
+    -out confusion_matrix_regularized.csv
+    #+END_EXAMPLE
