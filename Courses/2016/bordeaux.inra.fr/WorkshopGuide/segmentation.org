@@ -6,7 +6,7 @@
      - Savoir exporter la segmentation vers un logiciel SIG
 
 **** Données
-     Les données pour cet exercice se trouvent dans le répertoire /segmentation/.
+     Les données pour cet exercice se trouvent dans le répertoire ~Data/segmentation~.
 
 *** Déroulement
     Le déroulement du TP est le suivant:
@@ -68,7 +68,7 @@
      - Savoir exporter la segmentation vers un logiciel SIG
 
 *** Étapes                                                            :steps:
-
+    Les données pour cet exercice se trouvent dans le répertoire ~Data/segmentation~.
 **** Lissage de l'image par l'algorithme MeanShift
 
      L'algorithme du MeanShift réalise un lissage de l'image tout en

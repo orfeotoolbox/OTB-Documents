@@ -5,7 +5,7 @@
      - Savoir réaliser une fusion (pan-sharpening)
      - Savoir réaliser une ortho-rectification
 **** Données
-     Les données se trouvent dans les répertoires /PHR/ et /SRTM/
+     Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
 *** Déroulement
     Le déroulement du TP est le suivant:
     1. Corrections atmostphériques
@@ -148,6 +148,9 @@ des images à l'aide d'*OTB applications*.
       - Connaître les pré-requis, les biais, les approximations réalisées
        
 *** Étapes                                                            :steps:
+
+Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
+
 Dans cette partie de l'exercice, vous utiliserez les images
 ~phr_xs_osr_mipy.tif~ et ~phr_pan_osr_mipy.tif~. Ce sont des extraits Pan et XS
 d'un produit Bundle Pléiades Primary (Niveau 1) sur le sud-ouest de Toulouse. 
@@ -330,7 +333,7 @@ _Trucs et astuces :_
      Utilisez l'application *Orthorectification* pour réaliser
         l'orthorectification du produit fusionné:
         1. Sans DEM
-        2. Avec un DEM et un geoid (utilisé le répertoire /SRTM/)
+        2. Avec un DEM et un geoid (utilisé le sous-répertoire ~SRTM~)
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
         4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
         5. Dans quelle zone UTM se trouve l'extrait PHR Pléiades?

@@ -7,7 +7,7 @@
 
 **** Données
      
-     Les données se trouvent dans le répertoire /Internals/
+     Les données se trouvent dans le répertoire ~Data/internals/~.
 
 *** Déroulement
     Le déroulement du TP est le suivant:
@@ -100,6 +100,8 @@
 
 *** Étapes                                                            :steps:
 
+Les données se trouvent dans le répertoire ~Data/internals/~.
+
 **** Encodage des images
 
      Dans l'Orfeo ToolBox, c'est l'utilisateurs qui choisit le type
@@ -131,12 +133,12 @@
        |--------+----------------------------------------+------------------------+------------------|
 
      Utilisez *gdalinfo* pour connaître l'encodage des pixels de
-     l'image *image1.tif* (vous pouvez également y accéder dans
+     l'image ~image1.tif~ (vous pouvez également y accéder dans
      Qgis). Analysez les valeurs des pixels de l'image dans
      *monteverdi*. Que pouvez vous conclure ?
 
      Utilisez l'application *Convert* pour convertir l'image
-     *image1.tif* dans un encodage entier sur 16 bits. Comparez la
+     ~image1.tif~ dans un encodage entier sur 16 bits. Comparez la
      taille de fichier des deux images. Utilisez l'application
      *CompareImages* pour comparer le contenu des deux images. Que
      pouvez vous en conclure ? Peut-on réduire encore la taille du
@@ -150,7 +152,7 @@
 
 **** Les fichiers .geom
 
-     Examinez le contenu du fichier /image1.geom/. Que pouvez vous en
+     Examinez le contenu du fichier ~image1.geom~. Que pouvez vous en
      conclure quand à son rôle? Quelles sont les opérations
      nécessitant ce type d'informations ?
 
@@ -196,7 +198,7 @@
 
       A l'aide de cette option, et en consultant les options de
       créations de fichier disponible pour le format Tif dans gdal,
-      ré-encodez l'image /image1.tif/ en entier signé sur 12 bits,
+      ré-encodez l'image ~image1.tif~ en entier signé sur 12 bits,
       avec une compression LZW. Comparez la taille des fichiers et le
       contenu des image à l'aide de l'application *CompareImages*.
 
@@ -215,7 +217,7 @@
      l'écriture.
 
      utilisez l'application *LocalStatisticsExtraction* pour filtrer la première
-     bande de l'image /image1.tif/ avec un rayon de 9.
+     bande de l'image ~image1.tif~ avec un rayon de 9.
 
      Exécutez une seconde fois cette opération, cette fois en
      désactivant complètement le streaming à l'aide de l'option de nom

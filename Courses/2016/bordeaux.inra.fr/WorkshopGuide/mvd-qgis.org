@@ -9,7 +9,10 @@
      - Echanger des trucs et astuces.
 
 **** Données
-     L'ensemble des données distriburées pour les TPs.
+     Les données utilisées se trouvent dans les réperoires suivant:
+     - ~Data/preprocessing~ (extrait Pléiades)
+     - ~Data/classification/Extract16bits/~ (séries temporelle LandSat8)
+     - ~Data/classification/training/~ (fichier vecteur shp)
 
 *** Déroulement
 
@@ -111,7 +114,7 @@
 **** Visualiser une images dans Monteverdi
 
      Ouvrir l'image ~phr_xs_osr_mipy.tif~ du répertoire
-     /preprocessing/ dans Monteverdi.
+     ~Data/preprocessing~ dans Monteverdi.
 
      L'ensemble des raccourcis clavier sont disponibles dans le menu
      /Aide/.
@@ -130,7 +133,8 @@
 
 **** Visualiser une pile d'images dans Monteverdi
 
-     Ouvrez les 9 images Landsat8 présentes dans le dossier LS8 (TODO).
+     Ouvrez les 9 images Landsat8 présentes dans le dossier
+     ~Data/classification/Extract16bits/~.
 
      Modifiez les bandes visualisées pour afficher les couleurs
      naturelles (rouge: Bande 3, vert: bande 2, bleu bande
@@ -162,7 +166,8 @@
 
 **** Visualiser une données vecteur dans Qgis
 
-     Ouvrez la données vecteur ~training.shp~
+     Ouvrez la données vecteur ~training.shp~ situé dans le dossier
+     ~Data/classification/training/~.
 
      En utilisant le menu contextuel, ouvrez les /Propriétés/ puis
      l'onglet /Style/. En utilisant un rendu /Catégorisé/ en fonction
