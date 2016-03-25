@@ -12,22 +12,28 @@
     2. Fusion P+XS
     3. Ortho-rectification
 *** Calibration radiométrique
+**** Correction atmosphérique
+     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/atmo_correction.png]]
+     (source image http://www.hkcoastalwaterquality.tk/Methodology.html)
 **** Comptes numériques (DN)
      Sortie du capteur (pas de grandeur physique)
 **** Luminance
-     Quantité de lumière en entrée de l'instrument
+     Quantité de lumière en entrée de l'instrument (W.m-2.sr-1)
 **** Réflectance Top Of Atmosphere (TOA) 
-     Coefficient de réflexion de la lumière du soleil en haut de l'atmosphère (entre 0 et 1, sans unité)
+     La réflectance traduit la capacité d'un corps à réfléchir l'énergie incidente.
+     Coefficient de réflexion de la lumière du soleil en haut de l'atmosphère
+     (pourcentage qu'on exprime entre 0 et 1, sans unité)
 **** Réflectance Top Of Canopy (TOC) 
-     Coefficient de réflexion au sommet de la canopé (= TOA - effets atmosphériques)
+     Coefficient de réflexion au sommet de la canopée (= TOA - effets atmosphériques)
 
 *** Fusion (pan-sharpening)
     
 **** Pourquoi le pansharpening ?
-    - La plupart des capteurs THR sont consistutés de deux voix:
+    - La plupart des capteurs THR sont constitués de deux voix:
       - Une voie panchromatique (une bande spectrale large) très résolue
-      - Une voie multi-spectrale (plusieurs bandes spectrales plus étroites) moins résolue (habitullement 4 fois moins)
-    - Pansharpening = image de synthèse avec la résolution du pancrho et la couleur du multi-spectral
+      - Une voie multi-spectrale (plusieurs bandes spectrales plus étroites) moins résolue (habituellement 4 fois moins)
+    - Pansharpening = image de synthèse avec la résolution du panchro et la couleur du multi-spectral
 
 **** Principe:
      1. Superposition fine des voies P et XS
@@ -139,7 +145,7 @@ des images à l'aide d'*OTB applications*.
 ***** Savoir réaliser une orthorectification
       - Spatialiser l'image
       - Associer une coordonnées géographique aux pixels
-      - Connaitre les pré-requis, les biais, les approximations réalisées
+      - Connaître les pré-requis, les biais, les approximations réalisées
        
 *** Étapes                                                            :steps:
 Dans cette partie de l'exercice, vous utiliserez les images
@@ -233,11 +239,11 @@ _Trucs et astuces :_
         fusionner l'image PAN et XS. Notez que l'application possède un mode
         /phr/ qui permet d'effectuer la superposition des 2 images sans utiliser
         les modèles de capteurs respectifs des images pan et xs (mode par défaut). En effet les
-        produits bundle Pléiades ont la particularité d'etre sur 2 grilles
+        produits bundle Pléiades ont la particularité d'être sur 2 grilles
         colocalisées.
      2. Quel algorithme de fusion est utilisé dans l'application *BundleToPerfectSensor*?
      3. (optionnel) Utilisez les applications *Superimpose* et *Pansharpening*
-        pour réaliser la meme opération en utilisant d'autres méthodes de fusion.  
+        pour réaliser la même opération en utilisant d'autres méthodes de fusion.  
 
 **** Ortho-rectification
      Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
@@ -385,7 +391,7 @@ entre les 2 images multispectral:
                                    -io.out phr_orthopxs_osr_mipy.tif uint16 
                                    -elev.dem ../SRTM/ -elev.geoid ../Geoid/egm96.grd
        #+END_EXAMPLE
-    3. La projection par defaut est UTM. Sur l'extrait Pléiades la zone UTM est
+    3. La projection par défaut est UTM. Sur l'extrait Pléiades la zone UTM est
        32 Nord. 
     4. Orthorectification en WGS84 et en Lambert 93:
        #+BEGIN_EXAMPLE
