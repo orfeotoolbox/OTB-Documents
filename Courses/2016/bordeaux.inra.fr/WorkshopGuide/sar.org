@@ -16,7 +16,10 @@
     3. Filtrage du speckle
     4. Polarimétrie
     5. Extraction d'information
-
+*** Différence Optique/SAR
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
+    [[file:Images/actif_passif_cours_cnes.png]]
+    (source cours cnes)
 *** Introduction SAR
     - RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
     - Impulsions hyperfréquences et enregistrement des échos
@@ -27,11 +30,20 @@
     - Relfecteur sont localisés en fonction de leur eloignement (distance)
     - Répétition des échos réalise la deuxième dimension (azimuth)
     - signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
-*** Radiométrie
+*** Calibration radiométrie
     - comportement de la réflexion dépend des caractéristiques de la surface
     - notamment de sa rugosité, de l'humidité des sols
-    - Notion de polarimétrie
-
+    - Comme pour l'optique, la calibration permet de transformer des CN en
+      grandeur physique
+    - Permet d'intercomparer des images radars provenant de capteurs différents
+      ou de capteurs identiques utilisés dans différents modes
+*** Speckle
+    - Images RSO fortement affectées par le chatoiement (speckle)
+    - Bruit très fort
+    - Effet multiplicatif!
+    - Plusieurs méthodes pour réduire ce bruit
+    - Atténuer ce bruit en convervant le maximum de détails
+    - Filtrage permet d'améliorer enormément la qualité des images et leur interprétation
 *** Pour aller plus loin
     - S1 ToolBox (SNAP)
     - Polarimétrie: ESA PolSARPro
