@@ -8,7 +8,11 @@
      - Savoir mesurer les performances de la classification
      - Connaître les post-traitements applicables à une classification
 **** Données
-     Les données sont disponibles dans le répertoire /LS8/ (TODO: mettre à jour)
+     Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
+     - ~Extract16bits~ contient la série multi-temporelle LandSat8,
+     - ~training~ contient la donnée d'apprentissage au format /shp/,
+     - ~testing~ continet la donnée de validation au format /shp/.
+     
 *** Déroulement
     les étapes de l'exercice sont les suivantes:
     1. Introduction aux données landsat8
@@ -139,9 +143,14 @@
 
 *** Étapes                                                            :steps:
 
-**** Introduction aux données LANDSAT 8
+    Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
+     - ~Extract16bits~ contient la série multi-temporelle LandSat8,
+     - ~training~ contient la donnée d'apprentissage au format /shp/,
+     - ~testing~ continet la donnée de validation au format /shp/.
 
-    Dans l'archive de données, le dossier (TODO: ajouter chemin) contient neuf
+**** Présentation des données LANDSAT 8
+
+    Dans l'archive de données, le dossier ~Data/classification/Extract16bits~ contient neuf
     images Landsat 8 aux dates suivantes:
     
      |------------|
@@ -176,9 +185,9 @@
 
     Ouvrez les neuf images et remarquez les changements.
 
-    Les fichiers (TODO LS8/training/training.shp) et (TODO
-    LS8/testing/testing.shp) contiennent des polygones qui définissent 11
-    classes sur l'ensemble de la scène:
+    Les fichiers ~Data/classification/training/training.shp~ et
+    ~Data/classification/testing/testing.shp~ contiennent des
+    polygones qui définissent 11 classes sur l'ensemble de la scène:
 
     |------+-----------------------------+------------|
     | Code | Nom                         | #polygones |

@@ -9,7 +9,7 @@
 
 **** Données
      
-     Les données se trouvent dans le répertoire /Stegano/
+     Les données se trouvent dans le répertoire ~Data/stegano/~.
 
 *** Déroulement
     Le TP consiste à décoder successivement 6 messages encodés par
@@ -98,13 +98,15 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 *** Étapes                                                            :steps:
 
+    Les données se trouvent dans le répertoire ~Data/stegano~.
+
     Pour chacun des messages, on observera d'abord l'image pour
     essayer de déceler le message, puis on cherchera à utiliser les
     applications suggérées pour révéler le message.
 
 **** Message 1    
 
-     Dans l'image /message1.tif/, une phrase a été encodée dans une
+     Dans l'image ~message1.tif~, une phrase a été encodée dans une
      zone de forte réflectance, en utilisant une valeur de pixel qui
      n'est pas admissible pour Pléiades (rappel: les images Pléiades
      sont codées sur des entiers de 12 bits non signés).
@@ -114,7 +116,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 2
 
-     Dans l'image /message2.tif/, une phrase à été encodée dans une
+     Dans l'image ~message2.tif~, une phrase à été encodée dans une
      zone homogène de faible luminance. Les pixels ainsi modifiés ne
      sont pas détectables à l'oeil nu, mais pourraient être révélé par
      l'application d'un gradient ou d'un détecteur de contour.
@@ -123,7 +125,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 3
 
-     Dans l'image /message3.tif/, une phrase a été encodée en
+     Dans l'image ~message3.tif~, une phrase a été encodée en
      modifiant légèrement les valeurs des pixels des bandes rouge et
      proche infra-rouge. Cette modification est invisible à l'oeil nu,
      mais peut être révélée en calculant l'indice de végétation NDVI.
@@ -142,7 +144,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 4
 
-     Dans l'image /message4.tif/, un message a été dissimulé dans les
+     Dans l'image ~message4.tif~, un message a été dissimulé dans les
      2 bits de poids faible de l'image. Cette transformation est
      non détectable à l'oeil nu, mais pourrait être révélé en isolant la
      valeur de ces 2 bits.
@@ -156,7 +158,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 5
 
-     Dans l'image /message5.tif/, un message a été dissimulé en
+     Dans l'image ~message5.tif~, un message a été dissimulé en
      modifiant légèrement et localement le bruit de l'image. Il
      pourrait être révélé par une transformation permettant d'isoler
      le bruit.
@@ -170,7 +172,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 6
 
-     Dans l'image /message6.tif/, un message a été dissimulé en
+     Dans l'image ~message6.tif~, un message a été dissimulé en
      utilisant localement un opérateur morphologique en niveaux de gris
      (ouverture de rayon 1). Il pourrait être révélé en utilisant la
      propriété d'idempotence de cette transformation. Pour rappel, une
@@ -190,9 +192,9 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     avec Monteverdi? Quelles messages ne l'étaient pas?
 
     Pouvez vous imaginer d'autres procédés pour incruster des messages
-    indétectables dans les images? Une image (/image.tif/) et un
-    message sous la forme d'une image binaire (/message.tif/) vous
-    sont fournies pour vous exercer.
+    indétectables dans les images? Une image (~image.tif~) et un
+    message sous la forme d'une image binaire (~message.tif~) vous
+    sont fournies dans le répertoire ~Data/stegano/diy~ pour vous exercer.
 
 ** Le mécanisme des applications *Orfeo ToolBox*                  :solutions:
 *** Message 1
@@ -204,9 +206,9 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     *BandMath* pour seuiller les pixels au dessus de cette valeur:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_BandMath -il image1.tif 
+    $ otbcli_BandMath -il image1.tif          
                       -out decoded1.tif uint8 
-                      -exp "im1b1>4095?255:0"
+                      -exp "im1b1>4095?255:0" 
     #+END_EXAMPLE
 
     Le texte encodé apparaît alors en blanc sur fond noir.

@@ -8,7 +8,7 @@
      - Savoir réaliser une extraction de primitives simple
 
 **** Données
-     Les données pour cet exercice se trouvent dans le répertoire /sar/.
+     Les données pour cet exercice se trouvent dans le répertoire  ~Data/sar~.
 
 *** Déroulement
     1. Introduction à l'imagerie RSO
@@ -58,6 +58,9 @@
      - Savoir réaliser une extraction de primitives simple
 
 *** Étapes                                                            :steps:
+
+    Les données pour cet exercice se trouvent dans le répertoire  ~Data/sar~.
+
 **** Introduction à l'imagerie RSO
 
 Dans cette exercice nous utiliserons les extraits de l'image Sentinel 1 SLC :
