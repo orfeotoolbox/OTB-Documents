@@ -395,7 +395,7 @@ fournies avec le TP.
     
     #+BEGIN_EXAMPLE
     $ otbcli_ComputeImagesStatistics \
-    -il ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
                                      -out images_statistics.xml
     #+END_EXAMPLE
 
@@ -403,7 +403,7 @@ fournies avec le TP.
 
     #+BEGIN_EXAMPLE
     $ otbcli_TrainImagesClassifier \
-    -io.il ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -io.il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
       -io.vd ${LS8DATA}/training/training.shp \
       -sample.vfn CODE \
       -sample.vtr 0 \
@@ -416,7 +416,7 @@ fournies avec le TP.
 
     #+BEGIN_EXAMPLE
     $ otbcli_ImageClassifier \
-    -in ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
     -imstat images_statistics.xml \
     -model  model.svm \
     -out    labeled_image.tif
@@ -455,15 +455,15 @@ fournies avec le TP.
 
     #+BEGIN_EXAMPLE
     $ otbcli_ConcatenateImages -il \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
     -out image_concat.tif int16
     #+END_EXAMPLE
     
@@ -541,7 +541,7 @@ fournies avec le TP.
     $ for date in "20140309" "20140401" "20140417" "20140528" \
     "20140620" "20140731" "20140901" "20141003" "20141026"; do \
     otbcli_RadiometricIndices \
-    -in ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_${date}.tif \
+    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_${date}.tif \
     -out ${date}-ndvi.tif \
     -list Vegetation:NDVI \
     -channels.red 3 \
@@ -573,15 +573,15 @@ fournies avec le TP.
 
     #+BEGIN_EXAMPLE
     $ otbcli_ConcatenateImages -il \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
-    ${LS8DATA}/Extract16bit/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
     20140309-ndvi.tif \
     20140401-ndvi.tif \
     20140417-ndvi.tif \
