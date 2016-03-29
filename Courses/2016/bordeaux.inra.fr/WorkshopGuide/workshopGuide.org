@@ -3,7 +3,7 @@
 #+DATE: 2016
 #+OPTIONS: H:5
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright,french]
 #+LaTeX_HEADER: \usepackage{a4wide}
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
@@ -11,6 +11,8 @@
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[frenchb]{babel}
+#+LATEX_HEADER: \renewcommand{\contentsname}{Sommaire}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
@@ -34,8 +36,8 @@ oeuvre les outils disponibles dans les OTB applications pour
 l'exploitation, et la manipulation des images de télédection.
 
 Les capacités acquises en fin de formation concernent la mise en œuvre
-de chaine de traitements d'images en utilisant les applications OTB,
-incluant entre autre:
+de chaines de traitement d'images en utilisant les applications OTB,
+incluant notamment:
 - Extraction de primitives
 - Calibration
 - Classification
@@ -76,14 +78,14 @@ incluant entre autre:
 
 *** Répertoire Data
     Ce répertoire contient les données nécessaires à chaque TP, dans
-    des sous-répertoire séparés. Le sous-répertoire nécessaire est
+    des sous-répertoires séparés. Le sous-répertoire nécessaire est
     indiqué au début de l'énoncé du TP
 
 *** Répertoire Documentation
-    Ce répertoire contient la documentation de l'Orfeo ToolBox, et de Qgis:
+    Ce répertoire contient la documentation de l'Orfeo ToolBox, et de QGIS:
     - OTB Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
     - OTB CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
-    - QGis User Guide :: Manuel d'utilisation de Qgis
+    - QGIS User Guide :: Manuel d'utilisation de QGIS
 
 *** Répertoire Guide
 
@@ -101,34 +103,33 @@ nécessaires :
 
 - *Orfeo ToolBox* 5.2 ou plus récent avec les applications
 - *Monteverdi* 3.0 ou plus récent
-- *QGis* 2.4 ou plus récent
+- *QGIS* 2.4 ou plus récent
 
 Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
 de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
 
-Pour installer *QGis* consultez la documentation du logiciel qui est
+Pour installer *QGIS* consultez la documentation du logiciel qui est
 disponible sur le  [[http://www.qgis.org/][site du projet]].
 
 ** Les données
 
 Les données utilisées au cours du TP sont des extraits des données suivantes:
 
-- LandSat-8 :: plusieurs dates concaténées, dénuagés (gap-filling)
+- LandSat-8 :: plusieurs dates concaténées, dénuagées (gap-filling)
                avec des données terrains de référence au format ESRI
                Shapefile (pour le TP classification),
-- Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur
-              le site OSR MiPy, acquise en novembre 2013 (\copyright
-              ©CNES (2013), distribution Airbus DS/ Spot Image),
+- Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
+              Thématique Utilisateurs Pléiades - projet CNES) sur
+              le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright
+              CNES (2013), distribution Airbus DS/ Spot Image),
 - Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
                 résolues), bi-polarisation (HH et HV) sur le sud du
                 lac Constance (Allemagne).
 
-Pour obtenir d'autres données issues de ces capteurs:
+Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 - LandSat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
-- Sentinel-1 :: Données gratuites disponible sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
-
-
+- Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
 
 #+INCLUDE: "licence.org"
 

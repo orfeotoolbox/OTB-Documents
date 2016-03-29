@@ -3,9 +3,9 @@
 
 \begin{center}
 \vspace*{10cm}
-\tiny Creative Commons Attribution-ShareAlike 3.0 Unported License\\
+\small This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\\
 \normalsize
-\includegraphics[width=0.1\textwidth]{Images/CC-licence.png}
+\includegraphics[width=0.2\textwidth]{Images/cc-by-sa.png}
 \end{center}
 \newpage
 #+END_LaTeX

@@ -98,7 +98,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 **** Répertoire Documentation
      - Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
      - CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
-     - QGis User Guide :: Manuel d'utilisation de Qgis
+     - QGIS User Guide :: Manuel d'utilisation de QGIS
 
 *** Contenu du kit de formation
 **** Répertoire Guide
