@@ -3,7 +3,7 @@
 #+DATE: 2016
 #+OPTIONS: H:5
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright,french]
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
 #+LaTeX_HEADER: \usepackage{a4wide}
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
@@ -11,8 +11,6 @@
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
-#+LATEX_HEADER: \usepackage[frenchb]{babel}
-#+LATEX_HEADER: \renewcommand{\contentsname}{Sommaire}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
