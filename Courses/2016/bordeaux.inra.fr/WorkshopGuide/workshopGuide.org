@@ -89,7 +89,7 @@ incluant notamment:
 
     Ce répertoire contient l'ensemble des supports nécessaires à la réalisation des exercices de la formation:
     - Guide de TP
-    - Planches (cette présentation)
+    - Planches
     - Guide d'installation
     - Questionnaire d'évaluation
     - Solutions (distribuées à la fin)
