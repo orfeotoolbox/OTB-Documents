@@ -49,7 +49,7 @@
 *** Description                                                        :desc:
 **** Résumé
      
-     Cet exercice permet de se familariser avec la segmentation large
+     Cet exercice permet de se familiariser avec la segmentation large
      échelle en utilisant l'algorithme MeanShift. On y
      parcourt les différentes étapes jusqu'à l'export des polygones
      segmentés dans un SIG.
@@ -58,7 +58,7 @@
      
      - Logiciels installés (Monteverdi et Orfeo ToolBox)
      - Données issues du TP de pré-traitements pour l'imagerie THR optique
-     - Connaisance du mécanisme des applications de l'Orfeo ToolBox
+     - Connaissance du mécanisme des applications de l'Orfeo ToolBox
        (voir exercice correspondant)
        
 **** Objectifs
@@ -77,7 +77,7 @@
      facilite ainsi la segmentation de l'image par des méthodes
      simples, comme l'extraction des composantes
      connexes. L'algorithme moyenne itérativement les pixels dans un
-     certain voisinnage spatial et spectral.
+     certain voisinage spatial et spectral.
 
      Réaliser un lissage de l'image ~phr_orthopxs_osr_mipy_xt.tif~ en
      utilisant l'application *MeanShiftSmoothing*. Faites varier les
@@ -103,7 +103,7 @@
 **** Segmentation
 
      Cette étape va produire une segmentation initiale à partir des
-     images écrites précédement (sorties /fout/ et /foutpos/). Les
+     images écrites précédemment (sorties /fout/ et /foutpos/). Les
      pixels adjacents dont les valeurs dans l'image /fout/ sont
      distantes de moins de /ranger/ et dont les positions estimées
      dans l'image /foutpos/ sont distantes de moins de /spatialr/
@@ -122,7 +122,7 @@
      - L'image de sortie sera une image étiquettée, dans laquelle
        chaque pixel porte un label entier unique correspondant au
        segment auquel il appartient. Il est recommandé d'encoder cette
-       sortie en /uint32/ afin de disposer de suffisament de labels
+       sortie en /uint32/ afin de disposer de suffisamment de labels
        uniques.
      - Les valeurs pour les paramètres /ranger/ et /spatialr/ doivent
        être inférieures aux valeurs utilisées pour le lissage (étape
@@ -135,7 +135,7 @@
 
 **** Traitement des petites régions
 
-     Une fois la segmentation intiale réalisée, il reste en général
+     Une fois la segmentation initiale réalisée, il reste en général
      beaucoup de régions de petite taille, qui ne correspondent à
      aucun objet d'intérêt. L'application *LSMSSegmentation* permet de
      les filtrer (paramètre /minsize/), mais il est également possible
@@ -238,7 +238,7 @@
     #+END_EXAMPLE
 
     L'image de segmentation ainsi créée est difficilement
-    inteprétable à l'oeil nu. On peut la coloriser de la manière
+    interprétable. On peut la coloriser de la manière
     suivante:
 
     #+BEGIN_EXAMPLE
@@ -281,7 +281,7 @@
     régions de taille inférieur au paramètre spécifié ont été
     fusionnée avec les régions voisines les plus pertinentes.
 
-*** Vectorization
+*** Vectorisation
     
     Pour commencer, on calcule l'indice NDVI pour l'image initiale:
 

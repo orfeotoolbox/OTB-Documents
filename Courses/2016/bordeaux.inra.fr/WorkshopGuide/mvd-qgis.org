@@ -6,10 +6,10 @@
      - Savoir visualiser une image et régler son rendu dans Qgis,
      - Savoir visualiser une données vecteur dans Qgis,
      - Savoir visualiser une pile de données dans QGis,
-     - Echanger des trucs et astuces.
+     - Échanger des trucs et astuces.
 
 **** Données
-     Les données utilisées se trouvent dans les réperoires suivant:
+     Les données utilisées se trouvent dans les répertoires suivant:
      - ~Data/preprocessing~ (extrait Pléiades)
      - ~Data/classification/Extract16bits/~ (séries temporelle LandSat8)
      - ~Data/classification/training/~ (fichier vecteur shp)
@@ -25,7 +25,7 @@
     - Plusieurs logiciels qui partagent des fonctionnalités communes
     - Mais des philosophies parfois différentes (Monteverdi orienté et centré "Image", QGIS
       plateforme SIG)
-    - Plusieurs façon de faire la meme opération dans ces logiciels
+    - Plusieurs façon de faire la même opération dans ces logiciels
 *** Monteverdi
     - A l'origine c'est un outil simple de démonstration du potentiel de la librairie OTB
     - Devenu un outil intégré de visualisation qui embarque toutes les
@@ -49,7 +49,7 @@
       - Stack layer (pile d'images)
       - [[https://www.orfeo-toolbox.org/CookBook/CookBookch2.html#x19-180002][Voir A brief tour of Monteverdi]]
 *** Quantum GIS 
-    - système d'information géographique (SIG): stème d'information capable d'organiser et de présenter des données alphanumériques spatialement référencées
+    - système d'information géographique (SIG): système d'information capable d'organiser et de présenter des données alphanumériques spatialement référencées
     - Les principales fonctionnalités d'un SIG sont les suivantes :
       - Affichage ou production de cartes
       - Analyse des données pour créer une nouvelle information
@@ -58,7 +58,7 @@
       - Archivage
     - Beaucoup de support de formation, tutoriels disponibles (par exemple en français: Intro ENTE Aix - ENS - Licence ouverte)
 *** Quantum GIS processing (a partir de la version 2.0)
-    - Plateforme de traitements permettant d'intéragir avecinteragir avec GRASS,
+    - Plateforme de traitements permettant d'intéragir avec GRASS,
       SAGA-GIS, R et l'OTB!
     - Historique: intégration dans QGIS du projet sextante (développée par Victor Olaya)
     - Accès à toutes les applications OTB (certaines sont repackagées avec une

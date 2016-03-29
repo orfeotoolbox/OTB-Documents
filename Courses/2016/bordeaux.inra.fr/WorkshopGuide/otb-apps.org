@@ -19,7 +19,7 @@
 *** Rapide intro aux OTB-Applications
     - Orfeo ToolBox est une *bibliothèque* offrant des fonctionnalités de télédétection
     - Souvent nécessaire de combinant plusieurs fonctions (filtres) OTB dans une
-      chaine de traitements
+      chaîne de traitements
     - Besoin interface de plus haut niveau (paramètres, les données d'entrée et
       de sortie, les logs...)
     - Chaque application correspond à une fonctionnalité de "haut niveau"

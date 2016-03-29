@@ -90,7 +90,7 @@
 
      - Logiciels installés (Monteverdi et Orfeo ToolBox)
      - Données téléchargées
-     - Connaisance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
+     - Connaissance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
 
 **** Objectifs
      
@@ -104,13 +104,13 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
 
 **** Encodage des images
 
-     Dans l'Orfeo ToolBox, c'est l'utilisateurs qui choisit le type
+     Dans l'Orfeo ToolBox, c'est l'utilisateur qui choisit le type
      d'encodage des images en fonction de ce que l'image
      représente. Ainsi, on choisira en général:
      - Un encodage entier sur 8 bits non-signés (plage de valeurs
        [0,255]) pour des sorties destinées à un affichage ou des
        rapports,
-     - Un encodage entietre sur 16 bits non signés pour représenter
+     - Un encodage entier sur 16 bits non signés pour représenter
        des images satellites,
      - Un encodage flottant (32 ou 64 bits) quand on représente le
        résultat d'un calcul produisant des nombres réels (NDVI,
@@ -145,7 +145,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
      fichier image (voir paragraphe sur les noms de fichier étendus) ?
 
      Utilisez l'application *RadiometricIndices* pour calculer un
-     indice de vegetation NDVI à partir de l'image en entier sur 16
+     indice de végétation NDVI à partir de l'image en entier sur 16
      bits ainsi créée. Conservez l'encodage de la sortie en entier sur
      16 bits. Visualisez le résultat. Que constatez vous ? Quel
      encodage faut-il utiliser pour stocker correctement cette image ?
@@ -229,7 +229,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
      /streaming:sizevalue/. Que constatez vous ?
 
      Pour mieux observer les phénomènes, il est conseillé d'ouvrir un
-     moniteur système permettant de surveiller l'occuption des
+     moniteur système permettant de surveiller l'occupation des
      processeurs et le débit instantané vers les disques durs.
 
 **** Le multi-threading
@@ -396,7 +396,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
      Après exécution de cette commande, l'image de sortie correspond
      à un extrait de la sortie totale, commençant à l'index
      $(1000,1000)$ et de taille 100x100 pixels. Cette option peut être
-     utile pour prévisualiser le résultat d'un traitement avant de
+     utile pour pré visualiser le résultat d'un traitement avant de
      traiter l'image entière.
 
 *** La gestion du streaming

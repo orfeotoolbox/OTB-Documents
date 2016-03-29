@@ -2,7 +2,7 @@
 *** Objectifs et Données
 **** Objectifs
       Les objectifs sont les suivants:
-     - Connaître les différentes applications consistuant la procédure
+     - Connaître les différentes applications constituant la procédure
        de classification supervisée
      - Utiliser différents algorithmes pour l'apprentissage
      - Savoir mesurer les performances de la classification
@@ -129,13 +129,13 @@
      
      - Logiciels installés (Monteverdi et Orfeo ToolBox)
      - Données téléchargées
-     - Connaisance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
+     - Connaissance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
      - Notions de classification supervisée
      
 **** Objectifs
 
      Les objectifs sont les suivants:
-     - Connaître les différentes applications consistuant la procédure
+     - Connaître les différentes applications constituant la procédure
        de classification supervisée
      - Utiliser différents algorithmes pour l'apprentissage
      - Savoir mesurer les performances de la classification
@@ -165,7 +165,7 @@
      | 2014-10-26 |
      |------------|
 
-    Ces images sont chacune multispectrales avec les septs bandes du capteur OLI:
+    Ces images sont chacune multispectrales avec les sept bandes du capteur OLI:
 
     |---+---------------------|
     | 0 | Coastal aerosol     |
@@ -177,7 +177,7 @@
     | 6 | SWIR 2              |
     |---+---------------------|
 
-    Au total, c'est donc 63 bandes qui representent chaque pixel.
+    Au total, c'est donc 63 bandes qui représentent chaque pixel.
     Les images sont encodés sur 16 bits.
 
     Ouvrez une image dans monteverdi et régler les bandes pour un affichage en
@@ -255,7 +255,7 @@
 
     D'autres paramètres sont important aussi:
     - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
-    - sample.vtr 0 :: Ratio de l'emsemble d'apprentissage sur l'ensemble de
+    - sample.vtr 0 :: Ratio de l'ensemble d'apprentissage sur l'ensemble de
       validation. 0 ici car nous utilisons notre propre découpe.
     - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
       est 1000. La réduire permet d'accélérer significativement le temps
@@ -266,7 +266,7 @@
    Une fois le modèle de classification appris, il peut être utilisé pour
    classifier tout les pixels de l'image.
 
-   Utilisez l'application *ImageClassifier*, en specifiant le modèle créé dans
+   Utilisez l'application *ImageClassifier*, en spécifiant le modèle créé dans
    l'étape précédente.
 
 ***** Rendu
@@ -283,14 +283,14 @@
 
   Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
   des polygones. les 70% restant sont dans le fichier ~testing/testing.shp~ et
-  servent à evaluer les performances du modèle appris en calculant la matrice de
+  servent à évaluer les performances du modèle appris en calculant la matrice de
   confusion.
 
   Utilisez l'application *ComputeConfusionMatrix* avec le jeu de donnée de test
   pour produire la matrice de confusion du modèle appris.
 
-  Le paramètre /ref.vector.field CODE/ est nécéssaire. Il indique le nom du
-  champ contenant le numero de label.
+  Le paramètre /ref.vector.field CODE/ est nécessaire. Il indique le nom du
+  champ contenant le numéro de label.
 
   Consultez la matrice de confusion et identifiez les classes bien différenciés.
 
@@ -312,13 +312,13 @@
   spectrales supplémentaire. Avec les données LANDSAT 8, il s'agit
   donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
   façon à être réparties temporellement sur une année. Cela permet
-  d'intégrer les variation saisonales qui apporte beaucoup
+  d'intégrer les variation saisonnières qui apporte beaucoup
   d'information pour la discrimination de certaines classes.
 
-  Avant tout, créez un repertoire /classif9/ pour cette partie.
+  Avant tout, créez un répertoire /classif9/ pour cette partie.
 
   Les étapes sont les mêmes que précédement, mais il faut d'abord constituer une
-  image de 63 bandes en concatenant les 9 images.
+  image de 63 bandes en concaténant les 9 images.
 
   Pour cela, utilisez l'application *ConcatenateImages*.
 
@@ -334,7 +334,7 @@
 
    - sample.bm 0 :: Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
     classe.
-   - sample.mt 2000 :: Le nombre maximum d'échantillons d'aprentissage par
+   - sample.mt 2000 :: Le nombre maximum d'échantillons d'apprentissage par
     classe.
    - classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
    - classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
@@ -346,7 +346,7 @@
   
   Une image NDVI peut-être calculée pour chaque image de la série temporelle
   pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
-  profil permetra d'améliorer les performance de classification.
+  profil permettra d'améliorer les performance de classification.
 
   Calculer une image de NDVI pour chaque image de la série temporelle en
   utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
@@ -354,7 +354,7 @@
   Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
   temporelle.
 
-  Concatenez les neuf images d'indices en une seule pour constituer un profil
+  Concaténez les neuf images d'indices en une seule pour constituer un profil
   NDVI. Ouvrez le profil dans QGIS. Visualiser le profil NDVI temporellement
   avec l'outil bouton identifier les entités, puis vue graphique.
 
@@ -362,7 +362,7 @@
 
   Créez un répertoire /classifNDVI/ pour cette partie.
 
-  En suivant la même méthode que précédement, réaliser une classification de la
+  En suivant la même méthode que précédemment, réaliser une classification de la
   série temporelle augmentée du profil NDVI.
 
   Les résultats sont ils améliorés par rapport à la classification multi date
@@ -379,8 +379,8 @@
   - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur
   existante.
 
-  Filtrez le resultat de la classification précédente (neuf dates et
-  profil NDVI) puis comparer les resultats avec les images RGB (dans
+  Filtrez le résultat de la classification précédente (neuf dates et
+  profil NDVI) puis comparer les résultats avec les images RGB (dans
   monteverdi) et avec les matrices de confusions (avec un tableur).
 
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
@@ -434,7 +434,7 @@ fournies avec le TP.
     #+END_EXAMPLE
 
     Pour une meilleure visualisation des résultats, on réalise une
-    carte colorisée en fonction de la classe attribuée:
+    carte couleur en fonction de la classe attribuée:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ColorMapping \
@@ -448,7 +448,7 @@ fournies avec le TP.
     très bonne: on va maintenant essayer d'améliorer la discrimination
     des classes de végétation en utilisant plusieurs dates.
 
-*** Classification multidate
+*** Classification multi-date
 
     Pour commencer, on va concaténer les images de l'ensemble des
     dates en une seule image de $7x9=63$ bandes:
@@ -569,7 +569,7 @@ fournies avec le TP.
 
 *** Classification du profil de NDVI
     
-    Pour la classification, on rajoute également les bandes spectrales intiales pour toutes les dates:
+    Pour la classification, on rajoute également les bandes spectrales initiales pour toutes les dates:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ConcatenateImages -il \
@@ -666,7 +666,7 @@ fournies avec le TP.
     #+END_EXAMPLE
     
 
-    On peut ensuite rejouter les étapes de colorisation et de validation:
+    On peut ensuite rejouer les étapes de colorisation et de validation:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ColorMapping \

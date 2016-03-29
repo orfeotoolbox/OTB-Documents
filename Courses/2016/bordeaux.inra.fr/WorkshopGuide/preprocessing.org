@@ -8,7 +8,7 @@
      Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
 *** Déroulement
     Le déroulement du TP est le suivant:
-    1. Corrections atmostphériques
+    1. Corrections atmosphériques
     2. Fusion P+XS
     3. Ortho-rectification
 *** Calibration radiométrique
@@ -134,7 +134,7 @@ des images à l'aide d'*OTB applications*.
        
 **** Objectifs
 ***** Savoir réaliser une calibration optique
-      - Pouvoir inter-comparer les valeurs entre images pour le meme capteur
+      - Pouvoir inter-comparer les valeurs entre images pour le même capteur
          (multi-temp) et multi-capteurs
        - Conversion en réflectance TOA (Top of Atmosphere) et TOC (Top of Canopy)
 ***** Savoir réaliser une fusion (pan-sharpening)
@@ -226,11 +226,11 @@ _Trucs et astuces :_
      types d'images:
      - Multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
        de résolution spectrale donnée. Pour Pléiades, 4 bandes (B,V,R,PIR) à une
-       résolution spatiale de 2,8m (rééchantillonné à 2m)
+       résolution spatiale de 2,8m (rééchantillonnée à 2m)
      - Panchromatique (PAN): image en niveau de gris avec un détecteur couvrant
        une plus large partie du spectre ce qui permet d'augmenter le flux et
        d'améliorer la résolution par rapport à l'image multi-spectrale. 0,7m
-       dans le cas de Pléiades (rééchantillonné à 0,5m)
+       dans le cas de Pléiades (rééchantillonnée à 0,5m)
      
 
      Nous allons réaliser cette fusion à partir des extraits pan et xs en
