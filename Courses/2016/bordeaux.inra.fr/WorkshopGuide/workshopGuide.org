@@ -34,7 +34,7 @@ oeuvre les outils disponibles dans les OTB applications pour
 l'exploitation, et la manipulation des images de télédection.
 
 Les capacités acquises en fin de formation concernent la mise en œuvre
-de chaine de traitements d'images en utilisant les applications OTB,
+de chaines de traitement d'images en utilisant les applications OTB,
 incluant entre autre:
 - Extraction de primitives
 - Calibration
@@ -76,7 +76,7 @@ incluant entre autre:
 
 *** Répertoire Data
     Ce répertoire contient les données nécessaires à chaque TP, dans
-    des sous-répertoire séparés. Le sous-répertoire nécessaire est
+    des sous-répertoires séparés. Le sous-répertoire nécessaire est
     indiqué au début de l'énoncé du TP
 
 *** Répertoire Documentation
@@ -118,7 +118,7 @@ Les données utilisées au cours du TP sont des extraits des données suivantes:
                Shapefile (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur
               le site OSR MiPy, acquise en novembre 2013 (\copyright
-              ©CNES (2013), distribution Airbus DS/ Spot Image),
+              CNES (2013), distribution Airbus DS/ Spot Image),
 - Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
                 résolues), bi-polarisation (HH et HV) sur le sud du
                 lac Constance (Allemagne).
@@ -126,7 +126,7 @@ Les données utilisées au cours du TP sont des extraits des données suivantes:
 Pour obtenir d'autres données issues de ces capteurs:
 - LandSat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
-- Sentinel-1 :: Données gratuites disponible sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
+- Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
 
 
 

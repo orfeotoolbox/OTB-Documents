@@ -108,10 +108,10 @@
 
     Pour cet exercice, il est proposé de travailler en binôme. A la
     fin de l'exercice, chaque binôme présentera au reste du groupe une
-    astuce qu'il a découverte en manipulant les logiciels, ou posera
+    astuce qu'il a découvert en manipulant les logiciels, ou posera
     une question qui est restée sans réponse au terme de l'exercice.
 
-**** Visualiser une images dans Monteverdi
+**** Visualiser une image dans Monteverdi
 
      Ouvrir l'image ~phr_xs_osr_mipy.tif~ du répertoire
      ~Data/preprocessing~ dans Monteverdi.
@@ -162,11 +162,11 @@
      Chargez les autres images LandSat8, et appliquez leurs le style ainsi créé.
 
      Quelles sont les différences entre les fonctionnalités de
-     visualisation d'image offertes par Monteverdi et Qgis ?
+     visualisation d'images offertes par Monteverdi et Qgis ?
 
-**** Visualiser une données vecteur dans Qgis
+**** Visualiser une donnée vecteur dans Qgis
 
-     Ouvrez la données vecteur ~training.shp~ situé dans le dossier
+     Ouvrez la donnée vecteur ~training.shp~ situé dans le dossier
      ~Data/classification/training/~.
 
      En utilisant le menu contextuel, ouvrez les /Propriétés/ puis

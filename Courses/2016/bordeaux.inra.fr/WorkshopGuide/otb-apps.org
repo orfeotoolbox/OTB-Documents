@@ -74,7 +74,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** Description                                                        :desc:
 **** Résumé
      
-     Au cours de cette exercice, nous allons apprendre à utiliser les
+     Au cours de cet exercice, nous allons apprendre à utiliser les
      applications de l'Orfeo ToolBox. Des images intégrants des
      messages codés par stéganographie vous sont proposées. A vous
      d'utiliser les applications de l'Orfeo ToolBox afin de révéler le

@@ -333,11 +333,11 @@ _Trucs et astuces :_
      Utilisez l'application *Orthorectification* pour réaliser
         l'orthorectification du produit fusionné:
         1. Sans DEM
-        2. Avec un DEM et un geoid (utilisé le sous-répertoire ~SRTM~)
+        2. Avec un DEM et un geoid (utilisez le sous-répertoire ~SRTM~)
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
         4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
         5. Dans quelle zone UTM se trouve l'extrait PHR Pléiades?
-        6. Tester plusieurs types de projection en sortie (wgs84, lambert 93)
+        6. Tester plusieurs types de projection en sortie (WGS84, Lambert 93)
 
 ** Pré-traitements de l'imagerie THR optique                      :solutions:
 *** Corrections atmosphériques

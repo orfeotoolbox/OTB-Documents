@@ -206,7 +206,7 @@
     |------+-----------------------------+------------|
 
 
-    Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
+    Ouvrez un des fichiers de polygones dans Qgis. La table d'attributs est
     accessible depuis clic-droit sur la couche -> ouvrir la table des attributs.
     Chaque label est visible et la liste est filtrable par expression SQL.
 
@@ -232,7 +232,7 @@
 
 ***** Calcul des statistiques
 
-    Les variables doivent êtres comparables entre chaque image. La première
+    Les variables doivent êtres comparables entre chaque images. La première
     étape est le calcul de statistiques pour que les données puissent être
     normalisés: moyenne nulle et écart-type de 1.
     
@@ -249,7 +249,7 @@
 
     - io.il :: l'image d'entrée
     - io.vd :: le fichier vectoriel d'apprentissage (training.shp)
-    - io.imstat :: le fichier xml de statistique calculé précédement
+    - io.imstat :: le fichier xml de statistiques calculé précédement
     - classifier :: la méthode, ici utilisez /libsvm/
     - io.out :: le nom du fichier modèle en sortie, par exemple /model.rf/
 
@@ -302,14 +302,14 @@
 
 **** Classification multidate
 
-     Les performances de cette premières classification ne sont pas
-     très bonne: on va maintenant essayer d'améliorer la
+     Les performances de cette première classification ne sont pas
+     très bonnes: on va maintenant essayer d'améliorer la
      discrimination des classes de végétation en utilisant plusieurs
      dates.
 
   Le principe de la classification multidate est d'utiliser pour
   chaque pixel, toute les dates disponibles comme des bandes
-  spectrales supplémentaire. Avec les données LANDSAT 8, il s'agit
+  spectrales supplémentaires. Avec les données LANDSAT 8, il s'agit
   donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
   façon à être réparties temporellement sur une année. Cela permet
   d'intégrer les variation saisonnières qui apporte beaucoup
@@ -346,9 +346,9 @@
   
   Une image NDVI peut-être calculée pour chaque image de la série temporelle
   pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
-  profil permettra d'améliorer les performance de classification.
+  profil permettra d'améliorer les performances de classification.
 
-  Calculer une image de NDVI pour chaque image de la série temporelle en
+  Calculer une image de NDVI pour chaque images de la série temporelle en
   utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
 
   Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
@@ -376,8 +376,7 @@
   Les paramètres à régler sont:
 
   - ip.radius 1 :: Rayon de la zone participant au vote
-  - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur
-  existante.
+  - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur existante.
 
   Filtrez le résultat de la classification précédente (neuf dates et
   profil NDVI) puis comparer les résultats avec les images RGB (dans

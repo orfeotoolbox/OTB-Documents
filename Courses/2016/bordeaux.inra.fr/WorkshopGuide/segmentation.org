@@ -72,8 +72,8 @@
 **** Lissage de l'image par l'algorithme MeanShift
 
      L'algorithme du MeanShift réalise un lissage de l'image tout en
-     préservant ses contours. Il rend ainsi l'images plus homogène
-     tout en conservant des frontière franche entre les zones. Il
+     préservant ses contours. Il rend ainsi l'image plus homogène
+     tout en conservant des frontières franches entre les zones. Il
      facilite ainsi la segmentation de l'image par des méthodes
      simples, comme l'extraction des composantes
      connexes. L'algorithme moyenne itérativement les pixels dans un
@@ -154,7 +154,7 @@
      
 **** Vectorisation
      
-     La dernière étape consiste à exporter les polygones ainsi créé
+     La dernière étape consiste à exporter les polygones ainsi créés
      vers un fichier vectoriel. L'application *LSMSVectorization*
      permet d'effectuer cette étape, en calculant au passage la
      moyenne et la variance de chaque polygone en fonction d'une image

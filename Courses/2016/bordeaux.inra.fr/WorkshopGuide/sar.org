@@ -81,7 +81,7 @@ d'Ulm près du lac Constance (47.456276, 9.638616).
 
 Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUEST
 
-1. Ouvrir les images dans Monteverdi. A quoi correspondent les 2 images combien de bandes possèdent-elles?
+1. Ouvrir les images dans Monteverdi. A quoi correspondent les 2 images ? Combien de bandes possèdent-elles?
 2. A quoi correspondent ces bandes? 
 3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et ~s1_hv.tif~.
 
@@ -94,14 +94,14 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      radars provenant de capteurs différents ou de capteurs identiques utilisés
      dans différents modes. 
 
-     On peut de l'image d'entrée les caractéristiques physiques originales des
+     On veut de l'image d'entrée les caractéristiques physiques originales des
      valeurs de rétrodiffusion. Les valeurs suivantes peuvent etre calculées:
      - beta zero: luminosité radar (slant range)
      - sigma zero: rétrodiffusion radar (directement relié au propriété du sol)
-     - gamma zero: rétrodiffusion radar normalisée par l'angle d'incidence (à privilégier généralement ) 
+     - gamma zero: rétrodiffusion radar normalisée par l'angle d'incidence (à privilégier généralement) 
 
      Pour Sentinel-1 est fourni une table de
-     valeur permettant de faire la conversion depuis les comptes numérique vers
+     valeur permettant de faire la conversion depuis les comptes numériques vers
      ces différentes grandeurs.
 
      1. Quelle application permet d'effectuer cette opération dans l'OTB?
@@ -118,8 +118,8 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      Il existe plusieurs méthodes pour réduire ce bruit. Dans la suite nous
      allons utiliser le filtre de /Frost/ qui possède 2 paramètres: rayon: taille de la fenêtre
-     et /deramp/ qui contrôle la décroissance d'une fonction exponentiel qui est
-     utilisé pour pondéré la distance entre le pixel central et son voisinage.
+     et /deramp/ qui contrôle la décroissance d'une fonction exponentielle qui est
+     utilisée pour pondérer la distance entre le pixel central et son voisinage.
 
      Plus de détail sur le speckle et le filtre de Frost [[http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf][ici]].
 
@@ -138,25 +138,25 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      1. Calculez la différence entre l'image d'intensité HH et HV. On peut
         prendre 2 fois HV car la valeur rétrodiffusée en HV est généralement
-        inférieur. Sur cette image je propose d'utiliser la différence simple HH-HV
+        inférieure. Sur cette image je propose d'utiliser la différence simple HH-HV
      2. Effectuez une composition colorée avec les bandes HH, HV et HH-HV. On peut
         prendre 2 fois HV car la valeur rétrodiffusée en HV est généralement inférieur.
      3. Convertissez la composition colorée en Décibel (Db)
      4. Affichez le résultat avec Monteverdi et commentez les différences entre
         HH et HV (zone de layover, zone de végétation, sol nu, zone en eau...)
-     5. Jouons un peu pour finir à "Où est Charlie?".A partir de la
-        composition colorée en Décibel:
-        - Indiquer les coordonnées de 2 lignes électrique parallèle visible dans l'image?
+     5. Jouons un peu pour finir à "Où est Charlie?". A partir de la
+        composition colorée en décibels:
+        - Indiquer les coordonnées de 2 lignes électrique parallèles visible dans l'image?
         - Plus dur, chercher dans l'image une zone réagissant comme un coin réflecteur
           ("croix").
         - A quoi correspondent les "points" en violet dans le lac autour des
           coordonnées (930,1170)?
 
-        Vous pouvez pour faciliter l'analyse visualisez la zone d'étude dans
+        Vous pouvez pour faciliter l'analyse: visualisez la zone d'étude dans
         [[https://www.google.fr/maps/place/47%C2%B027'51.0%22N+9%C2%B036'22.5%22E/@47.462655,9.5676349,18957m/data=!3m1!1e3!4m2!3m1!1s0x0:0x0][Google Maps]].
 
         Et aussi remettre les images en Ouest/Est avec par exemple l'outil
-        ImagMagick:
+        ImageMagick:
 
         #+BEGIN_EXAMPLE
         convert input.tif -depth 32 
