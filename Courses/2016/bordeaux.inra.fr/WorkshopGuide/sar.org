@@ -19,7 +19,8 @@
 *** Différence Optique/SAR
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:Images/actif_passif_cours_cnes.png]]
-    (source cours cnes)
+    (source CNES: IMAGERIE SPATIALE Des principes d’acquisition au traitement
+    des images optiques pour l’observation de la Terre)
 *** Introduction SAR
     - RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
     - Impulsions hyperfréquences et enregistrement des échos

@@ -310,7 +310,7 @@
       1. Comparez les résultats obtenus entre les SVM et les RF?
       2. Comparez les résultats obtenus avec les RF avec et sans normalisation?
 
-**** Classification multidate
+**** Classification multi-date
 
      Les performances de cette première classification ne sont pas
      très bonnes: on va maintenant essayer d'améliorer la

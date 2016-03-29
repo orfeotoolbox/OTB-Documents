@@ -2,7 +2,7 @@
 *** Objectifs et Données
 **** Objectifs
      - Savoir visualiser une image et régler son rendu dans Monteverdi,
-     - Savoir visualiser une pile de données dans Monteverdi
+     - Savoir visualiser une pile de données dans Monteverdi,
      - Savoir visualiser une image et régler son rendu dans QGIS,
      - Savoir visualiser une données vecteur dans QGIS,
      - Savoir visualiser une pile de données dans QGIS,
