@@ -33,8 +33,8 @@
 *** Calibration radiométrie
     - comportement de la réflexion dépend des caractéristiques de la surface
     - notamment de sa rugosité, de l'humidité des sols
-    - Comme pour l'optique, la calibration permet de transformer des CN en
-      grandeur physique
+    - Comme pour l'optique, la calibration permet de transformer des comptes
+      numériques (CN) en grandeur physique
     - Permet d'inter-comparer des images radars provenant de capteurs différents
       ou de capteurs identiques utilisés dans différents modes
 *** Speckle
@@ -76,12 +76,13 @@
 **** Introduction à l'imagerie RSO
 
 Dans cette exercice nous utiliserons les extraits de l'image Sentinel 1 SLC :
-~s1_hh.tif~ et ~s1_hv.tif~. L'image se situe en Allemagne au sud de la ville
-d'Ulm près du lac Constance (47.456276, 9.638616).
+~s1_hh.tif~ et ~s1_hv.tif~. L'image se situe en Allemagne au sud du lac
+Constance (47.456276, 9.638616).
 
 Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUEST
 
-1. Ouvrir les images dans Monteverdi. A quoi correspondent les 2 images ? Combien de bandes possèdent-elles?
+1. Ouvrir les images dans Monteverdi. Combien de bandes dans chaque image? A
+   quoi correspondent ces bandes?
 2. A quoi correspondent ces bandes? 
 3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et ~s1_hv.tif~.
 
@@ -90,7 +91,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      unité (radar reflectivity or radar brightness).
 
      Le produit est accompagné de métadonnées permettant de transformer ces
-     valeurs en grandeur physique qui permettent d'intercomparer des images
+     valeurs en grandeur physique qui permettent de comparer des images
      radars provenant de capteurs différents ou de capteurs identiques utilisés
      dans différents modes. 
 
@@ -108,8 +109,9 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      2. Effectuer la calibration des extraits complexes HH et HV et calculer les grandeurs
         gamma zero (gamma naught en anglais). Attention, le fichier geom n'est
         pas reconnu automatiquement dans l'application. Il faut utiliser
-        l'option de fichier étendu "&geom=" en entrée. 
-     3. Convertir l'image gamma zero en dB.
+        l'option de fichier étendu "&geom=" en entrée et utiliser les fichiers
+        ~s1_hh_calibration.geom~ et ~s1_hv_calibration.geom~.. 
+     3. Convertir les images calibrées en décibel.
 
 **** Filtrage du speckle
      Les images SAR sont fortement affectées par le chatoiement (speckle) qui constitue un
@@ -133,7 +135,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
 **** Polarimétrie
      Nous allons comparer de manière qualitative la différence entre les
-     observations des images en polarimétries HH et HV pour détecter certains
+     observations des images en polarimétrie HH et HV pour détecter certains
      éléments dans l'image.
 
      1. Calculez la différence entre l'image d'intensité HH et HV. On peut
@@ -144,9 +146,9 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      3. Convertissez la composition colorée en Décibel (Db)
      4. Affichez le résultat avec Monteverdi et commentez les différences entre
         HH et HV (zone de layover, zone de végétation, sol nu, zone en eau...)
-     5. Jouons un peu pour finir à "Où est Charlie?". A partir de la
-        composition colorée en décibels:
-        - Indiquer les coordonnées de 2 lignes électrique parallèles visible dans l'image?
+     5. Jouons un peu pour finir à /Où est Charlie?/. A partir de la
+        composition colorée en Décibel:
+        - Indiquer les coordonnées de 2 lignes électrique parallèle visible dans l'image?
         - Plus dur, chercher dans l'image une zone réagissant comme un coin réflecteur
           ("croix").
         - A quoi correspondent les "points" en violet dans le lac autour des
@@ -199,18 +201,32 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      2. Pour Sentinel-1 les coefficients de calibration sont lus automatiquement
         dans les métadonnées du produit:
         #+BEGIN_EXAMPLE
-        $ otbcli_SarRadiometricCalibration -in "s1_hh.tif?&geom=s1_hh.geom"
+        $ otbcli_SarRadiometricCalibration -in "s1_hh.tif?&geom=s1_hh_calibration.geom"
                                            -out s1_hh_gamma0.tif
                                            -lut gamma
         #+END_EXAMPLE
 
-        Idem pour l'extrait en polarisation HV
+        Pour l'extrait de l'image en polarisation HV:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_SarRadiometricCalibration -in "s1_hv.tif?&geom=s1_hv_calibration.geom"
+                                           -out s1_hv_gamma0.tif
+                                           -lut gamma
+        #+END_EXAMPLE
         
      3. Attention au pixel <= 0 dans l'expression du log!
 
         #+BEGIN_EXAMPLE
         $ otbcli_BandMath -in s1_hh_gamma0.tif
                           -out s1_hh_gamma0_db.tif
+                          -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+
+        Et pour HV:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath -in s1_hv_gamma0.tif
+                          -out s1_hv_gamma0_db.tif
                           -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
 
@@ -271,7 +287,11 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         - HV moins sensible à la rugosité
         - Zone en eau: réponse radar faible (HH)
      3. Analyse de la composition colorée:
-        - Lignes électriques parallèles autour des coordonnées image (230,3700)
-        - Coin réflecteur au coordonnée image (3620,2925)
-        - Plot métalliques pour amarrer les bateaux 
+        - 2 lignes électriques parallèles autour des coordonnées (230,3700)
+        - Coin réflecteur au coordonnée image (3620,2925). C'est peut etre un
+          coin réflecteur fixe positionné pour la validation géométrique de
+          Sentinel-1 (cette zone fait partie des zones de validation de la
+          mission). Je n'ai pas trouvé d'information permettant de vérifier
+          cette hypothèse.
+        - Plots métalliques pour amarrer les bateaux 
      
