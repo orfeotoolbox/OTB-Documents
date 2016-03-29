@@ -1,11 +1,11 @@
-** Utiliser Monteverdi et QGis                                       :slides:
+** Utiliser Monteverdi et QGIS                                       :slides:
 *** Objectifs et Données
 **** Objectifs
      - Savoir visualiser une image et régler son rendu dans Monteverdi,
      - Savoir visualiser une pile de données dans Monteverdi
-     - Savoir visualiser une image et régler son rendu dans Qgis,
-     - Savoir visualiser une données vecteur dans Qgis,
-     - Savoir visualiser une pile de données dans QGis,
+     - Savoir visualiser une image et régler son rendu dans QGIS,
+     - Savoir visualiser une données vecteur dans QGIS,
+     - Savoir visualiser une pile de données dans QGIS,
      - Échanger des trucs et astuces.
 
 **** Données
@@ -18,8 +18,8 @@
 
     1. Visualiser une image dans Monteverdi
     2. Visualiser une pile d'images dans Monteverdi
-    3. Visualiser une image dans Qgis
-    4. Visualiser une données vecteur dans Qgis
+    3. Visualiser une image dans QGIS
+    4. Visualiser une données vecteur dans QGIS
 
 *** Introduction
     - Plusieurs logiciels qui partagent des fonctionnalités communes
@@ -80,12 +80,12 @@
       - Savoir visualiser une pile de données
     - Travail 15 minutes en binome et en aveugle
     - Tour de table (30 à 45 minutes), chaque binome passe devant les autres et propose une astuce ou pose une question
-** Utiliser *Monteverdi* et *QGis*                                  :guide:
+** Utiliser *Monteverdi* et *QGIS*                                  :guide:
 *** Description                                                        :desc:
 **** Résumé
      Ce TP est l'occasion de découvrir et de prendre en main les
-     logiciels que nous utiliserons pour visualiser les données et
-     résultats produits. Ces logiciels sont, au choix, QGis ou
+     logiciels que nous utiliserons pour visualiser les données et les
+     résultats produits. Ces logiciels sont, au choix, QGIS ou
      Monteverdi. Les données utilisées lors de ce TP sont les données
      qui seront utilisées pour la suite de la formation.
 
@@ -96,12 +96,13 @@
        
 **** Objectifs
 
-     les objectifs de ce TP sont les suivants:
+     Les objectifs de ce TP sont les suivants:
+
      - Savoir visualiser une image et régler son rendu dans Monteverdi,
      - Savoir visualiser une pile de données dans Monteverdi
-     - Savoir visualiser une image et régler son rendu dans Qgis,
-     - Savoir visualiser une données vecteur dans Qgis,
-     - Savoir visualiser une pile de données dans QGis,
+     - Savoir visualiser une image et régler son rendu dans QGIS,
+     - Savoir visualiser une données vecteur dans QGIS,
+     - Savoir visualiser une pile de données dans QGIS,
      - Echanger des trucs et astuces.
 
 *** Étapes                                                            :steps:
@@ -148,12 +149,12 @@
 
      Fermez Monteverdi.
 
-**** Visualiser une image dans Qgis
+**** Visualiser une image dans QGIS
 
-     Ouvrir la première date LandSat8 dans Qgis. Utilisez le menu
+     Ouvrir la première date LandSat8 dans QGIS. Utilisez le menu
      contextuel de la couche pour aller dans /Propriétés/ puis dans
      l'onglet /Style/ et régler l'affichage (dynamique et bandes) pour
-     le rendre équivalent à celui de /monteverdi/. Toujours avec le
+     le rendre équivalent à celui de Monteverdi. Toujours avec le
      menu contextuel, ajouter le style ainsi créé pour pouvoir
      l'appliquer à d'autres images.
 
@@ -162,9 +163,9 @@
      Chargez les autres images LandSat8, et appliquez leurs le style ainsi créé.
 
      Quelles sont les différences entre les fonctionnalités de
-     visualisation d'images offertes par Monteverdi et Qgis ?
+     visualisation d'images offertes par Monteverdi et QGIS ?
 
-**** Visualiser une donnée vecteur dans Qgis
+**** Visualiser une donnée vecteur dans QGIS
 
      Ouvrez la donnée vecteur ~training.shp~ situé dans le dossier
      ~Data/classification/training/~.
@@ -182,6 +183,6 @@
      A l'aide de l'outil de sélection conditionel, sélectionnez
      uniquement les polygônes correspondants à cette classe.
      
-** Utiliser *Monteverdi* et *Qgis*                                :solutions:
+** Utiliser *Monteverdi* et *QGIS*                                :solutions:
 
    Les manipulations demandées sont démontrées par le formateur à la fin de l'exercice.

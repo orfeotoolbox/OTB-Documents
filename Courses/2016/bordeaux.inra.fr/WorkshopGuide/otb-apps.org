@@ -13,7 +13,7 @@
 
 *** Déroulement
     Le TP consiste à décoder successivement 6 messages encodés par
-    stéganographie dans les images, en utilisant les applications OTB.
+    [[https://fr.wikipedia.org/wiki/St%25C3%25A9ganographie][stéganographie]] dans les images, en utilisant les applications OTB.
 
 
 *** Rapide intro aux OTB-Applications

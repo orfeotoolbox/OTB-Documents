@@ -122,7 +122,7 @@
 
      Cet exercice permet de se familiariser avec les applications de
      classification supervisée pixellique de l'Orfeo ToolBox, en
-     utilisant une série multi-temporelle Landsat8 et un vrai jeu de
+     utilisant une série multi-temporelle Landsat8 et un jeu de
      données de référence pour la supervision.
 
 **** Pré-requis
@@ -165,7 +165,7 @@
      | 2014-10-26 |
      |------------|
 
-    Ces images sont chacune multispectrales avec les sept bandes du capteur OLI:
+    Ces images sont toutes multispectrales avec les sept bandes du capteur OLI:
 
     |---+---------------------|
     | 0 | Coastal aerosol     |
@@ -192,7 +192,7 @@
     |------+-----------------------------+------------|
     | Code | Nom                         | #polygones |
     |------+-----------------------------+------------|
-    |   11 | Éte                         |       7898 |
+    |   11 | Été                         |       7898 |
     |   12 | Hiver                       |       8171 |
     |   31 | Foret feuilles caduques     |        867 |
     |   32 | Foret feuilles persistantes |        125 |
@@ -206,8 +206,8 @@
     |------+-----------------------------+------------|
 
 
-    Ouvrez un des fichiers de polygones dans Qgis. La table d'attributs est
-    accessible depuis clic-droit sur la couche -> ouvrir la table des attributs.
+    Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
+    accessible depuis clic-droit sur la couche -> /Ouvrir la table des attributs/.
     Chaque label est visible et la liste est filtrable par expression SQL.
 
     Les polygones sont répartis en deux ensembles: apprentissage (training) et
@@ -224,7 +224,7 @@
        4. Rendu
        5. Validation
 
-    Dans la suite du TP, vous réalisez d'autres classifications sur d'autres
+    Dans la suite du TP, vous réaliserez d'autres classifications sur d'autres
     images. Un conseil est donc de travailler dans un répertoire par sous
     partie, par exemple /classif1/.
 
@@ -299,6 +299,16 @@
 
   Vous pouvez utiliser le squelette csv (~template_confusion_matrix.csv~) pour
   identifier les labels facilement.
+***** Optionnel: Découvrir d'autres méthodes d'apprentissage
+      
+      Refaire toute la classification sur une date en utilisant l'algorithme
+      Random Forest à la place des SVM.
+
+      Effectuez l'ensemble de la procédure avec et sans l'étape 1 /Calcul des
+      statistiques/.
+
+      1. Comparez les résultats obtenus entre les SVM et les RF?
+      2. Comparez les résultats obtenus avec les RF avec et sans normalisation?
 
 **** Classification multidate
 
@@ -317,7 +327,7 @@
 
   Avant tout, créez un répertoire /classif9/ pour cette partie.
 
-  Les étapes sont les mêmes que précédement, mais il faut d'abord constituer une
+  Les étapes sont les mêmes que précédemment, mais il faut d'abord constituer une
   image de 63 bandes en concaténant les 9 images.
 
   Pour cela, utilisez l'application *ConcatenateImages*.
@@ -325,7 +335,7 @@
   Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
   63 bandes sur 16 bits avec /gdalinfo/.
 
-  Puis effectuez les même étapes que précédement: *ComputeImageStatistics*,
+  Puis effectuez les même étapes que précédemment: *ComputeImageStatistics*,
   *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
   
   Utilisez cette fois la méthode Random Forest pour le modèle qui est plus
@@ -339,7 +349,7 @@
    - classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
    - classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
 
-  Comparez ensuite les resultats avec la classification à une date en utilisant
+  Comparez ensuite les résultats avec la classification à une date en utilisant
   la matrice de confusion et l'image RGB.
 
 **** Calcul d'un profil de NDVI
@@ -564,7 +574,7 @@ fournies avec le TP.
     -out ndvi-profile.tif
     #+END_EXAMPLE
 
-    Ce qui permet d'analyser le profil dans Qgis par exemple.
+    Ce qui permet d'analyser le profil dans QGIS par exemple.
 
 *** Classification du profil de NDVI
     

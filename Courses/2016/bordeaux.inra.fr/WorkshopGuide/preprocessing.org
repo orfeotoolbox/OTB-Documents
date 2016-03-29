@@ -17,7 +17,7 @@
      [[file:Images/atmo_correction.png]]
      (source image http://www.hkcoastalwaterquality.tk/Methodology.html)
 **** Comptes numériques (DN)
-     Sortie du capteur (pas de grandeur physique)
+     Sortie du capteur (pas de grandeur physique, dépend du capteur)
 **** Luminance
      Quantité de lumière en entrée de l'instrument (W.m-2.sr-1)
 **** Réflectance Top Of Atmosphere (TOA) 
@@ -136,20 +136,21 @@ des images à l'aide d'*OTB applications*.
 ***** Savoir réaliser une calibration optique
       - Pouvoir inter-comparer les valeurs entre images pour le même capteur
          (multi-temp) et multi-capteurs
-       - Conversion en réflectance TOA (Top of Atmosphere) et TOC (Top of Canopy)
+      - Conversion en réflectance TOA (Top of Atmosphere) et TOC (Top of Canopy)
 ***** Savoir réaliser une fusion (pan-sharpening)
       - Produit Pan (résolu) et XS (multi-spectral)
       - Tester différentes techniques de fusion
-      - Voir les spécificités de la fusion en fonction du capteur (/mode Pléiades/)
+      - Voir les spécificités de la fusion en fonction du capteur (mode /Pléiades/)
       - Visualisation des images et les effets par la fusion (objets mobiles, indices radiométriques)
 ***** Savoir réaliser une orthorectification
       - Spatialiser l'image
-      - Associer une coordonnées géographique aux pixels
-      - Connaître les pré-requis, les biais, les approximations réalisées
+      - Associer une coordonnée géographique au pixel
+      - Connaître les pré-requis, les biais, les approximations réalisées...
        
 *** Étapes                                                            :steps:
 
-Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
+Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les
+sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
 
 Dans cette partie de l'exercice, vous utiliserez les images
 ~phr_xs_osr_mipy.tif~ et ~phr_pan_osr_mipy.tif~. Ce sont des extraits Pan et XS
@@ -210,7 +211,8 @@ Avec l'image ~phr_xs_osr_mipy.tif~:
    réflectance de surface (top of canopy).
 3. Comparez les 2 images en utilisant Monteverdi ou les applications
    en ligne de commande (TOA-TOC). Comparez cette différence pour les bandes
-   rouge, verte et bleu (B0,B1,B2)
+   rouge, verte et bleu (B0,B1,B2). Quelle bande est le plus /impactée/ par la
+   correction TOC?
 4. Appliquez les opérations 1,2 et 3 à l'image panchromatique ~phr_pan_osr_mipy.tif~.
 
 _Trucs et astuces :_
@@ -226,7 +228,7 @@ _Trucs et astuces :_
      types d'images:
      - Multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
        de résolution spectrale donnée. Pour Pléiades, 4 bandes (B,V,R,PIR) à une
-       résolution spatiale de 2,8m (rééchantillonnée à 2m)
+       résolution spatiale de 2,8m (rééchantillonnées à 2m)
      - Panchromatique (PAN): image en niveau de gris avec un détecteur couvrant
        une plus large partie du spectre ce qui permet d'augmenter le flux et
        d'améliorer la résolution par rapport à l'image multi-spectrale. 0,7m
@@ -250,6 +252,10 @@ _Trucs et astuces :_
 
 **** Ortho-rectification
      Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
+
+     Le schéma ci-dessous décrit l'ensemble des étapes susceptibles d'etre
+     réalisées pour passer d'un ensemble de produit de niveau 1 à une pile
+     d'images co-registrées et géo-localisées.
 
      #+BEGIN_LaTeX
      \begin{center}
@@ -330,6 +336,10 @@ _Trucs et astuces :_
      \end{tikzpicture}
      \end{center}
      #+END_LaTeX
+
+     Les modalités de ces étapes peuvent varier en fonction du type de capteurs
+     en entrée. 
+
      Utilisez l'application *Orthorectification* pour réaliser
         l'orthorectification du produit fusionné:
         1. Sans DEM
@@ -343,7 +353,8 @@ _Trucs et astuces :_
 *** Corrections atmosphériques
      
     Calcul réflectance TOA:
-     #+BEGIN_EXAMPLE
+
+    #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
                                 -out phr_xs_osr_mipy_toa.tif uint16
                                 -level toa
@@ -359,6 +370,7 @@ _Trucs et astuces :_
 
 
     Calcul réflectance TOC:
+
      #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
                                 -out phr_xs_osr_mipy_toc.tif uint16 
@@ -388,6 +400,10 @@ entre les 2 images multispectral:
                       -out diff_pan_toa_toc.tif int16 
                       -exp "im1b1-im2b1"
     #+END_EXAMPLE
+
+    On constate que la bande bleue est la plus sensible aux effets
+    atmosphériques. En effet c'est pour la bande bleue que l’influence de la
+    diffusion moléculaire sur le signal est maximale (effet en $\lambda^{-4}$). 
 
 *** Fusion P+XS
     #+BEGIN_EXAMPLE

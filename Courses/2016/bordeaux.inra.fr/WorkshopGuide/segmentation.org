@@ -14,7 +14,7 @@
     2. Segmentation
     3. Traitement des petites régions
     4. Vectorisation
-    5. Filtrage des polygones dans Qgis
+    5. Filtrage des polygones dans QGIS
 
 *** Algorithme MeanShift (1/4)
     #+ATTR_LATEX: :float t :width 0.4\textwidth
@@ -119,11 +119,11 @@
      Utilisez l'application *LSMSSegmentation* pour réaliser cette
      étape. A noter:
      - Utilisez un /minsize/ de 0 dans cette première étape,
-     - L'image de sortie sera une image étiquettée, dans laquelle
-       chaque pixel porte un label entier unique correspondant au
-       segment auquel il appartient. Il est recommandé d'encoder cette
-       sortie en /uint32/ afin de disposer de suffisamment de labels
-       uniques.
+     - L'image de sortie sera une image étiquettée, dans laquelle chaque pixel
+       porte un label entier unique correspondant au segment auquel il
+       appartient. Il est recommandé d'encoder cette sortie en /uint32/ afin de
+       disposer de suffisamment de labels uniques. En effet la segmentation
+       génère potentiellement un grand nombre de segments.
      - Les valeurs pour les paramètres /ranger/ et /spatialr/ doivent
        être inférieures aux valeurs utilisées pour le lissage (étape
        précédente). Des valeurs d'environ la moitié de celles utilisées
@@ -170,10 +170,10 @@
 
      Utilisez l'application *LSMSVectorization* en utilisant l'image
      ainsi créée et l'image de segmentation en entrée. Choisissez un
-     format /shapefile/ (extension shp) pour le fichier de sortie.
+     format /ESRI Shapefile/ (extension shp) pour le fichier de sortie.
 
      Ouvrez l'image initiale ainsi que le fichier vecteur ainsi créé
-     dans Qgis. Changez le style d'affichage de la couche vecteur pour
+     dans QGIS. Changez le style d'affichage de la couche vecteur pour
      afficher la bordure des polygones en rouge et le corp
      transparent. Analysez plus finement la segmentation ainsi
      affichée.
@@ -181,10 +181,10 @@
      Ouvrez la table des attributs de la données vectorielle. Que
      constatez vous ?
      
-**** Filtrage des polygones dans Qgis
+**** Filtrage des polygones dans QGIS
      
      Utilisez l'outil de sélection par une expression de la table des
-     attributs dans Qgis pour sélectionner les segments qui ne sont
+     attributs dans QGIS pour sélectionner les segments qui ne sont
      pas des ombres, et copiez les dans une nouvelle couche vecteur.
 
      Utilisez la calculatrice de champs de la table des attributs pour
@@ -195,7 +195,7 @@
      \end{center}
 
      Utilisez l'outil de sélection par une expression de la table des
-     attributs dans Qgis pour sélectionner les petits objets compacts
+     attributs dans QGIS pour sélectionner les petits objets compacts
      dont la valeur moyenne du NDVI est forte (arbres ?). Copiez les
      dans une nouvelle couche.     
 
@@ -310,11 +310,11 @@
                                -inseg final_seg.tif -out segmentation.shp
     #+END_EXAMPLE
     
-    En ouvrant la table des attributs dans Qgis, on constate qu'on
+    En ouvrant la table des attributs dans QGIS, on constate qu'on
     peut accéder pour chaque polygone à la moyenne et à la variance
     de chaque bande de l'image (incluant le NDVI).
 
-*** Filtrage polygones dans Qgis
+*** Filtrage polygones dans QGIS
     
     Pour sélectionner tout les segments qui ne sont pas des ombres à
     l'aide de l'outil de sélection par expression, on peut utiliser
