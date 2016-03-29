@@ -206,8 +206,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     *BandMath* pour seuiller les pixels au dessus de cette valeur:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_BandMath -il image1.tif          
-                      -out decoded1.tif uint8 
+    $ otbcli_BandMath -il image1.tif           \
+                      -out decoded1.tif uint8  \
                       -exp "im1b1>4095?255:0" 
     #+END_EXAMPLE
 
@@ -219,8 +219,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     en utilisant l'application *EdgeDetection*:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_EdgeExtraction -in message2.tif 
-                            -filter gradient 
+    $ otbcli_EdgeExtraction -in image2.tif    \
+                            -filter gradient    \
                             -out decoded2.tif
     #+END_EXAMPLE
 
@@ -231,10 +231,10 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     *RadiometricIndices*:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_RadiometricIndices -in message3.tif 
-                                -channels.red 1 
-                                -channels.nir 4 
-                                -list Vegetation:NDVI  
+    $ otbcli_RadiometricIndices -in image3.tif      \
+                                -channels.red 1       \
+                                -channels.nir 4       \
+                                -list Vegetation:NDVI \
                                 -out decoded3.tif
     #+END_EXAMPLE
 
@@ -242,8 +242,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     avec l'application *BandMath*:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_BandMath -il image3.tif  
-                      -out decoded3.tif 
+    $ otbcli_BandMath -il image3.tif                    \
+                      -out decoded3.tif                 \
                       -exp "(im1b4-im1b1)/(im1b4+im1b1)"
     #+END_EXAMPLE
 
@@ -253,8 +253,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     les 2 bits de poids faible en utilisant l'application *BandMath*:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_BandMath -il image4.tif 
-                      -out decoded4.tif 
+    $ otbcli_BandMath -il image4.tif               \
+                      -out decoded4.tif            \
                       -exp "im1b1-4*rint(im1b1/4)"
     #+END_EXAMPLE
     
@@ -270,11 +270,11 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     se concentre le bruit:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_DimensionalityReduction -in image5.tif 
-                                     -out pca6.tif 
+    $ otbcli_DimensionalityReduction -in image5.tif  \
+                                     -out pca6.tif   \
                                      -method pca
-    $ otbcli_ExtractROI -in pca6.tif 
-                        -out decoded6.tif 
+    $ otbcli_ExtractROI -in pca6.tif                 \
+                        -out decoded6.tif            \
                         -cl Channel4
     #+END_EXAMPLE
 
@@ -287,12 +287,12 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     l'image, on observera $f(image)$.
 
     #+BEGIN_EXAMPLE
-    $ otbcli_GrayScaleMorphologicalOperation -in image6.tif 
-                                             -out ouverture6.tif 
-                                             -structype.ball.xradius 1 
-                                             -structype.ball.yradius 1 
-                                             -filter opening
-    $ otbcli_BandMath -il image6.tif ouverture6.tif 
-                      -out decoded6.tif 
+    $ otbcli_GrayScaleMorphologicalOperation -in image6.tif             \
+                                             -out ouverture6.tif        \
+                                             -structype.ball.xradius 1  \
+                                             -structype.ball.yradius 1  \
+                                             -filter opening            
+    $ otbcli_BandMath -il image6.tif ouverture6.tif                     \
+                      -out decoded6.tif                                 \
                       -exp "(im2b1-im1b1)"
     #+END_EXAMPLE

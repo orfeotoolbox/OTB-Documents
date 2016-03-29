@@ -350,10 +350,25 @@ _Trucs et astuces :_
                                 -milli 1
     #+END_EXAMPLE
 
+    #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration -in phr_pan_osr_mipy.tif 
+                                -out phr_pan_osr_mipy_toa.tif uint16
+                                -level toa
+                                -milli 1
+    #+END_EXAMPLE
+
+
     Calcul réflectance TOC:
      #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration -in phr_xs_osr_mipy.tif 
-                                -out phr_xs_osr_mipy_toa.tif uint16 
+                                -out phr_xs_osr_mipy_toc.tif uint16 
+                                -level toc
+                                -milli 1
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration -in phr_pan_osr_mipy.tif 
+                                -out phr_pan_osr_mipy_toc.tif uint16 
                                 -level toc
                                 -milli 1
     #+END_EXAMPLE

@@ -545,7 +545,7 @@ fournies avec le TP.
     -out ${date}-ndvi.tif \
     -list Vegetation:NDVI \
     -channels.red 3 \
-    -channels.nir 4 \
+    -channels.nir 4 ; \
     done
     #+END_EXAMPLE
     
