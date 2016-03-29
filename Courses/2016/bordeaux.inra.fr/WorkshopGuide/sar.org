@@ -79,7 +79,18 @@ Dans cette exercice nous utiliserons les extraits de l'image Sentinel 1 SLC :
 ~s1_hh.tif~ et ~s1_hv.tif~. L'image se situe en Allemagne au sud du lac
 Constance (47.456276, 9.638616).
 
-Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUEST
+Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUEST.
+
+Si vous voulez remettre les images en Ouest/Est, vous pouvez utiliser par
+exemple l'outil ImageMagick:
+
+        #+BEGIN_EXAMPLE
+        convert input.tif -depth 32 
+        -define quantum:format=floating-point 
+        -flop output.tif
+        #+END_EXAMPLE
+
+Cela n'est pas nécessaire pour effectuer le TP
 
 1. Ouvrir les images dans Monteverdi. Combien de bandes dans chaque image? A
    quoi correspondent ces bandes?
@@ -157,14 +168,6 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         Vous pouvez pour faciliter l'analyse: visualisez la zone d'étude dans
         [[https://www.google.fr/maps/place/47%C2%B027'51.0%22N+9%C2%B036'22.5%22E/@47.462655,9.5676349,18957m/data=!3m1!1e3!4m2!3m1!1s0x0:0x0][Google Maps]].
 
-        Et aussi remettre les images en Ouest/Est avec par exemple l'outil
-        ImageMagick:
-
-        #+BEGIN_EXAMPLE
-        convert input.tif -depth 32 
-        -define quantum:format=floating-point 
-        -flop output.tif
-        #+END_EXAMPLE
 **** Extraction d'information
 
      Pour aller plus loin on pourra ensuite explorer les primitives et les
@@ -183,17 +186,19 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
    Pour HH:
 
    #+BEGIN_EXAMPLE
-    $ otbcli_BandMath -il s1_hh.tif 
-                      -out intensity_hh.tif int32 
-                      -exp "im1b1*im1b1+im1b2*im1b2"
+    $ otbcli_BandMath \
+   -il s1_hh.tif \
+   -out intensity_hh.tif int32 \
+   -exp "im1b1*im1b1+im1b2*im1b2"
    #+END_EXAMPLE
 
    Pour HV:
 
    #+BEGIN_EXAMPLE
-    $ otbcli_BandMath -il s1_hv.tif 
-                      -out intensity_hv.tif int32 
-                      -exp "im1b1*im1b1+im1b2*im1b2"
+    $ otbcli_BandMath \
+    -il s1_hv.tif \
+    -out intensity_hv.tif int32 \
+    -exp "im1b1*im1b1+im1b2*im1b2"
    #+END_EXAMPLE
 
 **** Calibration radiométrique
@@ -201,33 +206,37 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      2. Pour Sentinel-1 les coefficients de calibration sont lus automatiquement
         dans les métadonnées du produit:
         #+BEGIN_EXAMPLE
-        $ otbcli_SarRadiometricCalibration -in "s1_hh.tif?&geom=s1_hh_calibration.geom"
-                                           -out s1_hh_gamma0.tif
-                                           -lut gamma
+        $ otbcli_SarRadiometricCalibration \
+        -in "s1_hh.tif?&geom=s1_hh_calibration.geom" \
+        -out s1_hh_gamma0.tif \
+        -lut gamma
         #+END_EXAMPLE
 
         Pour l'extrait de l'image en polarisation HV:
 
         #+BEGIN_EXAMPLE
-        $ otbcli_SarRadiometricCalibration -in "s1_hv.tif?&geom=s1_hv_calibration.geom"
-                                           -out s1_hv_gamma0.tif
-                                           -lut gamma
+        $ otbcli_SarRadiometricCalibration \ 
+        -in "s1_hv.tif?&geom=s1_hv_calibration.geom" \
+        -out s1_hv_gamma0.tif \
+        -lut gamma
         #+END_EXAMPLE
         
      3. Attention au pixel <= 0 dans l'expression du log!
 
         #+BEGIN_EXAMPLE
-        $ otbcli_BandMath -in s1_hh_gamma0.tif
-                          -out s1_hh_gamma0_db.tif
-                          -exp "im1b1>0?10*log10(im1b1):0"
+        $ otbcli_BandMath \
+        -in s1_hh_gamma0.tif \
+        -out s1_hh_gamma0_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
 
         Et pour HV:
 
         #+BEGIN_EXAMPLE
-        $ otbcli_BandMath -in s1_hv_gamma0.tif
-                          -out s1_hv_gamma0_db.tif
-                          -exp "im1b1>0?10*log10(im1b1):0"
+        $ otbcli_BandMath \
+        -in s1_hv_gamma0.tif \
+        -out s1_hv_gamma0_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
 
 **** Filtrage du speckle
@@ -240,10 +249,11 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      2. Réduction du speckle avec l'algorithme de Frost:
 
         #+BEGIN_EXAMPLE
-        $ otbcli_Despeckle -in intensity_hh.tif 
-                           -out intensity_hh_speckle.tif 
-                           -filter frost 
-                           -filter.frost.rad 3
+        $ otbcli_Despeckle \
+        -in intensity_hh.tif \ 
+        -out intensity_hh_speckle.tif \ 
+        -filter frost \
+        -filter.frost.rad 3
         #+END_EXAMPLE
 
         L'augmentation du rayon a pour effet d'augmenter le lissage de l'image
@@ -263,22 +273,26 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 **** Polarimétrie
      1. Calcul de la différence HH-HV:
         #+BEGIN_EXAMPLE
-      $ otbcli_BandMath -il intensity_hh_speckle.tif intensity_hv_speckle.tif
-                        -out hh-hv_speckle.tif -exp "im1b1-2*im2b1"
+      $ otbcli_BandMath \
+      -il intensity_hh_speckle.tif intensity_hv_speckle.tif \
+      -out hh-hv_speckle.tif \
+      -exp "im1b1-2*im2b1"
         #+END_EXAMPLE
      2. On effectue ensuite la concaténation entre les polarisations croisées et la
         différence des 2:
      #+BEGIN_EXAMPLE
-      $ otbcli_ConcatenateImages -il intensity_hh_speckle.tif
-                                 intensity_hv_speckle.tif hh-hv_speckle.tif 
-                                 -out intensity_compo.tif 
+      $ otbcli_ConcatenateImages \ 
+      -il intensity_hh_speckle.tif \
+      intensity_hv_speckle.tif hh-hv_speckle.tif \ 
+      -out intensity_compo.tif 
      #+END_EXAMPLE
      1. Attention au pixel <= 0 dans l'expression du log!
 
         #+BEGIN_EXAMPLE
-        $ otbcli_BandMath -in intensity_compo.tif
-                          -out intensity_compo_db.tif
-                          -exp "im1b1>0?10*log10(im1b1):0"
+        $ otbcli_BandMath \
+        -in intensity_compo.tif \
+        -out intensity_compo_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
      2. Commentaires:
         - layover: correspond à un effet géométrique réponse similaire HH et HV
