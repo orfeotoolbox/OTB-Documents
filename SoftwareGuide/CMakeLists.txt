@@ -18,7 +18,7 @@ endif()
 
 PROJECT(SoftwareGuide C)
 
-
+message(WARNING "The official SoftwareGuide has been merged into the OTB repository. This version is not outdated and will likely be removed")
 
 #
 # File that defines the path to .cxx examples in OTB sources

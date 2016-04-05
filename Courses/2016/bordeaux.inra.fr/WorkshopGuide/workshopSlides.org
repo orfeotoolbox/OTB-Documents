@@ -115,7 +115,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
                Shapefile (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur
               le site OSR MiPy, acquise en novembre 2013 (\copyright
-              ©CNES (2013), distribution Airbus DS/ Spot Image),
+              CNES (2013), distribution Airbus DS/ Spot Image),
 - Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
                 résolues), bi-polarisation (HH et HV) sur le sud du
                 lac Constance (Allemagne).

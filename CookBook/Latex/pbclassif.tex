@@ -28,7 +28,7 @@ This tool will compute each band mean, compute the standard deviation based on
 pooled variance of each band and finally export them to an XML file.
 The features statistics XML file will be an input of the following tools.
 
-\subsubsection{Building the training data set}
+\subsubsection{Building the training data set}\label{sssec:building}
 
 As the chain is supervised, we first need to build a training set with
 positive examples of different objects of interest. These polygons
@@ -40,7 +40,7 @@ field with a label value higher than 1 and coherent in each images.
 
 You can generate the vector data set with \qgis software for
 example and save it in an OGR vector format supported by \gdal (ESRI
-sphapefile for example). \app should be able to transform the
+shapefile for example). \app should be able to transform the
 vector data into the image coordinate system.
 
 \subsubsection{Performing the learning scheme}
@@ -130,7 +130,7 @@ Color mapping can be used to apply color transformations on the final
 graylevel label image. It allows to get an RGB classification map
 by re-mapping the image values to be suitable for display purposes.
 One can use the \application{ColorMapping} application. This tool will
-replace each label with an 8-bits RGB color specificied in a mapping
+replace each label with an 8-bits RGB color specified in a mapping
 file. The mapping file should look like this :
 
 \begin{verbatim}
@@ -317,7 +317,7 @@ vegetation: green, buildings with red roofs: red, undecided: white).}
 \end{figure}
  
 
-\subsubsection{Recommandations to properly use the fusion of classification maps}
+\subsubsection{Recommendations to properly use the fusion of classification maps}
 
 In order to properly use the \application{FusionOfClassifications} application, 
 some points should be considered. First, the \verb?list_of_input_images? and 
@@ -347,7 +347,7 @@ to this majority label value. The ball shaped neighborhood is identified by its 
 \subsubsection{Handling ambiguity and not classified pixels in the majority voting based regularization}
 
 Since, the Majority Voting regularization may lead to not unique majority labels in the neighborhood, it is important to define
-which behaviour the filter must have in this case. For this purpose, a Boolean parameter (called ip.suvbool) is used in the
+which behavior the filter must have in this case. For this purpose, a Boolean parameter (called ip.suvbool) is used in the
 \application{ClassificationMapRegularization} application to choose whether pixels with more than one majority class are set to
 Undecided (true), or to their Original labels (false = default value).
 
@@ -378,7 +378,7 @@ otbcli_ClassificationMapRegularization  -io.in              labeled_image.tif
 \end{verbatim}
  
 
-\subsubsection{Recommandations to properly use the majority voting based regularization}
+\subsubsection{Recommendations to properly use the majority voting based regularization}
 
 In order to properly use the \application{ClassificationMapRegularization} application, some points should be considered.
 First, both \verb?InputLabeledImage? and \verb?OutputLabeledImage? are single band labeled images, which means that the
@@ -416,7 +416,7 @@ that are \application{TrainRegression} and \application{PredictRegression}.
 
 \subsubsection{Input datasets}
 
-The input dataset for training must have the following structure :
+The input data set for training must have the following structure :
 \begin{itemize}
 \item \textit{n} components for the input predictors
 \item one component for the corresponding output value
@@ -445,7 +445,7 @@ training. It allows to normalize the dynamic of the input predictors to a standa
 one : zero mean, unit standard deviation. The main difference with the classification
 case is that with regression, the dynamic of output values can also be reduced.
 
-The statistics file format is identic to the output file from \application{ComputeImagesStatistics}
+The statistics file format is identical to the output file from \application{ComputeImagesStatistics}
 application, for instance :
 \begin{verbatim}
 <?xml version="1.0" ?>
@@ -501,7 +501,7 @@ The regression mode is currently supported for :
 \end{itemize}
 
 The behaviour of \application{TrainRegression} application is very similar to
-\application{TrainImagesClassifier}. From the input dataset, a portion of the samples
+\application{TrainImagesClassifier}. From the input data set, a portion of the samples
 is used for training, whereas the other part is used for validation. The user may
 also set the model to train and its parameters. Once the training is done, the
 model is stored in an output file.
@@ -522,8 +522,8 @@ otbcli_TrainRegression  -io.il                training_set.tif
 Once the model is trained, it can be used in \application{PredictRegression} application
 to perform the prediction on an entire image containing input predictors (i.e.
 an image with only \textit{n} feature components). If the model was trained with
-normalization, the same statistic file must be used for prediction. The behaviour
-of \application{PredictRegression} with respect to statistic file is identic to
+normalization, the same statistic file must be used for prediction. The behavior
+of \application{PredictRegression} with respect to statistic file is identical to
 \application{TrainRegression} :
 \begin{itemize}
 \item no statistic file : normalization off
@@ -539,3 +539,125 @@ otbcli_PredictRegression  -in     features_bis.tif
                           -imstat stats.xml
                           -out    prediction.tif
 \end{verbatim}
+
+
+
+\subsection{Samples selection}\label{ssec:samplesselect}
+
+Since release 5.4, new functionalities related to the handling of the vectors from the training data set (see also \ref{sssec:building}) were added to OTB.
+
+The first improvement was provided by the application PolygonClassStatistics. This application processes a set of geometries intended for training, 
+and outputs statistics about different kind of geometries (in the form of a xml file) :
+\begin{itemize}
+\item number of samples per class
+\item number of samples per geometry
+\end{itemize}
+
+Supported geometries are polygons, lines and points; depending on the geometry type, this application behaves differently : 
+\begin{itemize}
+\item polygon : select points whose center is inside the polygon
+\item lines : select points intersecting the line
+\item points : select closest point to the provided point
+\end{itemize}
+The application also takes as input a support image; here, the values of its pixels are not used; 
+the purpose is rather to provide geometry information to the application. 
+The user can also provide a raster mask, that will be used to discard some samples.
+
+A simple use of the application PolygonClassStatistics could be as follows :
+\begin{verbatim}
+otbcli_PolygonClassStatistics  -in     support_image.tif
+                               -vec    variousTrainingVectors.sqlite
+                               -field  class
+                               -out    polygonStat.xml
+\end{verbatim}
+
+Once the statistics have been computed, comes the application OGRDataResampler (not yet released at the time of writing this document).
+The purpose of this application is to select samples from the training data set.
+
+First of all, this application needs the xml file computed by PolygonClassStatistics (parameter instats).
+Then, there are three different strategies to select samples (parameter sampstrat) :
+\begin{itemize}
+\item minnbsamp (default) : randomly select samples in such a way that the final sampled classes have the size of the smallest one.
+\item nbsampallclasses : randomly select samples in such a way that the final sampled classes have a size of N (with N below or equal to the size of the smallest class).
+\item nbsampbyclass : set the required number for each class manually with the following pattern : "class\_name1:nb\_samples1 class\_name2:nb\_samples2 ...".
+\end{itemize}
+Once the strategy is selected, the application outputs samples which are spatially uniformly distributed (parameter out).
+
+In addition to the parameters instats, sampstrat, and out, some others must be compulsorily specified:
+\begin{itemize}
+\item in : an input image must be provided to this application (parameter in). Here again, the values of its pixels are not used;
+the purpose is rather to provide geometry information so that the selected samples can be outputted as physical points.
+\item vec : input training vector data set, from where to pick samples.
+\item layer : index specifying from which layer to pick samples.
+\item field : set the field of the selected samples.
+\end{itemize}
+
+Some other optional arguments can also be passed to the application:
+\begin{itemize}
+\item mask : an optional raster mask can be used to discard samples.
+\item outrates : allows to output a txt file that summarizes the sampling rates for each class.
+\item outsampvec / insampvec : internally, this application uses a random lists of bits to decide
+    whether to select a sample or not. If users wish they could exactly repeat the selection process,
+    they should output these lists in a txt file, and reload it the next time. This is the purpose of these two parameters.
+\item maxsampvecsize : allows to limit the size of the lists of bits mentioned above, to optimize the memory footprint.
+\end{itemize}
+
+As with the PolygonClassStatistics application, different types  of geometry are supported : polygons, lines, points. 
+The behavior of this application is exactly the same as the one of PolygonClassStatistics.
+
+
+A simple use of the application OGRDataResampler could be as follows :
+\begin{verbatim}
+otbcli_PolygonClassStatistics  -in support_image.tif
+                               -vec variousVectors.sqlite
+                               -field class
+                               -instats apTvClPolygonClassStatisticsOut.xml
+                               -sampstrat nbsampbyclass
+                               -nbsampbyclass "1:98 2:100 3:23"
+                               -out resampledVectors.sqlite
+\end{verbatim}
+
+In this example, "apTvClPolygonClassStatisticsOut.xml" refers to the statistics computed by the PolygonClassStatistics application.
+The training data set from which we need to select samples is "variousVectors.sqlite". Here no mask was used, so every points had a chance to be selected.
+The sampling strategy is set to "nbsampbyclass", meaning that the user must indicate the number of samples to be selected for each class.
+This information is provided thanks to the string "1:98 2:100 3:23"; its interpretation is easy to grasp : 
+for class whose name is "1", the application mus select 98 samples, and so forth.
+The result is outputted to "resampledVectors.sqlite".
+
+Let's continue with another example :
+\begin{verbatim}
+otbcli_PolygonClassStatistics  -in support_image.tif
+                               -vec variousVectors.sqlite
+                               -mask some_mask.tif
+                               -field class
+                               -instats apTvClPolygonClassStatisticsOut.xml
+                               -out resampledVectors.sqlite
+\end{verbatim}
+
+This time, a mask was used; its pixels were interleaved with O and 1 values : it means that only fifty percents of the points could be selected.
+The parameter "sampstrat" was left empty; therefore, the used strategy was "minnbsamp" (default). 
+In this situation, the application identified the smallest class, \textit{taking into account the mask constraint} : 
+the result was class "1" with 104 samples. Then, the application uniformly and randomly selected 104 samples from classes "2" et "3".
+The result is shown in figure \ref{fig:samples1}.
+
+If the application is run a second time, we get another random selection for the classes "2" and "3".
+The sample selection for the class "1" didn't change : this is normal, 
+as the application will always select every point of the smallest class when using the "minnbsamp" strategy.
+The result is shown in figure \ref{fig:samples2}.
+
+
+
+\begin{center}
+  \begin{figure}[h!]
+    \includegraphics[width=\textwidth]{../Art/samplesselect1.png}
+    \itkcaption[First selection]{First selection.}
+    \label{fig:samples1}
+   \end{figure}
+   
+   \begin{figure}[h!]
+    \includegraphics[width=\textwidth]{../Art/samplesselect2.png}
+    \itkcaption[Second selection]{Second selection.}
+    \label{fig:samples2}
+   \end{figure}
+      
+\end{center}
