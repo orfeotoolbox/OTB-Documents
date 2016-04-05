@@ -65,11 +65,11 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 |-------+---------------+-------------------------|
 | 31.03 | 09:00 - 10:30 | Introduction            |
 | 31.03 | 10:30 - 10:40 | Pause                   |
-| 31.03 | 10:40 - 13:40 | TP1: Généralités        |
+| 31.03 | 10:40 - 12:40 | TP1: Généralités        |
 |-------+---------------+-------------------------|
-| 31.03 | 13:40 - 15:10 | Pause déjeuner          |
+| 31.03 | 12:40 - 14:10 | Pause déjeuner          |
 |-------+---------------+-------------------------|
-| 31.03 | 15:10 - 16:10 | TP2: Prétraitements THR |
+| 31.03 | 14:10 - 16:10 | TP2: Prétraitements THR |
 | 31.03 | 16:10 - 16:20 | Pause                   |
 | 31.03 | 16:20 - 17:50 | TP2: Segmentation       |
 | 31.03 | 17:50 - 18:00 | Conclusion jour 1       |
@@ -126,9 +126,9 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
     - Sentinel-1 :: Données gratuites disponible sur ESA Hub(https://scihub.copernicus.eu/) ou sur le site CNES PEPS(https://peps.cnes.fr)
 
 *** Informations pratiques
-**** TODO: Repas
-**** TODO: Code Wifi
-**** TODO: Autre?
+**** Repas
+**** Code Wifi
+**** Autre?
 
 * TP1: Généralités                                                          
 #+INCLUDE: "mvd-qgis.org"
