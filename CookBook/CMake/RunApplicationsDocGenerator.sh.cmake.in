@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export PYTHONPATH=@OTB_PREFIX@/lib:$PYTHONPATH
 export PYTHONPATH=@OTB_PREFIX@/lib/otb/python:$PYTHONPATH
 export PYTHONPATH=@OTB_PREFIX@/Modules/Wrappers/SWIG/src:$PYTHONPATH
 
