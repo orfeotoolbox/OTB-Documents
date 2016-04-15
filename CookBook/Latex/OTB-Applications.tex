@@ -89,17 +89,74 @@ chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 \section{Installation}\label{sec:appinstall}
 
-We provide different binary packages for OTB-Applications:
+We provide different standalone binary packages for OTB-Applications:
 \begin{itemize}
-\item for Windows platform (XP/Seven) through OsGeo4W installer (32/64bit)
-\item for Ubuntu 12.04 and higher
-\item for OpenSuse 12.X and higher
-\item for MacOSX through MacPorts software  
+\item for Windows platform (Seven and later) using MinGW cross-compilation (32/64bit)
+\item for Linux 64bit distribution
+\item for MacOSX
 \end{itemize}
 
+Other binaries can be available as packages (OSGeo packages, Debian/Ubuntu packages,
+OpenSuse packages), however be advised that they may not be up-to-date nor delivered
+with full features.
 If you want build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source)
 
-\subsection{Windows XP/Seven}
+\subsection{Windows}
+
+We provide OTB Applications for Windows Seven and later through standalone packages.
+They contain all OTB Applications and their launchers (both command line and graphical
+launchers are provided). Check the download page :
+\href{https://www.orfeo-toolbox.org/download}{OTB Download page}
+
+There is a 32bit and a 64bit version. They contain the same directory structure:
+\begin{itemize}
+\item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.bat,
+otbgui\textunderscore *.bat) and the DLLs.
+\item A \textbf{lib} folder containing application DLLs.
+\end{itemize}
+
+\subsection{Linux 64bit OS}
+
+We provide OTB Applications for Linux 64bit OS through standalone packages.
+They contain all OTB Applications and their launchers (both command line and graphical
+launchers are provided). Check the download page :
+\href{https://www.orfeo-toolbox.org/download}{OTB Download page}
+
+This package consist in a self-extractible archive.
+
+Once the archive is extracted, the directory structure is made of :
+\begin{itemize}
+\item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.sh,
+otbgui\textunderscore *.sh), Monteverdi and Mapla.
+\item A \textbf{lib} folder containing all shared libraries and application DLLs.
+\end{itemize}
+
+In order to run the command line launchers, this package doesn't require any special
+library that is not present in most modern Linux distributions. The graphical
+executable (otbgui launchers, Monteverdi and Mapla) use the X11 libraries, which
+are widely used in a lot of distributions :
+\begin{verbatim}
+libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
+\end{verbatim}
+Monteverdi also requires the standard graphics libraries \textbf{libgl1} and
+\textbf{libglu1}. Make sure you have at least one version of them installed in
+your system.
+
+\subsection{MacOS X}
+
+Soon ...
+% TODO : description of MacOSX standalone package
+
+\subsection{Other packages}
+
+\textbf{Warning !} These packages may not be up-to-date with latest OTB releases.
+In addition, some features of the library may not be available on every platform.
+Some of these are not maintained by the OTB-team. If you want to get involved in
+the packaging of OTB for your platform, please contact us through the developer's
+mailing list :
+\href{mailto:otb-developers@googlegroups.com}{otb-developers@googlegroups.com}.
+
+\subsubsection{OSGeo4W}
 
 Since version 3.12, we provide OTB Applications packages through OSGeo4W for Windows XP/Seven users:
 \begin{itemize}
@@ -118,14 +175,19 @@ import otbApplication
 print str( otbApplication.Registry.GetAvailableApplications() )
 \end{verbatim}
 
-\subsection{MacOS X}
+\subsubsection{Debian}
 
-OTB Applications are now available on \href{http://http://www.macports.org/}{MacPorts}.
-The port name is called orfeotoolbox.
-You can follow the \href{ http://guide.macports.org/}{MacPorts documentation} to install MacPorts first, then install the orfeotoolbox port.
-After the installation, you can used directly on your system, the OTB applications.
+There are OTB packages for Debian (unstable) since version 5.2.0.
+OTB Applications packages may be available as
+Debian packages through APT repositories:
+\begin{itemize}
+\item \textbf{otb-bin} for command line applications
+\item \textbf{otb-bin-qt} for Qt applications
+\item \textbf{python-otb} for python applications
+\end{itemize}
 
-\subsection{Ubuntu 12.04 and higher}
+\subsubsection{Ubuntu 12.04 and higher}
+
 For Ubuntu 12.04 and higher, OTB Applications packages may be available as
 Debian packages through APT repositories:
 \begin{itemize}
@@ -136,6 +198,8 @@ Debian packages through APT repositories:
 
 Since release 3.14.1, OTB Applications packages are available in the
 \href{https://launchpad.net/~ubuntugis/+archive/ubuntugis-unstable}{ubuntugis-unstable} repository.
+
+Since release 5.2.0, the Ubuntu packages derive from the Debian packages.
 
 You can add it by using these command-lines:
 \begin{verbatim}
@@ -162,7 +226,7 @@ quit. You can temporarily ignore this error and proceed with the update
 step. Following this, aptitude update will issue a warning about a signature
 problem. This warning won't prevent you from installing the packages.
 
-\subsection{OpenSuse 12.X and higher}
+\subsubsection{OpenSuse 12.X and higher}
 
 For OpenSuse 12.X and higher, OTB Applications packages are available through
 \emph{zypper}.
@@ -197,6 +261,13 @@ sudo zypper ar
 http://download.opensuse.org/repositories/home:/tzotsos/openSUSE_Tumbleweed/ tzotsos
 \end{verbatim}
 and then add the OTB packages as shown above.
+
+\subsubsection{MacPort}
+
+OTB Applications are now available on \href{http://http://www.macports.org/}{MacPorts}.
+The port name is called orfeotoolbox.
+You can follow the \href{ http://guide.macports.org/}{MacPorts documentation} to install MacPorts first, then install the orfeotoolbox port.
+After the installation, you can used directly on your system, the OTB applications.
 
 \section{Using the applications}\label{sec:usingapps}
 
