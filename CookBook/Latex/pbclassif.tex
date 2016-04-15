@@ -546,8 +546,8 @@ otbcli_PredictRegression  -in     features_bis.tif
 
 Since release 5.4, new functionalities related to the handling of the vectors from the training data set (see also \ref{sssec:building}) were added to OTB.
 
-The first improvement was provided by the application PolygonClassStatistics. This application processes a set of geometries intended for training, 
-and outputs statistics about different kind of geometries (in the form of a xml file) :
+The first improvement was provided by the application PolygonClassStatistics. This application processes a set of training geometries, 
+and outputs statistics about the sample distribution in the input geometries (in the form of a xml file) :
 \begin{itemize}
 \item number of samples per class
 \item number of samples per geometry
@@ -555,13 +555,13 @@ and outputs statistics about different kind of geometries (in the form of a xml 
 
 Supported geometries are polygons, lines and points; depending on the geometry type, this application behaves differently : 
 \begin{itemize}
-\item polygon : select points whose center is inside the polygon
-\item lines : select points intersecting the line
-\item points : select closest point to the provided point
+\item polygon : select pixels whose center is inside the polygon
+\item lines : select pixels intersecting the line
+\item points : select closest pixel to the provided point
 \end{itemize}
-The application also takes as input a support image; here, the values of its pixels are not used; 
-the purpose is rather to provide geometry information to the application. 
-The user can also provide a raster mask, that will be used to discard some samples.
+The application also takes as input a support image, but the values of its pixels are not used.
+The purpose is rather to define the image grid that will later provide the samples.
+The user can also provide a raster mask, that will be used to discard pixel positions.
 
 A simple use of the application PolygonClassStatistics could be as follows :
 \begin{verbatim}
@@ -571,93 +571,93 @@ otbcli_PolygonClassStatistics  -in     support_image.tif
                                -out    polygonStat.xml
 \end{verbatim}
 
-Once the statistics have been computed, comes the application OGRDataResampler (not yet released at the time of writing this document).
-The purpose of this application is to select samples from the training data set.
+%Once the statistics have been computed, comes the application OGRDataResampler (not yet released at the time of writing this document).
+%The purpose of this application is to select samples from the training data set.
 
-First of all, this application needs the xml file computed by PolygonClassStatistics (parameter instats).
-Then, there are three different strategies to select samples (parameter sampstrat) :
-\begin{itemize}
-\item minnbsamp (default) : randomly select samples in such a way that the final sampled classes have the size of the smallest one.
-\item nbsampallclasses : randomly select samples in such a way that the final sampled classes have a size of N (with N below or equal to the size of the smallest class).
-\item nbsampbyclass : set the required number for each class manually with the following pattern : "class\_name1:nb\_samples1 class\_name2:nb\_samples2 ...".
-\end{itemize}
-Once the strategy is selected, the application outputs samples which are spatially uniformly distributed (parameter out).
+%First of all, this application needs the xml file computed by PolygonClassStatistics (parameter instats).
+%Then, there are three different strategies to select samples (parameter sampstrat) :
+%\begin{itemize}
+%\item minnbsamp (default) : randomly select samples in such a way that the final sampled classes have the size of the smallest one.
+%\item nbsampallclasses : randomly select samples in such a way that the final sampled classes have a size of N (with N below or equal to the size of the smallest class).
+%\item nbsampbyclass : set the required number for each class manually with the following pattern : "class\_name1:nb\_samples1 class\_name2:nb\_samples2 ...".
+%\end{itemize}
+%Once the strategy is selected, the application outputs samples which are spatially uniformly distributed (parameter out).
 
-In addition to the parameters instats, sampstrat, and out, some others must be compulsorily specified:
-\begin{itemize}
-\item in : an input image must be provided to this application (parameter in). Here again, the values of its pixels are not used;
-the purpose is rather to provide geometry information so that the selected samples can be outputted as physical points.
-\item vec : input training vector data set, from where to pick samples.
-\item layer : index specifying from which layer to pick samples.
-\item field : set the field of the selected samples.
-\end{itemize}
+%In addition to the parameters instats, sampstrat, and out, some others must be compulsorily specified:
+%\begin{itemize}
+%\item in : an input image must be provided to this application (parameter in). Here again, the values of its pixels are not used;
+%the purpose is rather to provide geometry information so that the selected samples can be outputted as physical points.
+%\item vec : input training vector data set, from where to pick samples.
+%\item layer : index specifying from which layer to pick samples.
+%\item field : set the field of the selected samples.
+%\end{itemize}
 
-Some other optional arguments can also be passed to the application:
-\begin{itemize}
-\item mask : an optional raster mask can be used to discard samples.
-\item outrates : allows to output a txt file that summarizes the sampling rates for each class.
-\item outsampvec / insampvec : internally, this application uses a random lists of bits to decide
-    whether to select a sample or not. If users wish they could exactly repeat the selection process,
-    they should output these lists in a txt file, and reload it the next time. This is the purpose of these two parameters.
-\item maxsampvecsize : allows to limit the size of the lists of bits mentioned above, to optimize the memory footprint.
-\end{itemize}
+%Some other optional arguments can also be passed to the application:
+%\begin{itemize}
+%\item mask : an optional raster mask can be used to discard samples.
+%\item outrates : allows to output a txt file that summarizes the sampling rates for each class.
+%\item outsampvec / insampvec : internally, this application uses a random lists of bits to decide
+    %whether to select a sample or not. If users wish they could exactly repeat the selection process,
+    %they should output these lists in a txt file, and reload it the next time. This is the purpose of these two parameters.
+%\item maxsampvecsize : allows to limit the size of the lists of bits mentioned above, to optimize the memory footprint.
+%\end{itemize}
 
-As with the PolygonClassStatistics application, different types  of geometry are supported : polygons, lines, points. 
-The behavior of this application is exactly the same as the one of PolygonClassStatistics.
-
-
-A simple use of the application OGRDataResampler could be as follows :
-\begin{verbatim}
-otbcli_PolygonClassStatistics  -in support_image.tif
-                               -vec variousVectors.sqlite
-                               -field class
-                               -instats apTvClPolygonClassStatisticsOut.xml
-                               -sampstrat nbsampbyclass
-                               -nbsampbyclass "1:98 2:100 3:23"
-                               -out resampledVectors.sqlite
-\end{verbatim}
-
-In this example, "apTvClPolygonClassStatisticsOut.xml" refers to the statistics computed by the PolygonClassStatistics application.
-The training data set from which we need to select samples is "variousVectors.sqlite". Here no mask was used, so every points had a chance to be selected.
-The sampling strategy is set to "nbsampbyclass", meaning that the user must indicate the number of samples to be selected for each class.
-This information is provided thanks to the string "1:98 2:100 3:23"; its interpretation is easy to grasp : 
-for class whose name is "1", the application mus select 98 samples, and so forth.
-The result is outputted to "resampledVectors.sqlite".
-
-Let's continue with another example :
-\begin{verbatim}
-otbcli_PolygonClassStatistics  -in support_image.tif
-                               -vec variousVectors.sqlite
-                               -mask some_mask.tif
-                               -field class
-                               -instats apTvClPolygonClassStatisticsOut.xml
-                               -out resampledVectors.sqlite
-\end{verbatim}
-
-This time, a mask was used; its pixels were interleaved with O and 1 values : it means that only fifty percents of the points could be selected.
-The parameter "sampstrat" was left empty; therefore, the used strategy was "minnbsamp" (default). 
-In this situation, the application identified the smallest class, \textit{taking into account the mask constraint} : 
-the result was class "1" with 104 samples. Then, the application uniformly and randomly selected 104 samples from classes "2" et "3".
-The result is shown in figure \ref{fig:samples1}.
-
-If the application is run a second time, we get another random selection for the classes "2" and "3".
-The sample selection for the class "1" didn't change : this is normal, 
-as the application will always select every point of the smallest class when using the "minnbsamp" strategy.
-The result is shown in figure \ref{fig:samples2}.
+%As with the PolygonClassStatistics application, different types  of geometry are supported : polygons, lines, points. 
+%The behavior of this application is exactly the same as the one of PolygonClassStatistics.
 
 
+%A simple use of the application OGRDataResampler could be as follows :
+%\begin{verbatim}
+%otbcli_PolygonClassStatistics  -in support_image.tif
+                               %-vec variousVectors.sqlite
+                               %-field class
+                               %-instats apTvClPolygonClassStatisticsOut.xml
+                               %-sampstrat nbsampbyclass
+                               %-nbsampbyclass "1:98 2:100 3:23"
+                               %-out resampledVectors.sqlite
+%\end{verbatim}
 
-\begin{center}
-  \begin{figure}[h!]
-    \includegraphics[width=\textwidth]{../Art/samplesselect1.png}
-    \itkcaption[First selection]{First selection.}
-    \label{fig:samples1}
-   \end{figure}
+%In this example, "apTvClPolygonClassStatisticsOut.xml" refers to the statistics computed by the PolygonClassStatistics application.
+%The training data set from which we need to select samples is "variousVectors.sqlite". Here no mask was used, so every points had a chance to be selected.
+%The sampling strategy is set to "nbsampbyclass", meaning that the user must indicate the number of samples to be selected for each class.
+%This information is provided thanks to the string "1:98 2:100 3:23"; its interpretation is easy to grasp : 
+%for class whose name is "1", the application mus select 98 samples, and so forth.
+%The result is outputted to "resampledVectors.sqlite".
+
+%Let's continue with another example :
+%\begin{verbatim}
+%otbcli_PolygonClassStatistics  -in support_image.tif
+                               %-vec variousVectors.sqlite
+                               %-mask some_mask.tif
+                               %-field class
+                               %-instats apTvClPolygonClassStatisticsOut.xml
+                               %-out resampledVectors.sqlite
+%\end{verbatim}
+
+%This time, a mask was used; its pixels were interleaved with O and 1 values : it means that only fifty percents of the points could be selected.
+%The parameter "sampstrat" was left empty; therefore, the used strategy was "minnbsamp" (default). 
+%In this situation, the application identified the smallest class, \textit{taking into account the mask constraint} : 
+%the result was class "1" with 104 samples. Then, the application uniformly and randomly selected 104 samples from classes "2" et "3".
+%The result is shown in figure \ref{fig:samples1}.
+
+%If the application is run a second time, we get another random selection for the classes "2" and "3".
+%The sample selection for the class "1" didn't change : this is normal, 
+%as the application will always select every point of the smallest class when using the "minnbsamp" strategy.
+%The result is shown in figure \ref{fig:samples2}.
+
+
+
+%\begin{center}
+  %\begin{figure}[h!]
+    %\includegraphics[width=\textwidth]{../Art/samplesselect1.png}
+    %\itkcaption[First selection]{First selection.}
+    %\label{fig:samples1}
+   %\end{figure}
    
-   \begin{figure}[h!]
-    \includegraphics[width=\textwidth]{../Art/samplesselect2.png}
-    \itkcaption[Second selection]{Second selection.}
-    \label{fig:samples2}
-   \end{figure}
+   %\begin{figure}[h!]
+    %\includegraphics[width=\textwidth]{../Art/samplesselect2.png}
+    %\itkcaption[Second selection]{Second selection.}
+    %\label{fig:samples2}
+   %\end{figure}
       
-\end{center}
+%\end{center}
