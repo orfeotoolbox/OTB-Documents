@@ -91,20 +91,22 @@ chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 We provide different standalone binary packages for OTB-Applications:
 \begin{itemize}
-\item for Windows platform (Seven and later) using MinGW cross-compilation (32/64bit)
-\item for Linux 64bit distribution
-\item for MacOSX
+\item for Windows platform (Seven and later)
+\item for 64bit Linux distribution
+\item for MacOS X
 \end{itemize}
 
 Other binaries can be available as packages (OSGeo packages, Debian/Ubuntu packages,
 OpenSuse packages), however be advised that they may not be up-to-date nor delivered
 with full features.
-If you want build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source)
+If you want to build from source or if we don't provide packages for your system,
+some informations are available into the \sg, in the section \textbf(Building from Source)
 
 \subsection{Windows}
 
-We provide OTB Applications for Windows Seven and later through standalone packages.
-They contain all OTB Applications and their launchers (both command line and graphical
+We provide \app for Windows Seven and later through standalone packages.
+They are cross-compiled with MinGW, for 32bit and 64bit platforms.
+They contain all \app and their launchers (both command line and graphical
 launchers are provided). Check the download page :
 \href{https://www.orfeo-toolbox.org/download}{OTB Download page}
 
@@ -115,20 +117,27 @@ otbgui\textunderscore *.bat) and the DLLs.
 \item A \textbf{lib} folder containing application DLLs.
 \end{itemize}
 
-\subsection{Linux 64bit OS}
+\subsection{Linux 64bit}
 
-We provide OTB Applications for Linux 64bit OS through standalone packages.
+We provide \app for Linux 64bit OS through standalone packages.
 They contain all OTB Applications and their launchers (both command line and graphical
 launchers are provided). Check the download page :
 \href{https://www.orfeo-toolbox.org/download}{OTB Download page}
 
-This package consist in a self-extractible archive.
+This package consist in a self-extractible archive. You may uncompress it with a
+double-click on the file, or with the command line :
+\begin{verbatim}
+> sh  OTB-5.2.1-Linux64.run
+\end{verbatim}
 
-Once the archive is extracted, the directory structure is made of :
+Please note that the resulting installation is not meant to be moved, you should
+uncompress the archive in its final location. Once the archive is extracted, 
+the directory structure is made of :
 \begin{itemize}
 \item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.sh,
 otbgui\textunderscore *.sh), Monteverdi and Mapla.
-\item A \textbf{lib} folder containing all shared libraries and application DLLs.
+\item A \textbf{lib} folder containing all shared libraries and OTB applications.
+\item A \textbf{share} folder containing common resources and copyright mentions.
 \end{itemize}
 
 In order to run the command line launchers, this package doesn't require any special
@@ -144,8 +153,22 @@ your system.
 
 \subsection{MacOS X}
 
-Soon ...
-% TODO : description of MacOSX standalone package
+This package consist in a self-extractible archive, quite similar to the Linux
+one. You may uncompress it with the command line :
+\begin{verbatim}
+> sh  OTB-5.4.0-Darwin64.run
+\end{verbatim}
+
+Please note that the resulting installation is not meant to be moved, you should
+uncompress the archive in its final location.
+
+Once the archive is extracted, the directory structure is made of :
+\begin{itemize}
+\item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.sh,
+otbgui\textunderscore *.sh), Monteverdi and Mapla.
+\item A \textbf{lib} folder containing all shared libraries and OTB applications.
+\item A \textbf{share} folder containing common resources and copyright mentions.
+\end{itemize}
 
 \subsection{Other packages}
 
@@ -158,7 +181,7 @@ mailing list :
 
 \subsubsection{OSGeo4W}
 
-Since version 3.12, we provide OTB Applications packages through OSGeo4W for Windows XP/Seven users:
+Since version 3.12, we provide \app packages through OSGeo4W for Windows XP/Seven users:
 \begin{itemize}
 \item \textbf{otb-bin} for command line and QT applications
 \item \textbf{otb-python} for python applications
@@ -185,6 +208,9 @@ Debian packages through APT repositories:
 \item \textbf{otb-bin-qt} for Qt applications
 \item \textbf{python-otb} for python applications
 \end{itemize}
+
+Due to license issues, the OTB package built in Debian doesn't contain 6S. As
+a consequence, the package does not contain the OpticalCalibration application.
 
 \subsubsection{Ubuntu 12.04 and higher}
 

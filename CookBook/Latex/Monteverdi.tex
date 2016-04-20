@@ -23,31 +23,39 @@ sensing processes based on the \otb. This is also in
 remembering of the great (and once open source) Khoros/Cantata
 software.
   
-Installation of \mont is very simple. Standard installer packages are available on the main platforms thanks to OTB-Developpers and external users. 
-These packages are available few days after the release. Get the latest information on binary packages on the \website in the section download.
+Installation of \mont is very simple. The standalone packages described for the
+installation of \app (see \ref{sec:appinstall}) also contain \mont and Mapla.
+Get the latest information on binary packages on the \website in the Download section.
 
-We will describe in the following sections the way to install \mont on:
+% Standard installer packages are available on the main platforms thanks to OTB-Developpers and external users. 
+% These packages are available few days after the release. 
+
+In this section we will focus on alternative ways that are specific for \mont.
+We will describe how to install it on:
 \begin{itemize}
-\item Windows platform (XP/Seven)
+%\item Windows Seven and higher
 \item Ubuntu 14.X and higher
 \item MacOSX 10.10
 \end{itemize}
 
 If you want to build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source).
 Note that the git repository of \mont is located here : https://git.orfeo-toolbox.org/monteverdi2.git.
-In order to get the source of \mont, you will have to be placed on the right branch : git checkout 3.0.0-rc1
+In order to get the source of \mont, you will have to checkout the right version. For instance, use : 
+\begin{verbatim}
+git checkout 3.0.0-rc1
+\end{verbatim}
+to get 3.0.0 Release Candidate version.
 
+%\subsection{Windows Seven/8.1}
+%For Windows Seven/8.1 users, there is a classical standalone installation program for \mont, available from the \download after each release. 
 
-\subsection{Windows XP/Seven/8.1}
-For Windows XP/Seven/8.1 users, there is a classical standalone installation program for \mont, available from the \download after each release. 
-
-It is also possible to get \mont package through \osgeow for Windows XP/Seven users. 
-Package for \mont is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. 
-Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. 
-The installer will proceed with the installation of the package and all its dependencies. 
-\mont will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). 
-You can now use directly \mont from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. 
-Currently, you should use the 32bit OSGeo4W installer but we will soon distribute \mont package for 64 bit installer. 
+%It is also possible to get \mont package through \osgeow for Windows XP/Seven users. 
+%Package for \mont is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. 
+%Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. 
+%The installer will proceed with the installation of the package and all its dependencies. 
+%\mont will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). 
+%You can now use directly \mont from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. 
+%Currently, you should use the 32bit OSGeo4W installer but we will soon distribute \mont package for 64 bit installer. 
 
 \subsection{MacOS X}
 A standard DMG package is available for \mont for MacOS X 10.10. Please go the \download.
