@@ -112,10 +112,17 @@ launchers are provided). Check the download page :
 
 There is a 32bit and a 64bit version. They contain the same directory structure:
 \begin{itemize}
-\item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.bat,
+\item \verb?monteverdi.bat? : A launcher script for \mont
+\item \verb?mapla.bat? : A launcher script for Mapla
+\item \verb?otbenv.bat? : A script to initialize the environment for OTB executables
+\item \verb?bin? : A folder containing application launchers (otbcli\textunderscore *.bat,
 otbgui\textunderscore *.bat) and the DLLs.
-\item A \textbf{lib} folder containing application DLLs.
+\item \verb?lib? : A folder containing application DLLs.
 \end{itemize}
+
+The applications can be launched from the Mapla launcher. If you want to use
+the otbcli and otbgui launchers, you should before initialize a command prompt
+with \verb?otbenv.bat?. 
 
 \subsection{Linux 64bit}
 
@@ -124,7 +131,7 @@ They contain all OTB Applications and their launchers (both command line and gra
 launchers are provided). Check the download page :
 \href{https://www.orfeo-toolbox.org/download}{OTB Download page}
 
-This package consist in a self-extractible archive. You may uncompress it with a
+This package is a self-extractible archive. You may uncompress it with a
 double-click on the file, or with the command line :
 \begin{verbatim}
 > sh  OTB-5.2.1-Linux64.run
@@ -134,10 +141,13 @@ Please note that the resulting installation is not meant to be moved, you should
 uncompress the archive in its final location. Once the archive is extracted, 
 the directory structure is made of :
 \begin{itemize}
-\item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.sh,
+\item \verb?monteverdi.sh? : A launcher script for \mont
+\item \verb?mapla.sh? : A launcher script for Mapla
+\item \verb?otbenv.profile? : A script to initialize the environment for OTB executables
+\item \verb?bin? : A folder containing application launchers (otbcli\textunderscore *.sh,
 otbgui\textunderscore *.sh), Monteverdi and Mapla.
-\item A \textbf{lib} folder containing all shared libraries and OTB applications.
-\item A \textbf{share} folder containing common resources and copyright mentions.
+\item \verb?lib? : A folder containing all shared libraries and OTB applications.
+\item \verb?share? : A folder containing common resources and copyright mentions.
 \end{itemize}
 
 In order to run the command line launchers, this package doesn't require any special
@@ -151,10 +161,15 @@ Monteverdi also requires the standard graphics libraries \textbf{libgl1} and
 \textbf{libglu1}. Make sure you have at least one version of them installed in
 your system.
 
+The applications can be launched from the Mapla launcher. If you want to use
+the otbcli and otbgui launchers, you should before initialize your environment
+with \verb?otbenv.profile?.
+
 \subsection{MacOS X}
 
-This package consist in a self-extractible archive, quite similar to the Linux
-one. You may uncompress it with the command line :
+We provide \app for MacOS X through a standalone package. This package is a 
+self-extractible archive, quite similar to the Linux one. You may uncompress 
+it with the command line :
 \begin{verbatim}
 > sh  OTB-5.4.0-Darwin64.run
 \end{verbatim}
@@ -164,11 +179,18 @@ uncompress the archive in its final location.
 
 Once the archive is extracted, the directory structure is made of :
 \begin{itemize}
-\item A \textbf{bin} folder containing application launchers (otbcli\textunderscore *.sh,
+\item \verb?monteverdi.sh? : A launcher script for \mont
+\item \verb?mapla.sh? : A launcher script for Mapla
+\item \verb?otbenv.profile? : A script to initialize the environment for OTB executables
+\item \verb?bin? : A folder containing application launchers (otbcli\textunderscore *.sh,
 otbgui\textunderscore *.sh), Monteverdi and Mapla.
-\item A \textbf{lib} folder containing all shared libraries and OTB applications.
-\item A \textbf{share} folder containing common resources and copyright mentions.
+\item \verb?lib? : A folder containing all shared libraries and OTB applications.
+\item \verb?share? : A folder containing common resources and copyright mentions.
 \end{itemize}
+
+The applications can be launched from the Mapla launcher. If you want to use
+the otbcli and otbgui launchers, you should before initialize your environment
+with \verb?otbenv.profile?.
 
 \subsection{Other packages}
 
@@ -291,8 +313,8 @@ and then add the OTB packages as shown above.
 \subsubsection{MacPort}
 
 OTB Applications are now available on \href{http://http://www.macports.org/}{MacPorts}.
-The port name is called orfeotoolbox.
-You can follow the \href{ http://guide.macports.org/}{MacPorts documentation} to install MacPorts first, then install the orfeotoolbox port.
+The port name is called 'orfeotoolbox'.
+You can follow the \href{ http://guide.macports.org/}{MacPorts documentation} to install MacPorts first, then install the 'orfeotoolbox' port.
 After the installation, you can used directly on your system, the OTB applications.
 
 \section{Using the applications}\label{sec:usingapps}

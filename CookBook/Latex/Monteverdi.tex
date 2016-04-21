@@ -14,6 +14,8 @@ capacity building activities (teaching, simple image manipulation,
 etc.). The specifications included ease of integration of new
 processing modules.  
 
+\textbf{Warning} : since version 3.0.0, there is only one \mont, which replaces
+monteverdi2 and the original monteverdi 1 (version lower than 1.24.0).
 
 \section{Installation}\label{sec:montinstall}
 
@@ -33,9 +35,9 @@ Get the latest information on binary packages on the \website in the Download se
 In this section we will focus on alternative ways that are specific for \mont.
 We will describe how to install it on:
 \begin{itemize}
-%\item Windows Seven and higher
-\item Ubuntu 14.X and higher
-\item MacOSX 10.10
+\item for Windows platform (Seven and later)
+\item for 64bit Linux distribution
+\item for MacOS X 10.10
 \end{itemize}
 
 If you want to build from source or if we don't provide packages for your system, some informations are available into the \sg, in the section \textbf(Building from Source).
@@ -46,23 +48,103 @@ git checkout 3.0.0-rc1
 \end{verbatim}
 to get 3.0.0 Release Candidate version.
 
-%\subsection{Windows Seven/8.1}
-%For Windows Seven/8.1 users, there is a classical standalone installation program for \mont, available from the \download after each release. 
+\subsection{Windows}
+We provide \mont for Windows Seven and later through standalone packages.
+They are cross-compiled with MinGW, for 32bit and 64bit platforms.
+They contain \mont with all \app. These packages are the same as the one used 
+to install \app. Check the download page :
+\href{https://www.orfeo-toolbox.org/download}{OTB Download page}
 
-%It is also possible to get \mont package through \osgeow for Windows XP/Seven users. 
-%Package for \mont is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. 
-%Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. 
-%The installer will proceed with the installation of the package and all its dependencies. 
-%\mont will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). 
-%You can now use directly \mont from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. 
-%Currently, you should use the 32bit OSGeo4W installer but we will soon distribute \mont package for 64 bit installer. 
+There is a 32bit and a 64bit version. They contain the same directory structure:
+\begin{itemize}
+\item \verb?monteverdi.bat? : A launcher script for \mont
+\item \verb?mapla.bat? : A launcher script for Mapla
+\item \verb?otbenv.bat? : A script to initialize the environment for OTB executables
+\item \verb?bin? : A folder containing \mont executable and the DLLs.
+\item \verb?lib? : A folder containing application DLLs.
+\end{itemize}
+
+To launch \mont, simply use the launcher script in the base directory
+
+\subsection{Linux 64bit}
+
+We provide \mont for Linux 64bit OS through standalone packages.
+They contain \mont with all OTB Applications. These packages are the same as 
+the one used to install \app. Check the download page :
+\href{https://www.orfeo-toolbox.org/download}{OTB Download page}
+
+This package is a self-extractible archive. You may uncompress it with a
+double-click on the file, or with the command line :
+\begin{verbatim}
+> sh  OTB-5.2.1-Linux64.run
+\end{verbatim}
+
+Please note that the resulting installation is not meant to be moved, you should
+uncompress the archive in its final location. Once the archive is extracted, 
+the directory structure is made of :
+\begin{itemize}
+\item \verb?monteverdi.sh? : A launcher script for \mont
+\item \verb?mapla.sh? : A launcher script for Mapla
+\item \verb?otbenv.profile? : A script to initialize the environment for OTB executables
+\item \verb?bin? : A folder containing application launchers (otbcli\textunderscore *.sh,
+otbgui\textunderscore *.sh), Monteverdi and Mapla.
+\item \verb?lib? : A folder containing all shared libraries and OTB applications.
+\item \verb?share? : A folder containing common resources and copyright mentions.
+\end{itemize}
+
+In order to run the command line launchers, this package doesn't require any special
+library that is not present in most modern Linux distributions. The graphical
+executable (otbgui launchers, Monteverdi and Mapla) use the X11 libraries, which
+are widely used in a lot of distributions :
+\begin{verbatim}
+libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
+\end{verbatim}
+Monteverdi also requires the standard graphics libraries \textbf{libgl1} and
+\textbf{libglu1}. Make sure you have at least one version of them installed in
+your system.
+
+To launch \mont, simply use the launcher script in the base directory
 
 \subsection{MacOS X}
-A standard DMG package is available for \mont for MacOS X 10.10. Please go the \download.
-Click on the file to launch \mont. 
 
-\subsection{Ubuntu 14.x and higher}
-For Ubuntu 14.x and higher, \mont package may be available as Debian package through APT repositories.
+We provide \mont for MacOS X through a standalone package. This package is a 
+self-extractible archive, quite similar to the Linux one. You may uncompress 
+it with the command line :
+\begin{verbatim}
+> sh  OTB-5.4.0-Darwin64.run
+\end{verbatim}
+
+Please note that the resulting installation is not meant to be moved, you should
+uncompress the archive in its final location.
+
+Once the archive is extracted, the directory structure is made of :
+\begin{itemize}
+\item \verb?monteverdi.sh? : A launcher script for \mont
+\item \verb?mapla.sh? : A launcher script for Mapla
+\item \verb?otbenv.profile? : A script to initialize the environment for OTB executables
+\item \verb?bin? : A folder containing application launchers (otbcli\textunderscore *.sh,
+otbgui\textunderscore *.sh), Monteverdi and Mapla.
+\item \verb?lib? : A folder containing all shared libraries and OTB applications.
+\item \verb?share? : A folder containing common resources and copyright mentions.
+\end{itemize}
+
+To launch \mont, simply use the launcher script in the base directory
+
+\subsection{Other packages}
+
+\subsubsection{OSGeo4W}
+For Windows Seven/8.1 users, there is a classical standalone installation program for \mont, available from the \download after each release. 
+
+It is also possible to get \mont package through \osgeow for Windows XP/Seven users. 
+Package for \mont is available directly in the OSGeo4W installer when you select the \textbf{otb-monteverdi} package. 
+Follow the instructions in the OSGeo4W installer and select the \textbf{otb-monteverdi}. 
+The installer will proceed with the installation of the package and all its dependencies. 
+\mont will be directly installed in the OSGeo4W repository and a shortcut will be added to your desktop and in the start menu (in the OSGeo4W folder). 
+You can now use directly \mont from your desktop, from the start menu and from an OSGeo4W shell with command \texttt{monteverdi}. 
+Currently, you should use the 32bit OSGeo4W installer but we will soon distribute \mont package for 64 bit installer.
+
+\subsubsection{Ubuntu 12.04 and higher}
+For Ubuntu 12.04 and higher, \mont package may be available as Debian package through APT repositories.
 You can add it by using these command-lines:
 \begin{verbatim}
 sudo apt-get install add-apt-repository
@@ -84,9 +166,11 @@ quit. You can temporarily ignore this error and proceed with the update
 step. Following this, aptitude update will issue a warning about a signature
 problem. This warning won't prevent you from installing the packages.
 
+\subsubsection{MacOS X DMG}
+A standard DMG package is available for \mont for MacOS X 10.10. Please go the \download.
+Click on the file to launch \mont.
 
 \section{GUI : what does it look like ?}\label{sec:mongui}
-
 
 \begin{figure}[!h] 
   \center
