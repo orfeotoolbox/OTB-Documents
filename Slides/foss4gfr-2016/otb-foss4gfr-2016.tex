@@ -103,20 +103,17 @@ spatiale. Sa diffusion large contribue au rayonnement des missions (Pléiades, S
 \end{block}
 
 \begin{block}{Qualité et efficacité}
-Le domaine fonctionnel de l'OTB est vaste, son développement nécessite du temps et de l'expertise. L'ouverture des sources:
+Le domaine fonctionnel de l'OTB est vaste, son développement nécessite du temps
+et de l'expertise. L'ouverture des sources favorise:
 \begin{itemize}
-\item Favorise l'appropriation et la validation par la communauté des utilisateurs,
-\item Favorise les contributions et les corrections de bugs par les utilisateurs,
-\item Favorise la dissémination sur de multiples plate-formes.
-\item ``The Cathedral \& the
-  Bazaar''\footnote{\url{http://www.catb.org/esr/writings/cathedral-bazaar/}}:
-  ``Publiez tôt, publiez souvent ``, ``s'appuyer sur la dynamique du projet''
-
+\item L'appropriation et la validation par la communauté des utilisateurs,
+\item Les contributions et les corrections de bugs par les utilisateurs,
+\item La dissémination sur de multiples plateformes.
 \end{itemize}
 \end{block}
 
 \begin{block}{Démarche scientifique}
-Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ouverture des sources permet une démarche de \textbf{recherche reproductible}.
+L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ouverture des sources permet une démarche de \textbf{recherche reproductible}.
 \end{block}
 
 \end{frame}
@@ -130,7 +127,7 @@ Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information
   \item Manipulation d'images et de vecteurs
   \item Détection d'éléments saillants et calcul de primitives
   \item Détection de changement
-  \item Réduction de la dimension, traitement hyperspectraux
+  \item Réduction de la dimension, traitements hyperspectraux
   \item Segmentation
   \item Classification
 \end{itemize}
@@ -167,7 +164,7 @@ $\Rightarrow$ Proche de l'état de l'art.
 \end{frame}
 
 \begin{frame}
-\frametitle{Comment utiliser l'Orfeo Toolbox?}
+\frametitle{Comment utiliser l'Orfeo ToolBox?}
 \vspace{-0.5cm}
 \begin{center}
 \includegraphics[width=\textwidth]{../OTB-General/images/sandwich.pdf}
@@ -348,7 +345,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{block}
 \begin{block}{Un club de développeurs, pas de décideurs}
   \begin{itemize}
-  \item Pilotage haut niveau du projet, roadmaps, communication, plannification
+  \item Pilotage haut niveau du projet, roadmaps, communication, planification
   \item Vote les RFCs: Tous les membres ont le même poids dans les votes ($\pm 1$, $\pm 0$)
   \item Les sièges n'expirent pas, sortie par démission ou vote d'expulsion
   \item Le PSC n'est pas une entité légale et n'a pas de moyens propres
@@ -367,7 +364,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \frametitle{5.2 (Décembre 2015)}
 \begin{block}{OTB}
 \begin{itemize}
-\item Nouvelles applications pour le traitement SAR (polarimétrie)
+\item Nouvelles applications pour le traitement SAR polarimétrique
 \item Support des produits Sentinel-1
 \item Calibration radiométrique image SAR (Sentinel1 et Radarsat2)
 \item Méthodes pour le filtrage du Speckle (Frost, Lee, GammaMAP, Kuan)
@@ -387,15 +384,27 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-\frametitle{5.4 (Mai 2016) Nouveau framework d'échantillonnage}
+\frametitle{5.4 (Mai 2016) Nouveau module d'échantillonnage}
+\begin{columns}
+
+\begin{column}{0.6\textwidth}
 \begin{block}{Principe}
 \begin{itemize}
-\item Un nouveau module d'échantillonage pour l'apprentissage supervisé
-\item Selection et extraction d'échantillons avec différentes méthodes:
-  aléatoire, périodique, \ldots
+\item Un nouveau module d'échantillonnage pour l'apprentissage supervisé
+\item Différentes méthodes d'échantillonnage: aléatoire, périodique, uniforme.
 \end{itemize}
 \end{block}
+\end{column}
+
+\begin{column}{0.4\textwidth}
+\includegraphics[width=.8\textwidth]{art/sampling.png}
+\end{column}
+\end{columns}
+
+\begin{center}
 \includegraphics[width=\textwidth]{art/sampling_module.pdf}
+\end{center}
+
 \end{frame}
 
 \begin{frame}
@@ -412,7 +421,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{Monteverdi 3.2}
 \begin{itemize}
 \item Capture d'écran
-\item Génération d'overviews
+\item Génération d'overviews GDAL
 \item Gestion des sous datasets GDAL
 \item Ajout au SuperBuild
 \end{itemize}
