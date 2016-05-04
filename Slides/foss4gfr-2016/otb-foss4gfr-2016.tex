@@ -163,18 +163,6 @@ $\Rightarrow$ Proche de l'état de l'art.
 \vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
-    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{../OTB-General/images/argentiere_left.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{../OTB-General/images/argentiere_right.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{../OTB-General/images/argentiere_anaglyphe.png}
 \end{frame}
 
@@ -235,30 +223,6 @@ int main(int argc, char * argv[])
 }
 \end{lstlisting}
 \end{frame}
-
-\begin{frame}
-\frametitle{Les applications OTB: codées une fois, utilisables partout}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{itemize}
-\item 87 applications sont livrées avec l'OTB
-\item 1 application $=$ 1 librairie dynamique (plugin)
-\item Les applications sont auto-descriptives et auto-documentées
-\item Les applications peuvent etre étendues en dehors de l'OTB
-\item Plusieurs interfaces sont disponibles pour utiliser les plugins:
-\begin{itemize}
-  \item Ligne de commande
-  \item Interface Qt auto-générée
-  \item Python
-\end{itemize}
-\item Les applications sont conçues pour une intégration facilitée dans des systèmes externes
-\end{itemize}
-\column{0.5\textwidth}
-\includegraphics[width=\textwidth]{../OTB-General/images/cloud_applications.png}
-\end{columns}
-\end{frame}
-
-
 
 \begin{frame}[fragile]
 \frametitle{Applications OTB: Ligne de commande}
@@ -415,7 +379,6 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \begin{block}{Monteverdi 3.0}
 \begin{itemize}
-\item Léger et performant
 \item Affichage mosaïque d'images ou série multi-temporelle
 \item Outils de visualisation performants (contraste local, gradient\ldots)
 \item Accès aux applications OTB
@@ -424,12 +387,23 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
+\frametitle{5.4 (Mai 2016) Nouveau framework d'échantillonnage}
+\begin{block}{Principe}
+\begin{itemize}
+\item Un nouveau module d'échantillonage pour l'apprentissage supervisé
+\item Selection et extraction d'échantillons avec différentes méthodes:
+  aléatoire, périodique, \ldots
+\end{itemize}
+\end{block}
+\includegraphics[width=\textwidth]{art/sampling_module.pdf}
+\end{frame}
+
+\begin{frame}
 \frametitle{5.4 (Mai 2016)}
 \begin{block}{OTB}
 \begin{itemize}
 \item Passage à un cycle de release fixe (3 mois)
 \item Intégration du composant de visualisation
-\item Nouveau framework d'échantillonnage
 \item Compilation externe des modules externes
 \item Nouvelles décompositions SAR: Barnes, Huynen, Pauli
 \end{itemize}
