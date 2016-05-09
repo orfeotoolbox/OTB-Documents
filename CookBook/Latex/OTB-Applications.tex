@@ -50,7 +50,7 @@ processing. Therefore, in 2010 the \app package has been revamped: old
 applications have been moved to a legacy folder for backward
 compatibility, and the development team started to populate the
 package with compact command-line tools to perform various heavy
-processing tasks. 
+processing tasks.
 
 Later on in 2011, the \app has been further revamped. Because of the
 increasing need to interface the \app into other software and to
@@ -91,7 +91,7 @@ chapter~\ref{chap:apprefdoc}, page~\pageref{chap:apprefdoc}.
 
 We provide different standalone binary packages for OTB-Applications:
 \begin{itemize}
-\item for Windows platform (Seven and later)
+\item for Windows platform (7 or higher)
 \item for 64bit Linux distribution
 \item for MacOS X
 \end{itemize}
@@ -122,7 +122,7 @@ otbgui\textunderscore *.bat) and the DLLs.
 
 The applications can be launched from the Mapla launcher. If you want to use
 the otbcli and otbgui launchers, you should before initialize a command prompt
-with \verb?otbenv.bat?. 
+with \verb?otbenv.bat?.
 
 \subsection{Linux 64bit}
 
@@ -133,12 +133,15 @@ launchers are provided). Check the download page :
 
 This package is a self-extractible archive. You may uncompress it with a
 double-click on the file, or with the command line :
-\begin{verbatim}
-> sh  OTB-5.2.1-Linux64.run
-\end{verbatim}
+
+\lstsetescapechar
+
+\begin{lstlisting}[frame=none,numbers=none]
+> sh  OTB-&\otbversion&-Linux64.run
+\end{lstlisting}
 
 Please note that the resulting installation is not meant to be moved, you should
-uncompress the archive in its final location. Once the archive is extracted, 
+uncompress the archive in its final location. Once the archive is extracted,
 the directory structure is made of :
 \begin{itemize}
 \item \verb?monteverdi.sh? : A launcher script for \mont
@@ -167,30 +170,34 @@ with \verb?otbenv.profile?.
 
 \subsection{MacOS X}
 
-We provide \app for MacOS X through a standalone package. This package is a 
-self-extractible archive, quite similar to the Linux one. You may uncompress 
+We provide \app for MacOS X through a standalone package. This package is a
+self-extractible archive, quite similar to the Linux one. You may uncompress
 it with the command line :
-\begin{verbatim}
-> sh  OTB-5.4.0-Darwin64.run
-\end{verbatim}
 
-Please note that the resulting installation is not meant to be moved, you should
-uncompress the archive in its final location.
+\lstsetescapechar
 
-Once the archive is extracted, the directory structure is made of :
+\begin{lstlisting}[frame=none,numbers=none]
+> sh  OTB-&\otbversion&-Darwin64.run
+\end{lstlisting}
+
+Once the archive is extracted,  you can see OTB-\otbversion-Darwin64 directory in the same direcrtory along with OTB-\otbversion-Darwin64.run
+
+Contents of OTB-\otbversion-Darwin64 is briefly listed below:
+
+    Monteverdi.app : A Mac OSX .app for Monteverdi
+    Mapla.app : A Mac OSX .app for Mapla.
+    bin : A folder containing application launchers (otbcli_*.sh, otbgui_*.sh),
+    lib : A folder containing all shared libraries and OTB applications.
+    share : A folder containing common resources and copyright mentions.
+
+Notes:
 \begin{itemize}
-\item \verb?monteverdi.sh? : A launcher script for \mont
-\item \verb?mapla.sh? : A launcher script for Mapla
-\item \verb?otbenv.profile? : A script to initialize the environment for OTB executables
-\item \verb?bin? : A folder containing application launchers (otbcli\textunderscore *.sh,
-otbgui\textunderscore *.sh), Monteverdi and Mapla.
-\item \verb?lib? : A folder containing all shared libraries and OTB applications.
-\item \verb?share? : A folder containing common resources and copyright mentions.
+\item If you want to use the otbcli and otbgui launchers, you must access them via a terminal prompt.
+\item The OSX .app are provided for monteverdi (viewer) and mapla (application browser).
+\item You must use monteverdi and mapla through their .app files only.
+\item You are allowed to move these .app files and refrain from moving or deleting OTB-\otbversion-Darwin64 after extraction.
+In case you need to have OTB installed in some other directory. Extract the .run file there.
 \end{itemize}
-
-The applications can be launched from the Mapla launcher. If you want to use
-the otbcli and otbgui launchers, you should before initialize your environment
-with \verb?otbenv.profile?.
 
 \subsection{Other packages}
 
@@ -322,10 +329,10 @@ After the installation, you can used directly on your system, the OTB applicatio
 Using the new \app framework is slightly more complex than launching a
 command-line tool. This section describes all the ways to launch the
 new applications. Apart from the simplified access, which is similar
-to the former access to \app, you will need to know the application 
+to the former access to \app, you will need to know the application
 name and optionally the path where the applications plugins are stored.
-For applications shipped with \otb, the name of each 
-application can be found in chapter~\ref{chap:apprefdoc}, 
+For applications shipped with \otb, the name of each
+application can be found in chapter~\ref{chap:apprefdoc},
 page~\pageref{chap:apprefdoc}.
 
 \subsection{Simplified use}
@@ -353,18 +360,18 @@ line. Launching the \verb?otbApplicationLauncherCommandLine?
 without argument results in the following help to be displayed:
 
 \begin{verbatim}
-$ otbApplicationLauncherCommandLine 
+$ otbApplicationLauncherCommandLine
 Usage : ./otbApplicationLauncherCommandLine module_name [MODULEPATH] [arguments]
-\end{verbatim} 
+\end{verbatim}
 
 The \verb?module_name? parameter corresponds to the application
-name. The \verb?[MODULEPATH]? argument is optional and allows 
-to pass to the launcher a path where the shared library (or plugin) 
+name. The \verb?[MODULEPATH]? argument is optional and allows
+to pass to the launcher a path where the shared library (or plugin)
 corresponding to \verb?module_name? is.
 
-It is also possible to set this path with the environment variable 
+It is also possible to set this path with the environment variable
 \verb?OTB_APPLICATION_PATH?, making the \verb?[MODULEPATH]? optional.
-This variable is checked by default when 
+This variable is checked by default when
 no \verb?[MODULEPATH]? argument is given.
 When using multiple paths in \verb?OTB_APPLICATION_PATH?, one must make sure to use
 the standard path separator of the target system, which is \verb?:? on Unix, and \verb?;? on Windows.
@@ -373,7 +380,7 @@ the standard path separator of the target system, which is \verb?:? on Unix, and
 An error in the application name (i.e. in parameter
 \verb?module_name?) will make the
 \verb?otbApplicationLauncherCommandLine? lists the name of all
-applications found in the available path (either \verb?[MODULEPATH]? 
+applications found in the available path (either \verb?[MODULEPATH]?
 and/or \verb?OTB_APPLICATION_PATH?).
 
 To ease the use of the applications, and try avoiding extensive environment
@@ -401,37 +408,37 @@ ERROR: Waiting for at least one parameter...
 NAME: OrthoRectification
 DESCRIPTION: This application allows to ortho-rectify optical images from supported sensors.
 
-EXAMPLE OF USE: 
+EXAMPLE OF USE:
 otbcli_OrthoRectification -io.in QB_TOULOUSE_MUL_Extract_500_500.tif -io.out QB_Toulouse_ortho.tif
 
 DOCUMENTATION: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
 ======================= PARAMETERS =======================
-        -progress                        <boolean>        Report progress 
-MISSING -io.in                           <string>         Input Image 
+        -progress                        <boolean>        Report progress
+MISSING -io.in                           <string>         Input Image
 MISSING -io.out                          <string> [pixel] Output Image  [pixel=uint8/int8/uint16/int16/uint32/int32/float/double]
         -map                             <string>         Output Map Projection [utm/lambert2/lambert93/transmercator/wgs/epsg]
-MISSING -map.utm.zone                    <int32>          Zone number 
-        -map.utm.northhem                <boolean>        Northern Hemisphere 
-        -map.transmercator.falseeasting  <float>          False easting 
-        -map.transmercator.falsenorthing <float>          False northing 
-        -map.transmercator.scale         <float>          Scale factor 
-        -map.epsg.code                   <int32>          EPSG Code 
+MISSING -map.utm.zone                    <int32>          Zone number
+        -map.utm.northhem                <boolean>        Northern Hemisphere
+        -map.transmercator.falseeasting  <float>          False easting
+        -map.transmercator.falsenorthing <float>          False northing
+        -map.transmercator.scale         <float>          Scale factor
+        -map.epsg.code                   <int32>          EPSG Code
         -outputs.mode                    <string>         Parameters estimation modes [auto/autosize/autospacing]
-MISSING -outputs.ulx                     <float>          Upper Left X 
-MISSING -outputs.uly                     <float>          Upper Left Y 
-MISSING -outputs.sizex                   <int32>          Size X 
-MISSING -outputs.sizey                   <int32>          Size Y 
-MISSING -outputs.spacingx                <float>          Pixel Size X 
-MISSING -outputs.spacingy                <float>          Pixel Size Y 
-        -outputs.isotropic               <boolean>        Force isotropic spacing by default 
-        -elev.dem                        <string>         DEM directory 
-        -elev.geoid                      <string>         Geoid File 
-        -elev.default                    <float>          Average Elevation 
+MISSING -outputs.ulx                     <float>          Upper Left X
+MISSING -outputs.uly                     <float>          Upper Left Y
+MISSING -outputs.sizex                   <int32>          Size X
+MISSING -outputs.sizey                   <int32>          Size Y
+MISSING -outputs.spacingx                <float>          Pixel Size X
+MISSING -outputs.spacingy                <float>          Pixel Size Y
+        -outputs.isotropic               <boolean>        Force isotropic spacing by default
+        -elev.dem                        <string>         DEM directory
+        -elev.geoid                      <string>         Geoid File
+        -elev.default                    <float>          Average Elevation
         -interpolator                    <string>         Interpolation [nn/linear/bco]
-        -interpolator.bco.radius         <int32>          Radius for bicubic interpolation 
-        -opt.rpc                         <int32>          RPC modeling (points per axis) 
-        -opt.ram                         <int32>          Available memory for processing (in MB) 
-        -opt.gridspacing                 <float>          Resampling grid spacing 
+        -interpolator.bco.radius         <int32>          Radius for bicubic interpolation
+        -opt.rpc                         <int32>          RPC modeling (points per axis)
+        -opt.ram                         <int32>          Available memory for processing (in MB)
+        -opt.gridspacing                 <float>          Resampling grid spacing
 \end{verbatim}
 \end{scriptsize}
 
@@ -467,21 +474,21 @@ one will start the \verb?otbgui_Rescale? script.
 
 The resulting graphical application displays a window with several tabs:
 \begin{itemize}
-\item \textbf{Parameters} is where you set the parameters and 
-execute the application. 
-\item \textbf{Logs} is where you see the informations given by 
-the application during its execution. 
-\item \textbf{Progress} is where you see a progress bar of the 
-execution (not available for all applications). 
-\item \textbf{Documentation} is where you find a summary of the 
+\item \textbf{Parameters} is where you set the parameters and
+execute the application.
+\item \textbf{Logs} is where you see the informations given by
+the application during its execution.
+\item \textbf{Progress} is where you see a progress bar of the
+execution (not available for all applications).
+\item \textbf{Documentation} is where you find a summary of the
 application documentation.
 \end{itemize}
 
 In this interface, every optional parameter has a check box that
 you have to tick if you want to set a value and use this parameter.
 The mandatory parameters cannot be unchecked.
- 
-The interface of the application \application{Rescale} is shown 
+
+The interface of the application \application{Rescale} is shown
 here as an example.
 
 \begin{figure}[h]
@@ -611,7 +618,7 @@ otbcli_BandMath -inxml saved_applications_parameters.xml
 Note that you can also overload parameters from command line at the same time
 
 \begin{verbatim}
-otbcli_BandMath -inxml saved_applications_parameters.xml 
+otbcli_BandMath -inxml saved_applications_parameters.xml
                 -exp "(im1b1 - im2b1)"
 \end{verbatim}
 
@@ -624,7 +631,7 @@ the inxml parameter without having to declare the application name. Use in this 
 \begin{verbatim}
 otbApplicationLauncherCommandLine -inxml saved_applications_parameters.xml
 \end{verbatim}
- 
+
 It will retrieve the application name and related parameters from the input xml
 file and launch in this case the BandMath applications.
 
