@@ -1,0 +1,12 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{Introduction}
+
+* Introduction
+** Welcome!
+   Welcome to the OTB Users Days 2016!
+
+* Agenda
+** Agenda
+ 
