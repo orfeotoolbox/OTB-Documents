@@ -48,10 +48,10 @@
 \tableofcontents[currentsection]
 \end{frame}}
 
-\title{Quoi de neuf dans Orfeo ToolBox ?}
+\title{Orfeo ToolBox}
 \subtitle{Un logiciel libre pour le traitement d'images de télédétection.}
 \author{Victor Poughon \texttt{\textless victor.poughon@cnes.fr\textgreater}}
-\date{Jeudi 12 mai 2016}
+\date{Mercredi 29 juin 2016}
 
 \pgfdeclareimage[height=96mm,width=130mm]{background}{art/fondsClairSansLogo}
 \pgfdeclareimage[height=0.2cm]{cc}{art/CC-licence.png}
@@ -73,7 +73,7 @@
 \titlepage
 \end{frame}
 
-\section*{Introduction}
+\section{Introduction}
 
 \begin{frame}
 \frametitle{Si vous ne retenez qu'une planche\ldots}
@@ -118,20 +118,106 @@ L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ou
 
 \end{frame}
 
-\section{Fonctionnalités et utilisation}
+\section{Fonctionnalités}
 
 \begin{frame}
 \frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplètes)}
+
+\begin{block}{Pré-traitements}
 \begin{itemize}
-  \item Pré-traitements
-  \item Manipulation d'images et de vecteurs
-  \item Détection d'éléments saillants et calcul de primitives
-  \item Détection de changement
-  \item Réduction de la dimension, traitements hyperspectraux
-  \item Segmentation
-  \item Classification
+\item Calibration radiométrique, ortho-rectification, reprojection (raster et vecteur), pan-sharpening, stéréo-rectification,
+\item Capteurs supportés: Sentinels, Pléiades, SPOT6, SPOT5, capteurs DigitalGlobe
+\item Modélisation géométrique fournie par OSSIM, support de MNT SRTM ou GeoTIFF
 \end{itemize}
-$\Rightarrow$ Proche de l'état de l'art.
+\end{block}
+
+\begin{block}{Manipulation d'images et de vecteurs}
+\begin{itemize}
+\item Formats supportés par Gdal (raster et vecteur), conversion raster/vecteur
+\item Extraction de ROI, de bandes spectrales, concaténation ou séparation des bandes spectrales,
+\item calcul mathématiques entre bandes, color mapping, optimisation du contraste
+\item Filtrage linéaire, morphologie mathématique,
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+
+\begin{block}{Détection d'éléments saillants et calcul de primitives}
+\begin{itemize}
+\item Détection de contours, points d'intérêt SIFT et SURF, lignes, angles droits
+\item Indices radiométriques, indices de textures (Haralick, SFS, PanTex)
+\item Descripteurs statistiques locaux (moments de Flusser, HOG)
+\item Matching de points d'intérêts
+\end{itemize}
+\end{block}
+
+\begin{block}{Détection de changement}
+\begin{itemize}
+\item Algorithme classique avec métrique de comparaison d'images,
+\item Algorithme MAD (Multivariate Alteration Detector)
+\end{itemize}
+\end{block}
+
+\begin{block}{Réduction de la dimension, traitement hyperspectraux}
+\begin{itemize}
+\item Réduction de la dimension: PCA, NAPCA, ICA, MAF \ldots
+\item Estimation de la dimension et extraction des pixels purs: algorithme VCA
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+\begin{block}{Segmentation}
+\begin{itemize}
+\item Algorithmes de segmentation Connected Components, MeanShift, Ligne de partage des eaux
+\item Méthodologie pour une application large échelle,
+\item Représentation vectorielles et raster des résultats, avec capacités d'analyse objet
+\end{itemize}
+\end{block}
+
+\begin{block}{Classification}
+\begin{itemize}
+\item Supervision et classification d'images avec 9 algorithmes au choix (dont SVM et forêts aléatoires)
+\item Fusion et régularisation de cartes de classification
+\item Clustering de type K-Means ou carte de Kogonen
+\item Classification objets (segments issus d'une segmentation)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Flexibilité, passage à l'échelle: \textit{Pipeline}, \textit{Streaming} et \textit{multithreading}}
+
+\begin{block}{Le modèle de \textit{Pipeline}}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{art/ProcessObjectDataObject.png}
+\end{center}
+\end{block}
+\vspace{-0.5cm}
+\begin{block}{\textit{Streaming}}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{art/StreamingImageDiagram.png}
+\end{center}
+\end{block}
+\vspace{-0.5cm}
+\begin{center}
+\tiny{source: http://www.aosabook.org/en/itk.html}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Proche de l'état de l'art}
+\begin{itemize}
+\item Veille technologique de l'équipe de développement
+\item Implémentations d'algorithmes récents d'après publication. Ex.: profils morphologiques, segmentation MeanShift, textures de Haralick, points d'intérêt SURF \ldots
+\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift, fusion bayésienne, détection d'objets \ldots
+\item Veille pour bénéficier des avancées des logiciels tiers. Ex.: algorithmes de \textit{machine learning} d'OpenCV,
+\item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une même interface.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[plain]
@@ -180,6 +266,149 @@ $\Rightarrow$ Proche de l'état de l'art.
 Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
 \end{block}
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Show me the code!}
+\begin{lstlisting}[language=c++,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 2pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#include "otbImage.h"
+#include "otbImageFileReader.h"
+#include "otbImageFileWriter.h"
+#include "itkCannyEdgeDetectionImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+
+int main(int argc, char * argv[])
+{
+  typedef double                      PixelType;
+  typedef otb::Image<PixelType>       ImageType;
+  
+  typedef unsigned char               OutputPixelType;
+  typedef otb::Image<OutputPixelType> OutputImageType;
+
+  typedef otb::ImageFileReader<ImageType> ReaderType;
+  ReaderType::Pointer reader = ReaderType::New();
+
+  reader->SetFileName(argv[1]);
+
+  typedef itk::CannyEdgeDetectionImageFilter
+  <ImageType, ImageType> FilterType;
+  FilterType::Pointer filter = FilterType::New();
+
+  filter->SetInput(reader->GetOutput());
+
+  typedef otb::ImageFileWriter<OutputImageType> WriterType;
+  WriterType::Pointer writer = WriterType::New();
+
+  writer->SetFileName(argv[2]);
+  
+  writer->SetInput(filter->GetOutput());
+
+  writer->Update();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Les applications: codées une fois, utilisables partout}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+\item 87 applications sont livrées avec l'OTB
+\item 1 application $=$ 1 librairie dynamique (plugin)
+\item Les applications sont auto-descriptives et auto-documentées
+\item Les applications peuvent etre étendues en dehors de l'OTB
+\item Plusieurs interfaces sont disponibles pour utiliser les plugins:
+\begin{itemize}
+  \item Ligne de commande
+  \item Interface Qt auto-générée
+  \item Python
+\end{itemize}
+\item Les applications sont conçues pour une intégration facilitée dans des systèmes externes
+\end{itemize}
+\column{0.5\textwidth}
+\includegraphics[width=\textwidth]{art/cloud_applications.png}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Applications: appel depuis la ligne de commande}
+\begin{scriptsize}
+\vspace{-0.5cm}\begin{verbatim}
+$ otbcli_OrthoRectification 
+
+ERROR: Waiting for at least one parameter...
+This is the OrthoRectification application, version 5.2.1
+This application allows to ortho-rectify optical images from supported sensors.
+
+Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
+
+Parameters: 
+        -progress                <boolean>        Report progress 
+MISSING -io.in                   <string>         Input Image  (mandatory)
+MISSING -io.out                  <string> [pixel] Output Image  [pixel=uint8/uint16/int16/uint32/int32/float/double] (default value is float) (mandatory)
+        -map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
+        -map.utm.zone            <int32>          Zone number  (mandatory, default value is 31)
+        -map.utm.northhem        <boolean>        Northern Hemisphere  (optional, off by default)
+        -map.epsg.code           <int32>          EPSG Code  (mandatory, default value is 4326)
+        -outputs.mode            <string>         Parameters estimation modes [auto/autosize/autospacing/outputroi/orthofit] (mandatory, default value is auto)
+MISSING -outputs.ulx             <float>          Upper Left X  (mandatory)
+MISSING -outputs.uly             <float>          Upper Left Y  (mandatory)
+MISSING -outputs.sizex           <int32>          Size X  (mandatory)
+MISSING -outputs.sizey           <int32>          Size Y  (mandatory)
+MISSING -outputs.spacingx        <float>          Pixel Size X  (mandatory)
+MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
+        -outputs.lrx             <float>          Lower right X  (optional, off by default)
+        -outputs.lry             <float>          Lower right Y  (optional, off by default)
+        -outputs.ortho           <string>         Model ortho-image  (optional, off by default)
+        -outputs.isotropic       <boolean>        Force isotropic spacing by default  (optional, on by default)
+        -outputs.default         <float>          Default pixel value  (optional, on by default, default value is 0)
+        -elev.dem                <string>         DEM directory  (optional, off by default)
+        -elev.geoid              <string>         Geoid File  (optional, off by default)
+        -elev.default            <float>          Default elevation  (mandatory, default value is 0)
+        -interpolator            <string>         Interpolation [bco/nn/linear] (mandatory, default value is bco)
+\end{verbatim}
+\end{scriptsize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications: appel depuis l'interface Qt auto-générée (paramètres)}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{art/app_parameters.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Applications: appel depuis l'interface Qt auto-générée (documentation)}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{art/app_doc.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications: appel depuis l'interface Python}
+\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#!/usr/bin/python 
+ 
+# Import the otb applications package 
+import otbApplication 
+ 
+# The following line creates an instance of the OrthoRectification application 
+OrthoRectification = otb.Registry.CreateApplication("OrthoRectification") 
+ 
+# The following lines set all the application parameters: 
+OrthoRectification.IO.IN = "QB_TOULOUSE_MUL_Extract_500_500.tif"
+OrthoRectification.IO.OUT = "QB_Toulouse_ortho.tif"
+ 
+app.MAP = 'epsg'
+app.MAP.EPSG.CODE = 32768
+
+# The following line execute the application 
+OrthoRectification.ExecuteAndWriteOutput()
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Monteverdi (accès aux applications OTB)}
