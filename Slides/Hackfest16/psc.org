@@ -1,0 +1,85 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{One year of Open Governance for OTB: thoughts and context}
+
+* Introduction
+** Happy birthday PSC!
+- One year ago, CNES decided to set-up an open-governance for OTB
+- We now have a working PSC, with:
+  - Members
+  - Rules
+  - Decisions
+
+| *Name*                   | *Affiliation* | *Role*                          |
+|--------------------------+---------------+---------------------------------|
+| Manuel Grizonnet (chair) | CNES          | Infrastructure, legal issues    |
+| Rémi Cresson             | IRSTEA        | Release Manager for release 5.2 |
+| Guillaume Pasero         | CS-SI         | release planner                 |
+| Jordi Inglada            | CNES/CESBIO   | User support, roadmaps          |
+| Julien Michel            | CNES          | Communication, contributions    |
+
+
+** A short reminder of the RFC process
+   1. Request for Comments
+   2. Comments and discussions
+   3. Developments
+   4. Requests for changes
+   5. Review
+   6. PSC Vote
+   7. Request for Merge
+   8. Approval by Release Manager
+   9. Merge
+
+** Facts and figures
+*** Request for changes
+    http://wiki.orfeo-toolbox.org/index.php/Requests_for_Changes
+    - OTB 5.2: 19 Requests for Changes
+    - OTB 5.4: 14 Requests for Changes
+    - Pending: 7 Requests for Changes
+*** Requests for comments
+    http://wiki.orfeo-toolbox.org/index.php/Requests_for_Comments
+    - 31 Requests for Comments 
+
+* What has changed
+** ... for users
+- Every significant ongoing or passed change is now public and visible
+- Users have the opportunity to comment on pending Request for Changes during review
+- There are more details available on why and how things were done (and discussions)
+- Users can file new Request for Comments to request new features
+
+** ... for contributors
+
+- There is a clear and detailed process on how to get your code in OTB
+- Contributors are guaranteed to be treated with equity
+
+** ... for developers
+
+- No more silent merging of your 100+ commits branch
+- $\Rigtharrow$ Some adjustments needed:
+  - Accept comments from review
+  - Getting the code merged takes more time
+- On the bright side, less surprises on the /develop/ branch
+
+* Thoughts
+
+** Are we making a better OTB? Pros.
+On the overall, I think that we do.
+- we have more code reviews, from external reviewer (Luc, are you there?)
+- Changes are more consistent because they belong to the same RFC
+- Everyone gets to give his opinion
+- New feature are more visible
+
+** Are we making a better OTB? Cons.
+
+- PSC is still small and has a lot of CNES in it
+- Appart from CNES/CS funded by CNES/CS, we have very few requests for changes
+- We do Gerrit. By Hand. 
+- We still have broken dashboards, packages, and third party issues
+
+** Is voting really required?
+
+** Do comments become changes (and vice versa) ?
+
+** PSC, git workflow, release process: high coupling 
+
