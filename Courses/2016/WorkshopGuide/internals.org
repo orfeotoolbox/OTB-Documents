@@ -188,7 +188,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
       $ otbcli_ReadImageInfo -in "image2.tif?&geom=image1.geom"
       #+END_EXAMPLE
 
-      Quel est l'effet du paramètres /geom/ ? Quel peut être son utilité ?
+      Quel est l'effet du paramètre /geom/ ? Quel peut être son utilité ?
 
 ***** Les options d'écriture
 
@@ -338,7 +338,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
 
     Si l'on ouvre l'image ainsi générée dans *monteverdi*, on constate
     que l'image vaut 0 en tout point: l'encodage de la sortie ne
-    convient. Il faudrait utiliser un type flottant (comme celui par
+    convient pas. Il faudrait utiliser un type flottant (comme celui par
     défaut par exemple.
 
 *** Les fichiers .geom
