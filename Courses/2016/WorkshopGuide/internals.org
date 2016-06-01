@@ -188,7 +188,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
       $ otbcli_ReadImageInfo -in "image2.tif?&geom=image1.geom"
       #+END_EXAMPLE
 
-      Quel est l'effet du paramètres /geom/ ? Quel peut être son utilité ?
+      Quel est l'effet du paramètre /geom/ ? Quel peut être son utilité ?
 
 ***** Les options d'écriture
 
