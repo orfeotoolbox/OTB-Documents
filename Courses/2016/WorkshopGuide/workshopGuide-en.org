@@ -1,0 +1,138 @@
+#+TITLE: Guide for OTB training courses
+#+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES), Manuel Grizonnet (CNES)
+#+DATE: 2016
+#+OPTIONS: H:5
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
+#+LaTeX_HEADER: \usepackage{a4wide}
+#+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathptmx}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage{tikz}
+#+OPTIONS: tags:nil
+
+#+EXPORT_SELECT_TAGS:
+#+EXCLUDE_TAGS: solutions slides
+
+#+LATEX:\pagestyle{fancy}
+#+LATEX:\fancyhf{}
+#+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
+#+LATEX:\fancyhead[LO]{\bfseries\rightmark}
+#+LATEX:\fancyhead[RE]{\bfseries\leftmark}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Orfeo ToolBox course}}
+
+* Forewords                                                              :fw:
+
+** Goal
+
+The goal of this training course is to give an overview of the remote sensing
+image processing library OTB and to apply it to real case problems using OTB
+application which facilitate the use of remote sensing data.
+
+The course allow to acquired capability to design and create remote sensing
+image processing chain using OTB applications, including:
+- Feature extraction
+- Calibration
+- Classification
+- Segmentation
+- Basic SAR processing
+
+** Planning
+
+*** Day 0
+Introduction to OTB
+
+*** Day 1
+|-------+---------------+-------------------------|
+| 04.03 | 10:40 - 12:40 | P1: basics              |
+| 31.03 | 16:10 - 16:20 | Pause                   |
+| 31.03 | 14:10 - 16:10 | P2: image preprocessing |
+|-------+---------------+-------------------------|
+| 31.03 | 12:40 - 14:10 | Break                   |
+|-------+---------------+-------------------------|
+| 31.03 | 16:20 - 17:50 | P3: Segmentation        |
+| 31.03 | 17:50 - 18:00 | Conclusion D1           |
+|-------+---------------+-------------------------|
+
+*** Day 2
+|-------+---------------+------------------------|
+| 01.04 | 09:00 - 10:30 | P3: Classification     |
+| 01.04 | 10:30 - 10:40 | Pause                  |
+| 01.04 | 10:40 - 12:10 | P3: Classification     |
+|-------+---------------+------------------------|
+| 01.04 | 12:10 - 13:40 | Break                  |
+|-------+---------------+------------------------|
+| 01.04 | 13:40 - 15:10 | P4: SAR processing     |
+| 01.04 | 15:10 - 15:20 | Pause                  |
+| 01.04 | 15:20 - 16:50 | Exchange experiences   |
+| 01.04 | 16:50 - 17:20 | Conclusion             |
+|-------+---------------+------------------------|
+
+** Training kit
+
+*** Data folder
+    This folder contains data used during the course (separated in subfolders)
+    Sub-folder used is defined in the outline of each exercise. 
+
+*** Documentation folder
+    It contains the OTB and QGIS documentation:
+    - OTB Software Guide :: C++ API guide (and algorithms descriptions)
+    - OTB CookBook :: Guide for non-developers (with OTB applications API)
+    - QGIS User Guide :: QGIS official documentation
+
+*** Guide folder 
+    It contains all the support/documentation necessary to complete exercises:
+    - Guide for exercises
+    - Slides
+    - Installation guide
+    - Evaluation questionnaire
+    - Solutions (provided at the end of the course:)
+  
+** Software requirements
+
+To complete exercises, you need to install the following tools:
+
+- *Orfeo ToolBox* $>=$ 5.4 with applications
+- *Monteverdi* $>=$ 3.2
+- *QGIS* $>=$ 2.8 
+
+To install the *Orfeo ToolBox* and *Monteverdi*, follow instructions in  [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+
+To install *QGIS* follow instructions on the [[http://www.qgis.org/][QGIS website]].
+
+** Datasets
+
+Datasets uses during the training courses:
+
+- LandSat-8 :: Several dates concatenate, cloud-free (gap-filling) with
+               reference data in ESRI
+               Shapefile (for the classification exercise TP classification),
+- Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
+              Thématique Utilisateurs Pléiades - projet CNES) sur
+              le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright
+              CNES (2013), distribution Airbus DS/ Spot Image),
+- Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
+                résolues), bi-polarisation (HH et HV) sur le sud du
+                lac Constance (Allemagne).
+
+Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
+- LandSat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
+- Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
+- Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
+
+#+INCLUDE: "licence.org"
+
+* Généralités
+#+INCLUDE: "mvd-qgis.org" :minlevel 2
+#+INCLUDE: "otb-apps.org" :minlevel 2
+#+INCLUDE: "internals.org" :minlevel 2
+* Imagerie THR optique, des pré-traitements au SIG
+#+INCLUDE: "preprocessing.org" :minlevel 2
+#+INCLUDE: "segmentation.org" :minlevel 2
+#+INCLUDE: "classification.org" :minlevel 1
+* Traitements SAR pour l'imagerie Sentinel 1
+#+INCLUDE: "sar.org" :minlevel 2
