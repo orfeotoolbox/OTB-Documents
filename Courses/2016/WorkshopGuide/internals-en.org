@@ -6,7 +6,7 @@
      - Know where to find important information
 
 **** Data
-     
+
      The data are in ~Data/internals/~.
 
 *** Outline
@@ -72,19 +72,19 @@
 
     #+ATTR_LATEX: :float t :width 0.6\textwidth
     [[file:Images/ProcessObjectDataObjectInteractionUML.png]]
-    
-    
+
+
 ** *Orfeo ToolBox* internals							    :guide:
 *** Description                                                        :desc:
 **** Summary
-     
+
      This exercise introduces Orfeo ToolBox pipeline internals.
      - Extended filenames,
      - Streaming,
      - Multi-threading,
      - Environment variables,
      - geom files.
-     
+
 **** Prerequisites
 
      - Installed Monteverdi and Orfeo ToolBox software
@@ -92,7 +92,7 @@
      - Understand Orfeo Toolbox applications (see relevant exercise)
 
 **** Goal
-     
+
      - Understand OTB's transparent machinery
      - Influence the data processing pipeline
      - Know where to find important information
@@ -112,148 +112,126 @@
       computation results with real numbers (e.g. NDVI, radiometric
       calibration...)
 
-    In Orfeo ToolBox applications, the user can choose the encoding 
+    In Orfeo ToolBox applications, the user can choose the image encoding (drop
+      down menu in the GUI interface, or parameter in the command line).
+      |--------+----------------------------------------+------------------|
+      | *type* | *domain*                               | *number of bits* |
+      |--------+----------------------------------------+------------------|
+      | uint8  | [0,255]                                | 8 bits           |
+      | int16  | [−32 767, +32 767 ]                    | 16 bits          |
+      | uint16 | [0, 65 535]                            | 16 bits          |
+      | int32  | [−2 147 483 647, +2 147 483 647]       | 32 bits          |
+      | uint32 | [0, 4 294 967 294]                     | 32 bits          |
+      | float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | 32 bits          |
+      | double | [ -10^308, 10^308 ]                    | 64 bits          |
+      |--------+----------------------------------------+------------------|
 
-       Dans les applications de l'Orfeo ToolBox, l'utilisateur peut
-       choisir simplement son encodage (menu déroulant dans les
-       interfaces graphiques ou paramètre additionnel en ligne de
-       commande).
-       |--------+----------------------------------------+------------------------+------------------|
-       | *type* | *plage de valeurs*                     | *entier ou flottant*   | *nombre de bits* |
-       |--------+----------------------------------------+------------------------+------------------|
-       | uint8  | [0,255]                                | entier non signé       | 8 bits           |
-       | int16  | [−32 767, +32 767 ]                    | entier signé           | 16 bits          |
-       | uint16 | [0, 65 535]                            | entier non signé       | 16 bits          |
-       | int32  | [−2 147 483 647, +2 147 483 647]       | entier signé           | 32 bits          |
-       | uint32 | [0, 4 294 967 294]                     | entier non signé       | 32 bits          |
-       | float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | flottant               | 32 bits          |
-       | double | [ -10^308, 10^308 ]                    | flottant (plus précis) | 64 bits          |
-       |--------+----------------------------------------+------------------------+------------------|
+     Use *gdalinfo* to know the pixel encoding of ~image1.tif~ (you can also
+     access it from QGIS). Analyse pixel values of the image in Monteverdi. What
+     can you conclude?
 
-     Utilisez *gdalinfo* pour connaître l'encodage des pixels de
-     l'image ~image1.tif~ (vous pouvez également y accéder dans
-     QGIS). Analysez les valeurs des pixels de l'image dans
-     *monteverdi*. Que pouvez vous conclure ?
+     Use the *Convert* application to convert ~image1.tif~ to a 16 bits integer
+     encoding. Compare both images file sizes. Use the *CompareImages*
+     application to compare the content of both images. What can you conclude?
+     Can you reduce the file size further ? (See the extended filenames
+     paragraph).
 
-     Utilisez l'application *Convert* pour convertir l'image
-     ~image1.tif~ dans un encodage entier sur 16 bits. Comparez la
-     taille de fichier des deux images. Utilisez l'application
-     *CompareImages* pour comparer le contenu des deux images. Que
-     pouvez vous en conclure ? Peut-on réduire encore la taille du
-     fichier image (voir paragraphe sur les noms de fichier étendus) ?
+     Use the *RadiometricIndices* application to compute an NDVI (Normalized
+     Difference Vegetation Index) from the 16 bits image.
+     Keep the output encoding to 16 bits. Visualize the result. What do you
+     notice? Which encoding should be used to properly store this image ?
 
-     Utilisez l'application *RadiometricIndices* pour calculer un
-     indice de végétation NDVI à partir de l'image en entier sur 16
-     bits ainsi créée. Conservez l'encodage de la sortie en entier sur
-     16 bits. Visualisez le résultat. Que constatez vous ? Quel
-     encodage faut-il utiliser pour stocker correctement cette image ?
+**** .geom files
 
-**** Les fichiers .geom
+     Look into the ~image1.geom~ file with a text editor. What seems to be its
+     purpose? Which processing operations require this type of information?
 
-     Examinez le contenu du fichier ~image1.geom~. Que pouvez vous en
-     conclure quand à son rôle? Quelles sont les opérations
-     nécessitant ce type d'informations ?
+**** Extended filenames
 
-**** Les noms de fichiers étendus
+     Extended filenames are used to influence the image reading and writing
+     process in Orfeo ToolBox. They are not application specific, but can be
+     used with any Orfeo ToolBox based tool.
 
-     Les noms de fichiers étendus permettent d'influencer la manière
-     dont l'Orfeo ToolBox lit ou écrit une image. Ils ne sont pas
-     spécifiques aux applications, mais peuvent être utiliser pour
-     n'importe quel logiciel construit autour de l'Orfeo ToolBox.
-     
-     L'ensemble des options disponibles sont listées dans la section
-     7.10 du Software Guide. Nous allons illustrer leurs
-     fonctionnement en nous concentrant sur quelques options.
+     The full list of options is listed in the Software Guide. We will
+     illustrate here a few of them.
 
-***** Les options de lecture
+***** Read options
 
-      Comparez les sorties des deux commandes suivantes:
+      Compare the following command outputs:
 
       #+BEGIN_EXAMPLE
       $ otbcli_ReadImageInfo -in "image1.tif"
       $ otbcli_ReadImageInfo -in "image1.tif?&skipgeom=true"
       #+END_EXAMPLE
 
-      Quel est l'effet du paramètre /skipgeom/ ? Notez son
-      équivalent /skicarto/, qui permet de s'affranchir de la
-      projection cartographique grossière dans le cas des produits de
-      type /Ortho Ready/ (produit projeté à une altitude moyenne par défaut).
+      What is the effect of the /skipgeom/ parameter?
+      Note the similar /skipcarto/ which allows to ignore the coarse
+      cartographic projection in the case of /Ortho Ready/ type products
+      (projected onto an average altitude by default).
 
-      Comparez les sorties des deux commandes suivantes:
-      
+      Compare the following command outputs:
       #+BEGIN_EXAMPLE
       $ otbcli_ReadImageInfo -in "image2.tif"
       $ otbcli_ReadImageInfo -in "image2.tif?&geom=image1.geom"
       #+END_EXAMPLE
 
-      Quel est l'effet du paramètres /geom/ ? Quel peut être son utilité ?
+      What is the effect of the /geom/ parameter? What can be its purpose?
 
-***** Les options d'écriture
+***** Write options
 
-      Parmi les options d'écriture accessibles à partir des noms de
-      fichier étendu, l'option /gdal:co/ permet de passer des options
-      de créations du fichier directement à gdal.
+      Among available write options from extended filenames, the /gdal:co/
+      option allows to pass file creation options directly to GDAL.
+      With this option, and with Tif file format options available in GDAL,
+      re-encode ~image1.tif~ to signed 12 bits with LZW compression.
 
-      A l'aide de cette option, et en consultant les options de
-      créations de fichier disponible pour le format Tif dans gdal,
-      ré-encodez l'image ~image1.tif~ en entier signé sur 12 bits,
-      avec une compression LZW. Comparez la taille des fichiers et le
-      contenu des image à l'aide de l'application *CompareImages*.
+      Compare file sizes and image contents with the *CompareImages*
+      application.
 
-      Une seconde option de nom de fichier étendue qui peut être utile
-      est l'option box. Utilisez l'option box pour n'écrire qu'un
-      carré de 100x100 pixels au centre de l'image d'entrée.
+      Another useful extended filename option is the option box. Use the option
+      box to write only to a 100x100 pixels square in the center of the image.
 
-**** La gestion du streaming
+**** Streaming management
 
-     Par défaut, l'Orfeo ToolBox choisit le mode de découpage (tuile
-     ou bandeaux) le plus adapté à l'image d'entrée, et la taille de
-     bloc qui maximise l'occupation mémoire spécifiée dans
-     l'application (ou dans la variable d'environnement
-     =OTB_MAX_RAM_HINT=). Il est cependant possible de modifier ce
-     comportement en utilisant les noms de fichiers étendus à
-     l'écriture.
+     By default, Orfeo ToolBox chooses the tiling method most suitable to the
+     input image, and the block size which maximizes memory usage. Memory usage
+     is specified to the application, or with the =OTB_MAX_RAM_HINT=
+     environment variable.
+     However, it is possible to modify this behavior with writer extended filenames.
 
-     1. Utilisez l'application *LocalStatisticsExtraction* pour filtrer la première
-     bande de l'image ~image1.tif~ avec un rayon de 9.
+     1. Use the *LocalStatisticsExtraction* application to filter the first band
+        of ~image1.tif~ with a radius of 9.
 
-     2. Exécutez une seconde fois cette opération, cette fois en
-     désactivant complètement le streaming à l'aide de l'option de nom
-     de fichier étendu /streaming:type/. Que constatez vous ?
+     2. Execute the above operation a second time, but this time completely
+        disable streaming with the /streaming:type/ extended filename option.
+        What do you notice?
 
-     3. Exécutez à nouveau cette opération, en spécifiant cette fois un
-     découpage en 1000 bandeaux, en utilisant les options
-     /streaming:type/, /streaming:sizemode/ et
-     /streaming:sizevalue/. Que constatez vous ?
+     3. Execute the above operation a third time, but this time ask for a split
+        of 1000 strips. Use the /streaming:type/, /streaming:sizemode/ and
+        /streaming:sizevalue/. What do you notice?
 
-     Pour mieux observer les phénomènes, il est conseillé d'ouvrir un
-     moniteur système permettant de surveiller l'occupation des
-     processeurs et le débit instantané vers les disques durs.
+     To observe these effects, it is recommended to open a system monitoring
+     tool and look at CPU utilization and I/O throughput.
 
-**** Le multi-threading
+**** Multi-threading
 
-     Par défaut, tout les filtres de l'Orfeo ToolBox qui en ont la
-     capacité vont automatiquement utiliser l'ensemble des coeurs
-     disponibles sur le processeur de la machine. Ce comportement peut
-     être modifié en utilisant la variable d'environnement
-     =ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=.
+     By default, every filter in Orfeo ToolBox use all available processing
+     cores.
+     This behavior can be altered with the
+     =ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS= environment variable.
 
-     Reprenez l'exemple de l'exercice précédent utilisant
-     l'application *LocalStatisticsExtraction* en désactivant le
-     streaming. Utilisez la variable d'environnement ITK pour diminuer
-     puis augmenter le nombre de threads utilisés. Que constatez vous ?
+     Follow the previous example with the *LocalStatisticsExtraction*
+     application and disable streaming. Use the above environment variable to
+     decrease, and then increase the number of threads. What do you notice?
 
-     Vous pouvez utiliser la fonction /time/ pour mesurer le temps d'exécution.
+     You can use the /time/ command to measure execution time.
 
+** *Orfeo ToolBox* internals							:solutions:
 
-** Les mécanismes internes de l'*Orfeo ToolBox*                   :solutions:
+*** Encoding images
 
-*** Encodage des images
-
-    L'utilisation de *gdalinfo* pour l'image /image1.tif/ nous donne:
-
+    *gdalinfo* with /image1.tif/ yields:
     #+BEGIN_EXAMPLE
-    $ $ gdalinfo image1.tif 
+    $ $ gdalinfo image1.tif
     Driver: GTiff/GeoTIFF
     Files: image1.tif
     Size is 2000, 2000
@@ -263,33 +241,30 @@
     Image Structure Metadata:
     INTERLEAVE=PIXEL
     Corner Coordinates:
-    Upper Left  (    5400.000,    4300.000) 
-    Lower Left  (    5400.000,    6300.000) 
-    Upper Right (    7400.000,    4300.000) 
-    Lower Right (    7400.000,    6300.000) 
-    Center      (    6400.000,    5300.000) 
+    Upper Left  (    5400.000,    4300.000)
+    Lower Left  (    5400.000,    6300.000)
+    Upper Right (    7400.000,    4300.000)
+    Lower Right (    7400.000,    6300.000)
+    Center      (    6400.000,    5300.000)
     Band 1 Block=2000x1 Type=Float32, ColorInterp=Gray
     Band 2 Block=2000x1 Type=Float32, ColorInterp=Undefined
     Band 3 Block=2000x1 Type=Float32, ColorInterp=Undefined
     Band 4 Block=2000x1 Type=Float32, ColorInterp=Undefined
     #+END_EXAMPLE
 
-    Les pixels sont donc encodés en nombres flottants de 32 bits. En
-    analysant les valeurs de l'image dans *monteverdi*, on constate
-    que les valeurs de pixels sont entières et comprises entre 100 et
-    1600 environ. L'encodage en flottants de 32 bits est donc
-    inutilement coûteux.
+    Pixels are therefore encoded with 32 bits floating point numbers.
+    By looking at the pixel values in *monteverdi*, you can see that the
+    values are integers and between 100 and 1600 approximately. The 32 bit
+    encoding is therefore needlessly expensive.
 
-    L'appel à l'application *Convert* permet de convertir le type de
-    pixel encodé:
-    
+    The *Convert* application allows to convert the encoded pixel type:
+
     #+BEGIN_EXAMPLE
     $ otbcli_Convert -in image1.tif -out image1_uint16.tif uint16
     #+END_EXAMPLE
 
-    Nous pouvons maintenant comparer la taille des images, et
-    constater que l'image ainsi générée occupe seulement la moitié de
-    la place par rapport à l'image d'origine.
+    We can now compare image sizes, and see that the generated image only uses
+    half the space of the original image:
 
     #+BEGIN_EXAMPLE
     $ du -h image1.tif
@@ -299,20 +274,20 @@
     31M	image1_uint16.tif
     #+END_EXAMPLE
 
-    L'utilisation de l'application *CompareImages* nous montre par
-    ailleurs que le contenu des deux images est identique.
+    Using the *CompareImages* application also show that the image content is
+    identical.
 
     #+BEGIN_EXAMPLE
-    $ otbcli_CompareImages -ref.in image1.tif -meas.in image1_uint16.tif 
-    2016 Mar 08 13:59:24  :  Application.logger  (INFO) Using whole reference image 
+    $ otbcli_CompareImages -ref.in image1.tif -meas.in image1_uint16.tif
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) Using whole reference image
                              since the ROI contains no pixels or is not specified
-    2016 Mar 08 13:59:24  :  Application.logger  (DEBUG) Region of interest used 
+    2016 Mar 08 13:59:24  :  Application.logger  (DEBUG) Region of interest used
                              for comparison : ImageRegion (0x7ffcb6a6d930)
     Dimension: 2
     Index: [0, 0]
     Size: [2000, 2000]
-    
-    2016 Mar 08 13:59:24  :  Application.logger  (INFO) reference image channel 1 
+
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) reference image channel 1
                              is compared with measured image channel 1
     2016 Mar 08 13:59:24  :  Application.logger  (INFO) MSE: 0
     2016 Mar 08 13:59:24  :  Application.logger  (INFO) MAE: 0
@@ -323,129 +298,111 @@
     psnr: 0
     #+END_EXAMPLE
 
-    Pour calculer le NDVI, on utilise la commande suivantes :
-    
+    To compute the NDVI, we use the following commands:
+
     #+BEGIN_EXAMPLE
-    $ otbcli_RadiometricIndices -in image1.tif 
-                                -out image1_ndvi.tif uint16 
-                                -channels.red 1 
-                                -channels.green 2 
-                                -channels.blue 3 -channels.nir 4 
+    $ otbcli_RadiometricIndices -in image1.tif
+                                -out image1_ndvi.tif uint16
+                                -channels.red 1
+                                -channels.green 2
+                                -channels.blue 3 -channels.nir 4
                                 -list Vegetation:NDVI
     #+END_EXAMPLE
 
-    Si l'on ouvre l'image ainsi générée dans *monteverdi*, on constate
-    que l'image vaut 0 en tout point: l'encodage de la sortie ne
-    convient. Il faudrait utiliser un type flottant (comme celui par
-    défaut par exemple.
+    Looking at the generated image in *monteverdi*, we see that the image is 0
+    everywhere. The output encoding is therefore not appropriate. Floating point
+    type should be used (the default for example).
 
-*** Les fichiers .geom
+*** .geom files
 
-    Le fichier geom contient les informations nécessaires aux
-    opérations de corrections géométriques et radiométriques de
-    l'image.
+    The geom file contains information necessary for geometric and radiometric
+    image corrections.
 
-*** Les noms de fichiers étendus
+*** Extended filenames
 
-**** Les options de lecture
-     
-     L'utilisation du paramètre de nom de fichier étendu /skipgeom/
-     permet d'ignorer les informations contenue dans le fichier
-     /geom/. On constate que la taille du pixel au sol est erronée et
-     que les informations relatives à la date d'acquisition et au
-     capteur ont notamment disparu.
-     
-     Le paramètre de nom de fichier étendu /geom/ permet d'attacher un
-     fichier /geom/ à une image existante. C'est notamment utile pour
-     réaliser des traitements géométriques ou radiométriques pour une
-     image quelconque. Par défaut, l'Orfeo ToolBox (en fait OSSIM)
-     cherche un fichier /geom/ portant le même nom que l'image.
+**** Read option
 
-**** Les options d'écriture
+     The /skipgeom/ read parameters allows to ignore the associated geom file.
+     The ground pixel size is false and the acquisition date and sensor
+     information has disappeared.
 
-     La ligne de commande suivante permet de réaliser l'opération
-     demandée:
+     The /geom/ extended filename parameter allows to attach a /geom/ file to an
+     existing image. Among other things, it is useful for radiometric and
+     geometric processing. By default, Orfeo ToolBox (via OSSIM) looks for a
+     /geom/ file with the same name as the image.
+
+**** Write options
 
      #+BEGIN_EXAMPLE
-     $ otbcli_Convert -in image1.tif 
+     $ otbcli_Convert -in image1.tif
        -out "image1_comp.tif?&gdal:co:NBITS=12&gdal:co:COMPRESS=LZW"  uint16
      #+END_EXAMPLE
-     
-     La taille de l'image ainsi créée est :
+
+     The size of the image is:
 
      #+BEGIN_EXAMPLE
-     $ du -h image1_comp.tif 
+     $ du -h image1_comp.tif
      23M	image1_comp.tif
      #+END_EXAMPLE
 
-     On gagne donc 8 Mo par rapport à l'image encodée sur 16 bits non
-     signés. Par ailleurs l'appel à l'application *CompareImages*
-     permet de constater que les images sont toujours de contenu
-     identique.
+     8 MB are saved compared to the unsigned 16 bits image. The *CompareImages*
+     application shows that the content stays the same.
 
-     Le paramètre /box/ s'utilise de la manière suivante :
+     The box parameter is used as such:
 
      #+BEGIN_EXAMPLE
-     $ otbcli_Convert -in image1.tif 
+     $ otbcli_Convert -in image1.tif
                       -out "image1_comp.tif?&box=1000:1000:100:100"  uint16
      #+END_EXAMPLE
 
-     Après exécution de cette commande, l'image de sortie correspond
-     à un extrait de la sortie totale, commençant à l'index
-     $(1000,1000)$ et de taille 100x100 pixels. Cette option peut être
-     utile pour pré visualiser le résultat d'un traitement avant de
-     traiter l'image entière.
+     After this command, the output image is an extract of the total output,
+     beginning at the $(1000, 1000)$ index and of size 100x100. This option can
+     be used to visualize a result before processing the full image.
 
-*** La gestion du streaming
+*** Streaming management
 
-    L'appel à l'application *LocalStatiticsExtraction* se fait comme
-    suit:
-    
+    The *LocalStatiticsExtraction* application is used as follows:
+
     #+BEGIN_EXAMPLE
-    $ otbcli_LocalStatisticExtraction -in image1.tif -out image1_ls.tif 
+    $ otbcli_LocalStatisticExtraction -in image1.tif -out image1_ls.tif
                                       -radius 9
     #+END_EXAMPLE
 
-    On constate que le calcul s'effectue en plusieurs phases (charge
-    des processeurs), entrecoupées de phase d'écriture sur le
-    disque. Par défaut, c'est l'Orfeo ToolBox qui détermine le
-    découpage optimal.
+    We notice that computation is done in several steps, interleaved with disk
+    I/O. By default, Orfeo ToolBox specifies the optimal tiling.
 
-    Pour désactiver complètement le streaming, il suffit d'utiliser
-    les options de noms de fichier étendus suivantes:
+    To completely disable streaming, use the following extended filename
+    options:
 
     #+BEGIN_EXAMPLE
     $ otbcli_LocalStatisticExtraction -in image1.tif *
              -out "image1_ls.tif?&streaming:type=none" -radius 9
     #+END_EXAMPLE
 
-    On peut constater dans ce cas que le calcul s'effectue en une
-    seule fois, suivi d'une seule phase d'écriture sur le disque.
+    When processing is done in a single pass, only one disk write follows.
 
     #+BEGIN_EXAMPLE
-    $ otbcli_LocalStatisticExtraction -in image1.tif 
+    $ otbcli_LocalStatisticExtraction -in image1.tif
       -out "image1_ls.tif?&streaming:type=stripped \
-      &streaming:sizemode=nbsplits&streaming:sizevalue=1000" 
+      &streaming:sizemode=nbsplits&streaming:sizevalue=1000"
       -radius 9
     #+END_EXAMPLE
 
-    Cette fois-ci, on observe de multiples phases de calcul suivi de
-    phases d'écriture. Le temps de calcul peut être quasiment deux
-    fois plus long, car un découpage trop important est sous optimal.
+    This time, we see multiple compute and disk write steps. Computation time
+        can be almost twice as long , because over tiling is suboptimal.
 
-*** Le multi-threading
+*** Multithreading
 
-    Voici comment fixer le nombre de threads à 1 :
+    Here's how to set the number of threads to 1:
 
     #+BEGIN_EXAMPLE
     $ export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
-    $ otbcli_LocalStatisticExtraction -in image1.tif 
+    $ otbcli_LocalStatisticExtraction -in image1.tif
                                       -out "image1_ls.tif?&streaming:type=none"
                                       -radius 9
     #+END_EXAMPLE
 
-    Dans ce cas, le temps de calcul est beaucoup plus important. On
-    peut également constater qu'augmenter le nombre de threads au delà
-    des capacités de la machine (nombre de coeurs du processeur) ne
-    permet pas d'améliorer les temps de calcul.
-
+    In that case, computation time is much more significant. It can also be seen
+    that increasing the number too much does not improve performance above a
+    certain point (typically the number of
+    CPU cores).

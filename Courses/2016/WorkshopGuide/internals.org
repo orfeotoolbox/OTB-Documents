@@ -338,7 +338,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
 
     Si l'on ouvre l'image ainsi générée dans *monteverdi*, on constate
     que l'image vaut 0 en tout point: l'encodage de la sortie ne
-    convient. Il faudrait utiliser un type flottant (comme celui par
+    convient pas. Il faudrait utiliser un type flottant (comme celui par
     défaut par exemple.
 
 *** Les fichiers .geom
