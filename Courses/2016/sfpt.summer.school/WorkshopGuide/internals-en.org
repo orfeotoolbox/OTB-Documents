@@ -1,26 +1,26 @@
-** Les mécanismes internes de l'Orfeo ToolBox                        :slides:
-*** Objectifs et données
-**** Objectifs
-     - Comprendre les mécanismes transparents de l'Orfeo ToolBox
-     - Savoir influencer la manière dont l'Orfeo ToolBox exécute un traitement
-     - Savoir ou trouver des informations complémentaires
+** Orfeo ToolBox internals							   :slides:
+*** Goals and data
+**** Goals
+     - Understand OTB's transparent machinery
+     - Influence the data processing pipeline
+     - Know where to find important information
 
-**** Données
+**** Data
      
-     Les données se trouvent dans le répertoire ~Data/internals/~.
+     The data are in ~Data/internals/~.
 
-*** Déroulement
-    Le déroulement du TP est le suivant:
-    1. Encodage des images
-    2. Fichiers geom
-    3. Noms de fichiers étendus
+*** Outline
+    The outline for this workshop is as follows:
+    1. Encoding images
+    2. geom files
+    3. Extended filenames
     4. Streaming
     5. Multi-threading
 
-*** Encodage des images
+*** Encoding images
 
 |--------+----------------------------------------+------------------|
-| *type* | *plage de valeurs*                     | *nombre de bits* |
+| *type* | *domain*                               | *number of bits* |
 |--------+----------------------------------------+------------------|
 | uint8  | [0,255]                                | 8 bits           |
 | int16  | [−32 767, +32 767 ]                    | 16 bits          |
@@ -31,7 +31,7 @@
 | double | [ -10^308, 10^308 ]                    | 64 bits          |
 |--------+----------------------------------------+------------------|
 
-*** Fichiers geom
+*** geom files
 
     #+BEGIN_EXAMPLE
     [...]
@@ -53,68 +53,66 @@
     [...]
     #+END_EXAMPLE
 
-*** Noms de fichiers étendus
+*** Extended filenames
 
-    Syntaxe comprise par tout code OTB lisant ou écrivant des images
+    Syntax understood by all OTB code reading or writing images
 
     #+BEGIN_EXAMPLE
     "myImage.tif?&geom=mygeom.geom"
     "myImage.tif?&gdal:co:TILED=yes&streaming:type=none"
     #+END_EXAMPLE
 
-*** Streaming et multi-threading (1/2)
+*** Streaming and multi-threading (1/2)
 
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:Images/StreamingImageDiagram.png]]
 
 
-*** Streaming et multi-threading (2/2)
+*** Streaming and multi-threading (2/2)
 
     #+ATTR_LATEX: :float t :width 0.6\textwidth
     [[file:Images/ProcessObjectDataObjectInteractionUML.png]]
     
     
-** Les mécanismes internes de l'*Orfeo ToolBox*                     :guide:
+** *Orfeo ToolBox* internals							    :guide:
 *** Description                                                        :desc:
-**** Résumé
+**** Summary
      
-     Cet exercice permet de se familiariser avec les mécanismes
-     internes de l'Orfeo ToolBox:
-     - Les noms de fichier étendus,
-     - Le streaming,
-     - Le multi-threading,
-     - Les variables d'environnements,
-     - Les fichiers geom
+     This exercise introduces Orfeo ToolBox pipeline internals.
+     - Extended filenames,
+     - Streaming,
+     - Multi-threading,
+     - Environment variables,
+     - geom files.
      
-**** Pré-requis
+**** Prerequisites
 
-     - Logiciels installés (Monteverdi et Orfeo ToolBox)
-     - Données téléchargées
-     - Connaissance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
+     - Installed Monteverdi and Orfeo ToolBox software
+     - Downloaded data
+     - Understand Orfeo Toolbox applications (see relevant exercise)
 
-**** Objectifs
+**** Goal
      
-     - Comprendre les mécanismes transparents de l'Orfeo ToolBox
-     - Savoir influencer la manière dont l'Orfeo ToolBox exécute un traitement
-     - Savoir ou trouver des informations complémentaires
+     - Understand OTB's transparent machinery
+     - Influence the data processing pipeline
+     - Know where to find important information
 
-*** Étapes                                                            :steps:
+*** Steps										    :steps:
 
-Les données se trouvent dans le répertoire ~Data/internals/~.
+     The data are in ~Data/internals/~.
 
-**** Encodage des images
+**** Encoding images
 
-     Dans l'Orfeo ToolBox, c'est l'utilisateur qui choisit le type
-     d'encodage des images en fonction de ce que l'image
-     représente. Ainsi, on choisira en général:
-     - Un encodage entier sur 8 bits non-signés (plage de valeurs
-       [0,255]) pour des sorties destinées à un affichage ou des
-       rapports,
-     - Un encodage entier sur 16 bits non signés pour représenter
-       des images satellites,
-     - Un encodage flottant (32 ou 64 bits) quand on représente le
-       résultat d'un calcul produisant des nombres réels (NDVI,
-       calibration radiométrique ...).
+     With Orfeo ToolBox, the user chooses the image encoding type depending on
+     the image. In general we'll use:
+     - 8 bits unsigned encoding (with domain [0,255]) for outputs used on screen
+       or paper.
+     - 16 bits unsigned encoding to represent satellite images
+    - 32 bits unsigned encoding to represent intermediate processing steps,
+      computation results with real numbers (e.g. NDVI, radiometric
+      calibration...)
+
+    In Orfeo ToolBox applications, the user can choose the encoding 
 
        Dans les applications de l'Orfeo ToolBox, l'utilisateur peut
        choisir simplement son encodage (menu déroulant dans les
