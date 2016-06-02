@@ -11,7 +11,7 @@
      Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
      - ~Extract16bits~ contient la série multi-temporelle LandSat8,
      - ~training~ contient la donnée d'apprentissage au format /shp/,
-     - ~testing~ continet la donnée de validation au format /shp/.
+     - ~testing~ contient la donnée de validation au format /shp/.
      
 *** Déroulement
     les étapes de l'exercice sont les suivantes:
@@ -146,7 +146,7 @@
     Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
      - ~Extract16bits~ contient la série multi-temporelle LandSat8,
      - ~training~ contient la donnée d'apprentissage au format /shp/,
-     - ~testing~ continet la donnée de validation au format /shp/.
+     - ~testing~ contient la donnée de validation au format /shp/.
 
 **** Présentation des données LANDSAT 8
 
