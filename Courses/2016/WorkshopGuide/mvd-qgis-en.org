@@ -64,7 +64,7 @@
     - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
 *** Quantum GIS
     #+ATTR_LATEX: :float t :width 0.7\textwidth
-    [[file:../../../../Slides/OTB-General/images/otb_qgis.png]]
+    [[file:../../../Slides/OTB-General/images/otb_qgis.png]]
 
 *** Principle
     - Discover data package and software
