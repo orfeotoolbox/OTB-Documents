@@ -1,0 +1,143 @@
+#+TITLE: Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques
+#+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES), Manuel Grizonnet (CNES)
+#+DATE: 2016
+#+OPTIONS: H:5
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
+#+LaTeX_HEADER: \usepackage{a4wide}
+#+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathptmx}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage{tikz}
+#+OPTIONS: tags:nil
+
+#+EXPORT_SELECT_TAGS:
+#+EXCLUDE_TAGS: solutions slides
+
+#+LATEX:\pagestyle{fancy}
+#+LATEX:\fancyhf{}
+#+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
+#+LATEX:\fancyhead[LO]{\bfseries\rightmark}
+#+LATEX:\fancyhead[RE]{\bfseries\leftmark}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Formation Orfeo ToolBox}}
+
+* Avant-propos                                                           :fw:
+
+** Objectifs de la formation
+
+L'objectif de cette formation est de présenter l'OTB et mettre en
+oeuvre les outils disponibles dans les OTB applications pour
+l'exploitation, et la manipulation des images de télédection.
+
+Les capacités acquises en fin de formation concernent la mise en œuvre
+de chaines de traitement d'images en utilisant les applications OTB,
+incluant notamment:
+- Extraction de primitives
+- Calibration
+- Classification
+- Segmentation
+- Traitements basiques radar
+
+** Planning de la formation
+
+*** Jour 1
+|-------+---------------+-------------------------|
+| 31.03 | 09:00 - 10:30 | Introduction            |
+| 31.03 | 10:30 - 10:40 | Pause                   |
+| 31.03 | 10:40 - 12:40 | TP1: Généralités        |
+|-------+---------------+-------------------------|
+| 31.03 | 12:40 - 14:10 | Pause déjeuner          |
+|-------+---------------+-------------------------|
+| 31.03 | 14:10 - 16:10 | TP2: Prétraitements THR |
+| 31.03 | 16:10 - 16:20 | Pause                   |
+| 31.03 | 16:20 - 17:50 | TP2: Segmentation       |
+| 31.03 | 17:50 - 18:00 | Conclusion jour 1       |
+|-------+---------------+-------------------------|
+
+*** Jour 2
+|-------+---------------+------------------------|
+| 01.04 | 09:00 - 10:30 | TP3: Classification    |
+| 01.04 | 10:30 - 10:40 | Pause                  |
+| 01.04 | 10:40 - 12:10 | TP3: Classification    |
+|-------+---------------+------------------------|
+| 01.04 | 12:10 - 13:40 | Pause déjeuner         |
+|-------+---------------+------------------------|
+| 01.04 | 13:40 - 15:10 | TP4: Traitements Radar |
+| 01.04 | 15:10 - 15:20 | Pause                  |
+| 01.04 | 15:20 - 16:50 | Echanges libres        |
+| 01.04 | 16:50 - 17:20 | Conclusion générale    |
+|-------+---------------+------------------------|
+
+** Contenu du kit de formation
+
+*** Répertoire Data
+    Ce répertoire contient les données nécessaires à chaque TP, dans
+    des sous-répertoires séparés. Le sous-répertoire nécessaire est
+    indiqué au début de l'énoncé du TP
+
+*** Répertoire Documentation
+    Ce répertoire contient la documentation de l'Orfeo ToolBox, et de QGIS:
+    - OTB Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
+    - OTB CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
+    - QGIS User Guide :: Manuel d'utilisation de QGIS
+
+*** Répertoire Guide
+
+    Ce répertoire contient l'ensemble des supports nécessaires à la réalisation des exercices de la formation:
+    - Guide de TP
+    - Planches
+    - Guide d'installation
+    - Questionnaire d'évaluation
+    - Solutions (distribuées à la fin)
+  
+** Les logiciels nécessaires
+
+Afin de réaliser les exercices, les logiciels suivants sont
+nécessaires :
+
+- *Orfeo ToolBox* 5.2 ou plus récent avec les applications
+- *Monteverdi* 3.0 ou plus récent
+- *QGIS* 2.4 ou plus récent
+
+Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
+de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+
+Pour installer *QGIS* consultez la documentation du logiciel qui est
+disponible sur le  [[http://www.qgis.org/][site du projet]].
+
+** Les données
+
+Les données utilisées au cours du TP sont des extraits des données suivantes:
+
+- LandSat-8 :: plusieurs dates concaténées, dénuagées (gap-filling)
+               avec des données terrains de référence au format ESRI
+               Shapefile (pour le TP classification),
+- Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
+              Thématique Utilisateurs Pléiades - projet CNES) sur
+              le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright
+              CNES (2013), distribution Airbus DS/ Spot Image),
+- Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
+                résolues), bi-polarisation (HH et HV) sur le sud du
+                lac Constance (Allemagne).
+
+Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
+- LandSat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
+- Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
+- Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
+
+#+INCLUDE: "licence.org"
+
+* Généralités
+#+INCLUDE: "mvd-qgis.org" :minlevel 2
+#+INCLUDE: "otb-apps.org" :minlevel 2
+#+INCLUDE: "internals.org" :minlevel 2
+* Imagerie THR optique, des pré-traitements au SIG
+#+INCLUDE: "preprocessing.org" :minlevel 2
+#+INCLUDE: "segmentation.org" :minlevel 2
+#+INCLUDE: "classification.org" :minlevel 1
+* Traitements SAR pour l'imagerie Sentinel 1
+#+INCLUDE: "sar.org" :minlevel 2

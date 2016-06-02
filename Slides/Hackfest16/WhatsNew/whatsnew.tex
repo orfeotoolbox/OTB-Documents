@@ -1,0 +1,136 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES & THEMES
+%----------------------------------------------------------------------------------------
+
+\pdfminorversion=4
+\documentclass[8pt]{beamer}
+
+\usepackage{etex}
+\mode<presentation> {
+
+\usetheme{Vilanova}
+
+}
+
+
+
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{chronology}
+\let\CHRONOLOGY\chronology
+\let\endCHRONOLOGY\endchronology
+\def\chronology{\shorthandoff{;}\CHRONOLOGY}
+\def\endchronology{\endCHRONOLOGY\shorthandon{;}}
+\usepackage{pstricks}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{pifont}
+
+\usepackage{listings,color}
+
+\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+\definecolor{listnumbers}{gray}{0.65}
+\definecolor{listlightgray}{gray}{0.955}
+\definecolor{listwhite}{gray}{1.0}
+
+
+\AtBeginSection[]
+{
+\addtocounter{framenumber}{-1}
+\begin{frame}
+\frametitle{Sommaire}
+\tableofcontents[currentsection]
+\end{frame}}
+
+\title{What's new in Orfeo ToolBox?}
+\subtitle{Open source processing of remote sensing images}
+\author{Victor Poughon \texttt{\textless victor.poughon@cnes.fr\textgreater}}
+\date{OTB User Days 2016}
+
+\pgfdeclareimage[height=96mm,width=130mm]{background}{art/fondsClairSansLogo}
+\pgfdeclareimage[height=0.2cm]{cc}{art/CC-licence.png}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{art/logoIncrust}
+\pgfdeclareimage[height=0.6cm]{logo_cnes}{art/logo_cnes}
+\logo{
+\begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}
+\href{http://www.cnes.fr}{\pgfuseimage{logo_cnes}}
+& \vspace{-0.03\textwidth} \scriptsize{} % date and event here
+& \href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}} & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{5.0 (Mai 2015)}
+\begin{block}{Modularity}
+\begin{itemize}
+  \item Better code layout, coherent modules (124 modules and 16 groups) with
+    source, test and applications.
+\item Dependency management
+\item External contributions: \url{https://www.orfeo-toolbox.org/external-projects/}
+\end{itemize}
+\end{block}
+
+\begin{block}{SuperBuild}
+\begin{itemize}
+\item No more third party software in OTB!
+\item The Superbuild downloads, configures, builds and installs dependencies
+\item Offline mode for compiling OTB without network access (e.g. airplane)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.2 (December 2015)}
+\begin{block}{OTB}
+\begin{itemize}
+\item New SAR processing applications (polarimetry, radiometry, speckle)
+\item Support for Sentinel-1 products
+\item Better Python bindings
+\item Better GDAL 2.0 compatibility and support Sentinel-2 images
+\item \ldots
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.0}
+\begin{itemize}
+\item Display an image mosaic or multi-temporal dataset
+\item Efficient visualization tools (local contrast, gradient\ldots)
+\item Access to OTB applications
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.4 (May 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Switched to a fixed release schedule
+\item Merged Ice into OTB
+\item External build of external modules
+\item New SAR decompositions: Barnes, Huynen, Pauli
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.2}
+\begin{itemize}
+\item Screenshot feature
+\item Generate GDAL overviews
+\item Support for GDAL subdatasets
+\item Added to the SuperBuild
+\end{itemize}
+\end{block}
+\end{frame}
+
+\end{document}
