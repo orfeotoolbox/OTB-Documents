@@ -10,8 +10,6 @@
 
 \framebreak
 
-* 
-
   #+CAPTION: What we want to do is something like this.
      #+NAME:   fig:moon-shot
      [[./images/packages_01.jpg]]
