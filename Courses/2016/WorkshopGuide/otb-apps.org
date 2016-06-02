@@ -40,7 +40,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** GUI
     #+begin_center
     #+ATTR_LaTeX: width=0.95\textwidth center  
-    [[file:../../../../Slides/OTB-General/images/app_parameters.png]]
+    [[file:../../../Slides/OTB-General/images/app_parameters.png]]
     #+end_center
 *** Paramétrage
     - Afficher l'aide de l'application d'OrthoRectification (bon exemple)
