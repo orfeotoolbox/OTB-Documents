@@ -1,104 +1,99 @@
-** Segmentation et export vers un SIG                               :slides:
-*** Objectifs et Données
-**** Objectifs
-     - Connaître les étapes pour réaliser une segmentation
-     - Savoir optimiser les paramètres de la segmentation
-     - Savoir exporter la segmentation vers un logiciel SIG
+** Image segmentation and export to GIS                              :slides:
+*** Goals and data
+**** Goals
+     - Know steps to perform image segmentation with OTB
+     - Know how to optimize segmentation parameters
+     - Export segmentation results to a GIS
 
-**** Données
-     Les données pour cet exercice se trouvent dans le répertoire ~Data/segmentation~.
+**** Data
+     Dataset for this exercise can be found in folder: ~Data/segmentation~.
 
-*** Déroulement
-    Le déroulement du TP est le suivant:
-    1. Lissage de l'image par l'algorithme MeanShift
+*** Planning
+    Planning of the pratical work:
+    1. Image smoothing with the MeanShift algorithm
     2. Segmentation
-    3. Traitement des petites régions
-    4. Vectorisation
-    5. Filtrage des polygones dans QGIS
+    3. Handle small regions
+    4. Vectorization
+    5. Filter segments in QGIS
 
-*** Algorithme MeanShift (1/4)
+*** MeanShift algorithm (1/4)
     #+ATTR_LATEX: :float t :width 0.4\textwidth
     [[file:Images/principe_mean_shift_1.pdf]]
     #+BEGIN_CENTER
-    Recherche dans la fenêtre des pixels proches spectralement
+    Search in pixel neighboorhood /nearby/ spectrally
     #+END_CENTER
 
-*** Algorithme MeanShift (2/4)
+*** MeanShift algorithm (2/4)
     #+ATTR_LATEX: :float t :width 0.4\textwidth
     [[file:Images/principe_mean_shift_2.pdf]]
     #+BEGIN_CENTER
-    Moyennes spatiale et spectrale des pixels localisés dans la fenêtre
+    Spatial and spectral mean for pixels in the given window
     #+END_CENTER
 
-*** Algorithme MeanShift (3/4)
+*** MeanShift algorithm (3/4)
     #+ATTR_LATEX: :float t :width 0.4\textwidth
     [[file:Images/principe_mean_shift_3.pdf]]
     #+BEGIN_CENTER
-    Déplacement du pixel vers le barycentre et affectation de la moyenne spectrale
+    Move pixel to the barycentre and set value with spectral mean
     #+END_CENTER
 
-*** Algorithme MeanShift (4/4)
+*** MeanShift algorithm (4/4)
     #+ATTR_LATEX: :float t :width 0.4\textwidth
     [[file:Images/principe_mean_shift_4.pdf]]
     #+BEGIN_CENTER
-    Retour à l'étape 1 jusqu'à convergence
+    Go back to step 1 (iterative process). Stop afte convergence
     #+END_CENTER
 
 
-** Segmentation et export vers un SIG                               :guide:
+** Image segmentation and export to GIS                               :guide:
 *** Description                                                        :desc:
-**** Résumé
+**** Summary
      
-     Cet exercice permet de se familiariser avec la segmentation large
-     échelle en utilisant l'algorithme MeanShift. On y
-     parcourt les différentes étapes jusqu'à l'export des polygones
-     segmentés dans un SIG.
+     This exercise allow to get familiar with large scale segmentation using the
+     MeanShift algorithm. It goes through each step of the procedure and shows
+     how to export and use output segments in a GIS.
 
-**** Pré-requis
+**** Pre-requisites
      
-     - Logiciels installés (Monteverdi et Orfeo ToolBox)
-     - Données issues du TP de pré-traitements pour l'imagerie THR optique
-     - Connaissance du mécanisme des applications de l'Orfeo ToolBox
-       (voir exercice correspondant)
+     - Install software (Monteverdi and QGIS)
+     - Output data from the VHR image pre-processing exercise
+     - Know how OTB applications works (see corresponding exercise)
        
-**** Objectifs
+**** Goals
 
-     - Connaître les étapes pour réaliser une segmentation
-     - Savoir optimiser les paramètres de la segmentation
-     - Savoir exporter la segmentation vers un logiciel SIG
+     - Know steps required to perform a segmentation
+     - Know how to optimiez segmentation parameters
+     - Know how to export results to a GIS
 
-*** Étapes                                                            :steps:
-    Les données pour cet exercice se trouvent dans le répertoire ~Data/segmentation~.
-**** Lissage de l'image par l'algorithme MeanShift
+*** Steps                                                             :steps:
+    Data needed for this exercise can be found in folder ~Data/segmentation~.
+**** Image smoothing with MeanShift algorithm
 
-     L'algorithme du MeanShift réalise un lissage de l'image tout en
-     préservant ses contours. Il rend ainsi l'image plus homogène
-     tout en conservant des frontières franches entre les zones. Il
-     facilite ainsi la segmentation de l'image par des méthodes
-     simples, comme l'extraction des composantes
-     connexes. L'algorithme moyenne itérativement les pixels dans un
-     certain voisinage spatial et spectral.
+     MeanShift algorithm performs a smoothing of the image by preserving
+     edges. It gives more homogenous images and keep also clear frontiers
+     between regions. It aims at facilite the segmentation step done by simple
+     methods like connected component computation. The algorithm perform
+     iterative mean over pixel using a given neighboordhood (spatial and spectral).
 
-     Réaliser un lissage de l'image ~phr_orthopxs_osr_mipy_xt.tif~ en
-     utilisant l'application *MeanShiftSmoothing*. Faites varier les
-     paramètres /ranger/ et /spatialr/ pour observer leur influence.
+     Compute smoothing of image ~phr_orthopxs_osr_mipy_xt.tif~ using the
+     application *MeanShiftSmoothing*. Change values /ranger/ and /spatialr/ parameters
+     to see their influences.
 
      Notes:
-     - L'option /modesearch/ permet d'accélérer le calcul au détriment
-       de la stabilité, et sera donc désactivée,
-     - Le rayon spatial (/spatialr/) et spectral (/ranger/) sont les
-       paramètres déterminants pour l'algorithme. Le premier s'exprime
-       en nombre de pixel, tandis que le second comme une distance
-       entre signatures spectrales des pixels.
-     - La sortie /foutpos/ code les position moyenne des pixels après
-       lissage, et sera utilisée dans la suite du TP.
-     - Le paramètre de nom de fichier étendu /box/ peut être utilisé
-       pour trouver la valeur de /ranger/ et /spatialr/ optimale sans
-       traiter toute l'image.
+     - /modesearch/ option allow to speedup computation but it is less
+       stable. We will disable it in this exercise.
+     - Spatial (/spatialr/) and spectral (/ranger/) radiuses are the most
+       important parameters of the algorithm. The first one corresponds to a
+       numbe of pixels and the other one corresponds to a distance between
+       pixels spectral values.
+     - /foutpos/ output the spectral mean result for each pixels and will be
+       used in the next questions.
+     - You can use /extended filename/ parameters /box/ to find the optimal
+       parameters /ranger/ and /spatialr/ without processing all the input
+       image.
 
-     Pour la suite de l'exercice, utiliser une valeur de /ranger/
-     autour de 25 et une valeur de /spatialr/ autour de 3 (pour
-     limiter le temps de calcul).
+       In the next step of the exercise we will use /ranger/ around 254 and
+       /spatialr/ around 3 (to limit computation time)
 
 **** Segmentation
 
@@ -199,7 +194,7 @@
      dont la valeur moyenne du NDVI est forte (arbres ?). Copiez les
      dans une nouvelle couche.     
 
-** Segmentation et export vers un SIG                             :solutions:
+** Image segmentation and export to GIS                               :solutions:
 *** Lissage de l'image par l'algorithme MeanShift
 
     L'étape de lissage se réalise de la manière suivante:
