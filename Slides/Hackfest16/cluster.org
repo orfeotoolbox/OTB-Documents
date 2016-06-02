@@ -1,7 +1,7 @@
 #+STARTUP: beamer
 #+INCLUDE: "template-beamer.org"
 
-#+latex_header: \subtitle{One year of Open Governance for OTB: thoughts and context}
+#+latex_header: \subtitle{Processing your data with 500+ cores: yes wen can!}
 
 * Introduction
 
