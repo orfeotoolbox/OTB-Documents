@@ -21,7 +21,7 @@
 #+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
 #+LATEX:\fancyhead[LO]{\bfseries\rightmark}
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
-#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
 #+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Orfeo ToolBox course}}
 
@@ -48,11 +48,11 @@ Introduction to OTB
 
 *** Day 1
 |-------+---------------+-------------------------|
-| 04.03 | 10:40 - 12:40 | P1: basics              |
-| 31.03 | 16:10 - 16:20 | Pause                   |
-| 31.03 | 14:10 - 16:10 | P2: image preprocessing |
+| 04.07 | 10:40 - 12:40 | P1: basics              |
+| 04.07 | 16:10 - 16:20 | Pause                   |
+| 04.07 | 14:10 - 16:10 | P2: image preprocessing |
 |-------+---------------+-------------------------|
-| 31.03 | 12:40 - 14:10 | Break                   |
+| 04.07 | 12:40 - 14:10 | Break                   |
 |-------+---------------+-------------------------|
 | 31.03 | 16:20 - 17:50 | P3: Segmentation        |
 | 31.03 | 17:50 - 18:00 | Conclusion D1           |
@@ -106,33 +106,31 @@ To install *QGIS* follow instructions on the [[http://www.qgis.org/][QGIS websit
 
 ** Datasets
 
-Datasets uses during the training courses:
+Datasets use during the training courses:
 
 - LandSat-8 :: Several dates concatenate, cloud-free (gap-filling) with
                reference data in ESRI
                Shapefile (for the classification exercise TP classification),
-- Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
-              Thématique Utilisateurs Pléiades - projet CNES) sur
-              le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright
+- Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
+              over OSR MiPy (South West of Toulouse), 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
-- Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
-                résolues), bi-polarisation (HH et HV) sur le sud du
-                lac Constance (Allemagne).
+- Sentinel-1 :: SLC product (complex) SM (Strip Map, better resolution),
+                bi-polarization (HH and HV) near Constance lake (Germany).
 
-Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
-- LandSat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
+For more information on these satellites:
+- LandSat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
-- Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
+- Sentinel-1 :: Free access on [[https://scihub.copernicus.eu/][ESA hub]] or on CNES [[https://peps.cnes.fr][PEPS]]
 
 #+INCLUDE: "licence.org"
 
-* Généralités
-#+INCLUDE: "mvd-qgis.org" :minlevel 2
-#+INCLUDE: "otb-apps.org" :minlevel 2
-#+INCLUDE: "internals.org" :minlevel 2
-* Imagerie THR optique, des pré-traitements au SIG
-#+INCLUDE: "preprocessing.org" :minlevel 2
-#+INCLUDE: "segmentation.org" :minlevel 2
-#+INCLUDE: "classification.org" :minlevel 1
-* Traitements SAR pour l'imagerie Sentinel 1
-#+INCLUDE: "sar.org" :minlevel 2
+* Basics
+#+INCLUDE: "mvd-qgis-en.org" :minlevel 2
+#+INCLUDE: "otb-apps-en.org" :minlevel 2
+#+INCLUDE: "internals-en.org" :minlevel 2
+* Optical VHR image,from pre-processing to GIS
+#+INCLUDE: "preprocessing-en.org" :minlevel 2
+#+INCLUDE: "segmentation-en.org" :minlevel 2
+#+INCLUDE: "classification-en.org" :minlevel 1
+* SAR processing on Sentinel-1 images
+#+INCLUDE: "sar-en.org" :minlevel 2
