@@ -31,13 +31,13 @@
 MyFunction()
 {
   MyType * t = new MyType();
-  [hundreds of line of code]
+  [hundreds of lines of code]
   if(condition)
    {
    // Error, get out of the function
     return 1;
    }
-  [hundreds of line of code]
+  [hundreds of lines of code]
   delete t;
   return 0;
 }
