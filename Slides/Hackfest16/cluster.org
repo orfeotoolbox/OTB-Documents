@@ -12,6 +12,33 @@
    - Additional work done by Emmanuelle Sarrazin on CNES cluster
    - Everything integrated in a feature branch + seamless app mechanism
 
+** Why MPI ?
+
+*** Actual OTB parallelism
+   - Based on multithreading provided by ITK
+   - Limitations :
+     - not optimized (thread creation and destruction in each filter),
+     - limited scalability
+     - limited to one compute node
+
+       #+LATEX:\begin{center}
+       #+ATTR_LATEX: :float :width 0.8\textwidth
+       [[file:images/multithreading.png]]
+       #+LATEX:\end{center}
+
+
+** Why MPI ?
+
+*** New OTB MPI parallelism
+   - Use several compute nodes
+   - More scalability
+   - Streaming and multithreading can still be used in one MPI process
+
+     #+LATEX:\begin{center}
+     #+ATTR_LATEX: :float :width 0.8\textwidth
+     [[file:images/mpi.png]]
+     #+LATEX:\end{center}
+
 ** An example on CNES cluster
 
 #+LATEX:\begin{scriptsize}
