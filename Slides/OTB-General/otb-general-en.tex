@@ -6,41 +6,12 @@
 
 \usepackage{etex}
 \mode<presentation> {
-
 \usetheme{Vilanova}
-
-%% \setbeamertemplate{footline}{
-%% \leavevmode%
-%% \hbox{\hspace*{2.5cm}
-%% \begin{beamercolorbox}[wd=.17\paperwidth,ht=2.25ex,dp=1ex,center]{title}%
-%%   \usebeamerfont{author in head/foot}\insertshortauthor
-%% \end{beamercolorbox}%
-%% \begin{beamercolorbox}[wd=.38\paperwidth,ht=2.25ex,dp=1ex,center]{section in head/foot}%
-%%   \usebeamerfont{section in head/foot}\insertshorttitle
-%% \end{beamercolorbox}%
-%% \begin{beamercolorbox}[wd=.08\paperwidth,ht=2.25ex,dp=1ex,center]{title}%
-%%   \usebeamerfont{section in head/foot}\insertshortdate{}
-%%   \insertframenumber{} / \inserttotalframenumber
-%% \end{beamercolorbox}}%
-%% \vskip9pt%
-%% }
-
-%% \setbeamertemplate{navigation symbols}{}
-%% \setbeamercovered{transparent=30}
-%% }
 }
 
-
-
-\usepackage[french]{babel}
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{array}
-\usepackage{chronology}
-\let\CHRONOLOGY\chronology
-\let\endCHRONOLOGY\endchronology
-\def\chronology{\shorthandoff{;}\CHRONOLOGY}
-\def\endchronology{\endCHRONOLOGY\shorthandon{;}}
-\usepackage{pstricks}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb,amsthm}
@@ -48,7 +19,6 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usepackage{pifont}
-
 \usepackage{listings,color}
 
 \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
@@ -56,10 +26,6 @@
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
-
-
-%% \setbeamertemplate{background canvas}{\includegraphics
-%%    [width=\paperwidth,height=\paperheight]{./images/title.pdf}}
 
 \AtBeginSection[]
 {
@@ -70,11 +36,10 @@
 \end{frame}}
 
 %----------------------------------------------------------------------------------------
-%	PAGE TITRE
+%	TITLE PAGE
 %----------------------------------------------------------------------------------------
-\title{State of the Orfeo ToolBox}
-\subtitle{Open source library for remote sensing image processing - Updated for
-  OTB 5.2}
+\title{Orfeo ToolBox}
+\subtitle{Open source processing of remote sensing images (updated for 5.4)}
 \author{OTB Team CNES}
 \date{}
 
@@ -96,28 +61,7 @@
 \titlepage
 \end{frame}
 
-\section{Introduction}
-
-\begin{frame}
-\frametitle{Introduction}
-\begin{columns}
-\column{0.5\textwidth}
-Goal of this presentation:
-\begin{itemize}
-\item Insight of project components 
-\item Good practises to help starters using the library
-\item to go further and advanced use
-\end{itemize}
-\column{0.5\textwidth}
-\includegraphics[width=0.9\textwidth]{images/LOGOTB_blackbox.png}
-\end{columns}
-\begin{center}
-{\huge \color{red}{Orfeo ToolBox is not a black box\ldots}}
-
-\textbf{Let's start by opening the box!}
-\end{center}
-
-\end{frame}
+\section*{Introduction}
 
 \begin{frame}
 \frametitle{Things to know about OTB\ldots}
@@ -140,31 +84,8 @@ Goal of this presentation:
 
 \end{frame}
 
-\section{Back in 2006}
-
 \begin{frame}
-\frametitle{How it starts?}
-
-\begin{block}{CNES Orfeo accompaniment program (2006-2014)}
-\begin{itemize}
-\item Pléiades: gap in resolution comparing with SPOT5 which leads to new usages
-\item Goals: prepare, accompany and promote the use and the exploitation of the images derived from Pléiades/COSMO-SkyMed satellites
-\item Preparatory phase from 2006 to 2012
-\item Thematic Commissioning activities from 2012 to 2014
-\end{itemize}
-\end{block}
-
-\begin{block}{OTB in the Orfeo program}
-\begin{itemize}
-\item Answer to ORFEO user groups needs
-\item Capitalize CNES R\&D in Information Extraction
-\item Deliver generic tools for Pleiades users
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Why Open source?}
+\frametitle{Why open source?}
 
 \begin{block}{Showcase}
 Image processing library dedicated to remote sensing for Pleiades users. Its wide
@@ -187,406 +108,6 @@ OTB covers a vast panel of applications and thematic fields.Openness should:
 OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  transparent, \alert{reproducible} and trans-disciplinary \alert{research}.
 \end{block}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{A bit of history}
-
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[1.0.0] Architecture, compilation and documentation, few functions and applications
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[1.0.0] Architecture, compilation and documentation, few functions and applications
-\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization\ldots)
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[1.0.0] Architecture, compilation and documentation, few functions and applications
-\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization\ldots)
-\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
-  map\ldots) and more applications for demonstration (with GUI)
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[1.0.0] Architecture, compilation and documentation, few functions and applications
-\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization\ldots)
-\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
-  map\ldots) and more applications for demonstration (with GUI)
-\item[3.2.0] First version of Monteverdi, continue to enrich the library
-
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[1.0.0] Architecture, compilation and documentation, few functions and applications
-\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization\ldots)
-\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
-  map\ldots) and more applications for demonstration (with GUI)
-\item[3.2.0] First version of Monteverdi, continue to enrich the library
-\item[3.12.0] New applications mechanisms, complete support for Pleiades
-  imagery, new functions\ldots
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{\'Etapes clés}
-\begin{description}
-\item[1.0.0] Architecture, compilation and documentation, few functions and applications
-\item[2.0.0] More functions (SVM learning, feature extraction, pre-processing, vizualization\ldots)
-\item[3.0.0] Support for vector data, Markov Random Field, keypoints, Kohonen
-  map\ldots) and more applications for demonstration (with GUI)
-\item[3.2.0] First version of Monteverdi, continue to enrich the library
-\item[3.12.0] New applications mechanisms, complete support for Pleiades
-  imagery, new functions\ldots
-\item[3.16.0] Revamp of Monteverdi in \textbf{Monteverdi v2}
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{13}{2}{2015}}{\tiny{4.4.0}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[4.0.0] Compatible with ITK 4.0, and more functions.
-\item[4.2.0] Speed-up in Haralick textures calculation, enhancement of the
-  optical calibration framework, RPC coefficients for sensor modeling can now be
-  read and written from/to GeoTIFF RPC tags\ldots
-\item[4.4.0] Vector band math calculator based on MuparserX, New set of applications for learning/classification of geometries in a shapefile\ldots
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{A bit of history}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{13}{2}{2015}}{\tiny{4.4.0}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[4.0.0] Compatible with ITK 4.0, and more functions
-\item[4.2.0] speed-up in Haralick textures calculation, enhancement of the
-  optical calibration framework, RPC coefficients for sensor modeling can now be read and written from/to GeoTIFF RPC tags\ldots
-\item[5.0.0] In-dept changes in the way Orfeo ToolBox is organized and builds
-  (\alert{modularization})
-\item [5.2.0] Support partiel Sentinel-1, new SAR processing functions (speckle,
-  polarimetry), regression mode for machine learning methods and \alert{Monteverdi 3.0}
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Some numbers}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-%2 days ago 	4.0.0
-% months ago 	3.20.0 	
-% months ago 	3.18.0 	
-%3 months ago 	3.16.0 	
-%0 months ago 	3.14.0 	
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Lines of code}
-\begin{center}
-\includegraphics[width=\textwidth]{images/lines_of_code_crop.png}
-\end{center}
-\end{block}
-\end{minipage}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Some numbers}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-%2 days ago 	4.0.0
-% months ago 	3.20.0 	
-% months ago 	3.18.0 	
-%3 months ago 	3.16.0 	
-%0 months ago 	3.14.0 	
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Commits per month}
-\begin{center}
-\includegraphics[width=\textwidth]{images/commits_per_month_crop.png}
-\end{center}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{Some numbers}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-%2 days ago 	4.0.0
-% months ago 	3.20.0 	
-% months ago 	3.18.0 	
-%3 months ago 	3.16.0 	
-%0 months ago 	3.14.0 	
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{4}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Sourceforge downloads}
-\begin{center}
-\includegraphics[width=\textwidth]{images/OTB_downloads_sourceforge.png}
-\end{center}
-\end{block}
-\end{minipage}
 \end{frame}
 
 \section{Key characteristics}
