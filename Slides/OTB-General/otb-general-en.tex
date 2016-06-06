@@ -112,6 +112,121 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 
 \end{frame}
 
+\section{Functions and algorithms}
+
+\begin{frame}
+\frametitle{Incomplete list of OTB functions}
+
+\begin{block}{Pre-processing}
+\begin{itemize}
+\item Radiometric calibration, orthorectification, resampling (raster and
+  vector), pan-sharpening, stereo rectification\ldots
+\item Sensor supported: Sentinels, Pléiades, SPOT6, SPOT5, Digital Globe satellites
+\item Geometric models (thanks to OSSIM), support for DEM (SRTM or GeoTIFF)
+\end{itemize}
+\end{block}
+
+\begin{block}{Images and vector manipulation}
+\begin{itemize}
+\item Formats supported by GDAL (raster and vector), conversion raster/vector
+\item Region of interest extraction, of spectral bands, concatenation or splitting\ldots
+\item Band math, color mapping, contrast enhancement
+\item Linear filtering, Mathematical morphology
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{(Incomplete) List of OTB functions}
+
+\begin{block}{Feature extraction}
+\begin{itemize}
+\item Edge detection, scale-invariant feature transform, lines, corners
+\item Radiometric indices, textures (Haralick, SFS, PanTex)
+\item Local statistics (Flusser moments, Histogram of Oriented Gradient)
+\item Keypoints matching (SIFT, SURF\ldots)
+\end{itemize}
+\end{block}
+
+\begin{block}{Change detection}
+\begin{itemize}
+\item Classic methods with image metrics comparison
+\item Multivariate Alteration Detector
+\end{itemize}
+\end{block}
+
+\begin{block}{Dimensionality reduction, hyperspectral processing}
+\begin{itemize}
+\item PCA, NAPCA, ICA, MAF\ldots
+\item Dimension estimation, endmembers extraction, Vertex Component Analysis(VCA)
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Incomplete list of OTB functions}
+\begin{block}{Segmentation}
+\begin{itemize}
+\item Segmentation algorithms: Connected Components, MeanShift,Watershed\ldots
+\item Methods to apply those algorithms on large dataset
+\item Vector or raster representation which allow Object Based Image Analysis
+\end{itemize}
+\end{block}
+
+\begin{block}{Classification}
+\begin{itemize}
+\item 9 supervised methods available (including SVM and Random Forests)
+\item Fusion and regularization of classifications
+\item K-Means clustering or Kohonen maps
+\item Object classification (from a segmentation)
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2012.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2013.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte_mad.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+\includegraphics[keepaspectratio,height=1.1\paperheight]{images/saint_paul_lsd.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_left.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_right.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
+\end{frame}
+
 \section{Key characteristics}
 
 \begin{frame}
@@ -196,15 +311,13 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \end{frame}
 
 \begin{frame}
-\frametitle{(Near) bleeding-edge techniques}
+\frametitle{State of the art}
 \begin{itemize}
 \item Try to keep track of up-to-date information about the latest developments, exchanging ideas, identifying future trends, and making networking
 \item Reference implementation of algorithms based on publications
-\item e.g.: morphological profil,MeanShift segmentation,Haralick textures,SURF keypoints\ldots
+\item e.g.: morphological profil, MeanShift segmentation, Haralick textures, SURF keypoints\ldots
 \item Reference implementation contributes by authors with their
-  publications. e.g.: Large Scale MeanShift\footnote{Michel, J.; Youssefi, D.; Grizonnet, M., "Stable Mean-Shift Algorithm and Its Application to the Segmentation of Arbitrarily Large Remote Sensing Images," Geoscience and Remote Sensing, IEEE Transactions on , vol.53, no.2, pp.952,964, Feb. 2015}, bayesian fusion\footnote{J. R. Dominique Fasbender and P. Bogaert. Bayesian data fusion for adaptable image pan-
-sharpening. IEEE Transactions on Geoscience and Remote Sensing, 46(6):1847–1857, 2007.
-13.2}, object detection \ldots
+  publications. e.g.: Large Scale MeanShift, object detection \ldots
 \end{itemize}
 \end{frame}
 
@@ -420,121 +533,6 @@ OrthoRectification.ExecuteAndWriteOutput()
 \includegraphics[width=0.7\textwidth]{images/otb_qgis.png}
 \end{center}
 \end{minipage}
-\end{frame}
-
-\section{Functions and algorithms}
-
-\begin{frame}
-\frametitle{Incomplete list of OTB functions}
-
-\begin{block}{Pre-processing}
-\begin{itemize}
-\item Radiometric calibration, orthorectification, resampling (raster and
-  vector), pan-sharpening, stereo rectification\ldots
-\item Sensor supported: Sentinels, Pléiades, SPOT6, SPOT5, Digital Globe satellites
-\item Geometric models (thanks to OSSIM), support for DEM (SRTM or GeoTIFF)
-\end{itemize}
-\end{block}
-
-\begin{block}{Images and vector manipulation}
-\begin{itemize}
-\item Formats supported by GDAL (raster and vector), conversion raster/vector
-\item Region of interest extraction, of spectral bands, concatenation or splitting\ldots
-\item Band math, color mapping, contrast enhancement
-\item Linear filtering, Mathematical morphology
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{(Incomplete) List of OTB functions}
-
-\begin{block}{Feature extraction}
-\begin{itemize}
-\item Edge detection, scale-invariant feature transform, lines, corners
-\item Radiometric indices, textures (Haralick, SFS, PanTex)
-\item Local statistics (Flusser moments, Histogram of Oriented Gradient)
-\item Keypoints matching (SIFT, SURF\ldots)
-\end{itemize}
-\end{block}
-
-\begin{block}{Change detection}
-\begin{itemize}
-\item Classic methods with image metrics comparison
-\item Multivariate Alteration Detector
-\end{itemize}
-\end{block}
-
-\begin{block}{Dimensionality reduction, hyperspectral processing}
-\begin{itemize}
-\item PCA, NAPCA, ICA, MAF\ldots
-\item Dimension estimation, endmembers extraction, Vertex Component Analysis(VCA)
-\end{itemize}
-\end{block}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Incomplete list of OTB functions}
-\begin{block}{Segmentation}
-\begin{itemize}
-\item Segmentation algorithms: Connected Components, MeanShift,Watershed\ldots
-\item Methods to apply those algorithms on large dataset
-\item Vector or raster representation which allow Object Based Image Analysis
-\end{itemize}
-\end{block}
-
-\begin{block}{Classification}
-\begin{itemize}
-\item 9 supervised methods available (including SVM and Random Forests)
-\item Fusion and regularization of classifications
-\item K-Means clustering or Kohonen maps
-\item Object classification (from a segmentation)
-\end{itemize}
-\end{block}
-
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2012.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2013.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte_mad.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-\includegraphics[keepaspectratio,height=1.1\paperheight]{images/saint_paul_lsd.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_left.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_right.png}
-\end{frame}
-
-\vspace*{-6.5mm}
-\begin{frame}[plain]
-\hspace*{-11mm}
-    \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame}
 
 \section{What's new in OTB?}
