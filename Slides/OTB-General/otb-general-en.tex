@@ -338,8 +338,10 @@ configurations.
 \end{center}
 \end{frame}
 
+\section{How to use OTB?}
+
 \begin{frame}
-\frametitle{How to eat the OTB sandwich?}
+\frametitle{How to use OTB?}
 \vspace{-0.5cm}
 \begin{center}
 \includegraphics[width=\textwidth]{images/sandwich.pdf}
@@ -463,31 +465,15 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
 
 
 \begin{frame}[fragile]
-\frametitle{Applications: auto-generated Qt invocation (``Parameters tab'')}
+\frametitle{Applications: Graphical interface}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{images/app_parameters.png}
-\end{center}
-\end{frame}
-
-
-\begin{frame}[fragile]
-\frametitle{Applications: auto-generated Qt invocation (``Documentation tab'')}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{images/app_doc.png}
+\includegraphics[width=1\textwidth]{images/otbgui.png}
 \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Applications: Python wrapping}
-\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame
-    = tb,framerule =
-    0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle =
-    {\ttfamily\tiny},keywordstyle =
-    {\ttfamily\color{listkeyword}\textbf},identifierstyle =
-    {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle
-    = {\ttfamily},showstringspaces = false,showtabs = false,numbers =
-    none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize =
-    2]
+\frametitle{Applications: Python interface}
+\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
 #!/usr/bin/python
 
 # Import the otb applications package
@@ -510,28 +496,20 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 
 \begin{frame}
-\frametitle{Monteverdi: visualization}
+\frametitle{Monteverdi (acces to OTB applications)}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{images/monteverdi2-loupe.png}
+\includegraphics[width=1.0\textwidth]{images/monteverdi.png}
 \end{center}
 \end{minipage}
 \end{frame}
 
+%\vspace*{-3.0mm}
 \begin{frame}
-\frametitle{Monteverdi: processing}
+  \frametitle{QGIS (acces to OTB applications)}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{images/monteverdi2-haralick.png}
-\end{center}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{OTB in Quantum GIS}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=0.7\textwidth]{images/otb_qgis.png}
+\includegraphics[width=1\textwidth]{images/otb_in_qgis.png}
 \end{center}
 \end{minipage}
 \end{frame}
