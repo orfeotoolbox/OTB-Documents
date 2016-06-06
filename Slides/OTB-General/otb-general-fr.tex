@@ -511,97 +511,92 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 
-\section{Quoi de neuf dans l'OTB?}
+\section{Quoi de neuf depuis 5.0 ?}
 
 \begin{frame}
-\frametitle{Modularité (inspirée de l'organisation du code ITK 4.x)}
-\begin{block}{Qu'est ce qui change?}
+\frametitle{5.0 (Mai 2015)}
+\begin{block}{Modularité}
 \begin{itemize}
-\item Une meilleure organisation du code, en modules cohérents:
-  \begin{itemize}
-    \item OTB 4.4.0: 1672 fichiers dans 26 répertoires
-    \item OTB 5.0: 1627 fichiers dans 124 modules répartis en 16 groupes
-  \end{itemize}
-\item Les modules sont complets: tests, code source, applications sont regroupés
-\item Chaque module peut etre activé ou non, avec gestion des dépendances
-\item Ca fonctionne! Plusieurs contributions \url{https://www.orfeo-toolbox.org/external-projects/}
-
+\item Une meilleure organisation du code, en modules cohérents (124 modules et
+    16 groupes) contenants sources, tests et applications.
+\item Gestion des dépendances
+\item Contributions externes: \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{block}
 
-\begin{block}{Quels sont les avantages?}
-\begin{itemize}
-\item Les logiciels tiers sont importés dans des modules désactivables comme les autres
-\item Beaucoup de magie CMake (moins de code cmake, plus de choses automatisées)
-\item La documentation doxygen reflète l'organisation en groupes/modules
-\item Les contributions sont facilitées, notamment avec le mécanisme de
-  \textit{remote module}
-\item ça fonctionne! Déjà beaucoup de modules externes contribués: \url{https://www.orfeo-toolbox.org/external-projects/}
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Contribuer son module OTB}
-\begin{block}{Schéma ITK}
-\begin{center}
- \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
-\end{center}
-\end{block}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Superbuild}
-\begin{block}{Avant OTB 4.4.0}
-\begin{itemize}
-\item Certaines dépendances (mais pas toutes) peuvent etre compilée en interne
-\item Leur code source est intégré à celui de l'Orfeo ToolBox (pas une bonne pratique en général)
-\end{itemize}
-\end{block}
-
-\begin{block}{Dans OTB 5.0, on Superbuild!}
+\begin{block}{SuperBuild}
 \begin{itemize}
 \item Il n'y a plus de logiciels tiers dans l'OTB
-\item Il existe un projet séparé appelé Superbuild, qui télécharge, configure, compile et installe chaque dépendance dans sa bonne version
-\item On peut ainsi compiler une OTB complète avec très peu de pré-requis (cmake, gcc, zlib, curl), et totalement automatiquement
-\item Il existe également un mode \textit{offline} pour compiler l'OTB en avion (ou toute autre situation sans accès internet)
+\item Le Superbuild, télécharge, configure, compile et installe les dépendances
+\item Il existe également un mode \textit{offline} pour compiler l'OTB sans
+  accès internet (en avion par exemple).
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Project Steering Committee}
-\begin{itemize}
-\item Le PSC est un système de gouvernance ouverte
-\item Il s'agit d'une entité de coordination plus qu'un organisme de décision
-\item Animation de la communauté, et grandes orientations du projet
-\item Tout le monde peut en devenir membre (nouveau membre = vote)
-\item Les décisions et les débats sont publics (sur la liste de diffusion pour les développeurs)
-\item Les statuts sont publics\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
-\end{itemize}
+\frametitle{Gouvernance ouverte: Project Steering Committee}
+\begin{block}{Genèse du PSC}
+  \begin{itemize}
+  \item Jusqu'en 2015: l'OTB, un logiciel à sources ouvertes
+  \item En mars 2015: l'OTB devient un logiciel libre, le CNES nomme un PSC initial
+  \end{itemize}
+\end{block}
+\begin{block}{Un club de développeurs, pas de décideurs}
+  \begin{itemize}
+  \item Pilotage haut niveau du projet, roadmaps, communication, planification
+  \item Vote les RFCs: Tous les membres ont le même poids dans les votes ($\pm 1$, $\pm 0$)
+  \item Les sièges n'expirent pas, sortie par démission ou vote d'expulsion
+  \item Le PSC n'est pas une entité légale et n'a pas de moyens propres
+  \end{itemize}
+\end{block}
+\begin{block}{En chiffres}
+  \begin{itemize}
+  \item 5 membres de 4 entités différentes
+  \item 2 release sous l'égide du PSC (5.2, 5.4)
+  \item 3 meetings en ligne (logs publics)
+  \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Quoi de neuf dans l'OTB 5.2?}
-\begin{block}{Quoi de neuf dans la version 5.2 (Déc 2015)?}
+\frametitle{5.2 (Décembre 2015)}
+\begin{block}{OTB}
 \begin{itemize}
-\item Nouvelles applications pour le traitement SAR (polarimétrie)
+\item Nouvelles applications pour le traitement SAR (polarimétrie, radiométrie, speckle)
 \item Support des produits Sentinel-1
-\item Calibration radiométrique image SAR (Sentinel1 et Radarsat2)
-\item Méthodes pour le filtrage du Speckle (Frost, Lee, GammaMAP, Kuan)
-\item Mode régression et carte de confiance pour la classification
 \item Amélioration accès OTB en Python
-\item Compatibilité avec Gdal 2.0 et support des images Sentinel-2
+\item Compatibilité avec GDAL 2.0 et support des images Sentinel-2
+\item \ldots
 \end{itemize}
 \end{block}
 
-\begin{block}{Goodbye Monteverdi2, welcome Monteverdi 3.0}
+\begin{block}{Monteverdi 3.0}
 \begin{itemize}
-\item Léger et performant
-\item Affichage mosaique d'images ou série multi-temporelle
-\item Outils de visualisation performants(contraste local, gradient\ldots)
+\item Affichage mosaïque d'images ou série multi-temporelle
+\item Outils de visualisation performants (contraste local, gradient\ldots)
 \item Accès aux applications OTB
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.4 (Mai 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Passage à un cycle de release fixe (3 mois)
+\item Intégration du composant de visualisation
+\item Compilation externe des modules externes
+\item Nouvelles décompositions SAR: Barnes, Huynen, Pauli
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.2}
+\begin{itemize}
+\item Capture d'écran
+\item Génération d'overviews GDAL
+\item Gestion des sous datasets GDAL
+\item Ajout au SuperBuild
 \end{itemize}
 \end{block}
 \end{frame}

@@ -517,114 +517,88 @@ OrthoRectification.ExecuteAndWriteOutput()
 \section{What's new in OTB?}
 
 \begin{frame}
-\frametitle{Modular architecture (inspired by ITK 4.x)}
-\begin{block}{What has changed?}
+\frametitle{5.0 (Mai 2015)}
+\begin{block}{Modularity}
 \begin{itemize}
-\item  Organize the code into conceptual cohesive groups:
+  \item Better code layout, coherent modules (124 modules and 16 groups) with
+    source, test and applications.
+\item Dependency management
+\item External contributions: \url{https://www.orfeo-toolbox.org/external-projects/}
+\end{itemize}
+\end{block}
+
+\begin{block}{SuperBuild}
+\begin{itemize}
+\item No more third party software in OTB!
+\item The Superbuild downloads, configures, builds and installs dependencies
+\item Offline mode for compiling OTB without network access (e.g. airplane)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Open governance: Project Steering Committee}
+\begin{block}{Genèse du PSC}
   \begin{itemize}
-    \item OTB 4.4: 1672 files in 26 directories
-    \item OTB 5.0: 1627 files in 124 \textbf{modules} divided in 16 groups
+  \item Until 2015: OTB is open-source software
+  \item In march 2015: OTB become free software, with CNES as the first PSC
   \end{itemize}
-\item Modules contain: tests, source code, applications are grouped
-\item Each module can be (de)activate, with automatic dependencies resolutions
-\item Good start! Already many remote modules contributed by the community: \url{https://www.orfeo-toolbox.org/external-projects/}
-\end{itemize}
 \end{block}
-
-\begin{block}{Advantages?}
-\begin{itemize}
-\item Third part dependencies are integrated as modules and can be excluded
-\item Lots of CMake magic (less code for configuration, better support)
-\item Doxygen API documentation follows the new code organization (easier to
-  find class info)
-\item Facilitate external contributions with powerful mechanisms call
-  \href{https://www.orfeo-toolbox.org/external-projects/}{\alert{remote module}}
-\end{itemize}
+\begin{block}{A club of developers, not managers}
+  \begin{itemize}
+  \item High level project steering, roadmaps, communication and planning
+  \item Vote RFCs: all members' votes have the same value ($\pm 1$, $\pm 0$)
+  \item Seats do not expire. Exits are by resignation or vote of expulsion
+  \item The PSC is not a legal entity and has no funding
+  \end{itemize}
 \end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Contribute a module}
-\begin{center}
- \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Superbuild: installing OTB has never been so easy}
-\begin{block}{Before in OTB 4.4}
-\begin{itemize}
-\item Some of the OTB third part dependencies could be build internally
-\item External source code was integrated in OTB source tree (not a good idea)
-\end{itemize}
-\end{block}
-
-\begin{block}{In OTB 5.0, on Superbuild!}
-\begin{itemize}
-\item No more third party library sources integrated in OTB
-\item External project called \textbf{superbuild} which allows to
-  download/configure/build/install OTB and all dependencies in one pass!
-\item Allow to build OTB on an (almost) empty platform (CMake, GCC, zlib, curl),
-  and everything is automatic\ldots
-\item There is also an \textit{offline} mode which does not require Internet
-\end{itemize}
+\begin{block}{Numbers}
+  \begin{itemize}
+  \item 5 members from 4 different organisations
+  \item 2 releases under a PSC (5.2, 5.4)
+  \item 3 online meetings (with public logs)
+  \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Project Steering Committee: OTB governance structure}
+\frametitle{5.2 (December 2015)}
+\begin{block}{OTB}
 \begin{itemize}
-\item Open governance
-\item High level guidance and coordination for the ORFEO ToolBox
-\item Animation of OTB community, communication, orientation of the project
-\item Everyone can participate
-\item All members have equal standing and voice in the PSC (1 member = 1 vote)
-\item Proposals are written up and submitted on the otb-developers mailing list for discussion and voting
-\item Status and decision process are
-  public\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
-\item Note that the PSC is not a legal entity!
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Contribute a module}
-\begin{block}{ITK schema}
-\begin{center}
- \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
-\end{center}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Superbuild: installing OTB has never been so easy}
-\begin{block}{Before in OTB 4.4}
-\begin{itemize}
-\item Some of the OTB third part dependencies could be build internally
-\item External source code was integrated in OTB source tree (not a good idea)
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{What's new in OTB 5.2?}
-\begin{block}{What has changed?}
-\begin{itemize}
-\item New applications for SAR processing (polarimetry)
-\item Basic support of Sentinel1 products
-\item Radiometric calibration of Sentinel1 and Radarsat2
-\item New methods for SAR Despeckle filtering (Frost, Lee, GammaMAP, Kuan)
-\item Regression mode in machine learning and confidence maps for classification
-\item Enhanced syntax of applications python API
-\item Compatibilty with Gdal 2.0 and support of Sentinel-2
+\item New SAR processing applications (polarimetry, radiometry, speckle)
+\item Support for Sentinel-1 products
+\item Better Python bindings
+\item Better GDAL 2.0 compatibility and support Sentinel-2 images
+\item \ldots
 \end{itemize}
 \end{block}
 
-\begin{block}{Goodbye Monteverdi2, welcome Monteverdi 3.0}
+\begin{block}{Monteverdi 3.0}
 \begin{itemize}
-\item Light stack-layer model
-\item Display several images together, as a stack or as a mosaic
-\item Lots of nice rendering tools
+\item Display an image mosaic or multi-temporal dataset
+\item Efficient visualization tools (local contrast, gradient\ldots)
 \item Access to OTB applications
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.4 (May 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Switched to a fixed release schedule
+\item Merged Ice into OTB
+\item External build of external modules
+\item New SAR decompositions: Barnes, Huynen, Pauli
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.2}
+\begin{itemize}
+\item Screenshot feature
+\item Generate GDAL overviews
+\item Support for GDAL subdatasets
+\item Added to the SuperBuild
 \end{itemize}
 \end{block}
 \end{frame}
