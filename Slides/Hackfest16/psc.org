@@ -41,7 +41,7 @@
    8. Approval by Release Manager
    9. Merge
 
-** A short reminder of Git Workflow
+** A short reminder of Git workflow
 
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
@@ -99,7 +99,7 @@ On the overall, I think that we do.
 ** Are we making a better OTB? Cons.
 
 - PSC is still small and has a lot of CNES in it
-- Appart from CNES/CS funded by CNES/CS, we have very few requests for changes
+- Apart from CNES/CS funded by CNES/CS, we have very few requests for changes
 - We do Gerrit. By Hand. 
 - We still have broken dashboards, packages, and third party issues
 
@@ -108,7 +108,7 @@ On the overall, I think that we do.
    - PSC never voted -1 (or even +0)
    - Upon RFC, what really happens:
      - PSC members (and others) make comments
-     - No vote is casted until those comments are adressed
+     - No vote is casted until those comments are addressed
    - Indeed no RFC has been rejected
    - But some are still waiting for enough +1
    - Shall we replace vote by a simpler approval system?
@@ -118,7 +118,7 @@ On the overall, I think that we do.
 
 *** Request for comments
 - We have a lot of Request for Comments
-- They describe some new idea, like a whitepaper
+- They describe some new idea, like a white-paper
 - Once the idea is submitted, they do not remain active very long
 
 *** Request for changes

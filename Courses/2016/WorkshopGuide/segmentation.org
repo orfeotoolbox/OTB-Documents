@@ -56,7 +56,7 @@
 
 **** Pré-requis
      
-     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Logiciels installés (Monteverdi et QGIS)
      - Données issues du TP de pré-traitements pour l'imagerie THR optique
      - Connaissance du mécanisme des applications de l'Orfeo ToolBox
        (voir exercice correspondant)

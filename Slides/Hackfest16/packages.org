@@ -3,10 +3,10 @@
 #+latex_header: \subtitle{OTB binary packages and XDK}
 
 * The plan
- - OTB Users want to use OTB applications through commandline, application launcher, monteverdi.
- - OTB developers add new odules, applications into OTB for users.  Sometimes (ahemm..) they find small bugs and report  or fix them ASAP
+ - OTB Users want to use OTB applications through command-line, application launcher, monteverdi.
+ - OTB developers add new modules, applications into OTB for users.  Sometimes (ahemm../) they find small bugs and report  or fix them ASAP
  - Both of them don't want to spend a half a day on setting up OTB
- - "The Plan" is to let have OTB as the easiest way possible.!
+ - "The Plan" is to let have OTB as the easiest way possible!
 
 \framebreak
 
@@ -17,19 +17,20 @@
 \framebreak
 
 * Old Packaging strategy
-- Starts right after source archvies are published.
-- Check if any of our dependencies are messed up in official repository. (OSGeo4W, ubunutgis, Fedora, EPEL, MacPorts, Homebrew)
-- 90% of time they do mess up with anything or everything.
+- Starts right after source archives are published.
+- Check if any of our dependencies are messed up in official
+  repository. (OSGeo4W, ubuntuGIS, Fedora, EPEL, MacPorts, Homebrew (Mac OS X))
+- 90% of time they do mess up with anything or everything
 - We disable some modules and or application due to respective packaging policy
-- We copy-paste/fork existing packaging specs in OTB-DevUtils and keep adding stuff to make it work with OTB X.Y
-- We start building OTB and push new packages (OSGeo4W, ubunutugis (LTS + two versions), Fedora (last three versions)
+- We copy-paste/fork existing packaging specs in OTB-DevUtils git repo and keep adding stuff to make it work with OTB X.Y
+- We start building OTB and push new packages (OSGeo4W, ubuntuGIS (LTS + two versions), Fedora (last three versions))
 
 \framebreak
 
 * Packages are ready!
 - Our users and developers help us find a crash, an otb application, dll or a symbol not found.. so on and so forth.  
 - Now OTB team keep swirling through the last two weeks work to find what did we miss and fix them.
-- This has become a sad but important excersise taking out 2-3 week developer time!
+- This has become a /sad/ but important work taking out 2-3 week developer time!
 - Also by the time we fix and upload newer package, user had already passed on building OTB from source!
 
 Why couldn't we fix this once and for all?
@@ -37,12 +38,12 @@ Why couldn't we fix this once and for all?
 \framebreak
 
 * So we need a package that...
-  - .. works on Linux (all distribution), Windows, Mac OSX.
+  - .. works on Linux (all distros), Windows, Mac OSX.
   - .. works flawlessly for next 10 years!
   - .. can be installed without installing anything on your OS.
-  - .. does not require a sys admin for installation.
+  - .. does not require a sys-admin for installation.
   - .. does not make any new “entries” in bug tracker.
-  - .. does not distract developer crowd from fixing cirtical bugs to adding cool features and documentation!
+  - .. does not distract developer crowd from fixing critical bugs to adding cool features and documentation!
   - To sum up, an awesome package!
 
 \framebreak
@@ -50,7 +51,7 @@ Why couldn't we fix this once and for all?
 * Solution
   We did solve this problem with our current packaging strategy!
 ** OTB Package
- - OTB make binary packages from and with superbuild.
+ - OTB make binary packages from and with Superbuild.
  - This make sure it is tested daily and dependencies are A-okay!
  - We bake them on a daily basis from develop branch.
  - We keep them release ready for any day!
@@ -73,7 +74,7 @@ Why couldn't we fix this once and for all?
 
 ** What are it requirements ? 
  The requirements of OTB XDK are minimal depending on your platform of choice.
- - Linux: Unix shell (prefreably bash),  GCC 4.x
+ - Linux: Unix shell (preferably bash),  GCC 4.x
  - Mac OSX : Xcode, Apple Clang
  - Windows :  7zip, MinGW64 toolchain (32bit or 64bit)
  - All cases: CMake
@@ -85,23 +86,24 @@ Why couldn't we fix this once and for all?
 ** Where do I start...
 
 - Package is a self-extracting archive with a .run extension.
-- You only need a working unix shell to install OTB!
+- You only need a working Unix shell to install OTB!
 - You only need GLIBC to use OTB!
 - You only need X11 libs to use monteverdi!
 - RPATH mechanism is employed during installation.
 - Can co-exist multiple installation of OTB with zero issues!
-- Each packages links with their own copy of GDAL, ITK ..
+- Each packages links with their own copy of GDAL, ITK...
 - OTB executables (monteverdi, ApplicationLauncher) are portable!
-- You can even build your own custom binary package using OTB-Superbuild to use in your enterpise or university!
+- You can even build your own custom binary package using OTB-Superbuild to use
+  in your company or university!
 
 \framebreak
 
 * Issues
 ** Known issues
-- Monteverdi has a look and feel problem. 
+- Monteverdi has a look and feel problem 
 - Cannot work if GLIBC is older than 2.2.5
 - Only 64bit packages are available for GNU/Linux and OSX
-- XDK does not support all tribes of compilers.(GCC 6, IntelCC, borland, msvc)
+- XDK does not support all tribes of compilers (GCC 6, IntelCC, borland, msvc)
 
 \framebreak
 
@@ -109,8 +111,8 @@ Why couldn't we fix this once and for all?
 
 ** Did we reached our goal?
 - Yes. Indeed!
- - I worked on this task. So I am biased...But you can test it yourself!
-- With 5.4.0, we have zero bug reported on packaging side.
-- I know this can be Schrödinger's cat problem. 
-- Someone has to open up a mantis bug report (the box) to say cat it is dead.
-- But I say cat is alive and happy now!.
+- I worked on this task. So I am biased...But you can test it yourself!
+- With 5.4.0, we have zero bug reported on packaging side
+- I know this can be Schrödinger's cat problem
+- Someone has to open up a mantis bug report (the box) to say cat it is dead
+- But I say cat is alive and happy now!

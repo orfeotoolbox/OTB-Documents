@@ -6,51 +6,19 @@
 
 \usepackage{etex}
 \mode<presentation> {
-
 \usetheme{Vilanova}
-
-%% \setbeamertemplate{footline}{
-%% \leavevmode%
-%% \hbox{\hspace*{2.5cm}
-%% \begin{beamercolorbox}[wd=.17\paperwidth,ht=2.25ex,dp=1ex,center]{title}%
-%%   \usebeamerfont{author in head/foot}\insertshortauthor
-%% \end{beamercolorbox}%
-%% \begin{beamercolorbox}[wd=.38\paperwidth,ht=2.25ex,dp=1ex,center]{section in head/foot}%
-%%   \usebeamerfont{section in head/foot}\insertshorttitle
-%% \end{beamercolorbox}%
-%% \begin{beamercolorbox}[wd=.08\paperwidth,ht=2.25ex,dp=1ex,center]{title}%
-%%   \usebeamerfont{section in head/foot}\insertshortdate{}
-%%   \insertframenumber{} / \inserttotalframenumber
-%% \end{beamercolorbox}}%
-%% \vskip9pt%
-%% }
-
-%% \setbeamertemplate{navigation symbols}{}
-%% \setbeamercovered{transparent=30}
-%% }
 }
-
-
 
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{array}
-\usepackage{chronology}
-\let\CHRONOLOGY\chronology
-\let\endCHRONOLOGY\endchronology
-\def\chronology{\shorthandoff{;}\CHRONOLOGY}
-\def\endchronology{\endCHRONOLOGY\shorthandon{;}}
-\usepackage{pstricks}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{xcolor}
-\usepackage{textpos}
 \usepackage{tikz}
-\usepackage{xmpincl}
 \usetikzlibrary{arrows}
 \usepackage{pifont}
-
 \usepackage{listings,color}
 
 \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
@@ -58,10 +26,6 @@
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
-
-
-%% \setbeamertemplate{background canvas}{\includegraphics
-%%    [width=\paperwidth,height=\paperheight]{./images/title.pdf}}
 
 \AtBeginSection[]
 {
@@ -74,10 +38,8 @@
 %----------------------------------------------------------------------------------------
 %	PAGE TITRE
 %----------------------------------------------------------------------------------------
-\title{L'Orfeo ToolBox}
-\includexmp{images/cc}
-\subtitle{un logiciel libre pour le traitement d'images de télédétection - MAJ
-  pour OTB 5.2}
+\title{Orfeo ToolBox}
+\subtitle{Un logiciel libre pour le traitement d'images de télédétection (màj.  pour 5.4)}
 \author{Equipe OTB CNES}% date and event here
 \date{}
 
@@ -94,44 +56,25 @@
 \end{tabular}
 }
 
+\titlegraphic{\vspace*{-5em}\includegraphics[width=.5\textwidth]{images/LOGOTB_blackbox.png}}
+
 \begin{document}
 \begin{frame}
 \titlepage
 \end{frame}
 
-\section{Introduction}
-
-\begin{frame}
-\frametitle{Introduction}
-\begin{columns}
-\column{0.5\textwidth}
-L'objectif de la présentation est de donner à l'audience:
-\begin{itemize}
-\item Un aperçu de l'ensemble des composantes du projet,
-\item Des bonnes pratiques pour aiguiller les débutants vers une utilisation optimale,
-\item Des pointeurs pour aller plus loin.
-\end{itemize}
-\column{0.5\textwidth}
-\includegraphics[width=0.9\textwidth]{images/LOGOTB_blackbox.png}
-\end{columns}
-\begin{center}
-{\huge \color{red}{Orfeo ToolBox is not a black box \ldots}}
-
-Commençons donc l'ouverture de la boite !
-\end{center}
-
-\end{frame}
+\section*{Introduction}
 
 \begin{frame}
 \frametitle{Si vous ne retenez qu'une planche\ldots}
 \begin{block}{L'Orfeo ToolBox est:}
 \begin{itemize}
-\item Une \textbf{librairie de traitement d'images} dédiées à la télédétection,
-\item \textbf{Un logiciel libre} diffusé sous licence CeCILL-v2 (équivalent à la GPL),
-\item \textbf{Financée et développée par le CNES} dans le cadre du programme préparatoire à Pléiades Orfeo (et au delà),
-\item Écrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (librairie libre de traitement d'images médicales),
-\item Interfacée avec de nombreux autres logiciels libres de traitement d'images et de télédétection, tels que Gdal, OSSIM ou OpenCV,
-\item Conçue pour traiter de \textbf{gros volumes de données} de manière transparente grâce au traitement par morceaux et à la parallélisation.
+\item Une \textbf{bibliothèque de traitement d'images} pour la télédétection
+\item \textbf{Un logiciel libre} diffusé sous licence CeCILL-v2 (équivalent à la GPL)
+\item \textbf{Financée et développée par le CNES} (principalement)
+\item Écrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (imagerie médicale)
+\item Construite sur les épaules de géants (ITK, GDAL, OSSIM, OpenCV\ldots)
+\item Conçue pour traiter de \textbf{gros volumes de données} de manière transparente grâce au traitement par morceaux et à la parallélisation
 \end{itemize}
 \end{block}
 
@@ -141,754 +84,28 @@ Commençons donc l'ouverture de la boite !
 
 \end{frame}
 
-\section{Motivations et historique de l'Orfeo ToolBox}
-
-\begin{frame}
-\frametitle{La genèse de l'Orfeo ToolBox (OTB)}
-
-\begin{block}{Le programme CNES Orfeo  (2006-2014)}
-\begin{itemize}
-\item Constat: Le saut en résolution spatial de Pléiades par rapport à SPOT5 conduit à de nouveaux usages
-\item Objectif: préparer, accompagner et promouvoir l'utilisation et l'exploitation des images Pléiades (et CosmoSkymed)
-\item Une phase préparatoire de 2006 à 2012,
-\item Une phase de recette (Recette Thématique Utilisateurs) de 2012 à 2014.
-\end{itemize}
-\end{block}
-
-\begin{block}{L'OTB dans Orfeo}
-\begin{itemize}
-\item Répondre au besoin des groupes thématiques Orfeo
-\item Capitaliser la R\&D du CNES en extraction d'information
-\item Fournir des outils génériques aux utilisateurs Pléiades (pour faciliter l'utilisation des images)
-\end{itemize}
-\end{block}
-\end{frame}
-
 \begin{frame}
 \frametitle{Pourquoi un logiciel libre ?}
 
 \begin{block}{Diffusion maximale}
-L'OTB est un logiciel à destination de tous les utilisateurs de Pléiades. Sa diffusion large contribue au rayonnement de la mission.
+L'OTB est un logiciel à destination de tous les utilisateurs d'imagerie
+spatiale. Sa diffusion large contribue au rayonnement des missions (Pléiades, Sentinels\ldots)
 \end{block}
 
 \begin{block}{Qualité et efficacité}
-Le domaine fonctionnel de l'OTB est vaste, son développement nécessite du temps et de l'expertise. L'ouverture des sources:
+Le domaine fonctionnel de l'OTB est vaste, son développement nécessite du temps
+et de l'expertise. L'ouverture des sources favorise:
 \begin{itemize}
-\item Favorise l'appropriation et la validation par la communauté des utilisateurs,
-\item Favorise les contributions et les corrections de bugs par les utilisateurs,
-\item Favorise la dissémination sur de multiples plate-formes.  
-\item ``The Cathedral \& the
-  Bazaar''\footnote{\url{http://www.catb.org/esr/writings/cathedral-bazaar/}}:
-  ``Publiez tôt, publiez souvent ``, ``s'appuyer sur la dynamique du projet''
-
+\item L'appropriation et la validation par la communauté des utilisateurs,
+\item Les contributions et les corrections de bugs par les utilisateurs,
+\item La dissémination sur de multiples plateformes.
 \end{itemize}
 \end{block}
 
 \begin{block}{Démarche scientifique}
-Comme l'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ouverture des sources permet une démarche de \textbf{recherche reproductible}.
+L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ouverture des sources permet une démarche de \textbf{recherche reproductible}.
 \end{block}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
-\begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
-\begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
-\begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Etapes clés}
-\begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions\ldots
-
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Key steps}
-\begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveaux mécanismes OTB-Applications sous  la forme de
-  \alert{plugin}, support complet des images Pléiades (géométrie, radiométrie)\ldots
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{\'Etapes clés}
-\begin{description}
-\item[1.0.0] Architecture, compilation et documentation, quelques fonctions et applications
-\item[2.0.0] Expansion fonctionnelle (apprentissage SVM, extraction de primitives, pré-traitement, meilleure visualisation \ldots)
-\item[3.0.0] Suite de l'expansion fonctionnelle (support des données vecteurs, champs de Markov cachés, points clés, cartes de Kohonen  \ldots) et de nouvelles applications de démonstration, avec interface graphique
-\item[3.2.0] Première version de Monteverdi, et de nouvelles fonctions,
-\item[3.12.0] Nouveau mécanisme pour les applications, et support complet de
-  l'imagerie Pléiades, nouvelles fonctions,
-\item[3.16.0] Nouvelle version Monteverdi (v2), interface plus moderne,
-  intégration des applications
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-\event{\decimaldate{13}{2}{2015}}{\tiny{4.4.0}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{\'Etapes clés}
-\begin{description}
-\item[4.0.0] Compatibilité avec ITK 4.0, et nouvelles fonctions.
-\item[4.2.0] Méthode efficace pour le calcul des textures
-  d'Haralick,amélioration des techniques de calibration optique;
-  lecture/écriture de coefficients RPC à partir d'un fichier GeoTIFF\ldots
-\item[4.4.0] Calculatrice vectorielle sur les bandes ('ala' Scilab)\ldots
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2014}{\textwidth}
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{\'Etapes clés}
-\begin{description}
-\item[4.0.0] Compatibilité avec ITK 4.0, et nouvelles fonctions.
-\item[4.2.0] Méthode efficace pour le calcul des textures
-  d'Haralick,amélioration des techniques de calibration optique;
-  lecture/écriture de coefficients RPC à partir d'un fichier GeoTIFF\ldots
-\item[5.0.0] Ré-organisation de l'architecture du code OTB et des outils pour le
-  configurer et l'installer (\alert{modularité})
-\item[5.2.0] Support Sentinel-1, nouvelles fonctionnalités de traitement SAR
-  (speckle, polarimétrie), mode régression pour certains algorithmes
-  d'apprentissage et \alert{Monteverdi 3.0}
-\end{description}
-\end{block}
-\end{minipage}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-%2 days ago 	4.0.0
-% months ago 	3.20.0 	
-% months ago 	3.18.0 	
-%3 months ago 	3.16.0 	
-%0 months ago 	3.14.0 	
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Lines of code}
-\begin{center}
-\includegraphics[width=\textwidth]{images/lines_of_code_crop.png}
-\end{center}
-\end{block}
-\end{minipage}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2014}{\textwidth}
-%2 days ago 	4.0.0
-% months ago 	3.20.0 	
-% months ago 	3.18.0 	
-%3 months ago 	3.16.0 	
-%0 months ago 	3.14.0 	
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{01}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Commits per month}
-\begin{center}
-\includegraphics[width=\textwidth]{images/commits_per_month_crop.png}
-\end{center}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un peu d'histoire}
-
-\begin{chronology}[2]{2006}{2015}{\textwidth}
-%2 days ago 	4.0.0
-% months ago 	3.20.0 	
-% months ago 	3.18.0 	
-%3 months ago 	3.16.0 	
-%0 months ago 	3.14.0 	
-\event{\decimaldate{23}{12}{2015}}{\small{\textbf{5.2.0}}}
-\event{\decimaldate{1}{6}{2015}}{\small{\textbf{5.0.0}}}
-\event{\decimaldate{4}{9}{2014}}{\tiny{4.2.0}}
-\event{\decimaldate{12}{03}{2014}}{\small{\textbf{4.0.0}}}
-\event{\decimaldate{12}{11}{2013}}{\tiny{3.20.0}}
-\event{\decimaldate{04}{07}{2013}}{\tiny{3.18.0}}
-\event{\decimaldate{01}{02}{2013}}{\tiny{3.16.0}}
-\event{\decimaldate{9}{07}{2012}}{\tiny{3.14.0}}
-\event{\decimaldate{31}{01}{2012}}{\tiny{3.12.0}}
-\event{\decimaldate{29}{06}{2011}}{\tiny{3.10.0}}
-\event{\decimaldate{16}{12}{2010}}{\tiny{3.8.0}}
-\event{\decimaldate{07}{10}{2010}}{\tiny{3.6.0}}
-\event{\decimaldate{11}{07}{2010}}{\tiny{3.4.0}}
-\event{\decimaldate{22}{01}{2010}}{\tiny{3.2.0}}
-\event{\decimaldate{15}{05}{2009}}{\small{\textbf{3.0.0}}}
-\event{\decimaldate{16}{01}{2009}}{\tiny{2.8}}
-\event{\decimaldate{31}{10}{2008}}{\tiny{2.6.0}}
-\event{\decimaldate{29}{07}{2008}}{\tiny{2.4.0}}
-\event{\decimaldate{30}{05}{2008}}{\tiny{2.2.0}}
-\event{\decimaldate{14}{12}{2007}}{\small{\textbf{2.0.0}}}
-\event{\decimaldate{24}{10}{2007}}{\tiny{1.6.0}}
-\event{\decimaldate{05}{06}{2007}}{\tiny{1.4.0}}
-\event{\decimaldate{28}{02}{2007}}{\tiny{1.2.0}}
-\event{\decimaldate{30}{06}{2006}}{\small{\textbf{1.0.0}}}
-
-\end{chronology}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{block}{Sourceforge downloads}
-\begin{center}
-\includegraphics[width=\textwidth]{images/OTB_downloads_sourceforge.png}
-\end{center}
-\end{block}
-\end{minipage}
-\end{frame}
-
-\section{Caractéristiques clés}
-
-\begin{frame}
-\frametitle{Construite sur des logiciels libres tiers performants}
-\begin{block}{Motivations}
-\begin{itemize}
-\item A chaque fois que c'est possible, l'Orfeo ToolBox s'appuie sur des
-  logiciels libres tiers
-\item ``Reuse is powerful''
-\item Cette position d'intégrateur permet d'accroître rapidement le nombre de fonctions tout en assurant leurs validité
-\item Elle permet également de créer de nouvelles fonctionnalités par hybridation
-\end{itemize} 
-\end{block}
-
-\begin{block}{Les logiciels tiers principaux}
-\begin{itemize}
-\item \href{www.itk.org}{ITK} dépendance principale, fournit la modélisation du \emph{pipeline} de traitement
-\item \href{www.gdal.org}{GDAL} gère toutes les accès aux données images et vecteurs,
-\item \href{www.ossim.org}{OSSIM} contient toute la modélisation géométrique des prises de vues, 
-\item \href{www.opencv.org}{OpenCV} et \href{www.libsvm.org}{LibSVM} pour les fonctionnalités de classification supervisée,
-\item \href{www.muparser.org}{MuParser} et \href{www.muparserx.org}{MuParserX} l'analyse dynamique d'expressions mathématiques ...
-\end{itemize}
-\end{block}
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Compatible (et disponible) pour un maximum de plateformes}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{block}{Objectif multi-plateforme}
-\begin{itemize}
-\item Compiler avec les versions récentes de:
-\begin{itemize}
-\item GCC
-\item Clang 
-\item MinGW
-\item Visual Studio\ldots
-\end{itemize}
-\item Des paquets binaires sont disponibles en fonction de la plateforme:
-\begin{itemize}
-\item Dépôt ubuntuGIS pour Ubuntu,
-\item Intégration à OSGeo4W et paquets indépendants pour Windows,
-\item Paquets MacPort, formule HomeBrew et image dmg pour Mac OS X\ldots
-\end{itemize}
-\end{itemize}
-\end{block}
-\column{0.5\textwidth}
-\includegraphics[width=\textwidth]{images/OTB4_download_sourceforge_os_crop.png}
-\begin{center}
-\tiny{Système d'exploitation des téléchargements sur Sourceforge (ne tient pas compte des autres dépôt)}
-\end{center}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Flexibilité, passage à l'échelle: \textit{Pipeline}, \textit{Streaming} et \textit{multithreading}}
-
-\begin{block}{Le modèle de \textit{Pipeline}}
-\begin{center}
-\includegraphics[width=0.7\textwidth]{images/ProcessObjectDataObject.png}
-\end{center}
-\end{block}
-\vspace{-0.5cm}
-\begin{block}{\textit{Streaming}}
-\begin{center}
-\includegraphics[width=0.7\textwidth]{images/StreamingImageDiagram.png}
-\end{center}
-\end{block}
-\vspace{-0.5cm}
-\begin{center}
-\tiny{source: http://www.aosabook.org/en/itk.html}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Flexibilité, passage à l'échelle: en coulisse ...}
-\begin{center}
-\includegraphics[width=0.6\textwidth]{images/ProcessObjectDataObjectInteractionUML.png}\\
-\tiny{source: http://www.aosabook.org/en/itk.html}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Proche de l'état de l'art}
-\begin{itemize}
-\item Veille technologique de l'équipe de développement
-\item Implémentations d'algorithmes récents d'après publication. Ex.: profils morphologiques, segmentation MeanShift, textures de Haralick, points d'intérêt SURF \ldots
-\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift\footnote{Michel, J.; Youssefi, D.; Grizonnet, M., "Stable Mean-Shift Algorithm and Its Application to the Segmentation of Arbitrarily Large Remote Sensing Images," Geoscience and Remote Sensing, IEEE Transactions on , vol.53, no.2, pp.952,964, Feb. 2015}, fusion bayésienne\footnote{J. R. Dominique Fasbender and P. Bogaert. Bayesian data fusion for adaptable image pan-
-sharpening. IEEE Transactions on Geoscience and Remote Sensing, 46(6):1847–1857, 2007.
-13.2}, détection d'objets \ldots
-\item Veille pour bénéficier des avancées des logiciels tiers. Ex.: algorithmes de \textit{machine learning} d'OpenCV,
-\item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une même interface.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un mot concernant le développement du logiciel}
-\vspace{-0.5cm}
-\begin{itemize}
-\item Gestion de code source décentralisée: Git (migration depuis Mercurial en
-  Juillet 2015)
-\item C++ et suite CMake (CTest, CDash)
-\item Développement guidé par les tests (TDD)
-\item Gestion Agile (scrum)
-\item Intégration continue et packaging automatisé
-\end{itemize}
-Tout les jours, environ 3000 tests sont compilés et rejoués sur 16 configurations différentes!
-\begin{center}
-\includegraphics[width=\textwidth,trim=0 250 0 0,clip=true]{images/dashboard.png}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Comment utiliser l'OTB?}
-\vspace{-0.5cm}
-\begin{center}
-\includegraphics[width=\textwidth]{images/sandwich.pdf}
-\end{center}
-\vspace{-0.5cm}
-\begin{block}{Écrire son propre code}
- Flexible, accès à l'API complète, demande une connaissance en C++
-\end{block}
-\begin{block}{Utiliser les applications}
- Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis Python. Peut être étendue (création d'applications)
-\end{block}
-\begin{block}{Utiliser Monteverdi}
-Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Show me the code!}
-\begin{lstlisting}[language=c++,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 2pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
-#include "otbImage.h"
-#include "otbImageFileReader.h"
-#include "otbImageFileWriter.h"
-#include "itkCannyEdgeDetectionImageFilter.h"
-#include "itkRescaleIntensityImageFilter.h"
-
-int main(int argc, char * argv[])
-{
-  typedef double                      PixelType;
-  typedef otb::Image<PixelType>       ImageType;
-  
-  typedef unsigned char               OutputPixelType;
-  typedef otb::Image<OutputPixelType> OutputImageType;
-
-  typedef otb::ImageFileReader<ImageType> ReaderType;
-  ReaderType::Pointer reader = ReaderType::New();
-
-  reader->SetFileName(argv[1]);
-
-  typedef itk::CannyEdgeDetectionImageFilter
-  <ImageType, ImageType> FilterType;
-  FilterType::Pointer filter = FilterType::New();
-
-  filter->SetInput(reader->GetOutput());
-
-  typedef otb::ImageFileWriter<OutputImageType> WriterType;
-  WriterType::Pointer writer = WriterType::New();
-
-  writer->SetFileName(argv[2]);
-  
-  writer->SetInput(filter->GetOutput());
-
-  writer->Update();
-}
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}
-\frametitle{Les applications: codées une fois, utilisables partout}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{itemize}
-\item 87 applications sont livrées avec l'OTB
-\item 1 application $=$ 1 librairie dynamique (plugin)
-\item Les applications sont auto-descriptives et auto-documentées
-\item Les applications peuvent etre étendues en dehors de l'OTB
-\item Plusieurs interfaces sont disponibles pour utiliser les plugins:
-\begin{itemize}
-  \item Ligne de commande
-  \item Interface Qt auto-générée
-  \item Python
-\end{itemize}
-\item Les applications sont conçues pour une intégration facilitée dans des systèmes externes
-\end{itemize}
-\column{0.5\textwidth}
-\includegraphics[width=\textwidth]{images/cloud_applications.png}
-\end{columns}
-\end{frame}
-
-
-
-\begin{frame}[fragile]
-\frametitle{Applications: appel depuis la ligne de commande}
-\begin{scriptsize}
-\vspace{-0.5cm}\begin{verbatim}
-$ otbcli_OrthoRectification 
-
-ERROR: Waiting for at least one parameter...
-This is the OrthoRectification application, version 5.2.1
-This application allows to ortho-rectify optical images from supported sensors.
-
-Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
-
-Parameters: 
-        -progress                <boolean>        Report progress 
-MISSING -io.in                   <string>         Input Image  (mandatory)
-MISSING -io.out                  <string> [pixel] Output Image  [pixel=uint8/uint16/int16/uint32/int32/float/double] (default value is float) (mandatory)
-        -map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
-        -map.utm.zone            <int32>          Zone number  (mandatory, default value is 31)
-        -map.utm.northhem        <boolean>        Northern Hemisphere  (optional, off by default)
-        -map.epsg.code           <int32>          EPSG Code  (mandatory, default value is 4326)
-        -outputs.mode            <string>         Parameters estimation modes [auto/autosize/autospacing/outputroi/orthofit] (mandatory, default value is auto)
-MISSING -outputs.ulx             <float>          Upper Left X  (mandatory)
-MISSING -outputs.uly             <float>          Upper Left Y  (mandatory)
-MISSING -outputs.sizex           <int32>          Size X  (mandatory)
-MISSING -outputs.sizey           <int32>          Size Y  (mandatory)
-MISSING -outputs.spacingx        <float>          Pixel Size X  (mandatory)
-MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
-        -outputs.lrx             <float>          Lower right X  (optional, off by default)
-        -outputs.lry             <float>          Lower right Y  (optional, off by default)
-        -outputs.ortho           <string>         Model ortho-image  (optional, off by default)
-        -outputs.isotropic       <boolean>        Force isotropic spacing by default  (optional, on by default)
-        -outputs.default         <float>          Default pixel value  (optional, on by default, default value is 0)
-        -elev.dem                <string>         DEM directory  (optional, off by default)
-        -elev.geoid              <string>         Geoid File  (optional, off by default)
-        -elev.default            <float>          Default elevation  (mandatory, default value is 0)
-        -interpolator            <string>         Interpolation [bco/nn/linear] (mandatory, default value is bco)
-\end{verbatim}
-\end{scriptsize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface Qt auto-générée (paramètres)}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{images/app_parameters.png}
-\end{center}
-\end{frame}
-
-
-\begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface Qt auto-générée (documentation)}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{images/app_doc.png}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Applications: appel depuis l'interface Python}
-\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
-#!/usr/bin/python 
- 
-# Import the otb applications package 
-import otbApplication 
- 
-# The following line creates an instance of the OrthoRectification application 
-OrthoRectification = otb.Registry.CreateApplication("OrthoRectification") 
- 
-# The following lines set all the application parameters: 
-OrthoRectification.IO.IN = "QB_TOULOUSE_MUL_Extract_500_500.tif"
-OrthoRectification.IO.OUT = "QB_Toulouse_ortho.tif"
- 
-app.MAP = 'epsg'
-app.MAP.EPSG.CODE = 32768
-
-# The following line execute the application 
-OrthoRectification.ExecuteAndWriteOutput()
-\end{lstlisting}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Monteverdi: visualisation}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{images/monteverdi2-loupe.png}
-\end{center}
-\end{minipage}
-\end{frame}
-\begin{frame}
-
-\frametitle{Monteverdi2: traitement}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{images/monteverdi2-haralick.png}
-\end{center}
-\end{minipage}
-\end{frame}
-
-\begin{frame}
-\frametitle{OTB dans QGIS}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=0.7\textwidth]{images/otb_qgis.png}
-\end{center}
-\end{minipage}
 \end{frame}
 
 \section{Fonctionnalités}
@@ -963,139 +180,423 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2012.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2013.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte_mad.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
 \includegraphics[keepaspectratio,height=1.1\paperheight]{images/saint_paul_lsd.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_left.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_right.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
-\end{frame} 
+\end{frame}
 
-\section{Quoi de neuf dans l'OTB?}
+\section{Caractéristiques clés}
 
 \begin{frame}
-\frametitle{Modularité (inspirée de l'organisation du code ITK 4.x)}
-\begin{block}{Qu'est ce qui change?}
+\frametitle{Construite sur des logiciels libres tiers performants}
+\begin{block}{Motivations}
 \begin{itemize}
-\item Une meilleure organisation du code, en modules cohérents:
-  \begin{itemize}
-    \item OTB 4.4.0: 1672 fichiers dans 26 répertoires
-    \item OTB 5.0: 1627 fichiers dans 124 modules répartis en 16 groupes
-  \end{itemize}
-\item Les modules sont complets: tests, code source, applications sont regroupés
-\item Chaque module peut etre activé ou non, avec gestion des dépendances
-\item Ca fonctionne! Plusieurs contributions \url{https://www.orfeo-toolbox.org/external-projects/}
-
+\item A chaque fois que c'est possible, l'Orfeo ToolBox s'appuie sur des
+  logiciels libres tiers
+\item Cette position d'intégrateur permet d'accroître rapidement le nombre de fonctions tout en assurant leurs validité
+\item Elle permet également de créer de nouvelles fonctionnalités par hybridation
 \end{itemize}
 \end{block}
 
-\begin{block}{Quels sont les avantages?}
+\begin{block}{Les logiciels tiers principaux}
 \begin{itemize}
-\item Les logiciels tiers sont importés dans des modules désactivables comme les autres
-\item Beaucoup de magie CMake (moins de code cmake, plus de choses automatisées)
-\item La documentation doxygen reflète l'organisation en groupes/modules
-\item Les contributions sont facilitées, notamment avec le mécanisme de
-  \textit{remote module}
-\item ça fonctionne! Déjà beaucoup de modules externes contribués: \url{https://www.orfeo-toolbox.org/external-projects/}
+\item \href{www.itk.org}{ITK}: modélisation de la chaine de traitement
+\item \href{www.gdal.org}{GDAL}: accès aux données images et vecteurs,
+\item \href{www.ossim.org}{OSSIM}: modélisation géométrique des prises de vues,
+\item \href{www.opencv.org}{OpenCV} et \href{www.libsvm.org}{LibSVM}: fonctionnalités de classification supervisée,
+\item \href{www.muparser.org}{MuParser} et \href{www.muparserx.org}{MuParserX}:
+analyse dynamique d'expressions mathématiques.
 \end{itemize}
 \end{block}
+
+
 \end{frame}
 
 \begin{frame}
-\frametitle{Contribuer son module OTB}
-\begin{block}{Schéma ITK}
+\frametitle{Compatible (et disponible) pour un maximum de plateformes}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{block}{Objectif multi-plateforme}
+\begin{itemize}
+\item Compiler avec les versions récentes de:
+\begin{itemize}
+\item GCC
+\item Clang
+\item MinGW
+\item Visual Studio\ldots
+\end{itemize}
+\item Des paquets binaires sont disponibles en fonction de la plateforme:
+\begin{itemize}
+\item Dépôt ubuntuGIS pour Ubuntu,
+\item Intégration à OSGeo4W et paquets indépendants pour Windows,
+\item Paquets MacPort, formule HomeBrew et image dmg pour Mac OS X\ldots
+\end{itemize}
+\end{itemize}
+\end{block}
+\column{0.5\textwidth}
+\includegraphics[width=\textwidth]{images/OTB4_download_sourceforge_os_crop.png}
 \begin{center}
- \includegraphics[width=0.4\textwidth]{images/itk-remote-module.png}
+\tiny{Système d'exploitation des téléchargements sur Sourceforge (ne tient pas compte des autres dépôt)}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Flexibilité, passage à l'échelle: \textit{Pipeline}, \textit{Streaming} et \textit{multithreading}}
+
+\begin{block}{Le modèle de \textit{Pipeline}}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{images/ProcessObjectDataObject.png}
 \end{center}
 \end{block}
+\vspace{-0.5cm}
+\begin{block}{\textit{Streaming}}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{images/StreamingImageDiagram.png}
+\end{center}
+\end{block}
+\vspace{-0.5cm}
+\begin{center}
+\tiny{source: http://www.aosabook.org/en/itk.html}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Flexibilité, passage à l'échelle: en coulisse ...}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/ProcessObjectDataObjectInteractionUML.png}\\
+\tiny{source: http://www.aosabook.org/en/itk.html}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Proche de l'état de l'art}
+\begin{itemize}
+\item Veille technologique de l'équipe de développement
+\item Implémentations d'algorithmes récents d'après publication. Ex.: profils morphologiques, segmentation MeanShift, textures de Haralick, points d'intérêt SURF \ldots
+\item Implémentations de références contribuées par les auteurs de certains travaux en support à leur publication. Ex.: Large Scale MeanShift, fusion bayésienne, détection d'objets \ldots
+\item Veille pour bénéficier des avancées des logiciels tiers. Ex.: algorithmes de \textit{machine learning} d'OpenCV,
+\item Souvent: pour une même brique fonctionnelle, plusieurs algorithmes de complexités différentes disponibles sous une même interface.
+\end{itemize}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Superbuild}
-\begin{block}{Avant OTB 4.4.0}
+\frametitle{Un mot concernant le développement du logiciel}
+\vspace{-0.5cm}
 \begin{itemize}
-\item Certaines dépendances (mais pas toutes) peuvent etre compilée en interne
-\item Leur code source est intégré à celui de l'Orfeo ToolBox (pas une bonne pratique en général)
+\item Gestion de code source décentralisée: Git (migration depuis Mercurial en
+  Juillet 2015)
+\item C++ et suite CMake (CTest, CDash)
+\item Développement guidé par les tests (TDD)
+\item Gestion Agile (scrum)
+\item Intégration continue et packaging automatisé
+\end{itemize}
+Tout les jours, environ 3000 tests sont compilés et rejoués sur 16
+configurations différentes.
+\begin{center}
+\includegraphics[width=\textwidth]{images/dashboard.png}
+\end{center}
+\end{frame}
+
+\section{Comment utiliser OTB?}
+
+\begin{frame}
+\frametitle{Comment utiliser l'OTB?}
+\vspace{-0.5cm}
+\begin{center}
+\includegraphics[width=\textwidth]{images/sandwich.pdf}
+\end{center}
+\vspace{-0.5cm}
+\begin{block}{Écrire son propre code}
+ Flexible, accès à l'API complète, demande une connaissance en C++
+\end{block}
+\begin{block}{Utiliser les applications}
+ Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis Python. Peut être étendue (création d'applications)
+\end{block}
+\begin{block}{Utiliser Monteverdi}
+Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Show me the code!}
+\begin{lstlisting}[language=c++,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 2pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#include "otbImage.h"
+#include "otbImageFileReader.h"
+#include "otbImageFileWriter.h"
+#include "itkCannyEdgeDetectionImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+
+int main(int argc, char * argv[])
+{
+  typedef double                      PixelType;
+  typedef otb::Image<PixelType>       ImageType;
+
+  typedef unsigned char               OutputPixelType;
+  typedef otb::Image<OutputPixelType> OutputImageType;
+
+  typedef otb::ImageFileReader<ImageType> ReaderType;
+  ReaderType::Pointer reader = ReaderType::New();
+
+  reader->SetFileName(argv[1]);
+
+  typedef itk::CannyEdgeDetectionImageFilter
+  <ImageType, ImageType> FilterType;
+  FilterType::Pointer filter = FilterType::New();
+
+  filter->SetInput(reader->GetOutput());
+
+  typedef otb::ImageFileWriter<OutputImageType> WriterType;
+  WriterType::Pointer writer = WriterType::New();
+
+  writer->SetFileName(argv[2]);
+
+  writer->SetInput(filter->GetOutput());
+
+  writer->Update();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Les applications: codées une fois, utilisables partout}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+\item 87 applications sont livrées avec l'OTB
+\item 1 application $=$ 1 librairie dynamique (plugin)
+\item Les applications sont auto-descriptives et auto-documentées
+\item Les applications peuvent etre étendues en dehors de l'OTB
+\item Plusieurs interfaces sont disponibles pour utiliser les plugins:
+\begin{itemize}
+  \item Ligne de commande
+  \item Interface Qt auto-générée
+  \item Python
+\end{itemize}
+\item Les applications sont conçues pour une intégration facilitée dans des systèmes externes
+\end{itemize}
+\column{0.5\textwidth}
+\includegraphics[width=\textwidth]{images/cloud_applications.png}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Applications: appel depuis la ligne de commande}
+\begin{scriptsize}
+\vspace{-0.5cm}\begin{verbatim}
+$ otbcli_OrthoRectification
+
+ERROR: Waiting for at least one parameter...
+This is the OrthoRectification application, version 5.2.1
+This application allows to ortho-rectify optical images from supported sensors.
+
+Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
+
+Parameters:
+        -progress                <boolean>        Report progress
+MISSING -io.in                   <string>         Input Image  (mandatory)
+MISSING -io.out                  <string> [pixel] Output Image  [pixel=uint8/uint16/int16/uint32/int32/float/double] (default value is float) (mandatory)
+        -map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
+        -map.utm.zone            <int32>          Zone number  (mandatory, default value is 31)
+        -map.utm.northhem        <boolean>        Northern Hemisphere  (optional, off by default)
+        -map.epsg.code           <int32>          EPSG Code  (mandatory, default value is 4326)
+        -outputs.mode            <string>         Parameters estimation modes [auto/autosize/autospacing/outputroi/orthofit] (mandatory, default value is auto)
+MISSING -outputs.ulx             <float>          Upper Left X  (mandatory)
+MISSING -outputs.uly             <float>          Upper Left Y  (mandatory)
+MISSING -outputs.sizex           <int32>          Size X  (mandatory)
+MISSING -outputs.sizey           <int32>          Size Y  (mandatory)
+MISSING -outputs.spacingx        <float>          Pixel Size X  (mandatory)
+MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
+        -outputs.lrx             <float>          Lower right X  (optional, off by default)
+        -outputs.lry             <float>          Lower right Y  (optional, off by default)
+        -outputs.ortho           <string>         Model ortho-image  (optional, off by default)
+        -outputs.isotropic       <boolean>        Force isotropic spacing by default  (optional, on by default)
+        -outputs.default         <float>          Default pixel value  (optional, on by default, default value is 0)
+        -elev.dem                <string>         DEM directory  (optional, off by default)
+        -elev.geoid              <string>         Geoid File  (optional, off by default)
+        -elev.default            <float>          Default elevation  (mandatory, default value is 0)
+        -interpolator            <string>         Interpolation [bco/nn/linear] (mandatory, default value is bco)
+\end{verbatim}
+\end{scriptsize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications OTB: Interface graphique}
+\begin{center}
+\includegraphics[width=1\textwidth]{images/otbgui.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Applications: appel depuis l'interface Python}
+\begin{lstlisting}[language=python,breaklines=true,breakatwhitespace=true,frame = tb,framerule = 0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle = {\ttfamily\tiny},keywordstyle = {\ttfamily\color{listkeyword}\textbf},identifierstyle = {\ttfamily},commentstyle = {\ttfamily\color{listcomment}\textit},stringstyle = {\ttfamily},showstringspaces = false,showtabs = false,numbers = none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize = 2]
+#!/usr/bin/python
+
+# Import the otb applications package
+import otbApplication
+
+# The following line creates an instance of the OrthoRectification application
+OrthoRectification = otb.Registry.CreateApplication("OrthoRectification")
+
+# The following lines set all the application parameters:
+OrthoRectification.IO.IN = "QB_TOULOUSE_MUL_Extract_500_500.tif"
+OrthoRectification.IO.OUT = "QB_Toulouse_ortho.tif"
+
+app.MAP = 'epsg'
+app.MAP.EPSG.CODE = 32768
+
+# The following line execute the application
+OrthoRectification.ExecuteAndWriteOutput()
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Monteverdi (accès aux applications OTB)}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{images/monteverdi.png}
+\end{center}
+\end{minipage}
+\end{frame}
+
+%\vspace*{-3.0mm}
+\begin{frame}
+  \frametitle{QGIS (accès aux applications OTB)}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=1\textwidth]{images/otb_in_qgis.png}
+\end{center}
+\end{minipage}
+\end{frame}
+
+
+\section{Quoi de neuf depuis 5.0 ?}
+
+\begin{frame}
+\frametitle{5.0 (Mai 2015)}
+\begin{block}{Modularité}
+\begin{itemize}
+\item Une meilleure organisation du code, en modules cohérents (124 modules et
+    16 groupes) contenants sources, tests et applications.
+\item Gestion des dépendances
+\item Contributions externes: \url{https://www.orfeo-toolbox.org/external-projects/}
 \end{itemize}
 \end{block}
 
-\begin{block}{Dans OTB 5.0, on Superbuild!}
+\begin{block}{SuperBuild}
 \begin{itemize}
 \item Il n'y a plus de logiciels tiers dans l'OTB
-\item Il existe un projet séparé appelé Superbuild, qui télécharge, configure, compile et installe chaque dépendance dans sa bonne version
-\item On peut ainsi compiler une OTB complète avec très peu de pré-requis (cmake, gcc, zlib, curl), et totalement automatiquement
-\item Il existe également un mode \textit{offline} pour compiler l'OTB en avion (ou toute autre situation sans accès internet)
+\item Le Superbuild, télécharge, configure, compile et installe les dépendances
+\item Il existe également un mode \textit{offline} pour compiler l'OTB sans
+  accès internet (en avion par exemple).
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Project Steering Committee}
-\begin{itemize}
-\item Le PSC est un système de gouvernance ouverte
-\item Il s'agit d'une entité de coordination plus qu'un organisme de décision
-\item Animation de la communauté, et grandes orientations du projet
-\item Tout le monde peut en devenir membre (nouveau membre = vote)
-\item Les décisions et les débats sont publics (sur la liste de diffusion pour les développeurs)
-\item Les statuts sont publics\footnote{\url{http://wiki.orfeo-toolbox.org/index.php/Project_Steering_Committee}}
-\end{itemize}
+\frametitle{Gouvernance ouverte: Project Steering Committee}
+\begin{block}{Genèse du PSC}
+  \begin{itemize}
+  \item Jusqu'en 2015: l'OTB, un logiciel à sources ouvertes
+  \item En mars 2015: l'OTB devient un logiciel libre, le CNES nomme un PSC initial
+  \end{itemize}
+\end{block}
+\begin{block}{Un club de développeurs, pas de décideurs}
+  \begin{itemize}
+  \item Pilotage haut niveau du projet, roadmaps, communication, planification
+  \item Vote les RFCs: Tous les membres ont le même poids dans les votes ($\pm 1$, $\pm 0$)
+  \item Les sièges n'expirent pas, sortie par démission ou vote d'expulsion
+  \item Le PSC n'est pas une entité légale et n'a pas de moyens propres
+  \end{itemize}
+\end{block}
+\begin{block}{En chiffres}
+  \begin{itemize}
+  \item 5 membres de 4 entités différentes
+  \item 2 release sous l'égide du PSC (5.2, 5.4)
+  \item 3 meetings en ligne (logs publics)
+  \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Quoi de neuf dans l'OTB 5.2?}
-\begin{block}{Quoi de neuf dans la version 5.2 (Déc 2015)?}
+\frametitle{5.2 (Décembre 2015)}
+\begin{block}{OTB}
 \begin{itemize}
-\item Nouvelles applications pour le traitement SAR (polarimétrie)
+\item Nouvelles applications pour le traitement SAR (polarimétrie, radiométrie, speckle)
 \item Support des produits Sentinel-1
-\item Calibration radiométrique image SAR (Sentinel1 et Radarsat2)
-\item Méthodes pour le filtrage du Speckle (Frost, Lee, GammaMAP, Kuan)
-\item Mode régression et carte de confiance pour la classification
 \item Amélioration accès OTB en Python
-\item Compatibilité avec Gdal 2.0 et support des images Sentinel-2
+\item Compatibilité avec GDAL 2.0 et support des images Sentinel-2
+\item \ldots
 \end{itemize}
 \end{block}
 
-\begin{block}{Goodbye Monteverdi2, welcome Monteverdi 3.0}
+\begin{block}{Monteverdi 3.0}
 \begin{itemize}
-\item Léger et performant
-\item Affichage mosaique d'images ou série multi-temporelle
-\item Outils de visualisation performants(contraste local, gradient\ldots)
+\item Affichage mosaïque d'images ou série multi-temporelle
+\item Outils de visualisation performants (contraste local, gradient\ldots)
 \item Accès aux applications OTB
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.4 (Mai 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Passage à un cycle de release fixe (3 mois)
+\item Intégration du composant de visualisation
+\item Compilation externe des modules externes
+\item Nouvelles décompositions SAR: Barnes, Huynen, Pauli
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.2}
+\begin{itemize}
+\item Capture d'écran
+\item Génération d'overviews GDAL
+\item Gestion des sous datasets GDAL
+\item Ajout au SuperBuild
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1170,14 +671,6 @@ OrthoRectification.ExecuteAndWriteOutput()
   \tiny{Le logiciel Gnorasi}
 \end{center}
 \end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Un système complexe: chaos et effets de bord}
-\begin{center}
-\includegraphics[width=\textwidth]{images/Writing.png}\\
-\tiny{Effets des paramètres d'encodage tif et du streaming sur les performances d'une chaîne de traitement}
-\end{center}
 \end{frame}
 
 \begin{frame}
