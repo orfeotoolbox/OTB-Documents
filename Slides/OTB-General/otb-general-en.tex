@@ -122,14 +122,14 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item Reuse is powerful
 \item Increase the number of functions
 \item Combine tools to create hybrid data pipeline
-\end{itemize} 
+\end{itemize}
 \end{block}
 
 \begin{block}{OTB backbone}
 \begin{itemize}
 \item \href{www.itk.org}{ITK}: OTB data processing schema based on ITK \emph{pipeline}
 \item \href{www.gdal.org}{GDAL} to read/write raster/vector data
-\item \href{www.ossim.org}{OSSIM} sensor modelling and metadata support 
+\item \href{www.ossim.org}{OSSIM} sensor modelling and metadata support
 \item \href{www.opencv.org}{OpenCV} and \href{www.libsvm.org}{LibSVM} provide
   machine learning algorithms
 \item \href{www.muparser.org}{MuParser} and \href{www.muparserx.org}{MuParserX}
@@ -156,7 +156,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \item Binary packages available:
 \begin{itemize}
 \item UbuntuGIS repository (GIS and IP software for Ubuntu)
-\item Experimental Debian packages 
+\item Experimental Debian packages
 \item Available in  OSGeo4W (OSGeo tools on Windows)
 \item Binary installers, Port and Brew formula for Mac OS X\ldots
 \end{itemize}
@@ -258,7 +258,7 @@ int main(int argc, char * argv[])
 {
   typedef double                      PixelType;
   typedef otb::Image<PixelType>       ImageType;
-  
+
   typedef unsigned char               OutputPixelType;
   typedef otb::Image<OutputPixelType> OutputImageType;
 
@@ -277,7 +277,7 @@ int main(int argc, char * argv[])
   WriterType::Pointer writer = WriterType::New();
 
   writer->SetFileName(argv[2]);
-  
+
   writer->SetInput(filter->GetOutput());
 
   writer->Update();
@@ -314,7 +314,7 @@ int main(int argc, char * argv[])
 \frametitle{Applications: command-line invocation}
 \begin{scriptsize}
 \vspace{-0.5cm}\begin{verbatim}
-$ otbcli_OrthoRectification 
+$ otbcli_OrthoRectification
 
 ERROR: Waiting for at least one parameter...
 This is the OrthoRectification application, version 5.2.1
@@ -322,8 +322,8 @@ This application allows to ortho-rectify optical images from supported sensors.
 
 Complete documentation: http://www.orfeo-toolbox.org/Applications/OrthoRectification.html
 
-Parameters: 
-        -progress                <boolean>        Report progress 
+Parameters:
+        -progress                <boolean>        Report progress
 MISSING -io.in                   <string>         Input Image  (mandatory)
 MISSING -io.out                  <string> [pixel] Output Image  [pixel=uint8/uint16/int16/uint32/int32/float/double] (default value is float) (mandatory)
         -map                     <string>         Output Cartographic Map Projection [utm/lambert2/lambert93/wgs/epsg] (mandatory, default value is utm)
@@ -377,22 +377,22 @@ MISSING -outputs.spacingy        <float>          Pixel Size Y  (mandatory)
     = {\ttfamily},showstringspaces = false,showtabs = false,numbers =
     none,numbersep = 6pt, numberstyle={\ttfamily\color{listnumbers}},tabsize =
     2]
-#!/usr/bin/python 
- 
-# Import the otb applications package 
-import otbApplication 
- 
-# The following line creates an instance of the OrthoRectification application 
-OrthoRectification = otb.Registry.CreateApplication("OrthoRectification") 
- 
-# The following lines set all the application parameters: 
+#!/usr/bin/python
+
+# Import the otb applications package
+import otbApplication
+
+# The following line creates an instance of the OrthoRectification application
+OrthoRectification = otb.Registry.CreateApplication("OrthoRectification")
+
+# The following lines set all the application parameters:
 OrthoRectification.IO.IN = "QB_TOULOUSE_MUL_Extract_500_500.tif"
 OrthoRectification.IO.OUT = "QB_Toulouse_ortho.tif"
- 
+
 app.MAP = 'epsg'
 app.MAP.EPSG.CODE = 32768
 
-# The following line execute the application 
+# The following line execute the application
 OrthoRectification.ExecuteAndWriteOutput()
 \end{lstlisting}
 \end{frame}
@@ -498,47 +498,47 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2012.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte2013.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/mayotte_mad.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
 \includegraphics[keepaspectratio,height=1.1\paperheight]{images/saint_paul_lsd.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_left.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_right.png}
-\end{frame} 
+\end{frame}
 
-\vspace*{-6.5mm}    
+\vspace*{-6.5mm}
 \begin{frame}[plain]
 \hspace*{-11mm}
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
-\end{frame} 
+\end{frame}
 
 \section{What's new in OTB?}
 
@@ -687,7 +687,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
   images on RTU web site
 \item OTB provides many useful RS functions in \textbf{one single tool}
 \item OTB is/was the only open-source supporting PHR images (thanks to OpenJPEG)
-\item OTB equals or beats state-of-the-art tools (open source and maybe \$\$) on some points: 
+\item OTB equals or beats state-of-the-art tools (open source and maybe \$\$) on some points:
   \begin{itemize}
   \item band calculator
   \item tile-wise segmentation of full imagery
@@ -712,7 +712,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
     \item OTB is a component of \alert{Sentinel-2} and Venus ground segment (CNES and ESA)
     \item Terr'Image: Educational software for satellite image analysis
     \item Use to prototype \alert{THEIA} products from the Scientific Expertise Centres
-    \item ESA Sentinel-2 for Agriculture 
+    \item ESA Sentinel-2 for Agriculture
     \item Gnorasi Software (National Technical University of Athens)
     \item Vahine project (hyperspectral processing of astrophysics),IPAG
     \item Geosud project(IRSTEA)
