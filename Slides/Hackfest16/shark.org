@@ -128,10 +128,8 @@ cout << "Random Forest on validation set accuracy:     "
 ** Random Forests in OTB using Shark
 \scriptsize
 #+BEGIN_SRC C++
-namespace Shark
-{
 template <class TInputValue, class TTargetValue>
-class ITK_EXPORT RandomForestsMachineLearningModel
+class ITK_EXPORT SharkRandomForestsMachineLearningModel
   : public MachineLearningModel <TInputValue, TTargetValue>
 {
 //..
@@ -139,7 +137,6 @@ private:
   shark::RFClassifier m_RFModel;
   shark::RFTrainer m_RFTrainer;
 };
-}//namespace Shark
 #+END_SRC
 \normalsize
 ** Train
@@ -148,21 +145,22 @@ private:
 
 template <class TInputValue, class TOutputValue>
 void
-RandomForestsMachineLearningModel<TInputValue,TOutputValue>
+SharkRandomForestsMachineLearningModel<TInputValue,TOutputValue>
 ::Train()
 {
+  //Data preparation
   std::vector<shark::RealVector> features;
   std::vector<unsigned int> class_labels;
-
-  ListSampleToSharkVector(this->GetInputListSample(), features);
-  ListSampleToSharkVector(this->GetTargetListSample(), class_labels);
-  shark::ClassificationDataset TrainSamples = 
-    shark::createLabeledDataFromRange(features,class_labels);
+  Shark::ListSampleToSharkVector(this->GetInputListSample(), features);
+  Shark::ListSampleToSharkVector(this->GetTargetListSample(), class_labels);
+  shark::ClassificationDataset TrainSamples = shark::createLabeledDataFromRange(features,class_labels);
   //Set parameters
-  // ...
-
-  m_RFTrainer.train(m_RFModel, TrainSamples);
-  
+  m_RFTrainer.setMTry(m_MTry);
+  m_RFTrainer.setNTrees(m_NumberOfTrees);
+  m_RFTrainer.setNodeSize(m_NodeSize);
+  m_RFTrainer.setOOBratio(m_OobRatio);
+  //Train
+  m_RFTrainer.train(m_RFModel, TrainSamples);  
 } 
 #+END_SRC
 \normalsize
@@ -170,26 +168,24 @@ RandomForestsMachineLearningModel<TInputValue,TOutputValue>
 \scriptsize
 #+BEGIN_SRC C++
 template <class TInputValue, class TOutputValue>
-typename RandomForestsMachineLearningModel<TInputValue,TOutputValue>
+typename SharkRandomForestsMachineLearningModel<TInputValue,TOutputValue>
 ::TargetSampleType
-RandomForestsMachineLearningModel<TInputValue,TOutputValue>
+SharkRandomForestsMachineLearningModel<TInputValue,TOutputValue>
 ::Predict(const InputSampleType & value, ConfidenceValueType *quality) const
 {
   //Inefficient: we don't use batches!
   shark::RealVector samples;
-  for(size_t i = 0; i < value.Size();i++)
-     samples.push_back(value[i]);
-  std::vector<shark::RealVector> sampleVector;
-  sampleVector.push_back(samples);
-  auto InputsSamples = shark::createUnlabeledDataFromRange(sampleVector);
-  //Shark's RF predicts probability!
+  for(size_t i = 0; i < value.Size();i++) 
+    {
+    samples.push_back(value[i]);
+    }
   shark::ArgMaxConverter<shark::RFClassifier> amc;
-  amc.decisionFunction() = (m_RFModel);
-  auto amc_prediction = amc(InputsSamples.inputs());
-  auto amc_labels = amc_prediction.elements();
+  amc.decisionFunction() = m_RFModel;
+  unsigned int res;
+  amc.eval(samples, res);
   TargetSampleType target;
-  target[0] = static_cast<TOutputValue>(amc_labels[0]);
-  return target[0];
+  target[0] = static_cast<TOutputValue>(res);
+  return target;
 }
 
 #+END_SRC
@@ -209,12 +205,40 @@ RandomForestsMachineLearningModel<TInputValue,TOutputValue>
   - Not a problem for the learning step since we have all the samples
   - ~otb::MachineLearningModel::Predict()~ takes one sample at a time
     - should the ~otb::ImageClassificationFilter~ call a method using batches in ~ThreadedGenerateData()~?
-    - but how to keep the same interface for OpenCV: ~otb::MachineLearningModel::PredictBatch()~ could loop over samples and call ~Predict~ for OpenCV?\pause
+    - but how to keep the same interface for OpenCV: ~otb::MachineLearningModel::PredictAll()~ loops over samples and calls ~Predict~ for OpenCV?\pause
+    - make ~otb::MachineLearningModel::PredictAll()~ virtual and use batches for Shark?
+** Batch classification
+\scriptsize
+#+BEGIN_SRC C++
+template <class TInputValue, class TOutputValue>
+void
+SharkRandomForestsMachineLearningModel<TInputValue,TOutputValue>
+::PredictAll()
+{
+  std::vector<shark::RealVector> features;
+  Shark::ListSampleToSharkVector(this->GetInputListSample(), features);
+  shark::Data<shark::RealVector> inputSamples = shark::createDataFromRange(features);
+  shark::ArgMaxConverter<shark::RFClassifier> amc;
+  amc.decisionFunction() = m_RFModel;
+  auto prediction = amc(inputSamples);
+  TargetListSampleType * targets = this->GetTargetListSample();
+  targets->Clear();
+  for(const auto& p : prediction.elements())
+    {
+    TargetSampleType target;
+    target[0] = static_cast<TOutputValue>(p);
+    targets->PushBack(target);
+    }
+}
+#+END_SRC
+\normalsize
+
 ** s/OpenCV/Shark?
 - Well, not really, let's keep them side by side\pause
 - Roadmap for integration
   - For 5.6
     - Start with RF to understand issues
     - Add Shark to Superbuild
-  - Later (and not Shark specific)
-    - Add unsupervised algorithms with the same interface
+  - Later
+    - Add different kinds of ANN, KNN, etc.
+    - Not Shark specific: add unsupervised algorithms with the same interface
