@@ -24,7 +24,7 @@
 
 ** This year
 
-*** Temptative program
+*** Tentative program
 
    - Follow-up on what has been decided last year
    - Presenting one year of open-governance with 2 releases
@@ -38,7 +38,7 @@
     - We need your help to finalize the program
       
 * Agenda
-** Day 1: Plenary session (june 7)
+** Day 1: Plenary session (June 7)
 
   |---------------+--------------------------------------------------|
   | 10:00 - 12:00 | *Presentations from dev team*                    |
@@ -63,7 +63,7 @@
   |---------------+--------------------------------------------------|
 
 
-** Day 2: Technical session (june 8)
+** Day 2: Technical session (June 8)
 
   |---------------+-----------------------------------------------------|
   | 10:00 - 12:00 | *On-demand Tutorials*                               |
@@ -88,7 +88,7 @@
   |---------------+-----------------------------------------------------|
 
 
-** Day 3: Hackfest (june 9)
+** Day 3: Hackfest (June 9)
    
 30 minutes planning meeting at the beginning
 
@@ -113,4 +113,4 @@
 *** Social events
 
 *** Sponsor
-    Thanks to CS for hosting and cattering the event!
+    Thanks to CS for hosting and catering the event!
