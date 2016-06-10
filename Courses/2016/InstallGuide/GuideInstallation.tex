@@ -37,30 +37,30 @@
 
 \subsection{QGIS}
 Installer QGIS: \url{http://www.qgis.org/fr/site/forusers/download.html}.
+
 \subsection{Ligne de commande}
 Installer un environnement minimal de ligne de commande pour Windows. Par exemple
 Git for Windows est très facile à installer:
 \url{http://git-scm.com/download/win}.
 
 \subsection{OTB et Monteverdi}
-Pour installer OTB 5.2.1 et Monteverdi 3.0.1, télécharger les paquets
-correspondants à votre architecture (32 ou 64 bits). Si votre machine est 32
-bits:
+Pour installer OTB et Monteverdi, télécharger le paquet OTB correspondants à
+votre architecture (32 ou 64 bits). Si votre machine est 32
+bits il s'agit de:
 
 \begin{verbatim}
-Monteverdi-3.0.1-win32.zip
-OTB-5.2.1-win32.zip
+OTB-5.4.0-win32.zip
 \end{verbatim}
 
 Sinon si votre machine est 64 bits:
 
 \begin{verbatim}
-Monteverdi-3.0.1-win64.zip
-OTB-5.2.1-win64.zip
+OTB-5.4.0-win64.zip
 \end{verbatim}
 
-Ces archives sont disponibles sur \url{https://www.orfeo-toolbox.org/packages/}.
-Extraire les deux archives zip dans votre répertoire personnel, par exemple dans:\\
+Ces archives sont disponibles sur la page
+\url{https://www.orfeo-toolbox.org/download/}.
+Extraire l'archive zip dans votre répertoire personnel, par exemple dans:\\
 \begin{centering}
 \texttt{C:{\textbackslash}Utilisateurs{\textbackslash}Martin{\textbackslash}install{\textbackslash}}.
 \end{centering}
@@ -71,14 +71,11 @@ plusieurs façons. Verifier que l'installation est fonctionelle avec les étapes
 suivantes:
 \begin{enumerate}
 
-\item Lancer monteverdi en navigant dans le dossier \texttt{bin} de son répertoire
-d'installation, par exemple:
-\texttt{Martin{\textbackslash}install{\textbackslash}Monteverdi-3.0.1-win32{\textbackslash}bin},
-puis double cliquer sur \textbf{\texttt{monteverdi.bat}} (et non pas
-\texttt{monteverdi.exe}).
+\item Lancer monteverdi avec \texttt{monteverdi.bat} depuis le répertoire
+d'installation.
 
 \item Essayer d'ouvrir une image tif avec Monteverdi (voir
-  figure~\ref{fig:monteverdi}). Une image tif de démo est
+figure~\ref{fig:monteverdi}). Une image tif de démo est
 disponible ici: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
 
 \item Charger les applications OTB avec "Fichier" $\rightarrow$ "Charger les
@@ -89,7 +86,7 @@ $\rightarrow$ "Navigateur d'OTB-Applications".
 
 \item Naviguer dans le dossier \texttt{bin} du répertoire d'installation OTB et double cliquer sur le
 fichier \texttt{.bat} de l'application à lancer, par exemple:\\
-\texttt{Martin{\textbackslash}install{\textbackslash}OTB-5.2.1-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
+\texttt{Martin{\textbackslash}install{\textbackslash}OTB-5.4.0-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
 (Voir figure \ref{fig:windows-otbgui}).
 
 \end{enumerate}
@@ -140,7 +137,7 @@ ou écrasant les fichiers dans \texttt{}.
 \section{Ubuntu}
 
 \subsection{QGis}
-QGis peut être installé via un gestionnaire de paquets graphique ou bien en 
+QGis peut être installé via un gestionnaire de paquets graphique ou bien en
 ligne de commande, le paquet à installer s'appelle simplement \textbf{qgis}.
 \begin{verbatim}
 sudo apt-get install qgis
@@ -152,9 +149,10 @@ sont nécéssaires. Dans un terminal, taper:
 \begin{verbatim}
 sudo apt-get install libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
 \end{verbatim}
+ou equivalent pour d'autres distributions.
 
-Vous aurez en outre besoin des librairies libgl1 et libglu1, qui ont 
-différentes implémentations (MESA, FGLRX, NVIDIA, ...). Si vous n'avez pas 
+Vous aurez en outre besoin des librairies libgl1 et libglu1, qui ont
+différentes implémentations (MESA, FGLRX, NVIDIA, ...). Si vous n'avez pas
 déjà ces librairies sur votre système, vous pouvez prendre une implémentation
 libre comme MESA :
 \begin{verbatim}
@@ -162,23 +160,24 @@ sudo apt-get install libgl1-mesa-glx libglu1-mesa
 \end{verbatim}
 
 \subsection{Installer OTB et Monteverdi}
-Télécharger le paquet autoportant OTB pour linux (64 bits), disponible ici:
+Télécharger le paquet autoportant OTB pour linux (64 bits), disponible sur la
+page:
 \begin{center}
-\url{https://www.orfeo-toolbox.org/packages/OTB-5.2.1-Linux64.run}
+\url{https://www.orfeo-toolbox.org/download}
 \end{center}
 
 Il s'agit d'une archive auto-extractible, qui va se déployer dans le répertoire
-courant. Une fois rendue exécutable, l'archive peut être extraite. Les 
+courant. Une fois rendue exécutable, l'archive peut être extraite. Les
 exécutables sont dans le sous-dossier 'bin', vous pouvez les rendre facilement
-accessible en ajoutant ce chemin au PATH. Les commandes permettant de faire 
+accessible en ajoutant ce chemin au PATH. Les commandes permettant de faire
 ce déployement sont :
 \begin{verbatim}
-chmod +x OTB-5.2.1-Linux64.run
-./OTB-5.2.1-Linux64.run
+chmod +x OTB-5.4.0-Linux64.run
+./OTB-5.4.0-Linux64.run
 export PATH=$PATH:<votre-répertoire-OTB>/bin
 \end{verbatim}
 
-Ensuite, il y a quelques variables d'environnement nécessaire pour bénéficier de 
+Ensuite, il y a quelques variables d'environnement nécessaire pour bénéficier de
 toutes les fonctionnalités :
 \begin{verbatim}
 export GDAL_DATA=<votre-répertoire-OTB>/share/gdal
