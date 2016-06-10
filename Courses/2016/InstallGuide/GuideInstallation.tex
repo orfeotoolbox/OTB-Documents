@@ -174,18 +174,15 @@ ce déployement sont :
 \begin{verbatim}
 chmod +x OTB-5.4.0-Linux64.run
 ./OTB-5.4.0-Linux64.run
-export PATH=$PATH:<votre-répertoire-OTB>/bin
 \end{verbatim}
 
-Ensuite, il y a quelques variables d'environnement nécessaire pour bénéficier de
-toutes les fonctionnalités :
+Il existe ensuite un script permettant de lancer monteverdi ou mapla avec toutes les
+variables d'environment nécéssaires:
 \begin{verbatim}
-export GDAL_DATA=<votre-répertoire-OTB>/share/gdal
-export OTB_APPLICATION_PATH=<votre-répertoire-OTB>/lib/otb/applications
+cd OTB-5.4.0-Linux64
+./monteverdi.sh
+./mapla.sh
 \end{verbatim}
-
-Note: lorsque vous renseignez des chemins dans des variables d'environnement,
-utilisez des chemins absolus.
 
 \subsection{Tester l'installation}
 Une fois l'installation terminée, les applications OTB sont accessibles de
@@ -193,9 +190,8 @@ plusieurs façons. Verifier que l'installation est fonctionelle avec les étapes
 suivantes:
 \begin{enumerate}
 
-\item Lancer Monteverdi (taper "monteverdi" dans un terminal) et essayer
-d'ouvrir une image tif (voir figure~\ref{fig:monteverdi}). Une image tif de
-démo est disponible ici:
+\item Lancer Monteverdi et essayer d'ouvrir une image tif (voir
+figure~\ref{fig:monteverdi}). Une image tif de démo est disponible ici:
 \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
 
 \item Charger les applications OTB avec "Fichier" $\rightarrow$ "Charger les
