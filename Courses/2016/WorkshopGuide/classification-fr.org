@@ -237,12 +237,14 @@
     normalisés: moyenne nulle et écart-type de 1.
     
     Choisissez une image à classifier, puis, dans le répertoire classif1
-    utilisez l'application *ComputeImageStatistics* pour produire le fichier de
+    utilisez l'application *ComputeImageStatistics* (Compute Images second order
+      statistics) pour produire le fichier de
     statistiques.
 
 ***** Apprentissage du modèle
 
-    L'application *TrainImageClassifier* permet d'apprendre un modèle pour
+    L'application *TrainImageClassifier* (Train a classifier from multiple
+      images) permet d'apprendre un modèle pour
     différentes méthodes de classifications. Regardez la documentation de cette
     application et créez un modèle pour la méthode /libsvm/. Les paramètres
     à régler sont:
@@ -266,7 +268,7 @@
    Une fois le modèle de classification appris, il peut être utilisé pour
    classifier tout les pixels de l'image.
 
-   Utilisez l'application *ImageClassifier*, en spécifiant le modèle créé dans
+   Utilisez l'application *ImageClassifier* (Image Classification), en spécifiant le modèle créé dans
    l'étape précédente.
 
 ***** Rendu
@@ -286,7 +288,7 @@
   servent à évaluer les performances du modèle appris en calculant la matrice de
   confusion.
 
-  Utilisez l'application *ComputeConfusionMatrix* avec le jeu de donnée de test
+  Utilisez l'application *ComputeConfusionMatrix* (Confusion Matrix Computation) avec le jeu de donnée de test
   pour produire la matrice de confusion du modèle appris.
 
   Le paramètre /ref.vector.field CODE/ est nécessaire. Il indique le nom du
@@ -330,7 +332,7 @@
   Les étapes sont les mêmes que précédemment, mais il faut d'abord constituer une
   image de 63 bandes en concaténant les 9 images.
 
-  Pour cela, utilisez l'application *ConcatenateImages*.
+  Pour cela, utilisez l'application *ConcatenateImages* (Images Concatenation).
 
   Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
   63 bandes sur 16 bits avec /gdalinfo/.
