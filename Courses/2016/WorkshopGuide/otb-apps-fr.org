@@ -4,7 +4,7 @@
      - Savoir rechercher une application dans la liste des
        applications disponibles
      - Savoir paramétrer une application
-     - Savoir trouver la documentation d'un application
+     - Savoir trouver la documentation d'une application
      - Savoir utiliser plusieurs applications classiques
 
 **** Données
