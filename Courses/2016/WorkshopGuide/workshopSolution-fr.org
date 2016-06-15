@@ -43,7 +43,7 @@ de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packag
 Pour installer *QGIS* consultez la documentation du logiciel qui est
 disponible sur le  [[http://www.qgis.org/][site du projet]].
 
-#+INCLUDE: "licence-fr.org"
+#+INCLUDE: "licence.org"
 
 * Avant-propos                                                    :solutions:
 La plupart des solutions proposées dans ce guide des solutions sont
