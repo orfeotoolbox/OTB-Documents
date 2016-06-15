@@ -131,13 +131,13 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 **** Autre?
 
 * TP1: Généralités                                                          
-#+INCLUDE: "mvd-qgis.org"
-#+INCLUDE: "otb-apps.org" :minlevel 2
-#+INCLUDE: "internals.org" :minlevel 2
+#+INCLUDE: "mvd-qgis-fr.org"
+#+INCLUDE: "otb-apps-fr.org" :minlevel 2
+#+INCLUDE: "internals-fr.org" :minlevel 2
 * TP2: Imagerie THR optique, des pré-traitements au SIG
-#+INCLUDE: "preprocessing.org" :minlevel 2
-#+INCLUDE: "segmentation.org" :minlevel 2
+#+INCLUDE: "preprocessing-fr.org" :minlevel 2
+#+INCLUDE: "segmentation-fr.org" :minlevel 2
 * TP3: Classification supervisée pour les séries multi-t
-#+INCLUDE: "classification.org" :minlevel 2
+#+INCLUDE: "classification-fr.org" :minlevel 2
 * TP4: Traitements SAR pour l'imagerie Sentinel 1
-#+INCLUDE: "sar.org" :minlevel 2
+#+INCLUDE: "sar-fr.org" :minlevel 2

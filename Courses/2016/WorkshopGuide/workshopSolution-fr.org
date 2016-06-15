@@ -43,7 +43,7 @@ de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packag
 Pour installer *QGIS* consultez la documentation du logiciel qui est
 disponible sur le  [[http://www.qgis.org/][site du projet]].
 
-#+INCLUDE: "licence.org"
+#+INCLUDE: "licence-fr.org"
 
 * Avant-propos                                                    :solutions:
 La plupart des solutions proposées dans ce guide des solutions sont
@@ -52,12 +52,12 @@ l'Orfeo ToolBox. Néanmoins, le lecteur pourra aisément reporter ces
 paramètres dans l'interface graphique si besoin.
 
 * Généralités                                                          
-#+INCLUDE: "mvd-qgis.org" :minlevel 2
-#+INCLUDE: "otb-apps.org" :minlevel 2
-#+INCLUDE: "internals.org" :minlevel 2
+#+INCLUDE: "mvd-qgis-fr.org" :minlevel 2
+#+INCLUDE: "otb-apps-fr.org" :minlevel 2
+#+INCLUDE: "internals-fr.org" :minlevel 2
 * Imagerie THR optique, des pré-traitements au SIG
 #+INCLUDE: "preprocessing.org" :minlevel 2
 #+INCLUDE: "segmentation.org" :minlevel 2
 #+INCLUDE: "classification.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
-#+INCLUDE: "sar.org" :minlevel 2
+#+INCLUDE: "sar-fr.org" :minlevel 2
