@@ -129,7 +129,7 @@ Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
 - Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
 
-#+INCLUDE: "licence-fr.org"
+#+INCLUDE: "licence.org"
 
 * Généralités
 #+INCLUDE: "mvd-qgis-fr.org" :minlevel 2

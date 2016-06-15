@@ -56,8 +56,8 @@ paramètres dans l'interface graphique si besoin.
 #+INCLUDE: "otb-apps-fr.org" :minlevel 2
 #+INCLUDE: "internals-fr.org" :minlevel 2
 * Imagerie THR optique, des pré-traitements au SIG
-#+INCLUDE: "preprocessing.org" :minlevel 2
-#+INCLUDE: "segmentation.org" :minlevel 2
-#+INCLUDE: "classification.org" :minlevel 1
+#+INCLUDE: "preprocessing-fr.org" :minlevel 2
+#+INCLUDE: "segmentation-fr.org" :minlevel 2
+#+INCLUDE: "classification-fr.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
