@@ -129,15 +129,15 @@ Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
 - Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
 
-#+INCLUDE: "licence.org"
+#+INCLUDE: "licence-fr.org"
 
 * Généralités
-#+INCLUDE: "mvd-qgis.org" :minlevel 2
-#+INCLUDE: "otb-apps.org" :minlevel 2
-#+INCLUDE: "internals.org" :minlevel 2
+#+INCLUDE: "mvd-qgis-fr.org" :minlevel 2
+#+INCLUDE: "otb-apps-fr.org" :minlevel 2
+#+INCLUDE: "internals-fr.org" :minlevel 2
 * Imagerie THR optique, des pré-traitements au SIG
-#+INCLUDE: "preprocessing.org" :minlevel 2
-#+INCLUDE: "segmentation.org" :minlevel 2
-#+INCLUDE: "classification.org" :minlevel 1
+#+INCLUDE: "preprocessing-fr.org" :minlevel 2
+#+INCLUDE: "segmentation-fr.org" :minlevel 2
+#+INCLUDE: "classification-fr.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
-#+INCLUDE: "sar.org" :minlevel 2
+#+INCLUDE: "sar-fr.org" :minlevel 2
