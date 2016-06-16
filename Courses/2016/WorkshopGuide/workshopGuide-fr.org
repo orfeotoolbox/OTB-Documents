@@ -104,7 +104,7 @@ nécessaires :
 - *QGIS* 2.4 ou plus récent
 
 Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
-de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+de  *Monteverdi*, vous pouvez consulter le Cookbook ou le guide d'installation.
 
 Pour installer *QGIS* consultez la documentation du logiciel qui est
 disponible sur le  [[http://www.qgis.org/][site du projet]].

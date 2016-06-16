@@ -100,7 +100,8 @@ To complete exercises, you need to install the following tools:
 - *Monteverdi* $>=$ 3.2
 - *QGIS* $>=$ 2.8 
 
-To install the *Orfeo ToolBox* and *Monteverdi*, follow instructions in  [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+To install the *Orfeo ToolBox* and *Monteverdi*, follow instructions in the
+cookbook.
 
 To install *QGIS* follow instructions on the [[http://www.qgis.org/][QGIS website]].
 
