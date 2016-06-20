@@ -1,43 +1,47 @@
-** Pré-traitements de l'imagerie THR optique                         :slides:
-*** Objectifs et Données
-**** Objectifs
-     - Savoir réaliser une calibration optique
-     - Savoir réaliser une fusion (pan-sharpening)
-     - Savoir réaliser une ortho-rectification
-**** Données
-     Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
-*** Déroulement
-    Le déroulement du TP est le suivant:
-    1. Corrections atmosphériques
+** Preprocessing of Very High Resolution optical imagery             :slides:
+*** Goals and data
+**** Goals
+     - Know how to perform optical calibration
+     - Know how to perform image fusion (pan-sharpening)
+     - Know how to perform ortho-rectification
+**** Data
+     Data are available in directory ~Data/preprocessing/~. Sub-directories
+     ~SRTM~ and ~Geoid~ are also used.
+*** Outline
+    The outline for this workshop is as follows:
+    1. Atmospheric corrections
     2. Fusion P+XS
     3. Ortho-rectification
-*** Calibration radiométrique
-**** Correction atmosphérique
+*** Optical calibration
+**** Atmospheric correction
      #+ATTR_LATEX: :float t :width 0.7\textwidth
      [[file:Images/atmo_correction.png]]
-     (source image http://www.hkcoastalwaterquality.tk/Methodology.html)
-**** Comptes numériques (DN)
-     Sortie du capteur (pas de grandeur physique, dépend du capteur)
+     (source http://www.hkcoastalwaterquality.tk/Methodology.html)
+**** Digital number (DN)
+     Output from the sensor (no unit, sensor dependant)
 **** Luminance
-     Quantité de lumière en entrée de l'instrument (W.m-2.sr-1)
-**** Réflectance Top Of Atmosphere (TOA) 
-     La réflectance traduit la capacité d'un corps à réfléchir l'énergie incidente.
-     Coefficient de réflexion de la lumière du soleil en haut de l'atmosphère
-     (pourcentage qu'on exprime entre 0 et 1, sans unité)
-**** Réflectance Top Of Canopy (TOC) 
+     Luminance is the quantative measure of lights (W.m-2.sr-1)
+**** Reflectance Top Of Atmosphere (TOA) 
+     The reflectance of the surface of a material is its effectiveness in
+     reflecting radiant energy.
+     It is the fraction of incident electromagnetic power that is reflected at an interface.
+     Percentage, no unit.
+**** Reflectance Top Of Canopy (TOC) 
      Coefficient de réflexion au sommet de la canopée (= TOA - effets atmosphériques)
 
 *** Fusion (pan-sharpening)
     
-**** Pourquoi le pansharpening ?
-    - La plupart des capteurs THR sont constitués de deux voix:
-      - Une voie panchromatique (une bande spectrale large) très résolue
-      - Une voie multi-spectrale (plusieurs bandes spectrales plus étroites) moins résolue (habituellement 4 fois moins)
-    - Pansharpening = image de synthèse avec la résolution du panchro et la couleur du multi-spectral
+**** What is pansharpening ?
+    - Most VHR sensors acquired 2 images separately:
+      - The multi-spectral bands cover a narrow  range with less spatial
+        resolution (than PAN)
+      - The panchromatique band with a larger spectral range and a greater
+        spatial resolution (4x greater generally)
+    - Pansharpening =  process of merging high-resolution panchromatic and lower resolution multispectral imagery to create a single high-resolution color image
 
-**** Principe:
-     1. Superposition fine des voies P et XS
-     2. Application d'un algorithme de fusion
+**** PXS in a nuttshell
+     1. Fine superposition of Pan and XS bands
+     2. Fusion algorithme
 
 *** Orthorectification
 
@@ -122,30 +126,29 @@
      #+END_LaTeX
     
 
-** Pré-traitements de l'imagerie THR optique                          :guide:
+** Preprocessing of Very High Resolution optical imagery                          :guide:
 *** Description                                                        :desc:
-**** Résumé
-     Cet exercice présente les corrections radiométriques et géométriques
-des images à l'aide d'*OTB applications*.
+**** Summary
+     This exercise allows to get familiar qwith radiometric and geometric
+     corrections using OTB applications.
 
-**** Pré-requis
-     - Connaissances de base en traitement des images de télédétection.
-     - Notions d'utilisation d'applications en ligne de commande.
+**** Prerequisites
+     - Basic knowledge of remote sensing imagery
+     - Basic knowledge on how to use OTB applications
        
-**** Objectifs
-***** Savoir réaliser une calibration optique
-      - Pouvoir inter-comparer les valeurs entre images pour le même capteur
-         (multi-temp) et multi-capteurs
-      - Conversion en réflectance TOA (Top of Atmosphere) et TOC (Top of Canopy)
-***** Savoir réaliser une fusion (pan-sharpening)
-      - Produit Pan (résolu) et XS (multi-spectral)
-      - Tester différentes techniques de fusion
-      - Voir les spécificités de la fusion en fonction du capteur (mode /Pléiades/)
-      - Visualisation des images et les effets par la fusion (objets mobiles, indices radiométriques)
-***** Savoir réaliser une orthorectification
-      - Spatialiser l'image
-      - Associer une coordonnée géographique au pixel
-      - Connaître les pré-requis, les biais, les approximations réalisées...
+**** Goal
+***** Know how to perform optical calibration
+      - Allow to compare and validate values between images and sensors (multi-temp) et multi-sensors
+      - Convert DN between TOA reflectance (Top of Atmosphere) and TOC (Top of Canopy)
+***** Know how to perform image fusion (pan-sharpening)
+      - Pan (greater spatial resolution) and XS (greater spectral resolution)
+      - Test several fusion methods
+      - Special modes available for PHR Pleiades image fusion (mode /Pléiades/)
+      - See effects of image fusion (moving objects, radiometric calibration)
+***** Know how to perform orthorectification
+      - Spatialize l'image
+      - Associate geographical coordinates to pixel positions
+      - Know prerequisites; bias, approx...
        
 *** Étapes                                                            :steps:
 
