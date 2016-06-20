@@ -20,7 +20,7 @@
 **** Digital number (DN)
      Output from the sensor (no unit, sensor dependant)
 **** Luminance
-     Luminance is the quantative measure of lights (W.m-2.sr-1)
+     Luminance is the quantitative measure of lights (W.m-2.sr-1)
 **** Reflectance Top Of Atmosphere (TOA) 
      The reflectance of the surface of a material is its effectiveness in
      reflecting radiant energy.
@@ -31,17 +31,17 @@
 
 *** Fusion (pan-sharpening)
     
-**** What is pansharpening ?
+**** What is pan-sharpening ?
     - Most VHR sensors acquired 2 images separately:
       - The multi-spectral bands cover a narrow  range with less spatial
         resolution (than PAN)
-      - The panchromatique band with a larger spectral range and a greater
+      - The panchromatic band with a larger spectral range and a greater
         spatial resolution (4x greater generally)
     - Pansharpening =  process of merging high-resolution panchromatic and lower resolution multispectral imagery to create a single high-resolution color image
 
-**** PXS in a nuttshell
+**** PXS in a nutshell
      1. Fine superposition of Pan and XS bands
-     2. Fusion algorithme
+     2. Fusion algorithm
 
 *** Orthorectification
 
@@ -129,8 +129,8 @@
 ** Preprocessing of Very High Resolution optical imagery                          :guide:
 *** Description                                                        :desc:
 **** Summary
-     This exercise allows to get familiar qwith radiometric and geometric
-     corrections using OTB applications.
+     This exercise allows to get familiar with radiometric and geometric
+     corrections using OTB applications. 
 
 **** Prerequisites
      - Basic knowledge of remote sensing imagery
@@ -146,23 +146,23 @@
       - Special modes available for PHR Pleiades image fusion (mode /Pléiades/)
       - See effects of image fusion (moving objects, radiometric calibration)
 ***** Know how to perform orthorectification
-      - Spatialize l'image
+      - Spatially located satellite images
       - Associate geographical coordinates to pixel positions
       - Know prerequisites; bias, approx...
        
-*** Étapes                                                            :steps:
+*** Steps                                                             :steps:
 
-Les données se trouvent dans le répertoire ~Data/preprocessing/~. Les
-sous-répertoires ~SRTM~ et ~Geoid~ sont également utilisés.
+Data are located in the ~Data/preprocessing/~ folder. We will use also
+folders ~SRTM~ et ~Geoid~.
 
-Dans cette partie de l'exercice, vous utiliserez les images
-~phr_xs_osr_mipy.tif~ et ~phr_pan_osr_mipy.tif~. Ce sont des extraits Pan et XS
-d'un produit Bundle Pléiades Primary (Niveau 1) sur le sud-ouest de Toulouse. 
-**** Corrections atmosphériques
-Cette opération consiste à transformer les comptes numériques en
-réflectances (valeurs physiques). Elle comprend le passage de
-réflectance au sommet de l'atmosphère vers la réflectance de surface,
-dont l'objectif est de corriger les effets atmosphériques.
+In this part of the exercise, you'll use images ~phr_xs_osr_mipy.tif~ and
+~phr_pan_osr_mipy.tif~. Those are extracts of Pan and XS from a Pleiades product
+(Bundle Primary Level 1A) South West of Toulouse. 
+**** Atmospheric corrections
+     The goal is to convert Digital Number to reflectance (physical value). The
+process is composed of 2 steps: computation of Top Of Atmosphere reflectance and
+then surface reflectance which consists in taking into account atmospheric
+effects.
      #+BEGIN_LaTeX
 
 
@@ -206,59 +206,58 @@ dont l'objectif est de corriger les effets atmosphériques.
 
 #+END_LaTeX 
 
-Avec l'image ~phr_xs_osr_mipy.tif~:
+With ~phr_xs_osr_mipy.tif~:
 
-1. Utilisez l'application *OpticalCalibration* pour calculer la
-   réflectance au sommet de l'atmosphère (top of atmosphere).
-2. Utilisez l'application *OpticalCalibration* pour calculer la
-   réflectance de surface (top of canopy).
-3. Comparez les 2 images en utilisant Monteverdi ou les applications
-   en ligne de commande (TOA-TOC). Comparez cette différence pour les bandes
-   rouge, verte et bleu (B0,B1,B2). Quelle bande est le plus /impactée/ par la
-   correction TOC?
-4. Appliquez les opérations 1,2 et 3 à l'image panchromatique ~phr_pan_osr_mipy.tif~.
+1. Use *OpticalCalibration* application to compute TOA reflectance.
+2. Use *OpticalCalibration* application to compute surface reflectance (top of canopy).
+3. Compare both images using Monteverdi or an other OTB application
+   (TOA-TOC). Compare TOC and TOA bands separately red, green and blue
+   (B0,B1,B2). Which band is more impacted by atmospheric effects ?
+4. Apply operations 1,2 and 3 to the panchromatic image ~phr_pan_osr_mipy.tif~.
 
-_Trucs et astuces :_
-- Activez l'option '-milli' afin de générer les images de sortie en
-  millièmes de réflectance (entier 16 bits). Par défaut, les images de
-  réflectance sont sauvegardées en flottant (entre 0 et 1).
+_Tips :_
+- Use '-milli' option to allow to save output image in integer (16 bits). By
+  default reflectance images are saved in float values (between 0 and 1).
 
 **** Fusion P+XS
-     L'objectif de cet exercice est de créer une image fusionnée (/Pan-Sharpening/).
-     En raison des contraintes physiques sur la conception du capteur, il est
-     difficile d'obtenir la meilleure résolution spatiale et spectrale en même
-     temps. Pour cette raison la plupart des capteurs spatiaux THR délivrent 2
-     types d'images:
-     - Multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
-       de résolution spectrale donnée. Pour Pléiades, 4 bandes (B,V,R,PIR) à une
-       résolution spatiale de 2,8m (rééchantillonnées à 2m)
-     - Panchromatique (PAN): image en niveau de gris avec un détecteur couvrant
-       une plus large partie du spectre ce qui permet d'augmenter le flux et
-       d'améliorer la résolution par rapport à l'image multi-spectrale. 0,7m
-       dans le cas de Pléiades (rééchantillonnée à 0,5m)
-     
+     The goal of the exercise is to create a pan-sharpened image from the Pan
+     and XS bundle. Physical constraints on sensor and telescope conception did
+     not allow to have at the same time a high spatial and spectral
+     resolutions. Indeed, the reduction of the sampling is accompanied by a
+     decrease of the signal , so the SNR . It compensates by increasing the
+     diameter of the entrance pupil or well using specific detectors to charge
+     accumulation (TDI) and also varying the width of the spectral band.
+     An other arguments is the constraint on the amount of data that can be
+     archive in the satellite memory also as bandwidth limitation.
 
-     Nous allons réaliser cette fusion à partir des extraits pan et xs en
-     réflectance au sommet de l'atmosphère ~phr_xs_osr_mipy_toa.tif~ et ~phr_xs_osr_mipy_toa.tif~: 
+     Most VHR sensors delivers 2 types of images:
+     - Multi-spectral (XS): separate spectral bands each on a spectral range(can
+       overlap). For Pléiades, 4 bands (B,G,R,NIR) with a spatial resolution of
+       2.8m (resampled to 2m)
+     - Panchromatic(PAN): image in grey level with a detector which covers
+       a larger spectral range (improve SNR) which allow to acquire image at 0.7m
+       in the case of Pléiades (resample at 0.5m)
      
-     Pour cela:
+     We will perform pan-sharpening using TOA reflectance PAN and XS images (
+     ~phr_xs_osr_mipy_toa.tif~ and ~phr_xs_osr_mipy_toa.tif~)
+     
     
-     1. Utilisez l'application *BundleToPerfectSensor* pour superposer et
-        fusionner l'image PAN et XS. Notez que l'application possède un mode
-        /phr/ qui permet d'effectuer la superposition des 2 images sans utiliser
-        les modèles de capteurs respectifs des images pan et xs (mode par défaut). En effet les
-        produits bundle Pléiades ont la particularité d'être sur 2 grilles
-        colocalisées.
-     2. Quel algorithme de fusion est utilisé dans l'application *BundleToPerfectSensor*?
-     3. (optionnel) Utilisez les applications *Superimpose* et *Pansharpening*
-        pour réaliser la même opération en utilisant d'autres méthodes de fusion.  
+     1. Use the *BundleToPerfectSensor* application to superimpose and fuse PAN
+        and XS images. Note that the application has a /phr/ mode (Pléiades)
+        which allows to perform images superposition without the need of sensor
+        model parameters (default mode).In fact Pléiades bundle are colocalized
+        on the same grid.
+     2. Which fusion algorithm is used in the *BundleToPerfectSensor* application?
+     3. (optional) Use applications *Superimpose* et *Pansharpening* to perform
+        pan-sharpening with other fusion methods available in OTB.
 
 **** Ortho-rectification
-     Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
+     
+     This operation will allows to map pixel index in the image with ground
+coordinates. 
 
-     Le schéma ci-dessous décrit l'ensemble des étapes susceptibles d'etre
-     réalisées pour passer d'un ensemble de produit de niveau 1 à une pile
-     d'images co-registrées et géo-localisées.
+     The schema below describes all steps that can be required to go from a set
+     of Level 1 products to an coregistered and colocalized image stack. 
 
      #+BEGIN_LaTeX
      \begin{center}
@@ -340,22 +339,25 @@ _Trucs et astuces :_
      \end{center}
      #+END_LaTeX
 
-     Les modalités de ces étapes peuvent varier en fonction du type de capteurs
-     en entrée. 
+     Those steps can vary depending of the sensor and the product levels.
 
-     Utilisez l'application *Orthorectification* pour réaliser
-        l'orthorectification du produit fusionné:
-        1. Sans DEM
-        2. Avec un DEM et un geoid (utilisez le sous-répertoire ~SRTM~)
-        3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
-        4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
-        5. Dans quelle zone UTM se trouve l'extrait PHR Pléiades?
-        6. Tester plusieurs types de projection en sortie (WGS84, Lambert 93)
-
-** Pré-traitements de l'imagerie THR optique                      :solutions:
-*** Corrections atmosphériques
+     In the exercise we will only perform image orthorectification of the
+     pan-sharpened product to discover modes available in OTB.
      
-    Calcul réflectance TOA:
+     Use  the *Orthorectification* application to perform the
+     orthorectification:
+
+        1. Without DEM
+        2. With a DEM and a geoid (use ~SRTM~ directory)
+        3. Compare the 2 images in Monteverdi. What do you notice?
+        4. What is the projection system by default in the *Orthorectification* app?
+        5. In which UTM zone is located the Pleiades image?
+        6. Test different projection systems (WGS84, Lambert 93) and open the ortho image in QGIS?
+
+** Pre-processing of VHR satellite images                 :solutions:
+*** Atmospheric corrections
+     
+    Compute TOA reflectance:
 
     #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration \
@@ -374,7 +376,7 @@ _Trucs et astuces :_
     #+END_EXAMPLE
 
 
-    Calcul réflectance TOC:
+    Compute TOC reflectance:
 
      #+BEGIN_EXAMPLE
     $ otbcli_OpticalCalibration 
@@ -392,8 +394,7 @@ _Trucs et astuces :_
     -milli 1
     #+END_EXAMPLE
 
-    On peut utiliser le module *BandMathX* pour calculer la différence
-entre les 2 images multispectral:
+    We can use *BandMathX* app to compute image differences:
 
     #+BEGIN_EXAMPLE
     $ otbcli_BandMathX 
@@ -402,7 +403,7 @@ entre les 2 images multispectral:
     -exp "im1-im2"
     #+END_EXAMPLE
 
-    Pour l'image panchromatique:
+    Then, for the panchromatic image:
 
     #+BEGIN_EXAMPLE
     $ otbcli_BandMath 
@@ -411,9 +412,8 @@ entre les 2 images multispectral:
     -exp "im1b1-im2b1"
     #+END_EXAMPLE
 
-    On constate que la bande bleue est la plus sensible aux effets
-    atmosphériques. En effet c'est pour la bande bleue que l’influence de la
-    diffusion moléculaire sur le signal est maximale (effet en $\lambda^{-4}$). 
+    The blue band is more impacted by atmospheric effects. Indeed molecular
+    diffusion on signal is important in this spectral range (factor $\lambda^{-4}$). 
 
 *** Fusion P+XS
     #+BEGIN_EXAMPLE
@@ -425,13 +425,13 @@ entre les 2 images multispectral:
     #+END_EXAMPLE
 *** Ortho-rectification
 
-    1. Orthorectification sans DEM:
+    1. Orthorectification without DEM:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \
        -io.out phr_orthopxs_osr_mipy.tif uint16
        #+END_EXAMPLE
-    2. Orthorectification avec DEM et geoid:
+    2. Orthorectification with DEM and geoid:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \
@@ -439,9 +439,8 @@ entre les 2 images multispectral:
        -elev.dem SRTM/ \
        -elev.geoid Geoid/egm96.grd
        #+END_EXAMPLE
-    3. La projection par défaut est UTM. Sur l'extrait Pléiades la zone UTM est
-       32 Nord. 
-    4. Orthorectification en WGS84 et en Lambert 93:
+    3. Default projection is UTM. In our case the UTM zone is 32 North. 
+    4. Orthorectification in WGS84 and in Lambert 93:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \
