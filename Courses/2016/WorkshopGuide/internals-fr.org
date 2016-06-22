@@ -23,9 +23,9 @@
 | *type* | *plage de valeurs*                     | *nombre de bits* |
 |--------+----------------------------------------+------------------|
 | uint8  | [0,255]                                | 8 bits           |
-| int16  | [−32 767, +32 767 ]                    | 16 bits          |
+| int16  | [-32 767, +32 767 ]                    | 16 bits          |
 | uint16 | [0, 65 535]                            | 16 bits          |
-| int32  | [−2 147 483 647, +2 147 483 647]       | 32 bits          |
+| int32  | [-2 147 483 647, -2 147 483 647]       | 32 bits          |
 | uint32 | [0, 4 294 967 294]                     | 32 bits          |
 | float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | 32 bits          |
 | double | [ -10^308, 10^308 ]                    | 64 bits          |
@@ -124,9 +124,9 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
        | *type* | *plage de valeurs*                     | *entier ou flottant*   | *nombre de bits* |
        |--------+----------------------------------------+------------------------+------------------|
        | uint8  | [0,255]                                | entier non signé       | 8 bits           |
-       | int16  | [−32 767, +32 767 ]                    | entier signé           | 16 bits          |
+       | int16  | [-32 767, +32 767 ]                    | entier signé           | 16 bits          |
        | uint16 | [0, 65 535]                            | entier non signé       | 16 bits          |
-       | int32  | [−2 147 483 647, +2 147 483 647]       | entier signé           | 32 bits          |
+       | int32  | [-2 147 483 647, +2 147 483 647]       | entier signé           | 32 bits          |
        | uint32 | [0, 4 294 967 294]                     | entier non signé       | 32 bits          |
        | float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | flottant               | 32 bits          |
        | double | [ -10^308, 10^308 ]                    | flottant (plus précis) | 64 bits          |
