@@ -3,6 +3,7 @@
 **** Objectifs
      - Savoir manipuler des images
      - Savoir réaliser une calibration radiométrique
+     - Savoir réaliser une orthorectification
      - Savoir utiliser le filtrage du speckle
      - Savoir réaliser une analyse polarimétrique simple
      - Savoir réaliser une extraction de primitives simple
@@ -13,9 +14,10 @@
 *** Déroulement
     1. Introduction à l'imagerie RSO
     2. Calibration radiométrique
-    3. Filtrage du speckle
-    4. Polarimétrie
-    5. Extraction d'information
+    3. Calibration géométrique
+    4. Filtrage du speckle
+    5. Polarimétrie
+    6. Extraction d'information
 *** Différence Optique/SAR
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:Images/actif_passif_cours_cnes.png]]
@@ -25,19 +27,24 @@
     - RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
     - Impulsions hyperfréquences et enregistrement des échos
     - Quasi-transparence de l'atmosphère
+    - Acquisition de jour comme de nuit
 *** Principe de fonctionnement
     - 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
     - Écho recueilli par la même antenne
     - Réflecteur sont localisés en fonction de leur éloignement (distance)
     - Répétition des échos réalise la deuxième dimension (azimuth)
-    - signal  reçu  par  le  radar  est caractérisé  par  son  amplitude  et  sa  phase
-*** Calibration radiométrie
+    - signal reçu par le radar est caractérisé par son amplitude et sa phase
+*** Calibration radiométrique
     - comportement de la réflexion dépend des caractéristiques de la surface
     - notamment de sa rugosité, de l'humidité des sols
     - Comme pour l'optique, la calibration permet de transformer des comptes
       numériques (CN) en grandeur physique
     - Permet d'inter-comparer des images radars provenant de capteurs différents
       ou de capteurs identiques utilisés dans différents modes
+*** Correction géométrique
+    - le radar mesure la distance des objets obliquement
+    - distorsions géométriques dues au déplacement du relief (foreshortening et layover)
+    - http://fad.ensg.eu/moodle/course/view.php?id=519
 *** Speckle
     - Images RSO fortement affectées par le chatoiement (speckle)
     - Bruit très fort
@@ -55,17 +62,22 @@
      Cet exercice constitue une introduction au traitement et à l'analyse des
      images RSO (radar à synthèse d'ouverture) en utilisant l'Orfeo ToolBox.
 
+     Il existe par ailleurs de nombreuses sources bibliographiques et de cours
+     en ligne disponible sur la télédection radar. Par exemple:
+     - Support de cours ENSG: http://fad.ensg.eu/moodle/course/view.php?id=519
 **** Pré-requis
 
      - Logiciels installés (Monteverdi et Orfeo ToolBox)
      - Données téléchargées
      - Connaissance du mécanisme des applications de l'Orfeo ToolBox (voir
        exercice correspondant)
-
+       
 **** Objectifs
+
      Les objectifs de cet exercice sont les suivants:
-     - Savoir manipuler des images
+     - Savoir manipuler et visualiser des images
      - Savoir réaliser une calibration radiométrique
+     - Savoir réaliser une correction géométrique
      - Savoir utiliser le filtrage du speckle
      - Savoir réaliser une analyse polarimétrique simple
      - Savoir réaliser une extraction de primitives simple
@@ -91,7 +103,7 @@ exemple l'outil ImageMagick:
         -flop output.tif
         #+END_EXAMPLE
 
-Cela n'est pas nécessaire pour effectuer le TP
+Cela n'est pas nécessaire pour effectuer le TP.
 
 1. Ouvrir les images dans Monteverdi. Combien de bandes dans chaque image? A
    quoi correspondent ces bandes?
@@ -119,13 +131,15 @@ Cela n'est pas nécessaire pour effectuer le TP
 
      1. Quelle application permet d'effectuer cette opération dans l'OTB?
      2. Effectuer la calibration des extraits complexes HH et HV et calculer les grandeurs
-        gamma zero (gamma naught en anglais). Attention, le fichier geom n'est
-        pas reconnu automatiquement dans l'application. Il faut utiliser
-        l'option de fichier étendu "&geom=" en entrée et utiliser les fichiers
-        ~s1_hh_calibration.geom~ et ~s1_hv_calibration.geom~.. 
-     3. Convertir les images calibrées en décibel.
+        gamma zero (gamma naught en anglais). 
+     3. Convertir les images calibrées en décibel (dB).
+
+**** Corrections géométriques
+     La  géométrie  des  images  est  primordiale  pour  établir  des  liens
+ entre  les valeurs observées et les surfaces terrestres
 
 **** Filtrage du speckle
+
      Les images SAR sont fortement affectées par le chatoiement (speckle) qui constitue un
      type particulier de bruit présent dans tous les systèmes d'acquisition cohérent
      (sonar, laser, etc.). Ce bruit est très fort et il a un effet multiplicatif.
@@ -146,6 +160,7 @@ Cela n'est pas nécessaire pour effectuer le TP
         du paramètre /deramp/ (00.5,0.2 et 0.8). Commentez l'effet de ce paramètre.
 
 **** Polarimétrie
+
      Nous allons comparer de manière qualitative la différence entre les
      observations des images en polarimétrie HH et HV pour détecter certains
      éléments dans l'image.
