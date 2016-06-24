@@ -1,6 +1,7 @@
 ** Introduction au traitements des images RSO :slides:
 *** Objectifs et Données
 **** Objectifs
+
      - Savoir manipuler des images
      - Savoir réaliser une calibration radiométrique
      - Savoir réaliser une orthorectification
@@ -9,6 +10,7 @@
      - Savoir réaliser une extraction de primitives simple
 
 **** Données
+
      Les données pour cet exercice se trouvent dans le répertoire  ~Data/sar~.
 
 *** Déroulement
@@ -33,17 +35,19 @@
     - Écho recueilli par la même antenne
     - Réflecteur sont localisés en fonction de leur éloignement (distance)
     - Répétition des échos réalise la deuxième dimension (azimuth)
-    - signal reçu par le radar est caractérisé par son amplitude et sa phase
+    - Signal reçu par le radar est caractérisé par son amplitude et sa phase
 *** Calibration radiométrique
-    - comportement de la réflexion dépend des caractéristiques de la surface
-    - notamment de sa rugosité, de l'humidité des sols
+    - Comportement de la réflexion dépend des caractéristiques de la surface
+    - Notamment de sa rugosité, de l'humidité des sols
     - Comme pour l'optique, la calibration permet de transformer des comptes
       numériques (CN) en grandeur physique
     - Permet d'inter-comparer des images radars provenant de capteurs différents
       ou de capteurs identiques utilisés dans différents modes
 *** Correction géométrique
+    - Spatialiser l'image
+    - Associer une coordonnée géographique au pixel
     - le radar mesure la distance des objets obliquement
-    - distorsions géométriques dues au déplacement du relief (foreshortening et layover)
+    - Il existe distorsions géométriques dues au déplacement du relief (foreshortening et layover)
     - http://fad.ensg.eu/moodle/course/view.php?id=519
 *** Speckle
     - Images RSO fortement affectées par le chatoiement (speckle)
@@ -53,6 +57,7 @@
     - Atténuer ce bruit en conservant le maximum de détails
     - Filtrage permet d'améliorer énormément la qualité des images et leur interprétation
 *** Pour aller plus loin
+
     - S1 ToolBox (SNAP)
     - Polarimétrie: ESA PolSARPro
 
@@ -65,6 +70,7 @@
      Il existe par ailleurs de nombreuses sources bibliographiques et de cours
      en ligne disponible sur la télédection radar. Par exemple:
      - Support de cours ENSG: http://fad.ensg.eu/moodle/course/view.php?id=519
+
 **** Pré-requis
 
      - Logiciels installés (Monteverdi et Orfeo ToolBox)
@@ -111,6 +117,7 @@ Cela n'est pas nécessaire pour effectuer le TP.
 3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et ~s1_hv.tif~.
 
 **** Calibration radiométrique
+     
      Les valeurs des pixels dans les produits SAR comme Sentinel-1 sont sans
      unité (radar reflectivity or radar brightness).
 
@@ -135,8 +142,20 @@ Cela n'est pas nécessaire pour effectuer le TP.
      3. Convertir les images calibrées en décibel (dB).
 
 **** Corrections géométriques
+     
      La  géométrie  des  images  est  primordiale  pour  établir  des  liens
- entre  les valeurs observées et les surfaces terrestres
+ entre  les valeurs observées et les surfaces terrestres.
+
+     Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
+
+     Nous allons utiliser ici la sortie de la partie calibration optique (gamma zero).
+
+     Utilisez l'application *Orthorectification* pour réaliser
+     l'orthorectification des extraits des produits SLC Sentinel-1:
+        1. Sans DEM
+        2. Avec un DEM et un geoid (utilisez le sous-répertoire ~SRTM~)
+        3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
+        4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
 
 **** Filtrage du speckle
 
@@ -255,6 +274,23 @@ Cela n'est pas nécessaire pour effectuer le TP.
         -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
 
+**** Corrections géométrique
+    1. Orthorectification sans DEM:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in s1_hh_gamma0.tif \
+       -io.out s1_hh_gamma0_ortho.tif uint16
+       #+END_EXAMPLE
+    2. Orthorectification avec DEM et geoid:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in s1_hh_gamma0.tif \
+       -io.out s1_hh_gamma0_ortho.tif uint16 \ 
+       -elev.dem SRTM/ \
+       -elev.geoid Geoid/egm96.grd
+       #+END_EXAMPLE
+    3. La projection par défaut est UTM. Sur l'extrait Sentinel-1 la zone UTM est
+       32 Nord.
 **** Filtrage du speckle
 
      1. Les méthodes disponibles sont: lee, frost, kuan et gamma map. Quelque
@@ -285,7 +321,7 @@ Cela n'est pas nécessaire pour effectuer le TP.
         l'atténuation exponentielle et à donc tendance à prendre plus en compte
         les pixels éloignés du pixel central ce qui augmente l'effet de lissage
         sur l'image filtrée.
-
+        
 **** Polarimétrie
      1. Calcul de la différence HH-HV:
         #+BEGIN_EXAMPLE
