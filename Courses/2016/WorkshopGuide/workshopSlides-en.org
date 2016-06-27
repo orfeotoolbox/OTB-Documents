@@ -1,5 +1,5 @@
-#+TITLE: Formation à l'Orfeo ToolBox: Introduction des Travaux Pratiques
-#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Victor Poughon (CNES)
+#+TITLE: Guide for OTB training courses
+#+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES), Manuel Grizonnet (CNES)
 #+DATE: 2016
 
 #+startup: beamer
@@ -48,67 +48,68 @@
 
 
 * Introduction :slides:
-*** Objectifs de la formation
-**** Objectifs
-Présenter l'OTB et mettre en oeuvre les outils disponibles dans les OTB applications pour l'exploitation, la manipulation des images de télédection 
+*** Course
+**** Goal
+Give an overview of the ORFEO ToolBox and get familiar with OTB tools (OTB
+applications and Monteverdi) to exploit and analyze remote sensing image. 
 
-**** Capacités acquises en fin de formation
+**** Skills acquired at the end of the training
 
-Mise en œuvre de chaine de traitements d'images en utilisant les applications OTB, incluant entre autre:
-- Extraction de primitives
-- Calibration
+Know how to set up OTB processing and use OTB applications to perform: 
+- Feature extraction
+- Calibration 
 - Classification
 - Segmentation
-- Traitements basiques radar
+- Basic SAR processing
 
-*** Contenu du kit de formation
+*** Training kit
 
-**** Répertoire Data
-     - Contient les données nécessaires à chaque TP, dans des sous-répertoire séparés
-     - Le sous-répertoire nécessaire est indiqué au début de l'énoncé du TP
+**** Data folder
+     - Data used in all exercises (sub-folder for each exercise)
+     - Data folder is specified at the beginning of each exercise
 
-**** Répertoire Documentation
-     - Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
-     - CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
-     - QGIS User Guide :: Manuel d'utilisation de QGIS
+**** Documentation folder
+     - Software Guide :: C++ API (with algorithms definition)
+     - CookBook :: Guide for non developers (API of applications)
+     - QGIS User Guide :: QGIS user guide
 
-**** Répertoire Guide
-     - Guide de TP
-     - Planches (cette présentation)
-     - Guide d'installation
-     - Questionnaire d'évaluation
-     - Solutions (distribuées à la fin)
+**** Guide folder
+     - Training guide
+     - Slides
+     - Installation guide
+     - Evaluation survey
+     - Solutions (at the end of the training session)
 
-*** Origine des données
+*** Dataset
 
-- LandSat-8 :: plusieurs dates concaténées, dénuagés (gap-filling)
-               avec des données terrains de référence au format ESRI
-               Shapefile (pour le TP classification),
-- Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur
-              le site OSR MiPy, acquise en novembre 2013 (\copyright
+- LandSat-8 :: concatenation of several dates, cloud free (gap-filling) with
+               ground truth (reference data) in ESRI Shapefile format
+               (classification exercise)
+- Pléiades :: PHR Bundle PRIMARY Level 1A from the CNES Thematic Commissioning
+              phase over OSR MiPy (Toulouse) acquired in November 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
-- Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
-                résolues), bi-polarisation (HH et HV) sur le sud du
-                lac Constance (Allemagne).
+- Sentinel-1 :: SLC product (complex) SM (strip Map, 5m ground resolution),
+                polarization (HH and HV) over the South of the Constance lake (Germany).
 
-*** Accès aux données
-    - LandSat-8 :: produit de niveau 2A disponible sur le site THEIA (https://www.theia-land.fr/)
-    - Pléiades :: accès privilégié UIA (institutionnels français): http://professionnels.ign.fr/images-pleiades
-    - Sentinel-1 :: Données gratuites disponible sur ESA Hub(https://scihub.copernicus.eu/) ou sur le site CNES PEPS(https://peps.cnes.fr)
+*** Data access
+    - LandSat-8 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
+    - Pléiades :: For French Institute: http://professionnels.ign.fr/images-pleiades
+    - Sentinel-1 :: Free data available on ESA SciHub
+                    (https://scihub.copernicus.eu/) or on the CNES PEPS portal(https://peps.cnes.fr)
 
-*** Informations pratiques
-**** Repas
-**** Code Wifi
-**** Autre?
+*** Useful information
+**** Meal
+**** Wifi code
+**** Other?
 
-* TP1: Généralités                                                          
-#+INCLUDE: "mvd-qgis-fr.org"
-#+INCLUDE: "otb-apps-fr.org" :minlevel 2
-#+INCLUDE: "internals-fr.org" :minlevel 2
-* TP2: Imagerie THR optique, des pré-traitements au SIG
-#+INCLUDE: "preprocessing-fr.org" :minlevel 2
-#+INCLUDE: "segmentation-fr.org" :minlevel 2
-* TP3: Classification supervisée pour les séries multi-t
-#+INCLUDE: "classification-fr.org" :minlevel 2
-* TP4: Traitements SAR pour l'imagerie Sentinel 1
-#+INCLUDE: "sar-fr.org" :minlevel 2
+* TP1: General                                                          
+#+INCLUDE: "mvd-qgis-en.org"
+#+INCLUDE: "otb-apps-en.org" :minlevel 2
+#+INCLUDE: "internals-en.org" :minlevel 2
+* TP2: High resolution optical image, from pre-processing to GIS
+#+INCLUDE: "preprocessing-en.org" :minlevel 2
+#+INCLUDE: "segmentation-en.org" :minlevel 2
+* TP3: Supervised classification on image time series
+#+INCLUDE: "classification-en.org" :minlevel 2
+* TP4: SAR processing on Sentinel-1 
+#+INCLUDE: "sar-en.org" :minlevel 2

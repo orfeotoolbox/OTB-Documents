@@ -134,4 +134,4 @@ For more information on these satellites:
 #+INCLUDE: "segmentation-en.org" :minlevel 2
 #+INCLUDE: "classification-en.org" :minlevel 1
 * SAR processing on Sentinel-1 images
-#+INCLUDE: "sar-en.org" :minlevel 2
+  #+INCLUDE: "sar-en.org" :minlevel 2
