@@ -114,7 +114,8 @@ Cela n'est pas nécessaire pour effectuer le TP.
 1. Ouvrir les images dans Monteverdi. Combien de bandes dans chaque image? A
    quoi correspondent ces bandes?
 2. A quoi correspondent ces bandes? 
-3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et ~s1_hv.tif~.
+3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et
+   ~s1_hv.tif~. Calculer aussi l'intensité en décibel.
 
 **** Calibration radiométrique
      
@@ -215,7 +216,7 @@ Cela n'est pas nécessaire pour effectuer le TP.
 1. Les 2 extraits correspondent respectivement à la combinaison polarimétrique
    HH (transmission et réception horizontales) et HV (transmission horizontale et réception verticale).
 2. Ces bandes correspondent respectivement à la partie réelle et partie
-   imaginaire su signal radar?
+   imaginaire du signal radar.
 3. On peut utiliser l'application *BandMath* pour réaliser le calcul de l'image d'intensité:
 
    Pour HH:
@@ -237,11 +238,11 @@ Cela n'est pas nécessaire pour effectuer le TP.
    #+END_EXAMPLE
 
 **** Calibration radiométrique
-     1. *SarCalibration*
+     1. *SARCalibration*
      2. Pour Sentinel-1 les coefficients de calibration sont lus automatiquement
         dans les métadonnées du produit:
         #+BEGIN_EXAMPLE
-        $ otbcli_SarRadiometricCalibration \
+        $ otbcli_SARCalibration \
         -in "s1_hh.tif?&geom=s1_hh_calibration.geom" \
         -out s1_hh_gamma0.tif \
         -lut gamma
@@ -250,7 +251,7 @@ Cela n'est pas nécessaire pour effectuer le TP.
         Pour l'extrait de l'image en polarisation HV:
 
         #+BEGIN_EXAMPLE
-        $ otbcli_SarRadiometricCalibration \ 
+        $ otbcli_SARCalibration \ 
         -in "s1_hv.tif?&geom=s1_hv_calibration.geom" \
         -out s1_hv_gamma0.tif \
         -lut gamma
