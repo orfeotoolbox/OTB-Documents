@@ -284,7 +284,7 @@
 ***** Validation
 
   Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
-  des polygones. les 70% restant sont dans le fichier ~testing/testing.shp~ et
+  des polygones. Les 70% restant sont dans le fichier ~testing/testing.shp~ et
   servent à évaluer les performances du modèle appris en calculant la matrice de
   confusion.
 

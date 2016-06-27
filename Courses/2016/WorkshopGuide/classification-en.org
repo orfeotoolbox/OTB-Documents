@@ -1,0 +1,673 @@
+** Supervised classification of a satellite image time series	   :slides:
+*** Goals and data
+**** Goals
+     - Understand the applications needed for the supervised classification
+       procedure
+     - Use the different learning algorithms
+     - Measure the quality of classification results
+     - Know the available post processing steps
+**** Data
+     The data are available in the ~Data/classification~ directory, with the
+     following sub directories:
+     -
+     - ~Extract16bits~: the Landsat 8 time series
+     - ~training~: the training data in the /shp/ format
+     - ~testing~ the testing data in the /shp/ format
+
+*** Planning
+    Planning for this workshop:
+    1. Introduction to the Landsat 8 data set
+    2. Single date classification
+    3. Multi date classification
+    4. Classification with a NDVI profile
+    5. Classification post processing
+
+*** Introduction to the Landsat 8 data set
+
+    *Spatial resolution:* 30 meters
+
+**** Dates :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+
+|------------|
+| 2014-03-09 |
+| 2014-04-01 |
+| 2014-04-17 |
+| 2014-05-28 |
+| 2014-06-20 |
+| 2014-07-31 |
+| 2014-09-01 |
+| 2014-10-03 |
+| 2014-10-26 |
+|------------|
+
+**** Bands :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+
+ |---+---------------------|
+ | 0 | Coastal aerosol     |
+ | 1 | Blue                |
+ | 2 | Green               |
+ | 3 | Red                 |
+ | 4 | Near Infrared (NIR) |
+ | 5 | SWIR 1              |
+ | 6 | SWIR 2              |
+ |---+---------------------|
+
+*** Introdution to the training and testing data
+
+|------+-----------------------------+------------|
+| Code | Name                        | #polygons  |
+|------+-----------------------------+------------|
+|   11 | Summer                      | 7898       |
+|   12 | Winter                      | 8171       |
+|   31 | Mixed forest                | 867        |
+|   32 | Evergreen forest            | 125        |
+|   34 | Grass                       | 45         |
+|   36 | Woody plant                 | 386        |
+|   41 | Building                    | 4719       |
+|   51 | Water                       | 1280       |
+|  211 | Grasslands                  | 5647       |
+|  221 | Orchard                     | 204        |
+|  222 | Vine                        | 559        |
+|------+-----------------------------+------------|
+
+*** Supervised classification
+    #+ATTR_LATEX: :float t :width \textwidth
+    [[file:Images/classification.png]]
+
+*** SVM algorithm
+    #+ATTR_LATEX: :float t :width 0.5\textwidth
+    [[file:Images/svm.png]]
+
+*** RF algorithm
+    A set of random decision trees.
+
+**** Learning
+     1. Separate the learning set in k random sets $S_k$
+     2. For each $S_k$, choose randomly $F_k$ primitives
+     3. Recursivly build a decision tree, for each node:
+        1. Choose $f \in F_k$ and the threshold $t_k$ to separate the remaining set in two subsets:
+        2. Stop when the remaining set is too small
+
+**** Decision
+     Majority voting between all random trees
+
+
+*** Confusion matrix
+
+
+|-----------+--------------+--------------+--------------+
+|           | Pred. 1      | Pred. 2      | Pred. 3      |
+|-----------+--------------+--------------+--------------+
+| Ref. 1    | True pos. 1  |              |              |
+| Ref. 2    |              | True pos. 2  |              |
+| Ref. 3    |              |              | True pos. 3  |
+|-----------+--------------+--------------+--------------+
+
+- $precision = \frac{VP i}{\sum pred. i}$
+- $recall = \frac{VP i}{T\sum ref. i}$
+- $accuracy = \frac{\sum{VP i}}{Total}$
+- $Kappa = \frac{Accuracy - chance}{1-chance}$
+
+
+** Supervised classification of a satellite image time series	    :guide:
+*** Description                                                        :desc:
+**** Summary
+
+     This exercise will introduce pixel based supervised classification
+     applications in Orfeo ToolBox. We will use the Landsat 8 time series and a
+     data set for the training.
+
+**** Prerequisites
+
+     - Installed software: Orfeo ToolBox
+     - Workshop dataset downloaded
+     - Knowledge of the OTB applications mechanism
+     - Notions of supervised classification
+
+**** Goals
+
+**** Goals
+     - Understand the applications needed for the supervised classification
+       procedure
+     - Use the different learning algorithms
+     - Measure the quality of classification results
+     - Know the available post processing steps
+
+*** Steps										    :steps:
+
+     The data are available in the ~Data/classification~ directory, with the
+     following sub directories:
+     -
+     - ~Extract16bits~: the Landsat 8 time series
+     - ~training~: the training data in the /shp/ format
+     - ~testing~ the testing data in the /shp/ format
+
+**** The LANDSAT 8 dataset
+
+    In the data folder, ~Data/classification/Extract16bits~ contains nine Landat
+     8 images at the following dates:
+
+     |------------|
+     | 2014-03-09 |
+     | 2014-04-01 |
+     | 2014-04-17 |
+     | 2014-05-28 |
+     | 2014-06-20 |
+     | 2014-07-31 |
+     | 2014-09-01 |
+     | 2014-10-03 |
+     | 2014-10-26 |
+     |------------|
+
+    These images are multispectral with seven bands from the OLI sensor:
+
+    |---+---------------------|
+    | 0 | Coastal aerosol     |
+    | 1 | Blue                |
+    | 2 | Green               |
+    | 3 | Red                 |
+    | 4 | Near Infrared (NIR) |
+    | 5 | SWIR 1              |
+    | 6 | SWIR 2              |
+    |---+---------------------|
+
+    In total, 63 bands are therefore available to represent each pixel.
+    The images are encoded with 16 bits per pixel.
+
+    Open an image in monteverdi, and setup the display bands and ranges to make
+     a true color image (red, green, blue).
+
+    Open all nine images and notice the changes.
+
+    The files ~training/training.shp~ and ~testing/testing.shp~ contain polygons
+     which define 11 classes over the scene:
+
+|------+-----------------------------+------------|
+| Code | Name                        | #polygons  |
+|------+-----------------------------+------------|
+|   11 | Summer                      | 7898       |
+|   12 | Winter                      | 8171       |
+|   31 | Mixed forest                | 867        |
+|   32 | Evergreen forest            | 125        |
+|   34 | Grass                       | 45         |
+|   36 | Woody plant                 | 386        |
+|   41 | Building                    | 4719       |
+|   51 | Water                       | 1280       |
+|  211 | Grasslands                  | 5647       |
+|  221 | Orchard                     | 204        |
+|  222 | Vine                        | 559        |
+|------+-----------------------------+------------|
+
+
+    Open a polygon file in QGIS. The attribute table is accessible from
+     right-click on the layer, then /Open the attribute table/. Each label is
+     visible and the list can be filtered via SQL expresions.
+
+    The polygons are spread over two sets: learning (or training) and validation
+     (or testing).
+
+**** Single date classification
+
+    We'll start by doing all the steps necessary to classify a single date:
+
+       1. Compute the image statistics
+       2. Learn the model
+       3. Use the model (classify)
+       4. Display the results
+       5. Validation
+
+    In the rest of the exercise, you will perform other classifications on other
+    images. It is therefore recommended to work in a new subdirectory for
+    each part, for example /classif1/ for now.
+
+    Create a directory named /classif1/.
+
+***** Image statistics
+
+    Random variables must be comparable between each image. The first step is
+      therefore the computation of statistics to normalise images to a mean of
+      zero and a standard deviation of 1.
+
+    Choose an image to classify, then in the classif1 directory use the
+      *ComputeImageStatistics* application (Compute Images second order
+        statistics) to produce the statistics file.
+
+***** Learning the model
+
+    The *TrainImageClassifier* application (Train a classifier from multiple
+      images) will train a model for various classification methods. Have a look
+      at the documentation, and create a model with the /libsvm/ algorithm. The
+      parameters to setup are:
+
+    - io.il :: The input image
+    - io.vd :: The shapefile used for learning the model (training)
+    - io.imstat :: The statistics xml file created previously
+    - classifier :: The classifier method, here use /libsvm/
+    - io.out :: The output file name for the model, for example /model.rf/
+
+      Other parameters are also important:
+    - sample.vfn CODE :: indicates that the label column in the SQL file is
+      called CODE
+    - sample.vtr 0 :: Ration of the learning set to the validation set. Here 0
+      because we are using are own split.
+    - sample.mt :: Maximum number of samples per class, the default value is
+      1000. Reducing it will accelerate significantly the learning time.
+
+***** Using the model
+
+   Once the classification model is learned, it can be used to classify all the
+      pixels in the image.
+
+      Use the *ImageClassifier* application (Image classification), and specify
+      the model created in the previous step.
+
+***** Display
+
+   The output of the previous step is an .tif image, which associated to each
+      pixel a class. To view this image, the *ColorMapping* application allows
+      to map a RGB color and generate a new "color mapped" visualisation image.
+
+
+   Use the ColorMapping application with the proposed color map:
+      ~color_map.txt~.
+
+***** Validation
+
+    The labels used in the learning step represent only 30% of the polygons.
+      The remaining 70% are in the ~testing/testing.shp~ and are used to
+      measure the classification results by computing the confusion matrix.
+
+    Use the *ComputeConfusionMatrix* application (Confusion Matrix Computation)
+      with the testing data set to produce the confusion matrix of the learned
+      model.
+
+    The parameter /ref.vector.field CODE/ is necessary. It indicates the name of
+      the field containing the label number.
+
+    Look at the confusion matrix. Identify the classes that are well
+      differentiated.
+
+    Which class has the most classification errors. Why?
+
+    You can use the confusion matrix template in
+      ~template_confusion_matrix_en.csv~ to easily identify the labels.
+
+***** Optional: Other learning algorithms
+
+    Perform the classification again on another date, using the Random Forest
+      algorithm instead of SVM and compare the results. Compare also the
+      processing time.
+
+**** Multi-date classification
+
+     The quality of this first classification is not very good.
+     We will try to improve the discrimination of vegetation classes by using
+     the time series.
+
+     The principle behind multi date classification is to use for each pixel,
+     all the available dates as more spectral bands. With the Landsat 8 data, we
+     will therefore have 63 bands per pixel.
+     The dates have been chosen to be spread over a year, taking into account
+     seasonal variations which has a lot of information to discriminate some
+     classes.
+
+     First of all, create a /classif9/ directory for this part.
+
+     The steps are the same as before, but we will first make a 63 band image
+     by concatenating the nine images together.
+
+     Use the *ConcatenateImages* application (Images concatenation) to do this.
+
+     Then verify that the output image is of size 3667x3667 with 63 bands and 16
+     bits per pixel. Use /gdalinfo/ or the *ReadImageInfo* application.
+
+     Then, perform the same steps as before. *ComputeImageStatistics*,
+     *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
+
+     This time, use the Random Forest method which is faster.
+     Also use the following parameters for good classification performance:
+
+   - sample.bm 0 :: To disable limiting the number of samples to the size of the
+     smallest class.
+   - sample.mt 2000 :: The maximum number of samples per class.
+   - classifier.rf.max 25 :: Maximum depth of the decision trees
+   - classifier.rf.min 25 :: Minimum number of samples per node
+
+     Then, compare the results with the single date classification using the
+     confusion matrix and the RGB image.
+
+**** NDVI profile
+
+     An NDVI image can be calculated for each image od the time series, to build
+     an NDVI profile. When added to the concatenated image, this profile will
+     improve the quality of the classifiation.
+
+     Compute and NDVI image for each date in the series, using the
+     RadiometricIndices application. Beware of the output type.
+
+     Open all nine NDVI images in monteverdi and look at the temporal evolution.
+
+     Concatenate the nine images into one to make an NDVI profile. Open the
+     profile in QGIS and visualise it temporally with the button "identidy
+     entities", then "graphical view".
+
+**** Classification of the NDVI profile
+
+     Create a directory /classifNDVI/ for this part.
+
+     Following the same procedure as before, classify the time series augmented
+     with the NDVI profil.
+
+     Are the results improved compared to the multi date classification without
+     the NDVI profile?
+
+**** Post processing the classification result
+
+     The /ClassificationMapRegularization/ application filters a classified
+     image using a local majority vote. The parameters to use are:
+
+        - ip.radius 1 :: Radius of the voting zone in pixels
+        - ip.suvbool 0 :: Behavior in case of a tie. Use 0 to keep the existing
+          value.
+
+     Filter the previous classification result (nine dates and NDVI profile)
+          then compare the results with the RGB images (in monteverdi) and
+          confusion matrices (with a spreadsheet).
+
+** Supervised classification of a satellite image time series     :solutions:
+
+   *Note:* In this solution, the environment variable ~${LS8DATA}~
+   is the path to the /classification/ directory with the data for this
+     exercise.
+
+*** Single date classification
+
+    First of all, compute the image statistics:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics \
+    -il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+                                     -out images_statistics.xml
+    #+END_EXAMPLE
+
+    Then, train the SVM model:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainImagesClassifier \
+    -io.il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+      -io.vd ${LS8DATA}/training/training.shp \
+      -sample.vfn CODE \
+      -sample.vtr 0 \
+      -classifier libsvm \
+      -io.imstat images_statistics.xml \
+      -io.out model.svm
+    #+END_EXAMPLE
+
+    Once the model is learned, use it to classify the entire image:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier \
+    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -imstat images_statistics.xml \
+    -model  model.svm \
+    -out    labeled_image.tif
+    #+END_EXAMPLE
+
+    Measure the classification quality with the validation set:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+      -in labeled_image.tif \
+      -ref vector \
+      -ref.vector.in ${LS8DATA}/testing/testing.shp \
+      -ref.vector.field CODE \
+      -out confusion_matrix.csv
+    #+END_EXAMPLE
+
+    For a better visualisation of the results, make a color map:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in labeled_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out RGB_color_image.tif
+   #+END_EXAMPLE
+
+*** Multi-date classification
+
+    First of all, concatenate the nine images into a single 63 band image:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    -out image_concat.tif int16
+    #+END_EXAMPLE
+
+    Then, repeat the same classification process:
+
+    Compute statistics:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics -il \
+    image_concat.tif \
+    -out images_statistics.xml
+    #+END_EXAMPLE
+
+
+    Train the model (this time, use the random forest algorithm with more
+      samples):
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainImagesClassifier -io.il \
+    image_concat.tif \
+    -io.vd \
+    ${LS8DATA}/training/training.shp \
+    -sample.vfn CODE \
+    -sample.vtr 0 \
+    -classifier rf \
+    -sample.bm 0 \
+    -sample.mt 2000 \
+    -classifier.rf.max 25 \
+    -classifier.rf.min 25 \
+    -io.imstat images_statistics.xml \
+    -io.out model.rf
+    #+END_EXAMPLE
+
+    Classify all pixels in the image:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier -in \
+    image_concat.tif \
+    -imstat images_statistics.xml \
+    -model  model.rf \
+    -out    labeled_image.tif
+    #+END_EXAMPLE
+
+    And validate by looking at the confusion matrix:
+
+     #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+    -in labeled_image.tif \
+    -ref vector \
+    -ref.vector.in ${LS8DATA}/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix.csv
+    #+END_EXAMPLE
+
+    Then make a color map:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in labeled_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out RGB_color_image.tif
+    #+END_EXAMPLE
+
+*** Computing the NDVI profile
+
+    To make the NDVI profile, we will use the *RadiometricIndices* applications
+    for each date:
+
+    #+BEGIN_EXAMPLE
+    $ for date in "20140309" "20140401" "20140417" "20140528" \
+    "20140620" "20140731" "20140901" "20141003" "20141026"; do \
+    otbcli_RadiometricIndices \
+    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_${date}.tif \
+    -out ${date}-ndvi.tif \
+    -list Vegetation:NDVI \
+    -channels.red 3 \
+    -channels.nir 4 ; \
+    done
+    #+END_EXAMPLE
+
+    Then, concatenate all NDVI image to make a profile:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il \
+    20140309-ndvi.tif \
+    20140401-ndvi.tif \
+    20140417-ndvi.tif \
+    20140528-ndvi.tif \
+    20140620-ndvi.tif \
+    20140731-ndvi.tif \
+    20140901-ndvi.tif \
+    20141003-ndvi.tif \
+    20141026-ndvi.tif \
+    -out ndvi-profile.tif
+    #+END_EXAMPLE
+
+    This allows us to open it in QGIS for analysis.
+
+*** Classification of the NDVI profile
+
+    To classify, also add all the initial spectral bands of all nine dates:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
+    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
+    20140309-ndvi.tif \
+    20140401-ndvi.tif \
+    20140417-ndvi.tif \
+    20140528-ndvi.tif \
+    20140620-ndvi.tif \
+    20140731-ndvi.tif \
+    20140901-ndvi.tif \
+    20141003-ndvi.tif \
+    20141026-ndvi.tif \
+    -out image_concat.tif
+    #+END_EXAMPLE
+
+    Repeat the usual classification steps:
+    Compute statistics:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeImagesStatistics -il \
+    image_concat.tif \
+    -out images_statistics.xml
+    #+END_EXAMPLE
+
+    Train the model:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainImagesClassifier -io.il \
+    image_concat.tif \
+    -io.vd \
+    ${LS8DATA}/training/training.shp \
+    -sample.vfn CODE \
+    -sample.vtr 0 \
+    -classifier rf \
+    -sample.bm 0 \
+    -sample.mt 2000 \
+    -classifier.rf.max 25 \
+    -classifier.rf.min 25 \
+    -io.imstat images_statistics.xml \
+    -io.out model.rf
+    #+END_EXAMPLE
+
+    Use the model to classify the entire image:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier -in \
+    image_concat.tif \
+    -imstat images_statistics.xml \
+    -model  model.rf \
+    -out    labeled_image.tif
+    #+END_EXAMPLE
+
+    Validation:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+    -in labeled_image.tif \
+    -ref vector \
+    -ref.vector.in ${LS8DATA}/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix.csv
+    #+END_EXAMPLE
+
+    Visualisation:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in labeled_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out RGB_color_image.tif
+    #+END_EXAMPLE
+
+*** Post processing the classification result
+
+    For regularization, use the following:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ClassificationMapRegularization \
+    -io.in labeled_image.tif \
+    -io.out regularized_image.tif \
+    -ip.radius 1 \
+    -ip.suvbool 0
+    #+END_EXAMPLE
+
+    The colorization and validation steps can also be replayed:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping \
+    -in regularized_image.tif \
+    -method custom \
+    -method.custom.lut ../../color_map.txt \
+    -out rgb_regularized.tif
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix \
+    -in regularized_image.tif \
+    -ref vector \
+    -ref.vector.in ${LS8DATA}/testing/testing.shp \
+    -ref.vector.field CODE \
+    -out confusion_matrix_regularized.csv
+    #+END_EXAMPLE
