@@ -308,95 +308,89 @@
 
 **** Multi-date classification
 
-     Les performances de cette première classification ne sont pas
-     très bonnes: on va maintenant essayer d'améliorer la
-     discrimination des classes de végétation en utilisant plusieurs
-     dates.
+     The quality of this first classification is not very good.
+     We will try to improve the discrimination of vegetation classes by using
+     the time series.
 
-  Le principe de la classification multidate est d'utiliser pour
-  chaque pixel, toute les dates disponibles comme des bandes
-  spectrales supplémentaires. Avec les données LANDSAT 8, il s'agit
-  donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
-  façon à être réparties temporellement sur une année. Cela permet
-  d'intégrer les variation saisonnières qui apporte beaucoup
-  d'information pour la discrimination de certaines classes.
+     The principle behind multi date classification is to use for each pixel,
+     all the available dates as more spectral bands. With the Landsat 8 data, we
+     will therefore have 63 bands per pixel.
+     The dates have been chosen to be spread over a year, taking into account
+     seasonal variations which has a lot of information to discriminate some
+     classes.
 
-  Avant tout, créez un répertoire /classif9/ pour cette partie.
+     First of all, create a /classif9/ directory for this part.
 
-  Les étapes sont les mêmes que précédemment, mais il faut d'abord constituer une
-  image de 63 bandes en concaténant les 9 images.
+     The steps are the same as before, but we will first make a 63 band image
+     by concatenating the nine images together.
 
-  Pour cela, utilisez l'application *ConcatenateImages* (Images Concatenation).
+     Use the *ConcatenateImages* application (Images concatenation) to do this.
 
-  Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
-  63 bandes sur 16 bits avec /gdalinfo/.
+     Then verify that the output image is of size 3667x3667 with 63 bands and 16
+     bits per pixel. Use /gdalinfo/ or the *ReadImageInfo* application.
 
-  Puis effectuez les même étapes que précédemment: *ComputeImageStatistics*,
-  *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
+     Then, perform the same steps as before. *ComputeImageStatistics*,
+     *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
 
-  Utilisez cette fois la méthode Random Forest pour le modèle qui est plus
-  rapide. Utilisez également les paramètres suivants qui offrent de bonnes
-  performances de classification:
+     This time, use the Random Forest method which is faster.
+     Also use the following parameters for good classification performance:
 
-   - sample.bm 0 :: Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
-    classe.
-   - sample.mt 2000 :: Le nombre maximum d'échantillons d'apprentissage par
-    classe.
-   - classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
-   - classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
+   - sample.bm 0 :: To disable limiting the number of samples to the size of the
+     smallest class.
+   - sample.mt 2000 :: The maximum number of samples per class.
+   - classifier.rf.max 25 :: Maximum depth of the decision trees
+   - classifier.rf.min 25 :: Minimum number of samples per node
 
-  Comparez ensuite les résultats avec la classification à une date en utilisant
-  la matrice de confusion et l'image RGB.
+     Then, compare the results with the single date classification using the
+     confusion matrix and the RGB image.
 
-**** Calcul d'un profil de NDVI
+**** NDVI profile
 
-  Une image NDVI peut-être calculée pour chaque image de la série temporelle
-  pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
-  profil permettra d'améliorer les performances de classification.
+     An NDVI image can be calculated for each image od the time series, to build
+     an NDVI profile. When added to the concatenated image, this profile will
+     improve the quality of the classifiation.
 
-  Calculer une image de NDVI pour chaque images de la série temporelle en
-  utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
+     Compute and NDVI image for each date in the series, using the
+     RadiometricIndices application. Beware of the output type.
 
-  Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
-  temporelle.
+     Open all nine NDVI images in monteverdi and look at the temporal evolution.
 
-  Concaténez les neuf images d'indices en une seule pour constituer un profil
-  NDVI. Ouvrez le profil dans QGIS. Visualiser le profil NDVI temporellement
-  avec l'outil bouton identifier les entités, puis vue graphique.
+     Concatenate the nine images into one to make an NDVI profile. Open the
+     profile in QGIS and visualise it temporally with the button "identidy
+     entities", then "graphical view".
 
-**** Classification du profil de NDVI
+**** Classification of the NDVI profile
 
-  Créez un répertoire /classifNDVI/ pour cette partie.
+     Create a directory /classifNDVI/ for this part.
 
-  En suivant la même méthode que précédemment, réaliser une classification de la
-  série temporelle augmentée du profil NDVI.
+     Following the same procedure as before, classify the time series augmented
+     with the NDVI profil.
 
-  Les résultats sont ils améliorés par rapport à la classification multi date
-  sans l'indice NDVI ?
+     Are the results improved compared to the multi date classification without
+     the NDVI profile?
 
-**** Post-traitements de la classification
+**** Post processing the classification result
 
-  L'application /ClassificationMapRegularization/ filtre une image classifiée
-  en utilisant un vote majoritaire local.
+     The /ClassificationMapRegularization/ application filters a classified
+     image using a local majority vote. The parameters to use are:
 
-  Les paramètres à régler sont:
+        - ip.radius 1 :: Radius of the voting zone in pixels
+        - ip.suvbool 0 :: Behavior in case of a tie. Use 0 to keep the existing
+          value.
 
-  - ip.radius 1 :: Rayon de la zone participant au vote
-  - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur existante.
+     Filter the previous classification result (nine dates and NDVI profile)
+          then compare the results with the RGB images (in monteverdi) and
+          confusion matrices (with a spreadsheet).
 
-  Filtrez le résultat de la classification précédente (neuf dates et
-  profil NDVI) puis comparer les résultats avec les images RGB (dans
-  monteverdi) et avec les matrices de confusions (avec un tableur).
+** Supervised classification of a satellite image time series     :solutions:
 
-** Classification supervisée pour les séries multi-temporelles    :solutions:
+   *Note:* In this solution, the environment variable ~${LS8DATA}~
+   is the path to the /classification/ directory with the data for this
+     exercise.
 
-*Note: * Dans cette solution, la variable d'environnement ~${LS8DATA}~
-contient le chemin vers le répertoire /classification/ des données
-fournies avec le TP.
+*** Single date classification
 
-*** Classification d'une date
-
-    Premièrement, on calcule les statistiques de l'image à classer:
+    First of all, compute the image statistics:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ComputeImagesStatistics \
@@ -404,7 +398,7 @@ fournies avec le TP.
                                      -out images_statistics.xml
     #+END_EXAMPLE
 
-    On réalise ensuite l'apprentissage du modèle SVM.
+    Then, train the SVM model:
 
     #+BEGIN_EXAMPLE
     $ otbcli_TrainImagesClassifier \
@@ -417,7 +411,7 @@ fournies avec le TP.
       -io.out model.svm
     #+END_EXAMPLE
 
-    Une fois le modèle appris, on l'utilise pour réaliser la classification:
+    Once the model is learned, use it to classify the entire image:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ImageClassifier \
@@ -427,7 +421,7 @@ fournies avec le TP.
     -out    labeled_image.tif
     #+END_EXAMPLE
 
-    On peut ensuite estimer les performances obtenues à l'aide du jeu de validation:
+    Measure the classification quality with the validation set:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ComputeConfusionMatrix \
@@ -438,8 +432,7 @@ fournies avec le TP.
       -out confusion_matrix.csv
     #+END_EXAMPLE
 
-    Pour une meilleure visualisation des résultats, on réalise une
-    carte couleur en fonction de la classe attribuée:
+    For a better visualisation of the results, make a color map:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ColorMapping \
@@ -449,14 +442,9 @@ fournies avec le TP.
     -out RGB_color_image.tif
    #+END_EXAMPLE
 
-    Les performances de cette premières classification ne sont pas
-    très bonne: on va maintenant essayer d'améliorer la discrimination
-    des classes de végétation en utilisant plusieurs dates.
+*** Multi-date classification
 
-*** Classification multi-date
-
-    Pour commencer, on va concaténer les images de l'ensemble des
-    dates en une seule image de $7x9=63$ bandes:
+    First of all, concatenate the nine images into a single 63 band image:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ConcatenateImages -il \
@@ -472,10 +460,9 @@ fournies avec le TP.
     -out image_concat.tif int16
     #+END_EXAMPLE
 
-    Ensuite, on déroule le processus déjà réalisé lors de l'étape précédente.
+    Then, repeat the same classification process:
 
-
-    Calcul des statistiques:
+    Compute statistics:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ComputeImagesStatistics -il \
@@ -484,7 +471,8 @@ fournies avec le TP.
     #+END_EXAMPLE
 
 
-    Apprentissage du modèle (cette fois-ci, on utilise le classifieur random forests, avec plus d'échantillons):
+    Train the model (this time, use the random forest algorithm with more
+      samples):
 
     #+BEGIN_EXAMPLE
     $ otbcli_TrainImagesClassifier -io.il \
@@ -502,8 +490,7 @@ fournies avec le TP.
     -io.out model.rf
     #+END_EXAMPLE
 
-
-    On réalise la carte de classification:
+    Classify all pixels in the image:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ImageClassifier -in \
@@ -513,7 +500,7 @@ fournies avec le TP.
     -out    labeled_image.tif
     #+END_EXAMPLE
 
-    Et l'étape de validation:
+    And validate by looking at the confusion matrix:
 
      #+BEGIN_EXAMPLE
     $ otbcli_ComputeConfusionMatrix \
@@ -524,7 +511,7 @@ fournies avec le TP.
     -out confusion_matrix.csv
     #+END_EXAMPLE
 
-    Puis la création de la carte colorisée:
+    Then make a color map:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ColorMapping \
@@ -534,13 +521,10 @@ fournies avec le TP.
     -out RGB_color_image.tif
     #+END_EXAMPLE
 
-    Dans cette seconde version, les performances sont nettement
-    meilleures, mais il reste des confusions importantes, notamment
-    pour les classes vergers et vignes.
+*** Computing the NDVI profile
 
-*** Calcul d'un profil de NDVI
-
-    Pour réaliser le profil de NDVI, on va utiliser l'application *RadiometricIndices* pour chacune des dates:
+    To make the NDVI profile, we will use the *RadiometricIndices* applications
+    for each date:
 
     #+BEGIN_EXAMPLE
     $ for date in "20140309" "20140401" "20140417" "20140528" \
@@ -554,7 +538,7 @@ fournies avec le TP.
     done
     #+END_EXAMPLE
 
-    Ensuite, on va concaténer l'ensemble des bandes NDVI en une seule image:
+    Then, concatenate all NDVI image to make a profile:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ConcatenateImages -il \
@@ -570,11 +554,11 @@ fournies avec le TP.
     -out ndvi-profile.tif
     #+END_EXAMPLE
 
-    Ce qui permet d'analyser le profil dans QGIS par exemple.
+    This allows us to open it in QGIS for analysis.
 
-*** Classification du profil de NDVI
+*** Classification of the NDVI profile
 
-    Pour la classification, on rajoute également les bandes spectrales initiales pour toutes les dates:
+    To classify, also add all the initial spectral bands of all nine dates:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ConcatenateImages -il \
@@ -599,9 +583,8 @@ fournies avec le TP.
     -out image_concat.tif
     #+END_EXAMPLE
 
-    Nous déroulons ensuite les étapes classiques.
-
-    Calcul des statistiques:
+    Repeat the usual classification steps:
+    Compute statistics:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ComputeImagesStatistics -il \
@@ -609,7 +592,7 @@ fournies avec le TP.
     -out images_statistics.xml
     #+END_EXAMPLE
 
-    Apprentissage du modèle:
+    Train the model:
 
     #+BEGIN_EXAMPLE
     $ otbcli_TrainImagesClassifier -io.il \
@@ -627,7 +610,7 @@ fournies avec le TP.
     -io.out model.rf
     #+END_EXAMPLE
 
-    Utilisation du modèle (classification):
+    Use the model to classify the entire image:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ImageClassifier -in \
@@ -658,9 +641,9 @@ fournies avec le TP.
     -out RGB_color_image.tif
     #+END_EXAMPLE
 
-*** Post-traitements de la classification
+*** Post processing the classification result
 
-    Pour régulariser la classification, on utilise l'application suivante:
+    For regularization, use the following:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ClassificationMapRegularization \
@@ -670,8 +653,7 @@ fournies avec le TP.
     -ip.suvbool 0
     #+END_EXAMPLE
 
-
-    On peut ensuite rejouer les étapes de colorisation et de validation:
+    The colorization and validation steps can also be replayed:
 
     #+BEGIN_EXAMPLE
     $ otbcli_ColorMapping \
