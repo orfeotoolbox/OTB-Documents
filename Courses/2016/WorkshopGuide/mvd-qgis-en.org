@@ -1,4 +1,4 @@
-** Use Monteverdi et QGIS                                            :slides:
+** Use Monteverdi and QGIS                                           :slides:
 *** Goals and data
 **** Goals
      - Know how to visualize an image and set up rendering in Monteverdi,
@@ -55,7 +55,7 @@
       - Data analysis 
       - Data representation
       - Storage
-    - Lots of tutorials, courses...(in French: Intro ENTE Aix - ENS - Licence ouverte)
+    - Lots of tutorials, technical courses available online...
 *** Quantum GIS processing (since version 2.0)
     - Processing plateform to access to GRASS-GIS,SAGA-GIS, R and OTB!
     - Historically based on integration of Sextante project in QGIS(Victor Olaya)

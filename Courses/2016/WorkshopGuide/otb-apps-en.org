@@ -10,7 +10,7 @@
      Data can be found in folder ~Data/stegano/~.
 
 *** Outline
-    This exercise consist in decoding 6 messages encoded within the
+    This exercise consists in decoding 6 messages encoded within the
     images using steganography techniques, using OTB applications.
 
 *** Quick introduction to OTB applications

@@ -47,6 +47,9 @@
     - Spatialiser l'image
     - Associer une coordonnée géographique au pixel
     - le radar mesure la distance des objets obliquement
+    - Resolutions
+      - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
+      - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
     - Il existe distorsions géométriques dues au déplacement du relief (foreshortening et layover)
     - http://fad.ensg.eu/moodle/course/view.php?id=519
 *** Speckle

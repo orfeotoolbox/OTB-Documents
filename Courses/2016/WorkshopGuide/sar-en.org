@@ -53,7 +53,9 @@
     - Spatialize images
     - Range (depend on the PRF) and Azimuth Resolutions (depends on the size of
       the antenna for a Radar System
-    - TODO add resolution formula
+    - Resolutions
+      - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
+      - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
     - geometrical distortions (foreshortening and layover)
     - http://fad.ensg.eu/moodle/course/view.php?id=519
 *** Speckle

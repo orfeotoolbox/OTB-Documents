@@ -72,6 +72,8 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
      - CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
      - QGIS User Guide :: Manuel d'utilisation de QGIS
 
+*** Contenu du kit de formation
+
 **** Répertoire Guide
      - Guide de TP
      - Planches (cette présentation)

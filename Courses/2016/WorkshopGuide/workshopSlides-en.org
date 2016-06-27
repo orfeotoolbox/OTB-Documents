@@ -68,6 +68,8 @@ Know how to set up OTB processing and use OTB applications to perform:
      - Data used in all exercises (sub-folder for each exercise)
      - Data folder is specified at the beginning of each exercise
 
+*** Training kit
+
 **** Documentation folder
      - Software Guide :: C++ API (with algorithms definition)
      - CookBook :: Guide for non developers (API of applications)

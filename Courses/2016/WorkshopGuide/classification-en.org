@@ -9,7 +9,6 @@
 **** Data
      The data are available in the ~Data/classification~ directory, with the
      following sub directories:
-     -
      - ~Extract16bits~: the Landsat 8 time series
      - ~training~: the training data in the /shp/ format
      - ~testing~ the testing data in the /shp/ format
