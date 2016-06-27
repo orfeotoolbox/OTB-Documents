@@ -1,0 +1,113 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage[left=2.0cm,right=2.7cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{booktabs}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[scale=0.5]{Art/otb-logo.png}
+
+Client Satisfaction Survey
+
+{\small\url{https://www.orfeo-toolbox.org}}
+
+\today
+\end{center}
+
+\begin{center}
+\begin{minipage}{.8\textwidth}
+
+Thank you for your participation to the OTB course! To help us improve future
+training, please take 5 minutes to fill this survey and share your opinions
+regarding the course.
+\end{minipage}
+\end{center}
+
+\newcommand{\answer}{
+\\ \quad $\square$ Yes \quad $\square$ No\\
+\vspace{4em}
+}
+
+Happy about the training?
+\answer
+
+Do the objectives of the training have been completed?
+\answer
+
+Your opinion on the level of the training (too easy, too difficult...)
+\answer
+
+Do you think that the rythm of the training is adapted (sequences, breaks, timetable...)?
+\answer
+
+Do the trainers are available enough?
+\answer
+
+Quality of documents (slides, training guides, software documentation)?
+\answer
+
+Does the working environnement was satisfactory (computers, rooms, number of participants)?
+\answer
+
+Does the training was well planified? (announcment, pratical information, pre-requisites)
+\answer
+
+\newcommand{\moduleanswer}{
+\\
+\begin{tabular}{rlll}  
+  Difficulty:         & $\square$ Adapted & $\square$ Difficult & $\square$
+  Easy\\
+  Timing:       & $\square$ Adapted  & $\square$ Miss time to complete exercises
+  & $\square$ Too much time\\
+  Support and documentation: & $\square$ Good & $\square$ To improve: & \\
+  Comments: &&&\\
+\end{tabular}
+\vspace{4em}
+}
+
+\textbf{TP1} Installation and configuration:
+\moduleanswer
+
+\textbf{TP2} Monteverdi, QGIS, applications and OTB internal mechanisms:
+\moduleanswer
+
+\textbf{TP3} High resolution image, preprocessing to GIS:
+\moduleanswer
+
+\textbf{TP4} Supervised classification for image time series Landsat 8:
+\moduleanswer
+
+\textbf{TP5} SAR processing:
+\moduleanswer
+
+Does anything was missing in particular during the training?
+\vspace{6em}
+
+Do you think that there were useless or irrelevant things in the training? 
+\vspace{6em}
+
+Other comments:
+
+\end{document}

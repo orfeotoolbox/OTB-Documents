@@ -44,33 +44,7 @@ incluant notamment:
 
 ** Planning de la formation
 
-*** Jour 1
-|-------+---------------+-------------------------|
-| 31.03 | 09:00 - 10:30 | Introduction            |
-| 31.03 | 10:30 - 10:40 | Pause                   |
-| 31.03 | 10:40 - 12:40 | TP1: Généralités        |
-|-------+---------------+-------------------------|
-| 31.03 | 12:40 - 14:10 | Pause déjeuner          |
-|-------+---------------+-------------------------|
-| 31.03 | 14:10 - 16:10 | TP2: Prétraitements THR |
-| 31.03 | 16:10 - 16:20 | Pause                   |
-| 31.03 | 16:20 - 17:50 | TP2: Segmentation       |
-| 31.03 | 17:50 - 18:00 | Conclusion jour 1       |
-|-------+---------------+-------------------------|
-
-*** Jour 2
-|-------+---------------+------------------------|
-| 01.04 | 09:00 - 10:30 | TP3: Classification    |
-| 01.04 | 10:30 - 10:40 | Pause                  |
-| 01.04 | 10:40 - 12:10 | TP3: Classification    |
-|-------+---------------+------------------------|
-| 01.04 | 12:10 - 13:40 | Pause déjeuner         |
-|-------+---------------+------------------------|
-| 01.04 | 13:40 - 15:10 | TP4: Traitements Radar |
-| 01.04 | 15:10 - 15:20 | Pause                  |
-| 01.04 | 15:20 - 16:50 | Echanges libres        |
-| 01.04 | 16:50 - 17:20 | Conclusion générale    |
-|-------+---------------+------------------------|
+voir planning en PJ.
 
 ** Contenu du kit de formation
 
@@ -99,8 +73,8 @@ incluant notamment:
 Afin de réaliser les exercices, les logiciels suivants sont
 nécessaires :
 
-- *Orfeo ToolBox* 5.2 ou plus récent avec les applications
-- *Monteverdi* 3.0 ou plus récent
+- *Orfeo ToolBox* 5.4 ou plus récent avec les applications
+- *Monteverdi* 3.2 ou plus récent
 - *QGIS* 2.4 ou plus récent
 
 Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
