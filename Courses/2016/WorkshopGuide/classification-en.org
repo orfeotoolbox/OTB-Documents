@@ -1,29 +1,30 @@
-** Classification supervisée pour les séries multi-temporelles       :slides:
-*** Objectifs et Données
-**** Objectifs
-      Les objectifs sont les suivants:
-     - Connaître les différentes applications constituant la procédure
-       de classification supervisée
-     - Utiliser différents algorithmes pour l'apprentissage
-     - Savoir mesurer les performances de la classification
-     - Connaître les post-traitements applicables à une classification
-**** Données
-     Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
-     - ~Extract16bits~ contient la série multi-temporelle LandSat8,
-     - ~training~ contient la donnée d'apprentissage au format /shp/,
-     - ~testing~ contient la donnée de validation au format /shp/.
-     
-*** Déroulement
-    les étapes de l'exercice sont les suivantes:
-    1. Introduction aux données landsat8
-    2. Classification mono-date
-    3. Classification multi-date
-    4. Classification avec profil de NDVI
-    5. Post-traitements de la classification
-    
-*** Présentation des données LandSat8
+** Supervised classification of a satellite image time series	   :slides:
+*** Goals and data
+**** Goals
+     - Understand the applications needed for the supervised classification
+       procedure
+     - Use the different learning algorithms
+     - Measure the quality of classification results
+     - Know the available post processing steps
+**** Data
+     The data are available in the ~Data/classification~ directory, with the
+     following sub directories:
+     -
+     - ~Extract16bits~: the Landsat 8 time series
+     - ~training~: the training data in the /shp/ format
+     - ~testing~ the testing data in the /shp/ format
 
-    *Résolution spatiale:* 30 mètres
+*** Planning
+    Planning for this workshop:
+    1. Introduction to the Landsat 8 data set
+    2. Single date classification
+    3. Multi date classification
+    4. Classification with a NDVI profile
+    5. Classification post processing
+
+*** Introduction to the Landsat 8 data set
+
+    *Spatial resolution:* 30 meters
 
 **** Dates :BMCOL:B_block:
      :PROPERTIES:
@@ -43,8 +44,8 @@
 | 2014-10-26 |
 |------------|
 
-**** Bandes :BMCOL:B_block:
-     :PROPERTIES: 
+**** Bands :BMCOL:B_block:
+     :PROPERTIES:
      :BEAMER_col: 0.5
      :BEAMER_env: block
      :END:
@@ -59,100 +60,101 @@
  | 6 | SWIR 2              |
  |---+---------------------|
 
-*** Présentation des données de référence
+*** Introdution to the training and testing data
 
 |------+-----------------------------+------------|
-| Code | Nom                         | #polygones |
+| Code | Name                        | #polygons  |
 |------+-----------------------------+------------|
-|   11 | Éte                         | 7898       |
-|   12 | Hiver                       | 8171       |
-|   31 | Foret feuilles caduques     | 867        |
-|   32 | Foret feuilles persistantes | 125        |
-|   34 | Pelouses                    | 45         |
-|   36 | Lande ligneuse              | 386        |
-|   41 | Bati                        | 4719       |
-|   51 | Eau                         | 1280       |
-|  211 | Prairie                     | 5647       |
-|  221 | Verger                      | 204        |
-|  222 | Vigne                       | 559        |
+|   11 | Summer                      | 7898       |
+|   12 | Winter                      | 8171       |
+|   31 | Mixed forest                | 867        |
+|   32 | Evergreen forest            | 125        |
+|   34 | Grass                       | 45         |
+|   36 | Woody plant                 | 386        |
+|   41 | Building                    | 4719       |
+|   51 | Water                       | 1280       |
+|  211 | Grasslands                  | 5647       |
+|  221 | Orchard                     | 204        |
+|  222 | Vine                        | 559        |
 |------+-----------------------------+------------|
 
-*** Classification supervisée
+*** Supervised classification
     #+ATTR_LATEX: :float t :width \textwidth
     [[file:Images/classification.png]]
-   
-*** Algorithme SVM
+
+*** SVM algorithm
     #+ATTR_LATEX: :float t :width 0.5\textwidth
     [[file:Images/svm.png]]
 
-*** Algorithme RF
-    Ensemble d'arbres de décision aléatoires
+*** RF algorithm
+    A set of random decision trees.
 
-**** Apprentissage
-     1. Séparer le jeu d'apprentissage en k ensembles $S_k$ aléatoires
-     2. Pour chaque $S_k$ choisir aléatoirement $F_k$ primitives
-     3. Construire un arbre de décision récursivement, pour chaque noeud:
-        1. Choisir $f \in F_k$ et le seuil $t_k$ qui sépare l'ensemble restant en 2 parties les plus pures
-        2. Arrêter quand l'ensemble restant devient trop petit
- 
-**** Décision
-     Vote majoritaire de tous les arbres aléatoires
+**** Learning
+     1. Separate the learning set in k random sets $S_k$
+     2. For each $S_k$, choose randomly $F_k$ primitives
+     3. Recursivly build a decision tree, for each node:
+        1. Choose $f \in F_k$ and the threshold $t_k$ to separate the remaining set in two subsets:
+        2. Stop when the remaining set is too small
+
+**** Decision
+     Majority voting between all random trees
 
 
-*** Matrice de confusion
+*** Confusion matrix
 
 
 |-----------+--------------+--------------+--------------+
-|           | Préd. 1      | Préd. 2      | Préd. 3      | 
+|           | Pred. 1      | Pred. 2      | Pred. 3      |
 |-----------+--------------+--------------+--------------+
-| Réf. 1    | Vrais pos. 1 |              |              |
-| Réf. 2    |              | Vrais pos. 2 |              |
-| Réf. 3    |              |              | Vrais pos. 3 |
+| Ref. 1    | True pos. 1  |              |              |
+| Ref. 2    |              | True pos. 2  |              |
+| Ref. 3    |              |              | True pos. 3  |
 |-----------+--------------+--------------+--------------+
 
 - $precision = \frac{VP i}{\sum pred. i}$
-- $rappel = \frac{VP i}{T\sum ref. i}$
-- $Accuracy = \frac{\sum{VP i}}{Total}$
+- $recall = \frac{VP i}{T\sum ref. i}$
+- $accuracy = \frac{\sum{VP i}}{Total}$
 - $Kappa = \frac{Accuracy - chance}{1-chance}$
 
-  
-** Classification supervisée pour les séries multi-temporelles        :guide:
+
+** Supervised classification of a satellite image time series	    :guide:
 *** Description                                                        :desc:
-**** Résumé
+**** Summary
 
-     Cet exercice permet de se familiariser avec les applications de
-     classification supervisée pixellique de l'Orfeo ToolBox, en
-     utilisant une série multi-temporelle Landsat8 et un jeu de
-     données de référence pour la supervision.
+     This exercise will introduce pixel based supervised classification
+     applications in Orfeo ToolBox. We will use the Landsat 8 time series and a
+     data set for the training.
 
-**** Pré-requis
-     
-     - Logiciels installés (Monteverdi et Orfeo ToolBox)
-     - Données téléchargées
-     - Connaissance du mécanisme des applications de l'Orfeo ToolBox (voir exercice correspondant)
-     - Notions de classification supervisée
-     
-**** Objectifs
+**** Prerequisites
 
-     Les objectifs sont les suivants:
-     - Connaître les différentes applications constituant la procédure
-       de classification supervisée
-     - Utiliser différents algorithmes pour l'apprentissage
-     - Savoir mesurer les performances de la classification
-     - Connaître les post-traitements applicables à une classification
+     - Installed software: Orfeo ToolBox
+     - Workshop dataset downloaded
+     - Knowledge of the OTB applications mechanism
+     - Notions of supervised classification
 
-*** Étapes                                                            :steps:
+**** Goals
 
-    Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
-     - ~Extract16bits~ contient la série multi-temporelle LandSat8,
-     - ~training~ contient la donnée d'apprentissage au format /shp/,
-     - ~testing~ contient la donnée de validation au format /shp/.
+**** Goals
+     - Understand the applications needed for the supervised classification
+       procedure
+     - Use the different learning algorithms
+     - Measure the quality of classification results
+     - Know the available post processing steps
 
-**** Présentation des données LANDSAT 8
+*** Steps										    :steps:
 
-    Dans l'archive de données, le dossier ~Data/classification/Extract16bits~ contient neuf
-    images Landsat 8 aux dates suivantes:
-    
+     The data are available in the ~Data/classification~ directory, with the
+     following sub directories:
+     -
+     - ~Extract16bits~: the Landsat 8 time series
+     - ~training~: the training data in the /shp/ format
+     - ~testing~ the testing data in the /shp/ format
+
+**** The LANDSAT 8 dataset
+
+    In the data folder, ~Data/classification/Extract16bits~ contains nine Landat
+     8 images at the following dates:
+
      |------------|
      | 2014-03-09 |
      | 2014-04-01 |
@@ -165,7 +167,7 @@
      | 2014-10-26 |
      |------------|
 
-    Ces images sont toutes multispectrales avec les sept bandes du capteur OLI:
+    These images are multispectral with seven bands from the OLI sensor:
 
     |---+---------------------|
     | 0 | Coastal aerosol     |
@@ -177,142 +179,134 @@
     | 6 | SWIR 2              |
     |---+---------------------|
 
-    Au total, c'est donc 63 bandes qui représentent chaque pixel.
-    Les images sont encodés sur 16 bits.
+    In total, 63 bands are therefore available to represent each pixel.
+    The images are encoded with 16 bits per pixel.
 
-    Ouvrez une image dans monteverdi et régler les bandes pour un affichage en
-    vrais couleurs (rouge, vert, bleu).
+    Open an image in monteverdi, and setup the display bands and ranges to make
+     a true color image (red, green, blue).
 
-    Ouvrez les neuf images et remarquez les changements.
+    Open all nine images and notice the changes.
 
-    Les fichiers ~training/training.shp~ et
-    ~testing/testing.shp~ contiennent des
-    polygones qui définissent 11 classes sur l'ensemble de la scène:
+    The files ~training/training.shp~ and ~testing/testing.shp~ contain polygons
+     which define 11 classes over the scene:
 
-    |------+-----------------------------+------------|
-    | Code | Nom                         | #polygones |
-    |------+-----------------------------+------------|
-    |   11 | Été                         |       7898 |
-    |   12 | Hiver                       |       8171 |
-    |   31 | Foret feuilles caduques     |        867 |
-    |   32 | Foret feuilles persistantes |        125 |
-    |   34 | Pelouses                    |         45 |
-    |   36 | Lande ligneuse              |        386 |
-    |   41 | Bati                        |       4719 |
-    |   51 | Eau                         |       1280 |
-    |  211 | Prairie                     |       5647 |
-    |  221 | Verger                      |        204 |
-    |  222 | Vigne                       |        559 |
-    |------+-----------------------------+------------|
+|------+-----------------------------+------------|
+| Code | Name                        | #polygons  |
+|------+-----------------------------+------------|
+|   11 | Summer                      | 7898       |
+|   12 | Winter                      | 8171       |
+|   31 | Mixed forest                | 867        |
+|   32 | Evergreen forest            | 125        |
+|   34 | Grass                       | 45         |
+|   36 | Woody plant                 | 386        |
+|   41 | Building                    | 4719       |
+|   51 | Water                       | 1280       |
+|  211 | Grasslands                  | 5647       |
+|  221 | Orchard                     | 204        |
+|  222 | Vine                        | 559        |
+|------+-----------------------------+------------|
 
 
-    Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
-    accessible depuis clic-droit sur la couche -> /Ouvrir la table des attributs/.
-    Chaque label est visible et la liste est filtrable par expression SQL.
+    Open a polygon file in QGIS. The attribute table is accessible from
+     right-click on the layer, then /Open the attribute table/. Each label is
+     visible and the list can be filtered via SQL expresions.
 
-    Les polygones sont répartis en deux ensembles: apprentissage (training) et
-    validation (testing).
+    The polygons are spread over two sets: learning (or training) and validation
+     (or testing).
 
-**** Classification d'une date
+**** Single date classification
 
-    Nous allons commencer par réaliser sur une seule date toutes les
-    étapes qui constituent la procédure de classification supervisée:
+    We'll start by doing all the steps necessary to classify a single date:
 
-       1. Calcul des statistiques
-       2. Apprentissage du modèle
-       3. Utilisation du modèle (classification)
-       4. Rendu
+       1. Compute the image statistics
+       2. Learn the model
+       3. Use the model (classify)
+       4. Display the results
        5. Validation
 
-    Dans la suite du TP, vous réaliserez d'autres classifications sur d'autres
-    images. Un conseil est donc de travailler dans un répertoire par sous
-    partie, par exemple /classif1/.
+    In the rest of the exercise, you will perform other classifications on other
+    images. It is therefore recommended to work in a new subdirectory for
+    each part, for example /classif1/ for now.
 
-    Créez un répertoire /classif1/.
+    Create a directory named /classif1/.
 
-***** Calcul des statistiques
+***** Image statistics
 
-    Les variables doivent êtres comparables entre chaque images. La première
-    étape est le calcul de statistiques pour que les données puissent être
-    normalisés: moyenne nulle et écart-type de 1.
-    
-    Choisissez une image à classifier, puis, dans le répertoire classif1
-    utilisez l'application *ComputeImageStatistics* (Compute Images second order
-      statistics) pour produire le fichier de
-    statistiques.
+    Random variables must be comparable between each image. The first step is
+      therefore the computation of statistics to normalise images to a mean of
+      zero and a standard deviation of 1.
 
-***** Apprentissage du modèle
+    Choose an image to classify, then in the classif1 directory use the
+      *ComputeImageStatistics* application (Compute Images second order
+        statistics) to produce the statistics file.
 
-    L'application *TrainImageClassifier* (Train a classifier from multiple
-      images) permet d'apprendre un modèle pour
-    différentes méthodes de classifications. Regardez la documentation de cette
-    application et créez un modèle pour la méthode /libsvm/. Les paramètres
-    à régler sont:
+***** Learning the model
 
-    - io.il :: l'image d'entrée
-    - io.vd :: le fichier vectoriel d'apprentissage (training.shp)
-    - io.imstat :: le fichier xml de statistiques calculé précédement
-    - classifier :: la méthode, ici utilisez /libsvm/
-    - io.out :: le nom du fichier modèle en sortie, par exemple /model.rf/
+    The *TrainImageClassifier* application (Train a classifier from multiple
+      images) will train a model for various classification methods. Have a look
+      at the documentation, and create a model with the /libsvm/ algorithm. The
+      parameters to setup are:
 
-    D'autres paramètres sont important aussi:
-    - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
-    - sample.vtr 0 :: Ratio de l'ensemble d'apprentissage sur l'ensemble de
-      validation. 0 ici car nous utilisons notre propre découpe.
-    - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
-      est 1000. La réduire permet d'accélérer significativement le temps
-      d'apprentissage.
+    - io.il :: The input image
+    - io.vd :: The shapefile used for learning the model (training)
+    - io.imstat :: The statistics xml file created previously
+    - classifier :: The classifier method, here use /libsvm/
+    - io.out :: The output file name for the model, for example /model.rf/
 
-***** Utilisation du modèle
+      Other parameters are also important:
+    - sample.vfn CODE :: indicates that the label column in the SQL file is
+      called CODE
+    - sample.vtr 0 :: Ration of the learning set to the validation set. Here 0
+      because we are using are own split.
+    - sample.mt :: Maximum number of samples per class, the default value is
+      1000. Reducing it will accelerate significantly the learning time.
 
-   Une fois le modèle de classification appris, il peut être utilisé pour
-   classifier tout les pixels de l'image.
+***** Using the model
 
-   Utilisez l'application *ImageClassifier* (Image Classification), en spécifiant le modèle créé dans
-   l'étape précédente.
+   Once the classification model is learned, it can be used to classify all the
+      pixels in the image.
 
-***** Rendu
+      Use the *ImageClassifier* application (Image classification), and specify
+      the model created in the previous step.
 
-   La sortie de l'étape précédente est une image .tif qui associe à chaque pixel
-   une classe. Pour visualiser cette image, l'application *ColorMapping* permet
-   d'associer à chaque label une couleur RGB et de générer une image de
-   visualisation.
+***** Display
 
-   Utilisez l'application ColorMapping avec la table de couleur fournie
-   ~color_map.txt~.
+   The output of the previous step is an .tif image, which associated to each
+      pixel a class. To view this image, the *ColorMapping* application allows
+      to map a RGB color and generate a new "color mapped" visualisation image.
+
+
+   Use the ColorMapping application with the proposed color map:
+      ~color_map.txt~.
 
 ***** Validation
 
-  Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
-  des polygones. Les 70% restant sont dans le fichier ~testing/testing.shp~ et
-  servent à évaluer les performances du modèle appris en calculant la matrice de
-  confusion.
+    The labels used in the learning step represent only 30% of the polygons.
+      The remaining 70% are in the ~testing/testing.shp~ and are used to
+      measure the classification results by computing the confusion matrix.
 
-  Utilisez l'application *ComputeConfusionMatrix* (Confusion Matrix Computation) avec le jeu de donnée de test
-  pour produire la matrice de confusion du modèle appris.
+    Use the *ComputeConfusionMatrix* application (Confusion Matrix Computation)
+      with the testing data set to produce the confusion matrix of the learned
+      model.
 
-  Le paramètre /ref.vector.field CODE/ est nécessaire. Il indique le nom du
-  champ contenant le numéro de label.
+    The parameter /ref.vector.field CODE/ is necessary. It indicates the name of
+      the field containing the label number.
 
-  Consultez la matrice de confusion et identifiez les classes bien différenciés.
+    Look at the confusion matrix. Identify the classes that are well
+      differentiated.
 
-  A quel classe appartiennent le plus souvent les pixels mal classifiés ?
-  Pourquoi ?
+    Which class has the most classification errors. Why?
 
-  Vous pouvez utiliser le squelette csv (~template_confusion_matrix.csv~) pour
-  identifier les labels facilement.
-***** Optionnel: Découvrir d'autres méthodes d'apprentissage
-      
-      Refaire toute la classification sur une date en utilisant l'algorithme
-      Random Forest à la place des SVM.
+    You can use the confusion matrix template in
+      ~template_confusion_matrix_en.csv~ to easily identify the labels.
 
-      Effectuez l'ensemble de la procédure avec et sans l'étape 1 /Calcul des
-      statistiques/.
+***** Optional: Other learning algorithms
 
-      1. Comparez les résultats obtenus entre les SVM et les RF?
-      2. Comparez les résultats obtenus avec les RF avec et sans normalisation?
+    Perform the classification again on another date, using the Random Forest
+      algorithm instead of SVM and compare the results. Compare also the
+      processing time.
 
-**** Classification multi-date
+**** Multi-date classification
 
      Les performances de cette première classification ne sont pas
      très bonnes: on va maintenant essayer d'améliorer la
@@ -339,7 +333,7 @@
 
   Puis effectuez les même étapes que précédemment: *ComputeImageStatistics*,
   *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
-  
+
   Utilisez cette fois la méthode Random Forest pour le modèle qui est plus
   rapide. Utilisez également les paramètres suivants qui offrent de bonnes
   performances de classification:
@@ -355,7 +349,7 @@
   la matrice de confusion et l'image RGB.
 
 **** Calcul d'un profil de NDVI
-  
+
   Une image NDVI peut-être calculée pour chaque image de la série temporelle
   pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
   profil permettra d'améliorer les performances de classification.
@@ -403,7 +397,7 @@ fournies avec le TP.
 *** Classification d'une date
 
     Premièrement, on calcule les statistiques de l'image à classer:
-    
+
     #+BEGIN_EXAMPLE
     $ otbcli_ComputeImagesStatistics \
     -il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
@@ -477,7 +471,7 @@ fournies avec le TP.
     ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
     -out image_concat.tif int16
     #+END_EXAMPLE
-    
+
     Ensuite, on déroule le processus déjà réalisé lors de l'étape précédente.
 
 
@@ -531,7 +525,7 @@ fournies avec le TP.
     #+END_EXAMPLE
 
     Puis la création de la carte colorisée:
- 
+
     #+BEGIN_EXAMPLE
     $ otbcli_ColorMapping \
     -in labeled_image.tif \
@@ -559,7 +553,7 @@ fournies avec le TP.
     -channels.nir 4 ; \
     done
     #+END_EXAMPLE
-    
+
     Ensuite, on va concaténer l'ensemble des bandes NDVI en une seule image:
 
     #+BEGIN_EXAMPLE
@@ -579,7 +573,7 @@ fournies avec le TP.
     Ce qui permet d'analyser le profil dans QGIS par exemple.
 
 *** Classification du profil de NDVI
-    
+
     Pour la classification, on rajoute également les bandes spectrales initiales pour toutes les dates:
 
     #+BEGIN_EXAMPLE
@@ -675,7 +669,7 @@ fournies avec le TP.
     -ip.radius 1 \
     -ip.suvbool 0
     #+END_EXAMPLE
-    
+
 
     On peut ensuite rejouer les étapes de colorisation et de validation:
 
