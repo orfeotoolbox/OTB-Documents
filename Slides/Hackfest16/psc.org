@@ -1,0 +1,137 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{One year of Open Governance for OTB: thoughts and context}
+
+* Introduction
+** Happy birthday PSC!
+- One year ago, CNES decided to set-up an open-governance for OTB
+- We now have a working PSC, with:
+  - Members
+  - Rules
+  - Decisions
+
+| *Name*                   | *Affiliation* | *Role*                          |
+|--------------------------+---------------+---------------------------------|
+| Manuel Grizonnet (chair) | CNES          | Infrastructure, legal issues    |
+| Rémi Cresson             | IRSTEA        | Release Manager for release 5.2 |
+| Guillaume Pasero         | CS-SI         | release planner                 |
+| Jordi Inglada            | CNES/CESBIO   | User support, roadmaps          |
+| Julien Michel            | CNES          | Communication, contributions    |
+
+
+** PSC, git workflow, release process: high coupling 
+   
+   PSC established (or endorsed) a set of highly coupled process:
+     - RFC process
+     - The git workflow
+     - The testing/dashboard strategy
+     - The release process
+     - The packaging strategy
+
+
+** A short reminder of RFC process
+   1. *Request for Comments*
+   2. Comments and discussions
+   3. Developments
+   4. *Requests for changes*
+   5. Review
+   6. PSC Vote
+   7. *Request for Merge*
+   8. Approval by Release Manager
+   9. Merge
+
+** A short reminder of Git workflow
+
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/Workflow_2016-01-19-Victor.png]]
+   #+LATEX:\end{center}
+
+** A short reminder of release process
+
+   1. Release manager accepts Requests for Merge corresponding to PSC approved Request for Changes
+   2. Every 3 months, at a planned date, Release Manager branches develop which becomes the Release Candidate
+   3. After one or two weeks of testing and fixing, release is announced
+
+** Facts and figures
+*** Request for changes
+    http://wiki.orfeo-toolbox.org/index.php/Requests_for_Changes
+    - OTB 5.2: 19 Requests for Changes
+    - OTB 5.4: 14 Requests for Changes
+    - Pending: 7 Requests for Changes
+*** Requests for comments
+    http://wiki.orfeo-toolbox.org/index.php/Requests_for_Comments
+    - 31 Requests for Comments 
+
+* What has changed
+** ... for users
+- Every significant ongoing or passed change is now public and visible
+- Users have the opportunity to comment on pending Request for Changes during review
+- There are more details available on why and how things were done (and discussions)
+- Users can file new Request for Comments to request new features
+- Releases are more frequent
+
+** ... for contributors
+
+- There is a clear and detailed process on how to get your code in OTB
+- Contributors are guaranteed to be treated with equity
+- They know the deadline to get their feature into next release
+
+** ... for developers
+
+- No more silent merging of your 100+ commits branch
+- $\Rigtharrow$ Some adjustments needed:
+  - Accept comments from review
+  - Getting the code merged takes more time
+- On the bright side, less surprises on the /develop/ branch
+- They know the deadline to get their feature into next release
+
+* Thoughts
+
+** Are we making a better OTB? Pros.
+On the overall, I think that we do.
+- we have more code reviews, from external reviewer (Luc, are you there?)
+- Changes are more consistent because they belong to the same RFC
+- Everyone gets to give his opinion
+- New features are more visible
+
+** Are we making a better OTB? Cons.
+
+- PSC is still small and has a lot of CNES in it
+- Apart from CNES/CS funded by CNES/CS, we have very few requests for changes
+- We do Gerrit. By Hand. 
+- We still have broken dashboards, packages, and third party issues
+
+** Is voting really required?
+   
+   - PSC never voted -1 (or even +0)
+   - Upon RFC, what really happens:
+     - PSC members (and others) make comments
+     - No vote is casted until those comments are addressed
+   - Indeed no RFC has been rejected
+   - But some are still waiting for enough +1
+   - Shall we replace vote by a simpler approval system?
+   
+
+** Do comments become changes ?
+
+*** Request for comments
+- We have a lot of Request for Comments
+- They describe some new idea, like a white-paper
+- Once the idea is submitted, they do not remain active very long
+
+*** Request for changes
+- We have a lot of request for changes that do not come from request
+  for comments
+- It means that work is already done and we can only discuss the details
+- Sometime review shows that the feature was in fact unclear
+- Make it mandatory?
+
+** PSC meetings
+    
+   - There has been 3 IRC meeting in between 2015 and 2016 user days
+   - Logs and minutes are available on the wiki
+   - A face to face meeting is planned during 3rd day (Hackfest)
+   - Meetings are too long $\Rigtharrow$ should we do them more often?
+   - Only place where important matters (other than RFC) are discussed

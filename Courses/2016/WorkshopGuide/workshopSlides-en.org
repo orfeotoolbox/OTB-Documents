@@ -1,0 +1,117 @@
+#+TITLE: Guide for OTB training courses
+#+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES), Manuel Grizonnet (CNES)
+#+DATE: 2016
+
+#+startup: beamer
+#+startup: oddeven
+
+#+DESCRIPTION: 
+#+KEYWORDS: otb, cnes
+#+LANGUAGE: fr
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:nil mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+
+#+LINK_UP:   
+#+LINK_HOME:
+
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [smaller]
+#+latex_header: \usepackage[T1]{fontenc}
+#+latex_header: \usepackage[french]{babel}
+#+latex_header: \AtBeginSubsection[]{\begin{frame}<beamer>\frametitle{Sommaire}\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/shaded/hide]\end{frame}}
+#+latex_header: \useoutertheme{infolines}
+#+latex_header: \mode<beamer>{\usetheme{Pittsburgh}}
+#+latex_header: \setbeamertemplate{navigation symbols}{} 
+#+latex_header: \setbeamerfont{structure}{series=\bfseries}
+#+latex_header: \setbeamertemplate{items}[triangle]
+#+latex_header: \setbeamercolor{block title}{fg=blue!40!black}
+#+latex_header: \newcommand{\shorttitle}{Slides formation OTB}
+#+latex_header: \newcommand{\shortauthor}{}
+#+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
+#+latex_header: \institute{ \includegraphics[width=0.6cm]{../../../Artwork/logoVectoriel.png} \hspace{0.1cm} \includegraphics[width=1.5cm]{Images/logo_cnes.png}}
+#+latex_header: \usepackage{fourier}
+#+latex_header: \usepackage{amsfonts,bm,amsmath,amssymb,ifsym,marvosym,tabularx,array,ifsym}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usetikzlibrary{arrows,fit,backgrounds,positioning,shapes,shadows}
+#+latex_header: \newcommand{\vns}{Ven$\mu$s}
+#+latex_header: \newcommand\boxPlot[6] {  \pgfmathsetmacro\rectSize{0.3};  \draw[thick] (#2,#1) -- (#3,#1);  \draw[thick] (#2,#1-\rectSize/2) -- (#2,#1+\rectSize/2);  \draw[thick] (#5,#1) -- (#6,#1);  \draw[thick] (#6,#1-\rectSize/2) -- (#6,#1+\rectSize/2);  \draw[fill=white] (#3,#1-\rectSize) rectangle (#5,#1+\rectSize);  \draw (#4,#1-\rectSize) -- (#4,#1+\rectSize);}
+#+latex_header: \def\G{\ensuremath{{\cal G}}}
+#+latex_header: \newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+#+latex_header: \pgfdeclareimage[height=96mm,width=128mm]{background}{Images/fondsClairSansLogo}
+#+latex_header: \setbeamertemplate{background}{\pgfuseimage{background}}
+
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+
+#+SELECT_TAGS: slides
+#+EXCLUDE_TAGS: desc steps further solution
+
+
+* Introduction :slides:
+*** Course
+**** Goal
+Give an overview of the ORFEO ToolBox and get familiar with OTB tools (OTB
+applications and Monteverdi) to exploit and analyze remote sensing image. 
+
+**** Skills acquired at the end of the training
+
+Know how to set up OTB processing and use OTB applications to perform: 
+- Feature extraction
+- Calibration 
+- Classification
+- Segmentation
+- Basic SAR processing
+
+*** Training kit
+
+**** Data folder
+     - Data used in all exercises (sub-folder for each exercise)
+     - Data folder is specified at the beginning of each exercise
+
+*** Training kit
+
+**** Documentation folder
+     - Software Guide :: C++ API (with algorithms definition)
+     - CookBook :: Guide for non developers (API of applications)
+     - QGIS User Guide :: QGIS user guide
+
+**** Guide folder
+     - Training guide
+     - Slides
+     - Installation guide
+     - Evaluation survey
+     - Solutions (at the end of the training session)
+
+*** Dataset
+
+- LandSat-8 :: concatenation of several dates, cloud free (gap-filling) with
+               ground truth (reference data) in ESRI Shapefile format
+               (classification exercise)
+- Pléiades :: PHR Bundle PRIMARY Level 1A from the CNES Thematic Commissioning
+              phase over OSR MiPy (Toulouse) acquired in November 2013 (\copyright
+              CNES (2013), distribution Airbus DS/ Spot Image),
+- Sentinel-1 :: SLC product (complex) SM (strip Map, 5m ground resolution),
+                polarization (HH and HV) over the South of the Constance lake (Germany).
+
+*** Data access
+    - LandSat-8 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
+    - Pléiades :: For French Institute: http://professionnels.ign.fr/images-pleiades
+    - Sentinel-1 :: Free data available on ESA SciHub
+                    (https://scihub.copernicus.eu/) or on the CNES PEPS portal(https://peps.cnes.fr)
+
+*** Useful information
+**** Meal
+**** Wifi code
+**** Other?
+
+* TP1: General                                                          
+#+INCLUDE: "mvd-qgis-en.org"
+#+INCLUDE: "otb-apps-en.org" :minlevel 2
+#+INCLUDE: "internals-en.org" :minlevel 2
+* TP2: High resolution optical image, from pre-processing to GIS
+#+INCLUDE: "preprocessing-en.org" :minlevel 2
+#+INCLUDE: "segmentation-en.org" :minlevel 2
+* TP3: Supervised classification on image time series
+#+INCLUDE: "classification-en.org" :minlevel 2
+* TP4: SAR processing on Sentinel-1 
+#+INCLUDE: "sar-en.org" :minlevel 2

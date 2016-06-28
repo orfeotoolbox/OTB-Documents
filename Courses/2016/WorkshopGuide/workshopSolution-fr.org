@@ -1,0 +1,63 @@
+#+TITLE: Formation à l'Orfeo ToolBox: Solutions des Travaux Pratiques
+#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Victor Poughon (CNES)
+#+DATE: 2016
+#+OPTIONS: H:4
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
+#+LaTeX_HEADER: \usepackage{a4wide}
+#+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathptmx}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage{tikz}
+#+OPTIONS: tags:nil
+
+#+EXPORT_SELECT_TAGS: 
+#+EXCLUDE_TAGS: fw guide slides
+
+#+LATEX:\pagestyle{fancy}
+#+LATEX:\fancyhf{}
+#+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
+#+LATEX:\fancyhead[LO]{\bfseries\rightmark}
+#+LATEX:\fancyhead[RE]{\bfseries\leftmark}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Formation Orfeo ToolBox - INRA 2016}}
+
+* Avant-propos                                                           :fw:
+** Données
+
+** Les logiciels
+
+Afin de réaliser les exercices, les logiciels suivants sont
+nécessaires :
+
+- *Orfeo ToolBox* 5.2 ou plus récent avec les applications
+- *Monteverdi* 3.0 ou plus récent
+- *QGIS* 2.4 ou plus récent
+
+Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
+de  *Monteverdi*, vous pouvez consulter l' [[http://www.orfeo-toolbox.org/packages/OTBSoftwareGuide.pdf][Orfeo ToolBox Cookbook]].
+
+Pour installer *QGIS* consultez la documentation du logiciel qui est
+disponible sur le  [[http://www.qgis.org/][site du projet]].
+
+#+INCLUDE: "licence.org"
+
+* Avant-propos                                                    :solutions:
+La plupart des solutions proposées dans ce guide des solutions sont
+écrites en utilisant l'interface ligne de commande des applications de
+l'Orfeo ToolBox. Néanmoins, le lecteur pourra aisément reporter ces
+paramètres dans l'interface graphique si besoin.
+
+* Généralités                                                          
+#+INCLUDE: "mvd-qgis-fr.org" :minlevel 2
+#+INCLUDE: "otb-apps-fr.org" :minlevel 2
+#+INCLUDE: "internals-fr.org" :minlevel 2
+* Imagerie THR optique, des pré-traitements au SIG
+#+INCLUDE: "preprocessing-fr.org" :minlevel 2
+#+INCLUDE: "segmentation-fr.org" :minlevel 2
+#+INCLUDE: "classification-fr.org" :minlevel 1
+* Traitements SAR pour l'imagerie Sentinel 1
+#+INCLUDE: "sar-fr.org" :minlevel 2

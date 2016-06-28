@@ -1,0 +1,408 @@
+** Orfeo ToolBox internals							   :slides:
+*** Goals and data
+**** Goals
+     - Understand OTB's transparent machinery
+     - Influence the data processing pipeline
+     - Know where to find important information
+
+**** Data
+
+     The data are in ~Data/internals/~.
+
+*** Outline
+    The outline for this workshop is as follows:
+    1. Encoding images
+    2. geom files
+    3. Extended filenames
+    4. Streaming
+    5. Multi-threading
+
+*** Encoding images
+
+|--------+----------------------------------------+------------------|
+| *type* | *domain*                               | *number of bits* |
+|--------+----------------------------------------+------------------|
+| uint8  | [0,255]                                | 8 bits           |
+| int16  | [−32 767, +32 767 ]                    | 16 bits          |
+| uint16 | [0, 65 535]                            | 16 bits          |
+| int32  | [−2 147 483 647, +2 147 483 647]       | 32 bits          |
+| uint32 | [0, 4 294 967 294]                     | 32 bits          |
+| float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | 32 bits          |
+| double | [ -10^308, 10^308 ]                    | 64 bits          |
+|--------+----------------------------------------+------------------|
+
+*** geom files
+
+    #+BEGIN_EXAMPLE
+    [...]
+    samp_num_coeff_15:  -8.69402623737171e-06
+    samp_num_coeff_16:  -2.52010136133467e-09
+    samp_num_coeff_17:  -5.70277370040739e-07
+    samp_num_coeff_18:  -2.67844954240191e-07
+    samp_num_coeff_19:  -7.80920276666093e-09
+    samp_off:  19999
+    samp_scale:  19999.5
+    sensor:  PHR 1A
+    [...]
+    support_data.image_date:  2012-11-15T11:05:04.4Z
+    support_data.image_id:  602631101-001
+    support_data.image_size:  38187 38890
+    support_data.instrument:  PHR
+    support_data.instrument_index:  1A
+    support_data.line_period:  0.0735
+    [...]
+    #+END_EXAMPLE
+
+*** Extended filenames
+
+    Syntax understood by all OTB code reading or writing images
+
+    #+BEGIN_EXAMPLE
+    "myImage.tif?&geom=mygeom.geom"
+    "myImage.tif?&gdal:co:TILED=yes&streaming:type=none"
+    #+END_EXAMPLE
+
+*** Streaming and multi-threading (1/2)
+
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
+    [[file:Images/StreamingImageDiagram.png]]
+
+
+*** Streaming and multi-threading (2/2)
+
+    #+ATTR_LATEX: :float t :width 0.6\textwidth
+    [[file:Images/ProcessObjectDataObjectInteractionUML.png]]
+
+
+** *Orfeo ToolBox* internals							    :guide:
+*** Description                                                        :desc:
+**** Summary
+
+     This exercise introduces Orfeo ToolBox pipeline internals.
+     - Extended filenames,
+     - Streaming,
+     - Multi-threading,
+     - Environment variables,
+     - geom files.
+
+**** Prerequisites
+
+     - Installed Monteverdi and Orfeo ToolBox software
+     - Downloaded data
+     - Understand Orfeo Toolbox applications (see relevant exercise)
+
+**** Goal
+
+     - Understand OTB's transparent machinery
+     - Influence the data processing pipeline
+     - Know where to find important information
+
+*** Steps										    :steps:
+
+     The data are in ~Data/internals/~.
+
+**** Encoding images
+
+     With Orfeo ToolBox, the user chooses the image encoding type depending on
+     the image. In general we'll use:
+     - 8 bits unsigned encoding (with domain [0,255]) for outputs used on screen
+       or paper.
+     - 16 bits unsigned encoding to represent satellite images
+    - 32 bits unsigned encoding to represent intermediate processing steps,
+      computation results with real numbers (e.g. NDVI, radiometric
+      calibration...)
+
+    In Orfeo ToolBox applications, the user can choose the image encoding (drop
+      down menu in the GUI interface, or parameter in the command line).
+      |--------+----------------------------------------+------------------|
+      | *type* | *domain*                               | *number of bits* |
+      |--------+----------------------------------------+------------------|
+      | uint8  | [0,255]                                | 8 bits           |
+      | int16  | [−32 767, +32 767 ]                    | 16 bits          |
+      | uint16 | [0, 65 535]                            | 16 bits          |
+      | int32  | [−2 147 483 647, +2 147 483 647]       | 32 bits          |
+      | uint32 | [0, 4 294 967 294]                     | 32 bits          |
+      | float  | [ -3.402823 × 10^38,3.402823 × 10^38 ] | 32 bits          |
+      | double | [ -10^308, 10^308 ]                    | 64 bits          |
+      |--------+----------------------------------------+------------------|
+
+     Use *gdalinfo* to know the pixel encoding of ~image1.tif~ (you can also
+     access it from QGIS). Analyse pixel values of the image in Monteverdi. What
+     can you conclude?
+
+     Use the *Convert* application to convert ~image1.tif~ to a 16 bits integer
+     encoding. Compare both images file sizes. Use the *CompareImages*
+     application to compare the content of both images. What can you conclude?
+     Can you reduce the file size further ? (See the extended filenames
+     paragraph).
+
+     Use the *RadiometricIndices* application to compute an NDVI (Normalized
+     Difference Vegetation Index) from the 16 bits image.
+     Keep the output encoding to 16 bits. Visualize the result. What do you
+     notice? Which encoding should be used to properly store this image ?
+
+**** .geom files
+
+     Look into the ~image1.geom~ file with a text editor. What seems to be its
+     purpose? Which processing operations require this type of information?
+
+**** Extended filenames
+
+     Extended filenames are used to influence the image reading and writing
+     process in Orfeo ToolBox. They are not application specific, but can be
+     used with any Orfeo ToolBox based tool.
+
+     The full list of options is listed in the Software Guide. We will
+     illustrate here a few of them.
+
+***** Read options
+
+      Compare the following command outputs:
+
+      #+BEGIN_EXAMPLE
+      $ otbcli_ReadImageInfo -in "image1.tif"
+      $ otbcli_ReadImageInfo -in "image1.tif?&skipgeom=true"
+      #+END_EXAMPLE
+
+      What is the effect of the /skipgeom/ parameter?
+      Note the similar /skipcarto/ which allows to ignore the coarse
+      cartographic projection in the case of /Ortho Ready/ type products
+      (projected onto an average altitude by default).
+
+      Compare the following command outputs:
+      #+BEGIN_EXAMPLE
+      $ otbcli_ReadImageInfo -in "image2.tif"
+      $ otbcli_ReadImageInfo -in "image2.tif?&geom=image1.geom"
+      #+END_EXAMPLE
+
+      What is the effect of the /geom/ parameter? What can be its purpose?
+
+***** Write options
+
+      Among available write options from extended filenames, the /gdal:co/
+      option allows to pass file creation options directly to GDAL.
+      With this option, and with Tif file format options available in GDAL,
+      re-encode ~image1.tif~ to signed 12 bits with LZW compression.
+
+      Compare file sizes and image contents with the *CompareImages*
+      application.
+
+      Another useful extended filename option is the option box. Use the option
+      box to write only to a 100x100 pixels square in the center of the image.
+
+**** Streaming management
+
+     By default, Orfeo ToolBox chooses the tiling method most suitable to the
+     input image, and the block size which maximizes memory usage. Memory usage
+     is specified to the application, or with the =OTB_MAX_RAM_HINT=
+     environment variable.
+     However, it is possible to modify this behavior with writer extended filenames.
+
+     1. Use the *LocalStatisticsExtraction* application to filter the first band
+        of ~image1.tif~ with a radius of 9.
+
+     2. Execute the above operation a second time, but this time completely
+        disable streaming with the /streaming:type/ extended filename option.
+        What do you notice?
+
+     3. Execute the above operation a third time, but this time ask for a split
+        of 1000 strips. Use the /streaming:type/, /streaming:sizemode/ and
+        /streaming:sizevalue/. What do you notice?
+
+     To observe these effects, it is recommended to open a system monitoring
+     tool and look at CPU utilization and I/O throughput.
+
+**** Multi-threading
+
+     By default, every filter in Orfeo ToolBox use all available processing
+     cores.
+     This behavior can be altered with the
+     =ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS= environment variable.
+
+     Follow the previous example with the *LocalStatisticsExtraction*
+     application and disable streaming. Use the above environment variable to
+     decrease, and then increase the number of threads. What do you notice?
+
+     You can use the /time/ command to measure execution time.
+
+** *Orfeo ToolBox* internals							:solutions:
+
+*** Encoding images
+
+    *gdalinfo* with /image1.tif/ yields:
+    #+BEGIN_EXAMPLE
+    $ $ gdalinfo image1.tif
+    Driver: GTiff/GeoTIFF
+    Files: image1.tif
+    Size is 2000, 2000
+    Coordinate System is `'
+    Origin = (5400.000000000000000,4300.000000000000000)
+    Pixel Size = (1.000000000000000,1.000000000000000)
+    Image Structure Metadata:
+    INTERLEAVE=PIXEL
+    Corner Coordinates:
+    Upper Left  (    5400.000,    4300.000)
+    Lower Left  (    5400.000,    6300.000)
+    Upper Right (    7400.000,    4300.000)
+    Lower Right (    7400.000,    6300.000)
+    Center      (    6400.000,    5300.000)
+    Band 1 Block=2000x1 Type=Float32, ColorInterp=Gray
+    Band 2 Block=2000x1 Type=Float32, ColorInterp=Undefined
+    Band 3 Block=2000x1 Type=Float32, ColorInterp=Undefined
+    Band 4 Block=2000x1 Type=Float32, ColorInterp=Undefined
+    #+END_EXAMPLE
+
+    Pixels are therefore encoded with 32 bits floating point numbers.
+    By looking at the pixel values in *monteverdi*, you can see that the
+    values are integers and between 100 and 1600 approximately. The 32 bit
+    encoding is therefore needlessly expensive.
+
+    The *Convert* application allows to convert the encoded pixel type:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_Convert -in image1.tif -out image1_uint16.tif uint16
+    #+END_EXAMPLE
+
+    We can now compare image sizes, and see that the generated image only uses
+    half the space of the original image:
+
+    #+BEGIN_EXAMPLE
+    $ du -h image1.tif
+    62M	image1.tif
+
+    $ du -h image1_uint16.tif
+    31M	image1_uint16.tif
+    #+END_EXAMPLE
+
+    Using the *CompareImages* application also show that the image content is
+    identical.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_CompareImages -ref.in image1.tif -meas.in image1_uint16.tif
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) Using whole reference image
+                             since the ROI contains no pixels or is not specified
+    2016 Mar 08 13:59:24  :  Application.logger  (DEBUG) Region of interest used
+                             for comparison : ImageRegion (0x7ffcb6a6d930)
+    Dimension: 2
+    Index: [0, 0]
+    Size: [2000, 2000]
+
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) reference image channel 1
+                             is compared with measured image channel 1
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) MSE: 0
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) MAE: 0
+    2016 Mar 08 13:59:24  :  Application.logger  (INFO) PSNR: 0
+    Output parameters value:
+    mse: 0
+    mae: 0
+    psnr: 0
+    #+END_EXAMPLE
+
+    To compute the NDVI, we use the following commands:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_RadiometricIndices -in image1.tif
+                                -out image1_ndvi.tif uint16
+                                -channels.red 1
+                                -channels.green 2
+                                -channels.blue 3 -channels.nir 4
+                                -list Vegetation:NDVI
+    #+END_EXAMPLE
+
+    Looking at the generated image in *monteverdi*, we see that the image is 0
+    everywhere. The output encoding is therefore not appropriate. Floating point
+    type should be used (the default for example).
+
+*** .geom files
+
+    The geom file contains information necessary for geometric and radiometric
+    image corrections.
+
+*** Extended filenames
+
+**** Read option
+
+     The /skipgeom/ read parameters allows to ignore the associated geom file.
+     The ground pixel size is false and the acquisition date and sensor
+     information has disappeared.
+
+     The /geom/ extended filename parameter allows to attach a /geom/ file to an
+     existing image. Among other things, it is useful for radiometric and
+     geometric processing. By default, Orfeo ToolBox (via OSSIM) looks for a
+     /geom/ file with the same name as the image.
+
+**** Write options
+
+     #+BEGIN_EXAMPLE
+     $ otbcli_Convert -in image1.tif
+       -out "image1_comp.tif?&gdal:co:NBITS=12&gdal:co:COMPRESS=LZW"  uint16
+     #+END_EXAMPLE
+
+     The size of the image is:
+
+     #+BEGIN_EXAMPLE
+     $ du -h image1_comp.tif
+     23M	image1_comp.tif
+     #+END_EXAMPLE
+
+     8 MB are saved compared to the unsigned 16 bits image. The *CompareImages*
+     application shows that the content stays the same.
+
+     The box parameter is used as such:
+
+     #+BEGIN_EXAMPLE
+     $ otbcli_Convert -in image1.tif
+                      -out "image1_comp.tif?&box=1000:1000:100:100"  uint16
+     #+END_EXAMPLE
+
+     After this command, the output image is an extract of the total output,
+     beginning at the $(1000, 1000)$ index and of size 100x100. This option can
+     be used to visualize a result before processing the full image.
+
+*** Streaming management
+
+    The *LocalStatiticsExtraction* application is used as follows:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LocalStatisticExtraction -in image1.tif -out image1_ls.tif
+                                      -radius 9
+    #+END_EXAMPLE
+
+    We notice that computation is done in several steps, interleaved with disk
+    I/O. By default, Orfeo ToolBox specifies the optimal tiling.
+
+    To completely disable streaming, use the following extended filename
+    options:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LocalStatisticExtraction -in image1.tif *
+             -out "image1_ls.tif?&streaming:type=none" -radius 9
+    #+END_EXAMPLE
+
+    When processing is done in a single pass, only one disk write follows.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_LocalStatisticExtraction -in image1.tif
+      -out "image1_ls.tif?&streaming:type=stripped \
+      &streaming:sizemode=nbsplits&streaming:sizevalue=1000"
+      -radius 9
+    #+END_EXAMPLE
+
+    This time, we see multiple compute and disk write steps. Computation time
+        can be almost twice as long , because over tiling is suboptimal.
+
+*** Multithreading
+
+    Here's how to set the number of threads to 1:
+
+    #+BEGIN_EXAMPLE
+    $ export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
+    $ otbcli_LocalStatisticExtraction -in image1.tif
+                                      -out "image1_ls.tif?&streaming:type=none"
+                                      -radius 9
+    #+END_EXAMPLE
+
+    In that case, computation time is much more significant. It can also be seen
+    that increasing the number too much does not improve performance above a
+    certain point (typically the number of
+    CPU cores).

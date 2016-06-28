@@ -1,0 +1,116 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{Introduction}
+
+* Introduction
+** Welcome to OTB Users Days 2016!
+   
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/img_3977.jpg]]
+
+   Group picture of OTB Users Days 2015 (first edition)
+   #+LATEX:\end{center}
+
+** Highlights of OTB Users Days 2015
+
+   - Open Governance announced
+   - OTB 5.0 new features presented
+   - New orientations for Monteverdi decided
+   - Tutorials on how to write your own app and module taught
+   - Sentinel1 geometry requested by many users
+   - Regression mode in classification framework sketched during hackfest
+
+** This year
+
+*** Tentative program
+
+   - Follow-up on what has been decided last year
+   - Presenting one year of open-governance with 2 releases
+   - Focus on hot undergoing Request for Changes and ideas
+   - Group brainstorming $\Rightarrow$ GroupS brainstorming
+     
+*** This is not a 1000+ participants IEEE conf!
+    - Program can be adapted for you
+    - Discussions are more important than presentations
+    - We can always organize small groups to work on specific topics
+    - We need your help to finalize the program
+      
+* Agenda
+** Day 1: Plenary session (June 7)
+
+  |---------------+--------------------------------------------------|
+  | 10:00 - 12:00 | *Presentations from dev team*                    |
+  |               | One year of Open Governance                      |
+  |               | The new features of OTB 5.4                      |
+  |               | What is new in Monteverdi 3.2                    |
+  |               | The state of binary packages and xdk             |
+  |               | Code provenance review, licence and incubation   |
+  |---------------+--------------------------------------------------|
+  | 12:00 - 14:00 | *Lunch break*                                    |
+  |---------------+--------------------------------------------------|
+  | 14:00 - 17:00 | *Users feedback*                                 |
+  |               | P. Kempeneers (JRC), T. Koleck (CNES),           |
+  |               | A. Lobo (CSIC), C. Bisso (Geosigweb)             |
+  |               | *Tech talks*                                     |
+  |               | How we plan to do MPI-powered OTB                |
+  |               | The new flexible classification framework in OTB |
+  |               | Machine learning in OTB: s/opencv/shark/         |
+  |               | S1 Geometry in OTB                               |
+  |---------------+--------------------------------------------------|
+  | 17:00 - 19:00 | *Ice breaker*                                    |
+  |---------------+--------------------------------------------------|
+
+
+** Day 2: Technical session (June 8)
+
+  |---------------+-----------------------------------------------------|
+  | 10:00 - 12:00 | *On-demand Tutorials*                               |
+  |               | Introduction to Monteverdi 3.2                      |
+  |               | OTB tools for image segmentation                    |
+  |               | Discover the new applications                       |
+  |               | The steganography game                              |
+  |               | Reminder of app framework                           |
+  |               | Write your own remote module                        |
+  |---------------+-----------------------------------------------------|
+  | 12:00 - 14:00 | *Lunch break*                                       |
+  |---------------+-----------------------------------------------------|
+  | 14:00 - 17:00 | *Groups brainstorming*                              |
+  |               | Roadmaps and features request                       |
+  |               | New sensors: what are we missing ?                  |
+  |               | How to enhance OTB documentation ?                  |
+  |               | Should we do SimpleOTB ?                            |
+  |               | What is missing in the new classification framework |
+  |               | What is missing in Monteverdi                       |
+  |---------------+-----------------------------------------------------|
+  | 17:00 - 19:00 | *Happy hours*                                       |
+  |---------------+-----------------------------------------------------|
+
+
+** Day 3: Hackfest (June 9)
+   
+30 minutes planning meeting at the beginning
+
+ - Write the code you need with the help of a member of the
+   development team
+ - Documentation review: live enhancement of the documentation
+ - Live bugfixes: You think you found a bug? We investigate and fix it with you
+ - Packaging improvement
+ - PSC meeting (to be scheduled)
+ - If there is time left: guru code hacking
+
+*Lunch: Pizza party!*
+
+* Useful information
+** Useful information
+*** Wireless internet connection
+
+*** Coffee and coffee breaks
+
+*** Lunch
+
+*** Social events
+
+*** Sponsor
+    Thanks to CS for hosting and catering the event!

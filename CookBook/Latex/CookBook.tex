@@ -65,7 +65,11 @@
 \lstset{language=Java
         }
 }
-
+\newcommand{\lstsetescapechar} {
+\lstset{
+  escapechar=\&
+   }
+}
 
 \newif\ifitkFullVersion
 \itkFullVersiontrue
@@ -96,10 +100,7 @@ colorlinks,linkcolor={red},citecolor={blue},urlcolor={blue},
 \usepackage{bbm}
 
 
-
 \def\logoCNES{../Art/CNES_nom.pdf}
-
-
 
 % Useful macros
 \newcommand{\otb}{\textbf{Orfeo ToolBox}\xspace}
@@ -119,12 +120,14 @@ colorlinks,linkcolor={red},citecolor={blue},urlcolor={blue},
 \newcommand{\download}{\href{https://www.orfeo-toolbox.org/download/}{OTB download
    page}\xspace}
 \newcommand{\googleearth}{\textbf{Google Earth\copyright}\xspace}
-
 \newtheorem{algo}{Algorithm}
 \newtheorem{defin}{Definition}
 
+\include{OTBTexMacros}
+
 \title{The Orfeo ToolBox Cookbook, a guide for non-developers\\ Updated
-  for OTB-5.4.0}
+  for OTB-\otbversion}
+
 
 \author{OTB Development Team}
 
@@ -191,7 +194,7 @@ colorlinks,linkcolor={red},citecolor={blue},urlcolor={blue},
 %\input{Abstract.tex}
 \chapter*{Foreword}
 \noindent
-After almost 5 years of development, the \otb has become a
+Since 2006, the \otb has become a
 rich library used in many remote sensing context, from research work
 to operational systems. The \app and more recently the
 Monteverdi tool has helped to broaden the audience of the library,
@@ -260,6 +263,3 @@ For more information on the \otb, please feel free to visit the \website.
 \include{ApplicationsReference}
 
 \end{document}
-
-
-

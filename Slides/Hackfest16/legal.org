@@ -1,0 +1,85 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{Code provenance review, license and OSGeo incubation}
+
+
+* Introduction
+** Legal presentation
+   - I'm going to start a presentation on legal issues -> Please don't leave now
+   - IANAL ("I am not a lawyer")
+   - Legal questions does actually matter (packaging, contributions, governance...)
+   - State of OSGeo incubation process for OTB
+   - Code provenance review
+   - Moving OTB license from CeCILL (GPL) to Apache v2
+** Why legal issues matter?
+    - Why does it take so long to have OTB package in Debian?
+    - What is the difference between Apache and GNU GPL license?
+    - What is the difference between GNU GPL and CeCILL?
+    - Why not changing OTB license to the WTFPL license (Do What the /f-word/
+      You Want to Public License) ?
+    - Is it difficult to re-license a software ? /most of the time, yes/ [fn:1]
+* OSGeo incubation
+** OSGeo incubation
+*** OSGeo
+    - The Open Source Geospatial Foundation (OSGeo)
+      - Not-for-profit organization
+      - Software foundation
+      - Mission is to foster global adoption of open geospatial tech
+*** OSGeo incubation 
+    - Incubation committee: responsible for overseeing the incubation process for new projects
+    - OTB apply in 2011 -> mentor : Landon Blake
+    - Everyone is benevolent
+    - Checklist to complete the incubation 
+    - Long process, lead to sometimes long discussions...
+    - IMHO very valuable for OTB to improve and structure the project 
+** OTB incubation checklist
+   - OSGeo wiki: https://wiki.osgeo.org/wiki/OTB_Project_Incubation_Status
+*** Status report
+     - Infrastructure Transition (website, source access...) -> *OK*
+     - Community Functioning -> Set up OTB PSC and  project procedures -> *OK* 
+     - Foundation Membership -> brand OTB site with OSGeo foundation -> *OK* 
+     - Code Copyright Review and Committer Responsibilities Guidelines -> In progress
+** Code provenance review
+*** Contributions since 2006
+    - All OTB dependencies are license in Apache/MIT
+    - All contributions licensed in  CeCILL
+    - No contributor agreement for committers (no CLA, CCLA)
+    - Discussion (initiate by CNES) to move OTB license from CeCILL to Apache
+*** Strategy
+   - Check (again) the compatibility of third part libraries with OTB
+     - Most
+     - 6S (Radiative transfer) : provide with no license -> working on it
+   - Code provenance review:
+     - List all files and identify contributors
+     - *Completed*
+     - Contributors have been contacted to sign a CLA (adapted from Apache CLA)
+* Moving from GPL to Apache
+** Moving from GPL to Apache
+*** How does Apache 2.0 license differ from GPL?
+    - Permissive
+    - Apache: you're not required to distribute the source code of a covered work
+
+*** Re-licensing
+    - Code provenance review and contributor agreements is necessary condition
+    - But not sufficient! Also need to be discuss thorough an RFComments and a RFC
+    - Would not change much things for most users and contributors
+    - CNES committed to continue to contribute to the library
+
+* Conclusion
+
+** Conclusion
+   - OSGeo incubation starts in 2011 (first application)
+   - Not far for OTB to be a member
+   - Being an official OSGeo soft will not change lots of thing
+   - But I think that the incubation helps OTB to have a more open
+   - Code provenance review completed
+   - Moving to GPL to Apache was already discuss on OTB blog but it should lead
+     to an RFC and discussion (their is already a RFComments)
+
+** Questions ?
+
+* Footnotes
+
+[fn:1] Mozilla Foundation difficult experience http://www.mozillazine.org/talkback.html?article=4155
+

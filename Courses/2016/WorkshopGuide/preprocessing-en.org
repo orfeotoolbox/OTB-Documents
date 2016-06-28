@@ -1,0 +1,460 @@
+** Preprocessing of Very High Resolution optical imagery             :slides:
+*** Goals and data
+**** Goals
+     - Know how to perform optical calibration
+     - Know how to perform image fusion (pan-sharpening)
+     - Know how to perform ortho-rectification
+**** Data
+     Data are available in directory ~Data/preprocessing/~. Sub-directories
+     ~SRTM~ and ~Geoid~ are also used.
+*** Outline
+    The outline for this workshop is as follows:
+    1. Atmospheric corrections
+    2. Fusion P+XS
+    3. Ortho-rectification
+*** Optical calibration
+**** Atmospheric correction
+     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/atmo_correction.png]]
+     (source http://www.hkcoastalwaterquality.tk/Methodology.html)
+**** Digital number (DN)
+     Output from the sensor (no unit, sensor dependant)
+**** Luminance
+     Luminance is the quantitative measure of lights (W.m-2.sr-1)
+**** Reflectance Top Of Atmosphere (TOA) 
+     The reflectance of the surface of a material is its effectiveness in
+     reflecting radiant energy.
+     It is the fraction of incident electromagnetic power that is reflected at an interface.
+     Percentage, no unit.
+**** Reflectance Top Of Canopy (TOC) 
+     Coefficient de réflexion au sommet de la canopée (= TOA - effets atmosphériques)
+
+*** Fusion (pan-sharpening)
+    
+**** What is pan-sharpening ?
+    - Most VHR sensors acquired 2 images separately:
+      - The multi-spectral bands cover a narrow  range with less spatial
+        resolution (than PAN)
+      - The panchromatic band with a larger spectral range and a greater
+        spatial resolution (4x greater generally)
+    - Pansharpening =  process of merging high-resolution panchromatic and lower resolution multispectral imagery to create a single high-resolution color image
+
+**** PXS in a nutshell
+     1. Fine superposition of Pan and XS bands
+     2. Fusion algorithm
+
+*** Orthorectification
+
+     #+BEGIN_LaTeX
+     \begin{center}
+     \begin{tikzpicture}[scale=0.2]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Input series};
+     %\pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     %%\pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
+     %\pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     %\pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     %\pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+%\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block Adjustement};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     %\pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
+     %\pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     %\pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     %\pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Map Projection};
+     %\pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+     \end{tikzpicture}
+     \end{center}
+     #+END_LaTeX
+    
+
+** Preprocessing of Very High Resolution optical imagery                          :guide:
+*** Description                                                        :desc:
+**** Summary
+     This exercise allows to get familiar with radiometric and geometric
+     corrections using OTB applications. 
+
+**** Prerequisites
+     - Basic knowledge of remote sensing imagery
+     - Basic knowledge on how to use OTB applications
+       
+**** Goal
+***** Know how to perform optical calibration
+      - Allow to compare and validate values between images and sensors (multi-temp) et multi-sensors
+      - Convert DN between TOA reflectance (Top of Atmosphere) and TOC (Top of Canopy)
+***** Know how to perform image fusion (pan-sharpening)
+      - Pan (greater spatial resolution) and XS (greater spectral resolution)
+      - Test several fusion methods
+      - Special modes available for PHR Pleiades image fusion (mode /Pléiades/)
+      - See effects of image fusion (moving objects, radiometric calibration)
+***** Know how to perform orthorectification
+      - Spatially located satellite images
+      - Associate geographical coordinates to pixel positions
+      - Know prerequisites; bias, approx...
+       
+*** Steps                                                             :steps:
+
+Data are located in the ~Data/preprocessing/~ folder. We will use also
+folders ~SRTM~ et ~Geoid~.
+
+In this part of the exercise, you'll use images ~phr_xs_osr_mipy.tif~ and
+~phr_pan_osr_mipy.tif~. Those are extracts of Pan and XS from a Pleiades product
+(Bundle Primary Level 1A) South West of Toulouse. 
+**** Atmospheric corrections
+     The goal is to convert Digital Number to reflectance (physical value). The
+process is composed of 2 steps: computation of Top Of Atmosphere reflectance and
+then surface reflectance which consists in taking into account atmospheric
+effects.
+     #+BEGIN_LaTeX
+
+
+     \begin{center}
+\begin{tikzpicture}[scale=0.18]
+   \tiny
+
+    \draw[->,thick] (0,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (4,-2) rectangle +(6,4);
+    \node[text width= 0.8cm] (SensorModel) at (7,0) {DN to Lum};
+%     \pause
+
+    \draw[->,thick] (11,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (16,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (19,0) {Lum to Refl};
+%     \pause
+
+
+    \draw[->,thick] (23,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (27,-2) rectangle +(6,4);
+    \node[text width= 0.85cm] (SensorModel) at (30,0) {TOA to TOC};
+%     \pause
+
+    \draw[->,thick] (34,0) --  +(3,0);
+%     \pause
+
+    \draw[fill=black!30,rounded corners=2pt] (38,-2) rectangle +(6.5,4);
+    \node[text width= 0.85cm] (SensorModel) at (41,0) {Adjacency};
+%     \pause
+
+    \draw[->,thick] (45,0) --  +(3,0);
+
+ \end{tikzpicture}
+\end{center}
+
+#+END_LaTeX 
+
+With ~phr_xs_osr_mipy.tif~:
+
+1. Use *OpticalCalibration* application to compute TOA reflectance.
+2. Use *OpticalCalibration* application to compute surface reflectance (top of canopy).
+3. Compare both images using Monteverdi or an other OTB application
+   (TOA-TOC). Compare TOC and TOA bands separately red, green and blue
+   (B0,B1,B2). Which band is more impacted by atmospheric effects ?
+4. Apply operations 1,2 and 3 to the panchromatic image ~phr_pan_osr_mipy.tif~.
+
+_Tips :_
+- Use '-milli' option to allow to save output image in integer (16 bits). By
+  default reflectance images are saved in float values (between 0 and 1).
+
+**** Fusion P+XS
+     The goal of the exercise is to create a pan-sharpened image from the Pan
+     and XS bundle. Physical constraints on sensor and telescope conception did
+     not allow to have at the same time a high spatial and spectral
+     resolutions. Indeed, the reduction of the sampling is accompanied by a
+     decrease of the signal , so the SNR . It compensates by increasing the
+     diameter of the entrance pupil or well using specific detectors to charge
+     accumulation (TDI) and also varying the width of the spectral band.
+     An other arguments is the constraint on the amount of data that can be
+     archive in the satellite memory also as bandwidth limitation.
+
+     Most VHR sensors delivers 2 types of images:
+     - Multi-spectral (XS): separate spectral bands each on a spectral range(can
+       overlap). For Pléiades, 4 bands (B,G,R,NIR) with a spatial resolution of
+       2.8m (resampled to 2m)
+     - Panchromatic(PAN): image in grey level with a detector which covers
+       a larger spectral range (improve SNR) which allow to acquire image at 0.7m
+       in the case of Pléiades (resample at 0.5m)
+     
+     We will perform pan-sharpening using TOA reflectance PAN and XS images (
+     ~phr_xs_osr_mipy_toa.tif~ and ~phr_xs_osr_mipy_toa.tif~)
+     
+    
+     1. Use the *BundleToPerfectSensor* application to superimpose and fuse PAN
+        and XS images. Note that the application has a /phr/ mode (Pléiades)
+        which allows to perform images superposition without the need of sensor
+        model parameters (default mode).In fact Pléiades bundle are colocalized
+        on the same grid.
+     2. Which fusion algorithm is used in the *BundleToPerfectSensor* application?
+     3. (optional) Use applications *Superimpose* et *Pansharpening* to perform
+        pan-sharpening with other fusion methods available in OTB.
+
+**** Ortho-rectification
+     
+     This operation will allows to map pixel index in the image with ground
+coordinates. 
+
+     The schema below describes all steps that can be required to go from a set
+     of Level 1 products to an coregistered and colocalized image stack. 
+
+     #+BEGIN_LaTeX
+     \begin{center}
+     \begin{tikzpicture}[scale=0.2]
+    \tiny
+    \draw[fill=black!10] (-1,-12) rectangle (75,17);
+     \foreach \x in {5,...,1}
+       \draw[fill=red] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.5cm] (InputSeries) at
+       (4,-1) {Input series};
+     %\pause
+     \draw[->,thick] (9,5) --  +(3,0);
+     %%\pause
+     \draw[fill=black!30,rounded corners=2pt] (12.2,3) rectangle +(6,4);
+     \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
+     %\pause
+     \draw[fill=red!30] (1,-10) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.2cm] (DEM) at
+       (5,-11) {DEM};
+     %\pause
+     \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
+     %\pause
+     \draw[->,thick] (18.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=blue,xshift=600pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 2.8cm] (GeoRefSeries) at
+       (28,-1) {Geo-referenced Series};
+%\pause
+      
+
+       \draw[->,thick] (25.5,8.5) --  +(0,3);
+       
+     \draw[fill=black!30,rounded corners=2pt] (22,12) rectangle +(8.5,4);
+     \node[text width= 1.5cm] (HomPoExtr) at (27,14) {Homologous Points};
+
+     \draw[->,thick] (21.5,14) --  +(-2.5,0);
+
+     \draw[fill=black!30,rounded corners=2pt] (11,12) rectangle +(8,4);
+     \node[text width= 1.3cm] (BBAdj) at (15.5,14) {Bundle-block Adjustement};
+
+     \draw[->,thick] (15,11.5) --  +(0,-4);
+
+     %\pause
+      \draw[->,thick] (30,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (33.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (FineRegistration) at (36,4.9) {Fine Registration};
+     %\pause
+
+     
+     \draw[->,thick] (39.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=green,xshift=1200pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.8cm] (RegistSeries) at
+       (47,-1) {Registered Series};
+     %\pause
+     \draw[->,thick] (36,2) --  ++(0,-10) -- ++(-30,0);
+
+     %\pause
+      \draw[->,thick] (52,5) --  +(3,0);
+      %\pause
+     \draw[fill=black!30,rounded corners=2pt] (55.2,2.5) rectangle +(6,4.5);
+     \node[text width= 0.7cm] (CartoProjection) at (57.5,4.9)
+          {Map Projection};
+     %\pause
+
+     
+     \draw[->,thick] (61.5,5) --  +(3,0);
+     %\pause
+     \foreach \x in {5,...,1}
+       \draw[fill=yellow,xshift=1810pt] (\x,\x) rectangle +(4,4);
+     \node[fill=black!10, text width= 1.95cm] (CartoSeries) at
+       (68,-1) {Cartographic Series};
+     
+       
+     \end{tikzpicture}
+     \end{center}
+     #+END_LaTeX
+
+     Those steps can vary depending of the sensor and the product levels.
+
+     In the exercise we will only perform image orthorectification of the
+     pan-sharpened product to discover modes available in OTB.
+     
+     Use  the *Orthorectification* application to perform the
+     orthorectification:
+
+        1. Without DEM
+        2. With a DEM and a geoid (use ~SRTM~ directory)
+        3. Compare the 2 images in Monteverdi. What do you notice?
+        4. What is the projection system by default in the *Orthorectification* app?
+        5. In which UTM zone is located the Pleiades image?
+        6. Test different projection systems (WGS84, Lambert 93) and open the ortho image in QGIS?
+
+** Pre-processing of VHR satellite images                 :solutions:
+*** Atmospheric corrections
+     
+    Compute TOA reflectance:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration \
+    -in phr_xs_osr_mipy.tif \
+    -out phr_xs_osr_mipy_toa.tif uint16 \
+    -level toa \
+    -milli 1
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration \
+    -in phr_pan_osr_mipy.tif \
+    -out phr_pan_osr_mipy_toa.tif uint16 \
+    -level toa \
+    -milli 1
+    #+END_EXAMPLE
+
+
+    Compute TOC reflectance:
+
+     #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration 
+    -in phr_xs_osr_mipy.tif \
+    -out phr_xs_osr_mipy_toc.tif uint16 \
+    -level toc \
+    -milli 1
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_OpticalCalibration 
+    -in phr_pan_osr_mipy.tif \
+    -out phr_pan_osr_mipy_toc.tif uint16 \
+    -level toc \
+    -milli 1
+    #+END_EXAMPLE
+
+    We can use *BandMathX* app to compute image differences:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMathX 
+    -il phr_xs_osr_mipy_toa.tif phr_xs_osr_mipy_toc.tif \
+    -out diff_xs_toa_toc.tif int16 \
+    -exp "im1-im2"
+    #+END_EXAMPLE
+
+    Then, for the panchromatic image:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_BandMath 
+    -il phr_pan_osr_mipy_toa.tif phr_pan_osr_mipy_toc.tif \
+    -out diff_pan_toa_toc.tif int16 \
+    -exp "im1b1-im2b1"
+    #+END_EXAMPLE
+
+    The blue band is more impacted by atmospheric effects. Indeed molecular
+    diffusion on signal is important in this spectral range (factor $\lambda^{-4}$). 
+
+*** Fusion P+XS
+    #+BEGIN_EXAMPLE
+    $ otbcli_BundleToPerfectSensor \
+    -inp phr_pan_osr_mipy_toa.tif \
+    -inxs phr_xs_osr_mipy_toa.tif \
+    -mode phr \
+    -out phr_pxs_osr_mipy.tif uint16
+    #+END_EXAMPLE
+*** Ortho-rectification
+
+    1. Orthorectification without DEM:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in phr_pxs_osr_mipy.tif \
+       -io.out phr_orthopxs_osr_mipy.tif uint16
+       #+END_EXAMPLE
+    2. Orthorectification with DEM and geoid:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in phr_pxs_osr_mipy.tif \
+       -io.out phr_orthopxs_osr_mipy.tif uint16 \ 
+       -elev.dem SRTM/ \
+       -elev.geoid Geoid/egm96.grd
+       #+END_EXAMPLE
+    3. Default projection is UTM. In our case the UTM zone is 32 North. 
+    4. Orthorectification in WGS84 and in Lambert 93:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in phr_pxs_osr_mipy.tif \
+       -io.out phr_orthopxs_osr_mipy.tif uint16 \ 
+       -elev.dem SRTM/ \
+       -elev.geoid Geoid/egm96.grd \ 
+       -map epsg -map.epsg.code 4326
+       #+END_EXAMPLE
+
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in phr_pxs_osr_mipy.tif \
+       -io.out phr_orthopxs_osr_mipy.tif uint16 \
+       -elev.dem SRTM/ \
+       -elev.geoid Geoid/egm96.grd \
+       -map lambert93
+       #+END_EXAMPLE

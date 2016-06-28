@@ -1,0 +1,174 @@
+** Use Monteverdi and QGIS                                           :slides:
+*** Goals and data
+**** Goals
+     - Know how to visualize an image and set up rendering in Monteverdi,
+     - Know how to visualize an images stack in Monteverdi,
+     - Know how to visualize an image and set up rendering in QGIS,
+     - Know how to visualize vector data in QGIS,
+     - Know how to visualize an images stack in QGIS,
+     - Tips and tricks.
+
+**** Data
+     Dataset can be found in the following directories:
+     - ~Data/preprocessing~ (Pléiades extract)
+     - ~Data/classification/Extract16bits/~ (LandSat8 image series)
+     - ~Data/classification/training/~ (vector data ESRI Shapefile)
+
+*** Program
+
+    - Visualize an image in Monteverdi
+    - Visualize a stack of images in Monteverdi
+    - Visualize an image in QGIS
+    - Visualize vector data in QGIS
+
+*** Introduction
+    - Several software products which share common functions
+    - But which sometimes differ in term of philosophy (Monteverdi /image oriented/, QGIS
+      /GIS platform/)
+    - Several ways to do the same operation in these applications
+*** Monteverdi
+    - At the beginning simple tool to demonstrate OTB library potential
+    - Move to an integrate application which allow to access to OTB applications 
+    - Graphical User Interface (GUI) based on Qt
+    - Rendering engine based on Ice (OpenGL+OTB)
+    - Effects which use Graphic cards capability (shader) to allow to do on the
+      fly rendering (local contrast,
+      transparency, gradient...)
+*** Monteverdi
+      #+begin_center
+    #+ATTR_LaTeX: width=0.95\textwidth center  
+    [[file:../../../Slides/OTB-General/images/monteverdi2-loupe.png]]
+    #+end_center
+*** Monteverdi
+    - Main window contains:
+      - Main menu (open image, close,preferences...)
+      - Top toolbar (shortcut)
+      - Image displaying (main view)
+      - Right side dock (color composition, quicklook...) 
+      - Stack layer (images stack)
+      - [[https://www.orfeo-toolbox.org/CookBook/CookBookch2.html#x19-180002][See A brief tour of Monteverdi]]
+*** Quantum GIS 
+    - GIS: organize and display spatial data
+    - Main functions in a GIS :
+      - Display and create maps
+      - Data acquisition des données
+      - Data analysis 
+      - Data representation
+      - Storage
+    - Lots of tutorials, technical courses available online...
+*** Quantum GIS processing (since version 2.0)
+    - Processing plateform to access to GRASS-GIS,SAGA-GIS, R and OTB!
+    - Historically based on integration of Sextante project in QGIS(Victor Olaya)
+    - Access to all OTB applications(some of them are customized with a
+      simplified interface)
+    - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
+*** Quantum GIS
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
+    [[file:../../../Slides/OTB-General/images/otb_qgis.png]]
+
+*** Principle
+    - Discover data package and software
+    - Monteverdi:
+      - How to visualize and set up color rendering options
+      - Know how to use image stack
+      - Explore /Effects/ available
+    - QGIS:
+      - How to visualize and set up color rendering options
+      - How to visualize vector data
+      - Know how to use image stack
+    - Work in pairs for 15 minutes
+    - Round table (30 to 45 minutes), every group do a restitution/give a
+      trick/ask a question...
+** Use *Monteverdi* et *QGIS*                                         :guide:
+*** Description                                                        :desc:
+**** Résumé
+     Goal is to discover software products and the data package that will be
+     used during the course. You will be able to use both Monteverdi or QGIS to
+     do all exercises of the course. 
+
+**** Pré-requis
+
+     - Install Monteverdi and QGIS
+     - Download data
+       
+**** Objectifs
+
+     Goals of this exercise
+
+     - Know how to visualize an image and set up rendering in Monteverdi,
+     - Know how to visualize an images stack in Monteverdi,
+     - Know how to visualize an image and set up rendering in QGIS,
+     - Know how to visualize vector data in QGIS,
+     - Know how to visualize an images stack in QGIS,
+     - Tips and tricks.
+
+*** Étapes                                                            :steps:
+
+    For this exercise, we propose to work in pairs. At the end of the exercise
+    every team will do a restitution of their experiments to show to other
+    groups some tips they found and ask also some questions about functions
+    available in both software products.
+
+**** Visualize an image in Monteverdi
+
+     Open the image ~phr_xs_osr_mipy.tif~ available in directory
+     ~Data/preprocessing~ in Monteverdi.
+
+     List of all keyboards shortcuts is available in menu /Help/.
+
+     Change band display and also Modifiez les bandes visualisées and change
+     rendering values 
+
+     Test effects like /Local contrast/, /Gradient/ et /Spectral angle
+     Spectral/. What are there purpose ?
+
+     Change zoom level by using /CTRL + mopuse wheel/,
+     you can edit also the image scale in the bottom in the status bar.
+
+     Close Monteverdi.
+
+**** Visualize images stack in Monteverdi
+
+     Open the 9 LS8 images in folder
+     ~Data/classification/Extract16bits/~.
+
+     Change bands to display natural colors (red: Band 3, green: band 2, blue: band
+     1). Use button /Apply all parameters to all layers/ to have the same
+     rendering options on the all stack.
+
+     Use mouse wheel to move between all dates.
+
+     Test effects /Local transparency/, /Chess board/ et
+     /Balayage/. What are there purpose ?
+
+     Close Monteverdi.
+
+**** Visualize an image in QGIS
+
+     Open the first LS8 image in QGIS. Use the contextual menu of the layer to
+     change color dynamics to have the same rendering as in Monteverdi. In the
+     same contectual menu, add this style to be able to apply it to other images.
+
+     Move in resolution.
+
+     Open other LS8 images and apply the rendering style you've just created.
+
+     What are the differences between Monteverdi and QGIS in term of image
+     visualization and rendering functions ?
+
+**** Visualize vector data in QGIS
+
+     Open ~training.shp~ in folder
+     ~Data/classification/training/~.
+
+     Use the contextual menu to open /Properties/ and /Style/ tab. Use
+     /Categorised/ using colum /LC/. How many classes in the file? Change the
+     color to table to display different classes in different colors.
+
+     Open attribute table. How many polygons are contain in the class /pelouse/ (/lawn/)?
+
+     Try to find how to select and display only polygons from this class
+     
+** Use *Monteverdi* et *QGIS*                                     :solutions:
+
+   Live demo done by the instructor to show image manipulations and functions.

@@ -1,0 +1,116 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage[left=2.0cm,right=2.7cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{booktabs}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[scale=0.5]{Art/otb-logo.png}
+
+Questionnaire d'évaluation de formation
+
+{\small\url{https://www.orfeo-toolbox.org}}
+
+\today
+\end{center}
+
+\begin{center}
+\begin{minipage}{.8\textwidth}
+Merci d'avoir participé à cette formation Orfeo Toolbox ! Pour nous aider à
+améliorer nos futures prestations, merci de remplir ce questionnaire et de
+penser à ajouter tout commentaire pertinent. Toutes les remarques sont les
+bienvenues!
+\end{minipage}
+\end{center}
+
+\newcommand{\answer}{
+\\ \quad $\square$ Oui \quad $\square$ Non\\
+\vspace{4em}
+}
+
+Est-ce que vous êtes content d'avoir participé?
+\answer
+
+Est-ce que les objectifs annoncés sont atteints?
+\answer
+
+Est-ce que le niveau de difficulté est adapté?
+\answer
+
+Le rythme de la formation est adapté (temps par séquence, temps de pause,
+horaires)?
+\answer
+
+Est-ce que les formateurs sont disponibles et compétents?
+\answer
+
+Qualité des supports (planches, guides de tp)?
+\answer
+
+L'environnement de travail est satisfaisant (locaux, matériel, nombre de
+participants).
+\answer
+
+La formation était bien planifiée (annonce des dates, informations pratiques,
+prérequis).
+\answer
+
+\newcommand{\moduleanswer}{
+\\
+\begin{tabular}{rlll}  
+  Difficulté:         & $\square$ Adaptée & $\square$ Difficile & $\square$
+  Facile\\
+  Temps alloué:       & $\square$ Adapté  & $\square$ Manque de temps pour tout
+  faire & $\square$ Manque de choses à faire\\
+  Qualité du support: & $\square$ Bonne & $\square$ À améliorer: & \\
+  Commentaire: &&&\\
+\end{tabular}
+\vspace{4em}
+}
+
+\textbf{TP1} Installation et configuration des logiciels:
+\moduleanswer
+
+\textbf{TP2} Présentation de Monteverdi, QGIS, applications et méchanismes interne de l'OTB:
+\moduleanswer
+
+\textbf{TP3} Imagerie THR optique, prétraitements SIG:
+\moduleanswer
+
+\textbf{TP4} Classification supervisée pour les séries multitemporelles Landsat 8:
+\moduleanswer
+
+\textbf{TP5} Traitement SAR pour l'imagerie Sentinel 1:
+\moduleanswer
+
+Est-ce qu'il vous a manqué quelque chose en particulier ?
+\vspace{6em}
+
+Il y avait-il des choses superflues ou non pertinentes ?
+\vspace{6em}
+
+Autre commentaires:
+
+\end{document}

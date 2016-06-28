@@ -1,0 +1,342 @@
+** Introduction to SAR image processing :slides:
+*** Goals and data
+**** Goals
+
+     - Know how to manipulate SAR images
+     - Know how to perform SAR calibration
+     - Know how to perform SAR orthorectification
+     - Know methods to reduce speckle noise in images
+     - Know more about features extraction in SAR images
+
+**** Data
+
+     Data are located in the ~Data/sar~ folder.
+
+*** Outline
+    1. Introduction to SAR image
+    2. Radiometric calibration
+    3. Geometric corrections
+    4. Speckle filtering
+    5. Polarimetry
+    6. Feature extraction (TD)
+***  Optic vs Radar
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
+    [[file:Images/actif_passif_cours_cnes.png]]
+    (source CNES: Book "IMAGERIE SPATIALE Des principes d’acquisition au traitement
+    des images optiques pour l’observation de la Terre")
+*** Introduction SAR
+    - Radar: measuring objects properties from distance with dedicated instruments
+    - SAR: Synthetic Aperture Radar
+    - Active sensor
+    - Day and Night imaging capability
+    - Atmosphere mainly transparent to SAR
+    - Complementary information to optical systems
+*** Principles
+    - Use the flight path of the platform to simulate an extremely large antenna or aperture electronically
+    - Properties from distance
+    - Repeat echoes in the second dimension (azimuth)
+    - Complex signal (amplitude and phase)
+*** Radiometric calibration
+    - Radar reflectivity (backscattered signal) of targets as a function of their position
+    - backscattered coefficient can be a positive number if there is a focusing
+      of  backscattered energy towards the radar
+    - backscattered coefficient can be a negative number if there is a focusing
+      of  backscattered energy way from the radar
+    - Rugosity, humidity...
+    - Calibration -> DN to backscattering coefficient
+    - Examples:
+      - Very high backscatter (above -5 dB) -> man made surfaces
+      - High backscatter (-10 dB to 0 dB) -> rough surface, dense vegetation
+      - Moderate backscatter (-20 to -10 dB) -> medium level vegetation, crops
+      - Low backscatter (below -20 dB) -> smooth surface (water)
+*** Geometric corrections
+    - Spatialize images
+    - Range (depend on the PRF) and Azimuth Resolutions (depends on the size of
+      the antenna for a Radar System
+    - Resolutions
+      - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
+      - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
+    - geometrical distortions (foreshortening and layover)
+    - http://fad.ensg.eu/moodle/course/view.php?id=519
+*** Speckle
+    - Granular 'noise' that inherently exists in and degrades the image quality
+    - Strong!
+    - Speckle noise in SAR is a multiplicative noise, i.e. it is in direct proportion to the local grey level in any area
+    - Several methods to try to reduce this noise
+    - Try to reduce speckle effects without loosing to much details
+    - Speckle filtering allows to improve image quality and facilitate interpretations
+*** To go further
+
+    - S1 ToolBox (SNAP)
+    - Polarimetry: ESA PolSARPro
+    - Lot of useful resources related to SAR on the Internet (ENSG moodle, ESA
+      training, PolSARPro tutorials, SAREDU DLR online courses...)
+
+** Introduction to SAR images                                         :guide:
+*** Description                                                        :desc:
+**** Summary
+     
+     The following exercise is an introduction to processing and analysis of SAR
+     images using the ORFEO ToolBox.
+
+     There are also a lot of other open source tools to process SAR images that
+     can be used in combination with OTB (see PolSARPro, Sentinel-1 toolbox...) 
+
+**** Prerequisites
+
+     - Installed Monteverdi and Orfeo ToolBox software
+     - Downloaded data
+     - Understand Orfeo Toolbox applications (see relevant exercise)
+       
+**** Goal
+
+     - SAR image manipulation
+     - Radiometric calibration
+     - Geometric corrections
+     - Speckle filtering
+     - Basic SAR polarimetry
+
+*** Steps                                                             :steps:
+
+    Data located in ~Data/sar~ folder.
+
+**** Introduction to SAR images
+
+In this exercise we will use an extract from a Sentinel-1 SLC Strip Map (80 km
+Swath, 5 x 5 m spatial resolution): ~s1_hh.tif~ et ~s1_hv.tif~. The image is
+located in Germany near the Constance lake (47.456276, 9.638616).
+
+Tips: you can use ImageMagick if you want to flip images without doing the
+orthorectification (not mandatory):
+
+        #+BEGIN_EXAMPLE
+        convert input.tif -depth 32 
+        -define quantum:format=floating-point 
+        -flop output.tif
+        #+END_EXAMPLE
+
+1. Open the image in Monteverdi. How many bands in both images? To what
+   corresponds these bands in the complex product?
+2. Compute image intensity of complex products ~s1_hh.tif~ et
+   ~s1_hv.tif~. Compute also image intensity in decibel.
+
+**** Radiometric calibration
+     
+     Pixel values in SAR images like S1 are without unit (radar reflectivity or radar brightness).
+
+     Image metadata allows to transform DN to physical values (in case of SAR
+     backscattering coefficient) which allows to compare images from different
+     sensors and modes and perform analysis. 
+
+     Can be computed:
+     - Beta Nought: \beta radar brightness coefficient. The reflectivity per unit area in slant range which is dimensionless.
+     - sigma zero: radar backscatter ( portion of the outgoing radar signal
+       that the target redirects directly back towards the antenna)
+     - gamma zero: backscatter normalized with the incidence angle
+
+     For Sentinel-1, Look Up Tables available in image metadata allows to
+     convert from digital numbers to those values.
+
+     1. Find the application which allows to perform this operation with OTB?
+     2. Compute gamma nought for HH and HV images. 
+     3. Convert in decibel.
+
+**** Geometry corrections
+
+     This operation allows to comp
+
+     We will use here the output of the radiometric calibration exercise (gamma
+     nought) as input.
+     
+     Use the *Orthorectification* application to perform geometric corrections
+     using S1 metadata on SLC product:
+        1. Without DEM
+        2. With a DEM and a geoid (use folder ~SRTM~)
+        3. Compare the 2 images in Monteverdi.
+
+**** Speckle filtering
+
+     SAR images are affected by speckle noise  that inherently exists in and
+     degrades the image quality. It is caused by coherent processing of
+     backscattered signals from multiple distributed targets. It is locally
+     strong and it increases the mean grey level of a local area.
+
+     Several different methods are used to eliminate speckle noise, based upon
+     different mathematical models of the phenomenon. In the following part we
+     will use the /Frost/ filter. This algorithm has 2 parameters:
+
+     - /Radius/
+     - /deramp/ : control exponential function use to moderate effect of the
+       distance between the central pixel and its neighborhood.
+
+     You can find more details about the Frost filter [[http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf][here]].
+
+     1. What are despeckle methods available in OTB?
+     2. Use the /Frost/ filter with different radius (3,5 and 10) and comment
+        effects on the output image.
+     3. Compare the histogram of the filtered image with the intensity?
+     4. Use the /Frost/ filter with radius=5 and different /deramp/ values
+        (00.5,0.2 et 0.8). Comment effects of the deramp parameter.
+
+**** Polarimetry
+
+     We will try to introduce basic notions of polarimetry to show that HH and
+     HV polarizations allows to access to different types of information.
+
+     1. Compute the difference between HH and HV (use intensity image as input).
+     2. Create a color combination of bands HH, HV and HH-HV. We can take here
+        2*HV as HV backscattered values are generally smaller.
+     3. Convert the color composition in Decibel (Db)
+     4. Display the image in Monteverdi and comment differences between HH and
+        HV (layover areas, vegetation, soil, water...)
+     5. Using the image which combines HH, HV and HH-HV in Decibel try to find
+        in the extract:
+        - Coordinates of 2 parallel power lines
+        - Harder to find, locate in the image an area which looks like a corner
+          reflector (reflects waves back directly towards the source)
+        - What can you see in the lake at pixel coordinates (930,1170)?
+
+**** Feature extraction
+
+     To go further, we can explore available feature extractions methods for SAR
+     available in OTB. s
+
+     See for instance Touzi filter in *EdgeExtraction* application.
+
+** Introduction to SAR image processing                           :solutions:
+**** Introduction to SAR image
+1. The 2 extracts correspond to polarimetric combinations HH ( for horizontal
+   transmit and horizontal receive) and HV for horizontal transmit and vertical receive
+2. The 2 bands correspond to the real and the imaginary part of the complex signal.
+3. We can use the *BandMath* app to compute the image intensity:
+
+   For HH:
+
+   #+BEGIN_EXAMPLE
+    $ otbcli_BandMath \
+   -il s1_hh.tif \
+   -out intensity_hh.tif int32 \
+   -exp "im1b1*im1b1+im1b2*im1b2"
+   #+END_EXAMPLE
+
+   For HV:
+
+   #+BEGIN_EXAMPLE
+    $ otbcli_BandMath \
+    -il s1_hv.tif \
+    -out intensity_hv.tif int32 \
+    -exp "im1b1*im1b1+im1b2*im1b2"
+   #+END_EXAMPLE
+
+**** Radiometric calibration
+     1. *SARCalibration*
+     2. In the case of Sentinel-1, calibration coefficients are directly read in
+        the product metadata
+        #+BEGIN_EXAMPLE
+        $ otbcli_SARCalibration \
+        -in "s1_hh.tif?&geom=s1_hh_calibration.geom" \
+        -out s1_hh_gamma0.tif \
+        -lut gamma
+        #+END_EXAMPLE
+
+        For HV:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_SARCalibration \ 
+        -in "s1_hv.tif?&geom=s1_hv_calibration.geom" \
+        -out s1_hv_gamma0.tif \
+        -lut gamma
+        #+END_EXAMPLE
+        
+     3. Warning: pixel <= 0 in the log expression!
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath \
+        -in s1_hh_gamma0.tif \
+        -out s1_hh_gamma0_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+
+        For HV:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath \
+        -in s1_hv_gamma0.tif \
+        -out s1_hv_gamma0_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+
+**** Geometric corrections
+    1. Orthorectification without DEM:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in s1_hh_gamma0.tif \
+       -io.out s1_hh_gamma0_ortho.tif uint16
+       #+END_EXAMPLE
+    2. With a DEM and a geoid:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in s1_hh_gamma0.tif \
+       -io.out s1_hh_gamma0_ortho.tif uint16 \ 
+       -elev.dem SRTM/ \
+       -elev.geoid Geoid/egm96.grd
+       #+END_EXAMPLE
+    3. Default projection is UTM. 32 North.
+**** Speckle filtering
+
+     1. Available methods are: lee, frost, kuan et gamma map. Speckle filtering
+        allows to increase image quality and facilitate image analysis and
+        objects identification compare to the input signal.
+
+     2. Using the *Despeckle* application and the /Frost/ filter:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_Despeckle \
+        -in intensity_hh.tif \ 
+        -out intensity_hh_speckle.tif \ 
+        -filter frost \
+        -filter.frost.rad 3
+        #+END_EXAMPLE
+
+        The effect of increasing the radius is to smooth the image. It improves
+        image quality in rather smooth areas but degrade details on more
+        contrasted areas and  on small structures.  
+
+     3. The histogram of the filtered image tend to become /Gaussian/ and differ
+        from the Gamma distribution of the original image (right hand tail).
+     4. Increasing /deramp/ parameter will lead to take more into account pixels
+        far from the center and then increase the smoothing effects.
+        
+**** Polarimetry
+     1. HH-HV:
+        #+BEGIN_EXAMPLE
+      $ otbcli_BandMath \
+      -il intensity_hh_speckle.tif intensity_hv_speckle.tif \
+      -out hh-hv_speckle.tif \
+      -exp "im1b1-2*im2b1"
+        #+END_EXAMPLE
+     2. Then, image concatenation:
+     #+BEGIN_EXAMPLE
+      $ otbcli_ConcatenateImages \ 
+      -il intensity_hh_speckle.tif \
+      intensity_hv_speckle.tif hh-hv_speckle.tif \ 
+      -out intensity_compo.tif 
+     #+END_EXAMPLE
+     1. Then convert in Decibel:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath \
+        -in intensity_compo.tif \
+        -out intensity_compo_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+     2. Comments:
+        - layover is a geometric effects similar signal between HH and HV
+        - vegetation area (forest)
+        - HV is less sensible to rugosity
+        - Water areas: low backscatter
+     3. Analysis of color composition:
+        - Power lines around index (230,3700)
+        - Reflector near index (3620,2925)
+        - Anchor mast for boats 
+     
