@@ -79,7 +79,7 @@
     - Work in pairs for 15 minutes
     - Round table (30 to 45 minutes), every group do a restitution/give a
       trick/ask a question...
-** Utiliser *Monteverdi* et *QGIS*                                  :guide:
+** Use *Monteverdi* et *QGIS*                                         :guide:
 *** Description                                                        :desc:
 **** Résumé
      Goal is to discover software products and the data package that will be
@@ -169,6 +169,6 @@
 
      Try to find how to select and display only polygons from this class
      
-** Utiliser *Monteverdi* et *QGIS*                                :solutions:
+** Use *Monteverdi* et *QGIS*                                     :solutions:
 
    Live demo done by the instructor to show image manipulations and functions.
