@@ -1,4 +1,4 @@
-** The *Orfeo ToolBox* Application mechanism                         :slides:
+** The Orfeo ToolBox Application mechanism                           :slides:
 *** Data and Objectives
 **** Objectives
      - Know how to look for an application in the list of available applications
@@ -65,7 +65,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     - [[https://www.orfeo-toolbox.org/CookBook/CookBookch3.html#x38-370003][Examples of use]]
     - [[http://docs.qgis.org/2.8/en/docs/user_manual/processing/index.html][QGIS processing]]
     - Application help: /otbcli\textunderscore{}XXX -help/
-** The *Orfeo ToolBox* Application mechanism                          :guide:
+** The Orfeo ToolBox Application mechanism                            :guide:
 *** Description                                                        :desc:
 **** Summary
 
@@ -183,7 +183,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     images? An image (~image.tif~) and a message (~message.tif~) are
     provided in the ~Data/stegano/diy~ folder to try.
 
-** The *Orfeo ToolBox* Application mechanism                                                               :solutions:
+** The Orfeo ToolBox Application mechanism                        :solutions:
 *** Message 1
     
     To reveal the first message, one can observe that a Pléiades image

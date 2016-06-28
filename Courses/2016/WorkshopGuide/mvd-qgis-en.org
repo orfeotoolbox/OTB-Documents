@@ -35,18 +35,17 @@
       fly rendering (local contrast,
       transparency, gradient...)
 *** Monteverdi
-      #+begin_center
+    #+begin_center
     #+ATTR_LaTeX: width=0.95\textwidth center  
     [[file:../../../Slides/OTB-General/images/monteverdi2-loupe.png]]
     #+end_center
 *** Monteverdi
-    - Main window contains:
+    Main window contains:
       - Main menu (open image, close,preferences...)
       - Top toolbar (shortcut)
       - Image displaying (main view)
       - Right side dock (color composition, quicklook...) 
       - Stack layer (images stack)
-      - [[https://www.orfeo-toolbox.org/CookBook/CookBookch2.html#x19-180002][See A brief tour of Monteverdi]]
 *** Quantum GIS 
     - GIS: organize and display spatial data
     - Main functions in a GIS :
@@ -58,7 +57,7 @@
     - Lots of tutorials, technical courses available online...
 *** Quantum GIS processing (since version 2.0)
     - Processing plateform to access to GRASS-GIS,SAGA-GIS, R and OTB!
-    - Historically based on integration of Sextante project in QGIS(Victor Olaya)
+    - Historically based on integrwation of Sextante project in QGIS(Victor Olaya)
     - Access to all OTB applications(some of them are customized with a
       simplified interface)
     - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
