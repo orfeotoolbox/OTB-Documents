@@ -30,6 +30,7 @@
     - Impulsions hyperfréquences et enregistrement des échos
     - Quasi-transparence de l'atmosphère
     - Acquisition de jour comme de nuit
+    - [[http://cours-fad-public.ensg.eu/course/view.php?id=94][Cours en ligne ENSG]]
 *** Principe de fonctionnement
     - 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
     - Écho recueilli par la même antenne
@@ -51,7 +52,6 @@
       - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
       - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
     - Il existe distorsions géométriques dues au déplacement du relief (foreshortening et layover)
-    - http://fad.ensg.eu/moodle/course/view.php?id=519
 *** Speckle
     - Images RSO fortement affectées par le chatoiement (speckle)
     - Bruit très fort

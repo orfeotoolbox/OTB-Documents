@@ -57,7 +57,6 @@
       - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
       - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
     - geometrical distortions (foreshortening and layover)
-    - http://fad.ensg.eu/moodle/course/view.php?id=519
 *** Speckle
     - Granular 'noise' that inherently exists in and degrades the image quality
     - Strong!
