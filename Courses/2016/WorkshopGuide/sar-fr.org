@@ -103,17 +103,6 @@ Constance (47.456276, 9.638616).
 
 Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUEST.
 
-Si vous voulez remettre les images en Ouest/Est, vous pouvez utiliser par
-exemple l'outil ImageMagick:
-
-        #+BEGIN_EXAMPLE
-        convert input.tif -depth 32 
-        -define quantum:format=floating-point 
-        -flop output.tif
-        #+END_EXAMPLE
-
-Cela n'est pas nécessaire pour effectuer le TP.
-
 1. Ouvrir les images dans Monteverdi. Combien de bandes dans chaque image? A
    quoi correspondent ces bandes?
 2. A quoi correspondent ces bandes? 

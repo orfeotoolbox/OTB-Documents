@@ -107,8 +107,8 @@
      the image. In general we'll use:
      - 8 bits unsigned encoding (with domain [0,255]) for outputs used on screen
        or paper.
-     - 16 bits unsigned encoding to represent satellite images
-    - 32 bits unsigned encoding to represent intermediate processing steps,
+     - 16 bits unsigned encoding to represent most satellite images
+     - 32 bits unsigned encoding to represent intermediate processing steps,
       computation results with real numbers (e.g. NDVI, radiometric
       calibration...)
 

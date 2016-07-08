@@ -105,15 +105,6 @@ In this exercise we will use an extract from a Sentinel-1 SLC Strip Map (80 km
 Swath, 5 x 5 m spatial resolution): ~s1_hh.tif~ et ~s1_hv.tif~. The image is
 located in Germany near the Constance lake (47.456276, 9.638616).
 
-Tips: you can use ImageMagick if you want to flip images without doing the
-orthorectification (not mandatory):
-
-        #+BEGIN_EXAMPLE
-        convert input.tif -depth 32 
-        -define quantum:format=floating-point 
-        -flop output.tif
-        #+END_EXAMPLE
-
 1. Open the image in Monteverdi. How many bands in both images? To what
    corresponds these bands in the complex product?
 2. Compute image intensity of complex products ~s1_hh.tif~ et
@@ -121,35 +112,36 @@ orthorectification (not mandatory):
 
 **** Radiometric calibration
      
-     Pixel values in SAR images like S1 are without unit (radar reflectivity or radar brightness).
+     Pixel values in SAR images like S1 are without unit (radar reflectivity or
+     radar brightness).
 
      Image metadata allows to transform DN to physical values (in case of SAR
      backscattering coefficient) which allows to compare images from different
      sensors and modes and perform analysis. 
 
-     Can be computed:
-     - Beta Nought: \beta radar brightness coefficient. The reflectivity per unit area in slant range which is dimensionless.
+     SAR calibration consists in computing one of the following physical values:
+     - Beta Nought: \beta radar brightness coefficient. The reflectivity per
+       unit area in slant range which is dimensionless.
      - sigma zero: radar backscatter ( portion of the outgoing radar signal
        that the target redirects directly back towards the antenna)
      - gamma zero: backscatter normalized with the incidence angle
 
      For Sentinel-1, Look Up Tables available in image metadata allows to
-     convert from digital numbers to those values.
+     convert from digital numbers to those values. ORFEO ToolBox will retrieve
+     these values automatically and compute the backscattering coeficient.
 
      1. Find the application which allows to perform this operation with OTB?
      2. Compute gamma nought for HH and HV images. 
-     3. Convert in decibel.
+     3. Convert in decibel (Db).
 
 **** Geometry corrections
-
-     This operation allows to comp
 
      We will use here the output of the radiometric calibration exercise (gamma
      nought) as input.
      
      Use the *Orthorectification* application to perform geometric corrections
      using S1 metadata on SLC product:
-        1. Without DEM
+        1. Without Digital Elevation Model (DEM)
         2. With a DEM and a geoid (use folder ~SRTM~)
         3. Compare the 2 images in Monteverdi.
 
@@ -164,8 +156,8 @@ orthorectification (not mandatory):
      different mathematical models of the phenomenon. In the following part we
      will use the /Frost/ filter. This algorithm has 2 parameters:
 
-     - /Radius/
-     - /deramp/ : control exponential function use to moderate effect of the
+     - /Radius/: window radius
+     - /deramp/: control exponential function use to moderate effect of the
        distance between the central pixel and its neighborhood.
 
      You can find more details about the Frost filter [[http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf][here]].
@@ -198,7 +190,7 @@ orthorectification (not mandatory):
 **** Feature extraction
 
      To go further, we can explore available feature extractions methods for SAR
-     available in OTB. s
+     available in OTB.
 
      See for instance Touzi filter in *EdgeExtraction* application.
 

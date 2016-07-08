@@ -44,7 +44,7 @@
     Go back to step 1 (iterative process). Stop after convergence
     #+END_CENTER
 
-
+    
 ** Image segmentation and export to GIS                               :guide:
 *** Description                                                        :desc:
 **** Summary
@@ -118,7 +118,7 @@
        output image in /uint32/ to have enough unique labels. Indeed the
        segmentation can generate a large number of segments.
      - Parameters /ranger/ and /spatialr/ should have smaller values than in the
-       smoothing step. You can start by dividing the value by to two.
+       smoothing step. You can start by dividing the value by two.
 
      Use the /optimal/ mode from the *ColorMapping* application to generate a
      nice output from the labelled image.
@@ -147,11 +147,12 @@
      Start by computing NDVI from input image.
 
      Then, use the *ConcatenateImages* application to stack input radiometry
-     with NDVI (be careful about encoding the output image).
+     with NDVI (be careful with the encoding of the output image).
 
      Use the *LSMSVectorization* using this image and the segmentation
-     results. You can choose /ESRI Shapefile/ (.shp extension) as the vector
-     data format.
+     results. You can choose for instance /ESRI Shapefile/ (.shp extension) or
+     sqlite (.sqlite extension) as the vector data format (all formats supported
+     by GDAL/OGR can be used here).
 
      Open the input image and the vector layer in QGIS. Adapt the vector
      rendering to display polygon edges in red and the interior ring 100%
@@ -161,9 +162,9 @@
      
 **** Filter segments in QGIS
      
-     Use the selection tool in QGIS using SQL expression and the vector
-     attribute layer attributes table to select polygons which do not correspond
-     to shadow area and copy them in an other layer.
+     Use the selection tool in QGIS using SQL expression and the layer
+     attributes table to select polygons which do not correspond to shadow area
+     and copy them in an other layer.
 
      Use the calculator on attributes to create a new column which will store
      polygon's compacity:

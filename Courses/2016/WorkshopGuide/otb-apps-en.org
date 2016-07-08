@@ -94,7 +94,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     Data are located in the ~Data/stegano~ folder.
 
     For each message, one will first look at the image to try to
-    detect the message, the try to use suggested applications to
+    detect the message, then try to use suggested applications to
     reveal the message.
 
 **** Message 1    

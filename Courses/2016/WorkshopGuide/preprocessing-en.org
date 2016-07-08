@@ -138,7 +138,7 @@
        
 **** Goal
 ***** Know how to perform optical calibration
-      - Allow to compare and validate values between images and sensors (multi-temp) et multi-sensors
+      - Allow to compare and validate values between images and sensors (multi-temp) and multi-sensors
       - Convert DN between TOA reflectance (Top of Atmosphere) and TOC (Top of Canopy)
 ***** Know how to perform image fusion (pan-sharpening)
       - Pan (greater spatial resolution) and XS (greater spectral resolution)
@@ -148,7 +148,7 @@
 ***** Know how to perform orthorectification
       - Spatially located satellite images
       - Associate geographical coordinates to pixel positions
-      - Know prerequisites; bias, approx...
+      - Know prerequisites; bias, approximations
        
 *** Steps                                                             :steps:
 
@@ -157,7 +157,7 @@ folders ~SRTM~ et ~Geoid~.
 
 In this part of the exercise, you'll use images ~phr_xs_osr_mipy.tif~ and
 ~phr_pan_osr_mipy.tif~. Those are extracts of Pan and XS from a Pleiades product
-(Bundle Primary Level 1A) South West of Toulouse. 
+(Bundle Primary Level 1A) south west of Toulouse. 
 **** Atmospheric corrections
      The goal is to convert Digital Number to reflectance (physical value). The
 process is composed of 2 steps: computation of Top Of Atmosphere reflectance and
@@ -213,10 +213,10 @@ With ~phr_xs_osr_mipy.tif~:
 3. Compare both images using Monteverdi or an other OTB application
    (TOA-TOC). Compare TOC and TOA bands separately red, green and blue
    (B0,B1,B2). Which band is more impacted by atmospheric effects ?
-4. Apply operations 1,2 and 3 to the panchromatic image ~phr_pan_osr_mipy.tif~.
+4. Apply operations 1,2 and optionally3 to the panchromatic image ~phr_pan_osr_mipy.tif~.
 
 _Tips :_
-- Use '-milli' option to allow to save output image in integer (16 bits). By
+- Use '-milli' option which allows to save output image in integer (16 bits). By
   default reflectance images are saved in float values (between 0 and 1).
 
 **** Fusion P+XS
@@ -230,7 +230,8 @@ _Tips :_
      An other arguments is the constraint on the amount of data that can be
      archive in the satellite memory also as bandwidth limitation.
 
-     Most VHR sensors delivers 2 types of images:
+     As a consequence most VHR sensors delivers 2 types of images:
+
      - Multi-spectral (XS): separate spectral bands each on a spectral range(can
        overlap). For Pléiades, 4 bands (B,G,R,NIR) with a spatial resolution of
        2.8m (resampled to 2m)
@@ -245,18 +246,18 @@ _Tips :_
      1. Use the *BundleToPerfectSensor* application to superimpose and fuse PAN
         and XS images. Note that the application has a /phr/ mode (Pléiades)
         which allows to perform images superposition without the need of sensor
-        model parameters (default mode).In fact Pléiades bundle are colocalized
-        on the same grid.
+        model parameters (default mode).Indeed, the PHR mode takes advantage of
+        the fact that Pléiades bundle are colocalized on the same grid.
      2. Which fusion algorithm is used in the *BundleToPerfectSensor* application?
      3. (optional) Use applications *Superimpose* et *Pansharpening* to perform
         pan-sharpening with other fusion methods available in OTB.
 
-**** Ortho-rectification
+**** Orthorectification
      
      This operation will allows to map pixel index in the image with ground
 coordinates. 
 
-     The schema below describes all steps that can be required to go from a set
+     The schema belows describes all steps that can be required to go from a set
      of Level 1 products to an coregistered and colocalized image stack. 
 
      #+BEGIN_LaTeX
@@ -347,7 +348,7 @@ coordinates.
      Use  the *Orthorectification* application to perform the
      orthorectification:
 
-        1. Without DEM
+        1. Without Digital Elevation Model (DEM)
         2. With a DEM and a geoid (use ~SRTM~ directory)
         3. Compare the 2 images in Monteverdi. What do you notice?
         4. What is the projection system by default in the *Orthorectification* app?

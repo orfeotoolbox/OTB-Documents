@@ -27,7 +27,7 @@
 
 * Forewords                                                              :fw:
 
-** Goal
+** Goals
 
 The goal of this training course is to give an overview of the remote sensing
 image processing library OTB and to apply it to real case problems using OTB
@@ -39,7 +39,7 @@ image processing chain using OTB applications, including:
 - Calibration
 - Classification
 - Segmentation
-- Basic SAR processing
+- Synthetic Aperture Radar processing
 
 ** Planning
 
@@ -49,21 +49,23 @@ cf planning (pdf)
 
 *** Data folder
     This folder contains data used during the course (separated in subfolders)
-    Sub-folder used is defined in the outline of each exercise. 
+    Sub-folder used during the training session is defined in the outline of each exercise. 
 
 *** Documentation folder
     It contains the OTB and QGIS documentation:
-    - OTB Software Guide :: C++ API guide (and algorithms descriptions)
-    - OTB CookBook :: Guide for non-developers (with OTB applications API)
+    - OTB Software Guide :: C++ API guide and algorithms descriptions
+    - OTB CookBook :: Guide for non-developers (with recipes to process remote
+         sensing data with OTB applications). It contains also the OTB
+         applications API.
     - QGIS User Guide :: QGIS official documentation
 
 *** Guide folder 
-    It contains all the support/documentation necessary to complete exercises:
+    It contains all the support/documentation to complete exercises:
     - Guide for exercises
     - Slides
     - Installation guide
-    - Evaluation questionnaire
-    - Solutions (provided at the end of the course:)
+    - User survey to get your feedback about the session
+    - Solutions (provided at the end of the course :)
   
 ** Software requirements
 
@@ -74,7 +76,7 @@ To complete exercises, you need to install the following tools:
 - *QGIS* $>=$ 2.8 
 
 To install the *Orfeo ToolBox* and *Monteverdi*, follow instructions in the
-cookbook.
+ORFEO ToolBox cookbook.
 
 To install *QGIS* follow instructions on the [[http://www.qgis.org/][QGIS website]].
 
@@ -88,12 +90,12 @@ Datasets use during the training courses:
 - Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
               over OSR MiPy (South West of Toulouse), 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
-- Sentinel-1 :: SLC product (complex) SM (Strip Map, better resolution),
+- Sentinel-1 :: Single Look Complex (SLC) product - Strip Map (SM),
                 bi-polarization (HH and HV) near Constance lake (Germany).
 
 For more information on these satellites:
 - LandSat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]
-- Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
+- Pléiades :: [[http://professionnels.ign.fr/images-pleiades][access facilitate for French Institute]] 
 - Sentinel-1 :: Free access on [[https://scihub.copernicus.eu/][ESA hub]] or on CNES [[https://peps.cnes.fr][PEPS]]
 
 #+INCLUDE: "licence.org"

@@ -132,8 +132,6 @@
      - Notions of supervised classification
 
 **** Goals
-
-**** Goals
      - Understand the applications needed for the supervised classification
        procedure
      - Use the different learning algorithms
@@ -144,7 +142,6 @@
 
      The data are available in the ~Data/classification~ directory, with the
      following sub directories:
-     -
      - ~Extract16bits~: the Landsat 8 time series
      - ~training~: the training data in the /shp/ format
      - ~testing~ the testing data in the /shp/ format
@@ -184,9 +181,9 @@
     Open an image in monteverdi, and setup the display bands and ranges to make
      a true color image (red, green, blue).
 
-    Open all nine images and notice the changes.
+    Open all nine images and observe changes between each date.
 
-    The files ~training/training.shp~ and ~testing/testing.shp~ contain polygons
+    Vector layers ~training/training.shp~ and ~testing/testing.shp~ contain polygons
      which define 11 classes over the scene:
 
 |------+-----------------------------+------------|
@@ -250,15 +247,15 @@
     - io.vd :: The shapefile used for learning the model (training)
     - io.imstat :: The statistics xml file created previously
     - classifier :: The classifier method, here use /libsvm/
-    - io.out :: The output file name for the model, for example /model.rf/
+    - io.out :: The output file name for the model, for example /model.svm/
 
       Other parameters are also important:
     - sample.vfn CODE :: indicates that the label column in the SQL file is
-      called CODE
+      called CODE in the training dataset.
     - sample.vtr 0 :: Ration of the learning set to the validation set. Here 0
       because we are using are own split.
-    - sample.mt :: Maximum number of samples per class, the default value is
-      1000. Reducing it will accelerate significantly the learning time.
+    - sample.mt :: Maximum number of samples per class, the default value is one
+         thousend. Reducing it will accelerate significantly the learning time.
 
 ***** Using the model
 
@@ -270,9 +267,9 @@
 
 ***** Display
 
-   The output of the previous step is an .tif image, which associated to each
-      pixel a class. To view this image, the *ColorMapping* application allows
-      to map a RGB color and generate a new "color mapped" visualisation image.
+   The output of the previous step is a .tif image, which associated to each
+   pixel a class. To view this image, the *ColorMapping* application allows to
+   map a RGB color and generate a new "color mapped" visualisation image.
 
 
    Use the ColorMapping application with the proposed color map:
@@ -301,7 +298,7 @@
 
 ***** Optional: Other learning algorithms
 
-    Perform the classification again on another date, using the Random Forest
+    Perform the classification again on another date, using the Random Forests
       algorithm instead of SVM and compare the results. Compare also the
       processing time.
 
@@ -325,7 +322,7 @@
 
      Use the *ConcatenateImages* application (Images concatenation) to do this.
 
-     Then verify that the output image is of size 3667x3667 with 63 bands and 16
+     Then verify that the output image is of size 3671x3671 with 63 bands and 16
      bits per pixel. Use /gdalinfo/ or the *ReadImageInfo* application.
 
      Then, perform the same steps as before. *ComputeImageStatistics*,
@@ -343,7 +340,7 @@
      Then, compare the results with the single date classification using the
      confusion matrix and the RGB image.
 
-**** NDVI profile
+**** NDVI temporal profile
 
      An NDVI image can be calculated for each image od the time series, to build
      an NDVI profile. When added to the concatenated image, this profile will

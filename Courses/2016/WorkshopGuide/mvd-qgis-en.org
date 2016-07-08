@@ -80,17 +80,17 @@
       trick/ask a question...
 ** Use *Monteverdi* et *QGIS*                                         :guide:
 *** Description                                                        :desc:
-**** Résumé
+**** Summary
      Goal is to discover software products and the data package that will be
      used during the course. You will be able to use both Monteverdi or QGIS to
      do all exercises of the course. 
 
-**** Pré-requis
+**** Prerequisites
 
      - Install Monteverdi and QGIS
      - Download data
        
-**** Objectifs
+**** Goals
 
      Goals of this exercise
 
@@ -101,7 +101,7 @@
      - Know how to visualize an images stack in QGIS,
      - Tips and tricks.
 
-*** Étapes                                                            :steps:
+*** Steps                                                             :steps:
 
     For this exercise, we propose to work in pairs. At the end of the exercise
     every team will do a restitution of their experiments to show to other
@@ -115,8 +115,7 @@
 
      List of all keyboards shortcuts is available in menu /Help/.
 
-     Change band display and also Modifiez les bandes visualisées and change
-     rendering values 
+     Change band display and also change the rendering values. 
 
      Test effects like /Local contrast/, /Gradient/ et /Spectral angle
      Spectral/. What are there purpose ?
@@ -138,7 +137,7 @@
      Use mouse wheel to move between all dates.
 
      Test effects /Local transparency/, /Chess board/ et
-     /Balayage/. What are there purpose ?
+     /Swipe/. What are there purpose ?
 
      Close Monteverdi.
 
@@ -146,7 +145,7 @@
 
      Open the first LS8 image in QGIS. Use the contextual menu of the layer to
      change color dynamics to have the same rendering as in Monteverdi. In the
-     same contectual menu, add this style to be able to apply it to other images.
+     same contextual menu, add this style to be able to apply it to other images.
 
      Move in resolution.
 
