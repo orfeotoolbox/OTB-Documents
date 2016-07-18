@@ -237,7 +237,7 @@ L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ou
 
 \begin{block}{Les logiciels tiers principaux}
 \begin{itemize}
-\item \href{www.itk.org}{ITK}: modélisation de la chaine de traitement
+\item \href{www.itk.org}{ITK}: modélisation de la chaîne de traitement
 \item \href{www.gdal.org}{GDAL}: accès aux données images et vecteurs,
 \item \href{www.ossim.org}{OSSIM}: modélisation géométrique des prises de vues,
 \item \href{www.opencv.org}{OpenCV} et \href{www.libsvm.org}{LibSVM}: fonctionnalités de classification supervisée,
@@ -264,7 +264,7 @@ analyse dynamique d'expressions mathématiques.
 \end{itemize}
 \item Des paquets binaires sont disponibles en fonction de la plateforme:
 \begin{itemize}
-\item Dépôt ubuntuGIS pour Ubuntu,
+\item Dépôt UbuntuGIS pour Ubuntu,
 \item Intégration à OSGeo4W et paquets indépendants pour Windows,
 \item Paquets MacPort, formule HomeBrew et image dmg pour Mac OS X\ldots
 \end{itemize}
@@ -349,7 +349,7 @@ configurations différentes.
  Flexible, accès à l'API complète, demande une connaissance en C++
 \end{block}
 \begin{block}{Utiliser les applications}
- Fonctions de haut niveau (par ex. segmentation), appelable en ligne de commande, via une interface graphique, ou depuis Python. Peut être étendue (création d'applications)
+ Fonctions de haut niveau (par ex. segmentation), appel en ligne de commande, via une interface graphique, ou depuis Python. Peut être étendue (création d'applications)
 \end{block}
 \begin{block}{Utiliser Monteverdi}
 Visualisation, gestion persistante des données, \textcolor{red}{Accès à l'ensemble des applications}
@@ -404,7 +404,7 @@ int main(int argc, char * argv[])
 \item 87 applications sont livrées avec l'OTB
 \item 1 application $=$ 1 librairie dynamique (plugin)
 \item Les applications sont auto-descriptives et auto-documentées
-\item Les applications peuvent etre étendues en dehors de l'OTB
+\item Les applications peuvent être étendues en dehors de l'OTB
 \item Plusieurs interfaces sont disponibles pour utiliser les plugins:
 \begin{itemize}
   \item Ligne de commande
@@ -511,7 +511,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 
-\section{Quoi de neuf depuis 5.0 ?}
+\section{Quoi de neuf depuis 5.0?}
 
 \begin{frame}
 \frametitle{5.0 (Mai 2015)}
@@ -601,6 +601,43 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{block}
 \end{frame}
 
+\begin{frame}
+\frametitle{5.6 (August 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Support de l'écriture d'images en utilisant la librairie MPI
+\item Extraction et sélection d'échantillons pour la classification supervisée
+\item Amélioration classification données vecteurs
+\item Support des images Sentinel-1 (géométrie)
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.4}
+\begin{itemize}
+\item Amélioration affichage et accès aux OTB applications
+\item Visualisation produit Sentinel-1 (produit complexe)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallélisation de traitements OTB avec MPI}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{images/mpi.png}
+\end{center}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stratégies d'échantillonnages de polygones}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{images/sampling_position1.png}
+\end{center}
+\end{minipage}
+\end{frame}
+
 \section{Conclusion et perspectives}
 \begin{frame}
 \frametitle{Combien d'utilisateurs ?}
@@ -654,7 +691,7 @@ OrthoRectification.ExecuteAndWriteOutput()
     \item Les applications OTB applications sont disponibles dans le module de traitement de QGIS
     \item L'OTB est utilisée dans certains composant des segments sols S2 et
       Venus (CNES et ESA)
-    \item Logiciel educatif Terr'Image
+    \item Logiciel éducatif Terr'Image
     \item Utiliser pour générer des produits à l'échelle nationale en France
       dans THEIA
     \item Projet EA S2 Agriculture

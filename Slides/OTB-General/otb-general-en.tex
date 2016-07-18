@@ -253,7 +253,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \end{frame}
 
 \begin{frame}
-\frametitle{Compatible (and available) on multiple plateforms}
+\frametitle{Compatible (and available) on multiple platforms}
 \begin{columns}
 \column{0.5\textwidth}
 \begin{block}{Goal}
@@ -315,7 +315,7 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
 \begin{itemize}
 \item Try to keep track of up-to-date information about the latest developments, exchanging ideas, identifying future trends, and making networking
 \item Reference implementation of algorithms based on publications
-\item e.g.: morphological profil, MeanShift segmentation, Haralick textures, SURF keypoints\ldots
+\item e.g.: morphological profile, MeanShift segmentation, Haralick textures, SURF keypoints\ldots
 \item Reference implementation contributes by authors with their
   publications. e.g.: Large Scale MeanShift, object detection \ldots
 \end{itemize}
@@ -517,8 +517,8 @@ OrthoRectification.ExecuteAndWriteOutput()
 \section{What's new in OTB?}
 
 \begin{frame}
-\frametitle{5.0 (Mai 2015)}
-\begin{block}{Modularity}
+\frametitle{5.0 (May 2015)}
+\begin{block}{Make OTB more modular}
 \begin{itemize}
   \item Better code layout, coherent modules (124 modules and 16 groups) with
     source, test and applications.
@@ -538,7 +538,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 \begin{frame}
 \frametitle{Open governance: Project Steering Committee}
-\begin{block}{Genèse du PSC}
+\begin{block}{PSC beginning}
   \begin{itemize}
   \item Until 2015: OTB is open-source software
   \item In march 2015: OTB become free software, with CNES as the first PSC
@@ -554,7 +554,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{block}
 \begin{block}{Numbers}
   \begin{itemize}
-  \item 5 members from 4 different organisations
+  \item 5 members from 4 different organizations
   \item 2 releases under a PSC (5.2, 5.4)
   \item 3 online meetings (with public logs)
   \end{itemize}
@@ -587,20 +587,57 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{OTB}
 \begin{itemize}
 \item Switched to a fixed release schedule
-\item Merged Ice into OTB
+\item Merged Ice (visualization lib) into OTB
 \item External build of external modules
-\item New SAR decompositions: Barnes, Huynen, Pauli
+\item New SAR decomposition methods: Barnes, Huynen, Pauli
 \end{itemize}
 \end{block}
 
 \begin{block}{Monteverdi 3.2}
 \begin{itemize}
-\item Screenshot feature
+\item Screen-shot feature
 \item Generate GDAL overviews
-\item Support for GDAL subdatasets
+\item Support for GDAL sub-datasets
 \item Added to the SuperBuild
 \end{itemize}
 \end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.6 (August 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item MPI Image File Writer
+\item Samples extractor and selection for supervised classification
+\item Improve classification on vector
+\item Support for Sentinel-1 geometry (SAR sensor)
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.4}
+\begin{itemize}
+\item Improve OTB-applications display \& search bar
+\item Open Sentinel-1 image (SLC product)
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallel OTB pipeline with MPI}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{images/mpi.png}
+\end{center}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Polygons sampling strategy}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{images/sampling_position1.png}
+\end{center}
+\end{minipage}
 \end{frame}
 
 \section{Conclusion}
@@ -640,7 +677,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
   \item band calculator
   \item tile-wise segmentation of full imagery
   \item full scene classification with a range of machine learning algorithms
-  \item bridges between RS and SIG \ldots
+  \item bridges between RS and GIS \ldots
   \end{itemize}
 \item Beyond Orfeo, OTB is already used in several projects and software
 \item OSGeo incubation
