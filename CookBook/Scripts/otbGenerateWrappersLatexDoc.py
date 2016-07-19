@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import otbApplication
 import os
 import sys
@@ -27,6 +28,7 @@ def ConvertString(s):
     s = s.replace('>=', '\\re')
     s = s.replace('^-1','$^-1$')
     s = s.replace('&','\\&')
+    s = s.replace('°','\\textdegree')
     return s
 
 def EncloseString(s):
