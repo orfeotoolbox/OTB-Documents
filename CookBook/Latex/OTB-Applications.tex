@@ -137,7 +137,8 @@ double-click on the file, or with the command line :
 \lstsetescapechar
 
 \begin{lstlisting}[frame=none,numbers=none]
-> sh  OTB-&\otbversion&-Linux64.run
+> chmod +x OTB-&\otbversion&-Linux64.run
+> ./OTB-&\otbversion&-Linux64.run
 \end{lstlisting}
 
 Please note that the resulting installation is not meant to be moved, you should
@@ -177,7 +178,8 @@ it with the command line :
 \lstsetescapechar
 
 \begin{lstlisting}[frame=none,numbers=none]
-> sh  OTB-&\otbversion&-Darwin64.run
+> chmod +x  OTB-&\otbversion&-Darwin64.run
+> ./OTB-&\otbversion&-Darwin64.run
 \end{lstlisting}
 
 Once the archive is extracted,  you can see OTB-\otbversion-Darwin64 directory in the same direcrtory along with OTB-\otbversion-Darwin64.run
@@ -205,32 +207,12 @@ In case you need to have OTB installed in some other directory. Extract the .run
 
 \textbf{Warning !} These packages may not be up-to-date with latest OTB releases.
 In addition, some features of the library may not be available on every platform.
-Some of these are not maintained by the OTB-team. If you want to get involved in
-the packaging of OTB for your platform, please contact us through the developer's
+Some of these are not maintained by OTB-team. If you want to get involved in
+the packaging of OTB for your favourite platform, please contact us through the developer's
 mailing list :
 \href{mailto:otb-developers@googlegroups.com}{otb-developers@googlegroups.com}.
 
-\subsubsection{OSGeo4W}
-
-Since version 3.12, we provide \app packages through OSGeo4W for Windows XP/Seven users:
-\begin{itemize}
-\item \textbf{otb-bin} for command line and QT applications
-\item \textbf{otb-python} for python applications
-\end{itemize}
-Follow the instructions in the installer and select the packages you want to add. The installer will proceed with the installation of selected packages and all their dependencies.
-For the \textbf{otb-bin} packages, it will be available directly in the OSGeo4W shell, for example run
-\begin{verbatim}
-otbgui_BandMath.
-\end{verbatim}
-For the \textbf{otb-python} packages, you can simply check from an OSGeo4W shell the list of available applications:
-\begin{verbatim}
-python
-import otbApplication
-print str( otbApplication.Registry.GetAvailableApplications() )
-\end{verbatim}
-
 \subsubsection{Debian}
-
 There are OTB packages for Debian (unstable) since version 5.2.0.
 OTB Applications packages may be available as
 Debian packages through APT repositories:
