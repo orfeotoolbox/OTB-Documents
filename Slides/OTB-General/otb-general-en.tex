@@ -39,7 +39,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 \title{Orfeo ToolBox}
-\subtitle{Open source processing of remote sensing images (updated for 5.4)}
+\subtitle{Open source processing of remote sensing images (updated for 5.6)}
 \author{OTB Team CNES}
 \date{}
 
@@ -71,8 +71,9 @@
 \begin{itemize}
 \item An \textbf{image processing library} for remote sensing
 \item \textbf{Free and open source software} under CeCILL-v2 license (equivalent to GPL)
-\item \textbf{Funded and developed by CNES} (French Space Agency) in the frame
-  of the Orfeo Pléiades program (and beyond)
+\item \textbf{Funded and developed by CNES} (French Space Agency) in the frame the development of the Pléiades satellite (and beyond)
+\item Used at CNES, ESA (European Space Agency), mission exploitation platforms,
+  remote sensing labs, teaching\ldots
 \item Written in \textbf{C++} on top of \href{www.itk.org}{ITK} (medical image
   processing)
 \item Built on the shoulders of giants (GDAL, OSSIM, OpenCV\ldots)
@@ -91,7 +92,7 @@
 
 \begin{block}{Maximum reach}
 OTB is dedicated to every user of satellite images. Its wide
-dissemination contributes to the missions sucess (Pléiades, Sentinels\ldots)
+dissemination contributes to the missions success (Pléiades, Sentinels\ldots)
 \end{block}
 
 \begin{block}{Quality and efficiency}
@@ -506,7 +507,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 
 %\vspace*{-3.0mm}
 \begin{frame}
-  \frametitle{QGIS (acces to OTB applications)}
+  \frametitle{QGIS (\textbf{Added support to OTB 5.6 during the code sprint)}}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
 \includegraphics[width=1\textwidth]{images/otb_in_qgis.png}
@@ -569,6 +570,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \item Support for Sentinel-1 products
 \item Better Python bindings
 \item Better GDAL 2.0 compatibility and support Sentinel-2 images
+\item Official package in DebianGIS (special thanks to Rashad and Debian maintainer)
 \item \ldots
 \end{itemize}
 \end{block}
