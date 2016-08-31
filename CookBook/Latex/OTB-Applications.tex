@@ -158,6 +158,7 @@ In order to run the command line launchers, this package doesn't require any spe
 library that is not present in most modern Linux distributions. The graphical
 executable (otbgui launchers, Monteverdi and Mapla) use the X11 libraries, which
 are widely used in a lot of distributions :
+
 \begin{verbatim}
 libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
 \end{verbatim}
@@ -168,6 +169,15 @@ your system.
 The applications can be launched from the Mapla launcher. If you want to use
 the otbcli and otbgui launchers, you can initialize your environment
 with \verb?source otbenv.profile?.
+
+Notes:
+\begin{itemize}
+\item You must use monteverdi and mapla through mapla.sh and monteverdi.sh helper scripts in extracted directory.
+\item The helper scripts for monteverdi and mapla set required environment variables
+\item You might be tempted to move OTB-\otbversion-Linux64 into another location say /usr/local/ after extraction. But avoid this action!.
+\item To have OTB-\otbversion-Linux64 installed in /usr/local or /opt execute OTB-\otbversion-Linux64.run  in that directory.
+\item Multiple installation of OTB can exists in same system without one conflicting the other!
+\end{itemize}
 
 \subsection{MacOS X}
 
