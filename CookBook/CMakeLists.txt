@@ -3,6 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 # This is the Orfeo ToolBox cookbook : a guide for non-developpers
 PROJECT(CookBook)
 
+message(WARNING "The official CookBook has been merged into the OTB repository. This version is outdated and will likely be removed")
+
 # Include latex cmake mode
 INCLUDE(CMake/UseLATEX.cmake)
 
