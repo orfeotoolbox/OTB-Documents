@@ -253,20 +253,20 @@
     - io.vd :: le fichier vectoriel d'apprentissage (training.shp)
     - io.imstat :: le fichier xml de statistiques calculé précédement
     - classifier :: la méthode, ici utilisez /libsvm/
-    - io.out :: le nom du fichier modèle en sortie, par exemple /model.rf/
+    - io.out :: le nom du fichier modèle en sortie, par exemple /model.svm/
 
-    D'autres paramètres sont important aussi:
-    - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
+    D'autres paramètres sont importants aussi:
+    - sample.vfn CODE :: indique que la colonne des labels porte le nom CODE
     - sample.vtr 0 :: Ratio de l'ensemble d'apprentissage sur l'ensemble de
       validation. 0 ici car nous utilisons notre propre découpe.
     - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
       est 1000. La réduire permet d'accélérer significativement le temps
-      d'apprentissage.
+      d'apprentissage, mais peut dégrader la qualité du modèle appris.
 
 ***** Utilisation du modèle
 
    Une fois le modèle de classification appris, il peut être utilisé pour
-   classifier tout les pixels de l'image.
+   classifier tous les pixels de l'image.
 
    Utilisez l'application *ImageClassifier* (Image Classification), en spécifiant le modèle créé dans
    l'étape précédente.
