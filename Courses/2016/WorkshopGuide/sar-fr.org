@@ -34,20 +34,20 @@
 *** Principe de fonctionnement
     - 1 antenne réalise des impulsions micro-ondes dans le plan perpendiculaire à la trajectoire du porteur
     - Écho recueilli par la même antenne
-    - Réflecteur sont localisés en fonction de leur éloignement (distance)
+    - Diffuseurs sont localisés en fonction de leur éloignement (distance)
     - Répétition des échos réalise la deuxième dimension (azimuth)
     - Signal reçu par le radar est caractérisé par son amplitude et sa phase
 *** Calibration radiométrique
-    - Comportement de la réflexion dépend des caractéristiques de la surface
+    - Comportement de la rétro-diffusion dépend des caractéristiques de la surface
     - Notamment de sa rugosité, de l'humidité des sols
     - Comme pour l'optique, la calibration permet de transformer des comptes
       numériques (CN) en grandeur physique
     - Permet d'inter-comparer des images radars provenant de capteurs différents
-      ou de capteurs identiques utilisés dans différents modes
+      ou de capteurs identiques dans le cas multi-temporel
 *** Correction géométrique
     - Spatialiser l'image
     - Associer une coordonnée géographique au pixel
-    - le radar mesure la distance des objets obliquement
+    - Le radar mesure la distance des objets obliquement
     - Resolutions
       - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
       - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
@@ -97,27 +97,26 @@
 
 **** Introduction à l'imagerie RSO
 
-Dans cette exercice nous utiliserons les extraits de l'image Sentinel 1 SLC :
+Dans cet exercice nous utiliserons les extraits de l'image Sentinel 1 SLC :
 ~s1_hh.tif~ et ~s1_hv.tif~. L'image se situe en Allemagne au sud du lac
 Constance (47.456276, 9.638616).
 
 Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUEST.
 
-1. Ouvrir les images dans Monteverdi. Combien de bandes dans chaque image? A
-   quoi correspondent ces bandes?
+1. Ouvrir les images dans Monteverdi. Combien de bandes a chaque image?
 2. A quoi correspondent ces bandes? 
 3. Calculer l'image d'intensité à partir des produits complexes  ~s1_hh.tif~ et
-   ~s1_hv.tif~. Calculer aussi l'intensité en décibel.
+   ~s1_hv.tif~. Calculer aussi l'intensité en décibels.
 
 **** Calibration radiométrique
      
      Les valeurs des pixels dans les produits SAR comme Sentinel-1 sont sans
      unité (radar reflectivity or radar brightness).
 
-     Le produit est accompagné de métadonnées permettant de transformer ces
-     valeurs en grandeur physique qui permettent de comparer des images
-     radars provenant de capteurs différents ou de capteurs identiques utilisés
-     dans différents modes. 
+     Le produit est accompagné de métadonnées permettant de
+     transformer ces valeurs en grandeurs physiques qui permettent de
+     comparer des images radars provenant de capteurs différents ou de
+     capteurs identiques dans le cas multi-temporel.
 
      On veut de l'image d'entrée les caractéristiques physiques originales des
      valeurs de rétrodiffusion. Les valeurs suivantes peuvent etre calculées:
