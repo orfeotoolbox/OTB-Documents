@@ -99,7 +99,7 @@ disponible sur le  [[http://www.qgis.org/][site du projet]].
 
 Les données utilisées au cours du TP sont des extraits des données suivantes:
 
-- LandSat-8 :: plusieurs dates concaténées, dénuagées (gap-filling)
+- Landsat-8 :: plusieurs dates concaténées, dénuagées (gap-filling)
                avec des données terrains de référence au format ESRI
                Shapefile (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
@@ -111,7 +111,7 @@ Les données utilisées au cours du TP sont des extraits des données suivantes:
                 lac Constance (Allemagne).
 
 Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
-- LandSat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
+- Landsat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
 - Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
 

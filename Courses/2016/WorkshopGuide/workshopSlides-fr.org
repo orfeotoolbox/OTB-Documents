@@ -83,7 +83,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 
 *** Origine des données
 
-- LandSat-8 :: plusieurs dates concaténées, dénuagés (gap-filling)
+- Landsat-8 :: plusieurs dates concaténées, dénuagés (gap-filling)
                avec des données terrains de référence au format ESRI
                Shapefile (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU sur
@@ -94,7 +94,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
                 lac Constance (Allemagne).
 
 *** Accès aux données
-    - LandSat-8 :: produit de niveau 2A disponible sur le site THEIA (https://www.theia-land.fr/)
+    - Landsat-8 :: produit de niveau 2A disponible sur le site THEIA (https://www.theia-land.fr/)
     - Pléiades :: accès privilégié UIA (institutionnels français): http://professionnels.ign.fr/images-pleiades
     - Sentinel-1 :: Données gratuites disponible sur ESA Hub(https://scihub.copernicus.eu/) ou sur le site CNES PEPS(https://peps.cnes.fr)
 

@@ -84,7 +84,7 @@ Know how to set up OTB processing and use OTB applications to perform:
 
 *** Dataset
 
-- LandSat-8 :: concatenation of several dates, cloud free (gap-filling) with
+- Landsat-8 :: concatenation of several dates, cloud free (gap-filling) with
                ground truth (reference data) in ESRI Shapefile format
                (classification exercise)
 - Pléiades :: PHR Bundle PRIMARY Level 1A from the CNES Thematic Commissioning
@@ -94,7 +94,7 @@ Know how to set up OTB processing and use OTB applications to perform:
                 polarization (HH and HV) over the South of the Constance lake (Germany).
 
 *** Data access
-    - LandSat-8 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
+    - Landsat-8 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
     - Pléiades :: For French Institute: http://professionnels.ign.fr/images-pleiades
     - Sentinel-1 :: Free data available on ESA SciHub
                     (https://scihub.copernicus.eu/) or on the CNES PEPS portal(https://peps.cnes.fr)

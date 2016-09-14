@@ -9,7 +9,7 @@
      - Connaître les post-traitements applicables à une classification
 **** Données
      Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
-     - ~Extract16bits~ contient la série multi-temporelle LandSat8,
+     - ~Extract16bits~ contient la série multi-temporelle Landsat-8,
      - ~training~ contient la donnée d'apprentissage au format /shp/,
      - ~testing~ contient la donnée de validation au format /shp/.
      
@@ -21,7 +21,7 @@
     4. Classification avec profil de NDVI
     5. Post-traitements de la classification
     
-*** Présentation des données LandSat8
+*** Présentation des données Landsat-8
 
     *Résolution spatiale:* 30 mètres
 
@@ -144,7 +144,7 @@
 *** Étapes                                                            :steps:
 
     Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
-     - ~Extract16bits~ contient la série multi-temporelle LandSat8,
+     - ~Extract16bits~ contient la série multi-temporelle Landsat-8,
      - ~training~ contient la donnée d'apprentissage au format /shp/,
      - ~testing~ contient la donnée de validation au format /shp/.
 

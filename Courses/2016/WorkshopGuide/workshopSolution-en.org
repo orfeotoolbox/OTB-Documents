@@ -82,7 +82,7 @@ To install *QGIS* follow instructions on the [[http://www.qgis.org/][QGIS websit
 
 Datasets use during the training courses:
 
-- LandSat-8 :: Several dates concatenate, cloud-free (gap-filling) with
+- Landsat-8 :: Several dates concatenate, cloud-free (gap-filling) with
                reference data in ESRI
                Shapefile (for the classification exercise TP classification),
 - Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
@@ -92,7 +92,7 @@ Datasets use during the training courses:
                 bi-polarization (HH and HV) near Constance lake (Germany).
 
 For more information on these satellites:
-- LandSat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]
+- Landsat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
 - Sentinel-1 :: Free access on [[https://scihub.copernicus.eu/][ESA hub]] or on CNES [[https://peps.cnes.fr][PEPS]]
 
