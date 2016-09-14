@@ -1,6 +1,7 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques
 #+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES), Manuel Grizonnet (CNES)
 #+DATE: 2016
+#+LANGUAGE: fr
 #+OPTIONS: H:5
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
@@ -8,6 +9,8 @@
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
 #+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage[utf8]{inputenc}
+#+latex_header: \usepackage[french]{babel}
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
