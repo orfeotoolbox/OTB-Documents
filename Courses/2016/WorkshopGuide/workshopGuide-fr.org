@@ -61,24 +61,24 @@ voir planning en PJ.
 ** Contenu du kit de formation
 
 *** Répertoire Data
-    Ce répertoire contient les données nécessaires à chaque TP, dans
-    des sous-répertoires séparés. Le sous-répertoire nécessaire est
-    indiqué au début de l'énoncé du TP
+Ce répertoire contient les données nécessaires à chaque TP, dans
+des sous-répertoires séparés. Le sous-répertoire nécessaire est
+indiqué au début de l'énoncé du TP
 
 *** Répertoire Documentation
-    Ce répertoire contient la documentation de l'Orfeo ToolBox, et de QGIS:
-    - OTB Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
-    - OTB CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
-    - QGIS User Guide :: Manuel d'utilisation de QGIS
+Ce répertoire contient la documentation de l'Orfeo ToolBox, et de QGIS:
+- OTB Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
+- OTB CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
+- QGIS User Guide :: Manuel d'utilisation de QGIS
 
 *** Répertoire Guide
 
-    Ce répertoire contient l'ensemble des supports nécessaires à la réalisation des exercices de la formation:
-    - Guide de TP
-    - Planches
-    - Guide d'installation
-    - Questionnaire d'évaluation
-    - Solutions (distribuées à la fin)
+Ce répertoire contient l'ensemble des supports nécessaires à la réalisation des exercices de la formation:
+- Guide de TP
+- Planches
+- Guide d'installation
+- Questionnaire d'évaluation
+- Solutions (distribuées à la fin)
   
 ** Les logiciels nécessaires
 
