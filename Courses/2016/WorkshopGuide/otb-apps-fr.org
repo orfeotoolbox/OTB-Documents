@@ -59,11 +59,11 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
         - Y: numéro de la bande dans l'image X (de 1 à N)
       - [[http://muparser.beltoforion.de/mup_features.html][Liste des opérateurs mathématiques disponibles]]
     - Exemples:
-      - *-exp "(im1b4 - im1b1) / (im1b4 - im1b1))"
-      - *-exp "acos((123*im1b1+265*im1b2+652*im1b3) \\
+      - -exp "(im1b4 - im1b1) / (im1b4 - im1b1))"
+      - -exp "acos((123*im1b1+265*im1b2+652*im1b3) \\
                / (sqrt(123*123+265*265+652*652)\\
                *sqrt(im1b1*im1b1+im1b2*im1b2+im1b3*im1b3)))"
-      - *-exp "im1b1>0.5?255:0"*
+      - -exp "im1b1>0.5?255:0"
 *** Liens utiles
     - [[https://www.orfeo-toolbox.org/CookBook/CookBookse1.html#x7-60001.1][Introduction aux OTB applications]]
     - [[https://www.orfeo-toolbox.org//Applications/][Documentation de référence des applications]]
