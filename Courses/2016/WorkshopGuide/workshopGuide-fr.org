@@ -42,7 +42,7 @@
 ** Objectifs de la formation
 
 L'objectif de cette formation est de présenter l'OTB et mettre en
-oeuvre les outils disponibles dans les OTB applications pour
+œuvre les outils disponibles dans les OTB applications pour
 l'exploitation, et la manipulation des images de télédection.
 
 Les capacités acquises en fin de formation concernent la mise en œuvre
@@ -101,7 +101,7 @@ Les données utilisées au cours du TP sont des extraits des données suivantes:
 
 - Landsat-8 :: plusieurs dates concaténées, dénuagées (gap-filling)
                avec des données terrains de référence au format ESRI
-               Shapefile (pour le TP classification),
+               Shapefile fournies par le [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
               Thématique Utilisateurs Pléiades - projet CNES) sur
               le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright

@@ -86,7 +86,7 @@ Datasets use during the training courses:
 
 - Landsat-8 :: Several dates concatenate, cloud-free (gap-filling) with
                reference data in ESRI
-               Shapefile (for the classification exercise TP classification),
+               Shapefile provided by [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (for the classification exercise TP classification),
 - Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
               over OSR MiPy (South West of Toulouse), 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
