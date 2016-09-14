@@ -31,7 +31,7 @@
     - Devenu un outil intégré de visualisation qui embarque toutes les
       OTB-Applications 
     - Interface graphique qui utilise la bibliothèque Qt
-    - le moteur de rendu utilise la librairie Ice (OpenGL+OTB)
+    - Le moteur de rendu utilise la librairie Ice (OpenGL+OTB)
     - Effets tirant partie des capacités des cartes graphiques actuelles
       (shader) pour effectuer des rendus à la volée (contraste local,
       transparence, gradient...)
@@ -49,14 +49,14 @@
       - Stack layer (pile d'images)
       - [[https://www.orfeo-toolbox.org/CookBook/CookBookch2.html#x19-180002][Voir A brief tour of Monteverdi]]
 *** Quantum GIS 
-    - système d'information géographique (SIG): système d'information capable d'organiser et de présenter des données alphanumériques spatialement référencées
+    - Système d'information géographique (SIG): système d'information capable d'organiser et de présenter des données alphanumériques spatialement référencées
     - Les principales fonctionnalités d'un SIG sont les suivantes :
       - Affichage ou production de cartes
       - Acquisition des données
       - Analyse des données pour créer une nouvelle information
       - Abstraction ou représentation des éléments choisis
       - Archivage
-    - Beaucoup de support de formation, tutoriels disponibles (par exemple en français: Intro ENTE Aix - ENS - Licence ouverte)
+    - Beaucoup de supports de formation, tutoriels disponibles (par exemple en français: Intro ENTE Aix - ENS - Licence ouverte)
 *** Quantum GIS processing (a partir de la version 2.0)
     - Plateforme de traitements permettant d'intéragir avec GRASS,
       SAGA-GIS, R et l'OTB!
@@ -73,13 +73,13 @@
     - Monteverdi:
       - Savoir visualiser une image et régler son rendu
       - Savoir visualiser une pile de données
-      - Explorer les "Effets" disponible
+      - Explorer les "Effets" disponibles
     - QGIS:
       - Savoir visualiser une image et régler son rendu
-      - Savoir visualiser une données vecteur
+      - Savoir visualiser une donnée vecteur
       - Savoir visualiser une pile de données
-    - Travail 15 minutes en binome et en aveugle
-    - Tour de table (30 à 45 minutes), chaque binome passe devant les autres et propose une astuce ou pose une question
+    - Travail 15 minutes en binôme et en aveugle
+    - Tour de table (30 à 45 minutes), chaque binôme passe devant les autres et propose une astuce ou pose une question
 ** Utiliser *Monteverdi* et *QGIS*                                  :guide:
 *** Description                                                        :desc:
 **** Résumé
@@ -111,10 +111,10 @@
     fin de l'exercice, chaque binôme présentera au reste du groupe une
     astuce qu'il a découvert en manipulant les logiciels, ou posera
     une question qui est restée sans réponse au terme de l'exercice.
-
+    
 **** Visualiser une image dans Monteverdi
 
-     Ouvrir l'image ~phr_xs_osr_mipy.tif~ du répertoire
+     Ouvrir l'image ~phr_xs_osr_mipy.tif~ du répertoire\\
      ~Data/preprocessing~ dans Monteverdi.
 
      L'ensemble des raccourcis clavier sont disponibles dans le menu
@@ -134,11 +134,11 @@
 
 **** Visualiser une pile d'images dans Monteverdi
 
-     Ouvrez les 9 images Landsat8 présentes dans le dossier
+     Ouvrez les 9 images Landsat-8 présentes dans le dossier
      ~Data/classification/Extract16bits/~.
 
      Modifiez les bandes visualisées pour afficher les couleurs
-     naturelles (rouge: Bande 3, vert: bande 2, bleu: bande
+     naturelles (rouge: bande 3, vert: bande 2, bleu: bande
      1). Utilisez le bouton /Appliquer tous les paramètres aux autres
      couches/ pour avoir un rendu uniforme des images.
 
@@ -160,14 +160,14 @@
 
      Naviguez en résolution.
 
-     Chargez les autres images Landsat-8, et appliquez leurs le style ainsi créé.
+     Chargez les autres images Landsat-8, et appliquez-leur le style ainsi créé.
 
      Quelles sont les différences entre les fonctionnalités de
      visualisation d'images offertes par Monteverdi et QGIS ?
 
 **** Visualiser une donnée vecteur dans QGIS
 
-     Ouvrez la donnée vecteur ~training.shp~ situé dans le dossier
+     Ouvrez la donnée vecteur ~training.shp~ située dans le dossier
      ~Data/classification/training/~.
 
      En utilisant le menu contextuel, ouvrez les /Propriétés/ puis
@@ -177,7 +177,7 @@
      correspondent aux classes.
 
      Ouvrir la table des attributs à l'aide du menu
-     contextuel. Combien y a-t-il de polygones dans la classes
+     contextuel. Combien y a-t-il de polygones dans la classe
      /pelouse/ ?
 
      A l'aide de l'outil de sélection conditionel, sélectionnez

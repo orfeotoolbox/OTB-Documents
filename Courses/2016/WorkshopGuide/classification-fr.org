@@ -14,8 +14,8 @@
      - ~testing~ contient la donnée de validation au format /shp/.
      
 *** Déroulement
-    les étapes de l'exercice sont les suivantes:
-    1. Introduction aux données landsat8
+    Les étapes de l'exercice sont les suivantes:
+    1. Introduction aux données Landsat-8
     2. Classification mono-date
     3. Classification multi-date
     4. Classification avec profil de NDVI
@@ -64,13 +64,13 @@
 |------+-----------------------------+------------|
 | Code | Nom                         | #polygones |
 |------+-----------------------------+------------|
-|   11 | Éte                         | 7898       |
-|   12 | Hiver                       | 8171       |
-|   31 | Foret feuilles caduques     | 867        |
-|   32 | Foret feuilles persistantes | 125        |
+|   11 | Cultures d'été              | 7898       |
+|   12 | Cultures d'hiver            | 8171       |
+|   31 | Forêt feuilles caduques     | 867        |
+|   32 | Forêt feuilles persistantes | 125        |
 |   34 | Pelouses                    | 45         |
 |   36 | Lande ligneuse              | 386        |
-|   41 | Bati                        | 4719       |
+|   41 | Bâti                        | 4719       |
 |   51 | Eau                         | 1280       |
 |  211 | Prairie                     | 5647       |
 |  221 | Verger                      | 204        |
@@ -122,7 +122,7 @@
 
      Cet exercice permet de se familiariser avec les applications de
      classification supervisée pixellique de l'Orfeo ToolBox, en
-     utilisant une série multi-temporelle Landsat8 et un jeu de
+     utilisant une série multi-temporelle Landsat-8 et un jeu de
      données de référence pour la supervision.
 
 **** Pré-requis
@@ -151,7 +151,7 @@
 **** Présentation des données LANDSAT 8
 
     Dans l'archive de données, le dossier ~Data/classification/Extract16bits~ contient neuf
-    images Landsat 8 aux dates suivantes:
+    images Landsat-8 aux dates suivantes:
     
      |------------|
      | 2014-03-09 |
@@ -189,21 +189,21 @@
     ~testing/testing.shp~ contiennent des
     polygones qui définissent 11 classes sur l'ensemble de la scène:
 
-    |------+-----------------------------+------------|
-    | Code | Nom                         | #polygones |
-    |------+-----------------------------+------------|
-    |   11 | Été                         |       7898 |
-    |   12 | Hiver                       |       8171 |
-    |   31 | Foret feuilles caduques     |        867 |
-    |   32 | Foret feuilles persistantes |        125 |
-    |   34 | Pelouses                    |         45 |
-    |   36 | Lande ligneuse              |        386 |
-    |   41 | Bati                        |       4719 |
-    |   51 | Eau                         |       1280 |
-    |  211 | Prairie                     |       5647 |
-    |  221 | Verger                      |        204 |
-    |  222 | Vigne                       |        559 |
-    |------+-----------------------------+------------|
+|------+-----------------------------+------------|
+| Code | Nom                         | #polygones |
+|------+-----------------------------+------------|
+|   11 | Cultures d'été              |       7898 |
+|   12 | Cultures d'hiver            |       8171 |
+|   31 | Forêt feuilles caduques     |        867 |
+|   32 | Forêt feuilles persistantes |        125 |
+|   34 | Pelouses                    |         45 |
+|   36 | Lande ligneuse              |        386 |
+|   41 | Bâti                        |       4719 |
+|   51 | Eau                         |       1280 |
+|  211 | Prairie                     |       5647 |
+|  221 | Verger                      |        204 |
+|  222 | Vigne                       |        559 |
+|------+-----------------------------+------------|
 
 
     Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
@@ -225,18 +225,18 @@
        5. Validation
 
     Dans la suite du TP, vous réaliserez d'autres classifications sur d'autres
-    images. Un conseil est donc de travailler dans un répertoire par sous
-    partie, par exemple /classif1/.
+    images. Un conseil est donc de travailler dans un répertoire par sous-partie, 
+    par exemple /classif1/.
 
     Créez un répertoire /classif1/.
 
 ***** Calcul des statistiques
 
-    Les variables doivent êtres comparables entre chaque images. La première
+    Les variables doivent êtres comparables entre chaque image. La première
     étape est le calcul de statistiques pour que les données puissent être
     normalisés: moyenne nulle et écart-type de 1.
     
-    Choisissez une image à classifier, puis, dans le répertoire classif1
+    Choisissez une image à classifier, puis, dans le répertoire /classif1/
     utilisez l'application *ComputeImageStatistics* (Compute Images second order
       statistics) pour produire le fichier de
     statistiques.
@@ -245,7 +245,7 @@
 
     L'application *TrainImageClassifier* (Train a classifier from multiple
       images) permet d'apprendre un modèle pour
-    différentes méthodes de classifications. Regardez la documentation de cette
+    différentes méthodes de classification. Regardez la documentation de cette
     application et créez un modèle pour la méthode /libsvm/. Les paramètres
     à régler sont:
 
@@ -288,13 +288,13 @@
   servent à évaluer les performances du modèle appris en calculant la matrice de
   confusion.
 
-  Utilisez l'application *ComputeConfusionMatrix* (Confusion Matrix Computation) avec le jeu de donnée de test
+  Utilisez l'application *ComputeConfusionMatrix* (Confusion Matrix Computation) avec le jeu de données de test
   pour produire la matrice de confusion du modèle appris.
 
   Le paramètre /ref.vector.field CODE/ est nécessaire. Il indique le nom du
   champ contenant le numéro de label.
 
-  Consultez la matrice de confusion et identifiez les classes bien différenciés.
+  Consultez la matrice de confusion et identifiez les classes bien différenciées.
 
   A quel classe appartiennent le plus souvent les pixels mal classifiés ?
   Pourquoi ?
@@ -320,11 +320,11 @@
      dates.
 
   Le principe de la classification multidate est d'utiliser pour
-  chaque pixel, toute les dates disponibles comme des bandes
-  spectrales supplémentaires. Avec les données LANDSAT 8, il s'agit
+  chaque pixel, toutes les dates disponibles comme des bandes
+  spectrales supplémentaires. Avec les données Landsat-8, il s'agit
   donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
   façon à être réparties temporellement sur une année. Cela permet
-  d'intégrer les variation saisonnières qui apporte beaucoup
+  d'intégrer les variations saisonnières qui apportent beaucoup
   d'information pour la discrimination de certaines classes.
 
   Avant tout, créez un répertoire /classif9/ pour cette partie.
@@ -360,7 +360,7 @@
   pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
   profil permettra d'améliorer les performances de classification.
 
-  Calculer une image de NDVI pour chaque images de la série temporelle en
+  Calculer une image de NDVI pour chaque image de la série temporelle en
   utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
 
   Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
@@ -368,13 +368,13 @@
 
   Concaténez les neuf images d'indices en une seule pour constituer un profil
   NDVI. Ouvrez le profil dans QGIS. Visualiser le profil NDVI temporellement
-  avec l'outil bouton identifier les entités, puis vue graphique.
+  avec l'outil bouton /identifier les entités/, puis /vue graphique/.
 
 **** Classification du profil de NDVI
 
   Créez un répertoire /classifNDVI/ pour cette partie.
 
-  En suivant la même méthode que précédemment, réaliser une classification de la
+  En suivant la même méthode que précédemment, réalisez une classification de la
   série temporelle augmentée du profil NDVI.
 
   Les résultats sont ils améliorés par rapport à la classification multi date
@@ -391,7 +391,7 @@
   - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur existante.
 
   Filtrez le résultat de la classification précédente (neuf dates et
-  profil NDVI) puis comparer les résultats avec les images RGB (dans
+  profil NDVI) puis comparez les résultats avec les images RGB (dans
   monteverdi) et avec les matrices de confusions (avec un tableur).
 
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
@@ -455,8 +455,8 @@ fournies avec le TP.
     -out RGB_color_image.tif
    #+END_EXAMPLE
 
-    Les performances de cette premières classification ne sont pas
-    très bonne: on va maintenant essayer d'améliorer la discrimination
+    Les performances de cette première classification ne sont pas
+    très bonnes: on va maintenant essayer d'améliorer la discrimination
     des classes de végétation en utilisant plusieurs dates.
 
 *** Classification multi-date
@@ -490,7 +490,7 @@ fournies avec le TP.
     #+END_EXAMPLE
 
 
-    Apprentissage du modèle (cette fois-ci, on utilise le classifieur random forests, avec plus d'échantillons):
+    Apprentissage du modèle (cette fois-ci, on utilise le classifieur Random Forests, avec plus d'échantillons):
 
     #+BEGIN_EXAMPLE
     $ otbcli_TrainImagesClassifier -io.il \

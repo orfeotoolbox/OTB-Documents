@@ -79,7 +79,7 @@
      connexes. L'algorithme moyenne itérativement les pixels dans un
      certain voisinage spatial et spectral.
 
-     Réaliser un lissage de l'image ~phr_orthopxs_osr_mipy_xt.tif~ en
+     Réalisez un lissage de l'image ~phr_orthopxs_osr_mipy_xt.tif~ en
      utilisant l'application *MeanShiftSmoothing*. Faites varier les
      paramètres /ranger/ et /spatialr/ pour observer leur influence.
 
@@ -88,15 +88,15 @@
        de la stabilité, et sera donc désactivée,
      - Le rayon spatial (/spatialr/) et spectral (/ranger/) sont les
        paramètres déterminants pour l'algorithme. Le premier s'exprime
-       en nombre de pixel, tandis que le second comme une distance
+       en nombre de pixels, tandis que le second comme une distance
        entre signatures spectrales des pixels.
-     - La sortie /foutpos/ code les position moyenne des pixels après
+     - La sortie /foutpos/ code les position moyennes des pixels après
        lissage, et sera utilisée dans la suite du TP.
      - Le paramètre de nom de fichier étendu /box/ peut être utilisé
        pour trouver la valeur de /ranger/ et /spatialr/ optimale sans
        traiter toute l'image.
 
-     Pour la suite de l'exercice, utiliser une valeur de /ranger/
+     Pour la suite de l'exercice, utilisez une valeur de /ranger/
      autour de 25 et une valeur de /spatialr/ autour de 3 (pour
      limiter le temps de calcul).
 
@@ -174,11 +174,11 @@
 
      Ouvrez l'image initiale ainsi que le fichier vecteur ainsi créé
      dans QGIS. Changez le style d'affichage de la couche vecteur pour
-     afficher la bordure des polygones en rouge et le corp
+     afficher la bordure des polygones en rouge et le corps
      transparent. Analysez plus finement la segmentation ainsi
      affichée.
 
-     Ouvrez la table des attributs de la données vectorielle. Que
+     Ouvrez la table des attributs de la donnée vectorielle. Que
      constatez vous ?
      
 **** Filtrage des polygones dans QGIS
@@ -196,7 +196,7 @@
 
      Utilisez l'outil de sélection par une expression de la table des
      attributs dans QGIS pour sélectionner les petits objets compacts
-     dont la valeur moyenne du NDVI est forte (arbres ?). Copiez les
+     dont la valeur moyenne du NDVI est forte (arbres ?). Copiez-les
      dans une nouvelle couche.     
 
 ** Segmentation et export vers un SIG                             :solutions:
@@ -248,14 +248,14 @@
     #+END_EXAMPLE
     
     Cet algorithme de colorisation analyse les segments adjacents
-    pour maximiser leurs contraste lors de la colorisation.
+    pour maximiser leur contraste lors de la colorisation.
 
     L'image segmentée colorisée peut être analysée, et l'on constate
     qu'il y a une grande quantité de petites régions qui ne
     correspondent à aucun objet précis de la scène. A noter que ces
-    petites régions peuvent soit être filtrée en utilisant le
+    petites régions peuvent soit être filtrées en utilisant le
     paramètre /minsize/ de l'application *LSMSSegmentation*, soit
-    être traité dans l'étape suivante.
+    être traitées dans l'étape suivante.
 
 *** Traitement des petites régions
 
@@ -279,7 +279,7 @@
     
     En comparant les deux segmentations, on peut constater que les
     régions de taille inférieur au paramètre spécifié ont été
-    fusionnée avec les régions voisines les plus pertinentes.
+    fusionnées avec les régions voisines les plus pertinentes.
 
 *** Vectorisation
     
@@ -303,7 +303,7 @@
                                -out phr_radio_ndvi.tif 
     #+END_EXAMPLE
 
-    Enfin, on réaliser la vectorisation:
+    Enfin, on réalise la vectorisation:
 
     #+BEGIN_EXAMPLE
     $ otbcli_LSMSVectorization -in phr_radio_ndvi.tif 
@@ -316,7 +316,7 @@
 
 *** Filtrage polygones dans QGIS
     
-    Pour sélectionner tout les segments qui ne sont pas des ombres à
+    Pour sélectionner tous les segments qui ne sont pas des ombres à
     l'aide de l'outil de sélection par expression, on peut utiliser
     l'expression suivante:
 

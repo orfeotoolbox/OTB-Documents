@@ -30,9 +30,9 @@
 *** Fusion (pan-sharpening)
     
 **** Pourquoi le pansharpening ?
-    - La plupart des capteurs THR sont constitués de deux voix:
-      - Une voie panchromatique (une bande spectrale large) très résolue
-      - Une voie multi-spectrale (plusieurs bandes spectrales plus étroites) moins résolue (habituellement 4 fois moins)
+    - La plupart des capteurs THR sont constitués de deux voies:
+      - Une voie panchromatique (une bande spectrale large) très résolue spatialement
+      - Une voie multi-spectrale (plusieurs bandes spectrales plus étroites) moins résolue spatialement (habituellement 4 fois moins)
     - Pansharpening = image de synthèse avec la résolution du panchro et la couleur du multi-spectral
 
 **** Principe:
@@ -211,9 +211,9 @@ Avec l'image ~phr_xs_osr_mipy.tif~:
    réflectance de surface (top of canopy).
 3. Comparez les 2 images en utilisant Monteverdi ou les applications
    en ligne de commande (TOA-TOC). Comparez cette différence pour les bandes
-   rouge, verte et bleu (B0,B1,B2). Quelle bande est le plus /impactée/ par la
+   rouge, verte et bleue (B0,B1,B2). Quelle bande est le plus /impactée/ par la
    correction TOC?
-4. Appliquez les opérations 1,2 et 3 à l'image panchromatique ~phr_pan_osr_mipy.tif~.
+4. Appliquez les opérations 1, 2 et 3 à l'image panchromatique ~phr_pan_osr_mipy.tif~.
 
 _Trucs et astuces :_
 - Activez l'option '-milli' afin de générer les images de sortie en
@@ -226,16 +226,16 @@ _Trucs et astuces :_
      difficile d'obtenir la meilleure résolution spatiale et spectrale en même
      temps. Pour cette raison la plupart des capteurs spatiaux THR délivrent 2
      types d'images:
-     - Multi-spectral (XS): composée de plusieurs bandes, chacune sur une plage
-       de résolution spectrale donnée. Pour Pléiades, 4 bandes (B,V,R,PIR) à une
+     - Multi-spectrale (XS): composée de plusieurs bandes, chacune sur une plage
+       de résolution spectrale donnée. Pour Pléiades, 4 bandes (B, V, R, PIR) à une
        résolution spatiale de 2,8m (rééchantillonnées à 2m)
-     - Panchromatique (PAN): image en niveau de gris avec un détecteur couvrant
+     - Panchromatique (PAN): image en niveaux de gris avec un détecteur couvrant
        une plus large partie du spectre ce qui permet d'augmenter le flux et
        d'améliorer la résolution par rapport à l'image multi-spectrale. 0,7m
        dans le cas de Pléiades (rééchantillonnée à 0,5m)
      
 
-     Nous allons réaliser cette fusion à partir des extraits pan et xs en
+     Nous allons réaliser cette fusion à partir des extraits PAN et XS en
      réflectance au sommet de l'atmosphère ~phr_xs_osr_mipy_toa.tif~ et ~phr_xs_osr_mipy_toa.tif~: 
      
      Pour cela:
@@ -243,7 +243,7 @@ _Trucs et astuces :_
      1. Utilisez l'application *BundleToPerfectSensor* pour superposer et
         fusionner l'image PAN et XS. Notez que l'application possède un mode
         /phr/ qui permet d'effectuer la superposition des 2 images sans utiliser
-        les modèles de capteurs respectifs des images pan et xs (mode par défaut). En effet les
+        les modèles de capteurs respectifs des images PAN et XS (mode par défaut). En effet les
         produits bundle Pléiades ont la particularité d'être sur 2 grilles
         colocalisées.
      2. Quel algorithme de fusion est utilisé dans l'application *BundleToPerfectSensor*?
@@ -254,7 +254,7 @@ _Trucs et astuces :_
      Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
 
      Le schéma ci-dessous décrit l'ensemble des étapes susceptibles d'etre
-     réalisées pour passer d'un ensemble de produit de niveau 1 à une pile
+     réalisées pour passer d'un ensemble de produits de niveau 1 à une pile
      d'images co-registrées et géo-localisées.
 
      #+BEGIN_LaTeX
@@ -347,7 +347,7 @@ _Trucs et astuces :_
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
         4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
         5. Dans quelle zone UTM se trouve l'extrait PHR Pléiades?
-        6. Tester plusieurs types de projection en sortie (WGS84, Lambert 93)
+        6. Testez plusieurs types de projection en sortie (WGS84, Lambert 93)
 
 ** Pré-traitements de l'imagerie THR optique                      :solutions:
 *** Corrections atmosphériques
@@ -390,7 +390,7 @@ _Trucs et astuces :_
     #+END_EXAMPLE
 
     On peut utiliser le module *BandMathX* pour calculer la différence
-entre les 2 images multispectral:
+entre les 2 images multispectrales:
 
     #+BEGIN_EXAMPLE
     $ otbcli_BandMathX 

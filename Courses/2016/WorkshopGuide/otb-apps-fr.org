@@ -18,15 +18,15 @@
 
 *** Rapide intro aux OTB-Applications
     - Orfeo ToolBox est une *bibliothèque* offrant des fonctionnalités de télédétection
-    - Souvent nécessaire de combinant plusieurs fonctions (filtres) OTB dans une
+    - Souvent nécessaire de combiner plusieurs fonctions (filtres) OTB dans une
       chaîne de traitements
-    - Besoin interface de plus haut niveau (paramètres, les données d'entrée et
+    - Besoin d'interface de plus haut niveau (paramètres, les données d'entrée et
       de sortie, les logs...)
     - Chaque application correspond à une fonctionnalité de "haut niveau"
      (segmentation, orthorectification, segmentation, calculatrice sur les bandes...)
     - Correspond à une classe C++ (/otb::Application/) $\rightarrow$  librairie
     - Mécanisme de plugin
-    - Possibilité de développer et distribuer ces applications /homemade/
+    - Possibilité de développer et distribuer ces applications /maison/
 *** Rapide intro aux OTB-Applications   
     - En ligne de commande $\rightarrow$ otbcli\textunderscore{}Orthorectification
     - Dans une interface graphique $\rightarrow$ otbgui\textunderscore{}Orthorectification
@@ -35,8 +35,8 @@
 import otbApplication 
 orth=otb.Registry.CreateApplication("OrthoRectification") 
 #+end_src
-    - Intégré dans QGIS $\rightarrow$ Menu /processing/
-    - Intégré dans Monteverdi
+    - Intégrées dans QGIS $\rightarrow$ Menu /processing/
+    - Intégrées dans Monteverdi
 *** GUI
     #+begin_center
     #+ATTR_LaTeX: width=0.95\textwidth center  
@@ -46,7 +46,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     - Afficher l'aide de l'application d'OrthoRectification (bon exemple)
     - Notion de /groupe de paramètres/
     - Notion de /paramètre obligatoire/
-    - Dépendance entre paramètre (dynamique)
+    - Dépendance entre paramètres (dynamique)
     - Valeur par défaut
     - Type des images en sortie (par défaut flottant)
 *** Autre Exemple: BandMath
@@ -93,7 +93,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
      - Savoir rechercher une application dans la liste des
        applications disponibles
      - Savoir paramétrer une application
-     - Savoir trouver la documentation d'un application
+     - Savoir trouver la documentation d'une application
      - Savoir utiliser plusieurs applications classiques
 
 *** Étapes                                                            :steps:
@@ -118,8 +118,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
      Dans l'image ~message2.tif~, une phrase à été encodée dans une
      zone homogène de faible luminance. Les pixels ainsi modifiés ne
-     sont pas détectables à l'oeil nu, mais pourraient être révélé par
-     l'application d'un gradient ou d'un détecteur de contour.
+     sont pas détectables à l'oeil nu, mais pourraient être révélés par
+     l'application d'un gradient ou d'un détecteur de contours.
 
      Utilisez l'application *EdgeDetection* pour révéler le message.
 
@@ -188,8 +188,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 *** Pour aller plus loin                                            :further:
 
-    Quelles messages étaient détectables en analysant finement l'image
-    avec Monteverdi? Quelles messages ne l'étaient pas?
+    Quels messages étaient détectables en analysant finement l'image
+    avec Monteverdi? Quels messages ne l'étaient pas?
 
     Pouvez vous imaginer d'autres procédés pour incruster des messages
     indétectables dans les images? Une image (~image.tif~) et un
@@ -203,7 +203,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     qu'une image Pléiades est codée sur 12 bits, qu'il ne devrait donc
     pas y avoir de valeurs de pixel supérieures à
     $2^{12}-1=4095$. Nous allons donc utiliser l'application
-    *BandMath* pour seuiller les pixels au dessus de cette valeur:
+    *BandMath* pour seuiller les pixels au dessus de cette valeur :
 
     #+BEGIN_EXAMPLE
     $ otbcli_BandMath -il image1.tif           \
@@ -264,9 +264,9 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** Message 5
 
     Pour révéler le cinquième message, nous allons réaliser une
-    analyse en composante principale à l'aide de l'application
+    analyse en composantes principales à l'aide de l'application
     *DimensionalityReduction* et en extraire la dernière bande à
-    l'aide de l'application *ExtractROI*, ou
+    l'aide de l'application *ExtractROI*, où
     se concentre le bruit:
 
     #+BEGIN_EXAMPLE

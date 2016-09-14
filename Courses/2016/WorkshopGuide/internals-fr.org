@@ -3,7 +3,7 @@
 **** Objectifs
      - Comprendre les mécanismes transparents de l'Orfeo ToolBox
      - Savoir influencer la manière dont l'Orfeo ToolBox exécute un traitement
-     - Savoir ou trouver des informations complémentaires
+     - Savoir où trouver des informations complémentaires
 
 **** Données
      
@@ -80,10 +80,10 @@
      
      Cet exercice permet de se familiariser avec les mécanismes
      internes de l'Orfeo ToolBox:
-     - Les noms de fichier étendus,
-     - Le streaming,
-     - Le multi-threading,
-     - Les variables d'environnements,
+     - Les noms de fichier étendus
+     - Le streaming
+     - Le multi-threading
+     - Les variables d'environnement
      - Les fichiers geom
      
 **** Pré-requis
@@ -109,9 +109,9 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
      représente. Ainsi, on choisira en général:
      - Un encodage entier sur 8 bits non-signés (plage de valeurs
        [0,255]) pour des sorties destinées à un affichage ou des
-       rapports,
+       documents (rapports, articles),
      - Un encodage entier sur 16 bits non signés pour représenter
-       des images satellites,
+       des images satellite,
      - Un encodage flottant (32 ou 64 bits) quand on représente le
        résultat d'un calcul produisant des nombres réels (NDVI,
        calibration radiométrique ...).
@@ -160,11 +160,11 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
 
      Les noms de fichiers étendus permettent d'influencer la manière
      dont l'Orfeo ToolBox lit ou écrit une image. Ils ne sont pas
-     spécifiques aux applications, mais peuvent être utiliser pour
+     spécifiques aux applications, mais peuvent être utilisés pour
      n'importe quel logiciel construit autour de l'Orfeo ToolBox.
      
      L'ensemble des options disponibles sont listées dans la section
-     7.10 du Software Guide. Nous allons illustrer leurs
+     7.10 du Software Guide. Nous allons illustrer leur
      fonctionnement en nous concentrant sur quelques options.
 
 ***** Les options de lecture
@@ -177,7 +177,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
       #+END_EXAMPLE
 
       Quel est l'effet du paramètre /skipgeom/ ? Notez son
-      équivalent /skicarto/, qui permet de s'affranchir de la
+      équivalent /skipcarto/, qui permet de s'affranchir de la
       projection cartographique grossière dans le cas des produits de
       type /Ortho Ready/ (produit projeté à une altitude moyenne par défaut).
 
@@ -188,21 +188,21 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
       $ otbcli_ReadImageInfo -in "image2.tif?&geom=image1.geom"
       #+END_EXAMPLE
 
-      Quel est l'effet du paramètre /geom/ ? Quel peut être son utilité ?
+      Quel est l'effet du paramètre /geom/ ? Quelle peut être son utilité ?
 
 ***** Les options d'écriture
 
       Parmi les options d'écriture accessibles à partir des noms de
-      fichier étendu, l'option /gdal:co/ permet de passer des options
+      fichier étendus, l'option /gdal:co/ permet de passer des options
       de créations du fichier directement à gdal.
 
       A l'aide de cette option, et en consultant les options de
-      créations de fichier disponible pour le format Tif dans gdal,
+      création de fichier disponibles pour le format Tif dans gdal,
       ré-encodez l'image ~image1.tif~ en entier signé sur 12 bits,
       avec une compression LZW. Comparez la taille des fichiers et le
       contenu des image à l'aide de l'application *CompareImages*.
 
-      Une seconde option de nom de fichier étendue qui peut être utile
+      Une seconde option de nom de fichier étendu qui peut être utile
       est l'option box. Utilisez l'option box pour n'écrire qu'un
       carré de 100x100 pixels au centre de l'image d'entrée.
 
@@ -234,7 +234,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
 
 **** Le multi-threading
 
-     Par défaut, tout les filtres de l'Orfeo ToolBox qui en ont la
+     Par défaut, tous les filtres de l'Orfeo ToolBox qui en ont la
      capacité vont automatiquement utiliser l'ensemble des coeurs
      disponibles sur le processeur de la machine. Ce comportement peut
      être modifié en utilisant la variable d'environnement
@@ -325,7 +325,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
     psnr: 0
     #+END_EXAMPLE
 
-    Pour calculer le NDVI, on utilise la commande suivantes :
+    Pour calculer le NDVI, on utilise la commande suivante :
     
     #+BEGIN_EXAMPLE
     $ otbcli_RadiometricIndices -in image1.tif 
@@ -339,7 +339,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
     Si l'on ouvre l'image ainsi générée dans *monteverdi*, on constate
     que l'image vaut 0 en tout point: l'encodage de la sortie ne
     convient pas. Il faudrait utiliser un type flottant (comme celui par
-    défaut par exemple.
+    défaut par exemple).
 
 *** Les fichiers .geom
 
@@ -409,7 +409,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
     #+END_EXAMPLE
 
     On constate que le calcul s'effectue en plusieurs phases (charge
-    des processeurs), entrecoupées de phase d'écriture sur le
+    des processeurs), entrecoupées de phases d'écriture sur le
     disque. Par défaut, c'est l'Orfeo ToolBox qui détermine le
     découpage optimal.
 
@@ -431,7 +431,7 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
       -radius 9
     #+END_EXAMPLE
 
-    Cette fois-ci, on observe de multiples phases de calcul suivi de
+    Cette fois-ci, on observe de multiples phases de calcul suivies de
     phases d'écriture. Le temps de calcul peut être quasiment deux
     fois plus long, car un découpage trop important est sous optimal.
 

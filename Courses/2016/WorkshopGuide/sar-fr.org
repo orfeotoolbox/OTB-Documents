@@ -23,8 +23,8 @@
 *** Différence Optique/SAR
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:Images/actif_passif_cours_cnes.png]]
-    (source CNES: IMAGERIE SPATIALE Des principes d’acquisition au traitement
-    des images optiques pour l’observation de la Terre)
+    (source CNES: IMAGERIE SPATIALE Des principes d'acquisition au traitement
+    des images optiques pour l'observation de la Terre)
 *** Introduction SAR
     - RSO: Radar à Synthèse d'Ouverture (SAR en anglais)
     - Impulsions hyperfréquences et enregistrement des échos
@@ -71,7 +71,7 @@
      images RSO (radar à synthèse d'ouverture) en utilisant l'Orfeo ToolBox.
 
      Il existe par ailleurs de nombreuses sources bibliographiques et de cours
-     en ligne disponible sur la télédection radar. Par exemple:
+     en ligne disponibles sur la télédection radar. Par exemple:
      - Support de cours ENSG: http://fad.ensg.eu/moodle/course/view.php?id=519
 
 **** Pré-requis
@@ -125,7 +125,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      - gamma zero: rétrodiffusion radar normalisée par l'angle d'incidence (à privilégier généralement) 
 
      Pour Sentinel-1 est fourni une table de
-     valeur permettant de faire la conversion depuis les comptes numériques vers
+     valeurs permettant de faire la conversion depuis les comptes numériques vers
      ces différentes grandeurs.
 
      1. Quelle application permet d'effectuer cette opération dans l'OTB?
@@ -152,7 +152,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 **** Filtrage du speckle
 
      Les images SAR sont fortement affectées par le chatoiement (speckle) qui constitue un
-     type particulier de bruit présent dans tous les systèmes d'acquisition cohérent
+     type particulier de bruit présent dans tous les systèmes d'acquisition cohérents
      (sonar, laser, etc.). Ce bruit est très fort et il a un effet multiplicatif.
 
      Il existe plusieurs méthodes pour réduire ce bruit. Dans la suite nous
@@ -162,31 +162,31 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      Plus de détail sur le speckle et le filtre de Frost [[http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf][ici]].
 
-     1. Quelle sont les méthodes de réduction du speckle disponible dans l'OTB?
-     2. Utilisez le filtre de Frost avec différents rayons (3,5 et 10) et
+     1. Quelles sont les méthodes de réduction du speckle disponibles dans l'OTB?
+     2. Utilisez le filtre de Frost avec différents rayons (3, 5 et 10) et
        commentez l'effet sur l'image de sortie
-     3. Commentez la forme de l'histogramme des images filtrées comparé à
+     3. Commentez la forme de l'histogramme des images filtrées comparées à
         l'image d'intensité?
      4. Utilisez le filtre de Frost avec un rayon de 5 et différentes valeurs
-        du paramètre /deramp/ (00.5,0.2 et 0.8). Commentez l'effet de ce paramètre.
+        du paramètre /deramp/ (00.5, 0.2 et 0.8). Commentez l'effet de ce paramètre.
 
 **** Polarimétrie
 
      Nous allons comparer de manière qualitative la différence entre les
-     observations des images en polarimétrie HH et HV pour détecter certains
+     observations des images en polarisations HH et HV pour détecter certains
      éléments dans l'image.
 
      1. Calculez la différence entre l'image d'intensité HH et HV. On peut
         prendre 2 fois HV car la valeur rétrodiffusée en HV est généralement
-        inférieure. Sur cette image je propose d'utiliser la différence simple HH-HV
+        inférieure. Sur cette, on peut utiliser la différence simple HH-HV
      2. Effectuez une composition colorée avec les bandes HH, HV et HH-HV. On peut
-        prendre 2 fois HV car la valeur rétrodiffusée en HV est généralement inférieur.
+        prendre 2 fois HV car la valeur rétrodiffusée en HV est généralement inférieure.
      3. Convertissez la composition colorée en Décibel (Db)
      4. Affichez le résultat avec Monteverdi et commentez les différences entre
         HH et HV (zone de layover, zone de végétation, sol nu, zone en eau...)
      5. Jouons un peu pour finir à /Où est Charlie?/. A partir de la
         composition colorée en Décibel:
-        - Indiquer les coordonnées de 2 lignes électrique parallèle visible dans l'image?
+        - Indiquer les coordonnées de 2 lignes électriques parallèles visible dans l'image?
         - Plus dur, chercher dans l'image une zone réagissant comme un coin réflecteur
           ("croix").
         - A quoi correspondent les "points" en violet dans le lac autour des
@@ -248,7 +248,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         -lut gamma
         #+END_EXAMPLE
         
-     3. Attention au pixel <= 0 dans l'expression du log!
+     3. Attention aux pixels <= 0 dans l'expression du log!
 
         #+BEGIN_EXAMPLE
         $ otbcli_BandMath \
@@ -266,7 +266,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
 
-**** Corrections géométrique
+**** Corrections géométriques
     1. Orthorectification sans DEM:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
@@ -288,7 +288,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      1. Les méthodes disponibles sont: lee, frost, kuan et gamma map. Quelque
         soit la méthode utilisée on note une amélioration majeure de la qualité
         de l'image filtrée qui permet d'identifier des structures difficilement
-        visible dans l'image d'intensité originale. 
+        visibles dans l'image d'intensité originale. 
 
      2. Réduction du speckle avec l'algorithme de Frost:
 
@@ -302,7 +302,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
         L'augmentation du rayon a pour effet d'augmenter le lissage de l'image
         filtrée. Cela permet d'améliorer la qualité des images dans les zones
-        homogènes mais entraîne également la perte d'information et de détail
+        homogènes mais entraîne également la perte d'informations et de détails
         sur des petites structures avec beaucoup de contraste. 
 
      3. L'histogramme des images filtrées tend à devenir gaussien (en cloche) et
@@ -330,7 +330,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
       intensity_hv_speckle.tif hh-hv_speckle.tif \ 
       -out intensity_compo.tif 
      #+END_EXAMPLE
-     1. Attention au pixel <= 0 dans l'expression du log!
+     1. Attention aux pixels <= 0 dans l'expression du log!
 
         #+BEGIN_EXAMPLE
         $ otbcli_BandMath \
@@ -339,14 +339,14 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
      2. Commentaires:
-        - layover: correspond à un effet géométrique réponse similaire HH et HV
-        - variabilités traduisent aussi des différences de type et de niveau de croissance des végétations et d’humidité du sol
-        - zone de végétation (foret): vert/jaune
+        - Layover: correspond à un effet géométrique réponse similaire HH et HV
+        - Les variabilités traduisent aussi des différences de type et de niveau de croissance des végétations et d'humidité du sol
+        - Zone de végétation (forêt): vert/jaune
         - HV moins sensible à la rugosité
         - Zone en eau: réponse radar faible (HH)
      3. Analyse de la composition colorée:
         - 2 lignes électriques parallèles autour des coordonnées (230,3700)
-        - Coin réflecteur au coordonnée image (3620,2925). C'est peut etre un
+        - Coin réflecteur aux coordonnées image (3620,2925). C'est peut être un
           coin réflecteur fixe positionné pour la validation géométrique de
           Sentinel-1 (cette zone fait partie des zones de validation de la
           mission). Je n'ai pas trouvé d'information permettant de vérifier
