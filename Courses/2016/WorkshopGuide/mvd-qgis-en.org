@@ -160,7 +160,7 @@
      ~Data/classification/training/~.
 
      Use the contextual menu to open /Properties/ and /Style/ tab. Use
-     /Categorised/ using colum /LC/. How many classes in the file? Change the
+     /Categorised/ using column /LC/. How many classes in the file? Change the
      color to table to display different classes in different colors.
 
      Open attribute table. How many polygons are contain in the class /pelouse/ (/lawn/)?

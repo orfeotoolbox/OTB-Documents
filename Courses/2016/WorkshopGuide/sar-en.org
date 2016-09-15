@@ -62,7 +62,7 @@
     - Strong!
     - Speckle noise in SAR is a multiplicative noise, i.e. it is in direct proportion to the local grey level in any area
     - Several methods to try to reduce this noise
-    - Try to reduce speckle effects without loosing to much details
+    - Try to reduce speckle effects without losing to much details
     - Speckle filtering allows to improve image quality and facilitate interpretations
 *** To go further
 

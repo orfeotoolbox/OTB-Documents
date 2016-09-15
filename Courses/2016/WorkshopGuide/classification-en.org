@@ -91,7 +91,7 @@
 **** Learning
      1. Separate the learning set in k random sets $S_k$
      2. For each $S_k$, choose randomly $F_k$ primitives
-     3. Recursivly build a decision tree, for each node:
+     3. Recursively build a decision tree, for each node:
         1. Choose $f \in F_k$ and the threshold $t_k$ to separate the remaining set in two subsets:
         2. Stop when the remaining set is too small
 
@@ -205,7 +205,7 @@
 
     Open a polygon file in QGIS. The attribute table is accessible from
      right-click on the layer, then /Open the attribute table/. Each label is
-     visible and the list can be filtered via SQL expresions.
+     visible and the list can be filtered via SQL expressions.
 
     The polygons are spread over two sets: learning (or training) and validation
      (or testing).

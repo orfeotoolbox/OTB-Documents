@@ -18,7 +18,7 @@
      [[file:Images/atmo_correction.png]]
      (source http://www.hkcoastalwaterquality.tk/Methodology.html)
 **** Digital number (DN)
-     Output from the sensor (no unit, sensor dependant)
+     Output from the sensor (no unit, sensor dependent)
 **** Luminance
      Luminance is the quantitative measure of lights (W.m-2.sr-1)
 **** Reflectance Top Of Atmosphere (TOA) 
