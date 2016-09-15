@@ -250,12 +250,12 @@
     - io.out :: The output file name for the model, for example /model.svm/
 
       Other parameters are also important:
-    - sample.vfn CODE :: indicates that the label column in the SQL file is
+    - sample.vfn CODE :: indicates that the label column in the vector file is
       called CODE in the training dataset.
     - sample.vtr 0 :: Ration of the learning set to the validation set. Here 0
       because we are using are own split.
     - sample.mt :: Maximum number of samples per class, the default value is one
-         thousend. Reducing it will accelerate significantly the learning time.
+         thousand. Reducing it will accelerate significantly the learning time, but can decrease the quality of the obtained model.
 
 ***** Using the model
 

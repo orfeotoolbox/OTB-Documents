@@ -19,7 +19,7 @@
     4. Speckle filtering
     5. Polarimetry
     6. Feature extraction (TD)
-***  Optic vs Radar
+*** Optic vs Radar
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:Images/actif_passif_cours_cnes.png]]
     (source CNES: Book "IMAGERIE SPATIALE Des principes d’acquisition au traitement
