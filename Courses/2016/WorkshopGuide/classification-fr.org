@@ -163,6 +163,7 @@
      | 2014-09-01 |
      | 2014-10-03 |
      | 2014-10-26 |
+     |            |
      |------------|
 
     Ces images sont toutes multispectrales avec les sept bandes du capteur OLI:
@@ -213,172 +214,191 @@
     Les polygones sont répartis en deux ensembles: apprentissage (training) et
     validation (testing).
 
-**** Classification d'une date
+**** Préparation des données
 
-    Nous allons commencer par réaliser sur une seule date toutes les
-    étapes qui constituent la procédure de classification supervisée:
+     Pour ce TP nous allons utiliser trois types d'images:
+     1. Une image contenant les bandes originales pour toutes les dates (63 bandes)
+     2. Une image contenant les valeurs du NDVI pour chaque date (9 bandes)
+     3. Un image contenant les bandes originales et les valeurs du NDVI (72 bandes)
 
-       1. Calcul des statistiques
-       2. Apprentissage du modèle
-       3. Utilisation du modèle (classification)
-       4. Rendu
-       5. Validation
 
-    Dans la suite du TP, vous réaliserez d'autres classifications sur d'autres
-    images. Un conseil est donc de travailler dans un répertoire par sous
-    partie, par exemple /classif1/.
+     La première étape consiste à générer ces différentes images.
 
-    Créez un répertoire /classif1/.
 
-***** Calcul des statistiques
+     Utiliser l'application *ConcatenateImages* pour générer l'image
+     contenant toutes les bandes.
 
-    Les variables doivent êtres comparables entre chaque images. La première
-    étape est le calcul de statistiques pour que les données puissent être
-    normalisés: moyenne nulle et écart-type de 1.
-    
-    Choisissez une image à classifier, puis, dans le répertoire classif1
-    utilisez l'application *ComputeImageStatistics* (Compute Images second order
-      statistics) pour produire le fichier de
-    statistiques.
 
-***** Apprentissage du modèle
+     Utiliser l'application *RadiometricIndices* pour calculer le NDVI
+     pour chaque date. Utiliser ensuite l'application
+     *ConcatenateImages* pour générer l'image contenant l'ensemble des
+     valeurs du NDVI (profil).
 
-    L'application *TrainImageClassifier* (Train a classifier from multiple
-      images) permet d'apprendre un modèle pour
-    différentes méthodes de classifications. Regardez la documentation de cette
-    application et créez un modèle pour la méthode /libsvm/. Les paramètres
-    à régler sont:
 
-    - io.il :: l'image d'entrée
-    - io.vd :: le fichier vectoriel d'apprentissage (training.shp)
-    - io.imstat :: le fichier xml de statistiques calculé précédement
-    - classifier :: la méthode, ici utilisez /libsvm/
-    - io.out :: le nom du fichier modèle en sortie, par exemple /model.rf/
+     Enfin, utiliser à nouveau l'application *ConcatenateImages* pour
+     générer l'image contenant l'ensemble des bandes originales et le
+     profil de NDVI.
 
-    D'autres paramètres sont important aussi:
-    - sample.vfn CODE :: indique que la colonne SQL des labels porte le nom CODE
-    - sample.vtr 0 :: Ratio de l'ensemble d'apprentissage sur l'ensemble de
-      validation. 0 ici car nous utilisons notre propre découpe.
-    - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
-      est 1000. La réduire permet d'accélérer significativement le temps
-      d'apprentissage.
+     *Notes :* Le calcul de l'indice NDVI pour chaque date peut se
+     faire à l'aide d'un script bash:
 
-***** Utilisation du modèle
+     \begin{verbatim}
+     $ for f in *.tif; do \
+       otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
+                                 -channels.red 3 -channels.nir 4 \
+                                 -in "$f" -out "${f%.*}_ndvi.tif" \
+                                 -list Vegetation:NDVI; done
+     \end{verbatim}
 
-   Une fois le modèle de classification appris, il peut être utilisé pour
-   classifier tout les pixels de l'image.
+**** Calcul des statistiques des échantillons disponibles
 
-   Utilisez l'application *ImageClassifier* (Image Classification), en spécifiant le modèle créé dans
-   l'étape précédente.
+     Nous allons maintenant utiliser l'application
+     *PolygonClassStatistics* afin de recenser les échantillons
+     disponibles pour chaque classe et chaque polygone des données
+     d'entraînement et de validation.
 
-***** Rendu
+     Cette application prend en paramètre l'image qui sera utilisée
+     pour extraire les échantillons, la donnée vecteur définissant les
+     polygones à analyser (~training.shp~ pour l'apprentissage,
+     ~testing.shp~ pour la validation), et le nom du champ définissant
+     la classe dans ces données vecteur. Elle produit en sortie un
+     fichier XML résumant les informations récoltées.
 
-   La sortie de l'étape précédente est une image .tif qui associe à chaque pixel
-   une classe. Pour visualiser cette image, l'application *ColorMapping* permet
-   d'associer à chaque label une couleur RGB et de générer une image de
-   visualisation.
+     En inspectant les données dans QGis, repéré le champ qui sera
+     utilisé pour définir la classe.
 
-   Utilisez l'application ColorMapping avec la table de couleur fournie
-   ~color_map.txt~.
+     Ouvrez les fichiers XML générés. Combien y-a-t-il d'échantillons
+     disponibles pour la classe ~prairie~ dans le jeu d'apprentissage
+     ? Et dans celui de validation ?
 
-***** Validation
+     Combien d'échantillons contient le polygone dont l'identifiant
+     est 1081 dans le jeu d'apprentissage ?
 
-  Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
-  des polygones. Les 70% restant sont dans le fichier ~testing/testing.shp~ et
-  servent à évaluer les performances du modèle appris en calculant la matrice de
-  confusion.
+     Combien y-a-t-il d'échantillons, toutes classes confondues, dans
+     le jeu d'apprentissage ?
 
-  Utilisez l'application *ComputeConfusionMatrix* (Confusion Matrix Computation) avec le jeu de donnée de test
-  pour produire la matrice de confusion du modèle appris.
+**** Sélection des positions des échantillons
 
-  Le paramètre /ref.vector.field CODE/ est nécessaire. Il indique le nom du
-  champ contenant le numéro de label.
+     Nous avons vu lors de l'étape précédente que les polygones
+     d'apprentissage contienne beaucoup plus d'échantillons que
+     nécessaire à l'apprentissage du modèle. Nous allons maintenant
+     sélectionner un sous-ensemble de ces échantillons pour entraîner
+     notre modèle à l'aide de l'application *SampleSelection*.
 
-  Consultez la matrice de confusion et identifiez les classes bien différenciés.
+     Inspecter la documentation de l'application. Quels sont les
+     différentes stratégies possibles pour réaliser cette sélection ?
 
-  A quel classe appartiennent le plus souvent les pixels mal classifiés ?
-  Pourquoi ?
+     Nous allons utiliser la stratégie ~smallest~, qui permet de
+     limiter le nombre d'échantillon par classe à celui de la classe
+     la moins représentée. Nous génèrerons un jeu d'échantillons pour
+     l'apprentissage (à partir de ~training.shp~) et un pour la
+     validation (à partir de ~testing.shp~).
 
-  Vous pouvez utiliser le squelette csv (~template_confusion_matrix.csv~) pour
-  identifier les labels facilement.
-***** Optionnel: Découvrir d'autres méthodes d'apprentissage
-      
-      Refaire toute la classification sur une date en utilisant l'algorithme
-      Random Forest à la place des SVM.
+     L'application accepte comme paramètre l'image, la donnée vecteur
+     contenant les polygones, le nom du champ correspondant à la
+     classe dans cette donnée et le fichier de statistiques produit
+     précédemment. Elle génère un fichier vecteur contenant des
+     points, chaque point correspondant à un échantillon sélectionné.
 
-      Effectuez l'ensemble de la procédure avec et sans l'étape 1 /Calcul des
-      statistiques/.
+     Combien d'échantillons au total ont été sélectionnés par classe
+     pour l'apprentissage ?
 
-      1. Comparez les résultats obtenus entre les SVM et les RF?
-      2. Comparez les résultats obtenus avec les RF avec et sans normalisation?
+     Ouvrir les fichiers de points ainsi généré dans QGis. Quels sont les
+     attributs associés à chaque point ?
+     
+**** Calcul des attributs des échantillons
 
-**** Classification multi-date
+     Maintenant que nous avons sélectionné les positions des
+     échantillons, nous allons leurs associer des attributs qui seront
+     utilisés pour l'apprentissage et la classification. Ce calcul des
+     attributs se fait à l'aide de l'application *SampleExtraction*,
+     qui à chaque point va associer la signature spectrale de l'image
+     sous-jacente.
 
-     Les performances de cette première classification ne sont pas
-     très bonnes: on va maintenant essayer d'améliorer la
-     discrimination des classes de végétation en utilisant plusieurs
-     dates.
+     Notez qu'en l'absence d'une sortie vecteur explicite,
+     l'application fonctionne en mode mise-à-jour de la donnée vecteur
+     d'entrée, c'est à dire des attributs lui seront ajoutés.
+     
+     L'application prend en paramètre l'image à utiliser ainsi que le
+     fichier de points à enrichir. Elle permet également de spécifier
+     le nom des champs qui seront générés. Ainsi si l'on spécifie
+     comme préfixe ~band_~, alors les champs s'appelleront ~band_0~,
+     ~band_1~, etc ...
 
-  Le principe de la classification multidate est d'utiliser pour
-  chaque pixel, toute les dates disponibles comme des bandes
-  spectrales supplémentaires. Avec les données LANDSAT 8, il s'agit
-  donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
-  façon à être réparties temporellement sur une année. Cela permet
-  d'intégrer les variation saisonnières qui apporte beaucoup
-  d'information pour la discrimination de certaines classes.
+     Nommer les bandes de l'image avec le prefixe ~band_~ et le profil
+     de NDVI avec le préfixe ~ndvi_~
 
-  Avant tout, créez un répertoire /classif9/ pour cette partie.
+     Utilisez l'application pour ajouter les attributs correspondant
+     aux bandes de l'image et au profil de NDVI, pour le jeu
+     d'apprentissage et le jeu de validation.
 
-  Les étapes sont les mêmes que précédemment, mais il faut d'abord constituer une
-  image de 63 bandes en concaténant les 9 images.
+**** Entraînement du modèle
 
-  Pour cela, utilisez l'application *ConcatenateImages* (Images Concatenation).
+     Nos échantillons sont prêts, il est à présent temps d'entraîner
+     notre modèle. Pour cela nous allons utiliser l'application
+     *TrainVectorClassifier*, qui va lire les fichiers de points avec
+     leurs attributs générés précédemment, et les utiliser pour
+     réaliser l'apprentissage et la validation.
 
-  Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
-  63 bandes sur 16 bits avec /gdalinfo/.
+     Pour l'ensemble des expérience de cette section, nous allons
+     utiliser un modèle de type *Random Forest* (rf), avec une
+     profondeur maximale d'arbre de 20.
 
-  Puis effectuez les même étapes que précédemment: *ComputeImageStatistics*,
-  *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
-  
-  Utilisez cette fois la méthode Random Forest pour le modèle qui est plus
-  rapide. Utilisez également les paramètres suivants qui offrent de bonnes
-  performances de classification:
+     Il faut à nouveau donner en paramètre à l'application le nom du
+     champ définissant la classe. L'application accepte également en
+     paramètre le fichier de point décrivant les échantillons et un
+     fichier de sortie correspondant au modèle appris.
 
-   - sample.bm 0 :: Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
-    classe.
-   - sample.mt 2000 :: Le nombre maximum d'échantillons d'apprentissage par
-    classe.
-   - classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
-   - classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
+     Réaliser un premier apprentissage en utilisant uniquement la
+     première date (~band_0~ à ~band_6~), et sans spécifier de fichier
+     de validation.
 
-  Comparez ensuite les résultats avec la classification à une date en utilisant
-  la matrice de confusion et l'image RGB.
+     Quelle performance (coefficient Kappa) obtenez vous ? Cette
+     performance vous parait elle réaliste ? Comment a-t-elle été
+     évaluée ?
 
-**** Calcul d'un profil de NDVI
-  
-  Une image NDVI peut-être calculée pour chaque image de la série temporelle
-  pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
-  profil permettra d'améliorer les performances de classification.
+     Réaliser le même apprentissage, cette fois ci en ajoutant un fichier
+     de validation que vous avez calculé à l'étape
+     précédente. Qu'observez vous ?
 
-  Calculer une image de NDVI pour chaque images de la série temporelle en
-  utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
+     A l'aide de l'application d'apprentissage, il est aisé de tester
+     des combinaisons d'attributs pour observer leur influence sur les
+     performances:
+     - Quelle date fourni la meilleure performance individuelle ?
+     - La bande bleu côtier a-t-elle un intérêt pour la classification
+       ?
+     - Quelle est la performance du profil de ndvi seul ?
+     - Quelle est la performance en utilisant toutes les bandes sans
+       le profil de NDVI ?
+     - Quelle est la performance en utilisant toutes les bandes et le
+       profil de NDVI ?
 
-  Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
-  temporelle.
+     *Notes :* Il est possible de définir des variables bash pour les
+     ensembles d'attributs:
 
-  Concaténez les neuf images d'indices en une seule pour constituer un profil
-  NDVI. Ouvrez le profil dans QGIS. Visualiser le profil NDVI temporellement
-  avec l'outil bouton identifier les entités, puis vue graphique.
+     \begin{verbatim}
+     date1=`for i in $(seq 0 6); do printf "band_$i "; done`
+     date2=`for i in $(seq 7 13); do printf "band_$i "; done`
+     date3=`for i in $(seq 14 20); do printf "band_$i "; done`
+     date4=`for i in $(seq 21 27); do printf "band_$i "; done`
+     date5=`for i in $(seq 28 34); do printf "band_$i "; done`
+     date6=`for i in $(seq 35 41); do printf "band_$i "; done`
+     date7=`for i in $(seq 42 48); do printf "band_$i "; done`
+     date8=`for i in $(seq 49 55); do printf "band_$i "; done`
+     date9=`for i in $(seq 56 62); do printf "band_$i "; done`
 
-**** Classification du profil de NDVI
+     date1_nocb=`for i in $(seq 1 6); do printf "band_$i "; done`
 
-  Créez un répertoire /classifNDVI/ pour cette partie.
+     bands=`for i in $(seq 0 62); do printf "band_$i "; done`
 
-  En suivant la même méthode que précédemment, réaliser une classification de la
-  série temporelle augmentée du profil NDVI.
+     ndvis=`for i in $(seq 0 8); do printf "ndvi_$i "; done`
 
-  Les résultats sont ils améliorés par rapport à la classification multi date
-  sans l'indice NDVI ?
+     \end{verbatim}
+
+     Ensuite, on peut directement utiliser ces variables en paramètres
+     de l'application ~-feat ${bands} ${ndvis}~.
+
+**** Classification
 
 **** Post-traitements de la classification
 
@@ -393,6 +413,8 @@
   Filtrez le résultat de la classification précédente (neuf dates et
   profil NDVI) puis comparer les résultats avec les images RGB (dans
   monteverdi) et avec les matrices de confusions (avec un tableur).
+
+
 
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
 
