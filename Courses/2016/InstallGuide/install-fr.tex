@@ -44,7 +44,7 @@ Git for Windows est très facile à installer:
 \url{http://git-scm.com/download/win}.
 
 \subsection{OTB et Monteverdi}
-Pour installer OTB et Monteverdi, télécharger le paquet OTB correspondants à
+Pour installer OTB et Monteverdi, téléchargez le paquet OTB correspondants à
 votre architecture (32 ou 64 bits). Si votre machine est 32
 bits il s'agit de:
 
@@ -132,7 +132,12 @@ ou écrasant les fichiers dans \texttt{}.
 \end{comment}
 
 \clearpage
-\section{Ubuntu}
+\section{Linux (exemple Ubuntu)}
+
+La section ci-dessous détaille la procédure d'installation des outils dans un
+environnement Linux (Ubuntu). Cette procédure peut également s'appliquer à
+d'autres distributions Linux en adaptant le gestionnaire de paquets (dnf, yum,
+emerge, pacman\ldots)
 
 \subsection{QGis}
 QGis peut être installé via un gestionnaire de paquets graphique ou bien en
@@ -141,9 +146,9 @@ ligne de commande, le paquet à installer s'appelle simplement \textbf{qgis}.
 sudo apt-get install qgis
 \end{verbatim}
 
-\subsection{Installer les dépendences}
-Avant d'installer le paquet autoportant OTB, certaines dépendences système
-sont nécéssaires. Dans un terminal, taper:
+\subsection{Installer les dépendances}
+Avant d'installer le paquet autoportant OTB, certaines dépendances système
+sont nécessaires. Dans un terminal, taper:
 \begin{verbatim}
 sudo apt-get install libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
 \end{verbatim}
@@ -175,7 +180,7 @@ chmod +x OTB-5.6.1-Linux64.run
 \end{verbatim}
 
 Il existe ensuite un script permettant de lancer monteverdi ou mapla avec toutes les
-variables d'environnement nécéssaires:
+variables d'environnement nécessaires:
 \begin{verbatim}
 cd OTB-5.6.1-Linux64
 ./monteverdi.sh
@@ -184,12 +189,12 @@ cd OTB-5.6.1-Linux64
 
 \subsection{Tester l'installation}
 Une fois l'installation terminée, les applications OTB sont accessibles de
-plusieurs façons. Verifier que l'installation est fonctionelle avec les étapes
+plusieurs façons. Vérifier que l'installation est fonctionnelle avec les étapes
 suivantes:
 \begin{enumerate}
 
 \item Lancer Monteverdi et essayer d'ouvrir une image tif (voir
-figure~\ref{fig:monteverdi}). Une image tif de démo est disponible ici:
+figure~\ref{fig:monteverdi}). Une image tif de démonstration est disponible ici:
 \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
 
 \item Le navigateur d'application est ensuite accessible depuis "Affichage"
@@ -200,5 +205,23 @@ $\rightarrow$ "Navigateur d'OTB-Applications".
 \texttt{otbgui\_Rescale}. (Voir figure \ref{fig:windows-otbgui}).
 
 \end{enumerate}
+
+\clearpage
+\section{Mac OS X}
+
+Les logiciels peuvent également être installés sur un système Mac OS X.
+
+Installer d'abord QGIS en vous référant à la page officiel pour les instructions
+relatives au système Mac OS X.
+Pour installer OTB et Monteverdi, téléchargez le paquet OTB:
+OTB-5.6.1-Darwin64.run
+
+Cette archive est disponible sur la page \url{https://www.orfeo-toolbox.org/download/}.
+
+Il s'agit d'une archive auto-extractible, qui va se déployer dans le répertoire
+courant.
+
+Reportez vous à la section ``Tester l'installation'' de la section ``Linux''
+pour vérifier l'installation des logiciels.
 
 \end{document}
