@@ -11,6 +11,7 @@
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{upquote}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
