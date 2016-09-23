@@ -39,7 +39,7 @@
     - Signal reçu par le radar est caractérisé par son amplitude et sa phase
 *** Calibration radiométrique
     - Comportement de la rétro-diffusion dépend des caractéristiques de la surface
-    - Notamment de sa rugosité, de l'humidité des sols
+    - Notamment de sa rugosité, de l'humidité des sols, mais aussi de la géométrie (dipôle, coin réflecteur)
     - Comme pour l'optique, la calibration permet de transformer des comptes
       numériques (CN) en grandeur physique
     - Permet d'inter-comparer des images radars provenant de capteurs différents
