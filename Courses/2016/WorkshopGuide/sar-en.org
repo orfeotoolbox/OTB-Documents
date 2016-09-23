@@ -42,13 +42,13 @@
 - As for optical imagery, calibration consists in converting digital numbers (DN) into a physical magnitude
 - Allows comparing images acquired by different sensors or by the same sensor at different points in time
 *** Geometric corrections
-    - Spatialize images
-    - Range (depend on the PRF) and Azimuth Resolutions (depends on the size of
-      the antenna for a Radar System
+    - Spatially locate images
+    - Give a geographic coordinate to every pixel
+    - Radar measures distances in slant range
     - Resolutions
       - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
       - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
-    - geometrical distortions (foreshortening and layover)
+    - Geometrical distortions due to topography (foreshortening and layover)
 *** Speckle
     - Granular 'noise' that inherently exists in and degrades the image quality
     - Strong!
