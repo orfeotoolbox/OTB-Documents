@@ -37,18 +37,10 @@
     - Repeat echoes in the second dimension (azimuth)
     - Complex signal (amplitude and phase)
 *** Radiometric calibration
-    - Radar reflectivity (backscattered signal) of targets as a function of their position
-    - backscattered coefficient can be a positive number if there is a focusing
-      of  backscattered energy towards the radar
-    - backscattered coefficient can be a negative number if there is a focusing
-      of  backscattered energy way from the radar
-    - Rugosity, humidity...
-    - Calibration -> DN to backscattering coefficient
-    - Examples:
-      - Very high backscatter (above -5 dB) -> man made surfaces
-      - High backscatter (-10 dB to 0 dB) -> rough surface, dense vegetation
-      - Moderate backscatter (-20 to -10 dB) -> medium level vegetation, crops
-      - Low backscatter (below -20 dB) -> smooth surface (water)
+- Radar reflectivity (backscatter coefficient) depends on the nature of the observed surface
+- Sensitive to roughness and moisture, but also to geomety (dipole, corners)
+- As for optical imagery, calibration consists in converting digital numbers (DN) into a physical magnitude
+- Allows comparing images acquired by different sensors or by the same sensor at different points in time
 *** Geometric corrections
     - Spatialize images
     - Range (depend on the PRF) and Azimuth Resolutions (depends on the size of
