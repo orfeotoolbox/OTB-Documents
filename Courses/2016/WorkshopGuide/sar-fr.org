@@ -51,7 +51,7 @@
     - Resolutions
       - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
       - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
-    - Il existe distorsions géométriques dues au déplacement du relief (foreshortening et layover)
+    - Il existe distorsions géométriques dues au relief (foreshortening et layover)
 *** Speckle
     - Images RSO fortement affectées par le chatoiement (speckle)
     - Bruit très fort
