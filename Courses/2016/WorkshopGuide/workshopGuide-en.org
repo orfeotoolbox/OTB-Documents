@@ -25,16 +25,16 @@
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
 #+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Orfeo ToolBox course}}
 
-* Forewords                                                              :fw:
+* Foreword                                                               :fw:
 
 ** Goals
 
-The goal of this training course is to give an overview of the remote sensing
-image processing library OTB and to apply it to real case problems using OTB
-application which facilitate the use of remote sensing data.
+The goal of this training course is to give an overview of the OTB remote sensing
+image processing library and to apply it to real case problems using OTB
+applications, which make the use of remote sensing data easy.
 
-The course allow to acquired capability to design and create remote sensing
-image processing chain using OTB applications, including:
+The course allows to acquire the ability to design and create remote sensing
+image processing chains using OTB applications, including:
 - Feature extraction
 - Calibration
 - Classification
@@ -48,24 +48,24 @@ cf planning (pdf)
 ** Training kit
 
 *** Data folder
-    This folder contains data used during the course (separated in subfolders)
-    Sub-folder used during the training session is defined in the outline of each exercise. 
+    This folder contains data used during the course (organised in subfolders).
+    The sub-folders used during the training session are listed in the outline of each exercise. 
 
 *** Documentation folder
     It contains the OTB and QGIS documentation:
-    - OTB Software Guide :: C++ API guide and algorithms descriptions
+    - OTB Software Guide :: C++ API guide and algorithm descriptions
     - OTB CookBook :: Guide for non-developers (with recipes to process remote
          sensing data with OTB applications). It contains also the OTB
          applications API.
     - QGIS User Guide :: QGIS official documentation
 
 *** Guide folder 
-    It contains all the support/documentation to complete exercises:
+    It contains all the support/documentation to complete the exercises:
     - Guide for exercises
     - Slides
     - Installation guide
     - User survey to get your feedback about the session
-    - Solutions (provided at the end of the course :)
+    - Solutions (provided at the end of the course)
   
 ** Software requirements
 
@@ -75,27 +75,27 @@ To complete exercises, you need to install the following tools:
 - *Monteverdi* $>=$ 3.2
 - *QGIS* $>=$ 2.8 
 
-To install the *Orfeo ToolBox* and *Monteverdi*, follow instructions in the
+To install the *Orfeo ToolBox* and *Monteverdi*, follow the instructions in the
 ORFEO ToolBox cookbook.
 
-To install *QGIS* follow instructions on the [[http://www.qgis.org/][QGIS website]].
+To install *QGIS* follow the instructions on the [[http://www.qgis.org/][QGIS website]].
 
 ** Datasets
 
 Datasets use during the training courses:
 
-- Landsat-8 :: Several dates concatenate, cloud-free (gap-filling) with
+- Landsat-8 :: Several dates concatenated, cloud-free (gap-filled) with
                reference data in ESRI
-               Shapefile provided by [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (for the classification exercise TP classification),
+               Shapefile provided by [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (for the classification exercise),
 - Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
-              over OSR MiPy (South West of Toulouse), 2013 (\copyright
+              over OSR MiPy (South West of Toulouse, France), 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
 - Sentinel-1 :: Single Look Complex (SLC) product - Strip Map (SM),
-                bi-polarization (HH and HV) near Constance lake (Germany).
+                dual-polarization (HH and HV) near Constance lake (Germany).
 
 For more information on these satellites:
 - Landsat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]
-- Pléiades :: [[http://professionnels.ign.fr/images-pleiades][access facilitate for French Institute]] 
+- Pléiades :: [[http://professionnels.ign.fr/images-pleiades][access for public French organisms]]
 - Sentinel-1 :: Free access on [[https://scihub.copernicus.eu/][ESA hub]] or on CNES [[https://peps.cnes.fr][PEPS]]
 
 #+INCLUDE: "licence.org"
@@ -104,7 +104,7 @@ For more information on these satellites:
 #+INCLUDE: "mvd-qgis-en.org" :minlevel 2
 #+INCLUDE: "otb-apps-en.org" :minlevel 2
 #+INCLUDE: "internals-en.org" :minlevel 2
-* Optical VHR image,from pre-processing to GIS
+* Optical VHR image, from pre-processing to GIS
 #+INCLUDE: "preprocessing-en.org" :minlevel 2
 #+INCLUDE: "segmentation-en.org" :minlevel 2
 #+INCLUDE: "classification-en.org" :minlevel 1

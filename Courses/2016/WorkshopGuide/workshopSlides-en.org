@@ -51,7 +51,7 @@
 *** Course
 **** Goal
 Give an overview of the ORFEO ToolBox and get familiar with OTB tools (OTB
-applications and Monteverdi) to exploit and analyze remote sensing image. 
+applications and Monteverdi) to exploit and analyze remote sensing images. 
 
 **** Skills acquired at the end of the training
 
@@ -73,7 +73,7 @@ Know how to set up OTB processing and use OTB applications to perform:
 **** Documentation folder
      - Software Guide :: C++ API (with algorithms definition)
      - CookBook :: Guide for non developers (API of applications)
-     - QGIS User Guide :: QGIS user guide
+     - QGIS User Guide :: 
 
 **** Guide folder
      - Training guide
@@ -84,20 +84,20 @@ Know how to set up OTB processing and use OTB applications to perform:
 
 *** Dataset
 
-- Landsat-8 :: concatenation of several dates, cloud free (gap-filling) with
+- Landsat-8 :: concatenation of several dates, cloud free (gap-filled) with
                ground truth (reference data) in ESRI Shapefile format
                (classification exercise)
 - Pléiades :: PHR Bundle PRIMARY Level 1A from the CNES Thematic Commissioning
-              phase over OSR MiPy (Toulouse) acquired in November 2013 (\copyright
+              phase over OSR MiPy (Toulouse, France) acquired in November 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
 - Sentinel-1 :: SLC product (complex) SM (strip Map, 5m ground resolution),
-                polarization (HH and HV) over the South of the Constance lake (Germany).
+                polarimetric (HH and HV) over the South of the Constance lake (Germany).
 
 *** Data access
     - Landsat-8 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
-    - Pléiades :: For French Institute: http://professionnels.ign.fr/images-pleiades
+    - Pléiades :: For French public organisms: http://professionnels.ign.fr/images-pleiades
     - Sentinel-1 :: Free data available on ESA SciHub
-                    (https://scihub.copernicus.eu/) or on the CNES PEPS portal(https://peps.cnes.fr)
+                    (https://scihub.copernicus.eu/) or on the CNES PEPS portal (https://peps.cnes.fr)
 
 *** Useful information
 **** Meal
@@ -108,10 +108,10 @@ Know how to set up OTB processing and use OTB applications to perform:
 #+INCLUDE: "mvd-qgis-en.org"
 #+INCLUDE: "otb-apps-en.org" :minlevel 2
 #+INCLUDE: "internals-en.org" :minlevel 2
-* TP2: High resolution optical image, from pre-processing to GIS
+* TP2: High resolution optical images, from pre-processing to GIS
 #+INCLUDE: "preprocessing-en.org" :minlevel 2
 #+INCLUDE: "segmentation-en.org" :minlevel 2
 * TP3: Supervised classification on image time series
 #+INCLUDE: "classification-en.org" :minlevel 2
-* TP4: SAR processing on Sentinel-1 
+* TP4: SAR processing with Sentinel-1 
 #+INCLUDE: "sar-en.org" :minlevel 2
