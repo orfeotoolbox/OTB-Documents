@@ -1,11 +1,11 @@
 ** Use Monteverdi and QGIS                                           :slides:
 *** Goals and data
 **** Goals
-     - Know how to visualize an image and set up rendering in Monteverdi,
-     - Know how to visualize an images stack in Monteverdi,
-     - Know how to visualize an image and set up rendering in QGIS,
-     - Know how to visualize vector data in QGIS,
-     - Know how to visualize an images stack in QGIS,
+     - Know how to display an image and set up rendering in Monteverdi,
+     - Know how to display an image stack in Monteverdi,
+     - Know how to display an image and set up rendering in QGIS,
+     - Know how to display vector data in QGIS,
+     - Know how to display an images stack in QGIS,
      - Tips and tricks.
 
 **** Data
@@ -16,10 +16,10 @@
 
 *** Program
 
-    - Visualize an image in Monteverdi
-    - Visualize a stack of images in Monteverdi
-    - Visualize an image in QGIS
-    - Visualize vector data in QGIS
+    - Display an image in Monteverdi
+    - Display a stack of images in Monteverdi
+    - Display an image in QGIS
+    - Display vector data in QGIS
 
 *** Introduction
     - Several software products which share common functions
@@ -68,12 +68,12 @@
 *** Principle
     - Discover data package and software
     - Monteverdi:
-      - How to visualize and set up color rendering options
+      - How to display and set up color rendering options
       - Know how to use image stack
       - Explore /Effects/ available
     - QGIS:
-      - How to visualize and set up color rendering options
-      - How to visualize vector data
+      - How to display and set up color rendering options
+      - How to display vector data
       - Know how to use image stack
     - Work in pairs for 15 minutes
     - Round table (30 to 45 minutes), every group do a restitution/give a
@@ -94,11 +94,11 @@
 
      Goals of this exercise
 
-     - Know how to visualize an image and set up rendering in Monteverdi,
-     - Know how to visualize an images stack in Monteverdi,
-     - Know how to visualize an image and set up rendering in QGIS,
-     - Know how to visualize vector data in QGIS,
-     - Know how to visualize an images stack in QGIS,
+     - Know how to display an image and set up rendering in Monteverdi,
+     - Know how to display an images stack in Monteverdi,
+     - Know how to display an image and set up rendering in QGIS,
+     - Know how to display vector data in QGIS,
+     - Know how to display an images stack in QGIS,
      - Tips and tricks.
 
 *** Steps                                                             :steps:
@@ -108,7 +108,7 @@
     groups some tips they found and ask also some questions about functions
     available in both software products.
 
-**** Visualize an image in Monteverdi
+**** Display an image in Monteverdi
 
      Open the image ~phr_xs_osr_mipy.tif~ available in directory
      ~Data/preprocessing~ in Monteverdi.
@@ -125,7 +125,7 @@
 
      Close Monteverdi.
 
-**** Visualize images stack in Monteverdi
+**** Display images stack in Monteverdi
 
      Open the 9 LS8 images in folder
      ~Data/classification/Extract16bits/~.
@@ -141,7 +141,7 @@
 
      Close Monteverdi.
 
-**** Visualize an image in QGIS
+**** Display an image in QGIS
 
      Open the first LS8 image in QGIS. Use the contextual menu of the layer to
      change color dynamics to have the same rendering as in Monteverdi. In the
@@ -154,7 +154,7 @@
      What are the differences between Monteverdi and QGIS in term of image
      visualization and rendering functions ?
 
-**** Visualize vector data in QGIS
+**** Display vector data in QGIS
 
      Open ~training.shp~ in folder
      ~Data/classification/training/~.
