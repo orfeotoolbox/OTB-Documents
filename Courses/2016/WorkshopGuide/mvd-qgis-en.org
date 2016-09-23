@@ -9,7 +9,7 @@
      - Tips and tricks.
 
 **** Data
-     Dataset can be found in the following directories:
+     The datasets can be found in the following directories:
      - ~Data/preprocessing~ (Pléiades extract)
      - ~Data/classification/Extract16bits/~ (Landsat-8 image series)
      - ~Data/classification/training/~ (vector data ESRI Shapefile)
@@ -23,12 +23,12 @@
 
 *** Introduction
     - Several software products which share common functions
-    - But which sometimes differ in term of philosophy (Monteverdi /image oriented/, QGIS
+    - But which sometimes differ in terms of philosophy (Monteverdi /image oriented/, QGIS
       /GIS platform/)
     - Several ways to do the same operation in these applications
 *** Monteverdi
     - At the beginning simple tool to demonstrate OTB library potential
-    - Move to an integrate application which allow to access to OTB applications 
+    - Move to an integrated application which allow to access OTB applications 
     - Graphical User Interface (GUI) based on Qt
     - Rendering engine based on Ice (OpenGL+OTB)
     - Effects which use Graphic cards capability (shader) to allow to do on the
@@ -41,48 +41,48 @@
     #+end_center
 *** Monteverdi
     Main window contains:
-      - Main menu (open image, close,preferences...)
-      - Top toolbar (shortcut)
+      - Main menu (open image, close, preferences...)
+      - Top toolbar (shortcuts)
       - Image displaying (main view)
       - Right side dock (color composition, quicklook...) 
-      - Stack layer (images stack)
+      - Stack layer (image stack)
 *** Quantum GIS 
     - GIS: organize and display spatial data
     - Main functions in a GIS :
       - Display and create maps
-      - Data acquisition des données
+      - Data acquisition 
       - Data analysis 
       - Data representation
       - Storage
     - Lots of tutorials, technical courses available online...
 *** Quantum GIS processing (since version 2.0)
-    - Processing plateform to access to GRASS-GIS,SAGA-GIS, R and OTB!
-    - Historically based on integrwation of Sextante project in QGIS(Victor Olaya)
-    - Access to all OTB applications(some of them are customized with a
+    - Processing platform to access GRASS-GIS, SAGA-GIS, R and OTB!
+    - Historically based on integration of Sextante project in QGIS (Victor Olaya)
+    - Access to all OTB applications (some of them are customized with a
       simplified interface)
-    - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
+    - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][See QGIS processing documentation]]
 *** Quantum GIS
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:../../../Slides/OTB-General/images/otb_qgis.png]]
 
-*** Principle
+*** Principles
     - Discover data package and software
     - Monteverdi:
       - How to display and set up color rendering options
-      - Know how to use image stack
-      - Explore /Effects/ available
+      - Know how to use the image stack
+      - Explore available /Effects/
     - QGIS:
       - How to display and set up color rendering options
       - How to display vector data
-      - Know how to use image stack
+      - Know how to use the image stack
     - Work in pairs for 15 minutes
-    - Round table (30 to 45 minutes), every group do a restitution/give a
-      trick/ask a question...
-** Use *Monteverdi* et *QGIS*                                         :guide:
+    - Round table (30 to 45 minutes), every group does a restitution/shares a
+      trick/asks a question...
+** Use *Monteverdi* and *QGIS*                                        :guide:
 *** Description                                                        :desc:
 **** Summary
-     Goal is to discover software products and the data package that will be
-     used during the course. You will be able to use both Monteverdi or QGIS to
+     The goal is to discover software products and the data package that will be
+     used during the course. You will be able to use both Monteverdi and QGIS to
      do all exercises of the course. 
 
 **** Prerequisites
@@ -95,10 +95,10 @@
      Goals of this exercise
 
      - Know how to display an image and set up rendering in Monteverdi,
-     - Know how to display an images stack in Monteverdi,
+     - Know how to display an image stack in Monteverdi,
      - Know how to display an image and set up rendering in QGIS,
      - Know how to display vector data in QGIS,
-     - Know how to display an images stack in QGIS,
+     - Know how to display an image stack in QGIS,
      - Tips and tricks.
 
 *** Steps                                                             :steps:
@@ -110,34 +110,33 @@
 
 **** Display an image in Monteverdi
 
-     Open the image ~phr_xs_osr_mipy.tif~ available in directory
-     ~Data/preprocessing~ in Monteverdi.
+     Open the image ~phr_xs_osr_mipy.tif~ available in the ~Data/preprocessing~
+     directory with Monteverdi.
 
-     List of all keyboards shortcuts is available in menu /Help/.
+     The list of all keyboard shortcuts is available in /Help/ menu.
 
-     Change band display and also change the rendering values. 
+     Change the displayed band and also change the rendering values. 
 
-     Test effects like /Local contrast/, /Gradient/ et /Spectral angle
-     Spectral/. What are there purpose ?
+     Test effects like /Local contrast/, /Gradient/ and /Spectral angle/. What is their purpose?
 
-     Change zoom level by using /CTRL + mopuse wheel/,
+     Change the zoom level by using /CTRL + mouse wheel/,
      you can edit also the image scale in the bottom in the status bar.
 
      Close Monteverdi.
 
-**** Display images stack in Monteverdi
+**** Display an image stack in Monteverdi
 
-     Open the 9 LS8 images in folder
-     ~Data/classification/Extract16bits/~.
+     Open the 9 LS8 images in the ~Data/classification/Extract16bits/~
+     folder.
 
-     Change bands to display natural colors (red: Band 3, green: band 2, blue: band
-     1). Use button /Apply all parameters to all layers/ to have the same
-     rendering options on the all stack.
+     Change the bands to display natural colors (red: Band 3, green: band 2, blue: band
+     1). Use the /Apply all parameters to all layers/ button to have the same
+     rendering options on the whole stack.
 
      Use mouse wheel to move between all dates.
 
-     Test effects /Local transparency/, /Chess board/ et
-     /Swipe/. What are there purpose ?
+     Test effects /Local transparency/, /Chess board/ and
+     /Swipe/. What is their purpose?
 
      Close Monteverdi.
 
@@ -151,22 +150,22 @@
 
      Open other LS8 images and apply the rendering style you've just created.
 
-     What are the differences between Monteverdi and QGIS in term of image
+     What are the differences between Monteverdi and QGIS in terms of image
      visualization and rendering functions ?
 
 **** Display vector data in QGIS
 
-     Open ~training.shp~ in folder
-     ~Data/classification/training/~.
+     Open ~training.shp~ in the ~Data/classification/training/~
+     folder.
 
-     Use the contextual menu to open /Properties/ and /Style/ tab. Use
-     /Categorised/ using column /LC/. How many classes in the file? Change the
-     color to table to display different classes in different colors.
+     Use the contextual menu to open the /Properties/ and /Style/ tabs. Use
+     /Categorised/ using column /LC/. How many classes are there in the file? Change the
+     color table to display different classes in different colors.
 
-     Open attribute table. How many polygons are contain in the class /pelouse/ (/lawn/)?
+     Open the attribute table. How many polygons are contained in the class /pelouse/ (/lawn/)?
 
-     Try to find how to select and display only polygons from this class
+     Try to find how to select and display only polygons from this class.
      
-** Use *Monteverdi* et *QGIS*                                     :solutions:
+** Use *Monteverdi* and *QGIS*                                    :solutions:
 
    Live demo done by the instructor to show image manipulations and functions.
