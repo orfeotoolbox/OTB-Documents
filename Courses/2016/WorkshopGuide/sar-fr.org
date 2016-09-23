@@ -120,9 +120,9 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      On veut de l'image d'entrée les caractéristiques physiques originales des
      valeurs de rétrodiffusion. Les valeurs suivantes peuvent etre calculées:
-     - beta zero: luminosité radar (slant range)
-     - sigma zero: rétrodiffusion radar (directement relié au propriété du sol)
-     - gamma zero: rétrodiffusion radar normalisée par l'angle d'incidence (à privilégier généralement) 
+     - $\beta_0$: luminosité radar (slant range)
+     - $\sigma_0$: rétrodiffusion radar (directement relié au propriété du sol)
+     - $\gamma_0$: rétrodiffusion radar normalisée par l'angle d'incidence (à privilégier généralement) 
 
      Pour Sentinel-1 est fourni une table de
      valeurs permettant de faire la conversion depuis les comptes numériques vers
@@ -130,7 +130,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      1. Quelle application permet d'effectuer cette opération dans l'OTB?
      2. Effectuer la calibration des extraits complexes HH et HV et calculer les grandeurs
-        gamma zero (gamma naught en anglais). 
+        $\gamma_0$ (gamma naught en anglais). 
      3. Convertir les images calibrées en décibel (dB).
 
 **** Corrections géométriques
@@ -140,7 +140,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      Cette opération permet d'associer des coordonnées au sol aux pixels de l'image.
 
-     Nous allons utiliser ici la sortie de la partie calibration optique (gamma zero).
+     Nous allons utiliser ici la sortie de la partie calibration optique ($\gamma_0$).
 
      Utilisez l'application *Orthorectification* pour réaliser
      l'orthorectification des extraits des produits SLC Sentinel-1:
