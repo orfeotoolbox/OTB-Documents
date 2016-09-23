@@ -6,34 +6,34 @@
      - Know how to perform SAR calibration
      - Know how to perform SAR orthorectification
      - Know methods to reduce speckle noise in images
-     - Know more about features extraction in SAR images
+     - Know more about feature extraction in SAR images
 
 **** Data
 
      Data are located in the ~Data/sar~ folder.
 
 *** Outline
-    1. Introduction to SAR image
+    1. Introduction to SAR imagery
     2. Radiometric calibration
     3. Geometric corrections
     4. Speckle filtering
     5. Polarimetry
     6. Feature extraction (TD)
-*** Optic vs Radar
+*** Optical vs Radar
     #+ATTR_LATEX: :float t :width 0.7\textwidth
     [[file:Images/actif_passif_cours_cnes.png]]
     (source CNES: Book "IMAGERIE SPATIALE Des principes d’acquisition au traitement
     des images optiques pour l’observation de la Terre")
-*** Introduction SAR
-    - Radar: measuring objects properties from distance with dedicated instruments
+*** SAR basics
+    - Radar: Radio detection and ranging; using radio waves to locate objects and measure their backscattering coefficient
     - SAR: Synthetic Aperture Radar
     - Active sensor
-    - Day and Night imaging capability
+    - Day and night imaging capability
     - Atmosphere mainly transparent to SAR
     - Complementary information to optical systems
 *** Principles
-    - Use the flight path of the platform to simulate an extremely large antenna or aperture electronically
-    - Properties from distance
+    - SAR: Use the flight path of the platform to simulate an extremely large antenna or aperture for increased resolution
+    - The wave travelling time allows to locate objects in the range dimension (perpendicular to the flying path)
     - Repeat echoes in the second dimension (azimuth)
     - Complex signal (amplitude and phase)
 *** Radiometric calibration
@@ -55,15 +55,15 @@
     - Speckle noise in SAR is a multiplicative noise, i.e. it is in direct proportion to the local grey level in any area
     - Several methods to try to reduce this noise
     - Try to reduce speckle effects without losing to much details
-    - Speckle filtering allows to improve image quality and facilitate interpretations
+    - Speckle filtering allows to improve image quality and facilitate interpretation
 *** To go further
 
     - S1 ToolBox (SNAP)
     - Polarimetry: ESA PolSARPro
-    - Lot of useful resources related to SAR on the Internet (ENSG moodle, ESA
+    - Lot of useful resources related to SAR on the Internet (ENSG MOOC, ESA
       training, PolSARPro tutorials, SAREDU DLR online courses...)
 
-** Introduction to SAR images                                         :guide:
+** Introduction to SAR image processing                               :guide:
 *** Description                                                        :desc:
 **** Summary
      
@@ -77,9 +77,9 @@
 
      - Installed Monteverdi and Orfeo ToolBox software
      - Downloaded data
-     - Understand Orfeo Toolbox applications (see relevant exercise)
+     - Understandig of Orfeo Toolbox applications (see relevant exercise)
        
-**** Goal
+**** Goals
 
      - SAR image manipulation
      - Radiometric calibration
@@ -91,57 +91,55 @@
 
     Data located in ~Data/sar~ folder.
 
-**** Introduction to SAR images
+**** Introduction to SAR imagery
 
 In this exercise we will use an extract from a Sentinel-1 SLC Strip Map (80 km
 Swath, 5 x 5 m spatial resolution): ~s1_hh.tif~ et ~s1_hv.tif~. The image is
 located in Germany near the Constance lake (47.456276, 9.638616).
 
-1. Open the image in Monteverdi. How many bands in both images? To what
-   corresponds these bands in the complex product?
-2. Compute image intensity of complex products ~s1_hh.tif~ et
-   ~s1_hv.tif~. Compute also image intensity in decibel.
+1. Open the image in Monteverdi. How many bands are present in each image?
+2. What do these bands correspond to in the complex product?
+3. Compute the image intensity of the complex products ~s1_hh.tif~ and
+   ~s1_hv.tif~. Compute also the image intensity in decibels (dB).
 
 **** Radiometric calibration
      
-     Pixel values in SAR images like S1 are without unit (radar reflectivity or
-     radar brightness).
+     SAR images, like this Sentinel-1 product, provide pixel values without units (radar reflectivity or radar brightness). These are called digital numbers (DN).
 
-     Image metadata allows to transform DN to physical values (in case of SAR
+     Image metadata allows to transform DN into physical values (in case of SAR
      backscattering coefficient) which allows to compare images from different
-     sensors and modes and perform analysis. 
+     sensors or acquired at different dates in order to perform analysis. 
 
-     SAR calibration consists in computing one of the following physical values:
-     - Beta Nought: \beta radar brightness coefficient. The reflectivity per
+     SAR calibration consists in computing one of the following physical magnitudes:
+     - $\beta_0$: radar brightness coefficient, the reflectivity per
        unit area in slant range which is dimensionless.
-     - sigma zero: radar backscatter ( portion of the outgoing radar signal
-       that the target redirects directly back towards the antenna)
-     - gamma zero: backscatter normalized with the incidence angle
+     - $\sigma_0$: radar backscatter (ratio of the outgoing radar signal
+       that the target redirects back towards the antenna).
+     - $\gamma_0$: backscatter normalized by the incidence angle.
 
-     For Sentinel-1, Look Up Tables available in image metadata allows to
-     convert from digital numbers to those values. ORFEO ToolBox will retrieve
+     For Sentinel-1, Look Up Tables available in image metadata allow to
+     convert DN into those values. ORFEO ToolBox will retrieve
      these values automatically and compute the backscattering coeficient.
 
-     1. Find the application which allows to perform this operation with OTB?
-     2. Compute gamma nought for HH and HV images. 
-     3. Convert in decibel (Db).
+     1. Find the application which allows to perform this operation with OTB
+     2. Compute $\gamma_0$ for HH and HV images. 
+     3. Convert in decibels (dB).
 
 **** Geometry corrections
 
-     We will use here the output of the radiometric calibration exercise (gamma
-     nought) as input.
+     We will use here the output of the radiometric calibration exercise ($gamma_0$) as input.
      
      Use the *Orthorectification* application to perform geometric corrections
-     using S1 metadata on SLC product:
+     using S1 metadata from the SLC product:
         1. Without Digital Elevation Model (DEM)
-        2. With a DEM and a geoid (use folder ~SRTM~)
+        2. With a DEM and a geoid (use the ~SRTM~ folder)
         3. Compare the 2 images in Monteverdi.
 
 **** Speckle filtering
 
-     SAR images are affected by speckle noise  that inherently exists in and
-     degrades the image quality. It is caused by coherent processing of
-     backscattered signals from multiple distributed targets. It is locally
+     SAR images are affected by speckle noise that inherently exists in and which
+     degrades the image quality. It is caused by the coherent nature of
+     backscattered waves from multiple distributed targets. It is locally
      strong and it increases the mean grey level of a local area.
 
      Several different methods are used to eliminate speckle noise, based upon
@@ -149,35 +147,35 @@ located in Germany near the Constance lake (47.456276, 9.638616).
      will use the /Frost/ filter. This algorithm has 2 parameters:
 
      - /Radius/: window radius
-     - /deramp/: control exponential function use to moderate effect of the
+     - /deramp/: controls the exponential function used to weight effect of the
        distance between the central pixel and its neighborhood.
 
      You can find more details about the Frost filter [[http://earth.eo.esa.int/download/eoedu/Earthnet-website-material/to-access-from-Earthnet/2011_ESA-CONAE-SAR-Capacity-Building-Argentina/Speckle.pdf][here]].
 
-     1. What are despeckle methods available in OTB?
-     2. Use the /Frost/ filter with different radius (3,5 and 10) and comment
-        effects on the output image.
-     3. Compare the histogram of the filtered image with the intensity?
-     4. Use the /Frost/ filter with radius=5 and different /deramp/ values
-        (00.5,0.2 et 0.8). Comment effects of the deramp parameter.
+     1. What despeckle methods are available in OTB?
+     2. Use the /Frost/ filter with different radiuses (3, 5 and 10)
+        and comment about the effects on the output image.
+     3. Compare the histogram of the filtered image with the one of the intensity?
+     4. Use the /Frost/ filter with ~radius=5~ and different /deramp/ values
+        (00.5, 0.2 and 0.8). Comment about the effects of the deramp parameter.
 
 **** Polarimetry
 
-     We will try to introduce basic notions of polarimetry to show that HH and
-     HV polarizations allows to access to different types of information.
+     We will introduce basic notions of SAR polarimetry to show that HH and
+     HV polarizations allows to access different types of information.
 
-     1. Compute the difference between HH and HV (use intensity image as input).
-     2. Create a color combination of bands HH, HV and HH-HV. We can take here
-        2*HV as HV backscattered values are generally smaller.
-     3. Convert the color composition in Decibel (Db)
-     4. Display the image in Monteverdi and comment differences between HH and
+     1. Compute the difference between HH and HV (use the intensity images as input).
+     2. Create a color composite of bands HH, HV and HH-HV. We can take here
+        2*HV as HV backscattered values are generally lower.
+     3. Convert the color composition into decibels (dB).
+     4. Display the image in Monteverdi and comment about the differences between HH and
         HV (layover areas, vegetation, soil, water...)
-     5. Using the image which combines HH, HV and HH-HV in Decibel try to find
+     5. Using the image which combines HH, HV and HH-HV in decibels try to find
         in the extract:
-        - Coordinates of 2 parallel power lines
-        - Harder to find, locate in the image an area which looks like a corner
-          reflector (reflects waves back directly towards the source)
-        - What can you see in the lake at pixel coordinates (930,1170)?
+        - the coordinates of 2 parallel power lines;
+        - harder to find, locate in the image an area which looks like a corner
+          reflector (reflects waves back directly towards the source);
+        - what can you see in the lake at pixel coordinates (930,1170)?
 
 **** Feature extraction
 
@@ -188,10 +186,10 @@ located in Germany near the Constance lake (47.456276, 9.638616).
 
 ** Introduction to SAR image processing                           :solutions:
 **** Introduction to SAR image
-1. The 2 extracts correspond to polarimetric combinations HH ( for horizontal
-   transmit and horizontal receive) and HV for horizontal transmit and vertical receive
-2. The 2 bands correspond to the real and the imaginary part of the complex signal.
-3. We can use the *BandMath* app to compute the image intensity:
+1. The 2 extracts correspond to polarimetric combinations HH (for horizontal
+   transmission and horizontal reception) and HV (for horizontal transmission and vertical reception).
+2. The 2 bands correspond to the real and the imaginary parts of the complex signal.
+3. We can use the *BandMath* application to compute the image intensity:
 
    For HH:
 
@@ -267,9 +265,9 @@ located in Germany near the Constance lake (47.456276, 9.638616).
     3. Default projection is UTM. 32 North.
 **** Speckle filtering
 
-     1. Available methods are: lee, frost, kuan et gamma map. Speckle filtering
+     1. Available methods are: Lee, Frost, Kuan and Gamma MAP. Speckle filtering
         allows to increase image quality and facilitate image analysis and
-        objects identification compare to the input signal.
+        object identification.
 
      2. Using the *Despeckle* application and the /Frost/ filter:
 
@@ -281,14 +279,14 @@ located in Germany near the Constance lake (47.456276, 9.638616).
         -filter.frost.rad 3
         #+END_EXAMPLE
 
-        The effect of increasing the radius is to smooth the image. It improves
-        image quality in rather smooth areas but degrade details on more
-        contrasted areas and  on small structures.  
+        The effect of increasing the radius is to further smooth the image. It improves
+        image quality in rather smooth areas but degrades details in more
+        contrasted areas and on small structures.  
 
-     3. The histogram of the filtered image tend to become /Gaussian/ and differ
+     3. The histogram of the filtered image tends to become /Gaussian/ and differs
         from the Gamma distribution of the original image (right hand tail).
-     4. Increasing /deramp/ parameter will lead to take more into account pixels
-        far from the center and then increase the smoothing effects.
+     4. Increasing the /deramp/ parameter will lead to take more into account pixels
+        farther from the center and therefore increase the smoothing effects.
         
 **** Polarimetry
      1. HH-HV:
@@ -305,7 +303,7 @@ located in Germany near the Constance lake (47.456276, 9.638616).
       intensity_hv_speckle.tif hh-hv_speckle.tif \ 
       -out intensity_compo.tif 
      #+END_EXAMPLE
-     1. Then convert in Decibel:
+     1. Then convert in decibels:
 
         #+BEGIN_EXAMPLE
         $ otbcli_BandMath \
@@ -314,10 +312,10 @@ located in Germany near the Constance lake (47.456276, 9.638616).
         -exp "im1b1>0?10*log10(im1b1):0"
         #+END_EXAMPLE
      2. Comments:
-        - layover is a geometric effects similar signal between HH and HV
+        - layover is a geometric effect which makes the signal similar between HH and HV
         - vegetation area (forest)
-        - HV is less sensible to rugosity
-        - Water areas: low backscatter
+        - HV is less sensible to roughness
+        - water areas: low backscatter
      3. Analysis of color composition:
         - Power lines around index (230,3700)
         - Reflector near index (3620,2925)

@@ -285,7 +285,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
        32 Nord.
 **** Filtrage du speckle
 
-     1. Les méthodes disponibles sont: lee, frost, kuan et gamma map. Quelque
+     1. Les méthodes disponibles sont: Lee, Frost, Kuan et Gamma MAP. Quelque
         soit la méthode utilisée on note une amélioration majeure de la qualité
         de l'image filtrée qui permet d'identifier des structures difficilement
         visibles dans l'image d'intensité originale. 
