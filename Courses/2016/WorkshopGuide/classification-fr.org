@@ -282,7 +282,12 @@
      Combien y-a-t-il d'échantillons, toutes classes confondues, dans
      le jeu d'apprentissage ?
 
-     Quelle classe contient le moins d'échantillon dans le jeu d'apprentissage.
+     Quelle classe contient le moins d'échantillon dans le jeu
+     d'apprentissage.
+
+     *Note :* Même si cette application n'accède pas au contenu de
+     l'image (pixels), il faut tout de même lui spécifier l'image
+     support dont elle utilisera l'emprise.
 
 **** Sélection des positions des échantillons
 
@@ -314,8 +319,11 @@
      attributs associés à chaque point ?
 
      *Note :* Le fichier de style ~samples.qml~ peut être chargé dans
-    Qgis pour coloriser les polygones en fonction de leur classe. 
+     Qgis pour coloriser les polygones en fonction de leur classe. 
 
+     *Note :* Même si cette application n'accède pas au contenu de
+     l'image (pixels), il faut tout de même lui spécifier l'image
+     support dont elle utilisera l'emprise.
      
 **** Calcul des attributs des échantillons
 
