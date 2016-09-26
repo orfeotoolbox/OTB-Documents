@@ -21,6 +21,7 @@
 #+LATEX_HEADER:    urlcolor={blue!80!black}
 #+LATEX_HEADER: }
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{upquote}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:

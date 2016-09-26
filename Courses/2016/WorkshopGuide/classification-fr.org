@@ -4,7 +4,6 @@
       Les objectifs sont les suivants:
      - Connaître les différentes applications constituant la procédure
        de classification supervisée
-     - Utiliser différents algorithmes pour l'apprentissage
      - Savoir mesurer les performances de la classification
      - Connaître les post-traitements applicables à une classification
 **** Données
@@ -16,11 +15,16 @@
 *** Déroulement
     Les étapes de l'exercice sont les suivantes:
     1. Introduction aux données Landsat-8
-    2. Classification mono-date
-    3. Classification multi-date
-    4. Classification avec profil de NDVI
-    5. Post-traitements de la classification
-    
+    2. Préparation des données
+    3. Calcul des statistiques des échantillons disponibles
+    4. Sélection des positions des échantillons
+    5. Calcul des attributs des échantillons
+    6. Entraînement du modèle
+    7. Classification
+    8. Post-traitement
+    9. Évaluation complète des performances
+    10. Production d'une carte en couleur
+       
 *** Présentation des données Landsat-8
 
     *Résolution spatiale:* 30 mètres
@@ -68,23 +72,19 @@
 |   12 | Cultures d'hiver            | 8171       |
 |   31 | Forêt feuilles caduques     | 867        |
 |   32 | Forêt feuilles persistantes | 125        |
-|   34 | Pelouses                    | 45         |
-|   36 | Lande ligneuse              | 386        |
+|   34 | Pelouses                    |         45 |
+|   36 | Lande ligneuse              |        386 |
 |   41 | Bâti                        | 4719       |
-|   51 | Eau                         | 1280       |
-|  211 | Prairie                     | 5647       |
-|  221 | Verger                      | 204        |
-|  222 | Vigne                       | 559        |
+|   51 | Eau                         |       1280 |
+|  211 | Prairie                     |       5647 |
+|  221 | Verger                      |        204 |
+|  222 | Vigne                       |        559 |
 |------+-----------------------------+------------|
 
 *** Classification supervisée
     #+ATTR_LATEX: :float t :width \textwidth
     [[file:Images/classification.png]]
    
-*** Algorithme SVM
-    #+ATTR_LATEX: :float t :width 0.5\textwidth
-    [[file:Images/svm.png]]
-
 *** Algorithme RF
     Ensemble d'arbres de décision aléatoires
 
@@ -163,6 +163,7 @@
      | 2014-09-01 |
      | 2014-10-03 |
      | 2014-10-26 |
+     |            |
      |------------|
 
     Ces images sont toutes multispectrales avec les sept bandes du capteur OLI:
@@ -208,182 +209,239 @@
 
     Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
     accessible depuis clic-droit sur la couche -> /Ouvrir la table des attributs/.
-    Chaque label est visible et la liste est filtrable par expression SQL.
+    Chaque label est visible et la liste est filtrable par expression
+    SQL.
+
+    *Note :* Le fichier de style ~polygones.qml~ peut être chargé dans
+    Qgis pour coloriser les polygones en fonction de leur classe. 
 
     Les polygones sont répartis en deux ensembles: apprentissage (training) et
     validation (testing).
 
-**** Classification d'une date
+**** Préparation des données
 
-    Nous allons commencer par réaliser sur une seule date toutes les
-    étapes qui constituent la procédure de classification supervisée:
+     Pour ce TP nous allons utiliser trois types d'images:
+     1. Une image contenant les bandes originales pour toutes les dates (63 bandes)
+     2. Une image contenant les valeurs du NDVI pour chaque date (9 bandes)
+     3. Un image contenant les bandes originales et les valeurs du NDVI (72 bandes)
 
-       1. Calcul des statistiques
-       2. Apprentissage du modèle
-       3. Utilisation du modèle (classification)
-       4. Rendu
-       5. Validation
 
-    Dans la suite du TP, vous réaliserez d'autres classifications sur d'autres
-    images. Un conseil est donc de travailler dans un répertoire par sous-partie, 
-    par exemple /classif1/.
+     La première étape consiste à générer ces différentes images.
 
-    Créez un répertoire /classif1/.
 
-***** Calcul des statistiques
+     Utiliser l'application *ConcatenateImages* pour générer l'image
+     contenant toutes les bandes.
 
-    Les variables doivent êtres comparables entre chaque image. La première
-    étape est le calcul de statistiques pour que les données puissent être
-    normalisés: moyenne nulle et écart-type de 1.
-    
-    Choisissez une image à classifier, puis, dans le répertoire /classif1/
-    utilisez l'application *ComputeImageStatistics* (Compute Images second order
-      statistics) pour produire le fichier de
-    statistiques.
 
-***** Apprentissage du modèle
+     Utiliser l'application *RadiometricIndices* pour calculer le NDVI
+     pour chaque date. Utiliser ensuite l'application
+     *ConcatenateImages* pour générer l'image contenant l'ensemble des
+     valeurs du NDVI (profil).
 
-    L'application *TrainImageClassifier* (Train a classifier from multiple
-      images) permet d'apprendre un modèle pour
-    différentes méthodes de classification. Regardez la documentation de cette
-    application et créez un modèle pour la méthode /libsvm/. Les paramètres
-    à régler sont:
 
-    - io.il :: l'image d'entrée
-    - io.vd :: le fichier vectoriel d'apprentissage (training.shp)
-    - io.imstat :: le fichier xml de statistiques calculé précédement
-    - classifier :: la méthode, ici utilisez /libsvm/
-    - io.out :: le nom du fichier modèle en sortie, par exemple /model.svm/
+     Enfin, utiliser à nouveau l'application *ConcatenateImages* pour
+     générer l'image contenant l'ensemble des bandes originales et le
+     profil de NDVI.
 
-    D'autres paramètres sont importants aussi:
-    - sample.vfn CODE :: indique que la colonne des labels porte le nom CODE
-    - sample.vtr 0 :: Ratio de l'ensemble d'apprentissage sur l'ensemble de
-      validation. 0 ici car nous utilisons notre propre découpe.
-    - sample.mt :: Nombre maximum d'échantillons par classe. La valeur par défaut
-      est 1000. La réduire permet d'accélérer significativement le temps
-      d'apprentissage, mais peut dégrader la qualité du modèle appris.
+     *Notes :* En utilisant l'interface en ligne de commande des
+     applications, le calcul de l'indice NDVI pour chaque date peut se
+     faire à l'aide d'un script bash:
 
-***** Utilisation du modèle
+     #+BEGIN_EXAMPLE
+     $ for f in *.tif; do \
+       otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
+                                 -channels.red 3 -channels.nir 4 \
+                                 -in "$f" -out "${f%.*}_ndvi.tif" \
+                                 -list Vegetation:NDVI; done
+     #+END_EXAMPLE
 
-   Une fois le modèle de classification appris, il peut être utilisé pour
-   classifier tous les pixels de l'image.
+**** Calcul des statistiques des échantillons disponibles
 
-   Utilisez l'application *ImageClassifier* (Image Classification), en spécifiant le modèle créé dans
-   l'étape précédente.
+     Nous allons maintenant utiliser l'application
+     *PolygonClassStatistics* afin de recenser les échantillons
+     disponibles pour chaque classe et chaque polygone des données
+     d'entraînement et de validation.
 
-***** Rendu
+     Cette application prend en paramètre l'image qui sera utilisée
+     pour extraire les échantillons, la donnée vecteur définissant les
+     polygones à analyser (~training.shp~ pour l'apprentissage,
+     ~testing.shp~ pour la validation), et le nom du champ définissant
+     la classe dans ces données vecteur. Elle produit en sortie un
+     fichier XML résumant les informations récoltées.
 
-   La sortie de l'étape précédente est une image .tif qui associe à chaque pixel
-   une classe. Pour visualiser cette image, l'application *ColorMapping* permet
-   d'associer à chaque label une couleur RGB et de générer une image de
-   visualisation.
+     En inspectant les données dans QGis, repéré le champ qui sera
+     utilisé pour définir la classe.
 
-   Utilisez l'application ColorMapping avec la table de couleur fournie
-   ~color_map.txt~.
+     Ouvrez les fichiers XML générés. Combien y-a-t-il d'échantillons
+     disponibles pour la classe ~prairie~ dans le jeu d'apprentissage
+     ? Et dans celui de validation ?
 
-***** Validation
+     Combien d'échantillons contient le polygone dont l'identifiant
+     est 1081 dans le jeu d'apprentissage ?
 
-  Les labels utilisés lors de l'étape d'apprentissage ne représentent que 30%
-  des polygones. Les 70% restant sont dans le fichier ~testing/testing.shp~ et
-  servent à évaluer les performances du modèle appris en calculant la matrice de
-  confusion.
+     Combien y-a-t-il d'échantillons, toutes classes confondues, dans
+     le jeu d'apprentissage ?
 
-  Utilisez l'application *ComputeConfusionMatrix* (Confusion Matrix Computation) avec le jeu de données de test
-  pour produire la matrice de confusion du modèle appris.
+     Quelle classe contient le moins d'échantillon dans le jeu
+     d'apprentissage.
 
-  Le paramètre /ref.vector.field CODE/ est nécessaire. Il indique le nom du
-  champ contenant le numéro de label.
+     *Note :* Même si cette application n'accède pas au contenu de
+     l'image (pixels), il faut tout de même lui spécifier l'image
+     support dont elle utilisera l'emprise.
 
-  Consultez la matrice de confusion et identifiez les classes bien différenciées.
+**** Sélection des positions des échantillons
 
-  A quel classe appartiennent le plus souvent les pixels mal classifiés ?
-  Pourquoi ?
+     Nous avons vu lors de l'étape précédente que les polygones
+     d'apprentissage contienne beaucoup plus d'échantillons que
+     nécessaire à l'apprentissage du modèle. Nous allons maintenant
+     sélectionner un sous-ensemble de ces échantillons pour entraîner
+     notre modèle à l'aide de l'application *SampleSelection*.
 
-  Vous pouvez utiliser le squelette csv (~template_confusion_matrix.csv~) pour
-  identifier les labels facilement.
-***** Optionnel: Découvrir d'autres méthodes d'apprentissage
-      
-      Refaire toute la classification sur une date en utilisant l'algorithme
-      Random Forest à la place des SVM.
+     Inspecter la documentation de l'application. Quels sont les
+     différentes stratégies possibles pour réaliser cette sélection ?
 
-      Effectuez l'ensemble de la procédure avec et sans l'étape 1 /Calcul des
-      statistiques/.
+     Nous allons utiliser la stratégie ~smallest~, qui permet de
+     limiter le nombre d'échantillon par classe à celui de la classe
+     la moins représentée. Nous génèrerons un jeu d'échantillons pour
+     l'apprentissage (à partir de ~training.shp~) et un pour la
+     validation (à partir de ~testing.shp~).
 
-      1. Comparez les résultats obtenus entre les SVM et les RF?
-      2. Comparez les résultats obtenus avec les RF avec et sans normalisation?
+     L'application accepte comme paramètre l'image, la donnée vecteur
+     contenant les polygones, le nom du champ correspondant à la
+     classe dans cette donnée et le fichier de statistiques produit
+     précédemment. Elle génère un fichier vecteur contenant des
+     points, chaque point correspondant à un échantillon sélectionné.
 
-**** Classification multi-date
+     Combien d'échantillons au total ont été sélectionnés par classe
+     pour l'apprentissage ?
 
-     Les performances de cette première classification ne sont pas
-     très bonnes: on va maintenant essayer d'améliorer la
-     discrimination des classes de végétation en utilisant plusieurs
-     dates.
+     Ouvrir les fichiers de points ainsi généré dans QGis. Quels sont les
+     attributs associés à chaque point ?
 
-  Le principe de la classification multidate est d'utiliser pour
-  chaque pixel, toutes les dates disponibles comme des bandes
-  spectrales supplémentaires. Avec les données Landsat-8, il s'agit
-  donc d'utiliser 63 bandes par pixel.  Les dates ont été choisies de
-  façon à être réparties temporellement sur une année. Cela permet
-  d'intégrer les variations saisonnières qui apportent beaucoup
-  d'information pour la discrimination de certaines classes.
+     *Note :* Le fichier de style ~samples.qml~ peut être chargé dans
+     Qgis pour coloriser les polygones en fonction de leur classe. 
 
-  Avant tout, créez un répertoire /classif9/ pour cette partie.
+     *Note :* Même si cette application n'accède pas au contenu de
+     l'image (pixels), il faut tout de même lui spécifier l'image
+     support dont elle utilisera l'emprise.
+     
+**** Calcul des attributs des échantillons
 
-  Les étapes sont les mêmes que précédemment, mais il faut d'abord constituer une
-  image de 63 bandes en concaténant les 9 images.
+     Maintenant que nous avons sélectionné les positions des
+     échantillons, nous allons leurs associer des attributs qui seront
+     utilisés pour l'apprentissage et la classification. Ce calcul des
+     attributs se fait à l'aide de l'application *SampleExtraction*,
+     qui à chaque point va associer la signature spectrale de l'image
+     sous-jacente.
 
-  Pour cela, utilisez l'application *ConcatenateImages* (Images Concatenation).
+     Notez qu'en l'absence d'une sortie vecteur explicite,
+     l'application fonctionne en mode mise-à-jour de la donnée vecteur
+     d'entrée, c'est à dire des attributs lui seront ajoutés.
+     
+     L'application prend en paramètre l'image à utiliser ainsi que le
+     fichier de points à enrichir. Elle permet également de spécifier
+     le nom des champs qui seront générés. Ainsi si l'on spécifie
+     comme préfixe ~band_~, alors les champs s'appelleront ~band_0~,
+     ~band_1~, etc ...
 
-  Vérifiez ensuite que la sortie est bien une image de taille 3667x3667 de
-  63 bandes sur 16 bits avec /gdalinfo/.
+     Nommer les bandes de l'image avec le prefixe ~band_~ et le profil
+     de NDVI avec le préfixe ~ndvi_~
 
-  Puis effectuez les même étapes que précédemment: *ComputeImageStatistics*,
-  *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
-  
-  Utilisez cette fois la méthode Random Forest pour le modèle qui est plus
-  rapide. Utilisez également les paramètres suivants qui offrent de bonnes
-  performances de classification:
+     Utilisez l'application pour ajouter les attributs correspondant
+     aux bandes de l'image et au profil de NDVI, pour le jeu
+     d'apprentissage et le jeu de validation.
 
-   - sample.bm 0 :: Pour ne pas limiter le nombre d'échantillon par le minimum de la plus petite
-    classe.
-   - sample.mt 2000 :: Le nombre maximum d'échantillons d'apprentissage par
-    classe.
-   - classifier.rf.max 25 :: Profondeur maximum des arbres de décisions.
-   - classifier.rf.min 25 :: Nombre minimum d'échantillon dans chaque noeud.
+**** Entraînement du modèle
 
-  Comparez ensuite les résultats avec la classification à une date en utilisant
-  la matrice de confusion et l'image RGB.
+     Nos échantillons sont prêts, il est à présent temps d'entraîner
+     notre modèle. Pour cela nous allons utiliser l'application
+     *TrainVectorClassifier*, qui va lire les fichiers de points avec
+     leurs attributs générés précédemment, et les utiliser pour
+     réaliser l'apprentissage et la validation.
 
-**** Calcul d'un profil de NDVI
-  
-  Une image NDVI peut-être calculée pour chaque image de la série temporelle
-  pour constituer un profil de NDVI. Ajouté aux bandes de l'image concaténée, ce
-  profil permettra d'améliorer les performances de classification.
+     Pour l'ensemble des expérience de cette section, nous allons
+     utiliser un modèle de type *Random Forest* (rf), avec une
+     profondeur maximale d'arbre de 20.
 
-  Calculer une image de NDVI pour chaque image de la série temporelle en
-  utilisant l'application RadiometricIndices. Prenez garde au type de sortie.
+     Il faut à nouveau donner en paramètre à l'application le nom du
+     champ définissant la classe. L'application accepte également en
+     paramètre le fichier de point décrivant les échantillons et un
+     fichier de sortie correspondant au modèle appris.
 
-  Ouvrez les neuf images d'indices dans monteverdi pour constater l'évolution
-  temporelle.
+     Réaliser un premier apprentissage en utilisant uniquement la
+     première date (~band_0~ à ~band_6~), et sans spécifier de fichier
+     de validation.
 
-  Concaténez les neuf images d'indices en une seule pour constituer un profil
-  NDVI. Ouvrez le profil dans QGIS. Visualiser le profil NDVI temporellement
-  avec l'outil bouton /identifier les entités/, puis /vue graphique/.
+     Quelle performance (coefficient Kappa) obtenez vous ? Cette
+     performance vous parait elle réaliste ? Comment a-t-elle été
+     évaluée ?
 
-**** Classification du profil de NDVI
+     Réaliser le même apprentissage, cette fois ci en ajoutant un fichier
+     de validation que vous avez calculé à l'étape
+     précédente. Qu'observez vous ?
 
-  Créez un répertoire /classifNDVI/ pour cette partie.
+     A l'aide de l'application d'apprentissage, il est aisé de tester
+     des combinaisons d'attributs pour observer leur influence sur les
+     performances:
+     - Quelle date fourni la meilleure performance individuelle ?
+     - La bande bleu côtier a-t-elle un intérêt pour la classification
+       ?
+     - Quelle est la performance en utilisant toutes les bandes
+       spectrales ?
+     - Quelle est la performance du profil de ndvi seul ?
+     - Quelle est la performance en utilisant toutes les bandes et le
+       profil de NDVI ?
+     - Dans ce dernier cas, analyser les performances par classe
 
-  En suivant la même méthode que précédemment, réalisez une classification de la
-  série temporelle augmentée du profil NDVI.
 
-  Les résultats sont ils améliorés par rapport à la classification multi date
-  sans l'indice NDVI ?
+     *Notes :* En utilisant l'interface en ligne de commande des
+     applications, il est possible de définir des variables bash pour les
+     ensembles d'attributs:
 
-**** Post-traitements de la classification
+     #+BEGIN_EXAMPLE
+         date1=`for i in $(seq 0 6); do printf "band_$i "; done`
 
-  L'application /ClassificationMapRegularization/ filtre une image classifiée
-  en utilisant un vote majoritaire local.
+         date2=`for i in $(seq 7 13); do printf "band_$i "; done`
+
+         date3=`for i in $(seq 14 20); do printf "band_$i "; done`
+
+         date4=`for i in $(seq 21 27); do printf "band_$i "; done`
+
+         date5=`for i in $(seq 28 34); do printf "band_$i "; done`
+
+         date6=`for i in $(seq 35 41); do printf "band_$i "; done`
+
+         date7=`for i in $(seq 42 48); do printf "band_$i "; done`
+
+         date8=`for i in $(seq 49 55); do printf "band_$i "; done`
+
+         date9=`for i in $(seq 56 62); do printf "band_$i "; done`
+
+         date1_nocb=`for i in $(seq 1 6); do printf "band_$i "; done`
+
+         bands=`for i in $(seq 0 62); do printf "band_$i "; done`
+
+         bands_nocb=`for i in $(seq 0 62); do if [ $(($i % 7)) -ne 0 ]; \
+                     then printf "band_$i "; fi done`
+
+         ndvis=`for i in $(seq 0 8); do printf "ndvi_$i "; done`
+     #+END_EXAMPLE
+
+     Ensuite, on peut directement utiliser ces variables en paramètres
+     de l'application ~-feat ${bands} ${ndvis}~.
+
+**** Classification
+     
+     Utiliser l'application *ImageClassifier* pour produire la carte
+     de classification correspondant à l'ensemble des bandes (bandes
+     originales et NDVI). Attention: le modèle doit avoir été entraîné
+     avec le même ordre de bandes que celui utilisé pour la
+     classification.
+
+**** Post-traitement de la classification
+
+  Nous allons utiliser l'application *ClassificationMapRegularization*
+  filtre une image classifiée en utilisant un vote majoritaire local.
 
   Les paramètres à régler sont:
 
@@ -391,307 +449,495 @@
   - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur existante.
 
   Filtrez le résultat de la classification précédente (neuf dates et
-  profil NDVI) puis comparez les résultats avec les images RGB (dans
-  monteverdi) et avec les matrices de confusions (avec un tableur).
+  profil NDVI).
+
+**** Évaluation complète des performances
+
+  Nous allons maintenant utiliser l'application
+  *ComputeConfusionMatrix* afin de calculer la performance complète de
+  notre chaîne de classification. Par rapport à l'évaluation des
+  performances réalisée lors de l'apprentissage, cette application
+  permet de:
+  - Prendre en compte l'ensemble des pixels disponibles dans la vérité
+    terrain,
+  - Évaluer la performance d'une carte de classification qui a été
+    retraitée (par exemple avec une régularisation).
+
+  Le paramètre ~ref.vector.field CODE~ est nécessaire. Il indique le
+  nom du champ contenant le numéro de label.
+
+   Calculer la performance complète de la chaîne, avec et sans
+   régularisation. 
+   
+   - Que constatez vous par rapport à la performance évaluée lors de
+     la phase d'entraînement ? Comment expliquer ce phénomène ?
+   - Quel est l'impact de la régularisation sur les performances ?
+  
+**** Production d'une carte de classification en couleur
+La sortie de l'étape précédente est une image .tif qui associe à
+chaque pixel une classe. Pour visualiser cette image, l'application
+*ColorMapping* permet d'associer à chaque label une couleur RGB et de
+générer une image de visualisation.  
+
+Utilisez le mode *custom* l'application *ColorMapping* avec la table de couleur fournie
+~color_map.txt~ pour produire une carte colorisée.
+
+*Note :* Il se peut que l'image ne s'affiche pas correctement dans
+Qgis, du fait d'une valeur non renseignée (no data) par défaut enregistrée dans le
+fichier. La prise en compte du nodata peut être désactivé dans les
+propriétés de la couche dans Qgis.
+
+**** Pour aller plus loin
+
+     1) Peut on obtenir de meilleure performance avec d'autres
+        algorithmes de classification ?
+     
+     2) A l'aide de Qgis, fusionner dans la donnée de référence les
+        classes pelouse et lande ligneuse. Quelle performance obtenez
+        vous ?
 
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
 
-*Note: * Dans cette solution, la variable d'environnement ~${LS8DATA}~
+*Note :* Dans cette solution, la variable d'environnement ~${LS8DATA}~
 contient le chemin vers le répertoire /classification/ des données
 fournies avec le TP.
 
-*** Classification d'une date
+*** Préparation des données
 
-    Premièrement, on calcule les statistiques de l'image à classer:
+    Tout d'abord, nous concaténons l'ensemble des bandes pour toutes
+    les dates:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ConcatenateImages -il ${LS8DATA}/LANDSAT_*.tif -out alldates.tif uint16
+    #+END_EXAMPLE
+
+    Ensuite, nous calculons pour chaque date le NDVI correspondant:
     
     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics \
-    -il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-                                     -out images_statistics.xml
+    $ cd ${LS8DATA}
+    $ for f in LANDSAT_*.tif; do \
+        otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
+                                  -channels.red 3 -channels.nir 4    \
+                                  -in "$f" -out "NDVI_$f" -list Vegetation:NDVI; done
     #+END_EXAMPLE
 
-    On réalise ensuite l'apprentissage du modèle SVM.
+    Nous pouvons ensuite créer le profil de NDVI:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier \
-    -io.il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-      -io.vd ${LS8DATA}/training/training.shp \
-      -sample.vfn CODE \
-      -sample.vtr 0 \
-      -classifier libsvm \
-      -io.imstat images_statistics.xml \
-      -io.out model.svm
+    $ otbcli_ConcatenateImages -il ${LS8DATA}/NDVI_*.tif -out ndvis.tif
     #+END_EXAMPLE
 
-    Une fois le modèle appris, on l'utilise pour réaliser la classification:
+    Ainsi que l'image contenant l'ensemble des bandes et le profil de
+    NDVI:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier \
-    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-    -imstat images_statistics.xml \
-    -model  model.svm \
-    -out    labeled_image.tif
-    #+END_EXAMPLE
-
-    On peut ensuite estimer les performances obtenues à l'aide du jeu de validation:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-      -in labeled_image.tif \
-      -ref vector \
-      -ref.vector.in ${LS8DATA}/testing/testing.shp \
-      -ref.vector.field CODE \
-      -out confusion_matrix.csv
-    #+END_EXAMPLE
-
-    Pour une meilleure visualisation des résultats, on réalise une
-    carte couleur en fonction de la classe attribuée:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in labeled_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out RGB_color_image.tif
-   #+END_EXAMPLE
-
-    Les performances de cette première classification ne sont pas
-    très bonnes: on va maintenant essayer d'améliorer la discrimination
-    des classes de végétation en utilisant plusieurs dates.
-
-*** Classification multi-date
-
-    Pour commencer, on va concaténer les images de l'ensemble des
-    dates en une seule image de $7x9=63$ bandes:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-    -out image_concat.tif int16
+    $ otbcli_ConcatenateImages -il alldates.tif ndvis.tif -out all.tif
     #+END_EXAMPLE
     
-    Ensuite, on déroule le processus déjà réalisé lors de l'étape précédente.
+*** Calcul des statistiques des échantillons disponibles
 
-
-    Calcul des statistiques:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics -il \
-    image_concat.tif \
-    -out images_statistics.xml
-    #+END_EXAMPLE
-
-
-    Apprentissage du modèle (cette fois-ci, on utilise le classifieur Random Forests, avec plus d'échantillons):
+    Le calcul des statistiques des échantillons disponibles se réalise
+     de la manière suivante :
 
     #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier -io.il \
-    image_concat.tif \
-    -io.vd \
-    ${LS8DATA}/training/training.shp \
-    -sample.vfn CODE \
-    -sample.vtr 0 \
-    -classifier rf \
-    -sample.bm 0 \
-    -sample.mt 2000 \
-    -classifier.rf.max 25 \
-    -classifier.rf.min 25 \
-    -io.imstat images_statistics.xml \
-    -io.out model.rf
+    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
+                                    -field CODE -vec training/training.shp \
+                                    -out training_stats.xml
+
+    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
+                                    -field CODE -vec testing/testing.shp \
+                                     -out testing_stats.xml
     #+END_EXAMPLE
 
+    En inspectant les fichiers XML ~training_stats.xml~ et
+    ~validation_stats.xml~, on peut trouver les informations suivante:
 
-    On réalise la carte de classification:
+    Dans le fichier ~training_stats.xml~:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier -in \
-    image_concat.tif \
-    -imstat images_statistics.xml \
-    -model  model.rf \
-    -out    labeled_image.tif
+    <Statistic name="samplesPerClass">
+        <StatisticMap key="11" value="56774" />
+        <StatisticMap key="12" value="59347" />
+        <StatisticMap key="211" value="25317" />
+        <StatisticMap key="221" value="2087" />
+        <StatisticMap key="222" value="2080" />
+        <StatisticMap key="31" value="8149" />
+        <StatisticMap key="32" value="1029" />
+        <StatisticMap key="34" value="3770" />
+        <StatisticMap key="36" value="941" />
+        <StatisticMap key="41" value="2630" />
+        <StatisticMap key="51" value="11221" />
+    </Statistic>
     #+END_EXAMPLE
 
-    Et l'étape de validation:
+    La classe prairie (label 211) possède donc 25 317 échantillons
+    disponibles.  On peut également noter que le jeux d'apprentissage
+    contient 173 345 échantillons, et que la classe lande ligneuse
+    (label 36) est la classe qui en contient le moins, avec seulement
+    941 échantillons.
 
-     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-    -in labeled_image.tif \
-    -ref vector \
-    -ref.vector.in ${LS8DATA}/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix.csv
+    Le polygone dont l'identifiant est 1081 dans le jeu
+    d'apprentissage contient 342 échantillons:
+
+    #+BEGIN_EXAMPLE
+    <StatisticMap key="1081" value="342" />
     #+END_EXAMPLE
 
-    Puis la création de la carte colorisée:
+    Dans le fichier ~testing_stats.xml~:
+
+    #+BEGIN_EXAMPLE
+    <Statistic name="samplesPerClass">
+        <StatisticMap key="11" value="134590" />
+        <StatisticMap key="12" value="127548" />
+        <StatisticMap key="211" value="59052" />
+        <StatisticMap key="221" value="4820" />
+        <StatisticMap key="222" value="6393" />
+        <StatisticMap key="31" value="18620" />
+        <StatisticMap key="32" value="2121" />
+        <StatisticMap key="34" value="9351" />
+        <StatisticMap key="36" value="2812" />
+        <StatisticMap key="41" value="6110" />
+        <StatisticMap key="51" value="28858" />
+    </Statistic>
+    #+END_EXAMPLE
+
+    La classe prairie (label 211) possède donc 59 052 échantillons
+    disponibles.
+
+*** Sélection des positions des échantillons
+
+    D'après la documentation de l'application, les différentes
+    stratégies possibles pour pour réaliser l'échantillonnage des
+    données d'apprentissage sont :
+    - byclass :: Indiquer pour chaque classe le nombre d'échantillons
+                 à sélectionner (par le biais d'un fichier)
+    - constant :: Indiquer un nombre constant d'échantillons appliqué
+                  à toute les classes
+    - smallest :: Sélectionner un nombre constant d'échantillons
+                  appliqué à toute les classes de sorte que la classe
+                  la plus petite soit échantillonnée complètement.
+    - all :: Sélectionner tous les échantillons. 
+
  
+    Pour réaliser la sélection des échantillons avec la stratégie
+    /smallest/, on procède comme suit:
+
     #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in labeled_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out RGB_color_image.tif
+    $ otbcli_SampleSelection -in alldates.tif -field CODE \
+                             -vec training/training.shp   \
+                             -out training_samples.sqlite \
+                             -instats training_stats.xml -strategy smallest
     #+END_EXAMPLE
 
-    Dans cette seconde version, les performances sont nettement
-    meilleures, mais il reste des confusions importantes, notamment
-    pour les classes vergers et vignes.
+  Voici l'échantillonnage réalisé par l'application (chiffres extraits
+  des logs):
+    
+  |-----------+-----------------+--------------+-----------|
+  | className | requiredSamples | totalSamples |      rate |
+  |-----------+-----------------+--------------+-----------|
+  |        11 |             941 |        56774 | 0.0165745 |
+  |        12 |             941 |        59347 | 0.0158559 |
+  |       211 |             941 |        25317 | 0.0371687 |
+  |       221 |             941 |         2087 |  0.450886 |
+  |       222 |             941 |         2080 |  0.452404 |
+  |        31 |             941 |         8149 |  0.115474 |
+  |        32 |             941 |         1029 |   0.91448 |
+  |        34 |             941 |         3770 |  0.249602 |
+  |        36 |             941 |          941 |         1 |
+  |        41 |             941 |         2630 |  0.357795 |
+  |        51 |             941 |        11221 | 0.0838606 |
+  |-----------+-----------------+--------------+-----------|
 
-*** Calcul d'un profil de NDVI
+  Au total, 10 351 échantillons ont été sélectionnés. Si on ouvre la
+  couche dans Qgis, on peut se faire une idée de l'échantillonnage qui
+  a été réalisé.
+  
+  #+ATTR_LATEX: :width 0.9\textwidth
+  [[file:Images/samples_selection.png]]
 
-    Pour réaliser le profil de NDVI, on va utiliser l'application *RadiometricIndices* pour chacune des dates:
+  Les attributs associés à chaque point sont les attributs du fichier
+  vecteur d'origine ~training.shp~, ainsi que l'attribut ~originfid~
+  qui correspond à l'identifiant du polygone ou l'échantillon a été
+  sélectionné.
+
+*** Calcul des attributs des échantillons
+
+    Pour calculer les attributs associés à chaque échantillons, on
+    procède de la manière suivante. Pour les bandes de l'image:
 
     #+BEGIN_EXAMPLE
-    $ for date in "20140309" "20140401" "20140417" "20140528" \
-    "20140620" "20140731" "20140901" "20141003" "20141026"; do \
-    otbcli_RadiometricIndices \
-    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_${date}.tif \
-    -out ${date}-ndvi.tif \
-    -list Vegetation:NDVI \
-    -channels.red 3 \
-    -channels.nir 4 ; \
-    done
+    $ otbcli_SampleExtraction -in alldates.tif               \
+                              -vec training_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name band_    \
+                              -field CODE 
+
+    $ otbcli_SampleExtraction -in ndvis.tif                  \
+                              -vec training_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name ndvi_    \
+                              -field CODE 
+    #+END_EXAMPLE
+
+    On procède de la même manière pour le jeu de validation.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_SampleExtraction -in alldates.tif               \
+                              -vec testing_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name band_    \
+                              -field CODE 
+
+    $ otbcli_SampleExtraction -in ndvis.tif                  \
+                              -vec testing_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name ndvi_    \
+                              -field CODE 
+    #+END_EXAMPLE
+
+*** Entraînement du modèle
+
+    Nous utiliserons dans cette partie les variables shell proposées
+    dans l'énoncé.
+
+    L'apprentissage se réalise de la manière suivante:
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite \
+                                   -cfield code -classifier rf    \
+                                   -classifier.rf.max 20          \
+                                   -io.out model.rf -feat ${date1}
+    #+END_EXAMPLE
+
+    Cette première exécution donne les résultats suivants:
+
+    #+BEGIN_EXAMPLE
+    Confusion matrix (rows = reference labels, columns = produced labels):
+      [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
+[ 11]   861    28     2     0     8     5     3     0     5     6    24 
+[ 12]    16   889     3     1     3     2     1     2     5    12     7 
+[ 31]     8    10   873     5     9    19     2     0     6     9     0 
+[ 32]     4     0    21   895     6     3     2     3     1     4     2 
+[ 34]    12    20    39     9   785    19     8     1    19    17    12 
+[ 36]    10    30    46    11    21   771     8     1    20     9    14 
+[ 41]     4    13     8     4     5     1   862     3    16    17     8 
+[ 51]     2    11     2     0     4     2     5   906     2     7     0 
+[211]     2    27    35     5    21    32     2     1   782    15    19 
+[221]    13    14     5     3     7     4     8     6    11   845    25 
+[222]    15    24     2     0     2     8     0     0    16    14   860 
+
+[...]
+
+Global performance, Kappa index: 0.891296 
     #+END_EXAMPLE
     
-    Ensuite, on va concaténer l'ensemble des bandes NDVI en une seule image:
+    La raison pour laquelle le coefficient Kappa est si élevé malgré
+    l'emploi d'une unique date d'acquisition est qu'en l'absence
+    d'échantillons de validation, l'application évalue les
+    performances en utilisant le jeu d'apprentissage. Pour obtenir une
+    évaluation plus réaliste des performances, on peut utiliser pour
+    la validation le fichier ~testing_samples.sqlite~ que nous avons
+    créé précédemment:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il \
-    20140309-ndvi.tif \
-    20140401-ndvi.tif \
-    20140417-ndvi.tif \
-    20140528-ndvi.tif \
-    20140620-ndvi.tif \
-    20140731-ndvi.tif \
-    20140901-ndvi.tif \
-    20141003-ndvi.tif \
-    20141026-ndvi.tif \
-    -out ndvi-profile.tif
-    #+END_EXAMPLE
-
-    Ce qui permet d'analyser le profil dans QGIS par exemple.
-
-*** Classification du profil de NDVI
-    
-    Pour la classification, on rajoute également les bandes spectrales initiales pour toutes les dates:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-    20140309-ndvi.tif \
-    20140401-ndvi.tif \
-    20140417-ndvi.tif \
-    20140528-ndvi.tif \
-    20140620-ndvi.tif \
-    20140731-ndvi.tif \
-    20140901-ndvi.tif \
-    20141003-ndvi.tif \
-    20141026-ndvi.tif \
-    -out image_concat.tif
-    #+END_EXAMPLE
-
-    Nous déroulons ensuite les étapes classiques.
-
-    Calcul des statistiques:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics -il \
-    image_concat.tif \
-    -out images_statistics.xml
-    #+END_EXAMPLE
-
-    Apprentissage du modèle:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier -io.il \
-    image_concat.tif \
-    -io.vd \
-    ${LS8DATA}/training/training.shp \
-    -sample.vfn CODE \
-    -sample.vtr 0 \
-    -classifier rf \
-    -sample.bm 0 \
-    -sample.mt 2000 \
-    -classifier.rf.max 25 \
-    -classifier.rf.min 25 \
-    -io.imstat images_statistics.xml \
-    -io.out model.rf
-    #+END_EXAMPLE
-
-    Utilisation du modèle (classification):
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier -in \
-    image_concat.tif \
-    -imstat images_statistics.xml \
-    -model  model.rf \
-    -out    labeled_image.tif
-    #+END_EXAMPLE
-
-    Validation:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-    -in labeled_image.tif \
-    -ref vector \
-    -ref.vector.in ${LS8DATA}/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix.csv
-    #+END_EXAMPLE
-
-    Visualisation:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in labeled_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out RGB_color_image.tif
-    #+END_EXAMPLE
-
-*** Post-traitements de la classification
-
-    Pour régulariser la classification, on utilise l'application suivante:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ClassificationMapRegularization \
-    -io.in labeled_image.tif \
-    -io.out regularized_image.tif \
-    -ip.radius 1 \
-    -ip.suvbool 0
+    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite   \
+                                   -valid.vd testing_samples.sqlite \
+                                   -cfield code -classifier rf      \
+                                   -classifier.rf.max 20            \
+                                   -io.out model.rf -feat ${date1}
     #+END_EXAMPLE
     
 
-    On peut ensuite rejouer les étapes de colorisation et de validation:
+    Dans ce cas, les résultats sont les suivants:
+
+    
+    #+BEGIN_EXAMPLE
+     [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
+[ 11]  1504   285     9     1    32    40    43     3    43    36   126 
+[ 12]   183  1619    13     8    15    25     9     5    59    77   108 
+[ 31]    26    60  1463    89    76   237    38    30    33    65     4 
+[ 32]    47    54   362  1478    49    31    23    16    26    29     6 
+[ 34]    45    45   364   230   252   620    21    19   270   110   145 
+[ 36]    85   164   232    65   421   647    27     6   214   135   125 
+[ 41]    49    79    51    32    49    20  1559    29    61   128    64 
+[ 51]    27    39    26    17     7    19    44  1919     6    17     0 
+[211]    21   131   113    29   274   143    11     6  1086    66   241 
+[221]    93   165   113    93   201   148    95    12   196   771   234 
+[222]   164   229     8     4    91    58    10     1   181   123  1252
+
+[...]
+
+Global performance, Kappa index: 0.538822
+#+END_EXAMPLE
+
+Ces résultats montrent que les performances sont moyennes en utilisant
+une unique date.
+
+Pour tester différentes configurations, on peut utiliser les variables
+définies dans l'énoncé et les passer au paramètre ~-feat~. Par exemple
+pour tester les deux premières dates, on peut utiliser ~-feat ${date1}
+${date2}~.
+
+**** Quelle date fournit la meilleure performance individuelle ?
+
+La meilleure date est la troisième date (2014-04-17), avec un Kappa de 0.578.
+
+|------------+----------|
+|       Date |    Kappa |
+|------------+----------|
+| 2014-03-09 | 0.538822 |
+| 2014-04-01 | 0.560085 |
+| 2014-04-17 | 0.578801 |
+| 2014-05-28 |  0.56494 |
+| 2014-06-20 | 0.560509 |
+| 2014-07-31 | 0.540943 |
+| 2014-09-01 | 0.555276 |
+| 2014-10-03 | 0.530006 |
+| 2014-10-26 | 0.494788 |
+|------------+----------|
+
+Ce tableau a été obtenu avec le script bash suivant:
+
+#+BEGIN_EXAMPLE
+$ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
+                                     -io.vd training_samples.sqlite   \
+                                     -valid.vd testing_samples.sqlite \
+                                     -cfield code -classifier rf      \
+                                     -classifier.rf.max 20            \
+                                     -io.out model.rf -feat ${!var}   \
+                                     | grep Kappa; done
+#+END_EXAMPLE
+
+**** La bande bleu côtier a-t-elle un intérêt pour la classification ?
+
+     En utilisant le paramètre ~-feat ${date1}~ on obtient un Kappa
+     de 0.538822 pour la première date, tandis que si l'on retire la
+     bande bleu côtier en utilisant ~-feat ${date1_nocb}~ on obtient un
+     Kappa de 0.538068. On peut donc conclure que la bande bleu côtier
+     n'apporte que très peu d'information (et donc de performance) au
+     problème de classification.
+
+**** Quelle est la performance en utilisant toutes les bandes spectrales ?
+     
+     En utilisant le paramètre ~-feat ${dates}~, on obtient un Kappa
+     de 0.677147.
+
+**** Quelle est la performance du profil de NDVI seul ?
+
+     En utilisant le paramètre ~-feat ${ndvis}~ on obtient un Kappa de
+     0.554286. En utilisant seulement 9 valeurs d'indice
+     radiométrique, on fait donc seulement 0.12 points de Kappa en
+     moins par rapport à l'ensemble des 63 bandes spectrales. On fait
+     également aussi bien, voire mieux que certaines dates individuelles
+     (qui contiennent chacune 7 bandes).
+
+**** Quelle est la performance en utilisant toutes les bandes spectrales et le profil de NDVI ?
+
+     En utilisant le paramètre ~-feat ${bands} ${ndvis}~ on obtient un
+     Kappa de 0.682333, soit légèrement mieux que les bandes
+     spectrales seules.
+
+**** Dans ce dernier cas, analyser les performances par classe
+
+     La classe eau (label 51) est la mieux reconnue, avec un F-score
+     de 0.945575.
+
+     Les classes pelouse (label 34) et landes ligneuses (label 36)
+     sont de loin les moins bien reconnues, avec un F-score respectif
+     de 0.278807 et 0.428884. Toutes les autres classes ont un F-score
+     parfois très supérieur à 0.6.
+
+     Si l'on analyse plus finement la matrice de confusion, on peut
+     constater que ces deux classes sont souvent confondues par le
+     modèle: 24% des échantillons de pelouse sont classés comme lande
+     ligneuse (et 17% comme prairie), tandis que 22% des échantillons
+     de lande ligneuse sont classés comme pelouse (et 10% comme
+     prairie). 
+
+*** Classification
+
+    Pour réaliser la carte de classification, on va utiliser le modèle
+    appris sur l'ensemble des bandes spectrales et du profil de ndvi
+    (dans cet ordre). Attention, l'ordre des attributs utilisés lors
+    de l'apprentissage doit être le même que l'ordre des bandes
+    fournies en entrée de l'application *ImageClassifier*.
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in regularized_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out rgb_regularized.tif
+    $ otbcli_ImageClassifier -in Extract16bits/all.tif \
+                             -out classif.tif uint8 \
+                             -model model.rf
     #+END_EXAMPLE
 
+*** Post-traitement de la classification
+
+    Pour régulariser la carte de classification, on utilise l'appel
+    suivant:
+
     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-    -in regularized_image.tif \
-    -ref vector \
-    -ref.vector.in ${LS8DATA}/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix_regularized.csv
+    $ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0    \
+                                             -io.in classif.tif            \
+                                             -io.out classif_reg.tif uint8 
     #+END_EXAMPLE
+
+    On peut observer visuellement l'effet de cette régularisation
+    (attention à décocher l'utilisation des valeurs nulles (nodata)
+    dans Qgis), mais il est également intéressant de connaître
+    l'impact de cette opération sur les performances, ce que nous
+    allons faire dans la section suivante.
+
+*** Évaluation complète des performances
+
+    Pour évaluer les performances sur l'ensemble de la donnée de
+    validation, on utilise l'application *ComputeConfusionMatrix*.
+
+    Sur la carte de classification brute :
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix -in classif.tif -ref vector        \
+                                    -ref.vector.in testing/testing.shp \
+                                    -out confusion.csv                 \
+                                    -ref.vector.field CODE
+    #+END_EXAMPLE
+
+    Cette évaluation complète donne un Kappa de 0.803679. Cette valeur
+    est bien plus élevée que celle évaluée lors de la phase
+    d'entraînement, qui atteignait seulement 0.682333. Ceci s'explique
+    par le fait que la donnée de validation utilisée lors de la phase
+    d'entraînement a été générée avec la stratégie /smallest/ qui
+    produit le même nombre d'échantillon pour chaque classe. Or, si
+    l'on regarde les statistiques produites en début de TP, on peut
+    voir que les classes cultures d'été (11) cultures d'hiver (12) et
+    eau (51) sont sur-représentées dans la vérité terrain. Or, ces
+    trois classes ont également les meilleures performances de
+    classifications. Leurs sur-représentation tire donc la performance
+    globale vers le haut. On aurait pu générer le jeu de validation
+    avec la stratégie /all/, ce qui aurait permis d'estimer cette
+    performance finale dès la phase d'entraînement. Cependant, ceci
+    aurait éventuellement masqué les faibles performances de certaines
+    classes.
+
+    Sur la carte de classification régularisée :
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector    \
+                                    -ref.vector.in testing/testing.shp \
+                                    -out confusion.csv                 \
+                                    -ref.vector.field CODE
+    #+END_EXAMPLE
+
+    Cette fois-ci, le Kappa mesuré est de 0.873691. On peut donc
+    conclure que la régularisation améliore les performances de la
+    classification, car celle-ci est alors morphologiquement plus
+    proche de la donnée de référence, qui est régulière.
+
+*** Production d'une carte de classification en couleur
+    
+    Pour produire la carte colorisée, on utilise l'appel suivant:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping -in classif_reg.tif -out classif_reg_rgb.tif uint8 \
+                          -method custom -method.custom.lut color_map.txt
+    #+END_EXAMPLE
+    
+    #+ATTR_LATEX: :width 0.9\textwidth
+    [[file:Images/final_classification.png]]
