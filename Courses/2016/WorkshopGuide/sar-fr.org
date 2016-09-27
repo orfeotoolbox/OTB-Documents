@@ -234,7 +234,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         dans les métadonnées du produit:
         #+BEGIN_EXAMPLE
         $ otbcli_SARCalibration \
-        -in "s1_hh.tif?&geom=s1_hh_calibration.geom" \
+        -in s1_hh.tif \
         -out s1_hh_gamma0.tif \
         -lut gamma
         #+END_EXAMPLE
@@ -243,7 +243,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
         #+BEGIN_EXAMPLE
         $ otbcli_SARCalibration \ 
-        -in "s1_hv.tif?&geom=s1_hv_calibration.geom" \
+        -in s1_hv.tif \
         -out s1_hv_gamma0.tif \
         -lut gamma
         #+END_EXAMPLE
@@ -267,10 +267,13 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
         #+END_EXAMPLE
 
 **** Corrections géométriques
+     On utilise une grille de déformation à 10 mètres de résolution pour
+     accélérer le traitement.
     1. Orthorectification sans DEM:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in s1_hh_gamma0.tif \
+       -opt.gridspacing 10 \
        -io.out s1_hh_gamma0_ortho.tif uint16
        #+END_EXAMPLE
     2. Orthorectification avec DEM et geoid:
@@ -278,6 +281,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
        $ otbcli_OrthoRectification \
        -io.in s1_hh_gamma0.tif \
        -io.out s1_hh_gamma0_ortho.tif uint16 \ 
+       -opt.gridspacing 10 \
        -elev.dem SRTM/ \
        -elev.geoid Geoid/egm96.grd
        #+END_EXAMPLE

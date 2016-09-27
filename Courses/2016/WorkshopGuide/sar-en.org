@@ -215,7 +215,7 @@ located in Germany near the Constance lake (47.456276, 9.638616).
         the product metadata
         #+BEGIN_EXAMPLE
         $ otbcli_SARCalibration \
-        -in "s1_hh.tif?&geom=s1_hh_calibration.geom" \
+        -in s1_hh.tif \
         -out s1_hh_gamma0.tif \
         -lut gamma
         #+END_EXAMPLE
@@ -224,7 +224,7 @@ located in Germany near the Constance lake (47.456276, 9.638616).
 
         #+BEGIN_EXAMPLE
         $ otbcli_SARCalibration \ 
-        -in "s1_hv.tif?&geom=s1_hv_calibration.geom" \
+        -in s1_hv.tif \
         -out s1_hv_gamma0.tif \
         -lut gamma
         #+END_EXAMPLE
