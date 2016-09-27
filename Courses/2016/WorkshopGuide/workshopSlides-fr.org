@@ -1,5 +1,5 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Introduction des Travaux Pratiques
-#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Victor Poughon (CNES)
+#+AUTHOR: OTB team
 #+DATE: 2016
 
 #+startup: beamer

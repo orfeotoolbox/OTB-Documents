@@ -1,5 +1,5 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques
-#+AUTHOR: Julien Michel (CNES), Guillaume Pasero (CS), Victor Poughon (CNES), Manuel Grizonnet (CNES)
+#+AUTHOR: OTB team
 #+DATE: 2016
 #+LANGUAGE: fr
 #+OPTIONS: H:5
