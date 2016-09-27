@@ -48,7 +48,7 @@
     - Spatialiser l'image
     - Associer une coordonnée géographique au pixel
     - Le radar mesure la distance des objets obliquement
-    - Resolutions
+    - Résolutions
       - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
       - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
     - Il existe distorsions géométriques dues au relief (foreshortening et layover)
@@ -61,6 +61,8 @@
     - Filtrage permet d'améliorer énormément la qualité des images et leur interprétation
 *** Pour aller plus loin
 
+    Il existe d'autres logiciels open source pour le traitement et l'analyse des
+    données radar.
     - S1 ToolBox (SNAP)
     - Polarimétrie: ESA PolSARPro
 
@@ -111,7 +113,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 **** Calibration radiométrique
      
      Les valeurs des pixels dans les produits SAR comme Sentinel-1 sont sans
-     unité (radar reflectivity or radar brightness).
+     unité (radar reflectivity ou radar brightness).
 
      Le produit est accompagné de métadonnées permettant de
      transformer ces valeurs en grandeurs physiques qui permettent de
@@ -119,7 +121,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      capteurs identiques dans le cas multi-temporel.
 
      On veut de l'image d'entrée les caractéristiques physiques originales des
-     valeurs de rétrodiffusion. Les valeurs suivantes peuvent etre calculées:
+     valeurs de rétrodiffusion. Les valeurs suivantes peuvent être calculées:
      - $\beta_0$: luminosité radar (slant range)
      - $\sigma_0$: rétrodiffusion radar (directement relié au propriété du sol)
      - $\gamma_0$: rétrodiffusion radar normalisée par l'angle d'incidence (à privilégier généralement) 

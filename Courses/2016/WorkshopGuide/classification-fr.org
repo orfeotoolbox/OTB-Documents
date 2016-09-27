@@ -302,7 +302,7 @@
 
      Nous allons utiliser la stratégie ~smallest~, qui permet de
      limiter le nombre d'échantillon par classe à celui de la classe
-     la moins représentée. Nous génèrerons un jeu d'échantillons pour
+     la moins représentée. Nous générerons un jeu d'échantillons pour
      l'apprentissage (à partir de ~training.shp~) et un pour la
      validation (à partir de ~testing.shp~).
 
@@ -335,7 +335,7 @@
      sous-jacente.
 
      Notez qu'en l'absence d'une sortie vecteur explicite,
-     l'application fonctionne en mode mise-à-jour de la donnée vecteur
+     l'application fonctionne en mode mise à jour de la donnée vecteur
      d'entrée, c'est à dire des attributs lui seront ajoutés.
      
      L'application prend en paramètre l'image à utiliser ainsi que le
@@ -344,7 +344,7 @@
      comme préfixe ~band_~, alors les champs s'appelleront ~band_0~,
      ~band_1~, etc ...
 
-     Nommer les bandes de l'image avec le prefixe ~band_~ et le profil
+     Nommer les bandes de l'image avec le préfixe ~band_~ et le profil
      de NDVI avec le préfixe ~ndvi_~
 
      Utilisez l'application pour ajouter les attributs correspondant
@@ -857,7 +857,7 @@ $ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
 *** Classification
 
     Pour réaliser la carte de classification, on va utiliser le modèle
-    appris sur l'ensemble des bandes spectrales et du profil de ndvi
+    appris sur l'ensemble des bandes spectrales et du profil de NDVI
     (dans cet ordre). Attention, l'ordre des attributs utilisés lors
     de l'apprentissage doit être le même que l'ordre des bandes
     fournies en entrée de l'application *ImageClassifier*.
@@ -925,7 +925,7 @@ $ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
                                     -ref.vector.field CODE
     #+END_EXAMPLE
 
-    Cette fois-ci, le Kappa mesuré est de 0.873691. On peut donc
+    Cette fois, le Kappa mesuré est de 0.873691. On peut donc
     conclure que la régularisation améliore les performances de la
     classification, car celle-ci est alors morphologiquement plus
     proche de la donnée de référence, qui est régulière.
