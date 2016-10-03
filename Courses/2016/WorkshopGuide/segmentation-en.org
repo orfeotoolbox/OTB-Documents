@@ -1,15 +1,15 @@
 ** Image segmentation and export to GIS                              :slides:
 *** Goals and data
 **** Goals
-     - Know steps to perform image segmentation with OTB
+     - Know the steps to perform image segmentation with OTB
      - Know how to optimize segmentation parameters
      - Export segmentation results to a GIS
 
 **** Data
-     Dataset for this exercise can be found in folder: ~Data/segmentation~.
+     Dataset for this exercise can be found the ~Data/segmentation~ folder.
 
 *** Planning
-    Planning of the practical work:
+    Planning the session:
     1. Image smoothing with the MeanShift algorithm
     2. Segmentation
     3. Handle small regions
@@ -20,7 +20,7 @@
     #+ATTR_LATEX: :float t :width 0.4\textwidth
     [[file:Images/principe_mean_shift_1.pdf]]
     #+BEGIN_CENTER
-    Search in pixel neighborhood /nearby/ spectrally
+    Search in spectrally close pixel neighborhood 
     #+END_CENTER
 
 *** MeanShift algorithm (2/4)
@@ -34,7 +34,7 @@
     #+ATTR_LATEX: :float t :width 0.4\textwidth
     [[file:Images/principe_mean_shift_3.pdf]]
     #+BEGIN_CENTER
-    Move pixel to the barycentre and set value with spectral mean
+    Move pixel to the barycentre and set value to spectral mean
     #+END_CENTER
 
 *** MeanShift algorithm (4/4)
@@ -49,64 +49,64 @@
 *** Description                                                        :desc:
 **** Summary
      
-     This exercise allow to get familiar with large scale segmentation using the
+     This exercise allows to get familiar with large scale segmentation using the
      MeanShift algorithm. It goes through each step of the procedure and shows
      how to export and use output segments in a GIS.
 
 **** Pre-requisites
      
-     - Install software (Monteverdi and QGIS)
+     - Installed software (Monteverdi and QGIS)
      - Output data from the VHR image pre-processing exercise
-     - Know how OTB applications works (see corresponding exercise)
+     - Know how OTB applications work (see corresponding exercise)
        
 **** Goals
 
-     - Know steps required to perform a segmentation
+     - Know the steps required to perform a segmentation
      - Know how to optimize segmentation parameters
      - Know how to export results to a GIS
 
 *** Steps                                                             :steps:
-    Data needed for this exercise can be found in folder ~Data/segmentation~.
-**** Image smoothing with MeanShift algorithm
+    Data needed for this exercise can be found in the ~Data/segmentation~ folder.
+**** Image smoothing with the MeanShift algorithm
 
-     MeanShift algorithm performs a smoothing of the image by preserving
-     edges. It gives more homogeneous images and keep also clear frontiers
-     between regions. It aims at facilitate the segmentation step done by simple
-     methods like connected component computation. The algorithm perform
-     iterative mean over pixel using a given neighborhood (spatial and spectral).
+     The MeanShift algorithm performs a smoothing of the image by preserving
+     edges. It produces more homogeneous images and also keeps sharp boundaries
+     between regions. It aims at facilitating the segmentation step done by simple
+     methods like connected component computation. The algorithm performs
+     iterative mean over pixels using a given neighborhood (spatial and spectral).
 
-     Compute smoothing of image ~phr_orthopxs_osr_mipy_xt.tif~ using the
-     application *MeanShiftSmoothing*. Change values /ranger/ and /spatialr/ parameters
-     to see their influences.
+     Compute the smoothing of the image ~phr_orthopxs_osr_mipy_xt.tif~ using the
+     application *MeanShiftSmoothing*. Change the values of the /ranger/ and /spatialr/ parameters
+     to see their influence.
 
      Notes:
-     - /modesearch/ option allow to speedup computation but it is less
+     - the /modesearch/ option allows to speedup computation but it is less
        stable. We will disable it in this exercise.
      - Spatial (/spatialr/) and spectral (/ranger/) radiuses are the most
        important parameters of the algorithm. The first one corresponds to a
        number of pixels and the other one corresponds to a distance between
-       pixels spectral values.
-     - /foutpos/ output the spectral mean result for each pixels and will be
+       pixels in the spectral domain.
+     - /foutpos/ output the spectral mean result for each pixel and will be
        used in the next questions.
-     - You can use /extended filename/ parameters /box/ to find the optimal
+     - You can use the /extended filename/ parameter /box/ to find the optimal
        parameters /ranger/ and /spatialr/ without processing all the input
        image.
 
        In the next step of the exercise we will use /ranger/ around 254 and
-       /spatialr/ around 3 (to limit computation time)
+       /spatialr/ around 3 (to limit computation time).
 
 **** Segmentation
 
-     This step allows to produce the initial segmentation using output images
-     from the smoothing step (/fout/ and /foutpos/). Adjacent pixels in /fout/
-     image  for which spectral distance is lower than /ranger/ and for which
-     estimated positions in /foutpos/ is lower than /spatialr/ will be grouped
+     This step allows to produce the initial segmentation using the output images
+     from the smoothing step (/fout/ and /foutpos/). Adjacent pixels in the /fout/
+     image for which the spectral distance is lower than /ranger/ and for which the
+     estimated position in /foutpos/ is lower than /spatialr/ will be grouped
      in the same connected component (segment).
 
-     This step is computed on a tile basis. The application allows to set the
+     This step is performed on a tile basis. The application allows to set the
      tile size with parameters /tilesizex/ and /tilesizey/.
 
-     Finally, /minsize/ allows to remove small regions (threshold corresponds to
+     Finally, /minsize/ allows to remove small regions (the threshold corresponds to
      a number of pixels). 
 
      Use the *LSMSSegmentation* application to perform this step. Some tips
@@ -126,13 +126,13 @@
 **** Handle small regions
 
      After the initial segmentation, there is generally lots of small regions
-     which do not correspond to any objects or region of interest. The
+     which do not correspond to any object or region of interest. The
      *LSMSSegmentation* application allows to filter those regions (/minsize/
      parameter), but it is also possible to add a post-processing to fuse
      iterative adjacent regions (using a spectral criteria). This
      post-processing can be done with *LSMSSmallRegionsMerging*.
 
-     Use this application to re-process initial segmentation by fusing all
+     Use this application to re-process the initial segmentation by fusing all
      regions smaller than 50 pixels.
 
      Use the /optimal/ mode from the *ColorMapping* application to generate a
@@ -141,13 +141,13 @@
 **** Vectorization
      
      The last step allows to export polygons to a vector file. The
-     *LSMSVectorization* application performs the vectorization and compute mean
-     and variance on each segment using a support image.
+     *LSMSVectorization* application performs the vectorization and computes the mean
+     and the variance on each segment using a support image.
 
-     Start by computing NDVI from input image.
+     Start by computing the NDVI from input image.
 
-     Then, use the *ConcatenateImages* application to stack input radiometry
-     with NDVI (be careful with the encoding of the output image).
+     Then, use the *ConcatenateImages* application to stack the input radiometry
+     with the NDVI (be careful with the encoding of the output image).
 
      Use the *LSMSVectorization* using this image and the segmentation
      results. You can choose for instance /ESRI Shapefile/ (.shp extension) or
@@ -155,16 +155,16 @@
      by GDAL/OGR can be used here).
 
      Open the input image and the vector layer in QGIS. Adapt the vector
-     rendering to display polygon edges in red and the interior ring 100%
-     transparent. Analyze the segmentation and comment the result.
+     rendering to display polygon edges in red and the interior ring with 100%
+     transparency. Analyze the segmentation and comment the result.
 
      Open and comment the attribute table.
      
 **** Filter segments in QGIS
      
-     Use the selection tool in QGIS using SQL expression and the layer
-     attributes table to select polygons which do not correspond to shadow area
-     and copy them in an other layer.
+     Use the selection tool in QGIS using SQL expressions and the layer
+     attributes table to select polygons which do not correspond to shadow areas
+     and copy them in another layer.
 
      Use the calculator on attributes to create a new column which will store
      polygon's compacity:
@@ -202,7 +202,7 @@
 
 *** Segmentation
 
-    Segmentation step can be perform with the following command:
+    The segmentation step can be performed with the following command:
 
     #+BEGIN_EXAMPLE
     $ otbcli_LSMSSegmentation -in meanshift.tif 
@@ -221,17 +221,17 @@
                           -out init_seg_cm.tif uint8
     #+END_EXAMPLE
     
-    This application perform color mapping and the algorithm analyze nearest
+    This application performs color mapping and the algorithm analyzes nearest
     segments to maximize the contrast between polygons.
 
     The segmented image can then be analyzed. We can see a lot of small regions
-    which does not correspond to real objects. There are 2 ways to filtered
+    which do not correspond to real objects. There are 2 ways to filter
     those regions by using the /minsize/ parameter of the *LSMSSegmentation*
     application or by fusing them (next step).
 
 *** Dealing with small regions
 
-    Small regions can be merge with the command:
+    Small regions can be merged with the command:
 
     #+BEGIN_EXAMPLE
     $ otbcli_LSMSSmallRegionsMerging -in meanshift.tif 
@@ -249,7 +249,7 @@
     #+END_EXAMPLE
     
     By comparing both colorized segmentations we can see that regions smaller
-    than /minsize/ where fused with adjacent regions close in term of radiometry.
+    than /minsize/ where fused with adjacent regions close in terms of radiometry.
 
 *** Vectorization
     
@@ -280,25 +280,25 @@
     #+END_EXAMPLE
     
     In QGIS, we can see that for each polygon we've access to the mean and
-    variance in each spectral bands (including NDVI). 
+    variance in each spectral band (including NDVI). 
 
 ***  Polygons filtering in QGIS
     
-    To select all segments not in shadow area we are using the expression
-    features using the following expression:
+    To select all segments not belonging to shadow areas we are using the expression
+    features as follows:
 
     #+BEGIN_EXAMPLE
     meanB0 > 140 or meanB1 > 140 or meanB2 > 140 or meanB3 > 140
     #+END_EXAMPLE
 
     Then, we use the field calculator to create a new virtual field (real type)
-    call /compac/ with the following formula:
+    called /compac/ with the following formula:
 
     #+BEGIN_EXAMPLE
     sqrt(area($geometry)/perimeter($geometry)
     #+END_EXAMPLE
 
-    Finally, to select small and compact  objects with high NDVI with can use
+    Finally, to select small and compact objects with high NDVI we can use
     the following expression:
 
     #+BEGIN_EXAMPLE
