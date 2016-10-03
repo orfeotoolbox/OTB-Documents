@@ -14,7 +14,7 @@
     images using steganography techniques, using OTB applications.
 
 *** Quick introduction to OTB applications
-    - Orfeo TooLBox is a *library* offering remote sensing features
+    - Orfeo ToolBox is a *library* offering remote sensing features
     - Often several features of OTB must be combined within a processing chain
     - Need for higher level interfaces (parameters, input and output data, logs ...)
     - Each application corresponds to a high level function (segmentation, orthorectification, raster calculator ...)
@@ -39,7 +39,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
     #+end_center
 *** Parameters
     - Display help from orthorectification app (good example)
-    - /parameters groups/
+    - /parameter groups/
     - /mandatory parameters/
     - Dynamic parameters dependency
     - Default value
@@ -100,7 +100,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 **** Message 1    
 
      In ~message1.tif~ image, a sentence has been encoded in a high
-     signal area, using a pixel value which is outside of possible
+     signal area, using a pixel value which is outside the possible
      range for Pléiades (reminder: Pléiades images are encoded with
      unsigned 12 bits integers).
 
@@ -109,7 +109,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 2
 
-     In ~message2.tif~ image, a sentence has been encoded within an
+     In ~message2.tif~ image, a sentence has been encoded within a
      homogeneous, low signal area. Modified pixels can not be seen
      with human eyes, but could be revealed by computing the image
      gradient, or some edge detection.
@@ -119,7 +119,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 **** Message 3
 
      In ~message3.tif~ image, a sentence has been encoded by slightly
-     modifying the pixels values in the red and near infra-red
+     modifying the pixel values in the red and near infra-red
      bands. This modification can not be seen with human eyes, but
      could be revealed by computing an NDVI radiometric index.
 
@@ -132,13 +132,13 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
      $NDVI = \frac{NIR-RED}{NIR+RED}$
      \end{center}
 
-     Reminder: For Pléiades images red band is first band, and NIR
+     Reminder: For Pléiades images the red band is the first one, and the NIR
      band is the last one.
 
 **** Message 4
 
      In ~message4.tif~, a message has been hidden in the 2 least
-     significant bytes of the image. This modification can not be
+     significant bits of the image. This modification can not be
      detected by human eyes, but could be revealed by isolating the
      values of those 2 bits.
 
@@ -181,7 +181,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
     Can you imagine another process to encode hidden messages in
     images? An image (~image.tif~) and a message (~message.tif~) are
-    provided in the ~Data/stegano/diy~ folder to try.
+    provided in the ~Data/stegano/diy~ folder for you to try.
 
 ** The Orfeo ToolBox Application mechanism                        :solutions:
 *** Message 1
@@ -249,7 +249,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** Message 5
 
     To reveal this 5th message, we are going to do a principal
-    components analysis using the *DimensionalityReduction*
+    component analysis using the *DimensionalityReduction*
     application, and extract the last band, where the image noise is
     condensed, using the *ExtractROI*
     application.
