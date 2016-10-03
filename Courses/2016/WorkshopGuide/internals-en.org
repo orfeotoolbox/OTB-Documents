@@ -7,12 +7,12 @@
 
 **** Data
 
-     The data are in ~Data/internals/~.
+     The data are in the ~Data/internals/~ folder.
 
 *** Outline
     The outline for this workshop is as follows:
     1. Encoding images
-    2. geom files
+    2. ~geom~ files
     3. Extended filenames
     4. Streaming
     5. Multi-threading
@@ -78,12 +78,12 @@
 *** Description                                                        :desc:
 **** Summary
 
-     This exercise introduces Orfeo ToolBox pipeline internals.
+     This exercise introduces Orfeo the ToolBox pipeline internals.
      - Extended filenames,
      - Streaming,
      - Multi-threading,
      - Environment variables,
-     - geom files.
+     - ~geom~ files.
 
 **** Prerequisites
 
@@ -99,7 +99,7 @@
 
 *** Steps										    :steps:
 
-     The data are in ~Data/internals/~.
+     The data are in ~Data/internals/~ folder.
 
 **** Encoding images
 
@@ -131,15 +131,15 @@
      can you conclude?
 
      Use the *Convert* application to convert ~image1.tif~ to a 16 bits integer
-     encoding. Compare both images file sizes. Use the *CompareImages*
+     encoding. Compare both image file sizes. Use the *CompareImages*
      application to compare the content of both images. What can you conclude?
-     Can you reduce the file size further ? (See the extended filenames
+     Can you reduce the file size further? (See the extended filenames
      paragraph).
 
      Use the *RadiometricIndices* application to compute an NDVI (Normalized
      Difference Vegetation Index) from the 16 bits image.
      Keep the output encoding to 16 bits. Visualize the result. What do you
-     notice? Which encoding should be used to properly store this image ?
+     notice? Which encoding should be used to properly store this image?
 
 **** .geom files
 
@@ -181,14 +181,14 @@
 
       Among available write options from extended filenames, the /gdal:co/
       option allows to pass file creation options directly to GDAL.
-      With this option, and with Tif file format options available in GDAL,
+      With this option, and with the Tif file format options available in GDAL,
       re-encode ~image1.tif~ to signed 12 bits with LZW compression.
 
       Compare file sizes and image contents with the *CompareImages*
       application.
 
-      Another useful extended filename option is the option box. Use the option
-      box to write only to a 100x100 pixels square in the center of the image.
+      Another useful extended filename option is /box/. Use the /box/ option
+      to write only to a 100x100 pixels square in the center of the image.
 
 **** Streaming management
 
@@ -198,7 +198,7 @@
      environment variable.
      However, it is possible to modify this behavior with writer extended filenames.
 
-     1. Use the *LocalStatisticsExtraction* application to filter the first band
+     1. Use the *LocalStatisticsExtraction* application to process the first band
         of ~image1.tif~ with a radius of 9.
 
      2. Execute the above operation a second time, but this time completely
@@ -209,12 +209,12 @@
         of 1000 strips. Use the /streaming:type/, /streaming:sizemode/ and
         /streaming:sizevalue/. What do you notice?
 
-     To observe these effects, it is recommended to open a system monitoring
-     tool and look at CPU utilization and I/O throughput.
+     To observe these effects, it is recommended to open a system monitor
+     tool and look at CPU load and I/O throughput.
 
 **** Multi-threading
 
-     By default, every filter in Orfeo ToolBox use all available processing
+     By default, every filter in Orfeo ToolBox uses all available processing
      cores.
      This behavior can be altered with the
      =ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS= environment variable.
@@ -310,26 +310,26 @@
     #+END_EXAMPLE
 
     Looking at the generated image in *monteverdi*, we see that the image is 0
-    everywhere. The output encoding is therefore not appropriate. Floating point
+    everywhere. The output encoding is therefore not appropriate. A floating point
     type should be used (the default for example).
 
 *** .geom files
 
-    The geom file contains information necessary for geometric and radiometric
+    The ~geom~ file contains information necessary for geometric and radiometric
     image corrections.
 
 *** Extended filenames
 
 **** Read option
 
-     The /skipgeom/ read parameters allows to ignore the associated geom file.
+     The /skipgeom/ read parameter allows to ignore the associated ~geom~ file.
      The ground pixel size is false and the acquisition date and sensor
      information has disappeared.
 
-     The /geom/ extended filename parameter allows to attach a /geom/ file to an
+     The ~geom~ extended filename parameter allows to attach a ~geom~ file to an
      existing image. Among other things, it is useful for radiometric and
      geometric processing. By default, Orfeo ToolBox (via OSSIM) looks for a
-     /geom/ file with the same name as the image.
+     ~geom~ file with the same name as the image.
 
 **** Write options
 
@@ -368,7 +368,7 @@
                                       -radius 9
     #+END_EXAMPLE
 
-    We notice that computation is done in several steps, interleaved with disk
+    We notice that the computation is done in several steps, interleaved with disk
     I/O. By default, Orfeo ToolBox specifies the optimal tiling.
 
     To completely disable streaming, use the following extended filename
@@ -388,8 +388,8 @@
       -radius 9
     #+END_EXAMPLE
 
-    This time, we see multiple compute and disk write steps. Computation time
-        can be almost twice as long , because over tiling is suboptimal.
+    This time, we see multiple computation and disk writing steps. Computation time
+        can be almost twice as long, because over tiling is suboptimal.
 
 *** Multithreading
 
