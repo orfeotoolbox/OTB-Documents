@@ -213,7 +213,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** Message 3
 
     To decode the third message, one can compute a vegetation index
-    such as NDVI using the *RadiometricIndices* application:
+    such as the NDVI using the *RadiometricIndices* application:
 
     #+BEGIN_EXAMPLE
     $ otbcli_RadiometricIndices -in image3.tif      \
@@ -242,7 +242,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
                       -exp "im1b1-4*rint(im1b1/4)"
     #+END_EXAMPLE
     
-    The $4*rint(im1b1/4)$ expression contains only the 2 least
+    The $4*rint(im1b1/4)$ expression does not contain the 2 least
     significant bits, and the difference with original image thus
     reveals the message. 
 
