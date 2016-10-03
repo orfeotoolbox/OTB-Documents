@@ -3,25 +3,29 @@
 **** Goals
      - Understand the applications needed for the supervised classification
        procedure
-     - Use the different learning algorithms
      - Measure the quality of classification results
      - Know the available post processing steps
 **** Data
      The data are available in the ~Data/classification~ directory, with the
      following sub directories:
-     - ~Extract16bits~: the Landsat 8 time series
-     - ~training~: the training data in the /shp/ format
-     - ~testing~ the testing data in the /shp/ format
+     - ~Extract16bits~: the Landsat-8 time series,
+     - ~training~: the training data in the /shp/ format,
+     - ~testing~ the testing data in the /shp/ format.
 
 *** Planning
     Planning for this workshop:
-    1. Introduction to the Landsat 8 data set
-    2. Single date classification
-    3. Multi date classification
-    4. Classification with a NDVI profile
-    5. Classification post processing
+    1. Introduction to the Landsat-8 data set
+    2. Data preparation
+    3. Available sample statistics computation
+    4. Sample position selection
+    5. Feature extraction for the samples
+    6. Model training
+    7. Classification
+    8. Post-processing
+    9. Complete performance evaluation
+    10. Color map production
 
-*** Introduction to the Landsat 8 data set
+*** Introduction to the Landsat-8 data set
 
     *Spatial resolution:* 30 meters
 
@@ -61,42 +65,38 @@
 
 *** Introdution to the training and testing data
 
-|------+-----------------------------+------------|
-| Code | Name                        | #polygons  |
-|------+-----------------------------+------------|
-|   11 | Summer                      | 7898       |
-|   12 | Winter                      | 8171       |
-|   31 | Mixed forest                | 867        |
-|   32 | Evergreen forest            | 125        |
-|   34 | Grass                       | 45         |
-|   36 | Woody plant                 | 386        |
-|   41 | Building                    | 4719       |
-|   51 | Water                       | 1280       |
-|  211 | Grasslands                  | 5647       |
-|  221 | Orchard                     | 204        |
-|  222 | Vine                        | 559        |
-|------+-----------------------------+------------|
+|------+-----------------------+-----------|
+| Code | Name                  | #polygons |
+|------+-----------------------+-----------|
+|   11 | Summer crops          |      7898 |
+|   12 | Winter crops          |      8171 |
+|   31 | Deciduous forests     |       867 |
+|   32 | Evergreen forests     |       125 |
+|   34 | Cultivated grasslands |        45 |
+|   36 | Woody moorlands       |       386 |
+|   41 | Built-up              |      4719 |
+|   51 | Water                 |      1280 |
+|  211 | Natural grasslands    |      5647 |
+|  221 | Orchards              |       204 |
+|  222 | Vineyards             |       559 |
+|------+-----------------------+-----------|
 
 *** Supervised classification
     #+ATTR_LATEX: :float t :width \textwidth
     [[file:Images/classification.png]]
 
-*** SVM algorithm
-    #+ATTR_LATEX: :float t :width 0.5\textwidth
-    [[file:Images/svm.png]]
-
 *** RF algorithm
-    A set of random decision trees.
+    A committee of random decision trees.
 
 **** Learning
-     1. Separate the learning set in k random sets $S_k$
-     2. For each $S_k$, choose randomly $F_k$ primitives
+     1. Split the learning set in k random sets $S_k$
+     2. For each $S_k$, randomly choose $F_k$ features
      3. Recursively build a decision tree, for each node:
-        1. Choose $f \in F_k$ and the threshold $t_k$ to separate the remaining set in two subsets:
+        1. Choose $f \in F_k$ and the threshold $t_k$ which partitions the remaining set in two subsets as pure as possible
         2. Stop when the remaining set is too small
 
 **** Decision
-     Majority voting between all random trees
+     Majority vote between all random trees
 
 
 *** Confusion matrix
@@ -121,18 +121,18 @@
 **** Summary
 
      This exercise will introduce pixel based supervised classification
-     applications in Orfeo ToolBox. We will use the Landsat 8 time series and a
-     data set for the training.
+     applications in Orfeo ToolBox. We will use the Landsat-8 time series and a
+     data set for the supervised training.
 
 **** Prerequisites
 
-     - Installed software: Orfeo ToolBox
+     - Installed software: Orfeo ToolBox and Monteverdi
      - Workshop dataset downloaded
-     - Knowledge of the OTB applications mechanism
+     - Knowledge of the OTB applications mechanism (see corresponding exercises)
      - Notions of supervised classification
 
 **** Goals
-     - Understand the applications needed for the supervised classification
+     - Know the applications needed for the supervised classification
        procedure
      - Use the different learning algorithms
      - Measure the quality of classification results
@@ -142,13 +142,13 @@
 
      The data are available in the ~Data/classification~ directory, with the
      following sub directories:
-     - ~Extract16bits~: the Landsat 8 time series
+     - ~Extract16bits~: the Landsat-8 time series
      - ~training~: the training data in the /shp/ format
      - ~testing~ the testing data in the /shp/ format
 
 **** The LANDSAT 8 dataset
 
-    In the data folder, ~Data/classification/Extract16bits~ contains nine Landat
+    The data folder, ~Data/classification/Extract16bits~ contains nine Landat
      8 images at the following dates:
 
      |------------|
@@ -163,7 +163,7 @@
      | 2014-10-26 |
      |------------|
 
-    These images are multispectral with seven bands from the OLI sensor:
+    These are multispectral images with seven bands from the OLI sensor:
 
     |---+---------------------|
     | 0 | Coastal aerosol     |
@@ -181,489 +181,681 @@
     Open an image in monteverdi, and setup the display bands and ranges to make
      a true color image (red, green, blue).
 
-    Open all nine images and observe changes between each date.
+    Open all nine images and observe changes between each dates.
 
-    Vector layers ~training/training.shp~ and ~testing/testing.shp~ contain polygons
+    The vector layers ~training/training.shp~ and ~testing/testing.shp~ contain polygons
      which define 11 classes over the scene:
 
-|------+-----------------------------+------------|
-| Code | Name                        | #polygons  |
-|------+-----------------------------+------------|
-|   11 | Summer                      | 7898       |
-|   12 | Winter                      | 8171       |
-|   31 | Mixed forest                | 867        |
-|   32 | Evergreen forest            | 125        |
-|   34 | Grass                       | 45         |
-|   36 | Woody plant                 | 386        |
-|   41 | Building                    | 4719       |
-|   51 | Water                       | 1280       |
-|  211 | Grasslands                  | 5647       |
-|  221 | Orchard                     | 204        |
-|  222 | Vine                        | 559        |
-|------+-----------------------------+------------|
+|------+-----------------------+-----------|
+| Code | Name                  | #polygons |
+|------+-----------------------+-----------|
+|   11 | Summer crops          |      7898 |
+|   12 | Winter crops          |      8171 |
+|   31 | Deciduous forests     |       867 |
+|   32 | Evergreen forests     |       125 |
+|   34 | Cultivated grasslands |        45 |
+|   36 | Woody moorlands       |       386 |
+|   41 | Built-up              |      4719 |
+|   51 | Water                 |      1280 |
+|  211 | Natural grasslands    |      5647 |
+|  221 | Orchards              |       204 |
+|  222 | Vineyards             |       559 |
+|------+-----------------------+-----------|
 
 
     Open a polygon file in QGIS. The attribute table is accessible from
      right-click on the layer, then /Open the attribute table/. Each label is
      visible and the list can be filtered via SQL expressions.
 
-    The polygons are spread over two sets: learning (or training) and validation
+*Note:* The ~polygones.qml~ style file can be loaded into QGIS in order to give each polygon a color corresponding to its class.
+
+    The polygons are split into two sets: learning (or training) and validation
      (or testing).
 
-**** Single date classification
 
-    We'll start by doing all the steps necessary to classify a single date:
+**** Data preparation
 
-       1. Compute the image statistics
-       2. Learn the model
-       3. Use the model (classify)
-       4. Display the results
-       5. Validation
+     For this workshop, we are goint to use 3 kinds of images:
+     1. One image containing the original bands for every date (63 bands)
+     2. One image containing the NDVI values for each date (9 bands)
+     3. One image containing the original bands and the NDVI values (72 bands)
 
-    In the rest of the exercise, you will perform other classifications on other
-    images. It is therefore recommended to work in a new subdirectory for
-    each part, for example /classif1/ for now.
+     The first step consists in generating these images.
 
-    Create a directory named /classif1/.
+     Use the *ConcatenateImages* application in order to generate the image containing all the bands.
 
-***** Image statistics
+     Use the *RadiometricIndices* application to compute the NDVI for each date. Then, use the 
+     *ConcatenateImages* application to produce the image containing all the NDVI values (time series).
 
-    Random variables must be comparable between each image. The first step is
-      therefore the computation of statistics to normalise images to a mean of
-      zero and a standard deviation of 1.
+     Finally, use again the *ConcatenateImages* application to produce the image containing all the original spectral images and the NDVI time series.
 
-    Choose an image to classify, then in the classif1 directory use the
-      *ComputeImageStatistics* application (Compute Images second order
-        statistics) to produce the statistics file.
-
-***** Learning the model
-
-    The *TrainImageClassifier* application (Train a classifier from multiple
-      images) will train a model for various classification methods. Have a look
-      at the documentation, and create a model with the /libsvm/ algorithm. The
-      parameters to setup are:
-
-    - io.il :: The input image
-    - io.vd :: The shapefile used for learning the model (training)
-    - io.imstat :: The statistics xml file created previously
-    - classifier :: The classifier method, here use /libsvm/
-    - io.out :: The output file name for the model, for example /model.svm/
-
-      Other parameters are also important:
-    - sample.vfn CODE :: indicates that the label column in the vector file is
-      called CODE in the training dataset.
-    - sample.vtr 0 :: Ration of the learning set to the validation set. Here 0
-      because we are using are own split.
-    - sample.mt :: Maximum number of samples per class, the default value is one
-         thousand. Reducing it will accelerate significantly the learning time, but can decrease the quality of the obtained model.
-
-***** Using the model
-
-   Once the classification model is learned, it can be used to classify all the
-      pixels in the image.
-
-      Use the *ImageClassifier* application (Image classification), and specify
-      the model created in the previous step.
-
-***** Display
-
-   The output of the previous step is a .tif image, which associated to each
-   pixel a class. To view this image, the *ColorMapping* application allows to
-   map a RGB color and generate a new "color mapped" visualisation image.
-
-
-   Use the ColorMapping application with the proposed color map:
-      ~color_map.txt~.
-
-***** Validation
-
-    The labels used in the learning step represent only 30% of the polygons.
-      The remaining 70% are in the ~testing/testing.shp~ and are used to
-      measure the classification results by computing the confusion matrix.
-
-    Use the *ComputeConfusionMatrix* application (Confusion Matrix Computation)
-      with the testing data set to produce the confusion matrix of the learned
-      model.
-
-    The parameter /ref.vector.field CODE/ is necessary. It indicates the name of
-      the field containing the label number.
-
-    Look at the confusion matrix. Identify the classes that are well
-      differentiated.
-
-    Which class has the most classification errors. Why?
-
-    You can use the confusion matrix template in
-      ~template_confusion_matrix_en.csv~ to easily identify the labels.
-
-***** Optional: Other learning algorithms
-
-    Perform the classification again on another date, using the Random Forests
-      algorithm instead of SVM and compare the results. Compare also the
-      processing time.
-
-**** Multi-date classification
-
-     The quality of this first classification is not very good.
-     We will try to improve the discrimination of vegetation classes by using
-     the time series.
-
-     The principle behind multi date classification is to use for each pixel,
-     all the available dates as more spectral bands. With the Landsat 8 data, we
-     will therefore have 63 bands per pixel.
-     The dates have been chosen to be spread over a year, taking into account
-     seasonal variations which has a lot of information to discriminate some
-     classes.
-
-     First of all, create a /classif9/ directory for this part.
-
-     The steps are the same as before, but we will first make a 63 band image
-     by concatenating the nine images together.
-
-     Use the *ConcatenateImages* application (Images concatenation) to do this.
-
-     Then verify that the output image is of size 3671x3671 with 63 bands and 16
-     bits per pixel. Use /gdalinfo/ or the *ReadImageInfo* application.
-
-     Then, perform the same steps as before. *ComputeImageStatistics*,
-     *TrainImageClassifier*, *ImageClassifier*, *ColorMapping*, *ComputeConfusionMatrix*.
-
-     This time, use the Random Forest method which is faster.
-     Also use the following parameters for good classification performance:
-
-   - sample.bm 0 :: To disable limiting the number of samples to the size of the
-     smallest class.
-   - sample.mt 2000 :: The maximum number of samples per class.
-   - classifier.rf.max 25 :: Maximum depth of the decision trees
-   - classifier.rf.min 25 :: Minimum number of samples per node
-
-     Then, compare the results with the single date classification using the
-     confusion matrix and the RGB image.
-
-**** NDVI temporal profile
-
-     An NDVI image can be calculated for each image od the time series, to build
-     an NDVI profile. When added to the concatenated image, this profile will
-     improve the quality of the classifiation.
-
-     Compute and NDVI image for each date in the series, using the
-     RadiometricIndices application. Beware of the output type.
-
-     Open all nine NDVI images in monteverdi and look at the temporal evolution.
-
-     Concatenate the nine images into one to make an NDVI profile. Open the
-     profile in QGIS and visualise it temporally with the button "identidy
-     entities", then "graphical view".
-
-**** Classification of the NDVI profile
-
-     Create a directory /classifNDVI/ for this part.
-
-     Following the same procedure as before, classify the time series augmented
-     with the NDVI profil.
-
-     Are the results improved compared to the multi date classification without
-     the NDVI profile?
-
-**** Post processing the classification result
-
-     The /ClassificationMapRegularization/ application filters a classified
-     image using a local majority vote. The parameters to use are:
-
-        - ip.radius 1 :: Radius of the voting zone in pixels
-        - ip.suvbool 0 :: Behavior in case of a tie. Use 0 to keep the existing
-          value.
-
-     Filter the previous classification result (nine dates and NDVI profile)
-          then compare the results with the RGB images (in monteverdi) and
-          confusion matrices (with a spreadsheet).
-
-** Supervised classification of a satellite image time series     :solutions:
-
-   *Note:* In this solution, the environment variable ~${LS8DATA}~
-   is the path to the /classification/ directory with the data for this
-     exercise.
-
-*** Single date classification
-
-    First of all, compute the image statistics:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics \
-    -il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-                                     -out images_statistics.xml
-    #+END_EXAMPLE
-
-    Then, train the SVM model:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier \
-    -io.il ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-      -io.vd ${LS8DATA}/training/training.shp \
-      -sample.vfn CODE \
-      -sample.vtr 0 \
-      -classifier libsvm \
-      -io.imstat images_statistics.xml \
-      -io.out model.svm
-    #+END_EXAMPLE
-
-    Once the model is learned, use it to classify the entire image:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier \
-    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-    -imstat images_statistics.xml \
-    -model  model.svm \
-    -out    labeled_image.tif
-    #+END_EXAMPLE
-
-    Measure the classification quality with the validation set:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-      -in labeled_image.tif \
-      -ref vector \
-      -ref.vector.in ${LS8DATA}/testing/testing.shp \
-      -ref.vector.field CODE \
-      -out confusion_matrix.csv
-    #+END_EXAMPLE
-
-    For a better visualisation of the results, make a color map:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in labeled_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out RGB_color_image.tif
-   #+END_EXAMPLE
-
-*** Multi-date classification
-
-    First of all, concatenate the nine images into a single 63 band image:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-    -out image_concat.tif int16
-    #+END_EXAMPLE
-
-    Then, repeat the same classification process:
-
-    Compute statistics:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics -il \
-    image_concat.tif \
-    -out images_statistics.xml
-    #+END_EXAMPLE
-
-
-    Train the model (this time, use the random forest algorithm with more
-      samples):
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier -io.il \
-    image_concat.tif \
-    -io.vd \
-    ${LS8DATA}/training/training.shp \
-    -sample.vfn CODE \
-    -sample.vtr 0 \
-    -classifier rf \
-    -sample.bm 0 \
-    -sample.mt 2000 \
-    -classifier.rf.max 25 \
-    -classifier.rf.min 25 \
-    -io.imstat images_statistics.xml \
-    -io.out model.rf
-    #+END_EXAMPLE
-
-    Classify all pixels in the image:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier -in \
-    image_concat.tif \
-    -imstat images_statistics.xml \
-    -model  model.rf \
-    -out    labeled_image.tif
-    #+END_EXAMPLE
-
-    And validate by looking at the confusion matrix:
+     *Notes :* Using the application command line interface, the NDVI computation for each date can be scripted in bash:
 
      #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-    -in labeled_image.tif \
-    -ref vector \
-    -ref.vector.in ${LS8DATA}/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix.csv
-    #+END_EXAMPLE
+     $ for f in *.tif; do \
+       otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
+                                 -channels.red 3 -channels.nir 4 \
+                                 -in "$f" -out "${f%.*}_ndvi.tif" \
+                                 -list Vegetation:NDVI; done
+     #+END_EXAMPLE
 
-    Then make a color map:
+**** Available sample statistics computation
+
+     We are now going to use the *PolygonClassStatistics* application
+     to count the available samples for each class and each polygon in
+     the training and validation data.
+
+     This application takes as parameters the image which will be use
+     to get the samples, the vector data contaning the polygons to be
+     analysed (~training.shp~ for the learning, ~testing.shp~ for the
+     validation), and the name of the field which contains the class
+     label in the vector data. The application produces as output an
+     XML file with a summary of all the information needed.
+
+     Inspect the data in QGIS and identify the field which will be
+     used to define the class.
+
+     Open the generated XML files. How many samples are available for
+     the ~Natural grasslands~ class int the training set? And in the
+     validation set?
+
+     How many samples are contained into the polygon whose identifier
+     is 1081 in the training set?
+
+     How many samples are available for all classes in the training
+     set?
+
+     Which class has the fewer samples in the training set?
+
+     *Note :* Even if this application does not access the image contents (pixels), it needs to know the image in order to use its footprint.
+
+**** Sample poisition selection
+
+     In the previous step, we have see that the training polygons have
+     many more samples than needed to train a model. We are therefore
+     going to select a sub-set of those samples for training the
+     model. We will use the *SampleSelection* application.
+
+     Check the application documentation. Which are the different
+     strategies available to perform the sample selection.
+
+     We are going to use the ~smallest~ strategy, which allows to
+     limit the number of samples per class to the number of samples of
+     the class having fewest samples. We will produce a training
+     sample set (using ~training.shp~) and another one for the
+     validation (using ~testing.shp~).
+
+     The application takes as parameter the image, the vector data containing the polygons, the name of the field containing the class label in the vector data and the statistics file produced in the previous step. The application produces a vector data file containing points, each point corresponding to a selected sample.
+
+     How many samples in total have been selected for the training for each class?
+
+     Open the output point file in QGIS. Which are the features
+     associated to each point?
+
+     *Note :* The style file ~samples.qml~ can be loaded in QGIS in order to use a different color for each class.
+
+     *Note :* Even if this application does not access the image
+     contents (pixels), it needs to know the image in order to use its
+     footprint.
+     
+**** Feature extraction for the samples
+
+     Now that we have selected the sample positions, we are going to
+     associate to each of them the features that will be used for the
+     learning and the classification. This step is done using the
+     *SampleExtraction* application, which will give to each point the
+     values of the bands of the selected image.
+
+     Note that if no output vector file is specified, the application
+     works in update mode and the features will be added to the input
+     vector file.
+     
+     The application takes as parameter the image to be used and the
+     vector file to be updated. It also allows to set the name of the
+     fields which will be produced. For instance, if one uses the
+     ~band_~ prefix, then the fields will be called ~band_0~,
+     ~band_1~, etc ...
+
+     Use the prefix ~band_~ for the original image bands and the
+     prefix ~ndvi_~ for the NDVI time series.
+
+     Use the application to add the features corresponding to the
+     image bands and to the NDVI time series, fot the traning and the
+     validation sets.
+
+**** Model training
+
+     Now that the samples are ready, we can proceed to the model
+     training. We are going to use the *TrainVectorClassifier*
+     application, which is going to read the sample files containing
+     the features that we just produced, and use them for the training
+     and the validation of the model.
+
+     For all the experiments of this section, we will use a *Random
+     Forest* (rf) classifier with a maximum depth for the trees of 20.
+
+     Again, the application needs as parameter the name of the field
+     which defines the class. The application also takes as parameter
+     the name of the points file with the samples, as well as an
+     output file name for storing the learned model.
+
+     Do a first training using only the first date (~band_0~ to ~band_6~), and without a validation file.
+
+     What perfomances (Kappa coefficient) do you obtain? Is this
+     result realistic? How has it been computed?
+
+     Perform the same training, but this time used the validation file
+     produced in the previous step. What do you observe?
+
+     Using the training application, it is straighforward to test
+     different feature combinations and compare their impact on the
+     final performances:
+     - Which date yields the best performance?
+     - Has the coastal blue band an interest for the classification?
+     - Which are the performances using all the spectral bands?
+     - What are the performances using the NDVI time series alone?
+     - What are the performances using all the spectral bands and the NDVI time series?
+     - In the latter case, analyse the performances for each class.
+
+     *Notes :* Using the application command line interface, on can
+     define ~bash~ variables for the different sets of features:
+
+     #+BEGIN_EXAMPLE
+         date1=`for i in $(seq 0 6); do printf "band_$i "; done`
+
+         date2=`for i in $(seq 7 13); do printf "band_$i "; done`
+
+         date3=`for i in $(seq 14 20); do printf "band_$i "; done`
+
+         date4=`for i in $(seq 21 27); do printf "band_$i "; done`
+
+         date5=`for i in $(seq 28 34); do printf "band_$i "; done`
+
+         date6=`for i in $(seq 35 41); do printf "band_$i "; done`
+
+         date7=`for i in $(seq 42 48); do printf "band_$i "; done`
+
+         date8=`for i in $(seq 49 55); do printf "band_$i "; done`
+
+         date9=`for i in $(seq 56 62); do printf "band_$i "; done`
+
+         date1_nocb=`for i in $(seq 1 6); do printf "band_$i "; done`
+
+         bands=`for i in $(seq 0 62); do printf "band_$i "; done`
+
+         bands_nocb=`for i in $(seq 0 62); do if [ $(($i % 7)) -ne 0 ]; \
+                     then printf "band_$i "; fi done`
+
+         ndvis=`for i in $(seq 0 8); do printf "ndvi_$i "; done`
+     #+END_EXAMPLE
+
+     Then one can use these variable names as parameters for the
+     application like this: ~-feat ${bands} ${ndvis}~.
+
+**** Classification
+     
+     Use the *ImageClassifier* application to produce the
+     classification map for the model using all the features (original
+     bands and NDVI time series). Warning: the model has to be trained
+     with the same feature order as the one used in the
+     classification.
+
+**** Post-processing
+
+  We are going to use the *ClassificationMapRegularization* application. It filters a classified image using a local majority vote.
+
+  The parameters are:
+
+  - ip.radius 1 :: Radius of the window for the vote
+  - ip.suvbool 0 :: What to do in case of a tie. 0 keeps the original value.
+
+  Filter the result of the previous classification (nine dates and
+  NDVI time series).
+
+**** Complete performance evaluation
+
+  We are now going to use the *ComputeConfusionMatrix* application to
+  compute the complete performance of our classification chain. With
+  respect to the performance evaluation dont during the training, this
+  application allows to:
+  - Take into account all the pixels available in the reference data,
+  - Evaluate the quality of a classification map which has been
+    post-processed (with a regularisation, for instance).
+
+  The parameter ~ref.vector.field CODE~ is needed for the application to use the field containing the class label.
+
+  Compute the performances of the chain with and without
+  regularisation.
+   
+   - What do you notice with respect to the evaluation done during the
+     training step? How can this be explained?
+   - Which is the impact of the regularisation in the performances?
+  
+**** Color map production
+The output of the previous step is a tiff image where each pixel has the value of the class label. To display this image, the *ColorMapping* application allows to give an RGB color to each label and produce color image.  
+
+Use the *custom* mode of the *ColorMapping* application with the color
+table provided in the ~color_map.txt~ file to produce a color map.
+
+*Note :* QGIS may not be able to correctly display the image because
+of a ~no data~ value present in the file. This can be changed by using
+the layer properties in QGIS by checking the ~no data~ value.
+
+**** Further work
+
+     1) Is it possible to get better performances with other
+        classification algorithms?
+     
+     2) Using QGIS you can merge the classes ~natural grassland~ and
+        ~woody moorlands~ in the reference data. What are the
+        performances obtained with this new data set?
+
+** Supervised classification of a satellite image time series    :solutions:
+
+*Note :* In this solution, the environment variable ~${LS8DATA}~ contains the path the the /classification/ folder containing the data for the exercises.
+
+*** Data preparation
+
+    First of all, we concatenate all the bands for all the dates:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in labeled_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out RGB_color_image.tif
+    $ otbcli_ConcatenateImages -il ${LS8DATA}/LANDSAT_*.tif -out alldates.tif uint16
     #+END_EXAMPLE
 
-*** Computing the NDVI profile
+    Then, we compute the NDVI for each date:
+    
+    #+BEGIN_EXAMPLE
+    $ cd ${LS8DATA}
+    $ for f in LANDSAT_*.tif; do \
+        otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
+                                  -channels.red 3 -channels.nir 4    \
+                                  -in "$f" -out "NDVI_$f" -list Vegetation:NDVI; done
+    #+END_EXAMPLE
 
-    To make the NDVI profile, we will use the *RadiometricIndices* applications
-    for each date:
+    We can then create the NDVI time series:
 
     #+BEGIN_EXAMPLE
-    $ for date in "20140309" "20140401" "20140417" "20140528" \
-    "20140620" "20140731" "20140901" "20141003" "20141026"; do \
-    otbcli_RadiometricIndices \
-    -in ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_${date}.tif \
-    -out ${date}-ndvi.tif \
-    -list Vegetation:NDVI \
-    -channels.red 3 \
-    -channels.nir 4 ; \
-    done
+    $ otbcli_ConcatenateImages -il ${LS8DATA}/NDVI_*.tif -out ndvis.tif
     #+END_EXAMPLE
 
-    Then, concatenate all NDVI image to make a profile:
+    And the image containing all the bands and the NDVI time series:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il \
-    20140309-ndvi.tif \
-    20140401-ndvi.tif \
-    20140417-ndvi.tif \
-    20140528-ndvi.tif \
-    20140620-ndvi.tif \
-    20140731-ndvi.tif \
-    20140901-ndvi.tif \
-    20141003-ndvi.tif \
-    20141026-ndvi.tif \
-    -out ndvi-profile.tif
+    $ otbcli_ConcatenateImages -il alldates.tif ndvis.tif -out all.tif
     #+END_EXAMPLE
+    
+*** Available sample statistics computation
 
-    This allows us to open it in QGIS for analysis.
-
-*** Classification of the NDVI profile
-
-    To classify, also add all the initial spectral bands of all nine dates:
+    Computing the avalilable sample statistics can be done as follows:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140309.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140401.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140417.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140528.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140620.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140731.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20140901.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141003.tif \
-    ${LS8DATA}/Extract16bits/LANDSAT_MultiTempIm_clip_GapF_20141026.tif \
-    20140309-ndvi.tif \
-    20140401-ndvi.tif \
-    20140417-ndvi.tif \
-    20140528-ndvi.tif \
-    20140620-ndvi.tif \
-    20140731-ndvi.tif \
-    20140901-ndvi.tif \
-    20141003-ndvi.tif \
-    20141026-ndvi.tif \
-    -out image_concat.tif
+    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
+                                    -field CODE -vec training/training.shp \
+                                    -out training_stats.xml
+
+    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
+                                    -field CODE -vec testing/testing.shp \
+                                     -out testing_stats.xml
     #+END_EXAMPLE
 
-    Repeat the usual classification steps:
-    Compute statistics:
+    In the ~training_stats.xml~ and ~validation_stats.xml~ files, one can find the following information:
+
+    In ~training_stats.xml~:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeImagesStatistics -il \
-    image_concat.tif \
-    -out images_statistics.xml
+    <Statistic name="samplesPerClass">
+        <StatisticMap key="11" value="56774" />
+        <StatisticMap key="12" value="59347" />
+        <StatisticMap key="211" value="25317" />
+        <StatisticMap key="221" value="2087" />
+        <StatisticMap key="222" value="2080" />
+        <StatisticMap key="31" value="8149" />
+        <StatisticMap key="32" value="1029" />
+        <StatisticMap key="34" value="3770" />
+        <StatisticMap key="36" value="941" />
+        <StatisticMap key="41" value="2630" />
+        <StatisticMap key="51" value="11221" />
+    </Statistic>
     #+END_EXAMPLE
 
-    Train the model:
+    The class /natural grasslands/ (label 211) has 25 317 samples. One can also notice that the training sample has 173 345 samples, and that the /woody moorlands/ class (label 36) is the one with fewer samples with only 941 samples.
+
+    The polygon with id 1081 in the training set has 342 samples:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_TrainImagesClassifier -io.il \
-    image_concat.tif \
-    -io.vd \
-    ${LS8DATA}/training/training.shp \
-    -sample.vfn CODE \
-    -sample.vtr 0 \
-    -classifier rf \
-    -sample.bm 0 \
-    -sample.mt 2000 \
-    -classifier.rf.max 25 \
-    -classifier.rf.min 25 \
-    -io.imstat images_statistics.xml \
-    -io.out model.rf
+    <StatisticMap key="1081" value="342" />
     #+END_EXAMPLE
 
-    Use the model to classify the entire image:
+    In ~testing_stats.xml~:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier -in \
-    image_concat.tif \
-    -imstat images_statistics.xml \
-    -model  model.rf \
-    -out    labeled_image.tif
+    <Statistic name="samplesPerClass">
+        <StatisticMap key="11" value="134590" />
+        <StatisticMap key="12" value="127548" />
+        <StatisticMap key="211" value="59052" />
+        <StatisticMap key="221" value="4820" />
+        <StatisticMap key="222" value="6393" />
+        <StatisticMap key="31" value="18620" />
+        <StatisticMap key="32" value="2121" />
+        <StatisticMap key="34" value="9351" />
+        <StatisticMap key="36" value="2812" />
+        <StatisticMap key="41" value="6110" />
+        <StatisticMap key="51" value="28858" />
+    </Statistic>
     #+END_EXAMPLE
 
-    Validation:
+    The /natural grasslands/ class (label 211) has 59 052 samples.
+
+*** Sample position selection
+
+    The application documentaion shows that the different strategies for the sampling are:
+    - byclass :: the number of sample for each class can be set using a file
+    - constant :: for choosing a constant number of samples for all classes
+    - smallest :: select for all classes the number of samples of the
+         class which has the smallest amount
+    - all :: take all samples.
+
+ 
+    To perform the sample selection using the /smallest/ strategy, on
+    can do:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-    -in labeled_image.tif \
-    -ref vector \
-    -ref.vector.in ${LS8DATA}/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix.csv
+    $ otbcli_SampleSelection -in alldates.tif -field CODE \
+                             -vec training/training.shp   \
+                             -out training_samples.sqlite \
+                             -instats training_stats.xml -strategy smallest
     #+END_EXAMPLE
 
-    Visualisation:
+  Here is the result of the sample estraction (data extracted from the
+  logs):
+    
+  |-----------+-----------------+--------------+-----------|
+  | className | requiredSamples | totalSamples |      rate |
+  |-----------+-----------------+--------------+-----------|
+  |        11 |             941 |        56774 | 0.0165745 |
+  |        12 |             941 |        59347 | 0.0158559 |
+  |       211 |             941 |        25317 | 0.0371687 |
+  |       221 |             941 |         2087 |  0.450886 |
+  |       222 |             941 |         2080 |  0.452404 |
+  |        31 |             941 |         8149 |  0.115474 |
+  |        32 |             941 |         1029 |   0.91448 |
+  |        34 |             941 |         3770 |  0.249602 |
+  |        36 |             941 |          941 |         1 |
+  |        41 |             941 |         2630 |  0.357795 |
+  |        51 |             941 |        11221 | 0.0838606 |
+  |-----------+-----------------+--------------+-----------|
+
+  In total, 10 351 samples have been selected. If one loads the layer
+  in QGIS, the selected positions can be displayed.
+  
+  #+ATTR_LATEX: :width 0.9\textwidth
+  [[file:Images/samples_selection.png]]
+
+  The attributes associated to each point are those who were present in the original file ~training.shp~, and the  ~originfid~ attribute which corresponds to the polygon identifier of from which the sample has been taken.
+
+*** Feature extraction for the samples
+
+    To compute the features associated to each sample, one proceeds as follows. For the image bands:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in labeled_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out RGB_color_image.tif
+    $ otbcli_SampleExtraction -in alldates.tif               \
+                              -vec training_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name band_    \
+                              -field CODE 
+
+    $ otbcli_SampleExtraction -in ndvis.tif                  \
+                              -vec training_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name ndvi_    \
+                              -field CODE 
     #+END_EXAMPLE
 
-*** Post processing the classification result
-
-    For regularization, use the following:
+    Same approach for the validation set:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ClassificationMapRegularization \
-    -io.in labeled_image.tif \
-    -io.out regularized_image.tif \
-    -ip.radius 1 \
-    -ip.suvbool 0
+    $ otbcli_SampleExtraction -in alldates.tif               \
+                              -vec testing_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name band_    \
+                              -field CODE 
+
+    $ otbcli_SampleExtraction -in ndvis.tif                  \
+                              -vec testing_samples.sqlite   \
+                              -outfield prefix               \
+                              -outfield.prefix.name ndvi_    \
+                              -field CODE 
     #+END_EXAMPLE
 
-    The colorization and validation steps can also be replayed:
+*** Model training
+
+    In this section, we will use the shell variables proposed in the question.
+
+    The training is done as follows:
+    
+    #+BEGIN_EXAMPLE
+    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite \
+                                   -cfield code -classifier rf    \
+                                   -classifier.rf.max 20          \
+                                   -io.out model.rf -feat ${date1}
+    #+END_EXAMPLE
+
+    This first run yields the following results:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping \
-    -in regularized_image.tif \
-    -method custom \
-    -method.custom.lut ../../color_map.txt \
-    -out rgb_regularized.tif
+    Confusion matrix (rows = reference labels, columns = produced labels):
+      [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
+[ 11]   861    28     2     0     8     5     3     0     5     6    24 
+[ 12]    16   889     3     1     3     2     1     2     5    12     7 
+[ 31]     8    10   873     5     9    19     2     0     6     9     0 
+[ 32]     4     0    21   895     6     3     2     3     1     4     2 
+[ 34]    12    20    39     9   785    19     8     1    19    17    12 
+[ 36]    10    30    46    11    21   771     8     1    20     9    14 
+[ 41]     4    13     8     4     5     1   862     3    16    17     8 
+[ 51]     2    11     2     0     4     2     5   906     2     7     0 
+[211]     2    27    35     5    21    32     2     1   782    15    19 
+[221]    13    14     5     3     7     4     8     6    11   845    25 
+[222]    15    24     2     0     2     8     0     0    16    14   860 
+
+[...]
+
+Global performance, Kappa index: 0.891296 
     #+END_EXAMPLE
+    
+    The reason why the Kappa coefficient is so high despite the use of
+    a single date, is that when no validation set is given, the
+    application measures the performances using the training set. In
+    order to get a more realistic evaluation, one can validate using
+    the file ~testing_samples.sqlite~ that we created before:
 
     #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix \
-    -in regularized_image.tif \
-    -ref vector \
-    -ref.vector.in ${LS8DATA}/testing/testing.shp \
-    -ref.vector.field CODE \
-    -out confusion_matrix_regularized.csv
+    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite   \
+                                   -valid.vd testing_samples.sqlite \
+                                   -cfield code -classifier rf      \
+                                   -classifier.rf.max 20            \
+                                   -io.out model.rf -feat ${date1}
     #+END_EXAMPLE
+    
+
+    In this case, the results are the following:
+
+    
+    #+BEGIN_EXAMPLE
+     [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
+[ 11]  1504   285     9     1    32    40    43     3    43    36   126 
+[ 12]   183  1619    13     8    15    25     9     5    59    77   108 
+[ 31]    26    60  1463    89    76   237    38    30    33    65     4 
+[ 32]    47    54   362  1478    49    31    23    16    26    29     6 
+[ 34]    45    45   364   230   252   620    21    19   270   110   145 
+[ 36]    85   164   232    65   421   647    27     6   214   135   125 
+[ 41]    49    79    51    32    49    20  1559    29    61   128    64 
+[ 51]    27    39    26    17     7    19    44  1919     6    17     0 
+[211]    21   131   113    29   274   143    11     6  1086    66   241 
+[221]    93   165   113    93   201   148    95    12   196   771   234 
+[222]   164   229     8     4    91    58    10     1   181   123  1252
+
+[...]
+
+Global performance, Kappa index: 0.538822
+#+END_EXAMPLE
+
+These results show poor performances using a single date.
+
+In order to test different configurations, one can use the variables
+suggested in the question and pass them as the ~-feat~ parameter. For
+instance, to test the first 2 dates, one can use ~-feat ${date1} ${date2}~.
+
+**** Which date yields the best single date performances?
+
+The best date is the third one (2014-04-17), with a Kappa coefficient of 0.578.
+
+|------------+----------|
+|       Date |    Kappa |
+|------------+----------|
+| 2014-03-09 | 0.538822 |
+| 2014-04-01 | 0.560085 |
+| 2014-04-17 | 0.578801 |
+| 2014-05-28 |  0.56494 |
+| 2014-06-20 | 0.560509 |
+| 2014-07-31 | 0.540943 |
+| 2014-09-01 | 0.555276 |
+| 2014-10-03 | 0.530006 |
+| 2014-10-26 | 0.494788 |
+|------------+----------|
+
+This table has been obtained with the following bash script:
+
+#+BEGIN_EXAMPLE
+$ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
+                                     -io.vd training_samples.sqlite   \
+                                     -valid.vd testing_samples.sqlite \
+                                     -cfield code -classifier rf      \
+                                     -classifier.rf.max 20            \
+                                     -io.out model.rf -feat ${!var}   \
+                                     | grep Kappa; done
+#+END_EXAMPLE
+
+**** Has the coastal blue band an interest for the classification?intérêt pour la classification ?
+
+     Using the parameter ~-feat ${date1}~ one gets a Kappa coefficient
+     of 0.538822 for the first date, while if one removes the coastal
+     blue band using ~-feat ${date1_nocb}~ the Kappa coefficient is
+     0.538068. One can therefore conclude that this band contains
+     little information for this classification problem.
+
+**** Which are the performances using all the spectral bands?toutes les bandes spectrales ?
+     
+     Using the parameter ~-feat ${dates}~, one gets a Kappa coefficient of 0.677147.
+
+**** What are the performances using the NDVI time series alone?
+
+     Using the parameter ~-feat ${ndvis}~ one gets a Kappa coefficient
+     of 0.554286. Using only these 9 values, the performances are only
+     0.12 below the case using 63 spectral bands. The results are also
+     better than some individual dates for which 7 bands are used.
+
+**** What are the performances using all the spectral bands and the NDVI time series?
+
+     Using the parameter ~-feat ${bands} ${ndvis}~ one gets a Kappa
+     coefficient of 0.682333, which is slightly better than the
+     spectral bands alone.
+
+**** In the latter case, analyse the performances for each class.
+
+     The /water/ class (label 51) is the best classified, with an
+     F-score of 0.945575.
+
+     The /cultivated grasslands/ (label 34) and /woody moorlands/ (label 36)
+     are the worse recognised with F-scores of 0.278807 and 0.428884 respectively. All other classes have F-scores sometimes way above 0.6.
+
+     If we analyse more precisely the confusion matrix, one can see that these 2 classes are often confused with one another by the model: 24% of the /natural grasslands/ samples are classified as /woody moorland/ (and 17% as /cultivated grasslands/), while 22% of /woody moorland/ samples are classified as /natural grasslands/ (and 10% as /cultivated grasslands/).
+
+*** Classification
+
+    To produce the classification map, we use the model trained on all
+    the spectral bands and the NDVI time series (in this order). Pour
+    réaliser la carte de classification, on va utiliser le modèle
+    appris sur l'ensemble des bandes spectrales et du profil de NDVI
+    (dans cet ordre). Warning: the model has to be trained with the
+    same feature order as the one used by the *ImageClassifier*
+    application.
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ImageClassifier -in Extract16bits/all.tif \
+                             -out classif.tif uint8 \
+                             -model model.rf
+    #+END_EXAMPLE
+
+*** Post-processing
+
+    To regularise the classification map, one can use the following
+    command:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0    \
+                                             -io.in classif.tif            \
+                                             -io.out classif_reg.tif uint8 
+    #+END_EXAMPLE
+
+    It is straighforward to see the effect of the regularisation by
+    displaying the result in QGIS (beware of unchecking the no data
+    values in QGIS), but it is also interesting to evaluate the impact
+    of this operation on the classification perfomances. We will
+    address this issue in the following section.
+
+*** Complete performance evaluation
+
+    To evaluate the performances over the whole validation set, we use
+    the *ComputeConfusionMatrix* application.
+
+    On the raw classification map:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix -in classif.tif -ref vector        \
+                                    -ref.vector.in testing/testing.shp \
+                                    -out confusion.csv                 \
+                                    -ref.vector.field CODE
+    #+END_EXAMPLE
+
+    This complete evaluation yields a Kappa coefficient of 0.803679.
+    This value is way higher than the one obtained during the training
+    phase which was only 0.682333. This is explained by the fact that
+    the validation data used during the training step was generated
+    using the /smallest/ strategy, which produces the same number of
+    samples for each class. However, if we look at the statistics
+    generated at the beginning of the workshop, one can see that
+    /summer crops/ (11), /winter crops/ (12) and /water/ (51) are
+    over-represented in the reference data. These 3 classes are the
+    ones having the best performances in the classification. Therfore,
+    their outnumbering produces higher classification scores. If we
+    had generated the validation file using the /all/ strategy, we
+    would have obtained similar prerformances during the training
+    step. However, this would have hidden the poor performanced for
+    some classes.
+
+    On the regularised classification map:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector    \
+                                    -ref.vector.in testing/testing.shp \
+                                    -out confusion.csv                 \
+                                    -ref.vector.field CODE
+    #+END_EXAMPLE
+
+    Now the Kappa coefficient is 0.873691. The regularisation improves
+    the performances, since the final result is more similar to the
+    reference data which contains homogeneous polygons.
+
+*** Color map production
+    
+    To produce the color map, we use the following command:
+
+    #+BEGIN_EXAMPLE
+    $ otbcli_ColorMapping -in classif_reg.tif -out classif_reg_rgb.tif uint8 \
+                          -method custom -method.custom.lut color_map.txt
+    #+END_EXAMPLE
+    
+    #+ATTR_LATEX: :width 0.9\textwidth
+    [[file:Images/final_classification.png]]
+
+

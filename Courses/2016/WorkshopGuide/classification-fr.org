@@ -213,7 +213,7 @@
     SQL.
 
     *Note :* Le fichier de style ~polygones.qml~ peut être chargé dans
-    Qgis pour coloriser les polygones en fonction de leur classe. 
+    QGIS pour coloriser les polygones en fonction de leur classe. 
 
     Les polygones sont répartis en deux ensembles: apprentissage (training) et
     validation (testing).
@@ -269,7 +269,7 @@
      la classe dans ces données vecteur. Elle produit en sortie un
      fichier XML résumant les informations récoltées.
 
-     En inspectant les données dans QGis, repéré le champ qui sera
+     En inspectant les données dans QGIS, repérez le champ qui sera
      utilisé pour définir la classe.
 
      Ouvrez les fichiers XML générés. Combien y-a-t-il d'échantillons
@@ -315,11 +315,11 @@
      Combien d'échantillons au total ont été sélectionnés par classe
      pour l'apprentissage ?
 
-     Ouvrir les fichiers de points ainsi généré dans QGis. Quels sont les
+     Ouvrir les fichiers de points ainsi généré dans QGIS. Quels sont les
      attributs associés à chaque point ?
 
      *Note :* Le fichier de style ~samples.qml~ peut être chargé dans
-     Qgis pour coloriser les polygones en fonction de leur classe. 
+     Qgis pour coloriser les points en fonction de leur classe. 
 
      *Note :* Même si cette application n'accède pas au contenu de
      l'image (pixels), il faut tout de même lui spécifier l'image
@@ -440,7 +440,7 @@
 
 **** Post-traitement de la classification
 
-  Nous allons utiliser l'application *ClassificationMapRegularization*
+  Nous allons utiliser l'application *ClassificationMapRegularization*. Elle
   filtre une image classifiée en utilisant un vote majoritaire local.
 
   Les paramètres à régler sont:
@@ -458,8 +458,7 @@
   notre chaîne de classification. Par rapport à l'évaluation des
   performances réalisée lors de l'apprentissage, cette application
   permet de:
-  - Prendre en compte l'ensemble des pixels disponibles dans la vérité
-    terrain,
+  - Prendre en compte l'ensemble des pixels disponibles dans la donnée de référence,
   - Évaluer la performance d'une carte de classification qui a été
     retraitée (par exemple avec une régularisation).
 
@@ -550,7 +549,7 @@ fournies avec le TP.
     #+END_EXAMPLE
 
     En inspectant les fichiers XML ~training_stats.xml~ et
-    ~validation_stats.xml~, on peut trouver les informations suivante:
+    ~validation_stats.xml~, on peut trouver les informations suivantes:
 
     Dans le fichier ~training_stats.xml~:
 
@@ -612,7 +611,7 @@ fournies avec le TP.
     - byclass :: Indiquer pour chaque classe le nombre d'échantillons
                  à sélectionner (par le biais d'un fichier)
     - constant :: Indiquer un nombre constant d'échantillons appliqué
-                  à toute les classes
+                  à toutes les classes
     - smallest :: Sélectionner un nombre constant d'échantillons
                   appliqué à toute les classes de sorte que la classe
                   la plus petite soit échantillonnée complètement.
@@ -662,7 +661,7 @@ fournies avec le TP.
 
 *** Calcul des attributs des échantillons
 
-    Pour calculer les attributs associés à chaque échantillons, on
+    Pour calculer les attributs associés à chaque échantillon, on
     procède de la manière suivante. Pour les bandes de l'image:
 
     #+BEGIN_EXAMPLE
@@ -907,7 +906,7 @@ $ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
     produit le même nombre d'échantillon pour chaque classe. Or, si
     l'on regarde les statistiques produites en début de TP, on peut
     voir que les classes cultures d'été (11) cultures d'hiver (12) et
-    eau (51) sont sur-représentées dans la vérité terrain. Or, ces
+    eau (51) sont sur-représentées dans la donnée de référence. Or, ces
     trois classes ont également les meilleures performances de
     classifications. Leurs sur-représentation tire donc la performance
     globale vers le haut. On aurait pu générer le jeu de validation
