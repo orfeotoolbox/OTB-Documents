@@ -222,6 +222,25 @@ L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ou
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame}
 
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/segmentation.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{../../Courses/2016/WorkshopGuide/Images/samples_selection.png}
+\end{frame}
+
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{../../Courses/2016/WorkshopGuide/Images/final_classification.png}
+\end{frame}
+
 \section{Caractéristiques clés}
 
 \begin{frame}
@@ -514,7 +533,7 @@ OrthoRectification.ExecuteAndWriteOutput()
   \frametitle{Applications OTB ``as a service'' avec ZOO Project WPS}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=1\textwidth]{images/otb_in_zoo.png}
+\includegraphics[width=0.7\textwidth]{images/otb_in_zoo.png}
 \end{center}
 \end{minipage}
 \end{frame}
@@ -572,7 +591,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{OTB}
 \begin{itemize}
 \item Nouvelles applications pour le traitement SAR (polarimétrie, radiométrie, speckle)
-\item Support des produits Sentinel-1
+\item Support des produits Sentinel-1 (calibration radiométrique)
 \item Amélioration accès OTB en Python
 \item Compatibilité avec GDAL 2.0 et support des images Sentinel-2
 \item \ldots
@@ -613,37 +632,73 @@ OrthoRectification.ExecuteAndWriteOutput()
 \frametitle{5.6 (August 2016)}
 \begin{block}{OTB}
 \begin{itemize}
-\item Support de l'écriture d'images en utilisant la librairie MPI
+\item Parallélisation de l'exécution du pipeline avec la librairie MPI
 \item Extraction et sélection d'échantillons pour la classification supervisée
-\item Amélioration classification données vecteurs
-\item Support des images Sentinel-1 (géométrie)
+\item Amélioration de la classification données vecteurs
+\item Support des images Sentinel-1 (calibration géométrique)
 \end{itemize}
 \end{block}
 
 \begin{block}{Monteverdi 3.4}
 \begin{itemize}
 \item Amélioration affichage et accès aux OTB applications
-\item Visualisation produit Sentinel-1 (produit complexe)
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Parallélisation de traitements OTB avec MPI}
-\begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=1.0\textwidth]{images/mpi.png}
+  \vspace{-0.5cm}
+  \includegraphics[width=0.6\textwidth]{images/mpi.png}
+  \begin{scriptsize}
+\begin{verbatim}
+    $ mpirun -np $nb_procs --hostfile $PBS_NODEFILE  \
+    otbcli_BundleToPerfectSensor \
+    -inp $ROOT/IMG_PHR1A_P_001/IMG_PHR1A_P_201605260427149_ORT_1792732101-001_R1C1.JP2 \
+    -inxs $ROOT/IMG_PHR1A_MS_002/IMG_PHR1A_MS_201605260427149_ORT_1792732101-002_R1C1.JP2 \
+    -out $ROOT/pxs.tif uint16 -ram 1024
+
+    ------------ JOB INFO 1043196.tu-adm01 -------------
+    
+    JOBID           : 1043196.tu-adm01
+    USER            : michelj
+    GROUP           : ctsiap
+    JOB NAME        : OTB_mpi
+    SESSION         : 631249
+    RES REQSTED     : mem=1575000mb,ncpus=560,place=free,walltime=04:00:00
+    RES USED        : cpupercent=1553,cput=00:56:12,mem=4784872kb,ncpus=560,vmem=18558416kb,
+    walltime=00:04:35
+    BILLING         : 42:46:40 (ncpus x walltime)
+    QUEUE           : t72h
+    ACCOUNT         : null
+    JOB EXIT CODE   : 0
+    
+    ------------ END JOB INFO 1043196.tu-adm01 ---------
+\end{verbatim}
+\end{scriptsize}
 \end{center}
-\end{minipage}
 \end{frame}
 
 \begin{frame}
-\frametitle{Stratégies d'échantillonnages de polygones}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=1.0\textwidth]{images/sampling_position1.png}
-\end{center}
-\end{minipage}
+\frametitle{5.8 (Octobre 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Implémentation Random Forest de Shark: plus performante, apprentissage parallèle
+\item Meilleure performances BandMathX
+\item Support spot7 (calibration radiométrique et géométrique)
+\item Connection en mémoire des applications
+\item Finalisation  du nouveau framework de classification
+\item Et plein d'autres petites améliorations ...
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi 3.4}
+\begin{itemize}
+\item Intégration aux sources de l'Orfeo ToolBox
+\item Zoom avec molette sans CTRL
+\end{itemize}
+\end{block}
 \end{frame}
 
 \section{Conclusion et perspectives}
@@ -661,16 +716,21 @@ OrthoRectification.ExecuteAndWriteOutput()
     \item $\approx$ 3400 téléchargements for OTB 5.0
   \end{itemize}
 \end{block}
+\begin{block}{Users Days 2015 et 2016}
+  15 à 20 participants à Toulouse pendant 3 jours
+\end{block}
 \column{0.5\textwidth}
-\includegraphics[width=\textwidth]{images/OTB4_download_sourceforge_country_crop.png}
+\includegraphics[width=0.9\textwidth]{images/OTB4_download_sourceforge_country_crop.png}\\
+\includegraphics[width=0.9\textwidth]{images/img_hackfest.jpg}
 \end{columns}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Les réussites de l'OTB}
 \vspace{-0.5cm}
 \begin{columns}
-\column{0.6\textwidth}
+\column{0.65\textwidth}
 \begin{itemize}
 \item l'OTB a été utile à (certains) des utilisateurs ORFEO!
 \item L'OTB a traité avec succès plus de 619 images Pléiades pour le site web RTU,
@@ -685,16 +745,17 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{itemize}
 \item Au delà d'ORFEO, l'OTB est déjà utilisée dans plusieurs projets et logiciels
 \end{itemize}
-\column{0.4\textwidth}
+\column{0.35\textwidth}
 \includegraphics[width=0.9\textwidth]{images/resultats_ird.png}\\
 \tiny{Carte thématique à partir d'une segmentation par l'OTB, B. Mougenot~-~IRD}
 \end{columns}
 \end{frame}
 
 \begin{frame}
-\frametitle{Projets et logiciels utilisant l'OTB}
+  \frametitle{Projets et logiciels utilisant l'OTB}
+  \vspace{-0.5cm}
 \begin{columns}
-  \column{0.5\textwidth}
+  \column{0.55\textwidth}
   \begin{itemize}
     \item Les applications OTB applications sont disponibles dans le module de traitement de QGIS
     \item Support dans Zoo-Project (service WPS)
@@ -708,11 +769,11 @@ OrthoRectification.ExecuteAndWriteOutput()
     \item Projet GEOSUD (IRSTEA)
     \item Le programme de recherche TCM (ETS Quebec)
   \end{itemize}
-  \column{0.65\textwidth}
+  \column{0.6\textwidth}
 \begin{center}
   \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/Carte_17Classes.png}\\
   \tiny{Produit occupation du sol THEIA (CESBIO)}
-  \includegraphics[width=\textwidth]{images/gnorasi2.png}\\
+  \includegraphics[width=0.6\textwidth]{images/gnorasi2.png}\\
   \tiny{Le logiciel Gnorasi}
 \end{center}
 \end{columns}
