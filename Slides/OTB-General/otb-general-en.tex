@@ -228,6 +228,27 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
     \includegraphics[keepaspectratio,width=1.005\paperwidth,height=1.1\paperheight]{images/argentiere_anaglyphe.png}
 \end{frame}
 
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/segmentation.png}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{../../Courses/2016/WorkshopGuide/Images/samples_selection.png}
+\end{frame}
+
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{../../Courses/2016/WorkshopGuide/Images/final_classification.png}
+\end{frame}
+
+
 \section{Key characteristics}
 
 \begin{frame}
@@ -519,7 +540,7 @@ OrthoRectification.ExecuteAndWriteOutput()
   \frametitle{OTB applications as ZOO WPS service}
 \begin{minipage}[t][6cm][t]{\textwidth}
 \begin{center}
-\includegraphics[width=1\textwidth]{images/otb_in_zoo.png}
+\includegraphics[width=0.7\textwidth]{images/otb_in_zoo.png}
 \end{center}
 \end{minipage}
 \end{frame}
@@ -576,7 +597,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{OTB}
 \begin{itemize}
 \item New SAR processing applications (polarimetry, radiometry, speckle)
-\item Support for Sentinel-1 products
+\item Support for Sentinel-1 products (radiometric calibration)
 \item Better Python bindings
 \item Better GDAL 2.0 compatibility and support Sentinel-2 images
 \item Official package in DebianGIS (special thanks to Rashad and Debian maintainer)
@@ -587,7 +608,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{Monteverdi 3.0}
 \begin{itemize}
 \item Display an image mosaic or multi-temporal dataset
-\item Efficient visualization tools (local contrast, gradient\ldots)
+\item Efficient visualization tools (local contrast, gradient \ldots)
 \item Access to OTB applications
 \end{itemize}
 \end{block}
@@ -618,37 +639,52 @@ OrthoRectification.ExecuteAndWriteOutput()
 \frametitle{5.6 (August 2016)}
 \begin{block}{OTB}
 \begin{itemize}
-\item MPI Image File Writer
+\item MPI pipeline exectuion
 \item Samples extractor and selection for supervised classification
 \item Improve classification on vector
-\item Support for Sentinel-1 geometry (SAR sensor)
+\item Support for Sentinel-1 products (geometric calibration)
 \end{itemize}
 \end{block}
 
 \begin{block}{Monteverdi 3.4}
 \begin{itemize}
 \item Improve OTB-applications display \& search bar
-\item Open Sentinel-1 image (SLC product)
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Parallel OTB pipeline with MPI}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=1.0\textwidth]{images/mpi.png}
-\end{center}
-\end{minipage}
-\end{frame}
+  \begin{center}
+  \vspace{-0.5cm}
+  \includegraphics[width=0.6\textwidth]{images/mpi.png}
+  \begin{scriptsize}
+\begin{verbatim}
+    $ mpirun -np $nb_procs --hostfile $PBS_NODEFILE  \
+    otbcli_BundleToPerfectSensor \
+    -inp $ROOT/IMG_PHR1A_P_001/IMG_PHR1A_P_201605260427149_ORT_1792732101-001_R1C1.JP2 \
+    -inxs $ROOT/IMG_PHR1A_MS_002/IMG_PHR1A_MS_201605260427149_ORT_1792732101-002_R1C1.JP2 \
+    -out $ROOT/pxs.tif uint16 -ram 1024
 
-\begin{frame}
-\frametitle{Polygons sampling strategy}
-\begin{minipage}[t][6cm][t]{\textwidth}
-\begin{center}
-\includegraphics[width=1.0\textwidth]{images/sampling_position1.png}
+    ------------ JOB INFO 1043196.tu-adm01 -------------
+    
+    JOBID           : 1043196.tu-adm01
+    USER            : michelj
+    GROUP           : ctsiap
+    JOB NAME        : OTB_mpi
+    SESSION         : 631249
+    RES REQSTED     : mem=1575000mb,ncpus=560,place=free,walltime=04:00:00
+    RES USED        : cpupercent=1553,cput=00:56:12,mem=4784872kb,ncpus=560,vmem=18558416kb,
+    walltime=00:04:35
+    BILLING         : 42:46:40 (ncpus x walltime)
+    QUEUE           : t72h
+    ACCOUNT         : null
+    JOB EXIT CODE   : 0
+    
+    ------------ END JOB INFO 1043196.tu-adm01 ---------
+\end{verbatim}
+\end{scriptsize}
 \end{center}
-\end{minipage}
 \end{frame}
 
 \section{Conclusion}
@@ -666,15 +702,20 @@ OrthoRectification.ExecuteAndWriteOutput()
     \item $\approx$ 3400 downloads for OTB 5.0 on SourceForge(released June 1, 2015).
   \end{itemize}
 \end{block}
+\begin{block}{2015 and 2016 Users Days}
+  15 to 20 atendants in Toulouse during 3 days
+\end{block}
 \column{0.5\textwidth}
-\includegraphics[width=\textwidth]{images/OTB4_download_sourceforge_country_crop.png}
+\includegraphics[width=0.9\textwidth]{images/OTB4_download_sourceforge_country_crop.png}\\
+\includegraphics[width=0.9\textwidth]{images/img_hackfest.jpg}
 \end{columns}
 \end{frame}
 
 \begin{frame}
-\frametitle{Success stories}
+  \frametitle{Success stories}
+  \vspace{-0.5cm}
 \begin{columns}
-\column{0.6\textwidth}
+\column{0.65\textwidth}
 \begin{itemize}
 \item OTB has been useful for (some) ORFEO users!
 \item Several training courses (3/5-day courses) given in France, Belgium,
@@ -693,16 +734,17 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \item Beyond Orfeo, OTB is already used in several projects and software
 \item OSGeo incubation
 \end{itemize}
-\column{0.4\textwidth}
+\column{0.35\textwidth}
 \includegraphics[width=0.9\textwidth]{images/resultats_ird.png}\\
 \tiny{Thematic map from OTB segmentation, B. Mougenot~-~IRD}
 \end{columns}
 \end{frame}
 
 \begin{frame}
-\frametitle{Projects and software using OTB}
+  \frametitle{Projects and software using OTB}
+  \vspace{-0.5cm}
 \begin{columns}
-  \column{0.5\textwidth}
+  \column{0.55\textwidth}
   \begin{itemize}
     \item OTB applications are available through QGIS processing framework
     \item OTB applications are available in Zoo Project (WPS service)
@@ -714,10 +756,10 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
     \item Geosud project(IRSTEA)
     \item TCM research program (ETS Quebec)
   \end{itemize}
-  \column{0.65\textwidth}
+  \column{0.6\textwidth}
   \begin{center}
   \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/Carte_17Classes.png}\\
-  \tiny{Prototype of THEIA Land cover product(CESBIO)}
+  \tiny{Prototype of THEIA Land cover product (CESBIO)}
   \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/gnorasi2.png}\\
   \tiny{The Gnorasi software}
   \end{center}
