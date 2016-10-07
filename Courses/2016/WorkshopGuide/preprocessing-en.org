@@ -244,7 +244,7 @@ _Tips :_
        in the case of Pléiades (resampled to 0.5m).
      
      We will perform pan-sharpening using TOA reflectance PAN and XS images (
-     ~phr_xs_osr_mipy_toa.tif~ and ~phr_xs_osr_mipy_toa.tif~)
+     ~phr_pan_osr_mipy_toa.tif~ and ~phr_xs_osr_mipy_toa.tif~)
          
      1. Use the *BundleToPerfectSensor* application to superimpose and fuse the PAN
         and XS images. Note that the application has a /phr/ mode (Pléiades)

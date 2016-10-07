@@ -236,7 +236,7 @@ _Trucs et astuces :_
      
 
      Nous allons réaliser cette fusion à partir des extraits PAN et XS en
-     réflectance au sommet de l'atmosphère ~phr_xs_osr_mipy_toa.tif~ et ~phr_xs_osr_mipy_toa.tif~: 
+     réflectance au sommet de l'atmosphère ~phr_pan_osr_mipy_toa.tif~ et ~phr_xs_osr_mipy_toa.tif~: 
      
      Pour cela:
     

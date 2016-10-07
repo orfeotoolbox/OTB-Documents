@@ -233,8 +233,8 @@
 
      #+BEGIN_EXAMPLE
      $ for f in *.tif; do \
-       otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
-                                 -channels.red 3 -channels.nir 4 \
+       otbcli_RadiometricIndices -channels.blue 2 -channels.green 3 \
+                                 -channels.red 4 -channels.nir 5 \
                                  -in "$f" -out "${f%.*}_ndvi.tif" \
                                  -list Vegetation:NDVI; done
      #+END_EXAMPLE
@@ -467,8 +467,8 @@ the layer properties in QGIS by checking the ~no data~ value.
     #+BEGIN_EXAMPLE
     $ cd ${LS8DATA}
     $ for f in LANDSAT_*.tif; do \
-        otbcli_RadiometricIndices -channels.blue 1 -channels.green 2 \
-                                  -channels.red 3 -channels.nir 4    \
+        otbcli_RadiometricIndices -channels.blue 2 -channels.green 3 \
+                                  -channels.red 4 -channels.nir 5    \
                                   -in "$f" -out "NDVI_$f" -list Vegetation:NDVI; done
     #+END_EXAMPLE
 
