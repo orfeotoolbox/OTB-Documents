@@ -163,9 +163,9 @@ Les données se trouvent dans le répertoire ~Data/internals/~.
      spécifiques aux applications, mais peuvent être utilisés pour
      n'importe quel logiciel construit autour de l'Orfeo ToolBox.
      
-     L'ensemble des options disponibles sont listées dans la section
-     7.10 du Software Guide. Nous allons illustrer leur
-     fonctionnement en nous concentrant sur quelques options.
+     L'ensemble des options disponibles sont listées dans la section /Extended
+     filename for reader and writer/ du Software Guide. Nous allons illustrer
+     leur fonctionnement en nous concentrant sur quelques options.
 
 ***** Les options de lecture
 

@@ -121,7 +121,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
      sont pas détectables à l'oeil nu, mais pourraient être révélés par
      l'application d'un gradient ou d'un détecteur de contours.
 
-     Utilisez l'application *EdgeDetection* pour révéler le message.
+     Utilisez l'application *EdgeExtraction* pour révéler le message.
 
 **** Message 3
 
@@ -216,7 +216,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** Message 2
     
     Pour décoder ce deuxième message nous allons calculer un gradient
-    en utilisant l'application *EdgeDetection*:
+    en utilisant l'application *EdgeExtraction*:
 
     #+BEGIN_EXAMPLE
     $ otbcli_EdgeExtraction -in image2.tif    \

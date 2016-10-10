@@ -114,7 +114,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
      with human eyes, but could be revealed by computing the image
      gradient, or some edge detection.
      
-     Use the *EdgeDetection* application to reveal the message.
+     Use the *EdgeExtraction* application to reveal the message.
 
 **** Message 3
 
@@ -202,7 +202,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 *** Message 2
 
     To decode the second message we will compute the image gradient
-    using the *EdgeDetection* application:
+    using the *EdgeExtraction* application:
     
     #+BEGIN_EXAMPLE
     $ otbcli_EdgeExtraction -in image2.tif    \

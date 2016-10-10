@@ -152,8 +152,8 @@
      process in Orfeo ToolBox. They are not application specific, but can be
      used with any Orfeo ToolBox based tool.
 
-     The full list of options is listed in the Software Guide. We will
-     illustrate here a few of them.
+     The full list of options is listed in the section /Extended filename for
+     reader and writer/ Software Guide. We will illustrate here a few of them.
 
 ***** Read options
 

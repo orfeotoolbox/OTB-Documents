@@ -84,14 +84,14 @@ To install *QGIS* follow the instructions on the [[http://www.qgis.org/][QGIS we
 
 Datasets use during the training courses:
 
-- Landsat-8 :: Several dates concatenated, cloud-free (gap-filled) with
+- Landsat-8 :: 9 dates concatenated, cloud-free (gap-filled) with
                reference data in ESRI
                Shapefile provided by [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (for the classification exercise),
 - Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
               over OSR MiPy (South West of Toulouse, France), 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
-- Sentinel-1 :: Single Look Complex (SLC) product - Strip Map (SM),
-                dual-polarization (HH and HV) near Constance lake (Germany).
+- Sentinel-1 :: Single Look Complex (SLC) product - Strip Map (80 km swath, 5x5
+                m res), dual-polarization (HH and HV) near Constance lake (Germany).
 
 For more information on these satellites:
 - Landsat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]
