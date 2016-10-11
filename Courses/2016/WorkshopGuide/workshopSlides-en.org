@@ -19,7 +19,7 @@
 #+LaTeX_CLASS_OPTIONS: [smaller]
 #+latex_header: \usepackage[T1]{fontenc}
 #+latex_header: \usepackage[french]{babel}
-#+latex_header: \AtBeginSubsection[]{\begin{frame}<beamer>\frametitle{Sommaire}\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/shaded/hide]\end{frame}}
+#+latex_header: \AtBeginSubsection[]{\begin{frame}<beamer>\frametitle{Outline}\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/shaded/hide]\end{frame}}
 #+latex_header: \useoutertheme{infolines}
 #+latex_header: \mode<beamer>{\usetheme{Pittsburgh}}
 #+latex_header: \setbeamertemplate{navigation symbols}{} 
