@@ -79,7 +79,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Prerequisites
      
-     - Software installed (Monteverdi and Orfeo TooLBox)
+     - Software installed (Monteverdi and Orfeo ToolBox)
      - Data downloaded
 
 **** Objectives

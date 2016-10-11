@@ -93,7 +93,7 @@ To install *QGIS* follow the instructions on the [[http://www.qgis.org/][QGIS we
 
 ** Datasets
 
-Datasets use during the training courses:
+Datasets used during the training courses:
 
 - Landsat-8 :: 9 dates concatenated, cloud-free (gap-filled) with
                reference data in ESRI

@@ -92,7 +92,7 @@
        parameters /ranger/ and /spatialr/ without processing all the input
        image.
 
-       In the next step of the exercise we will use /ranger/ around 254 and
+       In the next step of the exercise we will use /ranger/ around 25 and
        /spatialr/ around 3 (to limit computation time).
 
 **** Segmentation
