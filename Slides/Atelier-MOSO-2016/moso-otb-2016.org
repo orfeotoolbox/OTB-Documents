@@ -1,0 +1,385 @@
+#+TITLE:     Le nouveau framework de classification de l'Orfeo Toolbox
+#+AUTHOR:    Julien Michel (CNES), OTB Team
+#+DATE:      24/11/2016
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+* Pourquoi un nouveau framework ?
+** Le framework existant:
+*** Column                                                         :B_column:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :BEAMER_env: column
+    :END:
+**** Une unique application                                         :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+   - Entrée :: Images et données de supervision (polygones SIG)
+   - Sorties :: Modèle (paramètres appris), matrice de confusion
+**** Etapes:                                                        :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+   1. Apprentissage
+   2. Génération des échantillons (positions, valeurs)
+   3. Calcul de la performance
+*** Column                                                         :B_column:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :BEAMER_env: column
+    :END:      
+    #+ATTR_LATEX: :float t :width \textwidth
+    [[file:images/classotb_1_1MachineLearningModel__inherit__graph.png]]
+
+** Le framework existant:
+   #+ATTR_LATEX: :float t :width \textwidth
+   [[file:images/old_framework.png]]
+
+** Des limitations
+*** Contrôle limité sur la sélection des échantillons:
+     - Nombre maximal d'échantillons par classe
+     - Ratio entraînement / validation
+     - Limitation par la classe la moins représentée
+*** Analyse difficile:
+    - Impossible de savoir:
+      - Quels échantillons ont été utilisés pour l'apprentissage
+      - Si l'échantillonnage est équilibré par rapport aux polygones d'entraînement
+    - Impossible d'étudier les échantillons (distribution, séparabilité)
+** Un problème de + en + complexe
+
+Sous ensemble des données d'apprentissage OSO (12 000 km2)   
+|-------+-----------------------------+------------|
+|  Code | Nom                         | #polygones |
+|-------+-----------------------------+------------|
+|    11 | Cultures d'été              |       7898 |
+|    12 | Cultures d'hiver            |       8171 |
+|    31 | Forêt feuilles caduques     |        867 |
+|    32 | Forêt feuilles persistantes |        125 |
+|    34 | Pelouses                    |         45 |
+|    36 | Lande ligneuse              |        386 |
+|    41 | Bâti                        |       4719 |
+|    51 | Eau                         |       1280 |
+|   211 | Prairie                     |       5647 |
+|   221 | Verger                      |        204 |
+|   222 | Vigne                       |        559 |
+|-------+-----------------------------+------------|
+| Total |                             |      29901 |
+|-------+-----------------------------+------------|
+
+** Un problème de + en + complexe
+
+Sous ensemble des données d'apprentissage OSO (12 000 km2)   
+|-------+-----------------------------+---------------|
+|  Code | Nom                         | #echantillons |
+|-------+-----------------------------+---------------|
+|    11 | Cultures d'été              |         56774 |
+|    12 | Cultures d'hiver            |         59347 |
+|    31 | Forêt feuilles caduques     |          8149 |
+|    32 | Forêt feuilles persistantes |          1029 |
+|    34 | Pelouses                    |          3770 |
+|    36 | Lande ligneuse              |           941 |
+|    41 | Bâti                        |          2630 |
+|    51 | Eau                         |         11221 |
+|   211 | Prairie                     |         25317 |
+|   221 | Verger                      |          2087 |
+|   222 | Vigne                       |          2080 |
+|-------+-----------------------------+---------------|
+| Total |                             |        173345 |
+|-------+-----------------------------+---------------|
+
+** Un problème de + en + complexe
+   #+ATTR_LATEX: :float t :width 0.75\textwidth
+   [[file:images/training_qgis.png]]
+
+
+* Ce qui change
+** Objectifs
+*** Contrôle
+    Les échantillons (positions et valeurs) doivent être accessible à
+    l'utilisateur avant apprentissage pour analyse et/ou retraitement
+
+*** Équité
+    - Il y a beaucoup plus d'échantillons disponibles que nécessaire
+    - L'opération de sélection doit être équitable et avoir de /bonnes propriétés/ (voir plus loin)
+*** Souplesse
+    - Les cas d'usage opérationnels sont plus complexes que 1 image et 1 jeu d'apprentissage
+    - On doit pouvoir combiner les nouveaux outils pour implémenter des stratégies complexes
+
+** Les nouvelles étapes
+   1. Recensement des échantillons disponibles
+   2. Sélection des position des échantillons
+   3. Extraction des mesures
+   4. Apprentissage
+
+** Recensement des échantillons
+*** Application: /PolygonClassStatistics/
+*** Objectifs
+   Pour chaque couple image/donnée de référence, connaître:
+   - Le nombre d'échantillons total disponible pour chaque classe
+   - Le nombre d'échantillons disponibles par polygone
+*** Fonctionnement
+    - Utilise l'emprise géographique de l'image
+    - Peut tenir compte d'un masque (données manquantes par exemple)
+    - Sortie des statistiques dans un fichier XML
+
+** Recensement des échantillons
+   #+BEGIN_EXAMPLE
+    <Statistic name="samplesPerClass">
+        <StatisticMap key="11" value="134590" />
+        <StatisticMap key="12" value="127548" />
+        <StatisticMap key="211" value="59052" />
+        <StatisticMap key="221" value="4820" />
+        <StatisticMap key="222" value="6393" />
+        <StatisticMap key="31" value="18620" />
+        <StatisticMap key="32" value="2121" />
+        <StatisticMap key="34" value="9351" />
+        <StatisticMap key="36" value="2812" />
+        <StatisticMap key="41" value="6110" />
+        <StatisticMap key="51" value="28858" />
+    </Statistic>
+    #+END_EXAMPLE
+
+** Sélection des positions
+*** Application: /SampleSelection/
+    Travaux stage CNES Paul Gely
+*** Objectifs
+    - Sélectionner les positions des échantillons par rapport à une stratégie définie par l'utilisateur
+    - Garantir un échantillonnage optimal (répartition spatiale / par polygone)
+*** Fonctionnement
+    - Utilisation des statistiques calculées précédemment
+    - Définition d'un taux d'échantillonnage par classe par rapport à la stratégie
+    - Tirage aléatoire ou périodique
+    - Sortie dans un fichier SIG de points (échantillons)
+** Sélection des positions (stratégies)
+   - Constant par classe :: chaque classe aura le même nombre d'échantillons, défini par l'utilisateur
+   - Classe la plus petite :: La classe la plus petite est
+        échantillonnée complètement. Les autres classes auront le même nombre d'échantillons.
+   - Pourcentage :: Un pourcentage est conservé pour chaque classe (défini par l'utilisateur).
+   - Total :: L'utilisateur définit un nombre total d'échantillons. La proportion des classes est respectée
+   - Tous :: Tous les échantillons sont sélectionnés
+   - Par classe :: L'utilisateur définit un nombre d'échantillon cible par classe
+
+** Sélection des positions (exemples)
+   
+   Stratégie : /classe la plus petite/
+   
+   |-----------+-----------------+--------------+-----------|
+   | className | requiredSamples | totalSamples |      rate |
+   |-----------+-----------------+--------------+-----------|
+   |        11 |             941 |        56774 | 0.0165745 |
+   |        12 |             941 |        59347 | 0.0158559 |
+   |       211 |             941 |        25317 | 0.0371687 |
+   |       221 |             941 |         2087 |  0.450886 |
+   |       222 |             941 |         2080 |  0.452404 |
+   |        31 |             941 |         8149 |  0.115474 |
+   |        32 |             941 |         1029 |   0.91448 |
+   |        34 |             941 |         3770 |  0.249602 |
+   |        36 |             941 |          941 |         1 |
+   |        41 |             941 |         2630 |  0.357795 |
+   |        51 |             941 |        11221 | 0.0838606 |
+   |-----------+-----------------+--------------+-----------  |
+
+** Sélection des positions (exemples)
+   #+Latex:\begin{center}
+   #+ATTR_LATEX: :width 0.8\textwidth
+   [[file:~/dev/src/otb-documents/Courses/2016/WorkshopGuide/Images/samples_selection.png]]
+   #+Latex: \end{center}
+
+** Sélection des positions (exemples)
+   
+   Stratégie : /Total (10 000 échantillons)/
+
+|-----------+-----------------+--------------+-----------|
+| className | requiredSamples | totalSamples |      rate |
+|-----------+-----------------+--------------+-----------|
+|        11 |            3275 |        56774 | 0.0576849 |
+|        12 |            3424 |        59347 | 0.0576946 |
+|       211 |            1460 |        25317 | 0.0576688 |
+|       221 |             120 |         2087 | 0.0574988 |
+|       222 |             120 |         2080 | 0.0576923 |
+|        31 |             470 |         8149 | 0.0576758 |
+|        32 |              59 |         1029 | 0.0573372 |
+|        34 |             217 |         3770 | 0.0575597 |
+|        36 |              54 |          941 | 0.0573858 |
+|        41 |             152 |         2630 | 0.0577947 |
+|        51 |             647 |        11221 | 0.0576597 |
+|-----------+-----------------+--------------+-----------|
+
+** Sélection des positions (exemples)
+   
+   Stratégie : /Pourcentage (5% échantillons)/
+
+|-----------+-----------------+--------------+------|
+| className | requiredSamples | totalSamples | rate |
+|-----------+-----------------+--------------+------|
+|        11 |            2839 |        56774 | 0.05 |
+|        12 |            2967 |        59347 | 0.05 |
+|       211 |            1266 |        25317 | 0.05 |
+|       221 |             104 |         2087 | 0.05 |
+|       222 |             104 |         2080 | 0.05 |
+|        31 |             407 |         8149 | 0.05 |
+|        32 |              51 |         1029 | 0.05 |
+|        34 |             189 |         3770 | 0.05 |
+|        36 |              47 |          941 | 0.05 |
+|        41 |             132 |         2630 | 0.05 |
+|        51 |             561 |        11221 | 0.05 |
+|-----------+-----------------+--------------+------|
+
+** Extraction des mesures
+   
+*** Application: /SampleExtraction/
+
+*** Objectifs:
+    - Associer à chaque point échantillonné une ou des mesures pour la classification
+    - Mesures issues d'une ou plusieurs images
+
+*** Fonctionnement
+    Pour chaque point:
+    - Lecture du pixel correspondant
+    - Création de champs associés dans le fichier vecteur
+    - Sortie: peut fonctionner en mode mise à jour
+
+** Extraction des mesures (exemple)
+
+   #+Latex:\begin{center}
+   #+ATTR_LATEX: :width \textwidth
+   [[file:images/samples-extraction.png]]
+   #+Latex: \end{center}
+   
+** Apprentissage
+
+*** Application: /TrainVectorClassifier/
+
+*** Objectifs:
+    - Équivalent du /TrainImagesClassifier/ précédemment utilisé
+    - Réaliser l'apprentissage à partir d'un fichier vecteur
+    - Produire un modèle compatible avec avec /ImageClassifier/
+
+*** Fonctionnement:
+    - Même paramétrage des algorithmes
+    - On peut fournir plusieurs fichiers vecteur
+    - Jeu d'apprentissage et de validation séparés
+    - On liste les champs à utiliser pour l'apprentissage
+
+** Apprentissage (exemple)
+
+Quelle est la date la plus performante dans la série ?
+
+#+LATEX: \begin{small}
+#+BEGIN_EXAMPLE
+$ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
+                                     -io.vd training_samples.sqlite   \
+                                     -valid.vd testing_samples.sqlite \
+                                     -cfield code -classifier rf      \
+                                     -classifier.rf.max 20            \
+                                     -io.out model.rf -feat ${!var}   \
+                                     | grep Kappa; done
+#+END_EXAMPLE
+#+LATEX:\end{small}
+
+** Apprentissage (exemple)
+
+
+La meilleure date est la troisième date (2014-04-17), avec un Kappa de 0.578.
+
+|------------+----------|
+|       Date |    Kappa |
+|------------+----------|
+| 2014-03-09 | 0.538822 |
+| 2014-04-01 | 0.560085 |
+| 2014-04-17 | 0.578801 |
+| 2014-05-28 |  0.56494 |
+| 2014-06-20 | 0.560509 |
+| 2014-07-31 | 0.540943 |
+| 2014-09-01 | 0.555276 |
+| 2014-10-03 | 0.530006 |
+| 2014-10-26 | 0.494788 |
+|------------+----------|
+
+** Le cas multi-images
+
+*** Que faire quand on a
+   - Plusieurs images (couverture) ?
+   - Plusieurs masques (stratification) ?
+
+*** Application /MultiImageSamplingRate/
+
+*** Objectifs
+    Fournir des taux d'échantillonnage par classe et par image utilisables par l'application /SampleSelection/
+
+*** Fonctionnement
+    - Méta-stratégie pour la répartition entre images : proportionelle, égale, /custom/
+    - Même stratégie que pour l'application /SampleSelection/
+
+* Quelques goodies
+** Classification distribuée avec MPI
+
+   #+LATEX:\begin{scriptsize}
+   #+BEGIN_EXAMPLE
+   $ mpirun -np $nb_procs --hostfile $PBS_NODEFILE  \
+    otbcli_BundleToPerfectSensor \
+    -inp $ROOT/IMG_PHR1A_P_001/IMG_PHR1A_P_201605260427149_ORT_1792732101-001_R1C1.JP2 \
+    -inxs $ROOT/IMG_PHR1A_MS_002/IMG_PHR1A_MS_201605260427149_ORT_1792732101-002_R1C1.JP2 \
+    -out $ROOT/pxs.tif uint16 -ram 1024
+   
+   ------------ JOB INFO 1043196.tu-adm01 -------------
+   
+   JOBID           : 1043196.tu-adm01
+   USER            : michelj
+   GROUP           : ctsiap
+   JOB NAME        : OTB_mpi
+   SESSION         : 631249
+   RES REQSTED     : mem=1575000mb,ncpus=560,place=free,walltime=04:00:00
+   RES USED        : cpupercent=1553,cput=00:56:12,mem=4784872kb,ncpus=560,vmem=18558416kb,
+                  walltime=00:04:35
+   BILLING         : 42:46:40 (ncpus x walltime)
+   QUEUE           : t72h
+   ACCOUNT         : null
+   JOB EXIT CODE   : 0
+   
+   ------------ END JOB INFO 1043196.tu-adm01 ---------
+   #+END_EXAMPLE
+   #+LATEX:\end{scriptsize}
+
+   - *walltime=00:04:35*
+   - *ncpus=560*
+
+** Chaînage en mémoire des applications
+   
+*** Le problème
+    - Une chaîne complexe est composée de plusieurs applications OTB
+    - Par ex. : Extraction des primitives -> échantillonnage
+    - Entre deux applications, les images sont écrites sur le disque
+    - Non nécessaire et coûteux (parfois les I/O représentent la plus grande partie du temps de calcul)
+
+*** A partir de OTB 5.8
+    - Possibilité d'enchaîner plusieurs applications en mémoire
+    - Depuis python ou C++
+    - Uniquement pour les données images
+    - Économie des opérations de lecture/écriture pour toutes les images intermédiaires
+   
+* Conclusion
+** Que devient l'ancienne application?
+   
+*** Dans OTB 5.8
+    /TrainImagesClassifier/ est inchangée
+
+*** Dans la version suivante
+    - Capacité à construire des applications composites (= composées d'applications internes)
+    - /TrainImagesClassifier/ existera toujours, avec la même API
+    - Mais elle utilisera en interne toutes les applications présentées ici
+
+** Quelques perspectives
+   
+   - /TrainVectorClassifier/ Sait apprendre à partir de tout type de
+     géométrie (points mais aussi polylignes ou polygones)
+   - Calcul des descripteurs à la volée, uniquement pour les points sélectionnés
+   - Fusion avec le framework de détection d'objets
+   - Intégration d'algorithmes non-supervisés
+
+** Merci pour votre attention!
+   #+Latex:\begin{center}
+   #+ATTR_LATEX: :width 0.7\textwidth
+   [[file:~/dev/src/otb-documents/Slides/OTB-General/images/LOGOTB_blackbox.png]]
+   #+Latex:\end{center}
