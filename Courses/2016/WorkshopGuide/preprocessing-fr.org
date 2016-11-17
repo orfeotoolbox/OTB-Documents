@@ -138,7 +138,7 @@ des images à l'aide d'*OTB applications*.
          (multi-temp) et multi-capteurs
       - Conversion en réflectance TOA (Top of Atmosphere) et TOC (Top of Canopy)
 ***** Savoir réaliser une fusion (pan-sharpening)
-      - Produit Pan (résolu) et XS (multi-spectral)
+      - Produit Pan (mieux résolu spatialialement) et XS (multi-spectral)
       - Tester différentes techniques de fusion
       - Voir les spécificités de la fusion en fonction du capteur (mode /Pléiades/)
       - Visualisation des images et les effets par la fusion (objets mobiles, indices radiométriques)

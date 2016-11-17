@@ -1,16 +1,27 @@
 #+TITLE: Guide for OTB training courses
 #+AUTHOR: OTB team
 #+DATE: 2016
+
 #+OPTIONS: H:5
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,pdftex,openright]
 #+LaTeX_HEADER: \usepackage{a4wide}
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
 #+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage[utf8]{inputenc}
+#+latex_header: \usepackage[french]{babel}
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{
+#+LATEX_HEADER:    colorlinks,
+#+LATEX_HEADER:    linkcolor={red!50!black},
+#+LATEX_HEADER:    citecolor={blue!50!black},
+#+LATEX_HEADER:    urlcolor={blue!80!black}
+#+LATEX_HEADER: }
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{upquote}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS:
@@ -82,16 +93,16 @@ To install *QGIS* follow the instructions on the [[http://www.qgis.org/][QGIS we
 
 ** Datasets
 
-Datasets use during the training courses:
+Datasets used during the training courses:
 
-- Landsat-8 :: Several dates concatenated, cloud-free (gap-filled) with
+- Landsat-8 :: 9 dates concatenated, cloud-free (gap-filled) with
                reference data in ESRI
                Shapefile provided by [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (for the classification exercise),
 - Pléiades :: Bundle PRIMARY Level 1A from CNES Thematic Comissionning Phase
               over OSR MiPy (South West of Toulouse, France), 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
-- Sentinel-1 :: Single Look Complex (SLC) product - Strip Map (SM),
-                dual-polarization (HH and HV) near Constance lake (Germany).
+- Sentinel-1 :: Single Look Complex (SLC) product - Strip Map (80 km swath, 5x5
+                m res), dual-polarization (HH and HV) near Constance lake (Germany).
 
 For more information on these satellites:
 - Landsat-8 :: level 2A available on [[https://www.theia-land.fr/][THEIA website.]]

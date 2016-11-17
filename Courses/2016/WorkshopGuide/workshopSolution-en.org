@@ -1,16 +1,26 @@
 #+TITLE:  Guide for OTB training courses (Solutions) 
-#+AUTHOR: Manuel Grizonnet (CNES), Julien Michel (CNES), Victor Poughon (CNES)
+#+AUTHOR: OTB Team
 #+DATE: 2016
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,openright]
+#+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,pdftex,openright]
 #+LaTeX_HEADER: \usepackage{a4wide}
 #+LaTeX_HEADER: \usepackage[scaled=.90]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
 #+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage[utf8]{inputenc}
+#+latex_header: \usepackage[french]{babel}
 #+LaTeX_HEADER: \usepackage{mathptmx}
 #+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{
+#+LATEX_HEADER:    colorlinks,
+#+LATEX_HEADER:    linkcolor={red!50!black},
+#+LATEX_HEADER:    citecolor={blue!50!black},
+#+LATEX_HEADER:    urlcolor={blue!80!black}
+#+LATEX_HEADER: }
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{upquote}
 #+OPTIONS: tags:nil
 
 #+EXPORT_SELECT_TAGS: 
@@ -21,9 +31,9 @@
 #+LATEX:\fancyhead[LE,RO]{\bfseries\thepage}
 #+LATEX:\fancyhead[LO]{\bfseries\rightmark}
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
-#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../../Artwork/logoVectoriel.png}}
+#+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Formation Orfeo ToolBox - INRA 2016}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Orfeo ToolBox Course - 2016}}
 
 * Foreword                                                               :fw:
 

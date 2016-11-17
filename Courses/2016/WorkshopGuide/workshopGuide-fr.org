@@ -100,17 +100,17 @@ disponible sur le  [[http://www.qgis.org/][site du projet]].
 
 Les données utilisées au cours du TP sont des extraits des données suivantes:
 
-- Landsat-8 :: plusieurs dates concaténées, dénuagées (gap-filling)
+- Landsat-8 :: 9 dates concaténées, dénuagées (gap-filling)
                avec des données terrains de référence au format ESRI
                Shapefile fournies par le [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
               Thématique Utilisateurs Pléiades - projet CNES) sur
               le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright
               CNES (2013), distribution Airbus DS/ Spot Image),
-- Sentinel-1 :: Produit SLC (complexe) SM (strip Map, les plus
-                résolues), bi-polarisation (HH et HV) sur le sud du
-                lac Constance (Allemagne).
-
+- Sentinel-1 :: Produit SLC (complexe) mode Strip Map (80 km swath, 5x5 m
+                résolution), bi-polarisation (HH et HV) sur le sud du lac Constance
+                (Allemagne).
+ 
 Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 - Landsat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 

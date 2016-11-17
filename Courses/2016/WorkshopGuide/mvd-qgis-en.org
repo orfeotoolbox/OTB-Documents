@@ -119,7 +119,7 @@
 
      Test effects like /Local contrast/, /Gradient/ and /Spectral angle/. What is their purpose?
 
-     Change the zoom level by using /CTRL + mouse wheel/,
+     Change the zoom level by using the /mouse wheel/,
      you can edit also the image scale in the bottom in the status bar.
 
      Close Monteverdi.
