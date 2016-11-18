@@ -183,7 +183,7 @@ Sous ensemble des données d'apprentissage OSO (12 000 km2)
 ** Sélection des positions (exemples)
    #+Latex:\begin{center}
    #+ATTR_LATEX: :width 0.8\textwidth
-   [[file:~/dev/src/otb-documents/Courses/2016/WorkshopGuide/Images/samples_selection.png]]
+   [[file:../../Courses/2016/WorkshopGuide/Images/samples_selection.png]]
    #+Latex: \end{center}
 
 ** Sélection des positions (exemples)
@@ -381,5 +381,5 @@ La meilleure date est la troisième date (2014-04-17), avec un Kappa de 0.578.
 ** Merci pour votre attention!
    #+Latex:\begin{center}
    #+ATTR_LATEX: :width 0.7\textwidth
-   [[file:~/dev/src/otb-documents/Slides/OTB-General/images/LOGOTB_blackbox.png]]
+   [[file:../../Slides/OTB-General/images/LOGOTB_blackbox.png]]
    #+Latex:\end{center}
