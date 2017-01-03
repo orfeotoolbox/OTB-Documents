@@ -223,7 +223,7 @@
      Pour ce TP nous allons utiliser trois types d'images:
      1. Une image contenant les bandes originales pour toutes les dates (63 bandes)
      2. Une image contenant les valeurs du NDVI pour chaque date (9 bandes)
-     3. Un image contenant les bandes originales et les valeurs du NDVI (72 bandes)
+     3. Une image contenant les bandes originales et les valeurs du NDVI (72 bandes)
 
 
      La première étape consiste à générer ces différentes images.
