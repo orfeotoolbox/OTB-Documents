@@ -262,12 +262,14 @@
      disponibles pour chaque classe et chaque polygone des données
      d'entraînement et de validation.
 
-     Cette application prend en paramètre l'image qui sera utilisée
-     pour extraire les échantillons, la donnée vecteur définissant les
-     polygones à analyser (~training.shp~ pour l'apprentissage,
-     ~testing.shp~ pour la validation), et le nom du champ définissant
-     la classe dans ces données vecteur. Elle produit en sortie un
-     fichier XML résumant les informations récoltées.
+     Cette application prend en paramètre:
+       - l'image qui sera utilisée pour extraire les échantillons. Ici, seule
+         l'emprise de l'image compte pour calculer les statistiques, on peut
+         donc utiliser n'importe quelle image du jeu de donnée.
+       - la donnée vecteur définissant les polygones à analyser (~training.shp~ pour
+         l'apprentissage, ~testing.shp~ pour la validation)
+       - le nom du champ définissant la classe dans ces données vecteur.
+     Elle produit en sortie un fichier XML résumant les informations récoltées.
 
      En inspectant les données dans QGIS, repérez le champ qui sera
      utilisé pour définir la classe.
