@@ -294,7 +294,7 @@
 **** Sélection des positions des échantillons
 
      Nous avons vu lors de l'étape précédente que les polygones
-     d'apprentissage contienne beaucoup plus d'échantillons que
+     d'apprentissage contiennent beaucoup plus d'échantillons que
      nécessaire à l'apprentissage du modèle. Nous allons maintenant
      sélectionner un sous-ensemble de ces échantillons pour entraîner
      notre modèle à l'aide de l'application *SampleSelection*.
