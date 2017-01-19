@@ -102,6 +102,7 @@ Know how to set up OTB processing and use OTB applications to perform:
 *** Useful information
 **** Meal
 **** Wifi code
+**** Attendance list and training certificate
 **** Other?
 
 * TP1: General                                                          

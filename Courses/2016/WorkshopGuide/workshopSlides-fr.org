@@ -130,6 +130,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 **** Repas
 Les plateaux repas seront livrés en salle Hibiscus
 **** Code Wifi
+**** Liste de présence et attestation de formation
 **** Autre?
 
 * TP1: Généralités                                                          
