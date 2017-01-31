@@ -99,7 +99,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 1    
 
-     In ~message1.tif~ image, a sentence has been encoded in a high
+     In ~image1.tif~ image, a sentence has been encoded in a high
      signal area, using a pixel value which is outside the possible
      range for Pléiades (reminder: Pléiades images are encoded with
      unsigned 12 bits integers).
@@ -109,7 +109,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 2
 
-     In ~message2.tif~ image, a sentence has been encoded within a
+     In ~image2.tif~ image, a sentence has been encoded within a
      homogeneous, low signal area. Modified pixels can not be seen
      with human eyes, but could be revealed by computing the image
      gradient, or some edge detection.
@@ -118,7 +118,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 3
 
-     In ~message3.tif~ image, a sentence has been encoded by slightly
+     In ~image3.tif~ image, a sentence has been encoded by slightly
      modifying the pixel values in the red and near infra-red
      bands. This modification can not be seen with human eyes, but
      could be revealed by computing an NDVI radiometric index.
@@ -137,7 +137,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 4
 
-     In ~message4.tif~, a message has been hidden in the 2 least
+     In ~image4.tif~, a message has been hidden in the 2 least
      significant bits of the image. This modification can not be
      detected by human eyes, but could be revealed by isolating the
      values of those 2 bits.
@@ -150,7 +150,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 5
 
-     In image ~message5.tif~, a message has been dissimulated by
+     In image ~image5.tif~, a message has been dissimulated by
      locally slightly modifying the image noise. It could be revealed
      by a transform that isolates noise.
      
@@ -162,7 +162,7 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
 
 **** Message 6
 
-     In ~message6.tif~ image, a message has been hidden by locally
+     In ~image6.tif~ image, a message has been hidden by locally
      using a gray-level morphological operation (opening with radius=1).
      It could be revealed by using the idempotent property of this
      transform. A function $f$ is said idempotent if:
