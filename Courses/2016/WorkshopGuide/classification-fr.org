@@ -671,13 +671,13 @@ fournies avec le TP.
                               -vec training_samples.sqlite   \
                               -outfield prefix               \
                               -outfield.prefix.name band_    \
-                              -field CODE 
+                              -field code
 
     $ otbcli_SampleExtraction -in ndvis.tif                  \
                               -vec training_samples.sqlite   \
                               -outfield prefix               \
                               -outfield.prefix.name ndvi_    \
-                              -field CODE 
+                              -field code
     #+END_EXAMPLE
 
     On procède de la même manière pour le jeu de validation.
@@ -687,13 +687,13 @@ fournies avec le TP.
                               -vec testing_samples.sqlite   \
                               -outfield prefix               \
                               -outfield.prefix.name band_    \
-                              -field CODE 
+                              -field code 
 
     $ otbcli_SampleExtraction -in ndvis.tif                  \
                               -vec testing_samples.sqlite   \
                               -outfield prefix               \
                               -outfield.prefix.name ndvi_    \
-                              -field CODE 
+                              -field code 
     #+END_EXAMPLE
 
 *** Entraînement du modèle
