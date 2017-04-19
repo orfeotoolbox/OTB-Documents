@@ -1,5 +1,5 @@
 # This project is designed to be built outside the OTB source tree.
-PROJECT(Exercise2)
+PROJECT(Exercise4)
 
 cmake_minimum_required(VERSION 2.8)
 
@@ -11,6 +11,8 @@ ELSE(OTB_FOUND)
   MESSAGE(FATAL_ERROR  
       "Cannot build OTB project without OTB.  Please set OTB_DIR.")  
 ENDIF(OTB_FOUND)  
- 
-ADD_EXECUTABLE(Pipeline Pipeline.cxx )  
-TARGET_LINK_LIBRARIES(Pipeline ${OTB_LIBRARIES}) 
+
+OTB_CREATE_APPLICATION(NAME MyApp
+                       SOURCES MyApp.cxx
+                       LINK_LIBRARIES ${OTB_LIBRARIES}
+)

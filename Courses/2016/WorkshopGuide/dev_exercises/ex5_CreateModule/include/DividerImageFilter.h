@@ -1,10 +1,10 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: DividerByTwoImageFilter.h,v $
+  Module:    $RCSfile: DividerImageFilter.h,v $
   Language:  C++
-  Date:      $Date: 2005/09/25 01:11:06 $
-  Version:   $Revision: 1.2 $
+  Date:      $Date: 2005/09/25 01:59:15 $
+  Version:   $Revision: 1.1 $
 
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
@@ -14,19 +14,17 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef DividerByTwoImageFilter_h
-#define DividerByTwoImageFilter_h
+#ifndef DividerImageFilter_h
+#define DividerImageFilter_h
 
 #include "itkUnaryFunctorImageFilter.h"
 
 namespace otb
 {
   
-/** \class DividerByTwoImageFilter
- * \brief This is a pixel-wise filter that divides by two every
- * pixel in the input image. 
- *
- * \ingroup IntensityImageFilters  Multithreaded
+/** \class DividerImageFilter
+ * \brief This is a pixel-wise filter that divides every
+ * pixel in the input image by a user-provided number. 
  */
 namespace Functor {  
   
@@ -36,15 +34,21 @@ class Divider
 public:
   Divider() {}
   ~Divider() {}
+  typedef typename itk::NumericTraits<TInput>::RealType  InputRealType;
   inline TOutput operator()( const TInput & A )
-  {
-    typedef typename itk::NumericTraits<TInput>::RealType  RealType;
-    return static_cast<TOutput>( RealType( A ) / 2.0 );
-  }
+    {
+    return static_cast<TOutput>( InputRealType( A ) / m_Divisor );
+    }
+  void SetDivisor( const InputRealType & divisor )
+    {
+    m_Divisor = divisor;
+    }
+private:
+  InputRealType m_Divisor;
 }; 
 }
 template <class TInputImage, class TOutputImage>
-class ITK_EXPORT DividerByTwoImageFilter :
+class ITK_EXPORT DividerImageFilter :
     public
 itk::UnaryFunctorImageFilter<TInputImage,TOutputImage, 
            Functor::Divider< typename TInputImage::PixelType, 
@@ -52,7 +56,7 @@ itk::UnaryFunctorImageFilter<TInputImage,TOutputImage,
 {
 public:
   /** Standard class typedefs. */
-  typedef DividerByTwoImageFilter  Self;
+  typedef DividerImageFilter  Self;
   typedef itk::UnaryFunctorImageFilter<TInputImage,TOutputImage, 
                  Functor::Divider< typename TInputImage::PixelType, 
                                    typename TOutputImage::PixelType> > Superclass;
@@ -62,12 +66,23 @@ public:
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
   
+  /** Explicit typedef for the FunctorType from the Superclass */
+  typedef typename  Superclass::FunctorType    FunctorType;
+
+  /** Get the divisor type from the functor type */
+  typedef typename  FunctorType::InputRealType  InputRealType;
+
+  void SetDivisor( const InputRealType & divisor )
+    {
+    this->GetFunctor().SetDivisor( divisor );
+    }
+
 protected:
-  DividerByTwoImageFilter() {}
-  virtual ~DividerByTwoImageFilter() {}
+  DividerImageFilter() {}
+  virtual ~DividerImageFilter() {}
 
 private:
-  DividerByTwoImageFilter(const Self&); //purposely not implemented
+  DividerImageFilter(const Self&); //purposely not implemented
   void operator=(const Self&); //purposely not implemented
 
 };

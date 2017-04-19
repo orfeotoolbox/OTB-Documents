@@ -1,5 +1,5 @@
 
-#include "DividerByTwoImageFilter.h"
+#include "DividerImageFilter.h"
 
 #include "otbImage.h"
 
@@ -8,18 +8,18 @@
 
 int main(int argc, char * argv []) 
 {
-  if( argc < 3 )
+  if( argc < 4 )
     {
     std::cerr << "Missing arguments" << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage outputImage" << std::endl;
+    std::cerr << " inputImage outputImage divisor" << std::endl;
     return 1;
     }
   
   typedef otb::Image< unsigned int,  2 > InputImageType;
-  typedef otb::Image< unsigned int, 2 >  OutputImageType;
+  typedef otb::Image< unsigned int, 2 > OutputImageType;
 
-  typedef otb::DividerByTwoImageFilter< 
+  typedef otb::DividerImageFilter< 
                               InputImageType, 
                               OutputImageType 
                                             > FilterType;
@@ -37,6 +37,12 @@ int main(int argc, char * argv [])
   
   filter->SetInput( reader->GetOutput() );
   writer->SetInput( filter->GetOutput() );
+
+  typedef FilterType::InputRealType    DivisorType;
+  
+  DivisorType divisor = atof( argv[3] );
+
+  filter->SetDivisor( divisor );
 
   try
     {

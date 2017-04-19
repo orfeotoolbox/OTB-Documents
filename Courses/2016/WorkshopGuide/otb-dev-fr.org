@@ -1,22 +1,64 @@
 ** Tuto pour futur développeur OTB                                   :slides:
 *** Objectifs et données
 **** Objectifs
+     - Savoir configurer et compiler un programme en C++ qui utilise la
+       librairie OTB avec l'outil CMake
+     - Savoir créer un programme C++ enchainant plusieurs étapes d'une chaine de
+       traitements d'images en utilisant l'API C++ de l'OTB. Les étapes à enchaineer:
+       - Lecture de l'image à partir d'un fichier en entrée
+       - Traitement de l'image (calcul de gradient)
+       - Ecriture de l'image de gradient dans un fichier en sortie
+     - Savoir coder son propre traitement unitaire dans un filter OTB
+     - Savoir créer une application OTB qui embarque sa chaine de traitements
+     - Savoir packager son traitement et son application custom dans un module externe OTB  
 
 **** Données
      
-  
+     Les données se trouvent dans le répertoire ~Data/otb_developers/~.
 
 *** Déroulement
-    
+    Le TP consiste en 5 exercices successifs. Pour chaque exercice 
+
+    Il s'agit de compléter 
+
+    Les parties du code à compléter sont localisés par le commentaire ~// TODO:~
+
 *** Liens utiles
+
+    - OTB Software Guide
+    - OTB module template
+    - Documentation ITK
+    - ITK CourseWare
 
 ** Tuto pour futur développeur OTB                                   :guide:
 *** Description                                                        :desc:
 **** Résumé
      
+     Au cours de ces exercices, nous allons apprendre à developper en utilisant
+     l'API en C++ de la librairie Orfeo ToolBox. Après avoir configurer et
+     compiler un programme informatique simple "Hello World" dont le but est de
+     faire la démonstration rapide de la configuration et de l'utilisation de
+     l'OTB, les exercices 
+ 
+     Pour l'exercice nous utiliserons
 **** Pré-requis
-     
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Environnement de développement (CMake, compilateur)
+     - SDK OTB
+     - Données téléchargées
 **** Objectifs
+
+     - Savoir configurer et compiler un programme en C++ qui utilise la
+       librairie OTB avec l'outil CMake
+     - Savoir créer un programme C++ enchainant plusieurs étapes d'une chaine de
+       traitements d'images en utilisant l'API C++ de l'OTB. Les étapes à enchaineer:
+       - Lecture de l'image à partir d'un fichier en entrée
+       - Traitement de l'image (calcul de gradient)
+       - Ecriture de l'image de gradient dans un fichier en sortie
+     - Savoir coder son propre traitement unitaire dans un filter OTB
+     - Savoir créer une application OTB qui embarque sa chaine de traitements
+     - Savoir packager son traitement et son application custom dans un module
+       externe OTB 
 
 *** Étapes                                                            :steps:
 
@@ -25,7 +67,6 @@
    
 
 **** Exercice 1: Hello World 
-
 
 **** Exercice 2: Pipeline OTB
 

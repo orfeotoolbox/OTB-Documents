@@ -1,5 +1,7 @@
 # This project is designed to be built outside the OTB source tree.
-PROJECT(Exercise2)
+PROJECT(Exercise3)
+
+cmake_minimum_required(VERSION 2.8)
 
 # Find OTB.
 FIND_PACKAGE(OTB)  
@@ -10,5 +12,8 @@ ELSE(OTB_FOUND)
       "Cannot build OTB project without OTB.  Please set OTB_DIR.")  
 ENDIF(OTB_FOUND)  
  
-ADD_EXECUTABLE(Pipeline Pipeline.cxx )  
-TARGET_LINK_LIBRARIES(Pipeline ${OTB_LIBRARIES}) 
+ADD_EXECUTABLE(DividerByTwo main.cxx )  
+TARGET_LINK_LIBRARIES(DividerByTwo ${OTB_LIBRARIES}) 
+
+ADD_EXECUTABLE(DivideImage main2.cxx )  
+TARGET_LINK_LIBRARIES(DivideImage ${OTB_LIBRARIES}) 

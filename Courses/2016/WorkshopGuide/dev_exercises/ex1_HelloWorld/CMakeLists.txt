@@ -1,6 +1,8 @@
 # This project is designed to be built outside the OTB source tree.
 PROJECT(Exercise1)
 
+cmake_minimum_required(VERSION 2.8)
+
 # Find OTB.
 FIND_PACKAGE(OTB)  
 IF(OTB_FOUND)  
