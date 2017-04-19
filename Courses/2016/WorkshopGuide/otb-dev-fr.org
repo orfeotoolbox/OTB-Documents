@@ -1,0 +1,51 @@
+** Tuto pour futur développeur OTB                                   :slides:
+*** Objectifs et données
+**** Objectifs
+
+**** Données
+     
+  
+
+*** Déroulement
+    
+*** Liens utiles
+
+** Tuto pour futur développeur OTB                                   :guide:
+*** Description                                                        :desc:
+**** Résumé
+     
+**** Pré-requis
+     
+**** Objectifs
+
+*** Étapes                                                            :steps:
+
+    Les données se trouvent dans le répertoire ~Data/otb_developers~.
+
+   
+
+**** Exercice 1: Hello World 
+
+
+**** Exercice 2: Pipeline OTB
+
+**** Exercice 3: Ecrire un filtre OTB
+
+**** Exercice 4: Ecrire une application OTB
+
+**** Exercice 5: Ecrire un module externe OTB
+
+*** Pour aller plus loin                                            :further:
+
+
+** Tuto pour futur développeur OTB                      :solutions:
+
+*** Exercice 1: Hello World 
+
+*** Exercice 2: Pipeline OTB
+
+*** Exercice 3: Ecrire un filtre OTB
+
+*** Exercice 4: Ecrire une application OTB
+
+*** Exercice 5: Ecrire un module externe OTB
