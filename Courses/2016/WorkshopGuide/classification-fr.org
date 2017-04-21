@@ -2,84 +2,76 @@
 *** Objectifs et Données
 **** Objectifs
       Les objectifs sont les suivants:
-     - Connaître les différentes applications constituant la procédure
-       de classification supervisée
+     - Savoir réaliser une classification supervisée
      - Savoir mesurer les performances de la classification
      - Connaître les post-traitements applicables à une classification
 **** Données
      Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
-     - ~Extract16bits~ contient la série multi-temporelle Landsat-8,
-     - ~training~ contient la donnée d'apprentissage au format /shp/,
-     - ~testing~ contient la donnée de validation au format /shp/.
+     - ~images~ contient la série multi-temporelle Sentinel2,
+     - ~references~ contient la donnée d'apprentissage et de validation au format /shp/,
+     - ~support~ contient différents fichiers utiles au TP (fichiers de style Qgis notamment)
      
 *** Déroulement
     Les étapes de l'exercice sont les suivantes:
-    1. Introduction aux données Landsat-8
-    2. Préparation des données
-    3. Calcul des statistiques des échantillons disponibles
-    4. Sélection des positions des échantillons
-    5. Calcul des attributs des échantillons
-    6. Entraînement du modèle
-    7. Classification
-    8. Post-traitement
-    9. Évaluation complète des performances
-    10. Production d'une carte en couleur
+    1. Introduction aux données
+    2. Réaliser un apprentissage mono-date
+    3. Indentifier la date la plus performante
+    4. Réaliser la classification et produire une carte en couleur
+    5. Evaluer la performance globale
+    6. Régulariser et mesurer le gain de performance
+    7. Réaliser une classification multi-date et mesurer le gain de performance
        
-*** Présentation des données Landsat-8
+*** Présentation des données Sentinel-2
 
-    *Résolution spatiale:* 30 mètres
-
-**** Dates :BMCOL:B_block:
-     :PROPERTIES:
-     :BEAMER_col: 0.5
-     :BEAMER_env: block
-     :END:
-
+    *Résolution spatiale:* 20 mètres (orignale: 10 mètres)
+    *Tuile:* T31TCJ (extrait)
 |------------|
-| 2014-03-09 |
-| 2014-04-01 |
-| 2014-04-17 |
-| 2014-05-28 |
-| 2014-06-20 |
-| 2014-07-31 |
-| 2014-09-01 |
-| 2014-10-03 |
-| 2014-10-26 |
+| 2016-06-07 |
+| 2016-07-07 |
+| 2016-08-06 |
+| 2016-09-05 |
+| 2016-10-05 |
 |------------|
 
-**** Bandes :BMCOL:B_block:
-     :PROPERTIES: 
-     :BEAMER_col: 0.5
-     :BEAMER_env: block
-     :END:
+*** Présentation des données Sentinel-2
 
- |---+---------------------|
- | 0 | Coastal aerosol     |
- | 1 | Blue                |
- | 2 | Green               |
- | 3 | Red                 |
- | 4 | Near Infrared (NIR) |
- | 5 | SWIR 1              |
- | 6 | SWIR 2              |
- |---+---------------------|
+    *Résolution spatiale:* 20 mètres (orignale: 10 mètres)
+    *Tuile:* T31TCJ (extrait)
+
+|---+----------------+------------+------------+--------------------|
+| # | Band name      | S2 band id | Wavelength | Initial resolution |
+|---+----------------+------------+------------+--------------------|
+| 0 | Blue           | B2         | 490 nm     | 10 m               |
+| 1 | Green          | B3         | 560 nm     | 10 m               |
+| 2 | Red            | B4         | 665 nm     | 10 m               |
+| 3 | NIR - Narrow 1 | B5         | 705 nm     | 20 m               |
+| 4 | NIR - Narrow 2 | B6         | 740 nm     | 20 m               |
+| 5 | NIR - Narrow 3 | B7         | 783 nm     | 20 m               |
+| 6 | NIR - Wide     | B8         | 842 nm     | 10 m               |
+| 7 | NIR - Narrow 4 | B8A        | 865 nm     | 20 m               |
+| 8 | SWIR 1         | B11        | 1610 nm    | 20 m               |
+| 9 | SWIR 2         | B12        | 2190 nm    | 20 m               |
+|---+----------------+------------+------------+--------------------|
 
 *** Présentation des données de référence
 
-|------+-----------------------------+------------|
-| Code | Nom                         | #polygones |
-|------+-----------------------------+------------|
-|   11 | Cultures d'été              | 7898       |
-|   12 | Cultures d'hiver            | 8171       |
-|   31 | Forêt feuilles caduques     | 867        |
-|   32 | Forêt feuilles persistantes | 125        |
-|   34 | Pelouses                    |         45 |
-|   36 | Lande ligneuse              |        386 |
-|   41 | Bâti                        | 4719       |
-|   51 | Eau                         |       1280 |
-|  211 | Prairie                     |       5647 |
-|  221 | Verger                      |        204 |
-|  222 | Vigne                       |        559 |
-|------+-----------------------------+------------|
+|------+-----------------------------+---------------------+--------------------|
+| Code | Nom                         | #polygones training | #polygones testing |
+|------+-----------------------------+---------------------+--------------------|
+|   10 | Cultures annuelles          | 3129                | 3078               |
+|   31 | Forêt feuilles caduques     | 176                 | 292                |
+|   32 | Forêt feuilles persistantes | 23                  | 29                 |
+|   34 | Pelouses                    | 2                   | 2                  |
+|   36 | Lande ligneuse              | 63                  | 38                 |
+|   41 | Bâti dense                  | 30                  | 33                 |
+|   42 | Bâti diffus                 | 326                 | 239                |
+|   43 | Zones industrielles         | 154                 | 212                |
+|   44 | Routes                      | 162                 | 114                |
+|   51 | Eau                         | 243                 | 332                |
+|  211 | Prairie                     | 320                 | 311                |
+|  221 | Verger                      | 227                 | 254                |
+|  222 | Vigne                       | 129                 | 97                 |
+|------+-----------------------------+---------------------+--------------------|
 
 *** Classification supervisée
     #+ATTR_LATEX: :float t :width \textwidth
@@ -114,7 +106,6 @@
 - $rappel = \frac{VP i}{T\sum ref. i}$
 - $Accuracy = \frac{\sum{VP i}}{Total}$
 - $Kappa = \frac{Accuracy - chance}{1-chance}$
-
   
 ** Classification supervisée pour les séries multi-temporelles        :guide:
 *** Description                                                        :desc:
@@ -122,7 +113,7 @@
 
      Cet exercice permet de se familiariser avec les applications de
      classification supervisée pixellique de l'Orfeo ToolBox, en
-     utilisant une série multi-temporelle Landsat-8 et un jeu de
+     utilisant une série multi-temporelle Sentinel-2 et un jeu de
      données de référence pour la supervision.
 
 **** Pré-requis
@@ -144,67 +135,76 @@
 *** Étapes                                                            :steps:
 
     Les données sont disponibles dans le répertoire ~Data/classification~, avec les sous-répertoires suivants:
-     - ~Extract16bits~ contient la série multi-temporelle Landsat-8,
-     - ~training~ contient la donnée d'apprentissage au format /shp/,
-     - ~testing~ contient la donnée de validation au format /shp/.
+     - ~images~ contient la série multi-temporelle Sentinel-2,
+     - ~references/training~ contient la donnée d'apprentissage au format /shp/,
+     - ~references/testing~ contient la donnée de validation au format /shp/.
 
-**** Présentation des données LANDSAT 8
+**** Présentation des données Sentinel-2
 
-    Dans l'archive de données, le dossier ~Data/classification/Extract16bits~ contient neuf
-    images Landsat-8 aux dates suivantes:
+    Dans l'archive de données, le dossier ~Data/classification/images~ contient 5
+    images Sentinel-2, extraites de la tuile T31TCJ, aux dates suivantes:
     
-     |------------|
-     | 2014-03-09 |
-     | 2014-04-01 |
-     | 2014-04-17 |
-     | 2014-05-28 |
-     | 2014-06-20 |
-     | 2014-07-31 |
-     | 2014-09-01 |
-     | 2014-10-03 |
-     | 2014-10-26 |
-     |            |
-     |------------|
+|------------|
+| 2016-06-07 |
+| 2016-07-07 |
+| 2016-08-06 |
+| 2016-09-05 |
+| 2016-10-05 |
+|------------|
 
-    Ces images sont toutes multispectrales avec les sept bandes du capteur OLI:
 
-    |---+---------------------|
-    | 0 | Coastal aerosol     |
-    | 1 | Blue                |
-    | 2 | Green               |
-    | 3 | Red                 |
-    | 4 | Near Infrared (NIR) |
-    | 5 | SWIR 1              |
-    | 6 | SWIR 2              |
-    |---+---------------------|
+    Ces images sont toutes multispectrales avec 10 bandes ré-échantillonnnées à 20 m:
 
-    Au total, c'est donc 63 bandes qui représentent chaque pixel.
-    Les images sont encodés sur 16 bits.
+|---+----------------+------------+------------+--------------------|
+| # | Band name      | S2 band id | Wavelength | Initial resolution |
+|---+----------------+------------+------------+--------------------|
+| 0 | Blue           | B2         | 490 nm     | 10 m               |
+| 1 | Green          | B3         | 560 nm     | 10 m               |
+| 2 | Red            | B4         | 665 nm     | 10 m               |
+| 3 | NIR - Narrow 1 | B5         | 705 nm     | 20 m               |
+| 4 | NIR - Narrow 2 | B6         | 740 nm     | 20 m               |
+| 5 | NIR - Narrow 3 | B7         | 783 nm     | 20 m               |
+| 6 | NIR - Wide     | B8         | 842 nm     | 10 m               |
+| 7 | NIR - Narrow 4 | B8A        | 865 nm     | 20 m               |
+| 8 | SWIR 1         | B11        | 1610 nm    | 20 m               |
+| 9 | SWIR 2         | B12        | 2190 nm    | 20 m               |
+|---+----------------+------------+------------+--------------------|
 
-    Ouvrez une image dans monteverdi et régler les bandes pour un affichage en
-    vrais couleurs (rouge, vert, bleu).
 
-    Ouvrez les neuf images et remarquez les changements.
+Au total, c'est donc 50 bandes qui représentent chaque pixel.
+Les images sont encodés sur 16 bits.
 
-    Les fichiers ~training/training.shp~ et
-    ~testing/testing.shp~ contiennent des
-    polygones qui définissent 11 classes sur l'ensemble de la scène:
+Ouvrez une image dans monteverdi et régler les bandes pour un affichage en
+vrais couleurs (rouge, vert, bleu).
 
-|------+-----------------------------+------------|
-| Code | Nom                         | #polygones |
-|------+-----------------------------+------------|
-|   11 | Cultures d'été              |       7898 |
-|   12 | Cultures d'hiver            |       8171 |
-|   31 | Forêt feuilles caduques     |        867 |
-|   32 | Forêt feuilles persistantes |        125 |
-|   34 | Pelouses                    |         45 |
-|   36 | Lande ligneuse              |        386 |
-|   41 | Bâti                        |       4719 |
-|   51 | Eau                         |       1280 |
-|  211 | Prairie                     |       5647 |
-|  221 | Verger                      |        204 |
-|  222 | Vigne                       |        559 |
-|------+-----------------------------+------------|
+Ouvrez les cinq images et remarquez les changements.
+
+*Note :* Le fichier de style ~support/images.qml~ peut être chargé
+dans QGis pour régler la dynamique et la composition colorée de chaque
+image à l'identique.
+
+Les fichiers ~references/training/training.shp~ 
+et
+~references/testing/testing.shp~ contiennent des
+polygones qui définissent 13 classes sur l'ensemble de la scène:
+
+|------+-----------------------------+---------------------+--------------------|
+| Code | Nom                         | #polygones training | #polygones testing |
+|------+-----------------------------+---------------------+--------------------|
+|   10 | Cultures annuelles          | 3129                | 3078               |
+|   31 | Forêt feuilles caduques     | 176                 | 292                |
+|   32 | Forêt feuilles persistantes | 23                  | 29                 |
+|   34 | Pelouses                    | 2                   | 2                  |
+|   36 | Lande ligneuse              | 63                  | 38                 |
+|   41 | Bâti dense                  | 30                  | 33                 |
+|   42 | Bâti diffus                 | 326                 | 239                |
+|   43 | Zones industrielles         | 154                 | 212                |
+|   44 | Routes                      | 162                 | 114                |
+|   51 | Eau                         | 243                 | 332                |
+|  211 | Prairie                     | 320                 | 311                |
+|  221 | Verger                      | 227                 | 254                |
+|  222 | Vigne                       | 129                 | 97                 |
+|------+-----------------------------+---------------------+--------------------|
 
 
     Ouvrez un des fichiers de polygones dans QGIS. La table d'attributs est
@@ -212,281 +212,126 @@
     Chaque label est visible et la liste est filtrable par expression
     SQL.
 
-    *Note :* Le fichier de style ~polygones.qml~ peut être chargé dans
+    *Note :* Le fichier de style ~support/polygons.qml~ peut être chargé dans
     QGIS pour coloriser les polygones en fonction de leur classe. 
 
     Les polygones sont répartis en deux ensembles: apprentissage (training) et
     validation (testing).
 
-**** Préparation des données
-
-     Pour ce TP nous allons utiliser trois types d'images:
-     1. Une image contenant les bandes originales pour toutes les dates (63 bandes)
-     2. Une image contenant les valeurs du NDVI pour chaque date (9 bandes)
-     3. Une image contenant les bandes originales et les valeurs du NDVI (72 bandes)
-
-
-     La première étape consiste à générer ces différentes images.
-
-
-     Utiliser l'application *ConcatenateImages* pour générer l'image
-     contenant toutes les bandes.
-
-
-     Utiliser l'application *RadiometricIndices* pour calculer le NDVI
-     pour chaque date. Utiliser ensuite l'application
-     *ConcatenateImages* pour générer l'image contenant l'ensemble des
-     valeurs du NDVI (profil).
-
-
-     Enfin, utiliser à nouveau l'application *ConcatenateImages* pour
-     générer l'image contenant l'ensemble des bandes originales et le
-     profil de NDVI.
-
-     *Notes :* En utilisant l'interface en ligne de commande des
-     applications, le calcul de l'indice NDVI pour chaque date peut se
-     faire à l'aide d'un script bash:
-
-     #+BEGIN_EXAMPLE
-     $ for f in *.tif; do \
-       otbcli_RadiometricIndices -channels.blue 2 -channels.green 3 \
-                                 -channels.red 4 -channels.nir 5 \
-                                 -in "$f" -out "${f%.*}_ndvi.tif" \
-                                 -list Vegetation:NDVI; done
-     #+END_EXAMPLE
-
-**** Calcul des statistiques des échantillons disponibles
-
+**** Réaliser un apprentissage mono-date
+     
      Nous allons maintenant utiliser l'application
-     *PolygonClassStatistics* afin de recenser les échantillons
-     disponibles pour chaque classe et chaque polygone des données
-     d'entraînement et de validation.
+     *TrainImagesClassifier* pafin de réaliser l'apprentissage
+     supervisé à partir des données d'entraînement disponibles dans
+     ~references/training/training.shp~. Pour commencer, nous allons
+     réaliser cet apprentissage avec uniquement l'image du 07.06.2016.
 
-     Cette application prend en paramètre:
-       - l'image qui sera utilisée pour extraire les échantillons. Ici, seule
-         l'emprise de l'image compte pour calculer les statistiques, on peut
-         donc utiliser n'importe quelle image du jeu de donnée.
-       - la donnée vecteur définissant les polygones à analyser (~training.shp~ pour
-         l'apprentissage, ~testing.shp~ pour la validation)
-       - le nom du champ définissant la classe dans ces données vecteur.
-     Elle produit en sortie un fichier XML résumant les informations récoltées.
-
-     En inspectant les données dans QGIS, repérez le champ qui sera
-     utilisé pour définir la classe.
-
-     Ouvrez les fichiers XML générés. Combien y-a-t-il d'échantillons
-     disponibles pour la classe ~prairie~ dans le jeu d'apprentissage
-     ? Et dans celui de validation ?
-
-     Combien d'échantillons contient le polygone dont l'identifiant
-     est 1081 dans le jeu d'apprentissage ?
-
-     Combien y-a-t-il d'échantillons, toutes classes confondues, dans
-     le jeu d'apprentissage ?
-
-     Quelle classe contient le moins d'échantillon dans le jeu
+     L'application *TrainImageClassifier* va échantillonner certains
+     pixels de l'image contenus dans les polygones de la vérité
+     terrain, afin de constituer un ensemble d'apprentissage
+     équilibré. Celui-ci est ensuite transmis à l'algorithme
      d'apprentissage.
 
-     *Note :* Même si cette application n'accède pas au contenu de
-     l'image (pixels), il faut tout de même lui spécifier l'image
-     support dont elle utilisera l'emprise.
+     Cette application prend en paramètres obligatoires:
+     - L'image dont les bandes seront utilisées comme descripteurs
+       pour l'algorithme de classification,
+     - La couche vecteur contenant les polygones de référence,
+     - Le nom du champ correspondant à la classe d'occupation du sol
+       dans cette couche vecteur,
+     - Le fichier sortie ou stocker le modèle appris (on peut
+       l'appeler ~model.rf~).
 
-**** Sélection des positions des échantillons
+     Régler certains paramètres optionnels comme suit:
+     - Le classifieur "Random Forests" pour comme algorithme
+       d'apprentissage,
+     - Le nombre d'arbre à 50,
+     - La profondeur maximale de l'arbre à 20,
+     - Le nombre minimum d'échantillons pour chaque noeud à 70,
+     - Le nombre de cluster à 13 (équivalent au nombre de classes)
 
-     Nous avons vu lors de l'étape précédente que les polygones
-     d'apprentissage contiennent beaucoup plus d'échantillons que
-     nécessaire à l'apprentissage du modèle. Nous allons maintenant
-     sélectionner un sous-ensemble de ces échantillons pour entraîner
-     notre modèle à l'aide de l'application *SampleSelection*.
+     Examiner les logs de l'application, en particulier la matrice de
+     confusion, la valeur du coefficient Kappa et les scores par
+     classe. Que constatez-vous ? En l'absence de polygones dédiés à
+     la validation, l'application utilise une partie des échantillons
+     générés pour la validation. Que peut on en déduire quand aux
+     performances affichées ?
 
-     Inspecter la documentation de l'application. Quels sont les
-     différentes stratégies possibles pour réaliser cette sélection ?
+     Refaire l'apprentissage, cette fois en utilisant les données de
+     validation ~reference/testing/testing.shp~ comme vecteur de
+     validation (vous donnez donc à l'application deux fichiers shp
+     différents). Que constatez vous ?
 
-     Nous allons utiliser la stratégie ~smallest~, qui permet de
-     limiter le nombre d'échantillon par classe à celui de la classe
-     la moins représentée. Nous générerons un jeu d'échantillons pour
-     l'apprentissage (à partir de ~training.shp~) et un pour la
-     validation (à partir de ~testing.shp~).
+**** Identifier la date la plus performante
 
-     L'application accepte comme paramètre l'image, la donnée vecteur
-     contenant les polygones, le nom du champ correspondant à la
-     classe dans cette donnée et le fichier de statistiques produit
-     précédemment. Elle génère un fichier vecteur contenant des
-     points, chaque point correspondant à un échantillon sélectionné.
+     Réitérer l'apprentissage pour chacune des dates. Quelle date
+     fournit la meilleure performance ? Le coefficient Kappa
+     change-t-il beaucoup ?
 
-     Combien d'échantillons au total ont été sélectionnés par classe
-     pour l'apprentissage ?
-
-     Ouvrir les fichiers de points ainsi généré dans QGIS. Quels sont les
-     attributs associés à chaque point ?
-
-     *Note :* Le fichier de style ~samples.qml~ peut être chargé dans
-     Qgis pour coloriser les points en fonction de leur classe. 
-
-     *Note :* Même si cette application n'accède pas au contenu de
-     l'image (pixels), il faut tout de même lui spécifier l'image
-     support dont elle utilisera l'emprise.
-     
-**** Calcul des attributs des échantillons
-
-     Maintenant que nous avons sélectionné les positions des
-     échantillons, nous allons leurs associer des attributs qui seront
-     utilisés pour l'apprentissage et la classification. Ce calcul des
-     attributs se fait à l'aide de l'application *SampleExtraction*,
-     qui à chaque point va associer la signature spectrale de l'image
-     sous-jacente.
-
-     Notez qu'en l'absence d'une sortie vecteur explicite,
-     l'application fonctionne en mode mise à jour de la donnée vecteur
-     d'entrée, c'est à dire des attributs lui seront ajoutés.
-     
-     L'application prend en paramètre l'image à utiliser ainsi que le
-     fichier de points à enrichir. Elle permet également de spécifier
-     le nom des champs qui seront générés. Ainsi si l'on spécifie
-     comme préfixe ~band_~, alors les champs s'appelleront ~band_0~,
-     ~band_1~, etc ...
-
-     Nommer les bandes de l'image avec le préfixe ~band_~ et le profil
-     de NDVI avec le préfixe ~ndvi_~
-
-     Utilisez l'application pour ajouter les attributs correspondant
-     aux bandes de l'image et au profil de NDVI, pour le jeu
-     d'apprentissage et le jeu de validation.
-
-**** Entraînement du modèle
-
-     Nos échantillons sont prêts, il est à présent temps d'entraîner
-     notre modèle. Pour cela nous allons utiliser l'application
-     *TrainVectorClassifier*, qui va lire les fichiers de points avec
-     leurs attributs générés précédemment, et les utiliser pour
-     réaliser l'apprentissage et la validation.
-
-     Pour l'ensemble des expérience de cette section, nous allons
-     utiliser un modèle de type *Random Forest* (rf), avec une
-     profondeur maximale d'arbre de 20.
-
-     Il faut à nouveau donner en paramètre à l'application le nom du
-     champ définissant la classe. L'application accepte également en
-     paramètre le fichier de point décrivant les échantillons et un
-     fichier de sortie correspondant au modèle appris.
-
-     Réaliser un premier apprentissage en utilisant uniquement la
-     première date (~band_0~ à ~band_6~), et sans spécifier de fichier
-     de validation.
-
-     Quelle performance (coefficient Kappa) obtenez vous ? Cette
-     performance vous parait elle réaliste ? Comment a-t-elle été
-     évaluée ?
-
-     Réaliser le même apprentissage, cette fois ci en ajoutant un fichier
-     de validation que vous avez calculé à l'étape
-     précédente. Qu'observez vous ?
-
-     A l'aide de l'application d'apprentissage, il est aisé de tester
-     des combinaisons d'attributs pour observer leur influence sur les
-     performances:
-     - Quelle date fourni la meilleure performance individuelle ?
-     - La bande bleu côtier a-t-elle un intérêt pour la classification
-       ?
-     - Quelle est la performance en utilisant toutes les bandes
-       spectrales ?
-     - Quelle est la performance du profil de ndvi seul ?
-     - Quelle est la performance en utilisant toutes les bandes et le
-       profil de NDVI ?
-     - Dans ce dernier cas, analyser les performances par classe
-
-
-     *Notes :* En utilisant l'interface en ligne de commande des
-     applications, il est possible de définir des variables bash pour les
-     ensembles d'attributs:
-
-     #+BEGIN_EXAMPLE
-         date1=`for i in $(seq 0 6); do printf "band_$i "; done`
-
-         date2=`for i in $(seq 7 13); do printf "band_$i "; done`
-
-         date3=`for i in $(seq 14 20); do printf "band_$i "; done`
-
-         date4=`for i in $(seq 21 27); do printf "band_$i "; done`
-
-         date5=`for i in $(seq 28 34); do printf "band_$i "; done`
-
-         date6=`for i in $(seq 35 41); do printf "band_$i "; done`
-
-         date7=`for i in $(seq 42 48); do printf "band_$i "; done`
-
-         date8=`for i in $(seq 49 55); do printf "band_$i "; done`
-
-         date9=`for i in $(seq 56 62); do printf "band_$i "; done`
-
-         date1_nocb=`for i in $(seq 1 6); do printf "band_$i "; done`
-
-         bands=`for i in $(seq 0 62); do printf "band_$i "; done`
-
-         bands_nocb=`for i in $(seq 0 62); do if [ $(($i % 7)) -ne 0 ]; \
-                     then printf "band_$i "; fi done`
-
-         ndvis=`for i in $(seq 0 8); do printf "ndvi_$i "; done`
-     #+END_EXAMPLE
-
-     Ensuite, on peut directement utiliser ces variables en paramètres
-     de l'application ~-feat ${bands} ${ndvis}~.
-
-**** Classification
+**** Réaliser la classification et produire une carte en couleur
      
      Utiliser l'application *ImageClassifier* pour produire la carte
-     de classification correspondant à l'ensemble des bandes (bandes
-     originales et NDVI). Attention: le modèle doit avoir été entraîné
-     avec le même ordre de bandes que celui utilisé pour la
-     classification.
+     de classification correspondant à la meilleure date
+     (celle du 05.09.2016). Attention à bien utiliser le fichier de modèle
+     correspondant entraîné à partir de cette date.
 
-**** Post-traitement de la classification
+     La sortie de l'étape précédente est une image .tif qui associe à
+     chaque pixel une classe. Pour visualiser cette image, l'application
+     *ColorMapping* permet d'associer à chaque label une couleur RGB et de
+     générer une image de visualisation.  
+     
+     Utilisez le mode *custom* l'application *ColorMapping* avec la table de couleur fournie
+     ~support/color_map.txt~ pour produire une carte colorisée.
+     
+     # TODO: vérifier si la note suivante est toujours nécessaire ?
+     *Note :* Il se peut que l'image ne s'affiche pas correctement dans
+     Qgis, du fait d'une valeur non renseignée (no data) par défaut enregistrée dans le
+     fichier. La prise en compte du nodata peut être désactivé dans les
+     propriétés de la couche dans Qgis.
+     
+**** Évaluer la performance globale
 
-  Nous allons utiliser l'application *ClassificationMapRegularization*. Elle
-  filtre une image classifiée en utilisant un vote majoritaire local.
+     Nous allons maintenant utiliser l'application
+     *ComputeConfusionMatrix* afin de calculer la performance globale
+     de la classification. Par rapport à l'évaluation des
+     performances réalisée lors de l'apprentissage, cette application
+     permet de:
+     - Prendre en compte l'ensemble des pixels disponibles dans la donnée de référence,
+     - Évaluer la performance d'une carte de classification qui a été
+    retraitée (par exemple avec une régularisation).
+    
+    Le paramètre ~ref.vector.field CODE~ est nécessaire. Il indique le
+    nom du champ contenant le numéro de label.
 
-  Les paramètres à régler sont:
+    Calculer la performance globale de la classification. Que
+     constatez vous par rapport à la performance évaluée lors de la
+     phase d'entraînement ? Comment expliquer ce phénomène ?
+     
+**** Régulariser et mesurer le gain de performance
+
+     Nous allons utiliser l'application *ClassificationMapRegularization*. Elle
+     filtre une image classifiée en utilisant un vote majoritaire local.
+
+     Les paramètres à régler sont:
 
   - ip.radius 1 :: Rayon de la zone participant au vote
   - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur existante.
 
-  Filtrez le résultat de la classification précédente (neuf dates et
-  profil NDVI).
+  Filtrez le résultat de la classification précédente. Evaluer la
+  performance globale de la carte de classification filtrée. Que
+  constatez-vous ?
 
-**** Évaluation complète des performances
+**** Réaliser une classification multi-date et mesurer le gain de performance
 
-  Nous allons maintenant utiliser l'application
-  *ComputeConfusionMatrix* afin de calculer la performance complète de
-  notre chaîne de classification. Par rapport à l'évaluation des
-  performances réalisée lors de l'apprentissage, cette application
-  permet de:
-  - Prendre en compte l'ensemble des pixels disponibles dans la donnée de référence,
-  - Évaluer la performance d'une carte de classification qui a été
-    retraitée (par exemple avec une régularisation).
+     Nous allons maintenant utiliser l'ensemble des dates pour la
+     classification. A cet effet, vous pouvez utiliser le fichier
+     ~images/all.vrt~ qui contient l'ensemble des bandes de chaque
+     dates concaténées (c'est donc une image à 50 bandes). 
 
-  Le paramètre ~ref.vector.field CODE~ est nécessaire. Il indique le
-  nom du champ contenant le numéro de label.
+     Rejouer l'ensemble du TP avec cette image de 50 bandes. Quel est
+     l'apport de la série multi-temporel pour la performance de
+     classification ?
 
-   Calculer la performance complète de la chaîne, avec et sans
-   régularisation. 
-   
-   - Que constatez vous par rapport à la performance évaluée lors de
-     la phase d'entraînement ? Comment expliquer ce phénomène ?
-   - Quel est l'impact de la régularisation sur les performances ?
-  
-**** Production d'une carte de classification en couleur
-La sortie de l'étape précédente est une image .tif qui associe à
-chaque pixel une classe. Pour visualiser cette image, l'application
-*ColorMapping* permet d'associer à chaque label une couleur RGB et de
-générer une image de visualisation.  
-
-Utilisez le mode *custom* l'application *ColorMapping* avec la table de couleur fournie
-~color_map.txt~ pour produire une carte colorisée.
-
-*Note :* Il se peut que l'image ne s'affiche pas correctement dans
-Qgis, du fait d'une valeur non renseignée (no data) par défaut enregistrée dans le
-fichier. La prise en compte du nodata peut être désactivé dans les
-propriétés de la couche dans Qgis.
+     Comparez dans Qgis les deux cartes de classification régularisées.
 
 **** Pour aller plus loin
 
@@ -496,6 +341,11 @@ propriétés de la couche dans Qgis.
      2) A l'aide de Qgis, fusionner dans la donnée de référence les
         classes pelouse et lande ligneuse. Quelle performance obtenez
         vous ?
+
+     3) L'application ~TrainImagesClassifier~ contient également un
+        algorithme de classification non-supervisée (Shark
+        KMeans). Comparer le résultat d'une classification supervisée
+        et non-supervisée avec la même image. 
 
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
 

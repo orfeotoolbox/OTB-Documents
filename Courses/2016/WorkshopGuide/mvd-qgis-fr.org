@@ -11,8 +11,8 @@
 **** Données
      Les données utilisées se trouvent dans les répertoires suivant:
      - ~Data/preprocessing~ (extrait Pléiades)
-     - ~Data/classification/Extract16bits/~ (séries temporelle Landsat-8)
-     - ~Data/classification/training/~ (fichier vecteur shp)
+     - ~Data/classification/images/~ (séries temporelle Sentinel-2)
+     - ~Data/classification/references/~ (fichier vecteur shp)
 
 *** Déroulement
 
@@ -134,8 +134,8 @@
 
 **** Visualiser une pile d'images dans Monteverdi
 
-     Ouvrez les 9 images Landsat-8 présentes dans le dossier
-     ~Data/classification/Extract16bits/~.
+     Ouvrez les 5 images Sentinel-2 présentes dans le dossier
+     ~Data/classification/images/~.
 
      Modifiez les bandes visualisées pour afficher les couleurs
      naturelles (rouge: bande 3, vert: bande 2, bleu: bande
@@ -151,7 +151,7 @@
 
 **** Visualiser une image dans QGIS
 
-     Ouvrir la première date Landsat-8 dans QGIS. Utilisez le menu
+     Ouvrir la première date Sentinel-2 dans QGIS. Utilisez le menu
      contextuel de la couche pour aller dans /Propriétés/ puis dans
      l'onglet /Style/ et régler l'affichage (dynamique et bandes) pour
      le rendre équivalent à celui de Monteverdi. Toujours avec le
@@ -168,7 +168,7 @@
 **** Visualiser une donnée vecteur dans QGIS
 
      Ouvrez la donnée vecteur ~training.shp~ située dans le dossier
-     ~Data/classification/training/~.
+     ~Data/classification/reference/training/~.
 
      En utilisant le menu contextuel, ouvrez les /Propriétés/ puis
      l'onglet /Style/. En utilisant un rendu /Catégorisé/ en fonction
