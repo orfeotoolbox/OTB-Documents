@@ -244,10 +244,10 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
      Régler certains paramètres optionnels comme suit:
      - Le classifieur "Random Forests" pour comme algorithme
        d'apprentissage,
-     - Le nombre d'arbre à 50,
+     - Le nombre d'arbres à 50,
      - La profondeur maximale de l'arbre à 20,
      - Le nombre minimum d'échantillons pour chaque noeud à 70,
-     - Le nombre de cluster à 13 (équivalent au nombre de classes)
+     - Le nombre de clusters à 13 (équivalent au nombre de classes)
 
      Examiner les logs de l'application, en particulier la matrice de
      confusion, la valeur du coefficient Kappa et les scores par
@@ -261,11 +261,18 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
      validation (vous donnez donc à l'application deux fichiers shp
      différents). Que constatez vous ?
 
+     Refaire l'apprentissage, en désactivant l'option
+     ~cleanup~. Regardez les données intermédiaires qui ont été
+     générées. A quoi correspondent elles ?
+
 **** Identifier la date la plus performante
 
      Réitérer l'apprentissage pour chacune des dates. Quelle date
      fournit la meilleure performance ? Le coefficient Kappa
      change-t-il beaucoup ?
+
+     Rejouer l'apprentissage correspondant à la meilleure date afin de
+     conserver le fichier de modèle ~model.rf~.
 
 **** Réaliser la classification et produire une carte en couleur
      
@@ -349,446 +356,215 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
 
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
 
-*Note :* Dans cette solution, la variable d'environnement ~${LS8DATA}~
-contient le chemin vers le répertoire /classification/ des données
-fournies avec le TP.
+Dans la correction suivante, la variable d'environnement ~$DATA~
+correspond au répertoire contenant les données du TP ~TODO~.
 
-*** Préparation des données
+*** Réaliser un apprentissage mono-date
 
-    Tout d'abord, nous concaténons l'ensemble des bandes pour toutes
-    les dates:
+L'apprentissage mono-date se réalise avec la commande suivante :
 
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il ${LS8DATA}/LANDSAT_*.tif -out alldates.tif uint16
-    #+END_EXAMPLE
-
-    Ensuite, nous calculons pour chaque date le NDVI correspondant:
-    
-    #+BEGIN_EXAMPLE
-    $ cd ${LS8DATA}
-    $ for f in LANDSAT_*.tif; do \
-        otbcli_RadiometricIndices -channels.blue 2 -channels.green 3 \
-                                  -channels.red 4 -channels.nir 5    \
-                                  -in "$f" -out "NDVI_$f" -list Vegetation:NDVI; done
-    #+END_EXAMPLE
-
-    Nous pouvons ensuite créer le profil de NDVI:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il ${LS8DATA}/NDVI_*.tif -out ndvis.tif
-    #+END_EXAMPLE
-
-    Ainsi que l'image contenant l'ensemble des bandes et le profil de
-    NDVI:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il alldates.tif ndvis.tif -out all.tif
-    #+END_EXAMPLE
-    
-*** Calcul des statistiques des échantillons disponibles
-
-    Le calcul des statistiques des échantillons disponibles se réalise
-     de la manière suivante :
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
-                                    -field CODE -vec training/training.shp \
-                                    -out training_stats.xml
-
-    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
-                                    -field CODE -vec testing/testing.shp \
-                                     -out testing_stats.xml
-    #+END_EXAMPLE
-
-    En inspectant les fichiers XML ~training_stats.xml~ et
-    ~validation_stats.xml~, on peut trouver les informations suivantes:
-
-    Dans le fichier ~training_stats.xml~:
-
-    #+BEGIN_EXAMPLE
-    <Statistic name="samplesPerClass">
-        <StatisticMap key="11" value="56774" />
-        <StatisticMap key="12" value="59347" />
-        <StatisticMap key="211" value="25317" />
-        <StatisticMap key="221" value="2087" />
-        <StatisticMap key="222" value="2080" />
-        <StatisticMap key="31" value="8149" />
-        <StatisticMap key="32" value="1029" />
-        <StatisticMap key="34" value="3770" />
-        <StatisticMap key="36" value="941" />
-        <StatisticMap key="41" value="2630" />
-        <StatisticMap key="51" value="11221" />
-    </Statistic>
-    #+END_EXAMPLE
-
-    La classe prairie (label 211) possède donc 25 317 échantillons
-    disponibles.  On peut également noter que le jeux d'apprentissage
-    contient 173 345 échantillons, et que la classe lande ligneuse
-    (label 36) est la classe qui en contient le moins, avec seulement
-    941 échantillons.
-
-    Le polygone dont l'identifiant est 1081 dans le jeu
-    d'apprentissage contient 342 échantillons:
-
-    #+BEGIN_EXAMPLE
-    <StatisticMap key="1081" value="342" />
-    #+END_EXAMPLE
-
-    Dans le fichier ~testing_stats.xml~:
-
-    #+BEGIN_EXAMPLE
-    <Statistic name="samplesPerClass">
-        <StatisticMap key="11" value="134590" />
-        <StatisticMap key="12" value="127548" />
-        <StatisticMap key="211" value="59052" />
-        <StatisticMap key="221" value="4820" />
-        <StatisticMap key="222" value="6393" />
-        <StatisticMap key="31" value="18620" />
-        <StatisticMap key="32" value="2121" />
-        <StatisticMap key="34" value="9351" />
-        <StatisticMap key="36" value="2812" />
-        <StatisticMap key="41" value="6110" />
-        <StatisticMap key="51" value="28858" />
-    </Statistic>
-    #+END_EXAMPLE
-
-    La classe prairie (label 211) possède donc 59 052 échantillons
-    disponibles.
-
-*** Sélection des positions des échantillons
-
-    D'après la documentation de l'application, les différentes
-    stratégies possibles pour pour réaliser l'échantillonnage des
-    données d'apprentissage sont :
-    - byclass :: Indiquer pour chaque classe le nombre d'échantillons
-                 à sélectionner (par le biais d'un fichier)
-    - constant :: Indiquer un nombre constant d'échantillons appliqué
-                  à toutes les classes
-    - smallest :: Sélectionner un nombre constant d'échantillons
-                  appliqué à toute les classes de sorte que la classe
-                  la plus petite soit échantillonnée complètement.
-    - all :: Sélectionner tous les échantillons. 
-
- 
-    Pour réaliser la sélection des échantillons avec la stratégie
-    /smallest/, on procède comme suit:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_SampleSelection -in alldates.tif -field CODE \
-                             -vec training/training.shp   \
-                             -out training_samples.sqlite \
-                             -instats training_stats.xml -strategy smallest
-    #+END_EXAMPLE
-
-  Voici l'échantillonnage réalisé par l'application (chiffres extraits
-  des logs):
-    
-  |-----------+-----------------+--------------+-----------|
-  | className | requiredSamples | totalSamples |      rate |
-  |-----------+-----------------+--------------+-----------|
-  |        11 |             941 |        56774 | 0.0165745 |
-  |        12 |             941 |        59347 | 0.0158559 |
-  |       211 |             941 |        25317 | 0.0371687 |
-  |       221 |             941 |         2087 |  0.450886 |
-  |       222 |             941 |         2080 |  0.452404 |
-  |        31 |             941 |         8149 |  0.115474 |
-  |        32 |             941 |         1029 |   0.91448 |
-  |        34 |             941 |         3770 |  0.249602 |
-  |        36 |             941 |          941 |         1 |
-  |        41 |             941 |         2630 |  0.357795 |
-  |        51 |             941 |        11221 | 0.0838606 |
-  |-----------+-----------------+--------------+-----------|
-
-  Au total, 10 351 échantillons ont été sélectionnés. Si on ouvre la
-  couche dans Qgis, on peut se faire une idée de l'échantillonnage qui
-  a été réalisé.
-  
-  #+ATTR_LATEX: :width 0.9\textwidth
-  [[file:Images/samples_selection.png]]
-
-  Les attributs associés à chaque point sont les attributs du fichier
-  vecteur d'origine ~training.shp~, ainsi que l'attribut ~originfid~
-  qui correspond à l'identifiant du polygone ou l'échantillon a été
-  sélectionné.
-
-*** Calcul des attributs des échantillons
-
-    Pour calculer les attributs associés à chaque échantillon, on
-    procède de la manière suivante. Pour les bandes de l'image:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_SampleExtraction -in alldates.tif               \
-                              -vec training_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name band_    \
-                              -field code
-
-    $ otbcli_SampleExtraction -in ndvis.tif                  \
-                              -vec training_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name ndvi_    \
-                              -field code
-    #+END_EXAMPLE
-
-    On procède de la même manière pour le jeu de validation.
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_SampleExtraction -in alldates.tif               \
-                              -vec testing_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name band_    \
-                              -field code 
-
-    $ otbcli_SampleExtraction -in ndvis.tif                  \
-                              -vec testing_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name ndvi_    \
-                              -field code 
-    #+END_EXAMPLE
-
-*** Entraînement du modèle
-
-    Nous utiliserons dans cette partie les variables shell proposées
-    dans l'énoncé.
-
-    L'apprentissage se réalise de la manière suivante:
-    
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite \
-                                   -cfield code -classifier rf    \
-                                   -classifier.rf.max 20          \
-                                   -io.out model.rf -feat ${date1}
-    #+END_EXAMPLE
-
-    Cette première exécution donne les résultats suivants:
-
-    #+BEGIN_EXAMPLE
-    Confusion matrix (rows = reference labels, columns = produced labels):
-      [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
-[ 11]   861    28     2     0     8     5     3     0     5     6    24 
-[ 12]    16   889     3     1     3     2     1     2     5    12     7 
-[ 31]     8    10   873     5     9    19     2     0     6     9     0 
-[ 32]     4     0    21   895     6     3     2     3     1     4     2 
-[ 34]    12    20    39     9   785    19     8     1    19    17    12 
-[ 36]    10    30    46    11    21   771     8     1    20     9    14 
-[ 41]     4    13     8     4     5     1   862     3    16    17     8 
-[ 51]     2    11     2     0     4     2     5   906     2     7     0 
-[211]     2    27    35     5    21    32     2     1   782    15    19 
-[221]    13    14     5     3     7     4     8     6    11   845    25 
-[222]    15    24     2     0     2     8     0     0    16    14   860 
-
-[...]
-
-Global performance, Kappa index: 0.891296 
-    #+END_EXAMPLE
-    
-    La raison pour laquelle le coefficient Kappa est si élevé malgré
-    l'emploi d'une unique date d'acquisition est qu'en l'absence
-    d'échantillons de validation, l'application évalue les
-    performances en utilisant le jeu d'apprentissage. Pour obtenir une
-    évaluation plus réaliste des performances, on peut utiliser pour
-    la validation le fichier ~testing_samples.sqlite~ que nous avons
-    créé précédemment:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite   \
-                                   -valid.vd testing_samples.sqlite \
-                                   -cfield code -classifier rf      \
-                                   -classifier.rf.max 20            \
-                                   -io.out model.rf -feat ${date1}
-    #+END_EXAMPLE
-    
-
-    Dans ce cas, les résultats sont les suivants:
-
-    
-    #+BEGIN_EXAMPLE
-     [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
-[ 11]  1504   285     9     1    32    40    43     3    43    36   126 
-[ 12]   183  1619    13     8    15    25     9     5    59    77   108 
-[ 31]    26    60  1463    89    76   237    38    30    33    65     4 
-[ 32]    47    54   362  1478    49    31    23    16    26    29     6 
-[ 34]    45    45   364   230   252   620    21    19   270   110   145 
-[ 36]    85   164   232    65   421   647    27     6   214   135   125 
-[ 41]    49    79    51    32    49    20  1559    29    61   128    64 
-[ 51]    27    39    26    17     7    19    44  1919     6    17     0 
-[211]    21   131   113    29   274   143    11     6  1086    66   241 
-[221]    93   165   113    93   201   148    95    12   196   771   234 
-[222]   164   229     8     4    91    58    10     1   181   123  1252
-
-[...]
-
-Global performance, Kappa index: 0.538822
+#+BEGIN_EXAMPLE
+$ otbcli_TrainImagesClassifier -io.il $DATA/images/20160607_T31TCJ_ROI_20m.tif \
+                               -io.vd $DATA/references/training/training.shp   \
+                               -io.out model.rf                                \
+                               -sample.vfn CODE -classifier rf                 \
+                               -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+                               -classifier.rf.cat 13
 #+END_EXAMPLE
 
-Ces résultats montrent que les performances sont moyennes en utilisant
-une unique date.
+Cette première exécution donne les résultats suivants :
+#+LATEX: \begin{small}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [10]  [31]  [32]  [34]  [36]  [41]  [42 ] [43]  [44]  [51] [211] [221] [222] 
+[ 10]   374     3     0    26     1     6    19    11     2     0    13    10    13 
+[ 31]     0   436     5     7    14     0     0     0     0     0     7     8     1 
+[ 32]     3    16   420     6    15     0     0     0     0     0    12     3     3 
+[ 34]    30    16    21   268    41     1    13     2     1     0    27    18    40 
+[ 36]    10     6    13    31   336     0     7     0     0     0    42    13    20 
+[ 41]     5     0     0     0     0   388    49    21    13     0     0     1     1 
+[ 42]    31     1     3    10     3    44   288    36    22     0     0     5    35 
+[ 43]    18     0     2    11     1    37    59   227   114     1     0     7     1 
+[ 44]     7     0     3     3     2     5    10    71   371     0     0     5     1 
+[ 51]     0     0     6     0     0     0     0     0     1   470     0     1     0 
+[211]    19     7    13    41    64     0     3     0     0     0   266    14    51 
+[221]    18    18     8    13    23     1    11     4     3     0    38   332     9 
+[222]    22     0     1    30    12     0    14     0     0     0    16     4   379
 
-Pour tester différentes configurations, on peut utiliser les variables
-définies dans l'énoncé et les passer au paramètre ~-feat~. Par exemple
-pour tester les deux premières dates, on peut utiliser ~-feat ${date1}
-${date2}~.
+[...]
 
-**** Quelle date fournit la meilleure performance individuelle ?
+Global performance, Kappa index: 0.710774
 
-La meilleure date est la troisième date (2014-04-17), avec un Kappa de 0.578.
+#+END_EXAMPLE
+#+Latex: \end{small}
+
+Ces performances sont cependant très optimistes, car les échantillons
+utilisés pour les estimer proviennent des mêmes polygones. Pour
+obtenir une évaluation plus réaliste des performances, il faut
+utiliser un jeu de validation différent :
+
+#+BEGIN_EXAMPLE
+$ otbcli_TrainImagesClassifier -io.il $DATA/images/20160607_T31TCJ_ROI_20m.tif \
+                               -io.vd $DATA/references/training/training.shp   \
+                               -io.valid $DATA/references/testing/testing.shp  \
+                               -io.out model.rf                                \
+                               -sample.vfn CODE -classifier rf                 \
+                               -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+                               -classifier.rf.cat 13
+#+END_EXAMPLE
+
+Ce qui donne les résultats suivants :
+
+#+LATEX: \begin{small}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [10]  [31]  [32]  [34]  [36]  [41]  [42]  [43]  [44]  [51] [211] [221] [222] 
+[ 10]   795     6     6    47     9     4    13    18     0     0    22    10    23 
+[ 31]     1   777    38    14    42     0     0     0     0     1    59    21     0 
+[ 32]     1    34   865     3    12     2    14     1     1     0     2    15     3 
+[ 34]    50   273   120    72    51     0     8     0     0    49   105   157    68 
+[ 36]    23    27    45   186   336     0     1     1     0     0   215    79    40 
+[ 41]     4     0     1     1     0   665   176    53    49     0     1     1     2 
+[ 42]    20     1     3    11     2    98   652    75    43     0     5     8    35 
+[ 43]    21     0     1    19     5    44   207   464   146     1     8    17    20 
+[ 44]     7     0     1     3     0    13    23   240   662     0     0     4     0 
+[ 51]     0     0     1     0     0     0     0     3     1   945     0     3     0 
+[211]    81    21    17    81   112     1    16     4     0     0   507    40    73 
+[221]    46    51    22    43    42     0    18    10     2     2   107   541    69 
+[222]    70     0     0    68    23     0    71     1     0     0    45    11   664
+
+[...]
+
+Global performance, Kappa index: 0.611403
+#+END_EXAMPLE
+#+Latex: \end{small}
+
+Si l'on désactive l'option ~cleanup~ en ajoutant le paramètre ~-cleanup
+0~, l'application n'efface pas les sorties intermédiaires générées.
+
+Les fichiers XML suivants contiennent les statistiques de nombre
+d'échantillons disponibles par classe pour le jeu d'apprentissage et
+celui de validation.
+- ~model.rf_statsTrain_1.xml~
+- ~model.rf_statsValid_1.xml~
+
+Les fichiers Shapefile suivants contiennent les échantillons utilisés
+pour l'apprentissage et pour la validation:
+- ~model.rf_samplesTrain_1.shp~
+- ~model.rf_samplesValid_1.shp~
+
+Ces fichiers contiennent des points correspondant aux échantillons
+sélectionnés dans les polygones d'apprentissage. Chaque point contient
+un ensemble de primitives qui correspond aux radiométries mesurées à
+cet endroit dans l'image. Ces deux fichiers peuvent être affichés dans
+Qgis.
+
+*** Identifier la date la plus performante
+
+
+La commande suivante permet de réaliser l'apprentissage pour chaque
+date. 
+
+#+BEGIN_EXAMPLE
+$ for f in $DATA/images/*.tif; do echo $f;            \
+      otbcli_TrainImagesClassifier -io.il $f          \
+      -io.vd $DATA/references/training/training.shp   \
+      -io.valid $DATA/references/testing/testing.shp  \
+      -sample.vfn CODE -classifier rf                 \
+      -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+      -classifier.rf.cat 13 -io.out model.rf   | grep Kappa; done
+#+END_EXAMPLE
+
+Les coefficients Kappa par date généré par cette commande sont les
+suivants :
 
 |------------+----------|
 |       Date |    Kappa |
 |------------+----------|
-| 2014-03-09 | 0.538822 |
-| 2014-04-01 | 0.560085 |
-| 2014-04-17 | 0.578801 |
-| 2014-05-28 |  0.56494 |
-| 2014-06-20 | 0.560509 |
-| 2014-07-31 | 0.540943 |
-| 2014-09-01 | 0.555276 |
-| 2014-10-03 | 0.530006 |
-| 2014-10-26 | 0.494788 |
+| 2016-06-07 | 0.609741 |
+| 2016-07-07 | 0.615163 |
+| 2016-08-06 | 0.593739 |
+| 2016-09-05 | 0.614463 |
+| 2016-10-05 | 0.628716 |
 |------------+----------|
 
-Ce tableau a été obtenu avec le script bash suivant:
+On constate que ce coefficient ne varie pas beaucoup, mais que la date
+du ~2016-10-05~ obtient des performances légèrement meilleures.
+
+*** Réaliser la classification et produire une carte en couleur
+
+Pour réaliser la classification, on prend le fichier ~model.rf~ appris
+sur la date ~2016-10-05~, et on utilise la commande suivante :
 
 #+BEGIN_EXAMPLE
-$ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
-                                     -io.vd training_samples.sqlite   \
-                                     -valid.vd testing_samples.sqlite \
-                                     -cfield code -classifier rf      \
-                                     -classifier.rf.max 20            \
-                                     -io.out model.rf -feat ${!var}   \
-                                     | grep Kappa; done
+$ otbcli_ImageClassifier -in $DATA/images/20161005_T31TCJ_ROI_20m.tif \
+                         -out classif_20161005.tif uint8              \
+                         -model model.rf
 #+END_EXAMPLE
 
-**** La bande bleu côtier a-t-elle un intérêt pour la classification ?
+L'image ~classif_20161005.tif~ contient pour chaque pixel le code de
+la classe qui lui a été attribué. Afin de faciliter la lisibilité de
+l'image, on peut transformer celle-ci en attribuant une couleur
+différente à chaque classe en utilisant l'application de
+*ColorMapping*:
 
-     En utilisant le paramètre ~-feat ${date1}~ on obtient un Kappa
-     de 0.538822 pour la première date, tandis que si l'on retire la
-     bande bleu côtier en utilisant ~-feat ${date1_nocb}~ on obtient un
-     Kappa de 0.538068. On peut donc conclure que la bande bleu côtier
-     n'apporte que très peu d'information (et donc de performance) au
-     problème de classification.
+#+BEGIN_EXAMPLE
+$ otbcli_ColorMapping -in classif_20161005.tif            \
+                      -out classif_20161005_rgb.tif uint8 \
+                      -method custom -method.custom.lut   \ 
+                      $DATA/support/color_map.txt
+#+END_EXAMPLE
 
-**** Quelle est la performance en utilisant toutes les bandes spectrales ?
-     
-     En utilisant le paramètre ~-feat ${dates}~, on obtient un Kappa
-     de 0.677147.
+Une autre manière de visualiser l'image ~classif_20161005.tif~ est de
+l'ouvrir dans QGis et d'utiliser le fichier de style fournit dans
+~support/classif.qml~.
 
-**** Quelle est la performance du profil de NDVI seul ?
+*** Évaluer la performance globale
 
-     En utilisant le paramètre ~-feat ${ndvis}~ on obtient un Kappa de
-     0.554286. En utilisant seulement 9 valeurs d'indice
-     radiométrique, on fait donc seulement 0.12 points de Kappa en
-     moins par rapport à l'ensemble des 63 bandes spectrales. On fait
-     également aussi bien, voire mieux que certaines dates individuelles
-     (qui contiennent chacune 7 bandes).
+ Pour évaluer les performances sur l'ensemble de la donnée de
+ validation, on utilise l'application *ComputeConfusionMatrix*. Cette
+ application complète l'évaluation réalisée lors de l'apprentissage,
+ et permet d'évaluer la performance d'une carte de classification qui
+ a éventuellement été retraitée. Attention à ne pas utiliser en entrée
+ la carte colorisée créée à l'étape précédente, qui n'est utile qu'à
+ des fins de visualisation et de publication.
+ 
+ 
+ #+BEGIN_EXAMPLE
+ $ otbcli_ComputeConfusionMatrix -in classif_20161005.tif -ref vector  \
+                   -ref.vector.in $DATA/references/testing/testing.shp \
+                                 -out confusion_20161005.csv           \
+                                 -ref.vector.field CODE
+#+END_EXAMPLE
 
-**** Quelle est la performance en utilisant toutes les bandes spectrales et le profil de NDVI ?
+La performance est évaluée en utilisant l'ensemble des données
+disponibles dans le jeu de validation. Voici le résultat :
 
-     En utilisant le paramètre ~-feat ${bands} ${ndvis}~ on obtient un
-     Kappa de 0.682333, soit légèrement mieux que les bandes
-     spectrales seules.
+#+LATEX: \begin{small}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [  10] [  31] [  32] [  34] [  36] [  41] [  42] [  43] [  44] [  51] [ 211] [ 221] [ 222] 
+[  10] 111624     63   2061  11263   4156   2487   1958   1297    398     34   8497   3068   3666 
+[  31]     12   9568    433    132    277      0     17      0      0      0     21    331    471 
+[  32]      0     35   1003      7      7      2      8      2      5      1      0     42      7 
+[  34]     93    312    278    257    136     11     73      8      8     68    216    209    248 
+[  36]     26     73     45    125    454      0      6      0      0      0    158     25     41 
+[  41]     46      0     19     27      9   3842    856    371    351      3      7     23     73 
+[  42]    973      9    132    778    318   5624  31345   3136   2645     12    501    535   3412 
+[  43]   1185     14    185    617    199   2002   7324  16246   7308    109    231    330   1164 
+[  44]     33      0      1     11      0     30    121    820   2361     11      0     42     14 
+[  51]     68      7    117      3     33      3     18    138    180  22628     11    178     17 
+[ 211]    899     72     67   1429   1284     42     34     13      0      0   6396    157    360 
+[ 221]    339    748    507    141    442     10    302     53     95     47    501   8495    641 
+[ 222]    151      1     26    191    217     10    406     18      7      1    407    119   2704
 
-**** Dans ce dernier cas, analyser les performances par classe
+[...]
 
-     La classe eau (label 51) est la mieux reconnue, avec un F-score
-     de 0.945575.
+Kappa index: 0.608824
+#+END_EXAMPLE
+#+Latex: \end{small}
 
-     Les classes pelouse (label 34) et landes ligneuses (label 36)
-     sont de loin les moins bien reconnues, avec un F-score respectif
-     de 0.278807 et 0.428884. Toutes les autres classes ont un F-score
-     parfois très supérieur à 0.6.
+ 
+*** Régulariser et mesurer le gain de performance
 
-     Si l'on analyse plus finement la matrice de confusion, on peut
-     constater que ces deux classes sont souvent confondues par le
-     modèle: 24% des échantillons de pelouse sont classés comme lande
-     ligneuse (et 17% comme prairie), tandis que 22% des échantillons
-     de lande ligneuse sont classés comme pelouse (et 10% comme
-     prairie). 
-
-*** Classification
-
-    Pour réaliser la carte de classification, on va utiliser le modèle
-    appris sur l'ensemble des bandes spectrales et du profil de NDVI
-    (dans cet ordre). Attention, l'ordre des attributs utilisés lors
-    de l'apprentissage doit être le même que l'ordre des bandes
-    fournies en entrée de l'application *ImageClassifier*.
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier -in Extract16bits/all.tif \
-                             -out classif.tif uint8 \
-                             -model model.rf
-    #+END_EXAMPLE
-
-*** Post-traitement de la classification
-
-    Pour régulariser la carte de classification, on utilise l'appel
-    suivant:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0    \
-                                             -io.in classif.tif            \
-                                             -io.out classif_reg.tif uint8 
-    #+END_EXAMPLE
-
-    On peut observer visuellement l'effet de cette régularisation
-    (attention à décocher l'utilisation des valeurs nulles (nodata)
-    dans Qgis), mais il est également intéressant de connaître
-    l'impact de cette opération sur les performances, ce que nous
-    allons faire dans la section suivante.
-
-*** Évaluation complète des performances
-
-    Pour évaluer les performances sur l'ensemble de la donnée de
-    validation, on utilise l'application *ComputeConfusionMatrix*.
-
-    Sur la carte de classification brute :
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix -in classif.tif -ref vector        \
-                                    -ref.vector.in testing/testing.shp \
-                                    -out confusion.csv                 \
-                                    -ref.vector.field CODE
-    #+END_EXAMPLE
-
-    Cette évaluation complète donne un Kappa de 0.803679. Cette valeur
-    est bien plus élevée que celle évaluée lors de la phase
-    d'entraînement, qui atteignait seulement 0.682333. Ceci s'explique
-    par le fait que la donnée de validation utilisée lors de la phase
-    d'entraînement a été générée avec la stratégie /smallest/ qui
-    produit le même nombre d'échantillon pour chaque classe. Or, si
-    l'on regarde les statistiques produites en début de TP, on peut
-    voir que les classes cultures d'été (11) cultures d'hiver (12) et
-    eau (51) sont sur-représentées dans la donnée de référence. Or, ces
-    trois classes ont également les meilleures performances de
-    classifications. Leurs sur-représentation tire donc la performance
-    globale vers le haut. On aurait pu générer le jeu de validation
-    avec la stratégie /all/, ce qui aurait permis d'estimer cette
-    performance finale dès la phase d'entraînement. Cependant, ceci
-    aurait éventuellement masqué les faibles performances de certaines
-    classes.
-
-    Sur la carte de classification régularisée :
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector    \
-                                    -ref.vector.in testing/testing.shp \
-                                    -out confusion.csv                 \
-                                    -ref.vector.field CODE
-    #+END_EXAMPLE
-
-    Cette fois, le Kappa mesuré est de 0.873691. On peut donc
-    conclure que la régularisation améliore les performances de la
-    classification, car celle-ci est alors morphologiquement plus
-    proche de la donnée de référence, qui est régulière.
-
-*** Production d'une carte de classification en couleur
-    
-    Pour produire la carte colorisée, on utilise l'appel suivant:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping -in classif_reg.tif -out classif_reg_rgb.tif uint8 \
-                          -method custom -method.custom.lut color_map.txt
-    #+END_EXAMPLE
-    
-    #+ATTR_LATEX: :width 0.9\textwidth
-    [[file:Images/final_classification.png]]
+*** Réaliser une classification multi-date et mesurer le gain de performance
