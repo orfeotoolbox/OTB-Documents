@@ -485,7 +485,7 @@ suivants :
 | 2016-07-07 | 0.615163 |
 | 2016-08-06 | 0.593739 |
 | 2016-09-05 | 0.614463 |
-| 2016-10-05 | 0.628716 |
+| 2016-10-05 | 0.622246 |
 |------------+----------|
 
 On constate que ce coefficient ne varie pas beaucoup, mais que la date
@@ -540,31 +540,158 @@ l'ouvrir dans QGis et d'utiliser le fichier de style fournit dans
 La performance est évaluée en utilisant l'ensemble des données
 disponibles dans le jeu de validation. Voici le résultat :
 
-#+LATEX: \begin{small}
+#+LATEX: \begin{scriptsize}
 #+BEGIN_EXAMPLE
 Confusion matrix (rows = reference labels, columns = produced labels):
-       [  10] [  31] [  32] [  34] [  36] [  41] [  42] [  43] [  44] [  51] [ 211] [ 221] [ 222] 
-[  10] 111624     63   2061  11263   4156   2487   1958   1297    398     34   8497   3068   3666 
-[  31]     12   9568    433    132    277      0     17      0      0      0     21    331    471 
-[  32]      0     35   1003      7      7      2      8      2      5      1      0     42      7 
-[  34]     93    312    278    257    136     11     73      8      8     68    216    209    248 
-[  36]     26     73     45    125    454      0      6      0      0      0    158     25     41 
-[  41]     46      0     19     27      9   3842    856    371    351      3      7     23     73 
-[  42]    973      9    132    778    318   5624  31345   3136   2645     12    501    535   3412 
-[  43]   1185     14    185    617    199   2002   7324  16246   7308    109    231    330   1164 
-[  44]     33      0      1     11      0     30    121    820   2361     11      0     42     14 
-[  51]     68      7    117      3     33      3     18    138    180  22628     11    178     17 
-[ 211]    899     72     67   1429   1284     42     34     13      0      0   6396    157    360 
-[ 221]    339    748    507    141    442     10    302     53     95     47    501   8495    641 
-[ 222]    151      1     26    191    217     10    406     18      7      1    407    119   2704
+       [  10] [  31] [  32] [  34] [  36] [  41] [  42] [  43] [  44] [  51] [ 211] [ 221] [ 222]
+[  10] 113219    219   2240  10349   4090   2654   2469   1029    233    202   7387   2571   3453
+[  31]      8  12282    265     66    346      0      5      1      0      0    174    192     27
+[  32]      1     21   1143      5     27      0      2      0      0      0      3      7     10
+[  34]    158     47     73   1469    146      9     68     25     12      0    187     11     70
+[  36]     11      8      2      8    889      0      4      0      0      0     25      1     11
+[  41]     45      0      4     34      7   4637    674    287    135      1      9      9     66
+[  42]    800     14    107    675    355   5084  33947   3642   2684     13    468    490   3358
+[  43]    816      4     97    417    130   2222   5399  18726   9404     66    137    171    857
+[  44]     12      0      7      7      5     54    105    561   2807      6      0     13     27
+[  51]    187     26     92     10     73      1     18    249    257  24330      4    300      4
+[ 211]    367     73     55    882   1143      9     58      1      0      0   6755    126    301
+[ 221]    244    337    372     79    338      2    197     49     16     32    174  10400    398
+[ 222]     72      2     66     40    115      9    195      1      0      0     98     52   3474
+
+Precision of class [10] vs all: 0.976531
+Recall of class [10] vs all: 0.754215
+F-score of class [10] vs all: 0.851095
 
 [...]
 
-Kappa index: 0.608824
-#+END_EXAMPLE
-#+Latex: \end{small}
+Kappa index: 0.659139
 
- 
+#+END_EXAMPLE
+#+Latex: \end{scriptsize}
+
+On peut constater deux choses:
+- Tout d'abord, la performance globale est légèrement meilleure que
+  celle évaluée lors de l'apprentissage. Cela vient du fait que dans
+  l'étape d'apprentissage, le même nombre d'échantillon est utilisé
+  pour chaque classe, tandis que lors du calcul ci-dessus, l'ensemble
+  des échantillons disponibles est utilisé. Certaines classes plus
+  représentée et bien reconnue, comme la classe 51 (eau), tirent donc
+  les performances globales vers le haut.
+- Ensuite, la classe des cultures annuelles présente une assez forte
+  confusion avec l'ensemble des autres classes. Elle présente un
+  rappel de 0.75, et une précision de 0.97. Cela signifie que si 97%
+  des éléments identifiés comme cultures annuels par le classifieur
+  appartiennent effectivement à cette classe, 25% des éléments de
+  cette classe dans la référence ont été mal classés. Nous allons voir
+  par la suite que l'ajout d'une information multi-temporelle permet
+  d'améliorer cette performance.
+
 *** Régulariser et mesurer le gain de performance
 
+Pour réaliser une régularisation par vote majoritaire, on utilise la commande suivante:
+
+#+BEGIN_EXAMPLE
+$ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0  \
+                                         -io.in classif_20161005.tif \
+                                         -io.out classif_20161005_reg.tif uint8
+#+END_EXAMPLE    
+
+Si l'on évalue à nouveau les performances, on obtient :
+
+#+BEGIN_EXAMPLE
+$ otbcli_ComputeConfusionMatrix -in classif_20161005_reg.tif -ref vector  \
+                   -ref.vector.in $DATA/references/testing/testing.shp    \
+                                 -out confusion_20161005_reg.csv          \
+                                 -ref.vector.field CODE
+
+Kappa index: 0.709103
+#+END_EXAMPLE
+
+La régularisation améliore donc signficativement les
+performances. Ceci s'explique par la régularité de la donnée de
+référence, dont on se rapproche avec ce type de traitement.
+
 *** Réaliser une classification multi-date et mesurer le gain de performance
+
+Rejouons les différentes étapes avec l'ensemble des dates:
+
+
+Tout d'abord, l'apprentissage :
+#+BEGIN_EXAMPLE
+$ otbcli_TrainImagesClassifier -io.il $DATA/images/all.vrt                     \
+                               -io.vd $DATA/references/training/training.shp   \
+                               -io.valid $DATA/references/testing/testing.shp  \
+                               -io.out model_all.rf                            \
+                               -sample.vfn CODE -classifier rf                 \
+                               -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+                               -classifier.rf.cat 13
+#+END_EXAMPLE
+
+Ensuite, la classification :
+#+BEGIN_EXAMPLE
+$ otbcli_ImageClassifier -in $DATA/images/all.vrt    \
+                         -out classif_all.tif uint8  \
+                         -model model.rf
+#+END_EXAMPLE
+
+Puis la régularisation :
+#+BEGIN_EXAMPLE
+$ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0  \
+                                         -io.in classif_all.tif \
+                                         -io.out classif_all_reg.tif uint8
+#+END_EXAMPLE   
+
+Enfin, l'évaluation des performances globales:
+#+BEGIN_EXAMPLE
+$ otbcli_ComputeConfusionMatrix -in classif_all_reg.tif -ref vector       \
+                   -ref.vector.in $DATA/references/testing/testing.shp    \
+                                 -out confusion_all_reg.csv               \
+                                 -ref.vector.field CODE
+#+END_EXAMPLE
+
+#+Latex:\begin{scriptsize}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [  10] [  31] [  32] [  34] [  36] [  41] [  42] [  43] [  44] [  51] [ 211] [ 221] [ 222] 
+[  10] 140681     13     68   1893    790    280    494    545     27    108   3569    383   1264 
+[  31]     19  12732     87     77    200      3      8      0      0      0    104    131      5 
+[  32]      1      6   1211      0      1      0      0      0      0      0      0      0      0 
+[  34]      0     32     23   2131     34      0     12     13      0      0     19      5      6 
+[  36]      0      0      0      4    937      0      4      0      0      0      8      0      6 
+[  41]      2      0      1      0      0   5369    330    111     87      1      0      7      0 
+[  42]    148     10     75    465     84   3166  41818   2943   1850      2    316    362    398 
+[  43]    143      6     67    528     57   1545   5556  21781   8265     35    166    195    102 
+[  44]     11      0     14     13      0     34     60    354   3108      0      2      8      0 
+[  51]      7     18     53      0     12      0      3     37     24  25319      2     76      0 
+[ 211]    213     41     17    444    491      8     45      1      0      0   8326    104     80 
+[ 221]    187     87     66    123    159      0    109     83      3     14    208  11374    225 
+[ 222]     29      0      2     15     41      4     42      0      0      0     43     11   3937 
+
+Precision of class [10] vs all: 0.994627
+Recall of class [10] vs all: 0.937155
+F-score of class [10] vs all: 0.965036
+
+[...]
+
+Kappa index: 0.828411
+
+#+END_EXAMPLE
+#+LATEX:\end{scriptsize}
+
+L'ajout de l'information multi-temporelle dans la classification a
+permis d'améliorer significativement les performances. On peut
+constater notamment que le rappel de la classe cultures annuelles a
+augmenté jusqu'à 93%, ce qui signifie que désormais 93% des éléments
+de cette classe présents dans la vérité terrain sont correctement
+identifiés par le classifieur. Cette amélioration était attendue car
+les classes de cultures présentent une dynamique temporelle
+distinctive, par rapport à d'autres classes.
+
+On peut enfin génerer la carte de classification colorisée finale :
+
+#+BEGIN_EXAMPLE
+$ otbcli_ColorMapping -in classif_all_reg.tif            \
+                      -out classif_all_reg_rgb.tif uint8 \
+                      -method custom -method.custom.lut  \ 
+                      $DATA/support/color_map.txt
+#+END_EXAMPLE
