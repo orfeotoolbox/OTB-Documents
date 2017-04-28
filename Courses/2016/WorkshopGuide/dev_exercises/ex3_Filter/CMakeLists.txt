@@ -11,7 +11,10 @@ ELSE(OTB_FOUND)
   MESSAGE(FATAL_ERROR  
       "Cannot build OTB project without OTB.  Please set OTB_DIR.")  
 ENDIF(OTB_FOUND)  
- 
+
+#required for windows. might be needed on other CMakeLists.txt also
+include_directories(${OTB_INCLUDE_DIRS})
+
 ADD_EXECUTABLE(DividerByTwo main.cxx )  
 TARGET_LINK_LIBRARIES(DividerByTwo ${OTB_LIBRARIES}) 
 

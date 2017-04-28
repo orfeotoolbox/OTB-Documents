@@ -12,5 +12,8 @@ ELSE(OTB_FOUND)
       "Cannot build OTB project without OTB.  Please set OTB_DIR.")  
 ENDIF(OTB_FOUND)  
  
+#required for windows. might be needed on other CMakeLists.txt also
+include_directories(${OTB_INCLUDE_DIRS})
+
 ADD_EXECUTABLE(Pipeline Pipeline.cxx )  
 TARGET_LINK_LIBRARIES(Pipeline ${OTB_LIBRARIES}) 
