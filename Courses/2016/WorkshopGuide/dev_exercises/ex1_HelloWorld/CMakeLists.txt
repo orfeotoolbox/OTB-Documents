@@ -11,6 +11,9 @@ ELSE(OTB_FOUND)
   MESSAGE(FATAL_ERROR  
       "Cannot build OTB project without OTB.  Please set OTB_DIR.")  
 ENDIF(OTB_FOUND)  
- 
-ADD_EXECUTABLE(HelloWorld HelloWorld.cxx )  
+
+#required for windows. might be needed on other CMakeLists.txt also
+include_directories(${OTB_INCLUDE_DIRS})
+
+ADD_EXECUTABLE(HelloWorld HelloWorld.cxx )
 TARGET_LINK_LIBRARIES(HelloWorld ${OTB_LIBRARIES}) 
