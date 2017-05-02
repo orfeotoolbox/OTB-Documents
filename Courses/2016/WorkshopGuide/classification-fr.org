@@ -242,7 +242,7 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
        l'appeler ~model.rf~).
 
      Régler certains paramètres optionnels comme suit:
-     - Le classifieur "Random Forests" pour comme algorithme
+     - Le classifieur "Random Forests" pour l'algorithme
        d'apprentissage,
      - Le nombre d'arbres à 50,
      - La profondeur maximale de l'arbre à 20,
@@ -335,7 +335,7 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
      dates concaténées (c'est donc une image à 50 bandes). 
 
      Rejouer l'ensemble du TP avec cette image de 50 bandes. Quel est
-     l'apport de la série multi-temporel pour la performance de
+     l'apport de la série multi-temporelle pour la performance de
      classification ?
 
      Comparez dans Qgis les deux cartes de classification régularisées.
