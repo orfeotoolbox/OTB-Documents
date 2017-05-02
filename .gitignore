@@ -27,4 +27,4 @@
 **/*.nav
 
 #ignore bin directory in developer tutorials
-Courses/2016/WorkshopGuide/dev_exercises/ex*/bin
+Courses/2016/WorkshopGuide/dev_exercises/*/ex*/bin
