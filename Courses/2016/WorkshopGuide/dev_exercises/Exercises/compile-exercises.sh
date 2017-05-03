@@ -2,8 +2,6 @@
 
 exercises=( "ex1_HelloWorld" "ex2_Pipeline" "ex3_Filter" "ex4_CreateApplication")
 
-source ~/tools/load_otb_develop.sh
-
 for exo in "${exercises[@]}"
 do
     echo "Build $exo..."
