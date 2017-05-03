@@ -17,23 +17,21 @@
      Les données se trouvent dans le répertoire ~Data/otb_developers/~.
 
 *** Déroulement
-    Le TP consiste en 5 exercices successifs. Pour chaque exercice un fichier
-    source CMake et des fichiers source en C++ sont fournis.
-
-    Il s'agit pour chaque exercice de compléter les fichiers sources en suivant
-    les indications de l'énoncé et les informations dans les commentaires des
-    fichiers .cxx 
-
-    Les parties du code à compléter sont localisés par le commentaire  ~//
-    TODO:~ dans les fichiers sources. Le commentaire fournit une indication sur
-    les modifications à apporter au programme. 
+    - Le TP consiste en 5 exercices successifs. Pour chaque exercice un fichier
+      source CMake et des fichiers source en C++ sont fournis.
+    - Il s'agit pour chaque exercice de compléter les fichiers sources en suivant
+      les indications de l'énoncé et les informations dans les commentaires des
+      fichiers .cxx
+    - Les parties du code à compléter sont localisés par le commentaire  ~//
+      TODO:~ dans les fichiers sources. Le commentaire fournit une indication sur
+      les modifications à apporter au programme.
 
 *** Liens utiles
-
     - OTB Software Guide
     - OTB module template
     - Documentation ITK
     - ITK CourseWare
+
 *** Exercice 1: Hello World 
 **** Les bases
      - C++ Generic Programming
