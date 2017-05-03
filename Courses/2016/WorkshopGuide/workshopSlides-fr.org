@@ -145,4 +145,4 @@ Les plateaux repas seront livrés en salle Hibiscus
 * TP4: Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
 * TP5: Développer avec l'OTB
-#+INCLUDE: "developers-fr.org" :minlevel 2
+#+INCLUDE: "dev_exercises/developers-fr.org" :minlevel 2
