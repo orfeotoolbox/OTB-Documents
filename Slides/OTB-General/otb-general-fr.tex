@@ -70,7 +70,7 @@
 \begin{block}{L'Orfeo ToolBox est:}
 \begin{itemize}
 \item Une \textbf{bibliothèque de traitement d'images} pour la télédétection
-\item \textbf{Un logiciel libre} diffusé sous licence CeCILL-v2 (équivalent à la GPL)
+\item \textbf{Un logiciel libre} diffusé sous licence Apache v2.0 (depuis OTB 6.0, précédement CeCILL-v2)
 \item \textbf{Financée et développée par le CNES} (principalement)
 \item Écrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (imagerie médicale)
 \item Construite sur les épaules de géants (ITK, GDAL, OSSIM, OpenCV\ldots)
@@ -700,6 +700,46 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{itemize}
 \end{block}
 \end{frame}
+
+\begin{frame}
+  \frametitle{5.10 (février 2017)}
+  \begin{block}{OTB}
+    \begin{itemize}
+      \item Framework pour applications composites
+      \item Refactoring TrainImagesClassifier et BundleToPerfectSensor (composite)
+      \item Affichage de la ligne de commande correspondante dans les GUI QT des applications
+      \item Amélioration du composant de sélection des champs dans les GUI QT
+      \item Application FFT/DWT
+      \item Calcul des textures de Haralick sous échantillonnées (release majeure)
+    \end{itemize}
+  \end{block}
+  
+  \begin{block}{Monteverdi}
+    \begin{itemize}
+      \item Pseudo-couleur à bande unique
+      \end{itemize}
+  \end{block}
+      
+\end{frame}
+
+\begin{frame}
+  \frametitle{6.0 (mai 2017)}
+  \begin{block}{OTB}
+    \begin{itemize}
+      \item Changement de licence pour Apache v2.0
+      \item Support OpenCV 3.0
+      \item Application pour deburst des produits Sentinel1 IW SLC
+      \item Sélection des bandes par noms de fichier étendus
+      \item Classification non-supervisée intégrée au framework
+      \item Application pour profils morphologiques
+      \item Application pour classer des vecteurs
+      \item Nettoyage des fonctions dépréciées
+    \end{itemize}
+    \end{block}
+  
+
+\end{frame}
+
 
 \section{Conclusion et perspectives}
 \begin{frame}

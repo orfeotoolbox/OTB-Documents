@@ -70,7 +70,7 @@
 \begin{block}{Orfeo ToolBox is:}
 \begin{itemize}
 \item An \textbf{image processing library} for remote sensing
-\item \textbf{Free and open source software} under CeCILL-v2 license (equivalent to GPL)
+\item \textbf{Free and open source software} under Apache v2.0 license (since 6.0, formerly CeCILL-v2)
 \item \textbf{Funded and developed by CNES} (French Space Agency) in the frame the development of the Pléiades satellite (and beyond)
 \item Used at CNES, ESA (European Space Agency), mission exploitation platforms,
   remote sensing labs, teaching\ldots
@@ -639,7 +639,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \frametitle{5.6 (August 2016)}
 \begin{block}{OTB}
 \begin{itemize}
-\item MPI pipeline exectuion
+\item MPI pipeline execution
 \item Samples extractor and selection for supervised classification
 \item Improve classification on vector
 \item Support for Sentinel-1 products (geometric calibration)
@@ -685,6 +685,65 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{verbatim}
 \end{scriptsize}
 \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{5.8 (October 2016)}
+\begin{block}{OTB}
+\begin{itemize}
+\item Access to Shark random forests (better performances, parallel learning)
+\item Better performances in BandMathX
+\item Spot7 support (radiometric and geometric calibration)
+\item Applications in-memory connection
+\item Full new classification framework available
+\item And lots of other small improvements ...
+\end{itemize}
+\end{block}
+
+\begin{block}{Monteverdi}
+\begin{itemize}
+\item Now part of OTB source code
+\item Zoom with mouse wheel without CTRL
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{5.10 (February 2017)}
+  \begin{block}{OTB}
+    \begin{itemize}
+      \item Composite applications framework 
+      \item TrainImagesClassifier and BundleToPerfectSensor refactoring (composite)
+      \item Print corresponding command-line in apps QT GUI
+      \item Enhancement of field selector QT component
+      \item FFT/DWT application
+      \item Texture app now allows for subsampled results (faster)
+    \end{itemize}
+  \end{block}
+  
+  \begin{block}{Monteverdi}
+    \begin{itemize}
+      \item Single band color mapping
+      \end{itemize}
+  \end{block}
+      
+\end{frame}
+
+\begin{frame}
+  \frametitle{6.0 (may 2017)}
+  \begin{block}{OTB}
+    \begin{itemize}
+      \item Licence change to  Apache v2.0
+      \item OpenCV 3.0 support
+      \item Sentinel1 IW SLC deburst application
+      \item Band selection through extended filenames
+      \item Unsupervised classification in framework
+      \item Morphological profiles app
+      \item Vector files classification app
+      \item Deprecated code cleanup (major release)
+    \end{itemize}
+    \end{block}
 \end{frame}
 
 \section{Conclusion}
