@@ -1,0 +1,219 @@
+** Tutoriel pour futur développeur OTB                               :slides:
+*** Objectifs et données
+**** Objectifs
+     - Savoir configurer et compiler un programme en C++ qui utilise la
+       librairie OTB avec l'outil CMake
+     - Savoir créer un programme C++ enchaînant plusieurs étapes d'une chaîne de
+       traitements d'images en utilisant l'API C++ de l'OTB. Les étapes à enchaîner:
+       - Lecture de l'image à partir d'un fichier en entrée
+       - Traitement de l'image (calcul de gradient)
+       - Écriture de l'image de gradient dans un fichier en sortie
+     - Savoir coder son propre traitement unitaire dans un filtre OTB
+     - Savoir créer une application OTB qui embarque sa chaîne de traitements
+     - Savoir packager son traitement et son application /custom/ dans un module externe OTB  
+
+**** Données
+     
+     Les données se trouvent dans le répertoire ~Data/otb_developers/~.
+
+*** Déroulement
+    Le TP consiste en 5 exercices successifs. Pour chaque exercice un fichier
+    source CMake et des fichiers source en C++ sont fournis.
+
+    Il s'agit pour chaque exercice de compléter les fichiers sources en suivant
+    les indications de l'énoncé et les informations dans les commentaires des
+    fichiers .cxx 
+
+    Les parties du code à compléter sont localisés par le commentaire  ~//
+    TODO:~ dans les fichiers sources. Le commentaire fournit une indication sur
+    les modifications à apporter au programme. 
+
+*** Liens utiles
+
+    - OTB Software Guide
+    - OTB module template
+    - Documentation ITK
+    - ITK CourseWare
+*** Exercice 1: Hello World 
+**** Les bases
+     - C++ Generic Programming
+     - STL  Standard Template Library
+     - Abstraction des types et des conteneurs
+     - std::vector< T >: std::vector< int > , std::vector< double >
+     - Image OTB: otb::Image< PixelType , Dimension >
+**** SmartPointer
+     - Mécanisme interne ITK pour gestion de la mémoire (tas) 
+     - Reference counting
+     - Déclaration: FilterType::Pointer  filter = FilterType::New();
+     - PAS BESOIN DE FAIRE: filter->Delete()
+*** Exercice 2: Pipeline OTB
+    - Idée: enchaîner des filtres en utilisant l'API OTB
+    - On utilis** Tuto pour futur développeur OTB                                   :slides:
+*** Objectifs et données
+**** Objectifs
+     - Savoir configurer et compiler un programme en C++ qui utilise la
+       librairie OTB avec l'outil CMake
+     - Savoir créer un programme C++ enchainant plusieurs étapes d'une chaine de
+       traitements d'images en utilisant l'API C++ de l'OTB. Les étapes à enchaineer:
+       - Lecture de l'image à partir d'un fichier en entrée
+       - Traitement de l'image (calcul de gradient)
+       - Ecriture de l'image de gradient dans un fichier en sortie
+     - Savoir coder son propre traitement unitaire dans un filter OTB
+     - Savoir créer une application OTB qui embarque sa chaine de traitements
+     - Savoir packager son traitement et son application custom dans un module externe OTB  
+
+**** Données
+     
+     Les données se trouvent dans le répertoire ~Data/otb_developers/~.
+
+*** Déroulement
+    Le TP consiste en 5 exercices successifs. Pour chaque exercice un fichier
+    source CMake et des fichiers source en C++ sont fournis.
+
+    Il s'agit pour chaque exercide de compléter les fichiers sources en suivant
+    les indications de l'énoncé et les informations dans les commentaires des
+    fichiers .cxx 
+
+    Les parties du code à compléter sont localisés par le commentaire  ~//
+    TODO:~ dans les fichiers sources. Le commentaire fournit une indication sur
+    les modifications à apporter au programme. 
+
+*** Liens utiles
+
+    - OTB Software Guide
+    - OTB module template
+    - Documentation ITK
+    - ITK CourseWare
+
+*** Exercice 1: Hello World 
+**** Les bases
+     - C++ Generic Programming
+     - STL  Standard Template Library
+     - Abstraction des types et des conteneurs
+     - std::vector< T >: std::vector< int > , std::vector< double >
+     - Image OTB: otb::Image< PixelType , Dimension >
+**** SmartPointer
+     - Mécanisme interne ITK pour gestion de la mémoire (tas) 
+     - Reference counting
+     - Déclaration: FilterType::Pointer  filter = FilterType::New();
+     - PAS BESOIN DE FAIRE: filter->Delete()
+*** Exercice 2: Pipeline OTB
+    - Idée: enchainer des filtres en utilisant l'API OTB
+    - On utilise toujours les memes méthodes (génériques)
+    - Déclaration: opérateur New()
+    - Chainage des filtres: filter2->SetInput(filter1->GetOutput)
+    - Déclenchement du pipeline: méthode Update()
+*** Exercice 3: Écrire un filtre OTB
+**** Type de filtre
+     - Hiérarchie de classes (ITK): Object -> DataObject -> ImageBase -> Image
+     - Filtres: Object -> ProcessObject -> ImageSource -> ImageToImageFilter
+     - ImageToImageFilter -> InPlaceImageFilter -> UnaryFunctorImageFilter
+**** Foncteur
+     - Toute classe surchargeant operator() est qualifiée de classe foncteur
+     - Dans le monde OTB/ITK
+     - Opération appliquée pixel par pixel
+     - Implémenter un foncteur qui divise par 2 tous les pixels
+     - (le filtre qui intègre le foncteur est déjà implémenter)
+*** Exercice 4: Écrire une application OTB
+**** Objectifs
+     - Package chaîne de traitement en ligne de commande via une API standard
+       (gestion des paramètres, documentation...)
+     - Interface GUI, Python...
+     - Possibilité d'intégration dans Monteverdi
+     - Possibilité de chaîner son application avec des apps existantes
+**** Par où commencer?
+     - Partir d'une application existante
+     - Hérite de la classe Application
+     - Implémenter les méthodes:
+     - Filtres membres de l'application
+*** Exercice 5: Écrire un module externe OTB
+**** Objectifs
+     - Partager ces fonctionnalités
+     - Tester le code sur le dashboard OTB (TDD)
+     - Contribuer du code à l'OTB
+**** Par où commencer?
+     - OTB module template: https://github.com/orfeotoolbox/otbExternalModuleTemplate
+     - CMake magic
+** Tutoriel pour futur développeur OTB                                :guide:
+*** Description                                                        :desc:
+**** Résumé
+     
+     Au cours de ces exercices, nous allons apprendre à développer en utilisant
+     l'API en C++ de la librairie Orfeo ToolBox. Après avoir configurer et
+     compiler un programme informatique simple "Hello World" dont le but est de
+     faire la démonstration rapide de la configuration et de l'utilisation de
+     l'OTB, nous allons comprendre les mécanismes permettant de chaîner des
+     traitements (filtres dans le langage OTB) permettant de lire une image,
+     d'effectuer un traitement sur l'image et ensuite d'écrire le résultat dans
+     un nouveau fichier. Ensuite nous apprendrons à créer sa propre brique de
+     traitement et nous verrons ensuite comment la packager dans une application
+     OTB et enfin un module externe.
+ 
+**** Pré-requis
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Environnement de développement (CMake, compilateur)
+     - SDK OTB
+     - Données téléchargées
+**** Objectifs
+
+     - Savoir configurer et compiler un programme en C++ qui utilise la
+       librairie OTB avec l'outil CMake
+     - Savoir créer un programme C++ câblant plusieurs étapes d'une chaine de
+       traitements d'images en utilisant l'API C++ de l'OTB. Les étapes à enchaîner:
+       - Lecture de l'image à partir d'un fichier en entrée
+       - Traitement de l'image (calcul de gradient)
+       - Écriture de l'image de gradient dans un fichier en sortie
+     - Savoir coder son propre traitement unitaire dans un filtre OTB
+     - Savoir créer une application OTB qui embarque sa chaîne de traitements
+     - Savoir packager son traitement et son application /custom/ dans un module
+       externe OTB 
+       
+*** Étapes                                                            :steps:
+
+    Les données se trouvent dans le répertoire ~Data/otb_developers~.
+
+    Pour chaque exercice, il s'agit:
+    - D'implémenter les fonctionnalités listées dans l'exercice
+    - Vérifier que le code compile
+    - Vérifier que le programme implémente la fonctionnalité attendue
+
+**** Exercice 1: Hello World 
+     Il s'agit de modifier le programme HelloWorld.cxx pour:
+     - Déclarer un alias à l'aide du mot clé /typedef/ pour le type Image de
+       dimension 2 pour des pixels de type entier non signé.
+     - Créer une image de ce type
+**** Exercice 2: Pipeline OTB
+     Il s'agit de modifier le programme Pipeline.cxx pour:
+     - Modifier le programme pour effectuer le calcul de la norme du gradient de l'image en
+       entrée et écrire le résultat dans une autre image en sortie
+**** Exercice 3: Écrire un filtre OTB
+     Il s'agit de modifier le programme DividerByTwoImageFilter.h pour:
+     - Implémenter le foncteur permettant de réaliser la division par 2 de tous
+       les pixels de l'image 
+     - Valider l'implémentation à partir de l'exécutable main.cxx d'une image utilisée pendant la formation
+     
+     Modifier ensuite le fichier DividerImageFilter.h pour implémenter un
+     foncteur réalisant la division de chaque pixel par un diviseur passé en
+     paramètre du filter
+**** Exercice 4: Écrire une application OTB
+     Il s'agit de modifier le programme MyApp.cxx pour:
+     - Déclarer un nouveau paramètre de type float permettant de modifier la valeur
+     - Modifier la méthode DoExecute pour que l'application réalise la division de tous les pixels
+       de l'image par la valeur passée en paramètre de l'application
+**** Exercice 5: Écrire un module externe OTB
+     Il s'agit de modifier le modèle de remote module fournit pour:
+     - Modifier les fichiers CMake pour changer le nom du remote module
+     - Insérer les fichiers sources correspondant au filtre DividerImageFilter.h
+       développés dans l'exercice 3
+     - Insérer l'application développée à l'exercice dans le répertoire app
+     - Ajouter un test de non régression de l'application développée
+*** Pour aller plus loin                                            :further:
+    - OTB Software Guide
+    - OTB module template
+    - Documentation ITK
+    - ITK CourseWare
+
+** Tutoriel pour futur développeur OTB                            :solutions:
+
+Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
+archive contenant les corrigés de tous les fichiers sources.
