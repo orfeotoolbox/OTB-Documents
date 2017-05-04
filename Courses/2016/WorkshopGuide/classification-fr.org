@@ -15,15 +15,15 @@
     Les étapes de l'exercice sont les suivantes:
     1. Introduction aux données
     2. Réaliser un apprentissage mono-date
-    3. Indentifier la date la plus performante
+    3. Identifier la date la plus performante
     4. Réaliser la classification et produire une carte en couleur
-    5. Evaluer la performance globale
+    5. Évaluer la performance globale
     6. Régulariser et mesurer le gain de performance
     7. Réaliser une classification multi-date et mesurer le gain de performance
        
 *** Présentation des données Sentinel-2
 
-    *Résolution spatiale:* 20 mètres (orignale: 10 mètres)
+    *Résolution spatiale:* 20 mètres (originale: 10 mètres)
     *Tuile:* T31TCJ (extrait)
 |------------|
 | 2016-06-07 |
@@ -35,7 +35,7 @@
 
 *** Présentation des données Sentinel-2
 
-    *Résolution spatiale:* 20 mètres (orignale: 10 mètres)
+    *Résolution spatiale:* 20 mètres (originale: 10 mètres)
     *Tuile:* T31TCJ (extrait)
 
 |---+----------------+------------+------------+--------------------|
@@ -77,7 +77,7 @@
     #+ATTR_LATEX: :float t :width \textwidth
     [[file:Images/classification.png]]
    
-*** Algorithme RF
+*** Algorithme Random Forests (RF)
     Ensemble d'arbres de décision aléatoires
 
 **** Apprentissage
@@ -153,7 +153,7 @@
 |------------|
 
 
-    Ces images sont toutes multispectrales avec 10 bandes ré-échantillonnnées à 20 m:
+    Ces images sont toutes multispectrales avec 10 bandes ré-échantillonnées à 20 m:
 
 |---+----------------+------------+------------+--------------------|
 | # | Band name      | S2 band id | Wavelength | Initial resolution |
@@ -221,7 +221,7 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
 **** Réaliser un apprentissage mono-date
      
      Nous allons maintenant utiliser l'application
-     *TrainImagesClassifier* pafin de réaliser l'apprentissage
+     *TrainImagesClassifier* afin de réaliser l'apprentissage
      supervisé à partir des données d'entraînement disponibles dans
      ~references/training/training.shp~. Pour commencer, nous allons
      réaliser cet apprentissage avec uniquement l'image du 07.06.2016.
@@ -323,7 +323,7 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
   - ip.radius 1 :: Rayon de la zone participant au vote
   - ip.suvbool 0 :: Que faire lors d'une égalité. 0 pour utiliser la valeur existante.
 
-  Filtrez le résultat de la classification précédente. Evaluer la
+  Filtrez le résultat de la classification précédente. Évaluer la
   performance globale de la carte de classification filtrée. Que
   constatez-vous ?
 
@@ -607,7 +607,7 @@ $ otbcli_ComputeConfusionMatrix -in classif_20161005_reg.tif -ref vector  \
 Kappa index: 0.709103
 #+END_EXAMPLE
 
-La régularisation améliore donc signficativement les
+La régularisation améliore donc significativement les
 performances. Ceci s'explique par la régularité de la donnée de
 référence, dont on se rapproche avec ce type de traitement.
 
@@ -687,7 +687,7 @@ identifiés par le classifieur. Cette amélioration était attendue car
 les classes de cultures présentent une dynamique temporelle
 distinctive, par rapport à d'autres classes.
 
-On peut enfin génerer la carte de classification colorisée finale :
+On peut enfin générer la carte de classification colorisée finale :
 
 #+BEGIN_EXAMPLE
 $ otbcli_ColorMapping -in classif_all_reg.tif            \
