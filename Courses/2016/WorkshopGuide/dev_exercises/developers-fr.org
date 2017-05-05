@@ -22,12 +22,6 @@
     
     - Les parties du code à compléter sont localisés par le commentaire  ~//TODO:~ dans les fichiers sources.
 
-*** Liens utiles
-
-    - OTB Software Guide
-    - OTB module template
-    - Documentation ITK
-    - ITK CourseWare
 *** Exercice 1: Hello World 
 **** Les bases
      - C++ Generic Programming
@@ -114,6 +108,10 @@
        un module externe OTB
        
 *** Étapes                                                            :steps:
+    
+    TODO: warning inspiration
+    http://www.na-mic.org/svn/NAMICSandBox/trunk/ITKAdvancedCourse/
+
 
     Les données se trouvent dans le répertoire ~Data/otb_developers~.
 
@@ -132,6 +130,8 @@
     Pour compiler un exercice, on procède de la manière suivante:
 
     Sous Windows:
+    
+    #TODO
 
     Sous Linux:
 
@@ -150,16 +150,23 @@
 
     Sous Mac:
 
+    #TODO
     
 **** Exercice 1: Hello World 
      Il s'agit de modifier le programme ~HelloWorld.cxx~ pour:
      - Déclarer un alias à l'aide du mot clé ~typedef~ pour le type ~Image~ de
        dimension 2 pour des pixels de type entier non signé (~unsigned int~).
      - Créer un objet image avec ce type
+
+     *Documentation utile:* section 5.1.1 du Software Guide.
+
 **** Exercice 2: Pipeline OTB
      Il s'agit de modifier le programme ~Pipeline.cxx~ pour:
      - Modifier le programme pour effectuer le calcul de la norme du gradient de l'image en
        entrée et écrire le résultat dans une autre image en sortie
+
+    *Documentation utile:* section 4.3 du Software Guide
+
 **** Exercice 3: Écrire un filtre OTB
      Il s'agit de modifier le programme ~DividerByTwoImageFilter.h~ pour:
      - Implémenter le foncteur permettant de réaliser la division par 2 de tous
@@ -169,11 +176,15 @@
      Modifier ensuite le fichier ~DividerImageFilter.h~ pour implémenter un
      foncteur réalisant la division de chaque pixel par un diviseur passé en
      paramètre du filtre
+
+     *Documentation utile:* 
 **** Exercice 4: Écrire une application OTB
      Il s'agit de modifier le programme ~MyApp.cxx~ pour:
      - Déclarer un nouveau paramètre de type ~float~ permettant de modifier la valeur
      - Modifier la méthode DoExecute pour que l'application réalise la division de tous les pixels
        de l'image par la valeur passée en paramètre de l'application
+       
+     *Documentation utile:* Chapitre 30 du Software Guide
 **** Exercice 5: Écrire un module externe OTB
      Il s'agit de modifier le modèle de remote module fournit pour:
      - Modifier les fichiers CMake pour changer le nom du remote module
@@ -181,11 +192,14 @@
        développés dans l'exercice 3
      - Insérer l'application développée à l'exercice dans le répertoire ~app~
      - Ajouter un test de non régression de l'application développée
+       
+     *Documentation utile:* Chapitre 31 du Software Guide
+
 *** Pour aller plus loin                                            :further:
-    - OTB Software Guide
-    - OTB module template
-    - Documentation ITK
-    - ITK CourseWare
+    - OTB Software Guide :: https://www.orfeo-toolbox.org/SoftwareGuide/
+    - OTB module template :: https://github.com/orfeotoolbox/otbExternalModuleTemplate
+    - ITK Software Guide :: http://www.itk.org/ItkSoftwareGuide.pdf
+    - ITK CourseWare :: https://itk.org/Wiki/ITK/Course_Ware
 
 ** Tutoriel pour futur développeur OTB                            :solutions:
 
