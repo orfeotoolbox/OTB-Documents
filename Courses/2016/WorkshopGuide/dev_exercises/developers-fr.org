@@ -109,7 +109,8 @@
        
 *** Étapes                                                            :steps:
     
-    TODO: warning inspiration
+    Les exercices de ce TP sont fortement inspirés du cours ITK ci-dessous :
+
     http://www.na-mic.org/svn/NAMICSandBox/trunk/ITKAdvancedCourse/
 
 
@@ -177,7 +178,7 @@
      foncteur réalisant la division de chaque pixel par un diviseur passé en
      paramètre du filtre
 
-     *Documentation utile:* 
+     *Documentation utile:* http://www.na-mic.org/svn/NAMICSandBox/trunk/ITKAdvancedCourse/doc/presentations/Insight-Writing-a-New-Filter.ppt , planches 11 à 16
 **** Exercice 4: Écrire une application OTB
      Il s'agit de modifier le programme ~MyApp.cxx~ pour:
      - Déclarer un nouveau paramètre de type ~float~ permettant de modifier la valeur
