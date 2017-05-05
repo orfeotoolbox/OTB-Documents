@@ -41,9 +41,10 @@
 
 \section{Windows}
 
-Install Clink to get Bash's powerful command line editing in cmd.exe \url{https://github.com/mridgers/clink}
-
-The tool can be downloaded free of charge from its github page.
+Install Clink.
+This add Bash's powerful command line editing in cmd.exe
+\newline
+The tool can be downloaded free of charge from above github page. \url{https://github.com/mridgers/clink}
 \newline
 \newline
 OTB binary package works on windows 7 or higher versions.
@@ -51,7 +52,7 @@ You should use OTB from windows command prompt (cmd.exe)
 
 \subsection{Installation}
 
-Download OTB-5.10.1-xdk-win64.zip from \url{orfeo-toolbox.org/packages/xdk/OTB-5.10/}
+Download OTB-5.10.1-xdk-win64.zip from \url{https://orfeo-toolbox.org/packages/xdk/OTB-5.10/}
 \newline
 Extract OTB-5.10.1-xdk-win64.zip using 7z tool.
 \newline
@@ -59,8 +60,8 @@ Installation finished!
 \newline \newline
 Note: I extracted OTB-5.10.1-xdk-win64.zip to c:projects.
 \newline
-You can ofcourse another directory of your choice.
-
+You can ofcourse use another directory of your choice.
+\newline \newline
 Next step is to update PATH environment variable. This must be done for using anything from package.
 
 \begin{verbatim}
@@ -104,26 +105,29 @@ Download visual studio 2015 from \url{https://www.visualstudio.com/vs/older-down
 \newline
 
 \subsection{CMake}
-CMake installer for Windows can be downloaded from \url{https://www.cmake.org}
+CMake installer for Windows can be downloaded from \url{https://cmake.org/files/v3.7/cmake-3.7.2-win64-x64.msi}
 \newline
 Make sure you add CMake to system PATH.
-\newline
+\begin{figure}[h]
+  \center
+  \includegraphics[width=1\textwidth]{Art/cmake-install.png}
+  \caption[]{cmake-install}
+  \label{fig:cmake-install}
+\end{figure}
+
 \textbf{CMake is not a required if you are building using the IDE.}
 
 \subsection{Using windows command prompt}
-
-I had extracted xdk package into C:\\projects\\
-\newline
-so I will be updating my variables relative to this path
+I had extracted xdk package into C:projects. So I will be updating my variables relative to this path
 \newline
 First step is to call \textbf{vcvarsall.bat} from Visual Studio 2015
 \newline
 \begin{verbatim}
-"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
+call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 \end{verbatim}
-
+\textbf{We assume you had installed visual studio to C: drive. If that's not the case, please change it}
 \textbf{x64 is the machine architecture. For some systems, it is called amd64 or x86\_64.}
-
+\newline
 Next step is to update PATH and CMAKE\_PREFIX\_PATH variables
 \newline
 PATH varaiable is required for finding dll files.
@@ -131,43 +135,37 @@ PATH varaiable is required for finding dll files.
 CMAKE\_PREFIX\_PATH variable is required for finding packages with cmake configure.
 \newline
 \newline
-open cmd.exe
-
+\textbf{open cmd.exe}
 \begin{verbatim}
 cd C:\projects
 cd OTB-5.10.1-xdk-win64 
 set PATH=C:\projects\OTB-5.10.1-xdk-win64\bin;$PATH
-set CMAKE\_PREFIX\_PATH=C:/projects/OTB-5.10.1-xdk-win64
+set CMAKE_PREFIX_PATH=C:/projects/OTB-5.10.1-xdk-win64
 \end{verbatim}
 
-
-
 \subsection{Configure and build project}
-
-
 
 \begin{verbatim}
 cd c:\projects\otbprojects\build
 cmake ..\ex1_HelloWorld -G"NMake Makefiles"
 nmake
 \end{verbatim}
-
 If build goes fine, you will get executable file HelloWorld.exe
 \newline
-
 C:{\textbackslash}projects{\textbackslash}otbprojects{\textbackslash}build{\textbackslash}HelloWorld.exe
 \newline
-\textbf{Test output}
+
+\subsection{Test output}
 
 \begin{verbatim}
 c:\projects\otbprojects\build\HelloWorld.exe
 HelloWorld OTB!
 \end{verbatim}
 
-%%\subsection{Using IDE}
+\subsection{Using IDE}
 
 
-%% \url{Writing_OTB_modules_with_Visual_Studio_IDE https://wiki.orfeo-toolbox.org/index.php/Writing_OTB_modules_with_Visual_Studio_IDE}
+Please see wiki page \url{https://wiki.orfeo-toolbox.org/index.php/Writing_OTB_modules_with_Visual_Studio_IDE}
 
 
 
@@ -176,54 +174,105 @@ HelloWorld OTB!
 \subsection{Installation}
 
 \begin{verbatim}
-cd ~{\textbackslash}projects
-wget \url{https://www.orfeo-toolbox.org/packages/xdk/OTB-5.10/OTB-5.10.1-xdk-Linux64.run}
+cd ~/projects
+wget https://www.orfeo-toolbox.org/packages/xdk/OTB-5.10/OTB-5.10.1-xdk-Linux64.run
 chmod +x OTB-5.10.1-xdk-Linux64.run
 ./OTB-5.10.1-xdk-Linux64
 cd OTB-5.10.1-xdk-Linux64
 . ./otbenv.profile
 \end{verbatim}
-
 Installation finished. You now have OTB-5.10.1-xdk-Linux64
-
-\subsection{Using OTB applications, monteverdi, mapla, iceviewer}
+\newline
+\subsection{Using OTB}
 \begin{enumerate}
 \item OTB Applications: You can run OTB applications through otbgui\_<APPLICATION> and or otbcli\_<APPLICATION> 
 \item Monteverdi : Start monteverdi using monteverdi.bat in OTB-5.10.1-xdk-Linux64
 \item Mapla : Start Mapla using mapla.sh in OTB-5.10.1-xdk-Linux64
 \item iceViewer: bin{\textbackslash}iceViewer. This is commandline visualization tool. This makes up the rendering core of Monteverdi.
 \end{enumerate}
-
-It is advised not to run bin/monteverd. or bin/mapla directly. 
+It is advised not to run bin/monteverdi or bin/mapla directly.
+\newline
 The .sh scripts setup required environment variables for running the actual binaries.
+\newline
+
+\subsection{Develop project using OTB}
+Make sure cmake and gcc (>= 4.9) are installed on your system.
+\newline
+\begin{verbatim}
+cmake --version
+gcc --version
+\end{verbatim}
+
+\subsection{Configure and build project}
+
+\begin{verbatim}
+cd ~/otbprojects/HelloWorld/
+mkdir build
+cmake ~/otbprojects/HelloWorld/ex1_HelloWorld -DCMAKE_CXX_FLAGS='-std=c++11'
+make
+\end{verbatim}
+You now have ~/otbprojects/HelloWorld/build/HelloWorld
+\newline
+\subsection{Test output}
+
+\begin{verbatim}
+~/otbprojects/HelloWorld/build/HelloWorld
+HelloWorld OTB!
+\end{verbatim}
 
 \subsection{Mac OSX}
 
 \begin{verbatim}
 cd ~/projects
-wget \url{https://www.orfeo-toolbox.org/packages/xdk/OTB-5.10/OTB-5.10.1-xdk-Darwin64.run}
+wget https://www.orfeo-toolbox.org/packages/xdk/OTB-5.10/OTB-5.10.1-xdk-Darwin64.run
 chmod +x OTB-5.10.1-xdk-Darwin64.run
 ./OTB-5.10.1-xdk-Darwin64
 cd OTB-5.10.1-xdk-Darwin64
 . ./otbenv.profile
 \end{verbatim}
-
-
 Installation finished. You now have OTB-5.10.1-xdk-Darwin64 in your directory
-
-\subsection{Using OTB applications, monteverdi, mapla, iceviewer}
+\newline
+\subsection{Using OTB}
 
 \begin{enumerate}
 \item OTB Applications: You can run OTB applications through otbgui\_<APPLICATION> and or otbcli\_<APPLICATION> 
 \item Monteverdi : Start monteverdi using Monteverdi.app in OTB-5.10.1-xdk-Darwin64
 \item Mapla : Start Mapla using Mapla.app in OTB-5.10.1-xdk-Darwin64
 \end{enumerate}
-
-It is advised not to run bin/monteverdi. or bin/mapla directly. 
+It is advised not to run bin/monteverdi or bin/mapla directly.
+\newline
 The wrapper scripts setup required environment variables for running the actual binaries.
+\newline
 
+\subsection{Develop project using OTB}
+Make sure cmake, and Xcode (>= 6.1.1) are installed on your system.
+\newline
+AppleClang is installed with XCode. Required version is 6.0 or higher
+\newline
+\begin{verbatim}
+cmake --version
+gcc --version
+\end{verbatim}
+
+\subsection{Configure and build project}
+
+\begin{verbatim}
+cd ~/otbprojects/HelloWorld/
+mkdir build
+cmake ~/otbprojects/HelloWorld/ex1_HelloWorld -DCMAKE_CXX_FLAGS='-std=c++11'
+make
+\end{verbatim}
+You now have ~/otbprojects/HelloWorld/build/HelloWorld
+\newline
+\subsection{Test output}
+
+\begin{verbatim}
+~/otbprojects/HelloWorld/build/HelloWorld
+HelloWorld OTB!
+\end{verbatim}
 
 \section{Windows}
+
 
 \subsection{QGIS}
 Install QGIS: \url{http://www.qgis.org/en/site/forusers/download.html}.
