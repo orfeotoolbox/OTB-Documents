@@ -128,13 +128,15 @@ You have two methods to build your projects:
 You need Visual Studio 2015 and CMake for building projects using OTB.
 
 \subsubsection{Clink (optional)}
-You can install Clink. This add Bash's powerful command line editing in
-cmd.exe. The tool can be downloaded free of charge from above GitHub
-page \url{https://github.com/mridgers/clink}.
+Clink add Bash's powerful command line editing in
+cmd.exe. The tool can be downloaded free of charge from their GitHub
+page \url{https://github.com/mridgers/clink}. This tool is optional for both development and usage of OTB.
+But it is highly recommended to use it rather than using third party terminal emulator such as git bash or
+mobxterm.
 
 \subsubsection{Visual Studio 2015}
-Community Edition can be downloaded free of charge. However, you must register
-to access to the download page. We use community edition because it is free
+Visual Studio Community Edition can be downloaded free of charge. However, you must register
+to get access to the download page. We use community edition because it is free
 of charge. If you have professional or enterprise edition that will work
 too. The latest version is 2017 but you must have \textbf{Visual Studio 2015 for OTB}. 
 
@@ -171,8 +173,6 @@ update variables relative to this path.
 is required for finding dll files. CMAKE\_PREFIX\_PATH variable is required for
 finding packages with cmake configure:
 \begin{verbatim}
-cd C:\projects
-cd OTB-5.10.1-xdk-win64 
 set PATH=C:\projects\OTB-5.10.1-xdk-win64\bin;$PATH
 set CMAKE_PREFIX_PATH=C:/projects/OTB-5.10.1-xdk-win64
 \end{verbatim}
