@@ -132,7 +132,17 @@
 
     Sous Windows:
     
-    #TODO
+    #+BEGIN_EXAMPLE
+    $ cd OTB-5.10.1-xdk-Linux64
+    $ . ./otbenv.profile
+    $ cd ..
+    $ mkdir build_ex1
+    $ cd build_ex1
+    $ cmake $DATA/dev_exercises/Exercises/ex1_HelloWorld/ -G"NMake Makefiles"
+    $ nmake
+    $ ./HelloWorld.exe 
+    OTB Hello World !
+    #+END_EXAMPLE
 
     Sous Linux:
 
@@ -142,16 +152,26 @@
     $ cd ..
     $ mkdir build_ex1
     $ cd build_ex1
-    $ cmake cmake $DATA/dev_exercises/Exercises/ex1_HelloWorld/
+    $ cmake $DATA/dev_exercises/Exercises/ex1_HelloWorld/
     $ make
     $ ./HelloWorld 
     OTB Hello World !
     #+END_EXAMPLE
 
 
-    Sous Mac:
+    Sous Mac OS X:
 
-    #TODO
+    #+BEGIN_EXAMPLE
+    $ cd OTB-5.10.1-xdk-Linux64
+    $ . ./otbenv.profile
+    $ cd ..
+    $ mkdir build_ex1
+    $ cd build_ex1
+    $ cmake cmake $DATA/dev_exercises/Exercises/ex1_HelloWorld/ -DCMAKE_CXX_FLAGS='-std=c++11'
+    $ make
+    $ ./HelloWorld 
+    OTB Hello World !
+    #+END_EXAMPLE
     
 **** Exercice 1: Hello World 
      Il s'agit de modifier le programme ~HelloWorld.cxx~ pour:
