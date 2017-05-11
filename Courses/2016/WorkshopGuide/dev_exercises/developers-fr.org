@@ -167,7 +167,7 @@
     $ cd ..
     $ mkdir build_ex1
     $ cd build_ex1
-    $ cmake cmake $DATA/dev_exercises/Exercises/ex1_HelloWorld/ -DCMAKE_CXX_FLAGS='-std=c++11'
+    $ cmake $DATA/dev_exercises/Exercises/ex1_HelloWorld/ -DCMAKE_CXX_FLAGS='-std=c++11'
     $ make
     $ ./HelloWorld 
     OTB Hello World !

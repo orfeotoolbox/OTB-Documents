@@ -242,14 +242,16 @@ chmod +x OTB-5.10.1-Linux64.run
 ./OTB-5.10.1-Linux64.run
 \end{verbatim}
 
-The executable binaries will be inside the 'bin' directory, and you can put this directory in your PATH variable if you want to. 
+The executable binaries will be inside the 'bin' directory, and you can put this
+directory in your PATH variable if you want to. To run monteverdi or mapla run
+bash scripts in the root directory called \textit{monteverdi.sh} and \textit{mapla.sh}.
 
-There are also scripts which set all the environment variables to allow to run Monteverdi and Mapla:
+There is also a script which set all the environment variables (run
+automatically by monteverdi.sh and mapla.sh):
+
 \begin{verbatim}
 cd OTB-5.10.1-Linux64
 . ./otbenv.profile
-./monteverdi.sh
-./mapla.sh
 \end{verbatim}
 
 \subsection{Test the installation}
