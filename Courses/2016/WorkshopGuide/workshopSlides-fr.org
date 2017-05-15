@@ -98,37 +98,39 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
     - Pléiades :: accès privilégié UIA (institutionnels français): http://professionnels.ign.fr/images-pleiades
     - Sentinel-1 :: Données gratuites disponible sur ESA Hub(https://scihub.copernicus.eu/) ou sur le site CNES PEPS(https://peps.cnes.fr)
 
-*** Planning de la formation: jour 1 (salle du Conseil)
+*** Planning de la formation: jour 1
 |-------+---------------+-------------------------|
-| 05.10 | 10:00 - 10:30 | Introduction            |
-| 05.10 | 10:30 - 10:40 | Pause                   |
-| 05.10 | 10:40 - 12:40 | TP1: Généralités        |
-|-------+---------------+-------------------------|
-| 05.10 | 12:40 - 14:00 | Pause déjeuner          |
-|-------+---------------+-------------------------|
-| 05.10 | 14:00 - 16:00 | TP2: Prétraitements THR |
-| 05.10 | 16:°0 - 16:15 | Pause                   |
-| 05.10 | 16:15 - 17:45 | TP2: Segmentation       |
-| 05.10 | 17:45 - 18:00 | Conclusion jour 1       |
+| 16.05 | 14:00 - 14:30 | Introduction            |
+| 16.05 | 14:30 - 17:00 | TP1: Généralités        |
 |-------+---------------+-------------------------|
 
-*** Planning de la formation: jour 2 (salle Badiane)
+*** Planning de la formation: jour 2
 |-------+---------------+------------------------|
-| 06.10 | 09:00 - 10:30 | TP3: Classification    |
-| 06.10 | 10:30 - 10:40 | Pause                  |
-| 06.10 | 10:40 - 12:10 | TP3: Classification    |
+| 17.05 | 09:00 - 10:30 | TP2: Prétraitements THR|
+| 17.05 | 10:30 - 10:40 | Pause                  |
+| 17.05 | 10:40 - 12:30 | TP2: Segmentation      |
 |-------+---------------+------------------------|
-| 06.10 | 12:10 - 13:40 | Pause déjeuner         |
+| 17.05 | 12:30 - 14:00 | Pause déjeuner         |
 |-------+---------------+------------------------|
-| 06.10 | 13:40 - 15:10 | TP4: Traitements Radar |
-| 06.10 | 15:10 - 15:20 | Pause                  |
-| 06.10 | 15:20 - 16:50 | Echanges libres        |
-| 06.10 | 16:50 - 17:20 | Conclusion générale    |
+| 17.05 | 14:00 - 15:30 | TP3: Classification    |
+| 17.05 | 15:30 - 15:40 | Pause                  |
+| 17.05 | 15:40 - 17:00 | TP3: Classification    |
+|-------+---------------+------------------------|
+
+*** Planning de la formation: jour 3
+
+|-------+---------------+------------------------|
+| 18.05 | 09:00 - 10:30 | TP4: Traitements Radar |
+| 18.05 | 10:30 - 10:40 | Pause                  |
+| 18.05 | 10:40 - 12:00 | Échanges libres        |
+|-------+---------------+------------------------|
+| 18.05 | 12:00 - 13:30 | Pause déjeuner         |
+|-------+---------------+------------------------|
+| 18.05 | 13:30 - 16:30 | Module développeur     |
 |-------+---------------+------------------------|
 
 *** Informations pratiques
 **** Repas
-Les plateaux repas seront livrés en salle Hibiscus
 **** Code Wifi
 **** Liste de présence et attestation de formation
 **** Autre?

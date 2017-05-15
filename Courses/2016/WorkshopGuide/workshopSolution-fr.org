@@ -71,3 +71,5 @@ paramètres dans l'interface graphique si besoin.
 #+INCLUDE: "classification-fr.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
+* Développer avec l'OTB
+#+INCLUDE: "dev_exercises/developers-fr.org" :minlevel 2
