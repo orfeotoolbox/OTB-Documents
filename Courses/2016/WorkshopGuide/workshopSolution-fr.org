@@ -1,6 +1,6 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Solutions des Travaux Pratiques
 #+AUTHOR: OTB Team
-#+DATE: 2016
+#+DATE: 2017
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,pdftex,openright]
