@@ -1,0 +1,162 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{Introduction}
+
+* Introduction
+** Welcome to OTB Users Days 2017!
+   
+   # #+LATEX:\begin{center}
+   # #+ATTR_LATEX: :float :width 0.4\textwidth
+   # [[file:../Hackfest16/images/img_3977.jpg]]
+
+   # Group picture of OTB Users Days 2015 (first edition)
+   # #+LATEX:\end{center}
+
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/img1-1024x536.jpg]]
+
+   PSC meeting during OTB Users Days 2016 (second edition)
+   #+LATEX:\end{center}
+
+** Recap of OTB Users Days 2015
+
+*** Day 1
+    - Presentations from the OTB development team at CNES and CS :
+      Introduction, What’s new in OTB? open governance, Monteverdi... for OTB: thoughts and context
+
+    - Users
+
+      - Big Data Solutions for EO pursued at JRC – P. Kempeneers & D. De Marchi (JRC)
+
+      - OTB for BIOMASS – T. Koleck (CNES)
+
+      - Using OTB for processing UAS imagery – A. Lobo (CSIC)
+
+      - Geosigweb – C. Bisso (Geosigweb)
+
+    - Then Tech talks:
+
+      - How we plan to do MPI-powered OTB (see rfc-26)
+
+      - The new flexible classification framework in OTB
+
+      - Machine learning in OTB: s/opencv/shark/
+
+      - S1 Geometry in OTB
+
+** Recap  Day 2
+*** Tutorials
+
+    Introduction to Monteverdi 3.0
+    OTB tools for image segmentation
+    Discover the new applications (Classification, Polarimetry)
+    The steganography game
+    Reminder about applications framework and extended filenames
+    Write your own remote module
+*** Brainstorming
+
+** Recap day 3
+
+** This year: program 2017
+   https://huit.re/otb_users_days_2017
+** Day 1: Talks
+   - 15/20 min talks and leave 5/10 minutes for questions
+   - Language for the event will most probably be French
+   - However slides and materials should be in English if possible
+   - In parallele: organize Day 2 and 3 (check with session leaders)
+** Day 2: Parallel sessions
+   - Tutorials
+   - Open question & features requests & one-on-one tutoring
+   - Brainstorming 
+** Day 3: Hackfest
+   - Keynote talks: C++11 for OTB?
+   - Then 30 minutes planning meeting at the beginning
+   - Write the code you need with the help of a member of the
+     development team
+   - Documentation review: live enhancement of the documentation
+   - Live bugfixes: You think you found a bug? We investigate and fix it with you
+   - Packaging improvement
+   - PSC meeting (to be scheduled)
+   - If there is time left: guru code hacking
+
+*Lunch: Pizza party!*
+
+*** This is not a 1000+ participants IEEE conf!
+    - Program can be adapted for you
+    - Discussions are more important than presentations
+    - We can always organize small groups to work on specific topics
+    - We need your help to finalize the program
+      
+* Agenda
+** Day 1: Plenary session (June 7)
+
+  |---------------+--------------------------------------------------|
+  | 10:00 - 12:00 | *Presentations from dev team*                    |
+  |               | One year of Open Governance                      |
+  |               | The new features of OTB 5.4                      |
+  |               | What is new in Monteverdi 3.2                    |
+  |               | The state of binary packages and xdk             |
+  |               | Code provenance review, licence and incubation   |
+  |---------------+--------------------------------------------------|
+  | 12:00 - 14:00 | *Lunch break*                                    |
+  |---------------+--------------------------------------------------|
+  | 14:00 - 17:00 | *Users feedback*                                 |
+  |               | P. Kempeneers (JRC), T. Koleck (CNES),           |
+  |               | A. Lobo (CSIC), C. Bisso (Geosigweb)             |
+  |               | *Tech talks*                                     |
+  |               | How we plan to do MPI-powered OTB                |
+  |               | The new flexible classification framework in OTB |
+  |               | Machine learning in OTB: s/opencv/shark/         |
+  |               | S1 Geometry in OTB                               |
+  |---------------+--------------------------------------------------|
+  | 17:00 - 19:00 | *Ice breaker*                                    |
+  |---------------+--------------------------------------------------|
+
+
+** Day 2: Technical session (June 8)
+
+  |---------------+-----------------------------------------------------|
+  | 10:00 - 12:00 | *On-demand Tutorials*                               |
+  |               | Introduction to Monteverdi 3.2                      |
+  |               | OTB tools for image segmentation                    |
+  |               | Discover the new applications                       |
+  |               | The steganography game                              |
+  |               | Reminder of app framework                           |
+  |               | Write your own remote module                        |
+  |---------------+-----------------------------------------------------|
+  | 12:00 - 14:00 | *Lunch break*                                       |
+  |---------------+-----------------------------------------------------|
+  | 14:00 - 17:00 | *Groups brainstorming*                              |
+  |               | Roadmaps and features request                       |
+  |               | New sensors: what are we missing ?                  |
+  |               | How to enhance OTB documentation ?                  |
+  |               | Should we do SimpleOTB ?                            |
+  |               | What is missing in the new classification framework |
+  |               | What is missing in Monteverdi                       |
+  |---------------+-----------------------------------------------------|
+  | 17:00 - 19:00 | *Happy hours*                                       |
+  |---------------+-----------------------------------------------------|
+
+
+** Day 3: Hackfest (June 9)
+   
+
+* Useful information
+** Useful information
+*** Program
+   https://huit.re/otb_users_days_2017   
+*** Wireless internet connection
+    TODO
+*** Coffee and coffee breaks
+    TODO
+*** Lunch
+    TODO
+*** Social events
+     17:00 - 19:00 : Ice breaker
+     Cocktail offered by our sponsor (CS-SI)
+*** Sponsor
+    Thanks to CS for hosting and catering the event!
+* Questions
+** Any questions ?
