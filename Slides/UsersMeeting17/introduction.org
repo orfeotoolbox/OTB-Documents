@@ -89,11 +89,12 @@
 
 *Lunch: Pizza party!*
 
-*** This is not a 1000+ participants IEEE conf!
-    - Program can be adapted for you
-    - Discussions are more important than presentations
-    - We can always organize small groups to work on specific topics
-    - We need your help to finalize the program
+** User meeting spirit 
+   - This is not a 1000+ participants IEEE conf!
+   - Program can be adapted for you
+   - Discussions are more important than presentations
+   - We can always organize small groups to work on specific topics
+   - We need your help to finalize the program
       
 * Useful information
 ** Useful information
