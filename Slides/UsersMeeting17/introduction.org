@@ -5,6 +5,18 @@
 
 * Introduction
 ** Welcome to OTB Users Days 2017!
+*** Thank you all to be here!
+    - Thank you for agreeing to spend some time discussing about OTB!
+    - Excited to learn about how you use OTB and your feedback
+    - Hope that the meeting would be fruitful
+*** Getting started
+    - OTB Dev team has set up a tentative program
+    - But program should be adapted for you
+    - Discussions are more important than presentations
+    - We can always organize small groups to work on specific topics
+    - We need your help to finalize the program
+
+** Recap of OTB Users Days 2016
    
    # #+LATEX:\begin{center}
    # #+ATTR_LATEX: :float :width 0.4\textwidth
@@ -17,55 +29,49 @@
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[file:images/img1-1024x536.jpg]]
 
-   PSC meeting during OTB Users Days 2016 (second edition)
+   OTB Users Days 2016 (second edition)
    #+LATEX:\end{center}
 
-** Recap of OTB Users Days 2015
-
+** Recap day 1
 *** Day 1
-    - Presentations from the OTB development team at CNES and CS :
-      Introduction, What’s new in OTB? open governance, Monteverdi... for OTB: thoughts and context
-
-    - Users
-
-      - Big Data Solutions for EO pursued at JRC – P. Kempeneers & D. De Marchi (JRC)
-
-      - OTB for BIOMASS – T. Koleck (CNES)
-
-      - Using OTB for processing UAS imagery – A. Lobo (CSIC)
-
-      - Geosigweb – C. Bisso (Geosigweb)
-
-    - Then Tech talks:
-
-      - How we plan to do MPI-powered OTB (see rfc-26)
-
-      - The new flexible classification framework in OTB
-
-      - Machine learning in OTB: s/opencv/shark/
-
-      - S1 Geometry in OTB
-
-** Recap  Day 2
+**** Presentations from the OTB development team
+     Introduction, What’s new in OTB? open governance, Monteverdi, packaging,
+     code provenance review...
+**** OTB usage
+     - Big Data Solutions for EO(JRC), OTB for BIOMASS, OTB for processing UAS
+       imagery (CSIC), Geosigweb
+**** Tech talks
+     - MPI-powered OTB, new classification framework in OTB, shark in OTB, S1 geometry...
+** Recap day 2
 *** Tutorials
+    - Introduction to Monteverdi 3.0
+    - OTB tools for image segmentation
+    - Discover the new applications (Classification, Polarimetry)
+    - The steganography game
+    - Reminder about applications framework and extended filenames
+    - Write your own remote module
+*** Brainstorming session
+    - Should we do SimpleOTB?
+    - What is missing in Monteverdi?
+    - What is missing in the new classification framework?
 
-    Introduction to Monteverdi 3.0
-    OTB tools for image segmentation
-    Discover the new applications (Classification, Polarimetry)
-    The steganography game
-    Reminder about applications framework and extended filenames
-    Write your own remote module
-*** Brainstorming
-
+    I think that we forgot to provide a report...
 ** Recap day 3
+   - Prototyping SAR visualization in Monteverdi (RFC-39) -> GDAL contribution done!
+   - Migrating the Cookbook to RST -> done!
+   - Shark integration -> done!
+   - In memory application chaining -> done
+   - Select image bounds in extended filenames -> done
+   - JIRA cleanup -> done :(
+   - PSC meeting
 
-** This year: program 2017
-   https://huit.re/otb_users_days_2017
+** Tentative program 2017
+*** https://huit.re/otb_users_days_2017
 ** Day 1: Talks
-   - 15/20 min talks and leave 5/10 minutes for questions
+   - 15/20 minutes talks and leave 5/10 minutes for questions
    - Language for the event will most probably be French
    - However slides and materials should be in English if possible
-   - In parallele: organize Day 2 and 3 (check with session leaders)
+   - In parallel: organize Day 2 and 3 (check with session leaders)
 ** Day 2: Parallel sessions
    - Tutorials
    - Open question & features requests & one-on-one tutoring
@@ -89,60 +95,6 @@
     - We can always organize small groups to work on specific topics
     - We need your help to finalize the program
       
-* Agenda
-** Day 1: Plenary session (June 7)
-
-  |---------------+--------------------------------------------------|
-  | 10:00 - 12:00 | *Presentations from dev team*                    |
-  |               | One year of Open Governance                      |
-  |               | The new features of OTB 5.4                      |
-  |               | What is new in Monteverdi 3.2                    |
-  |               | The state of binary packages and xdk             |
-  |               | Code provenance review, licence and incubation   |
-  |---------------+--------------------------------------------------|
-  | 12:00 - 14:00 | *Lunch break*                                    |
-  |---------------+--------------------------------------------------|
-  | 14:00 - 17:00 | *Users feedback*                                 |
-  |               | P. Kempeneers (JRC), T. Koleck (CNES),           |
-  |               | A. Lobo (CSIC), C. Bisso (Geosigweb)             |
-  |               | *Tech talks*                                     |
-  |               | How we plan to do MPI-powered OTB                |
-  |               | The new flexible classification framework in OTB |
-  |               | Machine learning in OTB: s/opencv/shark/         |
-  |               | S1 Geometry in OTB                               |
-  |---------------+--------------------------------------------------|
-  | 17:00 - 19:00 | *Ice breaker*                                    |
-  |---------------+--------------------------------------------------|
-
-
-** Day 2: Technical session (June 8)
-
-  |---------------+-----------------------------------------------------|
-  | 10:00 - 12:00 | *On-demand Tutorials*                               |
-  |               | Introduction to Monteverdi 3.2                      |
-  |               | OTB tools for image segmentation                    |
-  |               | Discover the new applications                       |
-  |               | The steganography game                              |
-  |               | Reminder of app framework                           |
-  |               | Write your own remote module                        |
-  |---------------+-----------------------------------------------------|
-  | 12:00 - 14:00 | *Lunch break*                                       |
-  |---------------+-----------------------------------------------------|
-  | 14:00 - 17:00 | *Groups brainstorming*                              |
-  |               | Roadmaps and features request                       |
-  |               | New sensors: what are we missing ?                  |
-  |               | How to enhance OTB documentation ?                  |
-  |               | Should we do SimpleOTB ?                            |
-  |               | What is missing in the new classification framework |
-  |               | What is missing in Monteverdi                       |
-  |---------------+-----------------------------------------------------|
-  | 17:00 - 19:00 | *Happy hours*                                       |
-  |---------------+-----------------------------------------------------|
-
-
-** Day 3: Hackfest (June 9)
-   
-
 * Useful information
 ** Useful information
 *** Program
@@ -160,3 +112,43 @@
     Thanks to CS for hosting and catering the event!
 * Questions
 ** Any questions ?
+* Agenda
+** Day 1: Plenary session (June 7) - Morning
+*** 10:00 - 12:00
+    - What's new in one year of OTB?" - V. Poughon
+    - iota2: scaling-up land-cover mapping thanks to OTB" - A. Vincent
+    - Développement de chaines d'extraction d'informations à partir d'OTB - J. Maxant
+    - Utilisation de l'OTB à l'IRSN - METIVIER JM/MENDY E
+    - MAJA software introduction and feedback on the development of otb applications" - P. Lassalle                                                                        |
+*** 12:00 - 14:00 *Lunch break*
+** Day 1: Plenary session (June 7) - Afternoon
+*** 14:00 - 17:30
+    - *Group photo*
+    - Large scale superpixel segmentation with OTB" -- Dawa DERKSEN
+    - Benchmarking of image processing libraries for the Euclid ground segment -- Peter Kettig
+    - Open Earth Engine: Integration of OTB in an Interactive Platform for Large Scale Remote Sensing and Visualization -- B. MEYLHEUC
+    - OTB for remote sensing of forest using SAR images -- M. Ballere
+    - Break
+    - A dimensionality reduction framework for OTB -- C.Traizet & J. Inglada
+    - Plans for asynchronous writing in OTB -- J.Michel / CNES
+    - OTB in QGIS: User feedback (TBC) -- M. Fauvel / ENSAT
+*** 17:30 - 19:00 *Ice breaker*                             
+** Day 2: Technical session (June 8) - Morning
+*** 09:30 - 12:00: Tutorials
+   - Beginners (learn Monteverdi and OTB Applications)
+   - Intermediate 1 (sampling and classification)
+   - Intermediate 2 (internals)
+   - Advanced (develop an OTB application in C++)
+*** 12:00-14:00 Lunch break
+** Day 2: Technical session (June 8) - Afternoon
+*** 14:00-17:00 Track 1: Continue tutorials (Victor)
+*** 14:00-17:00 Track 2: Open questions/tutoring (Manuel)
+*** 14:00-17:00 Track 3: Brainstorming (Julien)
+We'll brainstorm technical topics, with the objective of writing a RFComments. Some ideas:
+    - Refactoring of ExtractROI (and Convert ?) app : what users want
+    - How to fix DownloadSRTMTiles and make it better
+    - How to improve OBIA in Orfeo ToolBox
+    - Deep learning in OTB : yes or no ? why, how, when ?
+*** 17:00 - 19:00 : Happy hours (open questions and discussion with the development team) 
+
+   
