@@ -32,9 +32,9 @@ template< class TInput, class TOutput>
 class Divider
 {
 public:
-  Divider() {}
-  ~Divider() {}
   typedef typename itk::NumericTraits<TInput>::RealType  InputRealType;
+  Divider() {m_Divisor = itk::NumericTraits< InputRealType >::One;}
+  ~Divider() {}
   inline TOutput operator()( const TInput & A )
     {
     return static_cast<TOutput>( InputRealType( A ) / m_Divisor );

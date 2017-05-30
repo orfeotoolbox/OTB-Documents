@@ -21,7 +21,7 @@ public:
   typedef otb::DividerImageFilter<FloatImageType,FloatImageType> FilterType;
   
 private:
-  void DoInit()
+  void DoInit() ITK_OVERRIDE
   {
     SetName("MyApp");
     SetDescription("Divider application.");
@@ -45,18 +45,18 @@ private:
     // TODO: Declare a new parameter to allow to set divisor value
   }
 
-  void DoUpdateParameters()
+  void DoUpdateParameters() ITK_OVERRIDE
   {
   }
 
-  void DoExecute()
+  void DoExecute() ITK_OVERRIDE
   {
     FloatImageType::Pointer inImage = GetParameterImage<FloatImageType>("in");
 
     m_Filter = FilterType::New();
     m_Filter->SetInput( inImage );
 
-    float divisor = 0.;
+    float divisor = 1.;
     
     // TODO: Retrieve divisor value using OTB App API and set filter value
     // TIPS: You can change the divisor declaration and use const float instead

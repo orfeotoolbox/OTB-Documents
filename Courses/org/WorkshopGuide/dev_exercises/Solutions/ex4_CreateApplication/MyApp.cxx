@@ -21,7 +21,7 @@ public:
   typedef otb::DividerImageFilter<FloatImageType,FloatImageType> FilterType;
   
 private:
-  void DoInit()
+  void DoInit() ITK_OVERRIDE
   {
     SetName("MyApp");
     SetDescription("Divider application.");
@@ -47,11 +47,11 @@ private:
                             "The divisor value");
   }
 
-  void DoUpdateParameters()
+  void DoUpdateParameters() ITK_OVERRIDE
   {
   }
 
-  void DoExecute()
+  void DoExecute() ITK_OVERRIDE
   {
     FloatImageType::Pointer inImage = GetParameterImage<FloatImageType>("in");
 

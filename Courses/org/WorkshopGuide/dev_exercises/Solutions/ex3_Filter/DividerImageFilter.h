@@ -32,7 +32,7 @@ template< class TInput, class TOutput>
 class Divider
 {
 public:
-  Divider() {}
+  Divider() {m_Divisor = itk::NumericTraits< InputRealType >::One;}
   ~Divider() {}
   typedef typename itk::NumericTraits<TInput>::RealType  InputRealType;
   inline TOutput operator()( const TInput & A )
