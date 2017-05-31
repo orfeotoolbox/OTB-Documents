@@ -32,18 +32,16 @@ template< class TInput, class TOutput>
 class Divider
 {
 public:
-  Divider() {}
-  ~Divider() {}
   typedef typename itk::NumericTraits<TInput>::RealType  InputRealType;
+  Divider() {m_Divisor = itk::NumericTraits< InputRealType >::One;}
+  ~Divider() {}
   inline TOutput operator()( const TInput & A )
     {
-      // TODO: Implémenter le code du foncteur qui implémente la division de
-      // chaque pixel par un diviseur en entrée.
-      return 0;
+    return static_cast<TOutput>( InputRealType( A ) / m_Divisor );
     }
   void SetDivisor( const InputRealType & divisor )
     {
-      // TODO: Implémenter le Setter du diviseur du foncteur générique
+    m_Divisor = divisor;
     }
 private:
   InputRealType m_Divisor;

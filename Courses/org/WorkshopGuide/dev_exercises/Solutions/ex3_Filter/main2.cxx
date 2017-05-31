@@ -13,7 +13,7 @@ int main(int argc, char * argv [])
     std::cerr << "Missing arguments" << std::endl;
     std::cerr << "Usage: " << argv[0];
     std::cerr << " inputImage outputImage divisor" << std::endl;
-    return 1;
+    return EXIT_FAILURE;
     }
   
   typedef otb::Image< unsigned int,  2 > InputImageType;
@@ -54,6 +54,6 @@ int main(int argc, char * argv [])
     std::cerr << excp << std::endl;
     }
   
-  return 0;
+  return EXIT_SUCCESS;
 }
 
