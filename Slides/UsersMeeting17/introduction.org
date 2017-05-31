@@ -5,10 +5,10 @@
 
 * Introduction
 ** Welcome to OTB Users Days 2017!
-*** Thank you all to be here!
+*** Thank you all for being here!
     - Thank you for agreeing to spend some time discussing about OTB!
     - Excited to learn about how you use OTB and your feedback
-    - Hope that the meeting would be fruitful
+    - Hope that the meeting will be fruitful
 *** Getting started
     - OTB Dev team has set up a tentative program
     - But program should be adapted for you
@@ -74,7 +74,7 @@
    - In parallel: organize Day 2 and 3 (check with session leaders)
 ** Day 2: Parallel sessions
    - Tutorials
-   - Open question & features requests & one-on-one tutoring
+   - Open question & features requests & one-to-one tutoring
    - Brainstorming 
 ** Day 3: Hackfest
    - Keynote talks: C++11 for OTB?
@@ -89,12 +89,6 @@
 
 *Lunch: Pizza party!*
 
-** User meeting spirit 
-   - This is not a 1000+ participants IEEE conf!
-   - Program can be adapted for you
-   - Discussions are more important than presentations
-   - We can always organize small groups to work on specific topics
-   - We need your help to finalize the program
       
 * Useful information
 ** Useful information
