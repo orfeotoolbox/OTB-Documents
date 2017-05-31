@@ -120,335 +120,229 @@
 *** Description                                                        :desc:
 **** Summary
 
-     This exercise will introduce pixel based supervised classification
-     applications in Orfeo ToolBox. We will use the Landsat-8 time series and a
-     data set for the supervised training.
+     This exercise allows to get familiar with supervised, pixel-wise
+     classification applications in Orfeo ToolBox, using a Sentinel-2
+     time serie and a reference dataset for supervision.
 
-**** Prerequisites
-
-     - Installed software: Orfeo ToolBox and Monteverdi
-     - Workshop dataset downloaded
-     - Knowledge of the OTB applications mechanism (see corresponding exercises)
-     - Notions of supervised classification
-
-**** Goals
-     - Know the applications needed for the supervised classification
-       procedure
-     - Use the different learning algorithms
-     - Measure the quality of classification results
-     - Know the available post processing steps
-
-*** Steps										    :steps:
-
-     The data are available in the ~Data/classification~ directory, with the
-     following sub directories:
-     - ~Extract16bits~: the Landsat-8 time series
-     - ~training~: the training data in the /shp/ format
-     - ~testing~ the testing data in the /shp/ format
-
-**** The LANDSAT 8 dataset
-
-    The data folder, ~Data/classification/Extract16bits~ contains nine Landat
-     8 images at the following dates:
-
-     |------------|
-     | 2014-03-09 |
-     | 2014-04-01 |
-     | 2014-04-17 |
-     | 2014-05-28 |
-     | 2014-06-20 |
-     | 2014-07-31 |
-     | 2014-09-01 |
-     | 2014-10-03 |
-     | 2014-10-26 |
-     |------------|
-
-    These are multispectral images with seven bands from the OLI sensor:
-
-    |---+---------------------|
-    | 0 | Coastal aerosol     |
-    | 1 | Blue                |
-    | 2 | Green               |
-    | 3 | Red                 |
-    | 4 | Near Infrared (NIR) |
-    | 5 | SWIR 1              |
-    | 6 | SWIR 2              |
-    |---+---------------------|
-
-    In total, 63 bands are therefore available to represent each pixel.
-    The images are encoded with 16 bits per pixel.
-
-    Open an image in monteverdi, and setup the display bands and ranges to make
-     a true color image (red, green, blue).
-
-    Open all nine images and observe changes between each dates.
-
-    The vector layers ~training/training.shp~ and ~testing/testing.shp~ contain polygons
-     which define 11 classes over the scene:
-
-|------+-----------------------+-----------|
-| Code | Name                  | #polygons |
-|------+-----------------------+-----------|
-|   11 | Summer crops          |      7898 |
-|   12 | Winter crops          |      8171 |
-|   31 | Deciduous forests     |       867 |
-|   32 | Evergreen forests     |       125 |
-|   34 | Cultivated grasslands |        45 |
-|   36 | Woody moorlands       |       386 |
-|   41 | Built-up              |      4719 |
-|   51 | Water                 |      1280 |
-|  211 | Natural grasslands    |      5647 |
-|  221 | Orchards              |       204 |
-|  222 | Vineyards             |       559 |
-|------+-----------------------+-----------|
-
-
-    Open a polygon file in QGIS. The attribute table is accessible from
-     right-click on the layer, then /Open the attribute table/. Each label is
-     visible and the list can be filtered via SQL expressions.
-
-*Note:* The ~polygones.qml~ style file can be loaded into QGIS in order to give each polygon a color corresponding to its class.
-
-    The polygons are split into two sets: learning (or training) and validation
-     (or testing).
-
-
-**** Data preparation
-
-     For this workshop, we are goint to use 3 kinds of images:
-     1. One image containing the original bands for every date (63 bands)
-     2. One image containing the NDVI values for each date (9 bands)
-     3. One image containing the original bands and the NDVI values (72 bands)
-
-     The first step consists in generating these images.
-
-     Use the *ConcatenateImages* application in order to generate the image containing all the bands.
-
-     Use the *RadiometricIndices* application to compute the NDVI for each date. Then, use the 
-     *ConcatenateImages* application to produce the image containing all the NDVI values (time series).
-
-     Finally, use again the *ConcatenateImages* application to produce the image containing all the original spectral images and the NDVI time series.
-
-     *Notes :* Using the application command line interface, the NDVI computation for each date can be scripted in bash:
-
-     #+BEGIN_EXAMPLE
-     $ for f in *.tif; do \
-       otbcli_RadiometricIndices -channels.blue 2 -channels.green 3 \
-                                 -channels.red 4 -channels.nir 5 \
-                                 -in "$f" -out "${f%.*}_ndvi.tif" \
-                                 -list Vegetation:NDVI; done
-     #+END_EXAMPLE
-
-**** Available sample statistics computation
-
-     We are now going to use the *PolygonClassStatistics* application
-     to count the available samples for each class and each polygon in
-     the training and validation data.
-
-     This application takes as parameters the image which will be use
-     to get the samples, the vector data contaning the polygons to be
-     analysed (~training.shp~ for the learning, ~testing.shp~ for the
-     validation), and the name of the field which contains the class
-     label in the vector data. The application produces as output an
-     XML file with a summary of all the information needed.
-
-     Inspect the data in QGIS and identify the field which will be
-     used to define the class.
-
-     Open the generated XML files. How many samples are available for
-     the ~Natural grasslands~ class int the training set? And in the
-     validation set?
-
-     How many samples are contained into the polygon whose identifier
-     is 1081 in the training set?
-
-     How many samples are available for all classes in the training
-     set?
-
-     Which class has the fewer samples in the training set?
-
-     *Note :* Even if this application does not access the image contents (pixels), it needs to know the image in order to use its footprint.
-
-**** Sample poisition selection
-
-     In the previous step, we have see that the training polygons have
-     many more samples than needed to train a model. We are therefore
-     going to select a sub-set of those samples for training the
-     model. We will use the *SampleSelection* application.
-
-     Check the application documentation. Which are the different
-     strategies available to perform the sample selection.
-
-     We are going to use the ~smallest~ strategy, which allows to
-     limit the number of samples per class to the number of samples of
-     the class having fewest samples. We will produce a training
-     sample set (using ~training.shp~) and another one for the
-     validation (using ~testing.shp~).
-
-     The application takes as parameter the image, the vector data containing the polygons, the name of the field containing the class label in the vector data and the statistics file produced in the previous step. The application produces a vector data file containing points, each point corresponding to a selected sample.
-
-     How many samples in total have been selected for the training for each class?
-
-     Open the output point file in QGIS. Which are the features
-     associated to each point?
-
-     *Note :* The style file ~samples.qml~ can be loaded in QGIS in order to use a different color for each class.
-
-     *Note :* Even if this application does not access the image
-     contents (pixels), it needs to know the image in order to use its
-     footprint.
+**** Pré-requisites
      
-**** Feature extraction for the samples
-
-     Now that we have selected the sample positions, we are going to
-     associate to each of them the features that will be used for the
-     learning and the classification. This step is done using the
-     *SampleExtraction* application, which will give to each point the
-     values of the bands of the selected image.
-
-     Note that if no output vector file is specified, the application
-     works in update mode and the features will be added to the input
-     vector file.
+     - Software installed (Monteverdi and Orfeo ToolBox)
+     - Data downloaded
+     - Basic knowledge on using applications in OTB
+     - Basic knowledge on supervised classifcation
      
-     The application takes as parameter the image to be used and the
-     vector file to be updated. It also allows to set the name of the
-     fields which will be produced. For instance, if one uses the
-     ~band_~ prefix, then the fields will be called ~band_0~,
-     ~band_1~, etc ...
+**** Objectives
 
-     Use the prefix ~band_~ for the original image bands and the
-     prefix ~ndvi_~ for the NDVI time series.
+     Objectives are the following:
+     - Knowing the different applications of the supervised classification process
+     - Using different learning algorithms
+     - Measuring classification performances
+     - Post-processing of classification
 
-     Use the application to add the features corresponding to the
-     image bands and to the NDVI time series, fot the traning and the
-     validation sets.
+*** Steps                                                             :steps:
 
-**** Model training
+    Data are available in the ~Data/classification~ folder, with following sub-folders:
+    - ~images~ contains the Sentinel-2 time serie,
+    - ~references/training~ contains training data in /shp/ format,
+    - ~references/testing~ contains testing data in /shp/ format
 
-     Now that the samples are ready, we can proceed to the model
-     training. We are going to use the *TrainVectorClassifier*
-     application, which is going to read the sample files containing
-     the features that we just produced, and use them for the training
-     and the validation of the model.
-
-     For all the experiments of this section, we will use a *Random
-     Forest* (rf) classifier with a maximum depth for the trees of 20.
-
-     Again, the application needs as parameter the name of the field
-     which defines the class. The application also takes as parameter
-     the name of the points file with the samples, as well as an
-     output file name for storing the learned model.
-
-     Do a first training using only the first date (~band_0~ to ~band_6~), and without a validation file.
-
-     What perfomances (Kappa coefficient) do you obtain? Is this
-     result realistic? How has it been computed?
-
-     Perform the same training, but this time used the validation file
-     produced in the previous step. What do you observe?
-
-     Using the training application, it is straighforward to test
-     different feature combinations and compare their impact on the
-     final performances:
-     - Which date yields the best performance?
-     - Has the coastal blue band an interest for the classification?
-     - Which are the performances using all the spectral bands?
-     - What are the performances using the NDVI time series alone?
-     - What are the performances using all the spectral bands and the NDVI time series?
-     - In the latter case, analyse the performances for each class.
-
-     *Notes :* Using the application command line interface, on can
-     define ~bash~ variables for the different sets of features:
-
-     #+BEGIN_EXAMPLE
-         date1=`for i in $(seq 0 6); do printf "band_$i "; done`
-
-         date2=`for i in $(seq 7 13); do printf "band_$i "; done`
-
-         date3=`for i in $(seq 14 20); do printf "band_$i "; done`
-
-         date4=`for i in $(seq 21 27); do printf "band_$i "; done`
-
-         date5=`for i in $(seq 28 34); do printf "band_$i "; done`
-
-         date6=`for i in $(seq 35 41); do printf "band_$i "; done`
-
-         date7=`for i in $(seq 42 48); do printf "band_$i "; done`
-
-         date8=`for i in $(seq 49 55); do printf "band_$i "; done`
-
-         date9=`for i in $(seq 56 62); do printf "band_$i "; done`
-
-         date1_nocb=`for i in $(seq 1 6); do printf "band_$i "; done`
-
-         bands=`for i in $(seq 0 62); do printf "band_$i "; done`
-
-         bands_nocb=`for i in $(seq 0 62); do if [ $(($i % 7)) -ne 0 ]; \
-                     then printf "band_$i "; fi done`
-
-         ndvis=`for i in $(seq 0 8); do printf "ndvi_$i "; done`
-     #+END_EXAMPLE
-
-     Then one can use these variable names as parameters for the
-     application like this: ~-feat ${bands} ${ndvis}~.
-
-**** Classification
+**** Introduction to Sentinel-2 data
      
+     In the data package, folder ~Data/classification/images~ cotains
+     5 Sentinel-2 images, extracted on tile T31TCJ, at the following dates:
+    
+|------------|
+| 2016-06-07 |
+| 2016-07-07 |
+| 2016-08-06 |
+| 2016-09-05 |
+| 2016-10-05 |
+|------------|
+
+
+    Those images are multispectral, with 10 bands resampled at 20 m:
+
+|---+----------------+------------+------------+--------------------|
+| # | Band name      | S2 band id | Wavelength | Initial resolution |
+|---+----------------+------------+------------+--------------------|
+| 0 | Blue           | B2         | 490 nm     | 10 m               |
+| 1 | Green          | B3         | 560 nm     | 10 m               |
+| 2 | Red            | B4         | 665 nm     | 10 m               |
+| 3 | NIR - Narrow 1 | B5         | 705 nm     | 20 m               |
+| 4 | NIR - Narrow 2 | B6         | 740 nm     | 20 m               |
+| 5 | NIR - Narrow 3 | B7         | 783 nm     | 20 m               |
+| 6 | NIR - Wide     | B8         | 842 nm     | 10 m               |
+| 7 | NIR - Narrow 4 | B8A        | 865 nm     | 20 m               |
+| 8 | SWIR 1         | B11        | 1610 nm    | 20 m               |
+| 9 | SWIR 2         | B12        | 2190 nm    | 20 m               |
+|---+----------------+------------+------------+--------------------|
+
+
+We therefore have 50 bands for each pixels. Images are encoded over 16 bits.
+
+Open one image in monteverdi and set the bands for a true color
+display (red, green, blue)
+
+Open the remaining four images and look for changes.
+
+*Note:* Le fichier de style ~support/images.qml~ can be loaded into
+Qgis to set the rendering and color channls for each image.
+
+Files ~references/training/training.shp~ 
+and
+~references/testing/testing.shp~ contain polygons defining 13 classes
+over the scene:
+
+|------+-----------------------------+---------------------+--------------------|
+| Code | Name                        | #polygones training | #polygones testing |
+|------+-----------------------------+---------------------+--------------------|
+|   10 | Annual crops                | 3129                | 3078               |
+|   31 | Deciduous Forests           | 176                 | 292                |
+|   32 | Evergreen Forests           | 23                  | 29                 |
+|   34 | Grass                       | 2                   | 2                  |
+|   36 | Woody Moorlands             | 63                  | 38                 |
+|   41 | Dense Urban Area            | 30                  | 33                 |
+|   42 | Light Urban Area            | 326                 | 239                |
+|   43 | Industrial Area             | 154                 | 212                |
+|   44 | Roads                       | 162                 | 114                |
+|   51 | Water                       | 243                 | 332                |
+|  211 | Meadow                      | 320                 | 311                |
+|  221 | Orchards                    | 227                 | 254                |
+|  222 | Vineyards                   | 129                 | 97                 |
+|------+-----------------------------+---------------------+--------------------|
+
+Open one of the files in QGis. The attribute table can be accessed by
+    right-clicking on the layer -> /Open attributes table/. Each label
+    is visible, and the list can be filtered with SQL expressions.
+
+    *Note :* There is a style file ~support/polygons.qml~ that can be
+    loaded into Qgis to colorize polygons according to their classes.
+    
+    Polygons are splitted into two sets: training and validation.
+
+**** Single date training
+     
+     We are going to use th *TraingImagesClassifier* application in
+     order to do supervised learning from the training date in
+     ~references/training/training.shp~. First, we are going to work
+     with the image from the 07.06.2016.
+
+     The *TraingImagesClassifier* application will sample some image
+     pixels within the training polygons, in order to build a
+     well-balanced training set. This set is then passed to the
+     learning algorithm.
+     
+     This application has some mandatory parameters:
+     - The input images, which bands will be used as features by the
+       learning algorithm,
+     - The vector layer containing references polygons,
+     - The name of the field in that layer that contains the class
+       identifier,
+     - The output file containing the learnt model (call it ~model.rf~).
+
+     Some optional parameters should also be set as follows:
+     - Random forest classifier for the learning algorithm,
+     - The number of tree set to 50,
+     - The maximal tree depth to 20,
+     - The minimum number of samples in each node to 70,
+     - The number of clusters to 13 (equal to the number of classes)
+
+     Look at the application logs, in particular the confusion matrix,
+     the Kappa coefficients, and scores per class. What do you think
+     of those results ? Without using polygons dedicated to
+     validation, the application will use a part of the generated
+     samples for validation. What can be deduced regarding the
+     displayed performances ?
+
+     Do the training again, but this time also use the validation
+     dataset in ~reference/testing/testing.shp~ as validation layer
+     (you therefore set two differents shp files in the
+     application). What can be observed ?
+     
+     Do the training again, and deactivate the ~cleanup~ option. Look
+     at the intermediate data that have been generated. What are they
+     used for ?
+
+**** Spot the date with the best performances
+     
+     Do the training again, this time for each image date. What is
+     the date with the best performances ? Does the Kappa coefficient
+     change a lot ?
+     
+     Keep the ~model.rf~ file corresponding to the best date.
+
+**** Classifying and producing a colored classification map
+
      Use the *ImageClassifier* application to produce the
-     classification map for the model using all the features (original
-     bands and NDVI time series). Warning: the model has to be trained
-     with the same feature order as the one used in the
-     classification.
-
-**** Post-processing
-
-  We are going to use the *ClassificationMapRegularization* application. It filters a classified image using a local majority vote.
-
-  The parameters are:
-
-  - ip.radius 1 :: Radius of the window for the vote
-  - ip.suvbool 0 :: What to do in case of a tie. 0 keeps the original value.
-
-  Filter the result of the previous classification (nine dates and
-  NDVI time series).
-
-**** Complete performance evaluation
-
-  We are now going to use the *ComputeConfusionMatrix* application to
-  compute the complete performance of our classification chain. With
-  respect to the performance evaluation dont during the training, this
-  application allows to:
-  - Take into account all the pixels available in the reference data,
-  - Evaluate the quality of a classification map which has been
-    post-processed (with a regularisation, for instance).
-
-  The parameter ~ref.vector.field CODE~ is needed for the application to use the field containing the class label.
-
-  Compute the performances of the chain with and without
-  regularisation.
-   
-   - What do you notice with respect to the evaluation done during the
-     training step? How can this be explained?
-   - Which is the impact of the regularisation in the performances?
-  
-**** Color map production
-The output of the previous step is a tiff image where each pixel has the value of the class label. To display this image, the *ColorMapping* application allows to give an RGB color to each label and produce color image.  
-
-Use the *custom* mode of the *ColorMapping* application with the color
-table provided in the ~color_map.txt~ file to produce a color map.
-
-*Note :* QGIS may not be able to correctly display the image because
-of a ~no data~ value present in the file. This can be changed by using
-the layer properties in QGIS by checking the ~no data~ value.
-
-**** Further work
-
-     1) Is it possible to get better performances with other
-        classification algorithms?
+     classification map corresponding ot the best date (the one from
+     05.09.2016). Be careful to use the model file training with this date.
      
-     2) Using QGIS you can merge the classes ~natural grassland~ and
-        ~woody moorlands~ in the reference data. What are the
-        performances obtained with this new data set?
+     The output map is a tif image where each pixel value corresponds
+     to the class. To visualize such images, the *ColorMapping*
+     application allows to set a given color for each class.
+
+     Use the *custom* mode from the *ColorMapping* application with
+     the lookup table in ~support/color_map.txt~ to produced the
+     colored map.
+     
+     *Note :* The image may not display correctly in QGis, because of
+     default no data value set in the file. No data can be deactivated
+     in Qgis layer properties dialog.
+     
+**** Evaluate global performances
+
+     We are now going to use the *ComputeConfusionMatrix* application
+     in order to compute global classification performances. With
+     respect to the performance evaluation during the training step,
+     this application allows to:
+     - Take into account all pixels in the reference date,
+     - Evaluate performances of a post-processed classification map
+       (for instance with regularisation).
+     The ~ref.vector.field CODE~ parameter is mandatory to indicate
+    the field corresponding to class ids.
+
+    Copute the global performance of the classification. What do you
+    observe with respect to the performance computed during training ?
+    How to explain this phenomena ?
+     
+**** Classification regularization
+     
+     We are now going to use the *ClassificationMapRegularization*
+     application. It filters the classification map using a local
+     majority voting scheme.
+
+     Parameters are:$
+     
+     - ip.radius 1 :: Radius of the voting zone
+     - ip.suvbool 0 :: What to do in case of tie vote. 0 is to keep
+                       the initial value.
+
+     Filter the result of previous classification. Evaluate the
+     performances of the filtered map. What do you observe ?
+      
+**** Réaliser une classification multi-date et mesurer le gain de performance
+
+     We are now going to use all dates for classifications. For this,
+     you can use the ~images/all.vrt~ which contains all bands from
+     each date contatenated (the image has therefore 50 bands).
+     
+     Do the whole workshop, but this time with this 50 bands
+     image. What do temporel series bring to the performance of
+     classification ?
+
+     Compare both results in QGis.
+
+**** Going further
+     
+     1) Can we obtain better perforamnces with other classification
+        algorithms ?
+
+     2) In Qgis, merge in reference data the grass and Woody
+        Moorlands. Are the performances better ?
+
+     3) The ~TrainImagesClassifier~ also has an unsupervised algorithm
+        (Shark KMeans). Compare results with supervised and
+        unsupervised classification.
 
 ** Supervised classification of a satellite image time series    :solutions:
 
