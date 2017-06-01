@@ -1,6 +1,6 @@
 #+TITLE: Guide for OTB training courses
 #+AUTHOR: OTB team
-#+DATE: 2016
+#+DATE: 2017
 
 #+OPTIONS: H:5
 #+LaTeX_CLASS: article

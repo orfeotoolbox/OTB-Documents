@@ -1,6 +1,6 @@
 #+TITLE: Guide for OTB training courses
 #+AUTHOR: OTB team
-#+DATE: 2016
+#+DATE: 2017
 
 #+startup: beamer
 #+startup: oddeven
