@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in introduction.org
+for f in introduction.org assynchronous.org
 do
  filename=$(basename "$f")
  extension="${filename##*.}"
