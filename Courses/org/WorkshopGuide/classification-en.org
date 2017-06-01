@@ -24,7 +24,7 @@
     8. Post-processing
     9. Complete performance evaluation
     10. Color map production
-
+        
 *** Introduction to the Landsat-8 data set
 
     *Spatial resolution:* 30 meters
@@ -115,7 +115,6 @@
 - $accuracy = \frac{\sum{VP i}}{Total}$
 - $Kappa = \frac{Accuracy - chance}{1-chance}$
 
-
 ** Supervised classification of a satellite image time series	    :guide:
 *** Description                                                        :desc:
 **** Summary
@@ -129,7 +128,7 @@
      - Software installed (Monteverdi and Orfeo ToolBox)
      - Data downloaded
      - Basic knowledge on using applications in OTB
-     - Basic knowledge on supervised classifcation
+     - Basic knowledge on supervised classification
      
 **** Objectives
 
@@ -148,7 +147,7 @@
 
 **** Introduction to Sentinel-2 data
      
-     In the data package, folder ~Data/classification/images~ cotains
+     In the data package, folder ~Data/classification/images~ contains
      5 Sentinel-2 images, extracted on tile T31TCJ, at the following dates:
     
 |------------|
@@ -185,8 +184,8 @@ display (red, green, blue)
 
 Open the remaining four images and look for changes.
 
-*Note:* Le fichier de style ~support/images.qml~ can be loaded into
-Qgis to set the rendering and color channls for each image.
+*Note:* The Qgis style file ~support/images.qml~ can be loaded into
+Qgis to set the rendering and color channels for each image.
 
 Files ~references/training/training.shp~ 
 and
@@ -218,7 +217,7 @@ Open one of the files in QGis. The attribute table can be accessed by
     *Note :* There is a style file ~support/polygons.qml~ that can be
     loaded into Qgis to colorize polygons according to their classes.
     
-    Polygons are splitted into two sets: training and validation.
+    Polygons are split into two sets: training and validation.
 
 **** Single date training
      
@@ -256,7 +255,7 @@ Open one of the files in QGis. The attribute table can be accessed by
 
      Do the training again, but this time also use the validation
      dataset in ~reference/testing/testing.shp~ as validation layer
-     (you therefore set two differents shp files in the
+     (you therefore set two different shp files in the
      application). What can be observed ?
      
      Do the training again, and deactivate the ~cleanup~ option. Look
@@ -274,7 +273,7 @@ Open one of the files in QGis. The attribute table can be accessed by
 **** Classifying and producing a colored classification map
 
      Use the *ImageClassifier* application to produce the
-     classification map corresponding ot the best date (the one from
+     classification map corresponding to the best date (the one from
      05.09.2016). Be careful to use the model file training with this date.
      
      The output map is a tif image where each pixel value corresponds
@@ -282,14 +281,14 @@ Open one of the files in QGis. The attribute table can be accessed by
      application allows to set a given color for each class.
 
      Use the *custom* mode from the *ColorMapping* application with
-     the lookup table in ~support/color_map.txt~ to produced the
+     the look-up table in ~support/color_map.txt~ to produced the
      colored map.
      
      *Note :* The image may not display correctly in QGis, because of
      default no data value set in the file. No data can be deactivated
      in Qgis layer properties dialog.
      
-**** Evaluate global performances
+**** Evaluate global performance
 
      We are now going to use the *ComputeConfusionMatrix* application
      in order to compute global classification performances. With
@@ -301,7 +300,7 @@ Open one of the files in QGis. The attribute table can be accessed by
      The ~ref.vector.field CODE~ parameter is mandatory to indicate
     the field corresponding to class ids.
 
-    Copute the global performance of the classification. What do you
+    Compute the global performance of the classification. What do you
     observe with respect to the performance computed during training ?
     How to explain this phenomena ?
      
@@ -320,21 +319,21 @@ Open one of the files in QGis. The attribute table can be accessed by
      Filter the result of previous classification. Evaluate the
      performances of the filtered map. What do you observe ?
       
-**** Réaliser une classification multi-date et mesurer le gain de performance
+**** Classification with multiple dates
 
      We are now going to use all dates for classifications. For this,
      you can use the ~images/all.vrt~ which contains all bands from
-     each date contatenated (the image has therefore 50 bands).
+     each date concatenated (the image has therefore 50 bands).
      
      Do the whole workshop, but this time with this 50 bands
-     image. What do temporel series bring to the performance of
+     image. What do temporal series bring to the performance of
      classification ?
 
      Compare both results in QGis.
 
 **** Going further
      
-     1) Can we obtain better perforamnces with other classification
+     1) Can we obtain better performances with other classification
         algorithms ?
 
      2) In Qgis, merge in reference data the grass and Woody
@@ -346,410 +345,335 @@ Open one of the files in QGis. The attribute table can be accessed by
 
 ** Supervised classification of a satellite image time series    :solutions:
 
-*Note :* In this solution, the environment variable ~${LS8DATA}~ contains the path the the /classification/ folder containing the data for the exercises.
+In the following solution, the ~$DATA~ environment variable correspond
+to the folder containing the workshop data.
 
-*** Data preparation
+*** Single date training
 
-    First of all, we concatenate all the bands for all the dates:
+The single date training can be achieved with the following command line:
 
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il ${LS8DATA}/LANDSAT_*.tif -out alldates.tif uint16
-    #+END_EXAMPLE
-
-    Then, we compute the NDVI for each date:
-    
-    #+BEGIN_EXAMPLE
-    $ cd ${LS8DATA}
-    $ for f in LANDSAT_*.tif; do \
-        otbcli_RadiometricIndices -channels.blue 2 -channels.green 3 \
-                                  -channels.red 4 -channels.nir 5    \
-                                  -in "$f" -out "NDVI_$f" -list Vegetation:NDVI; done
-    #+END_EXAMPLE
-
-    We can then create the NDVI time series:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il ${LS8DATA}/NDVI_*.tif -out ndvis.tif
-    #+END_EXAMPLE
-
-    And the image containing all the bands and the NDVI time series:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ConcatenateImages -il alldates.tif ndvis.tif -out all.tif
-    #+END_EXAMPLE
-    
-*** Available sample statistics computation
-
-    Computing the avalilable sample statistics can be done as follows:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
-                                    -field CODE -vec training/training.shp \
-                                    -out training_stats.xml
-
-    $ otbcli_PolygonClassStatistics -in Extract16bits/alldates.tif \
-                                    -field CODE -vec testing/testing.shp \
-                                     -out testing_stats.xml
-    #+END_EXAMPLE
-
-    In the ~training_stats.xml~ and ~validation_stats.xml~ files, one can find the following information:
-
-    In ~training_stats.xml~:
-
-    #+BEGIN_EXAMPLE
-    <Statistic name="samplesPerClass">
-        <StatisticMap key="11" value="56774" />
-        <StatisticMap key="12" value="59347" />
-        <StatisticMap key="211" value="25317" />
-        <StatisticMap key="221" value="2087" />
-        <StatisticMap key="222" value="2080" />
-        <StatisticMap key="31" value="8149" />
-        <StatisticMap key="32" value="1029" />
-        <StatisticMap key="34" value="3770" />
-        <StatisticMap key="36" value="941" />
-        <StatisticMap key="41" value="2630" />
-        <StatisticMap key="51" value="11221" />
-    </Statistic>
-    #+END_EXAMPLE
-
-    The class /natural grasslands/ (label 211) has 25 317 samples. One can also notice that the training sample has 173 345 samples, and that the /woody moorlands/ class (label 36) is the one with fewer samples with only 941 samples.
-
-    The polygon with id 1081 in the training set has 342 samples:
-
-    #+BEGIN_EXAMPLE
-    <StatisticMap key="1081" value="342" />
-    #+END_EXAMPLE
-
-    In ~testing_stats.xml~:
-
-    #+BEGIN_EXAMPLE
-    <Statistic name="samplesPerClass">
-        <StatisticMap key="11" value="134590" />
-        <StatisticMap key="12" value="127548" />
-        <StatisticMap key="211" value="59052" />
-        <StatisticMap key="221" value="4820" />
-        <StatisticMap key="222" value="6393" />
-        <StatisticMap key="31" value="18620" />
-        <StatisticMap key="32" value="2121" />
-        <StatisticMap key="34" value="9351" />
-        <StatisticMap key="36" value="2812" />
-        <StatisticMap key="41" value="6110" />
-        <StatisticMap key="51" value="28858" />
-    </Statistic>
-    #+END_EXAMPLE
-
-    The /natural grasslands/ class (label 211) has 59 052 samples.
-
-*** Sample position selection
-
-    The application documentaion shows that the different strategies for the sampling are:
-    - byclass :: the number of sample for each class can be set using a file
-    - constant :: for choosing a constant number of samples for all classes
-    - smallest :: select for all classes the number of samples of the
-         class which has the smallest amount
-    - all :: take all samples.
-
- 
-    To perform the sample selection using the /smallest/ strategy, on
-    can do:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_SampleSelection -in alldates.tif -field CODE \
-                             -vec training/training.shp   \
-                             -out training_samples.sqlite \
-                             -instats training_stats.xml -strategy smallest
-    #+END_EXAMPLE
-
-  Here is the result of the sample estraction (data extracted from the
-  logs):
-    
-  |-----------+-----------------+--------------+-----------|
-  | className | requiredSamples | totalSamples |      rate |
-  |-----------+-----------------+--------------+-----------|
-  |        11 |             941 |        56774 | 0.0165745 |
-  |        12 |             941 |        59347 | 0.0158559 |
-  |       211 |             941 |        25317 | 0.0371687 |
-  |       221 |             941 |         2087 |  0.450886 |
-  |       222 |             941 |         2080 |  0.452404 |
-  |        31 |             941 |         8149 |  0.115474 |
-  |        32 |             941 |         1029 |   0.91448 |
-  |        34 |             941 |         3770 |  0.249602 |
-  |        36 |             941 |          941 |         1 |
-  |        41 |             941 |         2630 |  0.357795 |
-  |        51 |             941 |        11221 | 0.0838606 |
-  |-----------+-----------------+--------------+-----------|
-
-  In total, 10 351 samples have been selected. If one loads the layer
-  in QGIS, the selected positions can be displayed.
-  
-  #+ATTR_LATEX: :width 0.9\textwidth
-  [[file:Images/samples_selection.png]]
-
-  The attributes associated to each point are those who were present in the original file ~training.shp~, and the  ~originfid~ attribute which corresponds to the polygon identifier of from which the sample has been taken.
-
-*** Feature extraction for the samples
-
-    To compute the features associated to each sample, one proceeds as follows. For the image bands:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_SampleExtraction -in alldates.tif               \
-                              -vec training_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name band_    \
-                              -field code 
-
-    $ otbcli_SampleExtraction -in ndvis.tif                  \
-                              -vec training_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name ndvi_    \
-                              -field code 
-    #+END_EXAMPLE
-
-    Same approach for the validation set:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_SampleExtraction -in alldates.tif               \
-                              -vec testing_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name band_    \
-                              -field code 
-
-    $ otbcli_SampleExtraction -in ndvis.tif                  \
-                              -vec testing_samples.sqlite   \
-                              -outfield prefix               \
-                              -outfield.prefix.name ndvi_    \
-                              -field code 
-    #+END_EXAMPLE
-
-*** Model training
-
-    In this section, we will use the shell variables proposed in the question.
-
-    The training is done as follows:
-    
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite \
-                                   -cfield code -classifier rf    \
-                                   -classifier.rf.max 20          \
-                                   -io.out model.rf -feat ${date1}
-    #+END_EXAMPLE
-
-    This first run yields the following results:
-
-    #+BEGIN_EXAMPLE
-    Confusion matrix (rows = reference labels, columns = produced labels):
-      [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
-[ 11]   861    28     2     0     8     5     3     0     5     6    24 
-[ 12]    16   889     3     1     3     2     1     2     5    12     7 
-[ 31]     8    10   873     5     9    19     2     0     6     9     0 
-[ 32]     4     0    21   895     6     3     2     3     1     4     2 
-[ 34]    12    20    39     9   785    19     8     1    19    17    12 
-[ 36]    10    30    46    11    21   771     8     1    20     9    14 
-[ 41]     4    13     8     4     5     1   862     3    16    17     8 
-[ 51]     2    11     2     0     4     2     5   906     2     7     0 
-[211]     2    27    35     5    21    32     2     1   782    15    19 
-[221]    13    14     5     3     7     4     8     6    11   845    25 
-[222]    15    24     2     0     2     8     0     0    16    14   860 
-
-[...]
-
-Global performance, Kappa index: 0.891296 
-    #+END_EXAMPLE
-    
-    The reason why the Kappa coefficient is so high despite the use of
-    a single date, is that when no validation set is given, the
-    application measures the performances using the training set. In
-    order to get a more realistic evaluation, one can validate using
-    the file ~testing_samples.sqlite~ that we created before:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_TrainVectorClassifier -io.vd training_samples.sqlite   \
-                                   -valid.vd testing_samples.sqlite \
-                                   -cfield code -classifier rf      \
-                                   -classifier.rf.max 20            \
-                                   -io.out model.rf -feat ${date1}
-    #+END_EXAMPLE
-    
-
-    In this case, the results are the following:
-
-    
-    #+BEGIN_EXAMPLE
-     [11] [12] [31] [32] [34] [36] [41] [51] [211] [221] [222] 
-[ 11]  1504   285     9     1    32    40    43     3    43    36   126 
-[ 12]   183  1619    13     8    15    25     9     5    59    77   108 
-[ 31]    26    60  1463    89    76   237    38    30    33    65     4 
-[ 32]    47    54   362  1478    49    31    23    16    26    29     6 
-[ 34]    45    45   364   230   252   620    21    19   270   110   145 
-[ 36]    85   164   232    65   421   647    27     6   214   135   125 
-[ 41]    49    79    51    32    49    20  1559    29    61   128    64 
-[ 51]    27    39    26    17     7    19    44  1919     6    17     0 
-[211]    21   131   113    29   274   143    11     6  1086    66   241 
-[221]    93   165   113    93   201   148    95    12   196   771   234 
-[222]   164   229     8     4    91    58    10     1   181   123  1252
-
-[...]
-
-Global performance, Kappa index: 0.538822
+#+BEGIN_EXAMPLE
+$ otbcli_TrainImagesClassifier -io.il $DATA/images/20160607_T31TCJ_ROI_20m.tif \
+                               -io.vd $DATA/references/training/training.shp   \
+                               -io.out model.rf                                \
+                               -sample.vfn CODE -classifier rf                 \
+                               -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+                               -classifier.rf.cat 13
 #+END_EXAMPLE
 
-These results show poor performances using a single date.
+This first run outputs the following results:
 
-In order to test different configurations, one can use the variables
-suggested in the question and pass them as the ~-feat~ parameter. For
-instance, to test the first 2 dates, one can use ~-feat ${date1} ${date2}~.
+#+LATEX: \begin{small}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [10]  [31]  [32]  [34]  [36]  [41]  [42 ] [43]  [44]  [51] [211] [221] [222] 
+[ 10]   374     3     0    26     1     6    19    11     2     0    13    10    13 
+[ 31]     0   436     5     7    14     0     0     0     0     0     7     8     1 
+[ 32]     3    16   420     6    15     0     0     0     0     0    12     3     3 
+[ 34]    30    16    21   268    41     1    13     2     1     0    27    18    40 
+[ 36]    10     6    13    31   336     0     7     0     0     0    42    13    20 
+[ 41]     5     0     0     0     0   388    49    21    13     0     0     1     1 
+[ 42]    31     1     3    10     3    44   288    36    22     0     0     5    35 
+[ 43]    18     0     2    11     1    37    59   227   114     1     0     7     1 
+[ 44]     7     0     3     3     2     5    10    71   371     0     0     5     1 
+[ 51]     0     0     6     0     0     0     0     0     1   470     0     1     0 
+[211]    19     7    13    41    64     0     3     0     0     0   266    14    51 
+[221]    18    18     8    13    23     1    11     4     3     0    38   332     9 
+[222]    22     0     1    30    12     0    14     0     0     0    16     4   379
 
-**** Which date yields the best single date performances?
+[...]
 
-The best date is the third one (2014-04-17), with a Kappa coefficient of 0.578.
+Global performance, Kappa index: 0.710774
+
+#+END_EXAMPLE
+#+Latex: \end{small}
+
+The displayed performance is rather optimistic, since the samples used
+to estimate it comes from the same polygons as for the training. To
+obtain a more realistic evaluation of performances, it is better to
+select a dedicated polygon set for validation.
+
+#+BEGIN_EXAMPLE
+$ otbcli_TrainImagesClassifier -io.il $DATA/images/20160607_T31TCJ_ROI_20m.tif \
+                               -io.vd $DATA/references/training/training.shp   \
+                               -io.valid $DATA/references/testing/testing.shp  \
+                               -io.out model.rf                                \
+                               -sample.vfn CODE -classifier rf                 \
+                               -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+                               -classifier.rf.cat 13
+#+END_EXAMPLE
+
+Which outputs the following results:
+
+#+LATEX: \begin{small}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [10]  [31]  [32]  [34]  [36]  [41]  [42]  [43]  [44]  [51] [211] [221] [222] 
+[ 10]   795     6     6    47     9     4    13    18     0     0    22    10    23 
+[ 31]     1   777    38    14    42     0     0     0     0     1    59    21     0 
+[ 32]     1    34   865     3    12     2    14     1     1     0     2    15     3 
+[ 34]    50   273   120    72    51     0     8     0     0    49   105   157    68 
+[ 36]    23    27    45   186   336     0     1     1     0     0   215    79    40 
+[ 41]     4     0     1     1     0   665   176    53    49     0     1     1     2 
+[ 42]    20     1     3    11     2    98   652    75    43     0     5     8    35 
+[ 43]    21     0     1    19     5    44   207   464   146     1     8    17    20 
+[ 44]     7     0     1     3     0    13    23   240   662     0     0     4     0 
+[ 51]     0     0     1     0     0     0     0     3     1   945     0     3     0 
+[211]    81    21    17    81   112     1    16     4     0     0   507    40    73 
+[221]    46    51    22    43    42     0    18    10     2     2   107   541    69 
+[222]    70     0     0    68    23     0    71     1     0     0    45    11   664
+
+[...]
+
+Global performance, Kappa index: 0.611403
+#+END_EXAMPLE
+#+Latex: \end{small}
+
+If the ~cleanup~ option is deactivated by adding ~-cleanup 0~
+parameter, the application does not erase temporary outputs.
+
+The following XML files contain the statistics of available samples
+for each class, for training and validation set:
+- ~model.rf_statsTrain_1.xml~
+- ~model.rf_statsValid_1.xml~
+
+
+The following shapefile files contain the samples used for training and for validation:
+- ~model.rf_samplesTrain_1.shp~
+- ~model.rf_samplesValid_1.shp~
+
+Those files contain points corresponding to selected samples within
+the training and validation polygons. Each point has a set of fields
+corresponding to the radiometric measurement at the point location in
+the image. Those two files can be displayed in a GIS (in Qgis for
+instance).
+
+*** Spot the date with the best performances
+
+The following command line allows to do the training for each date:
+
+#+BEGIN_EXAMPLE
+$ for f in $DATA/images/*.tif; do echo $f;            \
+      otbcli_TrainImagesClassifier -io.il $f          \
+      -io.vd $DATA/references/training/training.shp   \
+      -io.valid $DATA/references/testing/testing.shp  \
+      -sample.vfn CODE -classifier rf                 \
+      -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+      -classifier.rf.cat 13 -io.out model.rf   | grep Kappa; done
+#+END_EXAMPLE
+
+Kappa coefficients for each date can be retrieved from the output:
 
 |------------+----------|
 |       Date |    Kappa |
 |------------+----------|
-| 2014-03-09 | 0.538822 |
-| 2014-04-01 | 0.560085 |
-| 2014-04-17 | 0.578801 |
-| 2014-05-28 |  0.56494 |
-| 2014-06-20 | 0.560509 |
-| 2014-07-31 | 0.540943 |
-| 2014-09-01 | 0.555276 |
-| 2014-10-03 | 0.530006 |
-| 2014-10-26 | 0.494788 |
+| 2016-06-07 | 0.609741 |
+| 2016-07-07 | 0.615163 |
+| 2016-08-06 | 0.593739 |
+| 2016-09-05 | 0.614463 |
+| 2016-10-05 | 0.622246 |
 |------------+----------|
 
-This table has been obtained with the following bash script:
+We can see that the coefficient does not vary much, but that the
+~2016-10-05~ date has slightly better performances.
+
+*** Classifying and producing a colored classification map
+
+To perform the classification, we use the ~model.rf~ file learnt on
+date ~2016-10-05~, and use the following command line:
 
 #+BEGIN_EXAMPLE
-$ for i in $(seq 1 9); do var=date$i; otbcli_TrainVectorClassifier    \
-                                     -io.vd training_samples.sqlite   \
-                                     -valid.vd testing_samples.sqlite \
-                                     -cfield code -classifier rf      \
-                                     -classifier.rf.max 20            \
-                                     -io.out model.rf -feat ${!var}   \
-                                     | grep Kappa; done
+$ otbcli_ImageClassifier -in $DATA/images/20161005_T31TCJ_ROI_20m.tif \
+                         -out classif_20161005.tif uint8              \
+                         -model model.rf
 #+END_EXAMPLE
 
-**** Has the coastal blue band an interest for the classification?intérêt pour la classification ?
+The ~classif_20161005.tif~ contains for each pixel the label of the
+class which has been assigned to it. In ordered to ease the
+visualisation of the classification result, we can transform this
+image by setting a different color for each class, using the *ColorMapping* application:
 
-     Using the parameter ~-feat ${date1}~ one gets a Kappa coefficient
-     of 0.538822 for the first date, while if one removes the coastal
-     blue band using ~-feat ${date1_nocb}~ the Kappa coefficient is
-     0.538068. One can therefore conclude that this band contains
-     little information for this classification problem.
+#+BEGIN_EXAMPLE
+$ otbcli_ColorMapping -in classif_20161005.tif            \
+                      -out classif_20161005_rgb.tif uint8 \
+                      -method custom -method.custom.lut   \ 
+                      $DATA/support/color_map.txt
+#+END_EXAMPLE
 
-**** Which are the performances using all the spectral bands?toutes les bandes spectrales ?
-     
-     Using the parameter ~-feat ${dates}~, one gets a Kappa coefficient of 0.677147.
+Another way of displaying the ~classif_20161005.tif~ results is to
+open it in QGis and use the style file provided in ~support/classif.qml~.
 
-**** What are the performances using the NDVI time series alone?
+*** Evaluate global performance
 
-     Using the parameter ~-feat ${ndvis}~ one gets a Kappa coefficient
-     of 0.554286. Using only these 9 values, the performances are only
-     0.12 below the case using 63 spectral bands. The results are also
-     better than some individual dates for which 7 bands are used.
-
-**** What are the performances using all the spectral bands and the NDVI time series?
-
-     Using the parameter ~-feat ${bands} ${ndvis}~ one gets a Kappa
-     coefficient of 0.682333, which is slightly better than the
-     spectral bands alone.
-
-**** In the latter case, analyse the performances for each class.
-
-     The /water/ class (label 51) is the best classified, with an
-     F-score of 0.945575.
-
-     The /cultivated grasslands/ (label 34) and /woody moorlands/ (label 36)
-     are the worse recognised with F-scores of 0.278807 and 0.428884 respectively. All other classes have F-scores sometimes way above 0.6.
-
-     If we analyse more precisely the confusion matrix, one can see that these 2 classes are often confused with one another by the model: 24% of the /natural grasslands/ samples are classified as /woody moorland/ (and 17% as /cultivated grasslands/), while 22% of /woody moorland/ samples are classified as /natural grasslands/ (and 10% as /cultivated grasslands/).
-
-*** Classification
-
-    To produce the classification map, we use the model trained on all
-    the spectral bands and the NDVI time series (in this order). Pour
-    réaliser la carte de classification, on va utiliser le modèle
-    appris sur l'ensemble des bandes spectrales et du profil de NDVI
-    (dans cet ordre). Warning: the model has to be trained with the
-    same feature order as the one used by the *ImageClassifier*
-    application.
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ImageClassifier -in Extract16bits/all.tif \
-                             -out classif.tif uint8 \
-                             -model model.rf
-    #+END_EXAMPLE
-
-*** Post-processing
-
-    To regularise the classification map, one can use the following
-    command:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0    \
-                                             -io.in classif.tif            \
-                                             -io.out classif_reg.tif uint8 
-    #+END_EXAMPLE
-
-    It is straighforward to see the effect of the regularisation by
-    displaying the result in QGIS (beware of unchecking the no data
-    values in QGIS), but it is also interesting to evaluate the impact
-    of this operation on the classification perfomances. We will
-    address this issue in the following section.
-
-*** Complete performance evaluation
-
-    To evaluate the performances over the whole validation set, we use
-    the *ComputeConfusionMatrix* application.
-
-    On the raw classification map:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix -in classif.tif -ref vector        \
-                                    -ref.vector.in testing/testing.shp \
-                                    -out confusion.csv                 \
-                                    -ref.vector.field CODE
-    #+END_EXAMPLE
-
-    This complete evaluation yields a Kappa coefficient of 0.803679.
-    This value is way higher than the one obtained during the training
-    phase which was only 0.682333. This is explained by the fact that
-    the validation data used during the training step was generated
-    using the /smallest/ strategy, which produces the same number of
-    samples for each class. However, if we look at the statistics
-    generated at the beginning of the workshop, one can see that
-    /summer crops/ (11), /winter crops/ (12) and /water/ (51) are
-    over-represented in the reference data. These 3 classes are the
-    ones having the best performances in the classification. Therfore,
-    their outnumbering produces higher classification scores. If we
-    had generated the validation file using the /all/ strategy, we
-    would have obtained similar prerformances during the training
-    step. However, this would have hidden the poor performanced for
-    some classes.
-
-    On the regularised classification map:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ComputeConfusionMatrix -in classif_reg.tif -ref vector    \
-                                    -ref.vector.in testing/testing.shp \
-                                    -out confusion.csv                 \
-                                    -ref.vector.field CODE
-    #+END_EXAMPLE
-
-    Now the Kappa coefficient is 0.873691. The regularisation improves
-    the performances, since the final result is more similar to the
-    reference data which contains homogeneous polygons.
-
-*** Color map production
-    
-    To produce the color map, we use the following command:
-
-    #+BEGIN_EXAMPLE
-    $ otbcli_ColorMapping -in classif_reg.tif -out classif_reg_rgb.tif uint8 \
-                          -method custom -method.custom.lut color_map.txt
-    #+END_EXAMPLE
-    
-    #+ATTR_LATEX: :width 0.9\textwidth
-    [[file:Images/final_classification.png]]
+To evaluate global performance over the whole validation set, one can
+use the *ComputeConfusionMatrix* application. This application allows
+to evaluate any classification map (for instance one that have been
+post-processed). Beware not to use as input the colored map created
+during previous step, which is only to be used for visualisation
+purposes.
+ 
+ #+BEGIN_EXAMPLE
+ $ otbcli_ComputeConfusionMatrix -in classif_20161005.tif -ref vector  \
+                   -ref.vector.in $DATA/references/testing/testing.shp \
+                                 -out confusion_20161005.csv           \
+                                 -ref.vector.field CODE
+#+END_EXAMPLE
 
 
+The performance measured using the whole validation set is as follows:
+
+#+LATEX: \begin{scriptsize}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [  10] [  31] [  32] [  34] [  36] [  41] [  42] [  43] [  44] [  51] [ 211] [ 221] [ 222]
+[  10] 113219    219   2240  10349   4090   2654   2469   1029    233    202   7387   2571   3453
+[  31]      8  12282    265     66    346      0      5      1      0      0    174    192     27
+[  32]      1     21   1143      5     27      0      2      0      0      0      3      7     10
+[  34]    158     47     73   1469    146      9     68     25     12      0    187     11     70
+[  36]     11      8      2      8    889      0      4      0      0      0     25      1     11
+[  41]     45      0      4     34      7   4637    674    287    135      1      9      9     66
+[  42]    800     14    107    675    355   5084  33947   3642   2684     13    468    490   3358
+[  43]    816      4     97    417    130   2222   5399  18726   9404     66    137    171    857
+[  44]     12      0      7      7      5     54    105    561   2807      6      0     13     27
+[  51]    187     26     92     10     73      1     18    249    257  24330      4    300      4
+[ 211]    367     73     55    882   1143      9     58      1      0      0   6755    126    301
+[ 221]    244    337    372     79    338      2    197     49     16     32    174  10400    398
+[ 222]     72      2     66     40    115      9    195      1      0      0     98     52   3474
+
+Precision of class [10] vs all: 0.976531
+Recall of class [10] vs all: 0.754215
+F-score of class [10] vs all: 0.851095
+
+[...]
+
+Kappa index: 0.659139
+
+#+END_EXAMPLE
+#+Latex: \end{scriptsize}
+
+One can note two things:
+- First global performance is slightly better than the performance
+  assessed during training. This comes from the fact that during the
+  training step, we use the same number of samples for all classes,
+  whereas when using the *ComputeConfusionMatrix*, all available
+  samples are used. Some classes both have more available samples and
+  are more easy to classify (such as class 51: water), and are
+  therefore improving performances.
+- Second, the annual crops class exhibit a lot of confusion with all
+  other classes. It has a recall of 0.75 and a precision of 0.97. This
+  means that if 97% of pixels identified as annul crops really belong
+  to this class, 25% of pixel that belong to this class according to
+  the reference validation set have been misclassified. We will see in
+  last section that adding multi-temporal information in the
+  classification allows to increase this performance.
+
+*** Classification map regularization
+
+To regularize the classification map using a majority voting
+algorithm, one can use the following command line:
+
+#+BEGIN_EXAMPLE
+$ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0  \
+                                         -io.in classif_20161005.tif \
+                                         -io.out classif_20161005_reg.tif uint8
+#+END_EXAMPLE    
+
+After regularization, we can evaluate the performances of the new
+classification map:
+
+#+BEGIN_EXAMPLE
+$ otbcli_ComputeConfusionMatrix -in classif_20161005_reg.tif -ref vector  \
+                   -ref.vector.in $DATA/references/testing/testing.shp    \
+                                 -out confusion_20161005_reg.csv          \
+                                 -ref.vector.field CODE
+
+Kappa index: 0.709103
+#+END_EXAMPLE
+
+Regularization improves significantly the classification map
+performance. This is due to the fact that reference data are rather
+regular, and applying this processing makes the classification map
+look more like the reference data.
+
+*** Classification with multiple dates
+
+
+Lets replay the different step with all the dates altogether:
+
+First, training:
+#+BEGIN_EXAMPLE
+$ otbcli_TrainImagesClassifier -io.il $DATA/images/all.vrt                     \
+                               -io.vd $DATA/references/training/training.shp   \
+                               -io.valid $DATA/references/testing/testing.shp  \
+                               -io.out model_all.rf                            \
+                               -sample.vfn CODE -classifier rf                 \
+                               -classifier.rf.nbtrees 50 -classifier.rf.max 20 \
+                               -classifier.rf.cat 13
+#+END_EXAMPLE
+
+Then, classification:
+#+BEGIN_EXAMPLE
+$ otbcli_ImageClassifier -in $DATA/images/all.vrt    \
+                         -out classif_all.tif uint8  \
+                         -model model.rf
+#+END_EXAMPLE
+
+Next, regularisation:
+#+BEGIN_EXAMPLE
+$ otbcli_ClassificationMapRegularization -ip.radius 1 -ip.suvbool 0  \
+                                         -io.in classif_all.tif \
+                                         -io.out classif_all_reg.tif uint8
+#+END_EXAMPLE   
+
+Finally, evaluation of performances:
+#+BEGIN_EXAMPLE
+$ otbcli_ComputeConfusionMatrix -in classif_all_reg.tif -ref vector       \
+                   -ref.vector.in $DATA/references/testing/testing.shp    \
+                                 -out confusion_all_reg.csv               \
+                                 -ref.vector.field CODE
+#+END_EXAMPLE
+
+#+Latex:\begin{scriptsize}
+#+BEGIN_EXAMPLE
+Confusion matrix (rows = reference labels, columns = produced labels):
+       [  10] [  31] [  32] [  34] [  36] [  41] [  42] [  43] [  44] [  51] [ 211] [ 221] [ 222] 
+[  10] 140681     13     68   1893    790    280    494    545     27    108   3569    383   1264 
+[  31]     19  12732     87     77    200      3      8      0      0      0    104    131      5 
+[  32]      1      6   1211      0      1      0      0      0      0      0      0      0      0 
+[  34]      0     32     23   2131     34      0     12     13      0      0     19      5      6 
+[  36]      0      0      0      4    937      0      4      0      0      0      8      0      6 
+[  41]      2      0      1      0      0   5369    330    111     87      1      0      7      0 
+[  42]    148     10     75    465     84   3166  41818   2943   1850      2    316    362    398 
+[  43]    143      6     67    528     57   1545   5556  21781   8265     35    166    195    102 
+[  44]     11      0     14     13      0     34     60    354   3108      0      2      8      0 
+[  51]      7     18     53      0     12      0      3     37     24  25319      2     76      0 
+[ 211]    213     41     17    444    491      8     45      1      0      0   8326    104     80 
+[ 221]    187     87     66    123    159      0    109     83      3     14    208  11374    225 
+[ 222]     29      0      2     15     41      4     42      0      0      0     43     11   3937 
+
+Precision of class [10] vs all: 0.994627
+Recall of class [10] vs all: 0.937155
+F-score of class [10] vs all: 0.965036
+
+[...]
+
+Kappa index: 0.828411
+
+#+END_EXAMPLE
+#+LATEX:\end{scriptsize}
+
+Adding multi-temporal information in classification result in a
+significant performance improvement. One can note that recall of the
+annual crops class has raised to 93%, which means that now 93% of this
+class in the ground truth are correctly classified. This improvement
+was expected since crop classes usually have a strong temporal
+signature with respect to other classes.
+
+Finally, we can generate the color classification map:
+
+#+BEGIN_EXAMPLE
+$ otbcli_ColorMapping -in classif_all_reg.tif            \
+                      -out classif_all_reg_rgb.tif uint8 \
+                      -method custom -method.custom.lut  \ 
+                      $DATA/support/color_map.txt
+#+END_EXAMPLE
