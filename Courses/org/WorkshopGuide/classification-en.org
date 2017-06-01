@@ -1,121 +1,119 @@
-** Supervised classification of a satellite image time series	   :slides:
-*** Goals and data
-**** Goals
-     - Understand the applications needed for the supervised classification
-       procedure
-     - Measure the quality of classification results
-     - Know the available post processing steps
-**** Data
-     The data are available in the ~Data/classification~ directory, with the
-     following sub directories:
-     - ~Extract16bits~: the Landsat-8 time series,
-     - ~training~: the training data in the /shp/ format,
-     - ~testing~ the testing data in the /shp/ format.
+** Supervised classification of a satellite image time serie        :slides:
+*** Objectives and Data
+**** Objectives
+     Objectives are as follows:
+     - Being able to perform a supervised classification
+     - Being able to measure the classfication performance
+     - Knowing existing post-processing for classification
+**** Données
+     Data are available in the ~Data/classification~ folder, with the
+     following sub-folders:
+     - ~images~ contains the Sentinel2 time serie,
+     - ~references~ contains the reference data for training and
+       validation (shapefile format),
+     - ~support~ contains different useful files for the workshop
+       (for instance Qgis style files)
+     
+*** Steps
+    Workshop follows the following steps:
+    1. Introduction to the data
+    2. Single date training
+    3. Spot the date with the best performance
+    4. Classifying and producing a colored classification map
+    5. Evaluate global performance
+    6. Classification regularization
+    7. Classification with multiple dates
+       
+*** Introduction to Sentinel-2 data
 
-*** Planning
-    Planning for this workshop:
-    1. Introduction to the Landsat-8 data set
-    2. Data preparation
-    3. Available sample statistics computation
-    4. Sample position selection
-    5. Feature extraction for the samples
-    6. Model training
-    7. Classification
-    8. Post-processing
-    9. Complete performance evaluation
-    10. Color map production
-        
-*** Introduction to the Landsat-8 data set
-
-    *Spatial resolution:* 30 meters
-
-**** Dates :BMCOL:B_block:
-     :PROPERTIES:
-     :BEAMER_col: 0.5
-     :BEAMER_env: block
-     :END:
-
+    *Spatial resolution:* 20 meters (source: 10 meters)
+    *Tile:* T31TCJ (extract)
 |------------|
-| 2014-03-09 |
-| 2014-04-01 |
-| 2014-04-17 |
-| 2014-05-28 |
-| 2014-06-20 |
-| 2014-07-31 |
-| 2014-09-01 |
-| 2014-10-03 |
-| 2014-10-26 |
+| 2016-06-07 |
+| 2016-07-07 |
+| 2016-08-06 |
+| 2016-09-05 |
+| 2016-10-05 |
 |------------|
 
-**** Bands :BMCOL:B_block:
-     :PROPERTIES:
-     :BEAMER_col: 0.5
-     :BEAMER_env: block
-     :END:
+*** Introduction to  Sentinel-2 data
 
- |---+---------------------|
- | 0 | Coastal aerosol     |
- | 1 | Blue                |
- | 2 | Green               |
- | 3 | Red                 |
- | 4 | Near Infrared (NIR) |
- | 5 | SWIR 1              |
- | 6 | SWIR 2              |
- |---+---------------------|
+    *Spatial resolution:* 20 meters (source: 10 meters)
+    *Tile:* T31TCJ (extract)
 
-*** Introdution to the training and testing data
+|---+----------------+------------+------------+--------------------|
+| # | Band name      | S2 band id | Wavelength | Initial resolution |
+|---+----------------+------------+------------+--------------------|
+| 0 | Blue           | B2         | 490 nm     | 10 m               |
+| 1 | Green          | B3         | 560 nm     | 10 m               |
+| 2 | Red            | B4         | 665 nm     | 10 m               |
+| 3 | NIR - Narrow 1 | B5         | 705 nm     | 20 m               |
+| 4 | NIR - Narrow 2 | B6         | 740 nm     | 20 m               |
+| 5 | NIR - Narrow 3 | B7         | 783 nm     | 20 m               |
+| 6 | NIR - Wide     | B8         | 842 nm     | 10 m               |
+| 7 | NIR - Narrow 4 | B8A        | 865 nm     | 20 m               |
+| 8 | SWIR 1         | B11        | 1610 nm    | 20 m               |
+| 9 | SWIR 2         | B12        | 2190 nm    | 20 m               |
+|---+----------------+------------+------------+--------------------|
 
-|------+-----------------------+-----------|
-| Code | Name                  | #polygons |
-|------+-----------------------+-----------|
-|   11 | Summer crops          |      7898 |
-|   12 | Winter crops          |      8171 |
-|   31 | Deciduous forests     |       867 |
-|   32 | Evergreen forests     |       125 |
-|   34 | Cultivated grasslands |        45 |
-|   36 | Woody moorlands       |       386 |
-|   41 | Built-up              |      4719 |
-|   51 | Water                 |      1280 |
-|  211 | Natural grasslands    |      5647 |
-|  221 | Orchards              |       204 |
-|  222 | Vineyards             |       559 |
-|------+-----------------------+-----------|
+*** Introduction to reference data
+
+|------+-----------------------------+---------------------+--------------------|
+| Code | Name                        | #polygons training  | #polygons testing  |
+|------+-----------------------------+---------------------+--------------------|
+|   10 | Annual crops                | 3129                | 3078               |
+|   31 | Deciduous Forests           | 176                 | 292                |
+|   32 | Evergreen Forests           | 23                  | 29                 |
+|   34 | Grass                       | 2                   | 2                  |
+|   36 | Woody Moorlands             | 63                  | 38                 |
+|   41 | Dense Urban Area            | 30                  | 33                 |
+|   42 | Light Urban Area            | 326                 | 239                |
+|   43 | Industrial Area             | 154                 | 212                |
+|   44 | Roads                       | 162                 | 114                |
+|   51 | Water                       | 243                 | 332                |
+|  211 | Meadow                      | 320                 | 311                |
+|  221 | Orchards                    | 227                 | 254                |
+|  222 | Vineyards                   | 129                 | 97                 |
+|------+-----------------------------+---------------------+--------------------|
+
+
 
 *** Supervised classification
     #+ATTR_LATEX: :float t :width \textwidth
     [[file:Images/classification.png]]
-
+   
 *** RF algorithm
     A committee of random decision trees.
-
+ 
 **** Learning
      1. Split the learning set in k random sets $S_k$
      2. For each $S_k$, randomly choose $F_k$ features
      3. Recursively build a decision tree, for each node:
         1. Choose $f \in F_k$ and the threshold $t_k$ which partitions the remaining set in two subsets as pure as possible
         2. Stop when the remaining set is too small
-
+ 
 **** Decision
      Majority vote between all random trees
 
-
 *** Confusion matrix
 
-
-|-----------+--------------+--------------+--------------+
-|           | Pred. 1      | Pred. 2      | Pred. 3      |
-|-----------+--------------+--------------+--------------+
-| Ref. 1    | True pos. 1  |              |              |
-| Ref. 2    |              | True pos. 2  |              |
-| Ref. 3    |              |              | True pos. 3  |
-|-----------+--------------+--------------+--------------+
+|--------+-------------+-------------+-------------|
+|        | Pred. 1     | Pred. 2     | Pred. 3     |
+|--------+-------------+-------------+-------------|
+| Ref. 1 | True pos. 1 |             |             |
+| Ref. 2 |             | True pos. 2 |             |
+| Ref. 3 |             |             | True pos. 3 |
+|--------+-------------+-------------+-------------|
 
 - $precision = \frac{VP i}{\sum pred. i}$
 - $recall = \frac{VP i}{T\sum ref. i}$
-- $accuracy = \frac{\sum{VP i}}{Total}$
+- $Accuracy = \frac{\sum{VP i}}{Total}$
 - $Kappa = \frac{Accuracy - chance}{1-chance}$
+  
 
-** Supervised classification of a satellite image time series	    :guide:
+
+
+** Supervised classification of a satellite image time serie          :guide:
 *** Description                                                        :desc:
 **** Summary
 
@@ -193,7 +191,7 @@ and
 over the scene:
 
 |------+-----------------------------+---------------------+--------------------|
-| Code | Name                        | #polygones training | #polygones testing |
+| Code | Name                        | #polygons training  | #polygons testing  |
 |------+-----------------------------+---------------------+--------------------|
 |   10 | Annual crops                | 3129                | 3078               |
 |   31 | Deciduous Forests           | 176                 | 292                |
@@ -262,7 +260,7 @@ Open one of the files in QGis. The attribute table can be accessed by
      at the intermediate data that have been generated. What are they
      used for ?
 
-**** Spot the date with the best performances
+**** Spot the date with the best performance
      
      Do the training again, this time for each image date. What is
      the date with the best performances ? Does the Kappa coefficient
@@ -343,7 +341,7 @@ Open one of the files in QGis. The attribute table can be accessed by
         (Shark KMeans). Compare results with supervised and
         unsupervised classification.
 
-** Supervised classification of a satellite image time series    :solutions:
+** Supervised classification of a satellite image time serie      :solutions:
 
 In the following solution, the ~$DATA~ environment variable correspond
 to the folder containing the workshop data.
@@ -448,7 +446,7 @@ corresponding to the radiometric measurement at the point location in
 the image. Those two files can be displayed in a GIS (in Qgis for
 instance).
 
-*** Spot the date with the best performances
+*** Spot the date with the best performance
 
 The following command line allows to do the training for each date:
 
