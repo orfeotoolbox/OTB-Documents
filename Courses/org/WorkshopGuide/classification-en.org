@@ -5,7 +5,7 @@
      - Being able to perform a supervised classification
      - Being able to measure the classfication performance
      - Knowing existing post-processing for classification
-**** Données
+**** Data
      Data are available in the ~Data/classification~ folder, with the
      following sub-folders:
      - ~images~ contains the Sentinel2 time serie,
