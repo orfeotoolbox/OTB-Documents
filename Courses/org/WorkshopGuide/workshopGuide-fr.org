@@ -55,32 +55,33 @@ incluant notamment:
 - Segmentation
 - Traitements basiques radar
 
-** Planning de la formation
 
-Voir planning en PJ.
+*** Contenu du kit de formation
 
-** Contenu du kit de formation
+**** Paquet de données
+     - Contient les données nécessaires à chaque TP, dans des sous-répertoire séparés
+     - Le sous-répertoire nécessaire est indiqué au début de l'énoncé du TP
+     - Téléchargeable ici: ~www.orfeo-toolbox.org/packages/WorkshopData/WorkshopData.zip~
+**** Enoncés
+     - Guide de TP
+     - Planches (cette présentation)
+     - Guide d'installation
+     - Questionnaire d'évaluation
+     - Solutions (distribuées à la fin)
 
-*** Répertoire Data
-Ce répertoire contient les données nécessaires à chaque TP, dans
-des sous-répertoires séparés. Le sous-répertoire nécessaire est
-indiqué au début de l'énoncé du TP
+**** Documentation des logiciels
+     - Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
 
-*** Répertoire Documentation
-Ce répertoire contient la documentation de l'Orfeo ToolBox, et de QGIS:
-- OTB Software Guide :: Guide de l'API C++ (contient également des descriptions algorithmiques)
-- OTB CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
-- QGIS User Guide :: Manuel d'utilisation de QGIS
+                         ~www.orfeo-toolbox.org/SoftwareGuide/index.html~
+     - CookBook :: Guide pour les nons dévelopeurs (contient l'API complète des applications)
 
-*** Répertoire Guide
+                   ~www.orfeo-toolbox.org/CookBook/~
+     - QGIS User Guide :: Manuel d'utilisation de QGIS
 
-Ce répertoire contient l'ensemble des supports nécessaires à la réalisation des exercices de la formation:
-- Guide de TP
-- Planches
-- Guide d'installation
-- Questionnaire d'évaluation
-- Solutions (distribuées à la fin)
-  
+          ~docs.qgis.org/2.14/en/docs/user_manual~
+
+
+
 ** Les logiciels nécessaires
 
 Afin de réaliser les exercices, les logiciels suivants sont
@@ -100,9 +101,9 @@ disponible sur le  [[http://www.qgis.org/][site du projet]].
 
 Les données utilisées au cours du TP sont des extraits des données suivantes:
 
-- Landsat-8 :: 9 dates concaténées, dénuagées (gap-filling)
+- Sentinel-2 :: plusieurs dates concaténées, dénuagés (gap-filling)
                avec des données terrains de référence au format ESRI
-               Shapefile fournies par le [[http://www.cesbio.ups-tlse.fr/][CESBIO]] (pour le TP classification),
+               Shapefile (pour le TP classification),
 - Pléiades :: image PHR Bundle PRIMARY Niveau 1A issue de la RTU (Recette
               Thématique Utilisateurs Pléiades - projet CNES) sur
               le site OSR MiPy (sud-ouest Toulouse), acquise en novembre 2013 (\copyright
@@ -112,7 +113,7 @@ Les données utilisées au cours du TP sont des extraits des données suivantes:
                 (Allemagne).
  
 Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
-- Landsat-8 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
+- Sentinel-2 :: produit de niveau 2A disponible sur le site [[https://www.theia-land.fr/][THEIA]]
 - Pléiades :: [[http://professionnels.ign.fr/images-pleiades][accès privilégié UIA]] (institutionnels français) 
 - Sentinel-1 :: Données gratuites disponibles sur le [[https://scihub.copernicus.eu/][Hub ESA]] ou sur le site CNES [[https://peps.cnes.fr][PEPS]]
 

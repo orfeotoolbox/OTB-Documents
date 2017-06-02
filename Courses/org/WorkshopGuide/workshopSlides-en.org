@@ -64,27 +64,37 @@ Know how to set up OTB processing and use OTB applications to perform:
 
 *** Training kit
 
-**** Data folder
+**** Data package
      - Data used in all exercises (sub-folder for each exercise)
      - Data folder is specified at the beginning of each exercise
-
-*** Training kit
-
-**** Documentation folder
-     - Software Guide :: C++ API (with algorithms definition)
-     - CookBook :: Guide for non developers (API of applications)
-     - QGIS User Guide :: 
-
-**** Guide folder
+       Download from: ~www.orfeo-toolbox.org/packages/WorkshopData/WorkshopData.zip~
+**** Guides
      - Training guide
      - Slides
      - Installation guide
      - Evaluation survey
      - Solutions (at the end of the training session)
 
-*** Dataset
 
-- Landsat-8 :: concatenation of several dates, cloud free (gap-filled) with
+*** Training kit
+
+**** Software documentation
+     - Software Guide :: C++ API (with algorithms definition)
+
+                         ~www.orfeo-toolbox.org/SoftwareGuide/index.html~
+
+
+     - CookBook :: Guide for non developers (API of applications)
+
+                   ~www.orfeo-toolbox.org/CookBook/~
+
+
+     - QGIS User Guide :: ~docs.qgis.org/2.14/en/docs/user_manual~
+          
+          
+*** Datasets
+
+- Sentinel-2 :: concatenation of several dates, cloud free (gap-filled) with
                ground truth (reference data) in ESRI Shapefile format
                (classification exercise)
 - Pléiades :: PHR Bundle PRIMARY Level 1A from the CNES Thematic Commissioning
@@ -99,11 +109,11 @@ Know how to set up OTB processing and use OTB applications to perform:
     - Sentinel-1 :: Free data available on ESA SciHub
                     (https://scihub.copernicus.eu/) or on the CNES PEPS portal (https://peps.cnes.fr)
 
-*** Useful information
-**** Meal
-**** Wifi code
-**** Attendance list and training certificate
-**** Other?
+# *** Useful information
+# **** Meal
+# **** Wifi code
+# **** Attendance list and training certificate
+# **** Other?
 
 * TP1: General                                                          
 #+INCLUDE: "mvd-qgis-en.org"
