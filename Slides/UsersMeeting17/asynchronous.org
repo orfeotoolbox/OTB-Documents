@@ -1,10 +1,10 @@
 #+STARTUP: beamer
 #+INCLUDE: "template-beamer.org"
 
-#+latex_header: \subtitle{Plans for assynchronous s/writing/I\/O/}
+#+latex_header: \subtitle{Plans for asynchronous s/writing/I\/O/}
 
 * Introduction
-** What assynchronous means
+** What asynchronous means
 
    - This is the CPU graph of running the OrthoRectification app:
 
@@ -92,7 +92,7 @@
 ** The easy part: writing
    - After call to ~UpdateOutputData()~ for current stream, the writer
      passes the output buffer to the driver for writing to disk
-   - Making this call assynchronous with a FIFO and a separate writing
+   - Making this call asynchronous with a FIFO and a separate writing
      thread is easy enough
    - FIFO should be size-limited with a sync lock so that it does not get
      flowed in case reading/processing is faster than writing
