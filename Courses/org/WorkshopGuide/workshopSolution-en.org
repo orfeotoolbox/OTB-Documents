@@ -33,10 +33,10 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Orfeo ToolBox Course - 2016}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt} \includegraphics[height=20pt]{Images/cc-by-sa.png}}}
 
 * Foreword                                                               :fw:
-
+  
 ** Goal
 
 The goal of this training course is to give an overview of the OTB remote sensing
@@ -113,6 +113,8 @@ For more information on these satellites:
 Solutions in the guide mostly use the command line interface of OTB
 applications. However, it is possible to apply the same commands by using the
 parameter values in the GUI (Mapla or Monteverdi).
+
+#+INCLUDE: "licence.org"
 
 * Basics                                                          
 #+INCLUDE: "mvd-qgis-en.org" :minlevel 2

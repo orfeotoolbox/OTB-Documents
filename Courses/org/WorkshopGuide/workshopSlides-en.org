@@ -29,7 +29,7 @@
 #+latex_header: \newcommand{\shorttitle}{OTB Training Slides}
 #+latex_header: \newcommand{\shortauthor}{}
 #+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
-#+latex_header: \institute{ \includegraphics[width=0.6cm]{../../../Artwork/logoVectoriel.png} \hspace{0.1cm} \includegraphics[width=1.5cm]{Images/logo_cnes.png}}
+#+latex_header: \institute{ \includegraphics[width=0.6cm]{../../../Artwork/logoVectoriel.png} \hspace{0.1cm} \includegraphics[height=12pt]{Images/cc-by-sa.png}  \hspace{0.1cm} \includegraphics[width=1.5cm]{Images/logo_cnes.png}}
 #+latex_header: \usepackage{fourier}
 #+latex_header: \usepackage{amsfonts,bm,amsmath,amssymb,ifsym,marvosym,tabularx,array,ifsym}
 #+latex_header: \usepackage{tikz}

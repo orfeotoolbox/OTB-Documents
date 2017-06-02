@@ -34,7 +34,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt}\footnotesize{Orfeo ToolBox course}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt} \includegraphics[height=20pt]{Images/cc-by-sa.png}}}
 
 * Foreword                                                               :fw:
 
