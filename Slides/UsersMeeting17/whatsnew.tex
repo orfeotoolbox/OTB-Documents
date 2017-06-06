@@ -1,44 +1,56 @@
-%----------------------------------------------------------------------------------------
-%	PACKAGES & THEMES
-%----------------------------------------------------------------------------------------
-
-\documentclass[8pt]{beamer}
-
-\usepackage{etex}
-\mode<presentation> {
-\usetheme{Vilanova}
-}
-
-\usepackage[english]{babel}
+\pdfminorversion=4
+% Created 2017-05-31 mer. 10:21
+\documentclass[smaller]{beamer}
 \usepackage[utf8]{inputenc}
-\usepackage{array}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
 \usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{xcolor}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage[T1]{fontenc}
+\usepackage[english, frenchb]{babel}
+\useoutertheme{infolines}
+\mode<beamer>{\usetheme{Pittsburgh}}
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{structure}{series=\bfseries}
+\setbeamertemplate{items}[triangle]
+\setbeamercolor{block title}{fg=blue!40!black}
+\newcommand{\shorttitle}{OTB User Days, June 7-9 2017}
+\newcommand{\shortauthor}{}
+\setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
+\institute{ \includegraphics[width=0.6cm]{images/logoIncrust.png}}
+\usepackage{fourier}
+\usepackage{amsfonts,bm,amsmath,amssymb,ifsym,marvosym,tabularx,array,ifsym}
 \usepackage{tikz}
-\usetikzlibrary{arrows}
-\usepackage{pifont}
-\usepackage{listings,color}
-
-\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
-\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
-\definecolor{listnumbers}{gray}{0.65}
-\definecolor{listlightgray}{gray}{0.955}
-\definecolor{listwhite}{gray}{1.0}
-
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
-\title{What's new in one year of OTB?}
-\author{}
-\date{2017-06-07}
-
+\usetikzlibrary{arrows,fit,backgrounds,positioning,shapes,shadows}
+\newcommand{\vns}{Ven$\mu$s}
+\newcommand\boxPlot[6] {  \pgfmathsetmacro\rectSize{0.3};  \draw[thick] (#2,#1) -- (#3,#1);  \draw[thick] (#2,#1-\rectSize/2) -- (#2,#1+\rectSize/2);  \draw[thick] (#5,#1) -- (#6,#1);  \draw[thick] (#6,#1-\rectSize/2) -- (#6,#1+\rectSize/2);  \draw[fill=white] (#3,#1-\rectSize) rectangle (#5,#1+\rectSize);  \draw (#4,#1-\rectSize) -- (#4,#1+\rectSize);}
+\def\G{\ensuremath{{\cal G}}}
+\newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+\pgfdeclareimage[height=96mm,width=130mm]{background}{images/fondsClairSansLogo}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\subtitle{What's new in one year of OTB?}
+\usetheme{default}
+\author{OTB Team}
+\date{05/06/2017}
+\title{OTB Users Days 2017}
+\hypersetup{
+  pdfkeywords={otb},
+  pdfsubject={},
+  pdfcreator={Emacs 24.4.1 (Org mode 8.2.10)}}
 \begin{document}
 
-\begin{frame}
-\titlepage
-\end{frame}
+\maketitle
 
 \begin{frame}
   \frametitle{Orfeo ToolBox 5.6 \textit{Scincinae}}
@@ -58,7 +70,7 @@
   \begin{center}
   \vspace{-0.5cm}
   \includegraphics[width=0.6\textwidth]{images/mpi.png}
-  \begin{scriptsize}
+  \begin{tiny}
 \begin{verbatim}
     $ mpirun -np $nb_procs --hostfile $PBS_NODEFILE  \
     otbcli_BundleToPerfectSensor \
@@ -83,7 +95,7 @@
 
     ------------ END JOB INFO 1043196.tu-adm01 ---------
 \end{verbatim}
-\end{scriptsize}
+\end{tiny}
 \end{center}
 \end{frame}
 
@@ -165,7 +177,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{PSC recuitement}
+\frametitle{PSC recruitement}
 We need new Project Steering Committee members! Are you interested?
 \begin{itemize}
     \item Review and vote on new RFCs.
