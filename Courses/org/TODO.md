@@ -5,6 +5,10 @@ List improvments that could be made to the tutorial and gather user feedbacks
 ## En vrac
 
 - Survey en ligne plutot que papier
+- traduire le tutoriel dévelopeur en anglais
+- paquet de données n'intègre pas les exercices pour les dévelopeurs
+- 2 install guide (with and without XDK) -> utiliser uniquement celui avec XDK
+- traduire le guide avec xdk en anglais
 
 ## User feedback Grenoble 2017:
 
