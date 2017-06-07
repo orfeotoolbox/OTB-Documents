@@ -114,7 +114,7 @@
    - ~std::packaged_task~
    - ~std::promise~
    
-   The tricky part is that our objects are not sateless 
+   The tricky part is that our objects are not stateless 
 
 * Conclusion and thoughts   
 ** Conclusion and thoughts
