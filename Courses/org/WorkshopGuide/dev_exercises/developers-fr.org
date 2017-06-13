@@ -111,8 +111,7 @@
     
     Les exercices de ce TP sont fortement inspirés du cours ITK ci-dessous :
 
-    http://www.na-mic.org/svn/NAMICSandBox/trunk/ITKAdvancedCourse/
-
+    https://itk.org/Wiki/ITK/Course_Ware
 
     Les données se trouvent dans le répertoire ~Data/otb_developers~.
 
