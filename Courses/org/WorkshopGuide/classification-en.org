@@ -1,18 +1,18 @@
-** Supervised classification of a satellite image time serie        :slides:
+** Supervised classification of a satellite image time series        :slides:
 *** Objectives and Data
 **** Objectives
      Objectives are as follows:
      - Being able to perform a supervised classification
-     - Being able to measure the classfication performance
+     - Being able to measure the classification performance
      - Knowing existing post-processing for classification
 **** Data
      Data are available in the ~Data/classification~ folder, with the
      following sub-folders:
-     - ~images~ contains the Sentinel2 time serie,
+     - ~images~ contains the Sentinel2 time series,
      - ~references~ contains the reference data for training and
-       validation (shapefile format),
+       validation (ESRI Shapefile format),
      - ~support~ contains different useful files for the workshop
-       (for instance Qgis style files)
+       (for instance QGIS style files)
      
 *** Steps
     Workshop follows the following steps:
@@ -113,15 +113,15 @@
 
 
 
-** Supervised classification of a satellite image time serie          :guide:
+** Supervised classification of a satellite image time series         :guide:
 *** Description                                                        :desc:
 **** Summary
 
      This exercise allows to get familiar with supervised, pixel-wise
      classification applications in Orfeo ToolBox, using a Sentinel-2
-     time serie and a reference dataset for supervision.
+     time series and a reference dataset for supervision.
 
-**** Pré-requisites
+**** Pre-requisites
      
      - Software installed (Monteverdi and Orfeo ToolBox)
      - Data downloaded
@@ -139,7 +139,7 @@
 *** Steps                                                             :steps:
 
     Data are available in the ~Data/classification~ folder, with following sub-folders:
-    - ~images~ contains the Sentinel-2 time serie,
+    - ~images~ contains the Sentinel-2 time series,
     - ~references/training~ contains training data in /shp/ format,
     - ~references/testing~ contains testing data in /shp/ format
 
@@ -182,8 +182,8 @@ display (red, green, blue)
 
 Open the remaining four images and look for changes.
 
-*Note:* The Qgis style file ~support/images.qml~ can be loaded into
-Qgis to set the rendering and color channels for each image.
+*Note:* The QGIS style file ~support/images.qml~ can be loaded into
+QGIS to set the rendering and color channels for each image.
 
 Files ~references/training/training.shp~ 
 and
@@ -208,23 +208,23 @@ over the scene:
 |  222 | Vineyards                   | 129                 | 97                 |
 |------+-----------------------------+---------------------+--------------------|
 
-Open one of the files in QGis. The attribute table can be accessed by
+Open one of the files in QGIS. The attribute table can be accessed by
     right-clicking on the layer -> /Open attributes table/. Each label
     is visible, and the list can be filtered with SQL expressions.
 
     *Note :* There is a style file ~support/polygons.qml~ that can be
-    loaded into Qgis to colorize polygons according to their classes.
+    loaded into QGIS to colorize polygons according to their classes.
     
     Polygons are split into two sets: training and validation.
 
 **** Single date training
      
-     We are going to use th *TraingImagesClassifier* application in
+     We are going to use the *TrainImagesClassifier* application in
      order to do supervised learning from the training date in
      ~references/training/training.shp~. First, we are going to work
      with the image from the 07.06.2016.
 
-     The *TraingImagesClassifier* application will sample some image
+     The *TrainImagesClassifier* application will sample some image
      pixels within the training polygons, in order to build a
      well-balanced training set. This set is then passed to the
      learning algorithm.
@@ -235,7 +235,7 @@ Open one of the files in QGis. The attribute table can be accessed by
      - The vector layer containing references polygons,
      - The name of the field in that layer that contains the class
        identifier,
-     - The output file containing the learnt model (call it ~model.rf~).
+     - The output file containing the learning model (call it ~model.rf~).
 
      Some optional parameters should also be set as follows:
      - Random forest classifier for the learning algorithm,
@@ -274,7 +274,7 @@ Open one of the files in QGis. The attribute table can be accessed by
      classification map corresponding to the best date (the one from
      05.09.2016). Be careful to use the model file training with this date.
      
-     The output map is a tif image where each pixel value corresponds
+     The output map is a TIFF image where each pixel value corresponds
      to the class. To visualize such images, the *ColorMapping*
      application allows to set a given color for each class.
 
@@ -282,9 +282,9 @@ Open one of the files in QGis. The attribute table can be accessed by
      the look-up table in ~support/color_map.txt~ to produced the
      colored map.
      
-     *Note :* The image may not display correctly in QGis, because of
+     *Note :* The image may not display correctly in QGIS, because of
      default no data value set in the file. No data can be deactivated
-     in Qgis layer properties dialog.
+     in QGIS layer properties dialog.
      
 **** Evaluate global performance
 
@@ -294,7 +294,7 @@ Open one of the files in QGis. The attribute table can be accessed by
      this application allows to:
      - Take into account all pixels in the reference date,
      - Evaluate performances of a post-processed classification map
-       (for instance with regularisation).
+       (for instance with regularization).
      The ~ref.vector.field CODE~ parameter is mandatory to indicate
     the field corresponding to class ids.
 
@@ -327,21 +327,21 @@ Open one of the files in QGis. The attribute table can be accessed by
      image. What do temporal series bring to the performance of
      classification ?
 
-     Compare both results in QGis.
+     Compare both results in QGIS.
 
 **** Going further
      
      1) Can we obtain better performances with other classification
         algorithms ?
 
-     2) In Qgis, merge in reference data the grass and Woody
+     2) In QGIS, merge in reference data the grass and Woody
         Moorlands. Are the performances better ?
 
      3) The ~TrainImagesClassifier~ also has an unsupervised algorithm
         (Shark KMeans). Compare results with supervised and
         unsupervised classification.
 
-** Supervised classification of a satellite image time serie      :solutions:
+** Supervised classification of a satellite image time series     :solutions:
 
 In the following solution, the ~$DATA~ environment variable correspond
 to the folder containing the workshop data.
@@ -443,7 +443,7 @@ The following shapefile files contain the samples used for training and for vali
 Those files contain points corresponding to selected samples within
 the training and validation polygons. Each point has a set of fields
 corresponding to the radiometric measurement at the point location in
-the image. Those two files can be displayed in a GIS (in Qgis for
+the image. Those two files can be displayed in a GIS (in QGIS for
 instance).
 
 *** Spot the date with the best performance
@@ -499,7 +499,7 @@ $ otbcli_ColorMapping -in classif_20161005.tif            \
 #+END_EXAMPLE
 
 Another way of displaying the ~classif_20161005.tif~ results is to
-open it in QGis and use the style file provided in ~support/classif.qml~.
+open it in QGIS and use the style file provided in ~support/classif.qml~.
 
 *** Evaluate global performance
 
@@ -507,7 +507,7 @@ To evaluate global performance over the whole validation set, one can
 use the *ComputeConfusionMatrix* application. This application allows
 to evaluate any classification map (for instance one that have been
 post-processed). Beware not to use as input the colored map created
-during previous step, which is only to be used for visualisation
+during previous step, which is only to be used for visualization
 purposes.
  
  #+BEGIN_EXAMPLE
