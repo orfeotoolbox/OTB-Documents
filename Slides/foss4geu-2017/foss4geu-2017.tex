@@ -256,6 +256,46 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Cluster oriented development environment}
+\begin{itemize}
+\item Remote sensing images processing
+\item Abstraction of low-level cluster-related mechanisms
+\item Message Passing Interface (MPI) standard
+\item Parallel pipelines: read, process, and write using many nodes
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/mpi1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Speedup}
+
+\tiny\begin{itemize}
+\item P1 : Orthorectification
+\item P2 : Textures Extraction
+\item P3 : Pansharpening
+\item P4 : RF Image classification
+\item P5 : Meanshift filtering
+\item P6 : Decompression JP2K
+\item P7 : Resampling
+\item I/O : Reading / writing
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/mpi2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{I/O bottleneck}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/mpi3.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
 \frametitle{Orfeo ToolBox 5.8 \textit{Sphenomorphinae}}
 \framesubtitle{Released 2016-11-08}
 \begin{block}{OTB}
