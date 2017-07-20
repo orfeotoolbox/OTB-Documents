@@ -25,7 +25,7 @@
 \setbeamerfont{structure}{series=\bfseries}
 \setbeamertemplate{items}[triangle]
 \setbeamercolor{block title}{fg=blue!40!black}
-\newcommand{\shorttitle}{OTB User Days, June 7-9 2017}
+\newcommand{\shorttitle}{FOSS4G 2017}
 \newcommand{\shortauthor}{}
 \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
 \institute{ \includegraphics[width=0.6cm]{images/logoIncrust.png}}
@@ -39,7 +39,7 @@
 \newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
 \pgfdeclareimage[height=96mm,width=130mm]{background}{images/fondsClairSansLogo}
 \setbeamertemplate{background}{\pgfuseimage{background}}
-\subtitle{FOSS4G Europe 2017}
+\subtitle{FOSS4G 2017}
 \usetheme{default}
 \author{Manuel Grizonnet}
 \date{2017-07-19}
@@ -62,6 +62,13 @@
 \end{frame}
 
 \begin{frame}
+
+  \tableofcontents[currentsection]
+
+\end{frame}
+
+
+\begin{frame}
 \frametitle{What is Orfeo ToolBox?}
 \begin{itemize}
 \item \textbf{90+ remote sensing applications}
@@ -70,12 +77,12 @@
 \item A \textbf{C++ library} for image processing, based on ITK
 \item \textbf{Big Data} capable, thanks to built-in streaming, multithreading
     and MPI
-\item Apache v2.0 license
+\item Apache v2.0 license (since release 6.0) before CeCILL v2
 \item Funded and developed by CNES (French Space Agency)
 \item Used at CNES, ESA, mission exploitation platforms,
   remote sensing labs, teaching\ldots
 \item Built on the shoulders of giants (ITK, GDAL, OSSIM, OpenCV\ldots)
-\item An OSGeo project since July 2017!
+\item \alert{An OSGeo project since July 2017!}
 \end{itemize}
 
 \begin{center}
@@ -83,6 +90,8 @@
 \end{center}
 
 \end{frame}
+
+\section{Few words about OTB}
 
 \begin{frame}
 \frametitle{Incomplete list of OTB functions}
@@ -186,54 +195,6 @@
     \includegraphics[keepaspectratio,height=1.1\paperheight]{images/segmentation.png}
 \end{frame}
 
-
-
-
-
-\begin{frame}
-\frametitle{Orfeo ToolBox 5.8 \textit{Sphenomorphinae}}
-\framesubtitle{Released 2016-11-08}
-\begin{block}{OTB}
-\begin{itemize}
-\item Access to Shark random forests (better performances, parallel learning)
-\item Better performances in BandMathX
-\item Spot7 support (radiometric and geometric calibration)
-\item Applications in-memory connection
-\end{itemize}
-\end{block}
-
-\begin{block}{Monteverdi}
-\begin{itemize}
-\item Now part of OTB source code
-\item Zoom with mouse wheel without CTRL
-\end{itemize}
-\end{block}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Orfeo ToolBox 5.10 \textit{Valentine}}
-\framesubtitle{Released 2017-02-14}
-  \begin{block}{OTB}
-    \begin{itemize}
-      \item Composite applications framework
-      \item TrainImagesClassifier and BundleToPerfectSensor refactoring (composite)
-      \item Print corresponding command-line in apps QT GUI
-      \item Enhancement of field selector QT component
-      \item FFT/DWT application
-      \item Texture app now allows for subsampled results (faster)
-      \item Packaging remote modules!
-    \end{itemize}
-  \end{block}
-
-  \begin{block}{Monteverdi}
-    \begin{itemize}
-      \item Single band color mapping
-      \end{itemize}
-  \end{block}
-
-\end{frame}
-
 \begin{frame}
 \frametitle{Monteverdi on the fly color mapping}
 \includegraphics[width=1\textwidth]{images/monteverdi-colormapping.png}
@@ -245,6 +206,10 @@
 \end{frame}
 
 
+\begin{frame}
+\frametitle{Sentinel-1 SLC IW Deburst}
+\includegraphics[width=1\textwidth]{images/monteverdi_S1_deburst.png}
+\end{frame}
 
 \begin{frame}
 \frametitle{Orfeo ToolBox 6.0}
@@ -263,22 +228,56 @@
     \end{block}
 \end{frame}
 
-\begin{frame}
-\frametitle{Sentinel-1 SLC IW Deburst}
-\includegraphics[width=1\textwidth]{images/monteverdi_S1_deburst.png}
-\end{frame}
+\section{ORFEO ToolBox license change}
 
-\begin{frame}
-\frametitle{Future of Orfeo ToolBox}
+\section{OTB governance and OSGeo incubation}
+
+\label{sec:orgheadline10}
+\begin{frame}[label={sec:orgheadline7}]{OTB decision making process before the PSC}
+\begin{block}{the benevolent dictatorship dynasty}
+\end{block}
+\begin{block}{Who makes feature requests}
 \begin{itemize}
-\item More features! (Unsupervised learning, OBIA, InSAR, time series image
-    stacks)
-\item Better QGIS integration
-\item Switch to C++14
-\item Maintenance (dependencies, binaries packaging, CI)
-\item Better documentation
-\item We need new Project Steering Commitee members! Are you interested?
+\item Users from Orfeo CNES program (main funding source for 8 years)
+\item CNES team (based on feedback from ml and orfeo)
+\item Users from mailing list
 \end{itemize}
+\end{block}
+\begin{block}{Who decides}
+\begin{itemize}
+\item CNES team with support of CS dev team (contractor)
+\end{itemize}
+\end{block}
+\begin{block}{Who actually writes code}
+\begin{itemize}
+\item CS dev team (funded by CNES)
+\item CNES team
+\item other contributors
+\end{itemize}
+\end{block}
+\end{frame}
+\begin{frame}[label={sec:orgheadline8}]{Why changing?}
+\begin{block}{Transparency}
+\begin{itemize}
+\item Users are often informed afterward of major changes
+\item No insight on motivations behind some decisions
+\item Difficult to participate in decision making
+\item OTB is a big project now, someone may want to get involved more deeply
+\end{itemize}
+\end{block}
+\begin{block}{For more, easier contributions}
+\begin{itemize}
+\item what was the process for contributing code to OTB?
+\item how can I know if my contribution will be accepted?
+\item if I contribute a lot, do I get a grip on decision making?
+\end{itemize}
+\end{block}
+\begin{block}{For sustainability}
+\begin{itemize}
+\item What if, one day, CNES stops funding OTB at the current level?
+\item We need new actors to be able to get involved in OTB!
+\end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
@@ -293,6 +292,17 @@ acceptance of OTB. This is great news for us! Special thanks to:
     Cavallini, Vincent Picavet, Yves Jacolin, Markus Neteler... and many others!
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Future of Orfeo ToolBox}
+\begin{itemize}
+\item More features! (Unsupervised learning, OBIA, InSAR, time series image stacks)
+\item Better documentation!
+\item Continue to work with other OSGeo projects
+\item We need more contributors! Are you interested?
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Questions ?}
 \end{frame}

@@ -1,0 +1,180 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{ORFEO ToolBox license change from CeCILL to Apache : diary of a long journey}
+
+* Me
+* Introduction
+** Things to know about OTB\ldots
+*** Orfeo ToolBox is:
+    - An *image processing library* for remote sensing
+    - *Free and open source software* under CeCILL-v2 license (equivalent to GPL)
+    - *Funded and developed by CNES* (French Space Agency) in the frame of the Orfeo Pléiades program (and beyond)
+    - Used at CNES, ESA (European Space Agency), scientific projects, in some
+      public administration (mostly French)
+** Topic
+   The aim of this presentation is:
+   - To give an overview of OTB incubation process
+   - To describe how Orfeo ToolBox project governance worked (and evolve) since 2010 
+   - To explain what the PSC is and how it works
+   - To sketch the possibilities offered by this new, more open governance
+* Things to know about OTB\ldots
+** What is Orfeo ToolBox?
+   - *90+ remote sensing applications*
+   - Accessible from C++, Bash, GUI, Python, QGIS, Monteverdi, WPS (Zoo)
+   - *Monteverdi*, a satellite image viewer (hardware accelerated, raw products)
+   - A *C++ library* for image processing, based on ITK
+   - *Big Data* (Buzz word detected here!) capable, thanks to built-in streaming, multithreading
+    and MPI
+   - Apache v2.0 license (since release 6.0) before CeCILL v2 (I'll talk about
+     it later\ldots)
+   - Funded and developed by CNES (French Space Agency)
+   - Used at CNES, ESA, mission exploitation platforms, remote sensing labs, teaching\ldots
+   - Built on the shoulders of giants (ITK, GDAL, OSSIM, OpenCV\ldots)
+   - *An OSGeo project since July 2017!* 
+** Feature extraction
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/saint_paul_lsd.png]]
+   #+LATEX:\end{center}
+** Segmentation
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/segmentation.png]]
+   #+LATEX:\end{center}
+** Supervised classification (at scale)
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/Carte_17Classes.png]]
+   #+LATEX:\end{center}
+* Moving from CeCILL to Apache
+** Before talking about license change
+*** TODO: transition slide pour expliquer la démarche
+    - Talk about governance
+    - About the community
+    - About how 
+** Talk first with the community
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[[[file:images/blog-wind.png]]
+   #+LATEX:\end{center}
+** TODO Ajouter un slide a propos de l'ouverture du projet ... MAIS ...
+** OTB decision making process before the PSC
+*** the benevolent dictatorship dynasty
+*** Who makes feature requests
+    - Users from Orfeo CNES program (main funding source for 8 years)
+    - CNES team (based on feedback from ml and orfeo)
+    - Users from mailing list
+*** Who decides
+    - CNES team with support of CS dev team (contractor)
+*** Who actually writes code
+    - CS dev team (funded by CNES)
+    - CNES team
+    - other contributors
+** Why changing?
+*** Transparency
+    - Users are often informed afterward of major changes
+    - No insight on motivations behind some decisions
+    - Difficult to participate in decision making
+    - OTB is a big project now, someone may want to get involved more deeply
+*** For more, easier contributions
+    - what was the process for contributing code to OTB?
+    - how can I know if my contribution will be accepted?
+    - if I contribute a lot, do I get a grip on decision making?
+*** For sustainability
+    - What if, one day, CNES stops funding OTB at the current level?
+    - We need new actors to be able to get involved in OTB!
+* What has changed?
+** ... for users
+- Every significant ongoing or passed change is now public and visible
+- Users have the opportunity to comment on pending Request for Changes during review
+- There are more details available on why and how things were done (and discussions)
+- Users can file new Request for Comments to request new features
+- Releases are more frequent
+
+** ... for contributors
+
+- There is a clear and detailed process on how to get your code in OTB
+- Contributors are guaranteed to be treated with equity
+- They know the deadline to get their feature into next release
+
+** ... for developers
+
+- No more silent merging of your 100+ commits branch
+- $\Rigtharrow$ Some adjustments needed:
+  - Accept comments from review
+  - Getting the code merged takes more time
+- On the bright side, less surprises on the /develop/ branch
+- They know the deadline to get their feature into next release
+
+** Are we making a better OTB?
+On the overall, I think that we do.
+- We have more code reviews, from external reviewer (even if PSC is still small)
+- Changes are more consistent because they belong to the same RFC
+- Everyone gets to give his opinion
+- New features are more visible
+
+* Moving from CeCILL to Apache
+** TODO expliquer la démarche le process le lien avec osgeo
+** In case of OTB
+*** in the current context where OTB can be useful, copyleft may also restrict the use of the library.
+*** This licensing change also means better management of contributors (CLA and ICLA)
+*** CeCILL is not a very common license (even if it is compatible with GPL and OSI approved since 2013)
+
+** Thought
+*** Copyleft is a very good protection for open-source software in general
+*** I don't like the term "business friendly license"
+*** But OTB was considered by many institutions and companies as part of their project
+** Conclusion about license change
+*** Changing license follow the same acceptance mechanism as new features (pull request, RFC...)
+*** Follow guidelines provided by OSI, GNU, Apache foundation\ldots
+*** It helps a lot for OTB to maintain properly contributions since the beginning 
+*** Changing the license was done jointly with a better management of 
+** Conclusion bis
+*** For most users changing the license will not change a lot the way that thye use OTB
+*** Comunicate, explain\ldots
+
+* OSGeo incubation
+** OSGeo incubation
+Once upon a time OTB starts the OSGeo incubation
+** How does it start?
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/ticket_incubation_2009.png]]
+   #+LATEX:\end{center}
+** FOSS4G 2010: Start the journey
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.6\textwidth
+   [[file:images/logo_foss4g2010.png]]
+   #+LATEX:\end{center}
+
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.6\textwidth
+   [[file:images/road-incubation.jpg]]
+   #+LATEX:\end{center}
+** Incubation revamp
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/ticket_incubation_2009.png]]
+   #+LATEX:\end{center}
+** Next step? Find a mentor
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/landon.jpg]]
+   #+LATEX:\end{center}
+** How OSGeo helps during the all process?
+*** Open gouvernance
+*** expliquer que ça a pris du temps mais le projet a grandi
+** Thought about the OSGeo incubation process
+* Conclusion
+** Ajouter des remercimements ici
+** Conclusion
+   - OSGeo incubation starts in 2011 (first application)
+   - Being an official OSGeo software will perhaps not change lots of thing...
+   - ...but I think that the incubation helps OTB to have a more open process
+     and overall
+   - Moving to GPL to Apache was also quite a huge work
+   - Changing license
+   - But at the end what counts at last is the community
+** Questions ?
+
