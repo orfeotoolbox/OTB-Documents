@@ -1,6 +1,6 @@
-#+TITLE:     FOSS4G 2016
-#+AUTHOR:    OTB Team
-#+DATE:      August 2016
+#+TITLE:     FOSS4G 2017
+#+AUTHOR:    Manuel GRIZONNET - CNES
+#+DATE:      August 2017
 #+DESCRIPTION: 
 #+KEYWORDS: otb
 #+LANGUAGE: fr
@@ -25,11 +25,12 @@
 #+latex_header: \setbeamerfont{structure}{series=\bfseries}
 #+latex_header: \setbeamertemplate{items}[triangle]
 #+latex_header: \setbeamercolor{block title}{fg=blue!40!black}
-#+latex_header: \newcommand{\shorttitle}{FOSS4G 2016}
+#+latex_header: \newcommand{\shorttitle}{FOSS4G 2017}
 #+latex_header: \newcommand{\shortauthor}{}
-#+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
+#+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\otb~~\cnes~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
 #+latex_header: \institute{ \includegraphics[width=2.cm]{images/OSGeo_logo.png}}
-#+latex_header: \otb{ \includegraphics[width=0.8.cm]{images/logoIncrust.png}}
+#+latex_header: \otb{ \includegraphics[width=1cm]{images/logoIncrust.png}}
+#+latex_header: \cnes{ \includegraphics[width=1cm]{images/logo_cnes.jpg}}
 #+latex_header: \usepackage{fourier}
 #+latex_header: \usepackage{amsfonts,bm,amsmath,amssymb,ifsym,marvosym,tabularx,array,ifsym}
 #+latex_header: \usepackage{tikz}

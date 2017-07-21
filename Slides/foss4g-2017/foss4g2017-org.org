@@ -49,19 +49,16 @@
    #+LATEX:\end{center}
 * Moving from CeCILL to Apache
 ** Before talking about license change
-   - Changing the license can be a pain to deal with
-   - But technical details like Code review, CLA, Copyright are not the most
+   - Changing the license can be a pain to deal with\ldots
+   - But technical details like code review, CLA, Copyright are not the most
      important thing at the end
-   - So I will start to talk about governance, about people\ldots
-   - How OTB starts by setting up a more open governance first with a Project
+   - So I talk more about governance, about communication with the community\ldots
+   - \ldots and less about technical details of the license change
+   - Explain how OTB starts by setting up a more open governance first with a Project
      Steering Committee
    - And how to deal about big changes like this in the most open "way" 
-** Talk first with the community
-   #+LATEX:\begin{center}
-   #+ATTR_LATEX: :float :width 0.8\textwidth
-   [[[[file:images/blog-wind.png]]
-   #+LATEX:\end{center}
-** OTB 
+
+** OTB since the beginning in 2006 
    - Always be a free and open source project
    - Mostly support from the French Space Agency
    - Encourage since the beginning external contributions
@@ -94,6 +91,22 @@
 *** For sustainability
     - What if, one day, CNES stops funding OTB at the current level?
     - We need new actors to be able to get involved in OTB!
+** OTB project Steering Committee
+- In 2015 CNES decided to set-up an open-governance for OTB
+- We now have a working PSC, with:
+  - Members
+  - Rules
+  - Decisions
+** OTB decision making process
+   1. *Request for Comments*
+   2. Comments and discussions
+   3. Developments
+   4. *Requests for changes*
+   5. Review
+   6. PSC Vote
+   7. *Request for Merge*
+   8. Approval by Release Manager
+   9. Merge
 * What has changed since 2015
 ** ... for users
 - Every significant ongoing or passed change is now public and visible
@@ -108,15 +121,6 @@
 - Contributors are guaranteed to be treated with equity
 - They know the deadline to get their feature into next release
 
-** ... for developers
-
-- No more silent merging of your 100+ commits branch
-- $\Rigtharrow$ Some adjustments needed:
-  - Accept comments from review
-  - Getting the code merged takes more time
-- On the bright side, less surprises on the /develop/ branch
-- They know the deadline to get their feature into next release
-
 ** Are we making a better OTB?
 On the overall, I think that we do.
 - We have more code reviews, from external reviewer (even if PSC is still small)
@@ -125,9 +129,15 @@ On the overall, I think that we do.
 - New features are more visible
 
 * Moving from CeCILL to Apache
+**  
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[[[file:images/blog-wind.png]]
+   #+LATEX:\end{center}
 ** Moving from CeCILL to Apache
-   - The license change startup following
-   - It was also closely related with the OSGeo incubation process
+   - The license change consideration starts in the same time as the governance
+     set up
+   - Also closely related with the OSGeo incubation process
    - PSC, open governance, RFC are strongly based on existing strategies
      implemented in other OSGeo projects like GDAL, GRASS GIS, QGIS\ldots
 ** Why moving from CeCILL to Apache
@@ -138,34 +148,36 @@ On the overall, I think that we do.
    - In the current context where OTB can be useful, copyleft may also restrict
      the use of the library (for some potential users and contributors)
    - This licensing change also means in our case better management of contributors (CLA and ICLA)
-** Thought (personal)
+** Personal thoughts
    - Copyleft is a very good protection for open-source software in general
-   - I don't like the term "business friendly license"
+   - I don't like general point of view about open source licenses should be
+     used
    - But OTB was considered by many institutions and companies as part of their project
    - From both a strategic and an operational point of view it is a good
      decision for OTB
-** Conclusion about license change
+** Conclusion about license change 1/2
    - Follow guidelines provided by OSI, GNU, Apache foundation\ldots
-   - Doing a code review is a long and hard work (especially for a library like OTB
-   - But it is always a 
+   - Doing a code review is a long and hard work (especially for a library like
+     OTB - more than 500k lines of code)
+   - But you always learn things doing a code review
    - It helps a lot for OTB to maintain properly contributions since the
      beginning
-   - Unable to contact only one contributor him about relicensing
+   - Helps from a lawyer at CNES (P. Maurette) and S. Dinot from the dev team
    - Changing license follow the same acceptance mechanism as new features (pull request, RFC...)
-** Conclusion about license change
-   - For most users changing the license will not change a lot the way that thye use OTB
-   - Comunicate, explain\ldots
-   - Try to find a consensus
+** Conclusion about license change 2/2
+   - For most users changing the license will not change a lot the way that they use OTB
+   - Communicate, explain\ldots
+   - Always try to find a consensus
 
 * OSGeo incubation
 ** OSGeo incubation
-Once upon a time OTB starts the OSGeo incubation
+Once upon a time OTB started the OSGeo incubation
 ** How does it start?
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[file:images/ticket_incubation_2009.png]]
    #+LATEX:\end{center}
-** FOSS4G 2010: Start the journey
+** FOSS4G 2010: Starting the journey
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.6\textwidth
    [[file:images/logo_foss4g2010.png]]
@@ -178,26 +190,39 @@ Once upon a time OTB starts the OSGeo incubation
 ** Incubation revamp
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
-   [[file:images/ticket_incubation_2009.png]]
+   [[file:images/ticket_incubation_grizonnet.png]]
    #+LATEX:\end{center}
-** Next step? Find a mentor
+** Next step? Find a mentor in 2013(Thank you Landon!) 
    #+LATEX:\begin{center}
-   #+ATTR_LATEX: :float :width 0.8\textwidth
+   #+ATTR_LATEX: :float :width 0.4\textwidth
    [[file:images/landon.jpg]]
    #+LATEX:\end{center}
 ** How OSGeo helps during the all process?
-*** Open gouvernance
-*** expliquer que ça a pris du temps mais le projet a grandi
+   - Open governance
+     - How to set up the PSC
+     - Decision making strategy
+     - Documentation license
+   - Take time to set up the governance\ldots
+   - We wait to complete the license migration before restarting the incubation
+     process in 2017
+   - It took time\ldots
+   - \ldotsBut it was perhaps the time needed by the project 
 ** Thought about the OSGeo incubation process
 * Conclusion
-** Ajouter des remercimements ici
 ** Conclusion
    - OSGeo incubation starts in 2011 (first application)
    - Being an official OSGeo software will perhaps not change lots of thing...
    - ...but I think that the incubation helps OTB to have a more open process
      and overall
    - Moving to GPL to Apache was also quite a huge work
-   - Changing license
-   - But at the end what counts at last is the community
+** Thanks
+   - Thanks to the incubation committee and the OSGeo board for the acceptance of OTB
+   - This is great news for us!
+   - Special thanks to:
+     - Our mentor Landon Blake
+     - Jody Garnett and Brian M Hamlin who helped in the final stretch
+     - Other OSGeo projects related to OTB: GDAL, OSSIM, QGIS, OSGeo-Live, ...
+     - Angelos Tzotsos, Even Rouault, Alexander Bruy, Victor Olaya, Paolo Cavallini, Vincent Picavet, Yves Jacolin, Markus Neteler\ldots
+     - And many others!
 ** Questions ?
 
