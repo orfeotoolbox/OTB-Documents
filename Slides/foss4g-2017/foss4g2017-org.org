@@ -3,21 +3,20 @@
 
 #+latex_header: \subtitle{ORFEO ToolBox license change from CeCILL to Apache : diary of a long journey}
 
-* Me
 * Introduction
-** Things to know about OTB\ldots
-*** Orfeo ToolBox is:
-    - An *image processing library* for remote sensing
-    - *Free and open source software* under CeCILL-v2 license (equivalent to GPL)
-    - *Funded and developed by CNES* (French Space Agency) in the frame of the Orfeo Pléiades program (and beyond)
-    - Used at CNES, ESA (European Space Agency), scientific projects, in some
-      public administration (mostly French)
-** Topic
-   The aim of this presentation is:
-   - To give an overview of OTB incubation process
-   - To describe how Orfeo ToolBox project governance worked (and evolve) since 2010 
-   - To explain what the PSC is and how it works
-   - To sketch the possibilities offered by this new, more open governance
+** Introduction
+*** Me
+    - My name is Manuel Grizonnet
+    - I work at CNES (French Space Agency) 
+    - I am involve in the Open Source library for remote sensing image processing Orfeo ToolBox
+    - Also a contributor to OSGeo-Live and QGIS
+*** Topic
+    - Talk about changing the license of a ten years old open source project
+    - Why we decide to make this change
+    - the strategy that we used to change the license of a 10 years old project
+    - Things that we learn
+    - More generally how the OTB governance works
+    - Recap of the OTB OSGeo incubation process
 * Things to know about OTB\ldots
 ** What is Orfeo ToolBox?
    - *90+ remote sensing applications*
@@ -42,35 +41,46 @@
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[file:images/segmentation.png]]
    #+LATEX:\end{center}
-** Supervised classification (at scale)
+** Example of  Supervised classification (at scale)
+   #+CAPTION: Source CESBIO/OSO
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
-   [[file:images/Carte_17Classes.png]]
+   [[file:images/Poster_OSO_V4.png]]
    #+LATEX:\end{center}
 * Moving from CeCILL to Apache
 ** Before talking about license change
-*** TODO: transition slide pour expliquer la démarche
-    - Talk about governance
-    - About the community
-    - About how 
+   - Changing the license can be a pain to deal with
+   - But technical details like Code review, CLA, Copyright are not the most
+     important thing at the end
+   - So I will start to talk about governance, about people\ldots
+   - How OTB starts by setting up a more open governance first with a Project
+     Steering Committee
+   - And how to deal about big changes like this in the most open "way" 
 ** Talk first with the community
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[[[file:images/blog-wind.png]]
    #+LATEX:\end{center}
-** TODO Ajouter un slide a propos de l'ouverture du projet ... MAIS ...
+** OTB 
+   - Always be a free and open source project
+   - Mostly support from the French Space Agency
+   - Encourage since the beginning external contributions
+   - Code, documentation, mailing list was public since the beginning
+   - Try to follow as much as possible open standards
+   - People who started the project were great FLOSS advocate
+   - \alert{But...}
 ** OTB decision making process before the PSC
 *** the benevolent dictatorship dynasty
 *** Who makes feature requests
     - Users from Orfeo CNES program (main funding source for 8 years)
-    - CNES team (based on feedback from ml and orfeo)
+    - CNES team
     - Users from mailing list
 *** Who decides
-    - CNES team with support of CS dev team (contractor)
+    - CNES team with support of CNES contractors
 *** Who actually writes code
-    - CS dev team (funded by CNES)
     - CNES team
-    - other contributors
+    - CS-SI dev team (funded by CNES)
+    - Other contributors
 ** Why changing?
 *** Transparency
     - Users are often informed afterward of major changes
@@ -84,7 +94,7 @@
 *** For sustainability
     - What if, one day, CNES stops funding OTB at the current level?
     - We need new actors to be able to get involved in OTB!
-* What has changed?
+* What has changed since 2015
 ** ... for users
 - Every significant ongoing or passed change is now public and visible
 - Users have the opportunity to comment on pending Request for Changes during review
@@ -115,24 +125,37 @@ On the overall, I think that we do.
 - New features are more visible
 
 * Moving from CeCILL to Apache
-** TODO expliquer la démarche le process le lien avec osgeo
-** In case of OTB
-*** in the current context where OTB can be useful, copyleft may also restrict the use of the library.
-*** This licensing change also means better management of contributors (CLA and ICLA)
-*** CeCILL is not a very common license (even if it is compatible with GPL and OSI approved since 2013)
-
-** Thought
-*** Copyleft is a very good protection for open-source software in general
-*** I don't like the term "business friendly license"
-*** But OTB was considered by many institutions and companies as part of their project
+** Moving from CeCILL to Apache
+   - The license change startup following
+   - It was also closely related with the OSGeo incubation process
+   - PSC, open governance, RFC are strongly based on existing strategies
+     implemented in other OSGeo projects like GDAL, GRASS GIS, QGIS\ldots
+** Why moving from CeCILL to Apache
+   - CeCILL is not a very common license (even if it is compatible with GPL and OSI approved since 2013)
+   - Strategy: OTB position in the GIS and image process
+   - Strong relationship with ITK (image processing library) distributed under
+     the Apache v2 license 
+   - In the current context where OTB can be useful, copyleft may also restrict
+     the use of the library (for some potential users and contributors)
+   - This licensing change also means in our case better management of contributors (CLA and ICLA)
+** Thought (personal)
+   - Copyleft is a very good protection for open-source software in general
+   - I don't like the term "business friendly license"
+   - But OTB was considered by many institutions and companies as part of their project
+   - From both a strategic and an operational point of view it is a good
+     decision for OTB
 ** Conclusion about license change
-*** Changing license follow the same acceptance mechanism as new features (pull request, RFC...)
-*** Follow guidelines provided by OSI, GNU, Apache foundation\ldots
-*** It helps a lot for OTB to maintain properly contributions since the beginning 
-*** Changing the license was done jointly with a better management of 
-** Conclusion bis
-*** For most users changing the license will not change a lot the way that thye use OTB
-*** Comunicate, explain\ldots
+   - Follow guidelines provided by OSI, GNU, Apache foundation\ldots
+   - Doing a code review is a long and hard work (especially for a library like OTB
+   - But it is always a 
+   - It helps a lot for OTB to maintain properly contributions since the
+     beginning
+   - Unable to contact only one contributor him about relicensing
+   - Changing license follow the same acceptance mechanism as new features (pull request, RFC...)
+** Conclusion about license change
+   - For most users changing the license will not change a lot the way that thye use OTB
+   - Comunicate, explain\ldots
+   - Try to find a consensus
 
 * OSGeo incubation
 ** OSGeo incubation
