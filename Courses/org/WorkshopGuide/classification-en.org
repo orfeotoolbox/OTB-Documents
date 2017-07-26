@@ -613,7 +613,7 @@ Then, classification:
 #+BEGIN_EXAMPLE
 $ otbcli_ImageClassifier -in $DATA/images/all.vrt    \
                          -out classif_all.tif uint8  \
-                         -model model.rf
+                         -model model_all.rf
 #+END_EXAMPLE
 
 Next, regularisation:
