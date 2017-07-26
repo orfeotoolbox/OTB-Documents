@@ -5,11 +5,11 @@
 
 * Introduction
 ** Introduction
-*** Me
+*** About
     - My name is Manuel Grizonnet
-    - I work at CNES (French Space Agency) 
+    - I work at CNES (the French Space Agency) 
     - I am involve in the Open Source library for remote sensing image processing Orfeo ToolBox
-    - Also a contributor to OSGeo-Live and QGIS
+    - Also an occasional contributor to OSGeo-Live and QGIS
 *** Topic
     - Talk about changing the license of a ten years old open source project
     - Why we decide to make this change
@@ -23,10 +23,9 @@
    - Accessible from C++, Bash, GUI, Python, QGIS, Monteverdi, WPS (Zoo)
    - *Monteverdi*, a satellite image viewer (hardware accelerated, raw products)
    - A *C++ library* for image processing, based on ITK
-   - *Big Data* (Buzz word detected here!) capable, thanks to built-in streaming, multithreading
+   - *Big Data* (buzzword detected here!) capable, thanks to built-in streaming, multithreading
     and MPI
-   - Apache v2.0 license (since release 6.0) before CeCILL v2 (I'll talk about
-     it later\ldots)
+   - Apache v2.0 license (since release 6.0) before CeCILL v2
    - Funded and developed by CNES (French Space Agency)
    - Used at CNES, ESA, mission exploitation platforms, remote sensing labs, teaching\ldots
    - Built on the shoulders of giants (ITK, GDAL, OSSIM, OpenCV\ldots)
@@ -41,7 +40,7 @@
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[file:images/segmentation.png]]
    #+LATEX:\end{center}
-** Example of  Supervised classification (at scale)
+** Large scale supervised classification (CESBIO - OSO project)
    #+CAPTION: Source CESBIO/OSO
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
@@ -58,13 +57,14 @@
      Steering Committee
    - And how to deal about big changes like this in the most open "way" 
 
-** OTB since the beginning in 2006 
+** OTB history
+   - Start in 2006
    - Always be a free and open source project
-   - Mostly support from the French Space Agency
-   - Encourage since the beginning external contributions
+   - Mostly supported from the French Space Agency CNES
+   - Always encourage and integrate contributions
    - Code, documentation, mailing list was public since the beginning
    - Try to follow as much as possible open standards
-   - People who started the project were great FLOSS advocate
+   - People who started the project were great FLOSS advocates
    - \alert{But...}
 ** OTB decision making process before the PSC
 *** the benevolent dictatorship dynasty
@@ -78,7 +78,7 @@
     - CNES team
     - CS-SI dev team (funded by CNES)
     - Other contributors
-** Why changing?
+** Why changing in 2015?
 *** Transparency
     - Users are often informed afterward of major changes
     - No insight on motivations behind some decisions
@@ -97,6 +97,15 @@
   - Members
   - Rules
   - Decisions
+- PSC scope:
+  - roadmaps
+  - communication
+  - contribution management
+  - release planning
+  - \alert{Handling legal issues}
+- "Should help to guarantee that OTB remains open and company neutral."
+- Inspired by existing governance (status, rules) especially from OSGeo
+  projects like GRASS GIS, GDAL, QGIS
 ** OTB decision making process
    1. *Request for Comments*
    2. Comments and discussions
@@ -127,6 +136,10 @@ On the overall, I think that we do.
 - Changes are more consistent because they belong to the same RFC
 - Everyone gets to give his opinion
 - New features are more visible
+*** It creates the structure to deal with more controversial changes 
+    - License
+    - Version control system
+    - Refactoring
 
 * Moving from CeCILL to Apache
 **  
@@ -137,9 +150,8 @@ On the overall, I think that we do.
 ** Moving from CeCILL to Apache
    - The license change consideration starts in the same time as the governance
      set up
-   - Also closely related with the OSGeo incubation process
-   - PSC, open governance, RFC are strongly based on existing strategies
-     implemented in other OSGeo projects like GDAL, GRASS GIS, QGIS\ldots
+   - Also closely related with the OSGeo incubation process as it was one of the
+     goal of the PSC to complete the application to OSGeo
 ** Why moving from CeCILL to Apache
    - CeCILL is not a very common license (even if it is compatible with GPL and OSI approved since 2013)
    - Strategy: OTB position in the GIS and image process
@@ -150,9 +162,9 @@ On the overall, I think that we do.
    - This licensing change also means in our case better management of contributors (CLA and ICLA)
 ** Personal thoughts
    - Copyleft is a very good protection for open-source software in general
-   - I don't like general point of view about open source licenses should be
-     used
    - But OTB was considered by many institutions and companies as part of their project
+   - For some of them the previous license was
+   - Defnitily related to the way that OTB
    - From both a strategic and an operational point of view it is a good
      decision for OTB
 ** Conclusion about license change 1/2
@@ -160,14 +172,14 @@ On the overall, I think that we do.
    - Doing a code review is a long and hard work (especially for a library like
      OTB - more than 500k lines of code)
    - But you always learn things doing a code review
+   - Think twice before integrating code/libs without a proper license
    - It helps a lot for OTB to maintain properly contributions since the
      beginning
    - Helps from a lawyer at CNES (P. Maurette) and S. Dinot from the dev team
-   - Changing license follow the same acceptance mechanism as new features (pull request, RFC...)
+   - Changing license should follow at the end the same acceptance mechanism as new features (pull request, RFC...)
 ** Conclusion about license change 2/2
    - For most users changing the license will not change a lot the way that they use OTB
-   - Communicate, explain\ldots
-   - Always try to find a consensus
+   - Communication is important
 
 * OSGeo incubation
 ** OSGeo incubation
@@ -206,7 +218,7 @@ Once upon a time OTB started the OSGeo incubation
    - We wait to complete the license migration before restarting the incubation
      process in 2017
    - It took time\ldots
-   - \ldotsBut it was perhaps the time needed by the project 
+   - \ldots But it was perhaps the time needed by the project 
 ** Thought about the OSGeo incubation process
 * Conclusion
 ** Conclusion
@@ -215,6 +227,8 @@ Once upon a time OTB started the OSGeo incubation
    - ...but I think that the incubation helps OTB to have a more open process
      and overall
    - Moving to GPL to Apache was also quite a huge work
+   - The OTB governance is still young but works well
+   - Number of RFC in 2 years: 103
 ** Thanks
    - Thanks to the incubation committee and the OSGeo board for the acceptance of OTB
    - This is great news for us!
@@ -222,7 +236,8 @@ Once upon a time OTB started the OSGeo incubation
      - Our mentor Landon Blake
      - Jody Garnett and Brian M Hamlin who helped in the final stretch
      - Other OSGeo projects related to OTB: GDAL, OSSIM, QGIS, OSGeo-Live, ...
-     - Angelos Tzotsos, Even Rouault, Alexander Bruy, Victor Olaya, Paolo Cavallini, Vincent Picavet, Yves Jacolin, Markus Neteler\ldots
+     - Angelos Tzotsos, Even Rouault, Alexander Bruy, Victor Olaya, Paolo
+       Cavallini, Vincent Picavet, Yves Jacolin, Gérald Fenoy, Markus Neteler\ldots
      - And many others!
 ** Questions ?
 
