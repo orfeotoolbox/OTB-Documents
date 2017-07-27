@@ -5,24 +5,23 @@
 
 * Introduction
 ** Introduction
-*** About
-    - My name is Manuel Grizonnet
+*** About me
+    - My name is [[https://wiki.osgeo.org/wiki/User:Grizonnetm][Manuel Grizonnet]]
     - I work at CNES (the French Space Agency) 
     - I am involve in the Open Source library for remote sensing image processing Orfeo ToolBox
-    - Also an occasional contributor to OSGeo-Live and QGIS
+    - Also an occasional contributor to OSGeo-Live, OSSIM and QGIS
 *** Topic
     - Talk about changing the license of a ten years old open source project
-    - Why we decide to make this change
-    - the strategy that we used to change the license of a 10 years old project
-    - Things that we learn
+    - the /strategy/ that we used to change the license of a 10 years old project
+    - Why we decide to make this change, things that we learn
     - More generally how the OTB governance works
     - Recap of the OTB OSGeo incubation process
-* Things to know about OTB\ldots
+* Things to know about OTB
 ** What is Orfeo ToolBox?
-   - *90+ remote sensing applications*
-   - Accessible from C++, Bash, GUI, Python, QGIS, Monteverdi, WPS (Zoo)
-   - *Monteverdi*, a satellite image viewer (hardware accelerated, raw products)
    - A *C++ library* for image processing, based on ITK
+   - *90+ remote sensing applications*
+   - *Monteverdi*, a satellite image viewer (hardware accelerated, raw products)
+   - Accessible from C++, Bash, GUI, Python, QGIS, Monteverdi, WPS (Zoo)
    - *Big Data* (buzzword detected here!) capable, thanks to built-in streaming, multithreading
     and MPI
    - Apache v2.0 license (since release 6.0) before CeCILL v2
@@ -48,10 +47,10 @@
    #+LATEX:\end{center}
 * Moving from CeCILL to Apache
 ** Before talking about license change
-   - Changing the license can be a pain to deal with\ldots
-   - But technical details like code review, CLA, Copyright are not the most
+   - Changing the license can be a pain to deal with
+   - But technical details like code review, CLA, Copyright are perhaps not the most
      important thing at the end
-   - So I talk more about governance, about communication with the community\ldots
+   - So I will talk more about governance, about communication with the community\ldots
    - \ldots and less about technical details of the license change
    - Explain how OTB starts by setting up a more open governance first with a Project
      Steering Committee
@@ -59,10 +58,10 @@
 
 ** OTB history
    - Start in 2006
-   - Always be a free and open source project
+   - Always be a Free and Open Source project
    - Mostly supported from the French Space Agency CNES
    - Always encourage and integrate contributions
-   - Code, documentation, mailing list was public since the beginning
+   - Code, documentation, mailing lists, everything is public since the beginning
    - Try to follow as much as possible open standards
    - People who started the project were great FLOSS advocates
    - \alert{But...}
@@ -75,8 +74,7 @@
 *** Who decides
     - CNES team with support of CNES contractors
 *** Who actually writes code
-    - CNES team
-    - CS-SI dev team (funded by CNES)
+    - CNES team or CNES contractors
     - Other contributors
 ** Why changing in 2015?
 *** Transparency
@@ -103,8 +101,8 @@
   - contribution management
   - release planning
   - \alert{Handling legal issues}
-- "Should help to guarantee that OTB remains open and company neutral."
-- Inspired by existing governance (status, rules) especially from OSGeo
+- "PSC should help to guarantee that OTB remains open and company neutral."
+- Inspired by existing governance (status,rules) and especially by OSGeo
   projects like GRASS GIS, GDAL, QGIS
 ** OTB decision making process
    1. *Request for Comments*
@@ -152,27 +150,27 @@ On the overall, I think that we do.
      set up
    - Also closely related with the OSGeo incubation process as it was one of the
      goal of the PSC to complete the application to OSGeo
-** Why moving from CeCILL to Apache
+** Why moving from CeCILL to Apache?
    - CeCILL is not a very common license (even if it is compatible with GPL and OSI approved since 2013)
-   - Strategy: OTB position in the GIS and image process
+   - Strategy: OTB position in the GIS and image processing pipelines
    - Strong relationship with ITK (image processing library) distributed under
      the Apache v2 license 
    - In the current context where OTB can be useful, copyleft may also restrict
-     the use of the library (for some potential users and contributors)
+     the use of the library for some potential users and contributors
    - This licensing change also means in our case better management of contributors (CLA and ICLA)
 ** Personal thoughts
    - Copyleft is a very good protection for open-source software in general
    - But OTB was considered by many institutions and companies as part of their project
-   - For some of them the previous license was
-   - Defnitily related to the way that OTB
-   - From both a strategic and an operational point of view it is a good
+   - Cause individual and expensive schemes to include OTB in projects and still respect the license requirements
+   - From a practical standpoint, think that a more permissive license could only increase interest in OTB
+   - From both a strategic and an operational point of view I hope that it is a good
      decision for OTB
 ** Conclusion about license change 1/2
    - Follow guidelines provided by OSI, GNU, Apache foundation\ldots
    - Doing a code review is a long and hard work (especially for a library like
      OTB - more than 500k lines of code)
    - But you always learn things doing a code review
-   - Think twice before integrating code/libs without a proper license
+   - Think twice before integrating code/libs without a license
    - It helps a lot for OTB to maintain properly contributions since the
      beginning
    - Helps from a lawyer at CNES (P. Maurette) and S. Dinot from the dev team
@@ -233,6 +231,7 @@ Once upon a time OTB started the OSGeo incubation
    - Thanks to the incubation committee and the OSGeo board for the acceptance of OTB
    - This is great news for us!
    - Special thanks to:
+     - All people of OTb community who participates in some way to the incubation
      - Our mentor Landon Blake
      - Jody Garnett and Brian M Hamlin who helped in the final stretch
      - Other OSGeo projects related to OTB: GDAL, OSSIM, QGIS, OSGeo-Live, ...

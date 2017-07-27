@@ -28,7 +28,7 @@
 #+latex_header: \newcommand{\shorttitle}{FOSS4G 2017}
 #+latex_header: \newcommand{\shortauthor}{}
 #+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\otb~~\cnes~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
-#+latex_header: \institute{ \includegraphics[width=2.cm]{images/OSGeo_logo.png}}
+#+latex_header: \institute{ \includegraphics[width=1.5cm]{images/OSGeo_logo.png}}
 #+latex_header: \otb{ \includegraphics[width=1cm]{images/logoIncrust.png}}
 #+latex_header: \cnes{ \includegraphics[width=3cm]{images/CNES_(logo).png}}
 #+latex_header: \usepackage{fourier}
