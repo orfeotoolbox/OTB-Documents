@@ -27,7 +27,7 @@
    - Apache v2.0 license (since release 6.0) before CeCILL v2
    - Funded and developed by CNES (French Space Agency)
    - Used at CNES, ESA, mission exploitation platforms, remote sensing labs, teaching\ldots
-   - Built on the shoulders of giants (ITK, GDAL, OSSIM, OpenCV\ldots)
+   - Standing on the shoulders of giants (ITK, GDAL, OSSIM, OpenCV\ldots)
    - *An OSGeo project since July 2017!* 
 ** Feature extraction
    #+LATEX:\begin{center}
