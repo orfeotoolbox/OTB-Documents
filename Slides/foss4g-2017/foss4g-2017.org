@@ -8,7 +8,7 @@
 *** About me
     - My name is [[https://wiki.osgeo.org/wiki/User:Grizonnetm][Manuel Grizonnet]]
     - I work at CNES (the French Space Agency) 
-    - I am involve in the Open Source library for remote sensing image processing Orfeo ToolBox
+    - I am involved in the Open Source library for remote sensing image processing Orfeo ToolBox
     - Also an occasional contributor to OSGeo-Live, OSSIM and QGIS
 *** Topic
     - Talk about changing the license of a ten years old open source project
