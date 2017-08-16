@@ -16,6 +16,7 @@
     - Why we decide to make this change, things that we learn
     - More generally how the OTB governance works
     - Recap of the OTB OSGeo incubation process
+    - \alert{This presentation is not about "Permissive versus copyleft license"}
 * Things to know about OTB
 ** What is Orfeo ToolBox?
    - A *C++ library* for image processing, based on ITK
@@ -39,6 +40,21 @@
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[file:images/segmentation.png]]
    #+LATEX:\end{center}
+** Image visualisation and analysis
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/monteverdi-colormapping.png]]
+   #+LATEX:\end{center}
+
+** Sucess stories
+*** From end users to operational ground segments
+    - OTB applications are available through QGIS processing framework
+    - OTB applications are available in Zoo Project (WPS service)
+    - OTB used to teach remote sensing
+    - Gnorasi Software (National Technical University of Athens)
+    - ESA Sentinel-2 for Agriculture
+    - Geosud project: Spot images mosaic over France 
+    - OTB is a component of Sentinel-2 and Venus ground segments (CNES and ESA)
 ** Large scale supervised classification (CESBIO - OSO project)
    #+CAPTION: Source CESBIO/OSO
    #+LATEX:\begin{center}
@@ -154,34 +170,40 @@ On the overall, I think that we do.
    - CeCILL is not a very common license (even if it is compatible with GPL and OSI approved since 2013)
    - Strategy: OTB position in the GIS and image processing pipelines
    - Strong relationship with ITK (image processing library) distributed under
-     the Apache v2 license 
+     the Apache v2 license
+   - OTB modular architecture: nothing prevent to contribute OTB module with an
+     other license
    - In the current context where OTB can be useful, copyleft may also restrict
      the use of the library for some potential users and contributors
    - This licensing change also means in our case better management of contributors (CLA and ICLA)
 ** Personal thoughts
    - Copyleft is a very good protection for open-source software in general
-   - But OTB was considered by many institutions and companies as part of their project
+   - But OTB was considered by many institutions and companies as part of their projects
    - Cause individual and expensive schemes to include OTB in projects and still respect the license requirements
    - From a practical standpoint, think that a more permissive license could only increase interest in OTB
-   - From both a strategic and an operational point of view I hope that it is a good
+   - From both a strategic and an operational point of view I think that it is a good
      decision for OTB
-** Conclusion about license change 1/2
+** License change feedback
    - Follow guidelines provided by OSI, GNU, Apache foundation\ldots
    - Doing a code review is a long and hard work (especially for a library like
-     OTB - more than 500k lines of code)
+     OTB -> more than 500k lines of code)
    - But you always learn things doing a code review
    - Think twice before integrating code/libs without a license
    - It helps a lot for OTB to maintain properly contributions since the
      beginning
    - Helps from a lawyer at CNES (P. Maurette) and S. Dinot from the dev team
-   - Changing license should follow at the end the same acceptance mechanism as new features (pull request, RFC...)
-** Conclusion about license change 2/2
+   - Changing license should follow at the end the same acceptance mechanism as
+     new features (pull request, RFC...)
    - For most users changing the license will not change a lot the way that they use OTB
    - Communication is important
-
+   
 * OSGeo incubation
 ** OSGeo incubation
-Once upon a time OTB started the OSGeo incubation
+Once upon a time OTB started the OSGeo incubation...
+*** OSGeo incubation
+    - Effort to welcome new projects into our foundation
+    - Designed to promote open source and inclusive development of software projects
+    - Formal process: http://www.osgeo.org/incubator/process/process.html
 ** How does it start?
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
@@ -202,7 +224,7 @@ Once upon a time OTB started the OSGeo incubation
    #+ATTR_LATEX: :float :width 0.8\textwidth
    [[file:images/ticket_incubation_grizonnet.png]]
    #+LATEX:\end{center}
-** Next step? Find a mentor in 2013(Thank you Landon!) 
+** Next step? Find a mentor in 2013 (thank you Landon!) 
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.4\textwidth
    [[file:images/landon.jpg]]
@@ -217,12 +239,11 @@ Once upon a time OTB started the OSGeo incubation
      process in 2017
    - It took time\ldots
    - \ldots But it was perhaps the time needed by the project 
-** Thought about the OSGeo incubation process
 * Conclusion
 ** Conclusion
    - OSGeo incubation starts in 2011 (first application)
-   - Being an official OSGeo software will perhaps not change lots of thing...
-   - ...but I think that the incubation helps OTB to have a more open process
+   - Being an official OSGeo software will perhaps not change lots of thing\ldots
+   - \ldotsbut I think that the incubation helps OTB to have a more open process
      and overall
    - Moving to GPL to Apache was also quite a huge work
    - The OTB governance is still young but works well
@@ -234,7 +255,7 @@ Once upon a time OTB started the OSGeo incubation
      - All people of OTb community who participates in some way to the incubation
      - Our mentor Landon Blake
      - Jody Garnett and Brian M Hamlin who helped in the final stretch
-     - Other OSGeo projects related to OTB: GDAL, OSSIM, QGIS, OSGeo-Live, ...
+     - Other OSGeo projects related to OTB: GDAL, OSSIM, QGIS, OSGeo-Live\ldots
      - Angelos Tzotsos, Even Rouault, Alexander Bruy, Victor Olaya, Paolo
        Cavallini, Vincent Picavet, Yves Jacolin, Gérald Fenoy, Markus Neteler\ldots
      - And many others!
