@@ -201,7 +201,7 @@ On the overall, I think that we do.
 ** OSGeo incubation
 Once upon a time OTB started the OSGeo incubation...
 *** OSGeo incubation
-    - Effort to welcome new projects into our foundation
+    - Effort to welcome new projects into OSGeo foundation
     - Designed to promote open source and inclusive development of software projects
     - Formal process: http://www.osgeo.org/incubator/process/process.html
 ** How does it start?
