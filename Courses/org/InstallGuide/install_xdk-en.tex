@@ -22,8 +22,8 @@
 }
 
 \title{\includegraphics[scale=1]{Art/otb-logo.png}\\
-  OTB Installation Guide\\
-  Updated for OTB-5.10.1\\
+  Develop with OTB\\
+  Updated for OTB-6.2\\
   {\small\url{https://www.orfeo-toolbox.org}}
 }
 
@@ -35,99 +35,16 @@
 
 \clearpage
 
+\section{Install OTB}
+
+On all platforms, follow the \textbf{OTB Installation Guide} to
+download and install OTB using the self-extracting binary package.
+
 \section{Windows}
 
-\subsection{7zip}
-This tool is required for extracting archives on Windows. although windows have
-a native zip extractor, our experience shows that it is too slow and have bugs
-when extracting archives to a folder with spaces. Even though this is not the
-case all the time, we strongly recommend to install and use 7zip. It can be
-downloaded free of charge and installation is very simple.
+This section describes how to set up the environment to develop in C++
+on Windows using OTB.
 
-Download page for 7zip: \url{http://www.7-zip.org/download.html}.
-
-\subsection{QGIS}
-Install QGIS: \url{http://www.qgis.org/en/site/forusers/download.html}.
-
-\subsection{OTB and Monteverdi}
-
-To install OTB and Monteverdi, download the appropriate package for your
-architecture (32 or 64 bits). If you have a 32 bit machine:
-
-\begin{verbatim}
-Download OTB-5.10.1-xdk-win32.zip
-\end{verbatim}
-
-If you have a 64 bit machine:
-
-\begin{verbatim}
-Download OTB-5.10.1-xdk-win64.zip
-\end{verbatim}
-
-These files are available at:
-\url{https://orfeo-toolbox.org/packages/xdk/}.
-
-Extract the zip archive in your personal folder, for instance in:\\
-\begin{centering}
-\texttt{C:{\textbackslash}projects}.
-\end{centering}
-
-You can of course use an other directory. The next step is to update PATH
-environment variable. This must be done one time before starting using OTB package.
-
-\begin{verbatim}
-open cmd.exe (DOS command)
-cd C:\projects\OTB-5.10.1-xdk-win64
-set PATH=C:\projects\OTB-5.10.1-xdk-win64\bin;%PATH%
-\end{verbatim}
-
-\subsection{Test the installation}
-Once the installation is done, OTB applications can be used in several
-ways. Check that you have a working OTB with the following steps:
-
-\begin{enumerate}
-
-\item Launch \texttt{monteverdi.bat} from the installation folder.
-
-\item Try to open a tif image in Monteverdi (see
-figure~\ref{fig:monteverdi}). A demonstration tif image is available here: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
-
-\item The application browser is available from the ``View'' menu 
-$\rightarrow$ "OTB-Applications browser".
-(see figure \ref{fig:windows-mapla}).
-
-\item Go to the \texttt{bin} folder in the OTB install directory and double-click on the \texttt{.bat} file corresponding to the application to be run, for instance:\\
-\texttt{John{\textbackslash}install{\textbackslash}OTB-5.10.1-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
-(see figure \ref{fig:windows-otbgui}).
-
-\end{enumerate}
-
-\begin{figure}[!htbp]
-  \center
-  \includegraphics[width=0.7\textwidth]{Art/monteverdi-tif.png}
-  \caption[]{Monteverdi}
-  \label{fig:monteverdi}
-\end{figure}
-
-\begin{figure}[!htbp]
-  \center
-  \includegraphics[width=0.7\textwidth]{Art/windows-mapla.png}
-  \caption[]{OTB applications can be used from Monteverdi}
-  \label{fig:windows-mapla}
-\end{figure}
-
-\begin{figure}[!htbp]
-  \center
-  \includegraphics[width=0.7\textwidth]{Art/windows-otbgui.png}
-  \caption[]{OTB Graphical User Interface}
-  \label{fig:windows-otbgui}
-\end{figure}
-
-
-\subsection{Develop with OTB (only for participants of the developer session)}
-
-This section describes how to set up the environment to develop in C++ on
-Windows using OTB.
 You have two methods to build your projects:
 \begin{enumerate}
 \item Using windows command prompt (cmd.exe)
@@ -136,25 +53,32 @@ You have two methods to build your projects:
 
 You need Visual Studio 2015 and CMake for building projects using OTB.
 
-\subsubsection{Clink (optional)}
-Clink add Bash's powerful command line editing in
-cmd.exe. The tool can be downloaded free of charge from their GitHub
-page \url{https://github.com/mridgers/clink}. This tool is optional for both development and usage of OTB.
-But it is highly recommended to use it rather than using third party terminal emulator such as git bash or
-mobaXterm.
+\subsection{Clink (optional)}
 
-\subsubsection{Visual Studio 2015}
-Visual Studio Community Edition can be downloaded free of charge. However, you must register
-to get access to the download page. We use community edition because it is free
-of charge. If you have professional or enterprise edition that will work
-too. The latest version is 2017 but you must have \textbf{Visual Studio 2015 for OTB}. 
+Clink add Bash's powerful command line editing in cmd.exe. The tool
+can be downloaded free of charge from their GitHub page
+\url{https://github.com/mridgers/clink}. This tool is optional for
+both development and usage of OTB.  But it is highly recommended to
+use it rather than using third party terminal emulator such as git
+bash or mobaXterm.
 
-Download visual studio 2015 from \url{https://www.visualstudio.com/vs/older-downloads/}
+\subsection{Visual Studio 2015}
 
-Below you can find screenshots from our visual studio 2015 installation.
-The default installation does not include C++ compiler which are required for
-building OTB (see figure \ref{fig:vs2015-custom-install}, figure \ref{fig:vs2015-select-components}
-and figure \ref{fig:vs2015-start-install})
+Visual Studio Community Edition can be downloaded free of
+charge. However, you must register to get access to the download
+page. We use community edition because it is free of charge. If you
+have professional or enterprise edition that will work too. The latest
+version is 2017 but you must have Visual Studio 2015 for OTB. 
+
+Download visual studio 2015 from
+\url{https://www.visualstudio.com/vs/older-downloads/}
+
+Below you can find screenshots from our visual studio 2015
+installation.  The default installation does not include C++ compiler
+which are required for building OTB (see figure
+\ref{fig:vs2015-custom-install}, figure
+\ref{fig:vs2015-select-components} and figure
+\ref{fig:vs2015-start-install})
 
 \begin{figure}[!htbp]
   \center
@@ -177,7 +101,7 @@ and figure \ref{fig:vs2015-start-install})
   \label{fig:vs2015-start-install}
 \end{figure}
 
-\subsubsection{CMake}
+\subsection{CMake}
 
 \textbf{CMake is not a required if you are building using the IDE (see section~\ref{ide}).}
 
@@ -194,7 +118,7 @@ Make sure you add CMake to system PATH (see figure \ref{fig:cmake-install}).
 
 \textbf{CMake is not a required if you are building using the IDE (see section~\ref{ide}).}
 
-\subsubsection{Develop using windows command prompt}
+\subsection{Develop using windows command prompt}
 I've extracted xdk package into \texttt{C:{\textbackslash}projects}. So I will
 update variables relative to this path.
 
@@ -217,9 +141,10 @@ set CMAKE_PREFIX_PATH=C:/projects/OTB-5.10.1-xdk-win64
 
 \end{itemize}
   
-\subsubsection{Configure and build project}
+\subsection{Configure and build project}
 
-We can try to build a simple program using cmake to test the configuration:
+We can try to build a simple program using cmake to test the
+configuration:
 
 \begin{verbatim}
 cd c:\projects\otbprojects\build
@@ -231,7 +156,7 @@ If build goes fine, you will get executable file HelloWorld.exe
 C:{\textbackslash}projects{\textbackslash}otbprojects{\textbackslash}build{\textbackslash}HelloWorld.exe
 \newline
 
-\subsubsection{Test the Hello World program}
+\subsection{Test the Hello World program}
 
 The last step is to run the generated executable:
 
@@ -240,7 +165,7 @@ The last step is to run the generated executable:
 > OTB Hello World !
 \end{verbatim}
 
-\subsubsection{Using Visual Studio IDE}\label{ide}
+\subsection{Using Visual Studio IDE}\label{ide}
 
 Please see the wiki page which describes how to set up visual studio project to
 develop with OTB:
@@ -249,76 +174,15 @@ develop with OTB:
 \clearpage
 \section{Linux (Ubuntu example)}
 
-
-\subsection{QGIS}
-QGIS can be installed via a command line like:
-\begin{verbatim}
-sudo apt-get install qgis
-\end{verbatim}
-
-\subsection{Dependencies installation}
-Before installing the self-extracting Linux binary for OTB, several system dependencies have to be installed. In a terminal, type the following:
-\begin{verbatim}
-sudo apt-get install libx11-6 libxext6 libxau6 libxxf86vm1 libxdmcp6 libdrm2
-\end{verbatim}
-or the equivalent for other distributions.
-
-You will need the libgl1 and libglu1 libraries, which have different implementations (MESA, FGLRX, NVIDIA, etc.). If you don't already have these libraries, you can use the MESA implementation:
-\begin{verbatim}
-sudo apt-get install libgl1-mesa-glx libglu1-mesa
-\end{verbatim}
-
-\subsection{Install OTB and Monteverdi}
-Download the self-extracting binary for Linux (64 bits), available at:
-\begin{center}
-\url{https://orfeo-toolbox.org/packages/xdk/OTB-5.10/}
-\end{center}
-
-The self-extracting binary will extract itself in the current directory. First, the archive has to be made executable, and then it can be run:
-\begin{verbatim}
-chmod +x OTB-5.10.1-Linux64.run
-./OTB-5.10.1-Linux64.run
-\end{verbatim}
-
-The executable binaries will be inside the 'bin' directory, and you can put this
-directory in your PATH variable if you want to. To run monteverdi or mapla run
-bash scripts in the root directory called \textit{monteverdi.sh} and \textit{mapla.sh}.
-
-There is also a script which set all the environment variables (run
-automatically by monteverdi.sh and mapla.sh):
-
-\begin{verbatim}
-cd OTB-5.10.1-Linux64
-. ./otbenv.profile
-\end{verbatim}
-
-\subsection{Test the installation}
-Once the installation is done, OTB applications can be run in several ways. Check that you have a working installation with the following steps:
-\begin{enumerate}
-
-\item Try to open a tif image in Monteverdi (see
-figure~\ref{fig:monteverdi}). A demonstration tif image is available here: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
-
-\item The application browser is available from the ``View'' menu 
-$\rightarrow$ "OTB-Applications browser".
-(see figure \ref{fig:windows-mapla}).
-
-\item Run an application using the terminal, for instance
-\texttt{otbgui\_Rescale}. (see figure \ref{fig:windows-otbgui}).
-
-\end{enumerate}
-
-\subsection{Develop with OTB (only for participants of the developer session)}
-
-Make sure cmake and gcc (>= 4.9) are installed on your system. You can print
-cmake and gcc versions with the following commands: 
+Make sure cmake and gcc (>= 4.9) are installed on your system. You can
+print cmake and gcc versions with the following commands: 
 
 \begin{verbatim}
 cmake --version
 gcc --version
 \end{verbatim}
 
-\subsubsection{Configure and build project}
+\subsection{Configure and build project}
 
 \begin{verbatim}
 cd ~/otbprojects/HelloWorld/
@@ -329,7 +193,7 @@ make
 
 You now have \textasciitilde/otbprojects/HelloWorld/build/HelloWorld
 
-\subsubsection{Test the Hello World program}
+\subsection{Test the Hello World program}
 
 \begin{verbatim}
 > ~/otbprojects/HelloWorld/build/HelloWorld
@@ -338,42 +202,8 @@ You now have \textasciitilde/otbprojects/HelloWorld/build/HelloWorld
 
 \section{Mac OS X}
 
-\subsection{QGIS}
-Install QGIS: \url{http://www.qgis.org/en/site/forusers/download.html}.
-
-\subsection{OTB and Monteverdi}
-
-To install OTB and Monteverdi, download the appropriate package from \url{https://www.orfeo-toolbox.org/packages/xdk/OTB-5.10/}.
-
-\begin{verbatim}
-https://www.orfeo-toolbox.org/packages/xdk/OTB-5.10/OTB-5.10.1-xdk-Darwin64.run
-\end{verbatim}
-
-The self-extracting binary will extract itself in the current directory. First,
-the archive has to be made executable, and then it can be run:
-
-\begin{verbatim}
-chmod +x OTB-5.10.1-xdk-Darwin64.run
-./OTB-5.10.1-xdk-Darwin64
-cd OTB-5.10.1-xdk-Darwin64
-. ./otbenv.profile
-\end{verbatim}
-
-The installation is finished. You now have OTB-5.10.1-xdk-Darwin64 in your
-directory.
-
-\subsection{Test the installation}
-
-\begin{enumerate}
-\item OTB Applications: You can run OTB applications through otbgui\_<APPLICATION> and or otbcli\_<APPLICATION> 
-\item Monteverdi : Start monteverdi using Monteverdi.app in OTB-5.10.1-xdk-Darwin64
-\item Mapla : Start Mapla using Mapla.app in OTB-5.10.1-xdk-Darwin64
-\end{enumerate}
-It is advised not to run bin/monteverdi or bin/mapla directly (use .app files instead).
-
-\subsection{Develop with OTB (only for participants of the developer session)}
-Make sure cmake, and XCode (>= 6.1.1) are installed on your system. AppleClang
-is installed with XCode.
+Make sure cmake, and XCode (>= 6.1.1) are installed on your
+system. AppleClang is installed with XCode.
 
 Check cmake and gcc version with:
 
@@ -382,7 +212,7 @@ cmake --version
 gcc --version
 \end{verbatim}
 
-\subsubsection{Configure and build project}
+\subsection{Configure and build project}
 
 \begin{verbatim}
 cd ~/otbprojects/HelloWorld/
@@ -393,7 +223,7 @@ make
 
 You now have ~/otbprojects/HelloWorld/build/HelloWorld
 
-\subsubsection{Test the Hello World program}
+\subsection{Test the Hello World program}
 
 \begin{verbatim}
 > ~/otbprojects/HelloWorld/build/HelloWorld
