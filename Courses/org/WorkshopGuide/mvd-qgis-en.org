@@ -11,7 +11,7 @@
 **** Data
      The datasets can be found in the following directories:
      - ~Data/preprocessing~ (Pléiades extract)
-     - ~Data/classification/Extract16bits/~ (Landsat-8 image series)
+     - ~Data/classification/Extract16bits/~ (Sentinel-2 image series)
      - ~Data/classification/training/~ (vector data ESRI Shapefile)
 
 *** Program

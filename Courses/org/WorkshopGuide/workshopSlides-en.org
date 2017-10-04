@@ -104,7 +104,7 @@ Know how to set up OTB processing and use OTB applications to perform:
                 polarimetric (HH and HV) over the South of the Constance lake (Germany).
 
 *** Data access
-    - Landsat-8 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
+    - Sentinel-2 :: Level 2A (surface reflectance) available on THEIA website (https://www.theia-land.fr/)
     - Pléiades :: For French public organisms: http://professionnels.ign.fr/images-pleiades
     - Sentinel-1 :: Free data available on ESA SciHub
                     (https://scihub.copernicus.eu/) or on the CNES PEPS portal (https://peps.cnes.fr)

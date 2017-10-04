@@ -160,7 +160,7 @@
 
      Naviguez en résolution.
 
-     Chargez les autres images Landsat-8, et appliquez-leur le style ainsi créé.
+     Chargez les autres images Sentinel-2, et appliquez-leur le style ainsi créé.
 
      Quelles sont les différences entre les fonctionnalités de
      visualisation d'images offertes par Monteverdi et QGIS ?
