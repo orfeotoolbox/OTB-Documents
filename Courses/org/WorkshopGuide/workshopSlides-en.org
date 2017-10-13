@@ -109,11 +109,7 @@ Know how to set up OTB processing and use OTB applications to perform:
     - Sentinel-1 :: Free data available on ESA SciHub
                     (https://scihub.copernicus.eu/) or on the CNES PEPS portal (https://peps.cnes.fr)
 
-# *** Useful information
-# **** Meal
-# **** Wifi code
-# **** Attendance list and training certificate
-# **** Other?
+*** Useful information
 
 * TP1: General                                                          
 #+INCLUDE: "mvd-qgis-en.org"
