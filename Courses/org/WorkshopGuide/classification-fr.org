@@ -357,7 +357,7 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
 ** Classification supervisée pour les séries multi-temporelles    :solutions:
 
 Dans la correction suivante, la variable d'environnement ~$DATA~
-correspond au répertoire contenant les données du TP ~TODO~.
+correspond au répertoire contenant les données du TP (~Data/classification~).
 
 *** Réaliser un apprentissage mono-date
 
