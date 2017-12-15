@@ -87,7 +87,7 @@ incluant notamment:
 Afin de réaliser les exercices, les logiciels suivants sont
 nécessaires :
 
-- *Orfeo ToolBox* 5.4 ou plus récent avec les applications
+- *Orfeo ToolBox* 6.2 ou plus récent avec les applications
 - *Monteverdi* 3.2 ou plus récent
 - *QGIS* 2.4 ou plus récent
 

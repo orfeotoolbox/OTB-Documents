@@ -157,7 +157,7 @@ located in Germany near the Constance lake (47.456276, 9.638616).
         and comment about the effects on the output image.
      3. Compare the histogram of the filtered image with the one of the intensity?
      4. Use the /Frost/ filter with ~radius=5~ and different /deramp/ values
-        (00.5, 0.2 and 0.8). Comment about the effects of the deramp parameter.
+        (0.05, 0.2 and 0.8). Comment about the effects of the deramp parameter.
 
 **** Polarimetry
 
