@@ -92,7 +92,7 @@ image processing chains using OTB applications, including:
 
 To complete exercises, you need to install the following tools:
 
-- *Orfeo ToolBox* $>=$ 5.4 with applications
+- *Orfeo ToolBox* $>=$ 6.2 with applications
 - *Monteverdi* $>=$ 3.2
 - *QGIS* $>=$ 2.8 
 

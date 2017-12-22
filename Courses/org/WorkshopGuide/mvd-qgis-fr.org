@@ -126,7 +126,7 @@
      Testez les effets /Contraste local/, /Gradient/ et /Angle
      Spectral/. A quoi servent-ils ?
 
-     Modifiez le niveau de zoom en utilisant /CTRL + molette souris/,
+     Modifiez le niveau de zoom en utilisant la molette souris,
      les raccourcis de la barre d'outil ou en éditant directement
      l'échelle dans la barre d'état en bas à droite.
 
@@ -142,7 +142,7 @@
      1). Utilisez le bouton /Appliquer tous les paramètres aux autres
      couches/ pour avoir un rendu uniforme des images.
 
-     Utilisez la molette de la souris pour faire défiler les différentes dates.
+     Utilisez /CTRL + molette souris/ pour faire défiler les différentes dates.
 
      Testez les effets /Transparence local/, /Echiquier/ et
      /Balayage/. A quoi servent-ils ?

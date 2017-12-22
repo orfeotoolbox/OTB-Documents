@@ -170,7 +170,7 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
      3. Commentez la forme de l'histogramme des images filtrées comparées à
         l'image d'intensité?
      4. Utilisez le filtre de Frost avec un rayon de 5 et différentes valeurs
-        du paramètre /deramp/ (00.5, 0.2 et 0.8). Commentez l'effet de ce paramètre.
+        du paramètre /deramp/ (0.05, 0.2 et 0.8). Commentez l'effet de ce paramètre.
 
 **** Polarimétrie
 
