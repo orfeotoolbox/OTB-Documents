@@ -2,9 +2,9 @@
 *** Objectifs et données
 **** Objectifs
      - Savoir configurer l'environnement pour utiliser les applications en Python
-     - Savoir paramétrer une application en Python
+     - Savoir paramétrer une application OTB en Python
      - Savoir utiliser la connexion en mémoire entre applications
-     - Utiliser le bridge entre OTB et NumPy
+     - Savoir utiliser le /bridge/ entre OTB et NumPy
 
 **** Données
      
@@ -12,7 +12,8 @@
 
 *** Déroulement
     Le TP consiste à mettre en place un script Python pour réaliser l'extraction
-    des surfaces en eaux dans une série d'images Sentinel-2
+    des surfaces en eaux dans une série d'images Sentinel-2 sur le zone de
+    /Laguna la nina/ au Pérou.
 
 
 *** Rapide intro aux OTB-Applications
