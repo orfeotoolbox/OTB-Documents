@@ -1,0 +1,70 @@
+** Utiliser les applications OTB en Python                           :slides:
+*** Objectifs et données
+**** Objectifs
+     - Savoir configurer l'environnement pour utiliser les applications en Python
+     - Savoir paramétrer une application en Python
+     - Savoir utiliser la connexion en mémoire entre applications
+     - Utiliser le bridge entre OTB et NumPy
+
+**** Données
+     
+     Les données se trouvent dans le répertoire ~Data/otb-python/~.
+
+*** Déroulement
+    Le TP consiste à mettre en place un script Python pour réaliser l'extraction
+    des surfaces en eaux dans une série d'images Sentinel-2
+
+
+*** Rapide intro aux OTB-Applications
+    - Orfeo ToolBox est une *bibliothèque* offrant des fonctionnalités de télédétection
+    - Souvent nécessaire de combiner plusieurs fonctions (filtres) OTB dans une
+      chaîne de traitements
+    - Besoin d'interface de plus haut niveau (paramètres, les données d'entrée et
+      de sortie, les logs...)
+    - Chaque application correspond à une fonctionnalité de "haut niveau"
+     (segmentation, orthorectification, segmentation, calculatrice sur les bandes...)
+    - Correspond à une classe C++ (/otb::Application/) $\rightarrow$  librairie
+    - Mécanisme de plugin
+    - Possibilité de développer et distribuer ces applications /maison/
+*** Rapide intro aux OTB-Applications   
+    - En ligne de commande $\rightarrow$ otbcli\textunderscore{}Orthorectification
+    - Dans une interface graphique $\rightarrow$ otbgui\textunderscore{}Orthorectification
+    - En Python:
+#+begin_src python
+import otbApplication 
+orth=otb.Registry.CreateApplication("OrthoRectification") 
+#+end_src
+    - Intégrées dans QGIS $\rightarrow$ Menu /processing/
+    - Intégrées dans Monteverdi
+*** GUI
+    #+begin_center
+    #+ATTR_LaTeX: width=0.95\textwidth center  
+    [[file:../../../Slides/OTB-General/images/app_parameters.png]]
+    #+end_center
+*** Paramétrage
+    - Afficher l'aide de l'application d'OrthoRectification (bon exemple)
+    - Notion de /groupe de paramètres/
+    - Notion de /paramètre obligatoire/
+    - Dépendance entre paramètres (dynamique)
+    - Valeur par défaut
+    - Type des images en sortie (par défaut flottant)
+*** Autre Exemple: BandMath
+    - Calculatrice raster
+    - Utilise la librairie MuParser
+    - Prend en entrée une liste d'images (paramètre /-il/)
+    - Codage des expressions mathématiques:
+      - imXbY:
+        - X: numéro de l'image dans la liste (de 1 à N)
+        - Y: numéro de la bande dans l'image X (de 1 à N)
+      - [[http://muparser.beltoforion.de/mup_features.html][Liste des opérateurs mathématiques disponibles]]
+    - Exemples:
+      - -exp "(im1b4 - im1b1) / (im1b4 - im1b1))"
+      - -exp "acos((123*im1b1+265*im1b2+652*im1b3) \\
+               / (sqrt(123*123+265*265+652*652)\\
+               *sqrt(im1b1*im1b1+im1b2*im1b2+im1b3*im1b3)))"
+      - -exp "im1b1>0.5?255:0"
+*** Liens utiles
+    - [[https://www.orfeo-toolbox.org/CookBook/CookBookse1.html#x7-60001.1][Introduction aux OTB applications]]
+    - [[https://www.orfeo-toolbox.org//Applications/][Documentation de référence des applications]]
+    - [[https://www.orfeo-toolbox.org/CookBook/CookBookch3.html#x38-370003][Exemples utilisation des OTB applications]]
+    - Aide d'une application: /otbcli\textunderscore{}XXX -help/
