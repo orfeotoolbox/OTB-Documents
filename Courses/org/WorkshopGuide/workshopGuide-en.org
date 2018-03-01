@@ -51,6 +51,7 @@ image processing chains using OTB applications, including:
 - Classification
 - Segmentation
 - Synthetic Aperture Radar processing
+- OTB Application Python API
 
 ** Training kit
 *** Data package
@@ -130,4 +131,6 @@ For more information on these satellites:
 #+INCLUDE: "segmentation-en.org" :minlevel 2
 #+INCLUDE: "classification-en.org" :minlevel 1
 * SAR processing on Sentinel-1 images
-  #+INCLUDE: "sar-en.org" :minlevel 2
+#+INCLUDE: "sar-en.org" :minlevel 2
+* OTB Application Python API
+#+INCLUDE: "app-python-en.org" :minlevel 2

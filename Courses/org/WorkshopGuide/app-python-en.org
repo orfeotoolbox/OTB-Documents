@@ -1,0 +1,476 @@
+** OTB Applications on Python API                                    :slides:
+*** Goals and data
+**** Goals
+
+     - Know how to manipulate SAR images
+     - Know how to perform SAR calibration
+     - Know how to perform SAR orthorectification
+     - Know methods to reduce speckle noise in images
+     - Know more about feature extraction in SAR images
+
+**** Data
+
+     Data are located in the ~Data/sar~ folder.
+
+*** Outline
+    1. Introduction to SAR imagery
+    2. Radiometric calibration
+    3. Geometric corrections
+    4. Speckle filtering
+    5. Polarimetry
+    6. Feature extraction (TD)
+*** Optical vs Radar
+    #+ATTR_LATEX: :float t :width 0.7\textwidth
+    [[file:Images/actif_passif_cours_cnes.png]]
+    (source CNES: Book "IMAGERIE SPATIALE Des principes d’acquisition au traitement
+    des images optiques pour l’observation de la Terre")
+*** SAR basics
+    - Radar: Radio detection and ranging; using radio waves to locate objects and measure their backscattering coefficient
+    - SAR: Synthetic Aperture Radar
+    - Active sensor
+    - Day and night imaging capability
+    - Atmosphere mainly transparent to SAR
+    - Complementary information to optical systems
+*** Principles
+    - SAR: Use the flight path of the platform to simulate an extremely large antenna or aperture for increased resolution
+    - The wave travelling time allows to locate objects in the range dimension (perpendicular to the flying path)
+    - Repeat echoes in the second dimension (azimuth)
+    - Complex signal (amplitude and phase)
+*** Radiometric calibration
+- Radar reflectivity (backscatter coefficient) depends on the nature of the observed surface
+- Sensitive to roughness and moisture, but also to geomety (dipole, corners)
+- As for optical imagery, calibration consists in converting digital numbers (DN) into a physical magnitude
+- Allows comparing images acquired by different sensors or by the same sensor at different points in time
+*** Geometric corrections
+    - Spatially locate images
+    - Give a geographic coordinate to every pixel
+    - Radar measures distances in slant range
+    - Resolutions
+      - $azimuthResolution = \frac{H*\lambda}{L*\cos(\theta)}$
+      - $rangeResolution = \frac{c*prf}{2*\sin(\theta)}$
+    - Geometrical distortions due to topography (foreshortening and layover)
+*** Speckle
+    - Granular 'noise' that inherently exists in and degrades the image quality
+    - Strong!
+    - Speckle noise in SAR is a multiplicative noise, i.e. it is in direct proportion to the local grey level in any area
+    - Several methods to try to reduce this noise
+    - Try to reduce speckle effects without losing to much details
+    - Speckle filtering allows to improve image quality and facilitate interpretation
+*** To go further
+
+    - S1 ToolBox (SNAP)
+    - Polarimetry: ESA PolSARPro
+    - Lot of useful resources related to SAR on the Internet (ENSG MOOC, ESA
+      training, PolSARPro tutorials, SAREDU DLR online courses...)
+
+** OTB Applications on Python API                                      :guide:
+*** Description                                                        :desc:
+**** Summary
+     
+     The following exercise is an introduction to the Python API for ORFEO ToolBox applications.
+
+     This exercise will precise how to chain OTB applications wisely using an optical
+     dataset for an hydrological goal : water extent detection
+
+**** Prerequisites
+
+     - Installed Monteverdi and Orfeo ToolBox software
+     - Installed Python(2.7.X or 3.X), with Numpy dependencies and the right environmental variables setup (help: use otbenv.bash/otbenv.bat).
+     *Test*: launch "import otbApplication" on the python command line to check this point 
+     - Downloaded data 
+     - Understandig of Orfeo Toolbox applications (see relevant exercise) 
+
+**** Goals
+
+     - Create, configure and launch OTB Applications from python scripts
+     - Use of in-memory bindings between OTB Applications
+     - Process Sentinel2-Level 2A as raw input
+     - Compare simple methods for water detection (ndvi, mndwi)
+     - Evaluate the resulting water maps with a reference layer
+
+*** Steps                                                             :steps:
+
+    Data located in ~Data/app-python~ folder, with the following sub-folders: 
+     - ~images~ contains a set of Sentinel 2 images (Level 2A) in Laguna de la 
+       Nina, Perou
+     - ~reference~ contains ancillary testing data (occurrence water masks) in
+       raster format
+     - ~scripts~ contains the necessary python scripts to complete the exercise
+
+**** Introduction : Water monitoring in the Laguna de la Nina(Peru) event 
+
+     The region of interest for this exercise is Laguna de la Nina, Peru  
+     (-5.8101 lat, -80.7155 lon). At these dates, the water surfaces
+     have drastically changed due to heavy rains during "El nino" periods. 
+
+     In this exercise we will use three Sentinel-2 Level2A images 
+     (folder ~app-python/images~), extracted on tile T17MNP, at the following
+     dates: 
+|------------|
+| 2016-12-18 |
+| 2017-04-07 |
+| 2017-12-03 |
+|------------|
+
+     1. Open in Monteverdi the VRT (RGB composition) of each image in 
+     ~app-python/images/SENTINEL2A_*XXXX*_L2A_T17MNP_D_V1-4/composition_*.vrt~
+     What do you observe in these images? How does the water extent change? 
+
+     *Note*: The VRT compositions have been created with the tool ~gdalbuildvrt~
+     for this exercise. They are not included by default in Sentinel 2 products.
+
+**** Sentinel 2 - Level 2A Format
+
+     One of the goal of this exercise is to process this product as downloaded 
+     from the product provider (Theia Server : theia.cnes.fr). Level 2A is and 
+     orthorectified product in ground reflectance, constructed from L1C 
+     products (orthorectified product in Top of Atmosphere) reflectance.
+
+     Each Sentinel2 product contains several files, which may be divided as: 
+         - MTD: Metadata
+         - QKL: quicklook file (low resolution image to show an RGB overview )
+         - SRE: image in ground reflectance without the correction of slope effects
+         - FRE: image in ground reflectance with the correction of slope effects 
+         - ATB: atmospheric and biophysical parameters with 2 bands :
+                - 1st band: water vapor content (WVC) coded over 8 bits
+                - 2st band: aerosol optical thickness (AOT) coded over 8 bits
+         - CLM: cloud mask computed by MACCS software, made of 1 band coded over 8 useful bits.
+         - SAT: saturation mask coded over 8 bits
+         
+     In this exercise, water maps will be calculated from ground reflectance 
+     files (as SRE or FRE).
+
+     The ground reflectance images are distributed as one image file per band
+     in GeoTiff format (.tif). Each band image may have a different resolution 
+     (10m or 20m)
+
+|----------------+------------+------------+------------+-----------------------|
+| Band name      | S2 band id | Wavelength | Resolution | Used in this exercise |
+|----------------+------------+------------+------------+-----------------------|
+| Blue           | B2         | 490 nm     | 10 m       | -                     |
+| Green          | B3         | 560 nm     | 10 m       | Yes                   |
+| Red            | B4         | 665 nm     | 10 m       | Yes                   |
+| NIR - Narrow 1 | B5         | 705 nm     | 20 m       | -                     | 
+| NIR - Narrow 2 | B6         | 740 nm     | 20 m       | -                     | 
+| NIR - Narrow 3 | B7         | 783 nm     | 20 m       | -                     |   
+| NIR - Wide     | B8         | 842 nm     | 10 m       | Yes                   |
+| NIR - Narrow 4 | B8A        | 865 nm     | 20 m       | -                     |  
+| SWIR 1         | B11        | 1610 nm    | 20 m       | Yes                   |
+| SWIR 2         | B12        | 2190 nm    | 20 m       | -                     |  
+|----------------+------------+------------+------------+-----------------------|
+
+     For this exercise, only some bands will be used to obtain water extents maps: 
+     Green, Red, NIR-Wide and SWIR1. Also, the Cloud Mask will be used. 
+
+     *Note:* To reduce the dataset size, we have deleted all the bands not used and 
+     replaced them with an empty file with the same name. In that way, the file
+     structure is kept, in order to help you to get familiar with the real datasets.
+    
+     Let's play: 
+
+     1. Since we are interested in ground reflectance images to calculate water 
+        surfaces, what band kind of file would you use between SRE and FRE? 
+
+     2. Look at the B3 and B11 files of one the datasets in 
+        ~app-python/images/SENTINEL2A_*/~. Do all files have the same memory
+        size? Why?
+
+     3. On the command line, launch the ~gdalinfo~ command on different band 
+        files to check the pixel size, the number of pixels and the minimum 
+        and maximum values. Why do we have common minimum values between 
+        different bands?
+     
+        *Note: * Make sure that OTB binary files ($otb_path/bin) is included 
+        in your PATH environment variable.
+ 
+     4. Look at the /MASKS subfolder : there is a CLM file that contains a cloud
+        mask computed by an special algorithm (MACCS). Do you think that this 
+        information might be interesting to make better water detections? 
+
+     5. Open in Monteverdi the B8 and B4 and check the values in a water surface.
+        What is the reflectance behaviour of these bands on water surfaces?
+
+**** Simple OTB application in Python : exercise1.py
+    
+     Take a look to the ~app-python/exercise1.py~ script. The aim of 
+     this script is to launch the Superimpose application from OTB to resample 
+     the B11 band (20m pixel size) to a new resolution (pixel size). 
+  
+     At the beginning, there is an otbApplication import. In the otbApplication
+     module, two main classes can be manipulated :
+
+        - Registry, which provides access to the list of available applications, 
+          and can create applications.
+        - Application, the base class for all applications. This allows to 
+          interact with an application instance created by the Registry
+
+     1. In order to show the available applications, launch exercise1.py with 
+        the command  : python exercise1.py. On the output you will have the list
+        of available applications.
+
+     On the second part of the script, we want to launch the Superimpose application
+     to do the resampling of the B8A image (20m pixel size) using the reference image
+     B4 (10m pixel size). The inputs and outputs of the Superimpose application
+     (https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html)
+     are described on the following table: 
+
+|---------------+------------------------+----------------|
+| Parameter Key | Parameter Name         | Parameter Type |
+|---------------+------------------------+----------------|
+| inr           | Reference Input        | input image    | 
+| inm           | The image to reproject | input image    | 
+| out           | Output image           | output image   | 
+     
+     2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
+        You need to complete the path of ~app-python/data~ of your system.
+     3. Open ~exercise1.py~ and complete the "FILL THE GAP 2".
+        You need to initialize the Superimpose OTB application. See that the ~inr~
+        ,~inm~ and ~out~ parameters are already set. 
+     4. Launch ~exercise1.py~ the script with the command 
+        : python exercise1.py. How does the output look like?       
+         
+         
+**** Chain OTB applications : exercise2.py
+
+     In this part, the aim is to calculate an NDVI image and obtain a water mask by means
+     of thresholding the NDVI value. It is necessary to launch different OTB applications
+     in the same script to obtain the desired result.
+
+     The script ~exercise2.py~ chains OTB applications as presented in the following schema:
+      #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/apps-python-exe-2.png]]
+
+     Use the Superimpose and Bandmath applications to calculate the NDVI and Water map image 
+     using Red band (B4) and NIR band (B8A) from the S2 product:
+     1. Open ~exercise2.py~ and complete the "FILL THE GAP 1".
+        You need to complete the path of ~app-python/data~ of your system.
+     2. Open ~exercise2.py~ and complete the "FILL THE GAP" 2, 3 and 4.
+        You need to :
+            - configure the application1 "Superimpose" parameters : ~inr,imr,out~
+            - configure the application2 "BandMath" parameters:  ~il,out,exp~
+            - configure the application3 "BandMath" parameters:  ~il,out,exp~
+     4. Launch ~exercise2.py~ the script with the command: python exercise2.py. What
+        are the resulting files?
+
+**** Chain OTB applications in-memory: exercise3.py
+     This exercise is equivalent to exercise2.py, but avoiding writing temporary
+     files. The goal is to process the images using only RAM memory. Also the NDVI water
+     mask is reduced to only one BandMath calculation.
+     
+     The script ~exercise3.py~ chains OTB applications as presented in the following schema:
+      #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/apps-python-exe-3.png]]
+
+     In-memory connection: the output of application1 might be declared as input of
+     application2 using an expression as: 
+        - app2.SetParameterInputImage("in",app1.GetParameterOutputImage("out"))
+          if the input of application2 is an Image(like in the Superimpose application)
+        - app2.AddImageToParameterInputImageList("il",app1.GetParameterOutputImage("out"))
+          if the input of application2 is an ImageList(like the BandMath application)
+     
+     Let's optimize our water mask calculator:
+     1. Open ~exercise3.py~ and complete the "FILL THE GAP 1".
+        You need to complete the path of ~app-python/data~ of your system.
+     2. Open ~exercise3.py~ and complete the "FILL THE GAP 2" to declare the output 
+        of application1 as input of application2.
+     3. Open ~exercise3.py~ and complete the "FILL THE GAP 3" to set the BandMath expression
+        that sets value 1 if ndvi value<0 and 0 if ndvi value>1
+     4. Launch ~exercise3.py~ with the command: python exercise3.py. 
+        As you see in the code, the ApplicationX.ExecuteAndWriteOutput()
+        has been changed to ApplicationX.Execute()
+        in ~exercise3.py~. How does it affect to the execution sequence?
+     5. In Application1, the output parameter has been declared with a filename .
+        Has it been written as a file after the execution? Why?
+     6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
+        , there is a line like : 
+         ~appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)~
+         What is the purpose of this line? What would happend without it?
+        
+
+
+**** Water detection chain with NoData management: exercise4.py
+
+     There are some parts of the images that are covered by clouds. In this 
+     exercise, we will use the CLD band in the S2 product to set NODATA regions.
+     
+     If a CLD pixel value is different of zero, that means that a cloud 
+     has been detected in the pixel. An special value (255) is applied to  
+     warn the cloud presence.
+
+     The script ~exercise4.py~ chains OTB applications as presented in the following schema:
+      #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/apps-python-exe-3.png]]
+
+     At the end of the chain, an OTB application "ManageNoData" is used to set the NODATA value
+     as 255 in the GeoTiff metadata.
+     
+     
+     Let's calculate some water masks:
+     1. Open ~exercise4.py~ and complete the "FILL THE GAP 1".
+        You need to complete the path of ~app-python/data~ of your system.
+     2. Open ~exercise4.py~ and complete the "FILL THE GAP 2" to set the BandMath expression
+        to set the 255 value where the clouds image is different to zero, and otherwise
+        keep the NDVI mask image.
+     3. Launch ~exercise4.py~ with the different dates as arguments:
+
+            ~python exercise4.py SENTINEL2A_20161218-153729-222_L2A_T17MNP_D_V1-4~
+
+            ~python exercise4.py SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4~
+
+            ~python exercise4.py SENTINEL2A_20171203-154308-349_L2A_T17MNP_D_V1-4~
+
+        and you will obtain three different masks. Open them with monteverdi to check
+        the water extent variations.
+     4. Look at the 20161218 final NDVI mask. What are the lines detected as water? 
+         
+
+**** Comparison with a reference 
+ 
+     The water mask obtained correspond to an special event in the Laguna de la Nina, but how
+     often do we observe that floods in the region? 
+     
+     Global Surface Water map, a Water extent map based on optical images (Landsat) over the
+     last 30 years will serve us as a reference.
+     
+     The Global Surface Water data are available for download in tiles 10°x10°. 
+     It is available at : https://global-surface-water.appspot.com/download
+    
+    :
+
+* OTB Applications on Python API                                 :solutions:
+*** Introduction to SAR image
+1. The 2 extracts correspond to polarimetric combinations HH (for horizontal
+   transmission and horizontal reception) and HV (for horizontal transmission and vertical reception).
+2. The 2 bands correspond to the real and the imaginary parts of the complex signal.
+3. We can use the *BandMath* application to compute the image intensity:
+
+   For HH:
+
+   #+BEGIN_EXAMPLE
+    $ otbcli_BandMath \
+   -il s1_hh.tif \
+   -out intensity_hh.tif int32 \
+   -exp "im1b1*im1b1+im1b2*im1b2"
+   #+END_EXAMPLE
+
+   For HV:
+
+   #+BEGIN_EXAMPLE
+    $ otbcli_BandMath \
+    -il s1_hv.tif \
+    -out intensity_hv.tif int32 \
+    -exp "im1b1*im1b1+im1b2*im1b2"
+   #+END_EXAMPLE
+
+**** Radiometric calibration
+     1. *SARCalibration*
+     2. In the case of Sentinel-1, calibration coefficients are directly read in
+        the product metadata
+        #+BEGIN_EXAMPLE
+        $ otbcli_SARCalibration \
+        -in s1_hh.tif \
+        -out s1_hh_gamma0.tif \
+        -lut gamma
+        #+END_EXAMPLE
+
+        For HV:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_SARCalibration \ 
+        -in s1_hv.tif \
+        -out s1_hv_gamma0.tif \
+        -lut gamma
+        #+END_EXAMPLE
+        
+     3. Warning: pixel <= 0 in the log expression!
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath \
+        -in s1_hh_gamma0.tif \
+        -out s1_hh_gamma0_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+
+        For HV:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath \
+        -in s1_hv_gamma0.tif \
+        -out s1_hv_gamma0_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+
+**** Geometric corrections
+    1. Orthorectification without DEM:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in s1_hh_gamma0.tif \
+       -io.out s1_hh_gamma0_ortho.tif uint16
+       #+END_EXAMPLE
+    2. With a DEM and a geoid:
+       #+BEGIN_EXAMPLE
+       $ otbcli_OrthoRectification \
+       -io.in s1_hh_gamma0.tif \
+       -io.out s1_hh_gamma0_ortho.tif uint16 \ 
+       -elev.dem SRTM/ \
+       -elev.geoid Geoid/egm96.grd
+       #+END_EXAMPLE
+    3. Default projection is UTM. 32 North.
+**** Speckle filtering
+
+     1. Available methods are: Lee, Frost, Kuan and Gamma MAP. Speckle filtering
+        allows to increase image quality and facilitate image analysis and
+        object identification.
+
+     2. Using the *Despeckle* application and the /Frost/ filter:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_Despeckle \
+        -in intensity_hh.tif \ 
+        -out intensity_hh_speckle.tif \ 
+        -filter frost \
+        -filter.frost.rad 3
+        #+END_EXAMPLE
+
+        The effect of increasing the radius is to further smooth the image. It improves
+        image quality in rather smooth areas but degrades details in more
+        contrasted areas and on small structures.  
+
+     3. The histogram of the filtered image tends to become /Gaussian/ and differs
+        from the Gamma distribution of the original image (right hand tail).
+     4. Increasing the /deramp/ parameter will lead to take more into account pixels
+        farther from the center and therefore increase the smoothing effects.
+        
+**** Polarimetry
+     1. HH-HV:
+        #+BEGIN_EXAMPLE
+      $ otbcli_BandMath \
+      -il intensity_hh_speckle.tif intensity_hv_speckle.tif \
+      -out hh-hv_speckle.tif \
+      -exp "im1b1-2*im2b1"
+        #+END_EXAMPLE
+     2. Then, image concatenation:
+     #+BEGIN_EXAMPLE
+      $ otbcli_ConcatenateImages \ 
+      -il intensity_hh_speckle.tif \
+      intensity_hv_speckle.tif hh-hv_speckle.tif \ 
+      -out intensity_compo.tif 
+     #+END_EXAMPLE
+     1. Then convert in decibels:
+
+        #+BEGIN_EXAMPLE
+        $ otbcli_BandMath \
+        -in intensity_compo.tif \
+        -out intensity_compo_db.tif \
+        -exp "im1b1>0?10*log10(im1b1):0"
+        #+END_EXAMPLE
+     2. Comments:
+        - layover is a geometric effect which makes the signal similar between HH and HV
+        - vegetation area (forest)
+        - HV is less sensible to roughness
+        - water areas: low backscatter
+     3. Analysis of color composition:
+        - Power lines around index (230,3700)
+        - Reflector near index (3620,2925)
+        - Anchor mast for boats 
+    
