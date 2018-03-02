@@ -122,3 +122,5 @@ Know how to set up OTB processing and use OTB applications to perform:
 #+INCLUDE: "classification-en.org" :minlevel 2
 * TP4: SAR processing with Sentinel-1 
 #+INCLUDE: "sar-en.org" :minlevel 2
+* TP5: OTB Applications in Python 
+#+INCLUDE: "otb-apps-python-en.org" :minlevel 2

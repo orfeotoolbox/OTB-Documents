@@ -133,4 +133,4 @@ For more information on these satellites:
 * SAR processing on Sentinel-1 images
 #+INCLUDE: "sar-en.org" :minlevel 2
 * OTB Application Python API
-#+INCLUDE: "app-python-en.org" :minlevel 2
+#+INCLUDE: "app-python-en.org" :minlevel 1
