@@ -237,7 +237,7 @@ ExtractROI.STARTX=140
      The script ~exercise1.py~ launches the Superimpose OTB application 
      as presented in the following scheme:
 
-     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
      [[file:Images/app-python-1.png]]
       
      *Note:* Superimpose may be configured to used different interpolations 
@@ -270,7 +270,7 @@ ExtractROI.STARTX=140
      in the same script to obtain the desired result.
 
      The script ~exercise2.py~ chains OTB applications as presented in the following scheme:
-      #+ATTR_LATEX: :float t :width 0.7\textwidth
+      #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-2.png]]
 
      Use the Superimpose and Bandmath applications to calculate the NDVI and Water map image 
@@ -297,7 +297,7 @@ ExtractROI.STARTX=140
      In OTB terms, we perform just one BandMath calculation (instead of two).
      
      The script ~exercise3.py~ chains OTB applications as presented in the following scheme:
-      #+ATTR_LATEX: :float t :width 0.7\textwidth
+      #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-3.png]]
 
      In-memory connection: the output of application1 might be declared as input of
@@ -335,11 +335,11 @@ ExtractROI.STARTX=140
      If a CLD pixel value is different of zero, that means that a cloud 
      has been detected in the pixel. The aim of this exercise is to use an special 
      value (255) in the final mask when clouds are present. 
-     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
      [[file:Images/app-python-4.png]]
 
      The script ~exercise4.py~ chains OTB applications as presented in the following scheme:
-     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-5.png]]
 
      At the end of the chain, an OTB application "ManageNoData" is used to set the NODATA value
