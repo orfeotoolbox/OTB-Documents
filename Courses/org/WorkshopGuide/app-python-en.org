@@ -13,10 +13,10 @@
     This exercise consists in coding a Python script to perform surface water
     extraction on Sentinel-2 images over the area of /Laguna la nina/ in Peru.
 
-    #+begin_center
-    #+ATTR_LaTeX: width=0.95\textwidth center  
+    #+attr_LATEX: :float t :width \textwidth
     [[file:Images/lluvias-peru.jpg]]
-    #+end_center
+
+
     (Twitter pic from @hombredeltiempo)
 
 *** Quick introduction to OTB applications
@@ -432,149 +432,148 @@ ExtractROI.STARTX=140
         4. What would you conclude about the results? 
 
 
-* OTB Applications on Python API                                 :solutions:
-**** Introduction : Water monitoring in the Laguna de la Nina(Peru) event 
-
-     1. Open in Monteverdi the composition_*.vrt file (RGB composition) of each 
-        of the dates. What do you observe in these images?  
-        How does the water extent change? 
+** OTB Applications on Python API                                 :solutions:
+*** Introduction : Water monitoring in the Laguna de la Nina(Peru) event 
+    1. Open in Monteverdi the composition_*.vrt file (RGB composition) of each 
+       of the dates. What do you observe in these images?  
+       How does the water extent change? 
         
-        Solution : The color composition of each image of level 2 allows to see the regions as 
-        seen by the naked eye and seen as we did not have any atmosphere. 
-        The images show how this region goes over three phases: 
-         - empty lagoon on December 2016
-         - max extension of the flooded lagoon in Avril 2017
-         - flooding lagoon decreasing its size. 
+       Solution : The color composition of each image of level 2 allows to see the regions as 
+       seen by the naked eye and seen as we did not have any atmosphere. 
+       The images show how this region goes over three phases: 
+        - empty lagoon on December 2016
+        - max extension of the flooded lagoon in Avril 2017
+        - flooding lagoon decreasing its size. 
 
 
-**** Sentinel 2 - Level 2A Format
+*** Sentinel 2 - Level 2A Format
 
-     1. Since we are interested in ground reflectance images to calculate water 
-        surfaces, what band kind of file would you use between SRE and FRE? 
+    1. Since we are interested in ground reflectance images to calculate water 
+       surfaces, what band kind of file would you use between SRE and FRE? 
         
-        Solution : FRE images corrects the effects of the atmosphere, and hence,
-        the physical propierties of the ground are better described on the FRE image.
+       Solution : FRE images corrects the effects of the atmosphere, and hence,
+       the physical propierties of the ground are better described on the FRE image.
 
-     2. Look at the disk size of B3 and B11 files of one the datasets in 
-        ~app-python/images/SENTINEL2A_*/~ Do all files have the same disk
-        size? Why?
+    2. Look at the disk size of B3 and B11 files of one the datasets in 
+       ~app-python/images/SENTINEL2A_*/~ Do all files have the same disk
+       size? Why?
  
-        Solution : B3 and B11 have different resolutions. Higher resolution (smaller pixel size) for the same area
-        involves a higher number of pixels to be described in the file, and hence, a bigger file size. 
+       Solution : B3 and B11 have different resolutions. Higher resolution (smaller pixel size) for the same area
+       involves a higher number of pixels to be described in the file, and hence, a bigger file size. 
 
-     3. On the command line, launch the ~gdalinfo~ command on different band 
-        files to check the pixel size, the number of pixels and the minimum 
-        and maximum values. Do we have common minimum values between 
-        different bands? Why?
+    3. On the command line, launch the ~gdalinfo~ command on different band 
+       files to check the pixel size, the number of pixels and the minimum 
+       and maximum values. Do we have common minimum values between 
+       different bands? Why?
      
-        *Note:* Make sure that OTB binary files ($otb-path/bin) is included 
-        in your PATH environment variable.
+       *Note:* Make sure that OTB binary files ($otb-path/bin) is included 
+       in your PATH environment variable.
 
-        Solution: Each band is independent from the others.
+       Solution: Each band is independent from the others.
  
-     4. Look at /MASKS subfolder : there is a CLM file that contains a cloud
-        mask. Do you think that this information might be interesting to 
-        make better water detections? How? 
+    4. Look at /MASKS subfolder : there is a CLM file that contains a cloud
+       mask. Do you think that this information might be interesting to 
+       make better water detections? How? 
 
-        Solution : An image with clouds does not contain information about the ground.
-        It is better to avoid the cloud areas by tagging them as NODATA regions, in order to 
-        avoid false detections of water.
+       Solution : An image with clouds does not contain information about the ground.
+       It is better to avoid the cloud areas by tagging them as NODATA regions, in order to 
+       avoid false detections of water.
 
-     5. Open in Monteverdi the B8A and B4 and check the values in a water surface.
-        What is the reflectance behaviour of these bands on water surfaces?
+    5. Open in Monteverdi the B8A and B4 and check the values in a water surface.
+       What is the reflectance behaviour of these bands on water surfaces?
 
-        Solution : On water regions, B4(RED) has higher reflectance values than B8A(NIR).
+       Solution : On water regions, B4(RED) has higher reflectance values than B8A(NIR).
 
 
-**** Simple OTB application in Python : exercise1.py
+*** Simple OTB application in Python : exercise1.py
     
-     1. In order to show the available applications, launch exercise1.py with 
-        the command  : python exercise1.py. On the output you will see the list
-        of available applications. Which line in the script allowed to show the 
-        list of applications? This method is present in the Registry or in an Application
-        module?
+    1. In order to show the available applications, launch exercise1.py with 
+       the command  : python exercise1.py. On the output you will see the list
+       of available applications. Which line in the script allowed to show the 
+       list of applications? This method is present in the Registry or in an Application
+       module?
 
-     2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
-        You need to complete the path of ~app-python/data~ of your system.
-     3. Open ~exercise1.py~ and complete the "FILL THE GAP 2".
-        You need to initialize the Superimpose OTB application. See that the ~inr~
-        ,~inm~ and ~out~ parameters are already set. 
-     4. Launch ~exercise1.py~ the script with the command 
-        python exercise1.py. How does the output look like?       
+    2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
+       You need to complete the path of ~app-python/data~ of your system.
+    3. Open ~exercise1.py~ and complete the "FILL THE GAP 2".
+       You need to initialize the Superimpose OTB application. See that the ~inr~
+       ,~inm~ and ~out~ parameters are already set. 
+    4. Launch ~exercise1.py~ the script with the command 
+       python exercise1.py. How does the output look like?       
          
          
-**** Chain OTB applications : exercise2.py
+*** Chain OTB applications : exercise2.py
 
-     1. Open ~exercise2.py~ and complete the "FILL THE GAP 1".
-        You need to complete the path of ~app-python/data~ of your system.
-     2. Open ~exercise2.py~ and complete the "FILL THE GAP" 2, 3 and 4.
-        You need to :
-            - configure the application1 "Superimpose" parameters : ~inr,imr,out~
-            - configure the application2 "BandMath" parameters:  ~il,out,exp~
-            - configure the application3 "BandMath" parameters:  ~il,out,exp~
-     4. Launch ~exercise2.py~ the script with the command: python exercise2.py. What
-        are the resulting files?
+    1. Open ~exercise2.py~ and complete the "FILL THE GAP 1".
+       You need to complete the path of ~app-python/data~ of your system.
+    2. Open ~exercise2.py~ and complete the "FILL THE GAP" 2, 3 and 4.
+       You need to :
+           - configure the application1 "Superimpose" parameters : ~inr,imr,out~
+           - configure the application2 "BandMath" parameters:  ~il,out,exp~
+           - configure the application3 "BandMath" parameters:  ~il,out,exp~
+    4. Launch ~exercise2.py~ the script with the command: python exercise2.py. What
+       are the resulting files?
 
-**** Chain OTB applications in-memory: exercise3.py
+*** Chain OTB applications in-memory: exercise3.py
      
-     1. Open ~exercise3.py~ and complete the "FILL THE GAP 1".
-        You need to complete the path of ~app-python/data~ of your system.
-     2. Open ~exercise3.py~ and complete the "FILL THE GAP 2" to declare the output 
-        of application1 as input of application2.
-     3. Open ~exercise3.py~ and complete the "FILL THE GAP 3" to set the BandMath expression
-        that sets value 1 if ndvi value<0 and 0 if ndvi value>1
-     4. Launch ~exercise3.py~ with the command: python exercise3.py. 
-        As you see in the code, the ApplicationX.ExecuteAndWriteOutput()
-        has been changed to ApplicationX.Execute()
-        in ~exercise3.py~. How does it affect to the execution sequence?
-     5. In Application1, the output parameter has been declared with a filename.
-        Has it been written as a file after the execution? Why?
-     6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
-        ), there is a line like : 
-         appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)
-         What is the purpose of this line? What would happend without it?
+    1. Open ~exercise3.py~ and complete the "FILL THE GAP 1".
+       You need to complete the path of ~app-python/data~ of your system.
+    2. Open ~exercise3.py~ and complete the "FILL THE GAP 2" to declare the output 
+       of application1 as input of application2.
+    3. Open ~exercise3.py~ and complete the "FILL THE GAP 3" to set the BandMath expression
+       that sets value 1 if ndvi value<0 and 0 if ndvi value>1
+    4. Launch ~exercise3.py~ with the command: python exercise3.py. 
+       As you see in the code, the ApplicationX.ExecuteAndWriteOutput()
+       has been changed to ApplicationX.Execute()
+       in ~exercise3.py~. How does it affect to the execution sequence?
+    5. In Application1, the output parameter has been declared with a filename.
+       Has it been written as a file after the execution? Why?
+    6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
+       ), there is a line like : 
+        appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)
+        What is the purpose of this line? What would happend without it?
 
-**** Water detection chain with NoData management: exercise4.py
+*** Water detection chain with NoData management: exercise4.py
 
-     1. Open ~exercise4.py~ and complete the "FILL THE GAP 1".
-        You need to complete the path of ~app-python/data~ of your system.
-     2. Open ~exercise4.py~ and complete the "FILL THE GAP 2" to set the BandMath expression
-        to set the 255 value where the clouds image is different to zero, and otherwise
-        keep the NDVI mask image.
-     3. Launch ~exercise4.py~ with the different dates as arguments:
+    1. Open ~exercise4.py~ and complete the "FILL THE GAP 1".
+       You need to complete the path of ~app-python/data~ of your system.
+    2. Open ~exercise4.py~ and complete the "FILL THE GAP 2" to set the BandMath expression
+       to set the 255 value where the clouds image is different to zero, and otherwise
+       keep the NDVI mask image.
+    3. Launch ~exercise4.py~ with the different dates as arguments:
 
-            ~python exercise4.py SENTINEL2A_20161218-153729-222_L2A_T17MNP_D_V1-4~
+           ~python exercise4.py SENTINEL2A_20161218-153729-222_L2A_T17MNP_D_V1-4~
 
-            ~python exercise4.py SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4~
+           ~python exercise4.py SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4~
 
-            ~python exercise4.py SENTINEL2A_20171203-154308-349_L2A_T17MNP_D_V1-4~
+           ~python exercise4.py SENTINEL2A_20171203-154308-349_L2A_T17MNP_D_V1-4~
 
-        and you will obtain three different masks. Open them with monteverdi to check
-        the water extent variations.
-     4. Look at the 20161218 final NDVI mask. What are the lines detected as water? 
+       and you will obtain three different masks. Open them with monteverdi to check
+       the water extent variations.
+    4. Look at the 20161218 final NDVI mask. What are the lines detected as water? 
          
 
-**** Comparison with a reference 
+*** Comparison with a reference 
  
-     1. Open the image ~ref/occurrence_90W_0N.tif~ in QGIS or Monteverdi. What values do you observe
-        around the coordinates lon: -80.6767, lat: -5.91. Do you observe any zone with 90-100 occurrence?
-        What does it means: permanent or rare waters?
-     2. Our zone of study is just an portion of the ~ref/occurrence_90W_0N.tif~. The ~exercise5.py~ script
-        will launch Superimpose and Bandmath OTB applications to obtain the GSW layer cropped, resampled 
-        and thresholded over a given value. To obtain the reference mask launch:
-            python exercise5.py 10
-            python exercise5.py 20	
-            python exercise5.py 30
-            python exercise5.py 50
-            python exercise5.py 75
-            python exercise5.py 90
-     3. Now it's time to compare each of the water masks of exercise 4 (on 3 dates: 20161218,
-        20170407 and 20171203) with each of the reference images.
-        Check the following list of applications in www.orfeo-toolbox.org/CookBook/Applications.html, 
-        and look the Learning section. Which application do you think that might be helpful to compare 
-        two raster maps?  
-        Use this application to calculate the reference mask that yields the best likelihood (Kappa index)
-        for each of the 3 water masks.You may launch the otb application in the commandline: 
-            otbcli-XXXXX -in XXXX -out XXXX -param1 XXXX          
-     4. What would you conclude about the results?
+    1. Open the image ~ref/occurrence_90W_0N.tif~ in QGIS or Monteverdi. What values do you observe
+       around the coordinates lon: -80.6767, lat: -5.91. Do you observe any zone with 90-100 occurrence?
+       What does it means: permanent or rare waters?
+    2. Our zone of study is just an portion of the ~ref/occurrence_90W_0N.tif~. The ~exercise5.py~ script
+       will launch Superimpose and Bandmath OTB applications to obtain the GSW layer cropped, resampled 
+       and thresholded over a given value. To obtain the reference mask launch:
+           python exercise5.py 10
+           python exercise5.py 20	
+           python exercise5.py 30
+           python exercise5.py 50
+           python exercise5.py 75
+           python exercise5.py 90
+    3. Now it's time to compare each of the water masks of exercise 4 (on 3 dates: 20161218,
+       20170407 and 20171203) with each of the reference images.
+       Check the following list of applications in www.orfeo-toolbox.org/CookBook/Applications.html, 
+       and look the Learning section. Which application do you think that might be helpful to compare 
+       two raster maps?  
+       Use this application to calculate the reference mask that yields the best likelihood (Kappa index)
+       for each of the 3 water masks.You may launch the otb application in the commandline: 
+           otbcli-XXXXX -in XXXX -out XXXX -param1 XXXX          
+    4. What would you conclude about the results?
 
