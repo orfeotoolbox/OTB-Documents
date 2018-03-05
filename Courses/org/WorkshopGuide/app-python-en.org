@@ -1,7 +1,7 @@
 ** OTB Applications on Python API                                    :slides:
 *** Data and Objectives
 **** Objectives
-     - Know how to set the environnement to use OTB application in Python
+     - Know how to set the environment to use OTB application in Python
      - Know how to set application parameter in Python
      - Know how to use in memory connection of applications
      - Know how to use OTB/NumPy bridge.
@@ -92,12 +92,12 @@ ExtractROI.STARTX=140
 **** Prerequisites
 
      - Installed Monteverdi and Orfeo ToolBox software
-     - Installed Python(2.7.X or 3.5.X), with Numpy dependencies and the right 
-       environmental variables setup (help: source the otbenv.profile in linux or launch otbenv.bat
+     - Installed Python(2.7.X or 3.5.X), with NumPy dependencies and the right 
+       environmental variables setup (help: source the otbenv.profile in Linux or launch otbenv.bat
        in Windows). 
        *Test*: launch "import otbApplication" on the python command line to check this point 
      - Downloaded dataset (~Data/app-python~) 
-     - Understandig of Orfeo Toolbox applications (see relevant exercise) 
+     - Understanding of Orfeo Toolbox applications (see relevant exercises) 
 
 **** Goals
 
@@ -111,7 +111,7 @@ ExtractROI.STARTX=140
 
     Data are located in ~Data/app-python~ folder, with the following sub-folders: 
      - ~images~ contains a set of Sentinel 2 images (Level 2A) in Laguna de la 
-       Nina, Perou
+       Nina, Peru
      - ~ref~ contains ancillary testing data (occurrence water masks) in
        raster format
     This folder also contains the following python scripts:
@@ -122,7 +122,7 @@ ExtractROI.STARTX=140
      The region of interest for this exercise is Laguna de la Nina, Peru  
      (-5.8101 lat, -80.7155 lon). In 2017 water surface extents
      have drastically changed due to heavy rains during "El nino" periods.
-     The final objective is to analyse this change by means of satellite image
+     The final objective is to analyze this change by means of satellite image
      processing. 
 
      In this exercise we will use three Sentinel-2 Level2A images 
@@ -156,7 +156,7 @@ ExtractROI.STARTX=140
          - ATB: atmospheric and biophysical parameters with 2 bands :
                 - 1st band: water vapor content (WVC) coded over 8 bits
                 - 2st band: aerosol optical thickness (AOT) coded over 8 bits
-         - CLM: cloud mask computed by MACCS software, made of 1 band coded over 8 useful bits.
+         - CLM: cloud mask computed by MAJA software, made of 1 band coded over 8 useful bits.
          - SAT: saturation mask coded over 8 bits
          
      In this exercise, water maps will be calculated from ground reflectance 
@@ -241,7 +241,7 @@ ExtractROI.STARTX=140
      [[file:Images/app-python-1.png]]
       
      *Note:* Superimpose may be configured to used different interpolations 
-     (linear, bicubic or nearest neighbor)
+     (linear, bi-cubic or nearest neighbor)
 
      The necessary inputs and outputs of the Superimpose application
      (https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html)
@@ -397,7 +397,7 @@ ExtractROI.STARTX=140
          - Apply a threshold on the GSW resampled product with different probabilities:
            10%, 20%, 30%, 50%, 75%, 95% to obtain different reference images
          - Compare the water extent masks of exercise 4 with each of the reference
-           images issued from GSW. This comparison will help us to understant how often do
+           images issued from GSW. This comparison will help us to understand how often do
            we observe a water extent map along time.
      #+ATTR_LATEX: :float t :width 0.7\textwidth
      [[file:Images/app-python-8.png]]
@@ -442,7 +442,7 @@ ExtractROI.STARTX=140
        seen by the naked eye and seen as we did not have any atmosphere. 
        The images show how this region goes over three phases: 
         - empty lagoon on December 2016
-        - max extension of the flooded lagoon in Avril 2017
+        - max extension of the flooded lagoon in April 2017
         - flooding lagoon decreasing its size. 
 
 
@@ -452,7 +452,7 @@ ExtractROI.STARTX=140
        surfaces, what band kind of file would you use between SRE and FRE? 
         
        Solution : FRE images corrects the effects of the atmosphere, and hence,
-       the physical propierties of the ground are better described on the FRE image.
+       the physical properties of the ground are better described on the FRE image.
 
     2. Look at the disk size of B3 and B11 files of one the datasets in 
        ~app-python/images/SENTINEL2A_*/~ Do all files have the same disk
@@ -480,7 +480,7 @@ ExtractROI.STARTX=140
        avoid false detections of water.
 
     5. Open in Monteverdi the B8A and B4 and check the values in a water surface.
-       What is the reflectance behaviour of these bands on water surfaces?
+       What is the reflectance behavior of these bands on water surfaces?
 
        Solution : On water regions, B4(RED) has higher reflectance values than B8A(NIR).
 
@@ -531,7 +531,7 @@ ExtractROI.STARTX=140
     6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
        ), there is a line like : 
         appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)
-        What is the purpose of this line? What would happend without it?
+        What is the purpose of this line? What would happened without it?
 
 *** Water detection chain with NoData management: exercise4.py
 
