@@ -198,4 +198,35 @@ OTB-6.2.0-rc1-Darwin64.run from \url{https://www.orfeo-toolbox.org/download/}.
 
 This is a self-extracting binary which extracts itself in the current directory. Testing the installation is done like in the Linux case.
 
+
+\clearpage
+\section{Python install for OTB}
+
+Starting from OTB 5.8.0, OTB bindings for Python 2.7 are distributed with binary package. With OTB 6.4.0, additional bindings for Python 3.5 are also included. Please note that using a different Python version may not be compatible with OTB wrappings. If no compatible Python 2.x version is found a notification is generated during the installation process. If the installation completes without issue, information relating to your Python bindings will be provided.
+
+You must have Python numpy bindings installed in your system. They can be installed locally without admin rights as follows: “pip install –user numpy”. This is to give users the option to select their own existing Python installation rather than the one dibstributed by the OTB package.
+
+By default, bindings for Python 2.7 will be enabled with the otbenv script. If you want to use bindings for Python 3.5, you can copy this script and modify:
+\begin{verbatim}
+lib/python into lib/python3, for variable PYTHONPATH
+\end{verbatim}
+
+Notes:
+\begin{enumerate}
+
+\item You must use monteverdi and mapla through mapla.sh and monteverdi.sh helper scripts in extracted directory.
+\item The helper scripts for monteverdi and mapla set required environment variables
+\item You might be tempted to move “OTB-6.4.0-Linux64” into another location say /usr/local/ after extraction. But avoid this action!
+\item To have “OTB-6.4.0-Linux64” installed in /usr/local or /opt execute “OTB-6.4.0-Linux64.run” in that directory.
+\item Multiple installation of OTB can exists in same system without one conflicting the other!
+
+\end{enumerate}
+
+\subsection{Test}
+In order to test the Python OTB dependencies, try:
+\begin{enumerate}
+\item Launch the python console (Linux: ./python ; Windows: python.exe)
+\item Try: import numpy
+\item Try: import otbApplication
+If no error message is printed, everything is fine. If not, check the Python version (2.7 or 3.5), and the PATH and PYTHONPATH variables.
 \end{document}
