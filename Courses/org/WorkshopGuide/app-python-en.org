@@ -92,17 +92,17 @@ ExtractROI.STARTX=140
 **** Prerequisites
 
      - Installed Monteverdi and Orfeo ToolBox software
-     - Installed Python(2.7.X or 3.5.X), with NumPy dependencies and the right 
+     - Installed Python (2.7.X or 3.5.X), with NumPy dependencies and the right 
        environmental variables setup (help: source the otbenv.profile in Linux or launch otbenv.bat
        in Windows). 
-       *Test*: launch "import otbApplication" on the python command line to check this point 
+       *Test*: launch "import otbApplication" on the Python command line to check this point 
      - Downloaded dataset (~Data/app-python~) 
      - Understanding of Orfeo Toolbox applications (see relevant exercises) 
 
 **** Goals
 
-     - Create, configure and launch OTB Applications from python scripts
-     - Use of in-memory bindings between OTB Applications
+     - Create, configure and launch OTB Applications from Python scripts
+     - Use of in-memory connection between OTB Applications
      - Process Sentinel2-Level 2A as input dataset (optical satellite images)
      - Show a simple method for water detection based on NDVI
      - Evaluate the resulting water map with a reference layer
@@ -114,7 +114,7 @@ ExtractROI.STARTX=140
        Nina, Peru
      - ~ref~ contains ancillary testing data (occurrence water masks) in
        raster format
-    This folder also contains the following python scripts:
+    This folder also contains the following Python scripts:
     ~exercise1.py~ ... ~exercise5.py~
 
 **** Introduction : Water monitoring in the Laguna de la Nina(Peru) event 
@@ -139,12 +139,12 @@ ExtractROI.STARTX=140
         How does the water extent change? 
 
      *Note*: The VRT compositions have been created with the tool ~gdalbuildvrt~
-     for this exercise. They are not included by default in Sentinel 2 products.
+     for this exercise. They are not included by default in Sentinel-2 products.
 
 **** Sentinel 2 - Level 2A Format
 
      One of the goals of this exercise is to process this product as downloaded 
-     from the product provider (Theia Server : theia.cnes.fr). Level 2A is an 
+     from the product provider ([[https://theia.cnes.fr][Theia server]]). Level 2A is an 
      orthorectified product in ground reflectance, constructed from L1C 
      products (orthorectified product in Top of Atmosphere).
 
@@ -162,9 +162,9 @@ ExtractROI.STARTX=140
      In this exercise, water maps will be calculated from ground reflectance 
      files SRE or FRE.
 
-     The SRE and FRE files consist of 13 files, one per frequency band 
-     in GeoTiff format (.tif). Each band image may have a different resolution 
-     (10m or 20m)
+     The SRE and FRE files consist of 13 files, one per spectral channel in
+     GeoTiff format (.tif). Each band image may have a different resolution (10m
+     or 20m).
 
 |----------------+------------+------------+------------+-----------------------|
 | Band name      | S2 band id | Wavelength | Resolution | Used in this exercise |
@@ -182,7 +182,7 @@ ExtractROI.STARTX=140
 |----------------+------------+------------+------------+-----------------------|
 
      For this exercise, only some bands will be used to obtain water extents maps: 
-     Red and NIR - Narrow4. Also, the Cloud Mask will be used. 
+     Red (B4) and NIR - Narrow4 (B8A). Also, the Cloud Mask will be used. 
 
      *Note:* To reduce the dataset size, we have deleted all the bands not used and 
      replaced them with an empty file with the same name. 
@@ -212,20 +212,24 @@ ExtractROI.STARTX=140
 
 **** Simple OTB application in Python : exercise1.py
     
-     Take a look to the script: ~app-python/exercise1.py~ The aim of 
+     Take a look to the script: ~app-python/exercise1.py~. The aim of 
      this script is to launch the Superimpose application from OTB to resample 
      the B8A band (20m pixel size) to a new resolution. 
   
      At the beginning, there is an otbApplication import. In the otbApplication
-     module, two main classes can be manipulated :
+     module, two main classes can be manipulated:
 
-        - Registry, which provides access to the list of available applications, 
+        - /Registry/, which provides access to the list of available applications, 
           and can create applications.
-        - Application, the base class for all applications. This allows to 
+        - /Application/, the base class for all applications. This allows to 
           interact with an application instance created by the Registry
 
-     1. In order to show the available applications, launch exercise1.py with 
-        the command  : python exercise1.py. At the output you will see the list
+     1. In order to show the available applications, launch ~exercise1.py~ with 
+        the command  : 
+        #+BEGIN_EXAMPLE
+        $ python exercise1.py
+        #+END_EXAMPLE
+        At the output you will see the list
         of available applications. Which line in the script allowed to show the 
         list of applications? This method is present in the Registry or in an Application
         module?
@@ -243,9 +247,8 @@ ExtractROI.STARTX=140
      *Note:* Superimpose may be configured to used different interpolations 
      (linear, bi-cubic or nearest neighbor)
 
-     The necessary inputs and outputs of the Superimpose application
-     (https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html)
-     are described in the following table: 
+     The necessary inputs and outputs of the [[https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html][Superimpose application]] are
+     described in the following table:
 
 |---------------+------------------------+----------------|
 | Parameter Key | Parameter Name         | Parameter Type |
@@ -260,7 +263,7 @@ ExtractROI.STARTX=140
         You need to initialize the Superimpose OTB application. See that the ~inr~
         ,~inm~ and ~out~ parameters are already set. 
      4. Launch ~exercise1.py~ the script with the command 
-        python exercise1.py. How does the output file B8A_10m.tif look like?       
+        python exercise1.py. How does the output file ~B8A_10m.tif~ look like?       
          
          
 **** Chain OTB applications : exercise2.py
@@ -273,7 +276,8 @@ ExtractROI.STARTX=140
       #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-2.png]]
 
-     Use the Superimpose and Bandmath applications to calculate the NDVI and Water map image 
+     Use the Superimpose and Bandmath applications to calculate the NDVI and
+     the water map image 
      using Red band (B4) and NIR band (B8A) from the S2 product:
      1. Open ~exercise2.py~ and complete the "FILL THE GAP 1".
         You need to complete the path of ~app-python/images~ of your system.
@@ -285,8 +289,11 @@ ExtractROI.STARTX=140
         *Note:* Take a look to lines 23-30 to understand the filepath of each band image.
         Check also the online help of the applications if necessary.
 
-     3. Launch ~exercise2.py~ the script with the command: python exercise2.py. What
-        are the resulting files? Check the results in Monteverdi.
+     3. Launch ~exercise2.py~ script with the command: 
+        #+BEGIN_EXAMPLE
+        $ python exercise2.py
+        #+END_EXAMPLE
+        What are the resulting files? Check the results in Monteverdi.
 
 **** Chain OTB applications in-memory: exercise3.py
      This exercise is equivalent to exercise2.py, but avoiding to write on intermediate
@@ -300,8 +307,8 @@ ExtractROI.STARTX=140
       #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-3.png]]
 
-     In-memory connection: the output of application1 might be declared as input of
-     application2 using an expression as: 
+     In-memory connection: the output of app1 might be declared as input of
+     app2 using an expression as: 
         - app2.SetParameterInputImage("in",app1.GetParameterOutputImage("out"))
           if the input of application2 is an Image(like in the Superimpose application)
         - app2.AddImageToParameterInputImageList("il",app1.GetParameterOutputImage("out"))
@@ -314,10 +321,13 @@ ExtractROI.STARTX=140
         of application1 as input of application2.
      3. Open ~exercise3.py~ and complete the "FILL THE GAP 3" to set the BandMath expression
         that sets value 1 if ndvi value<0 and 0 if ndvi value>1
-     4. Launch ~exercise3.py~ with the command: python exercise3.py. 
+     4. Launch ~exercise3.py~ with the command: 
+        #+BEGIN_EXAMPLE
+        python exercise3.py
+        #+END_EXAMPLE
         As you see in the code, the ApplicationX.ExecuteAndWriteOutput()
         has been changed to ApplicationX.Execute()
-        in ~exercise3.py~. How does it affect to the execution sequence?
+        in ~exercise3.py~. How does it affect the execution sequence?
      5. In Application1, the output parameter has been declared with a filename.
         Has it been written as a file after the execution? Why?
      6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
@@ -372,8 +382,9 @@ ExtractROI.STARTX=140
      
      The Global Surface Water(GSW) map, a water extent map based on optical images (Landsat satellite) over the
      last 30 years, can be helpful to understand how frequently water is detected in a given area. This product
-     contains an occurrence layer that provides the ratio between "water found" occurrences and the number valid observations in the
-     last 30 years for each pixel. Hence, a pixel with occurrence value = 10 means 
+     contains an occurrence layer that provides the ratio between "water found"
+     occurrences and the number of valid observations in the
+     last 30 years for each pixel. Hence, a pixel with occurrence value equal to 10 means 
      that water has been detected in 10% of valid observations.
      
 
@@ -383,8 +394,8 @@ ExtractROI.STARTX=140
      #+ATTR_LATEX: :float t :width 0.7\textwidth
      [[file:Images/app-python-7.png]]
      
-     The Global Surface Water data are available for download in tiles 10°x10°. 
-     It is available at : https://global-surface-water.appspot.com/download
+     The Global Surface Water data are available for download in tiles 10°x10°
+     on [[https://global-surface-water.appspot.com/download][Global Surface Water AppSpot website]].
  
      You will find the required dataset already downloaded in the folder: ~app-python/ref~
 
@@ -415,15 +426,19 @@ ExtractROI.STARTX=140
         2. Our zone of study is just a portion of the ~ref/occurrence_90W_0N.tif~. The ~exercise5.py~ script
            will launch Superimpose and Bandmath OTB applications to obtain the GSW layer cropped, resampled 
            and thresholded at given value. To obtain the reference mask launch:
+
+           #+BEGIN_EXAMPLE
                python exercise5.py 10
                python exercise5.py 20	
                python exercise5.py 30
                python exercise5.py 50
                python exercise5.py 75
                python exercise5.py 90
+           #+END_EXAMPLE
+
         3. Now it's time to compare each of the water masks of exercise 4 (on 3 dates: 20161218,
            20170407 and 20171203) with each of the reference images.
-           Check the following list of applications in www.orfeo-toolbox.org/CookBook/Applications.html, 
+           Check the following list of applications in the [[https://www.orfeo-toolbox.org/CookBook/Applications.html][OTB Applications reference documentation]], 
            and look the Learning section. Which application do you think that might be helpful to compare 
            two raster maps?  
            Use this application to calculate the reference mask that yields the best likelihood (Kappa index)
