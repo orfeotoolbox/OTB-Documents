@@ -60,10 +60,8 @@ orth=otb.Registry.CreateApplication("OrthoRectification")
                *sqrt(im1b1*im1b1+im1b2*im1b2+im1b3*im1b3)))"
       - -exp "im1b1>0.5?255:0"
 *** Useful links
-    - [[https://www.orfeo-toolbox.org/CookBook/CookBookse1.html#x7-60001.1][Introduction to OTB applications]]
-    - [[https://www.orfeo-toolbox.org//Applications/][Application Reference Documentation]]
-    - [[https://www.orfeo-toolbox.org/CookBook/CookBookch3.html#x38-370003][Examples of use]]
-    - [[http://docs.qgis.org/2.8/en/docs/user_manual/processing/index.html][QGIS processing]]
+    - [[https://www.orfeo-toolbox.org/CookBook/OTB-Applications.html][Introduction to OTB applications]]
+    - [[https://www.orfeo-toolbox.org/CookBook/Applications.html][Application Reference Documentation]]
     - Application help: /otbcli\textunderscore{}XXX -help/
 ** The Orfeo ToolBox Application mechanism                            :guide:
 *** Description                                                        :desc:
