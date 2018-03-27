@@ -26,6 +26,8 @@
   {\small\url{https://www.orfeo-toolbox.org}}
 }
 
+\setlength\parindent{0pt}
+
 \begin{document}
 
 \maketitle
@@ -35,7 +37,8 @@
 \clearpage
 \section{Data package}
 
-The data package for the training can be downloaded at \url{www.orfeo-toolbox.org/packages/WorkshopData/WorkshopData.zip}.
+The data package for the training can be downloaded at
+\url{www.orfeo-toolbox.org/packages/WorkshopData/WorkshopData.zip}.
 
 \section{Windows}
 
@@ -44,37 +47,43 @@ Install QGIS: \url{http://www.qgis.org/en/site/forusers/download.html}.
 
 \subsection{Python}
 
-This dependency is required only if python module is part of your training. Download the 3.5.4 version available here : \url{https://www.python.org/ftp/python/3.5.4/python-3.5.4-amd64.exe}. It does not require root privileges.
+This dependency is required only if python module is part of your
+training. Download the 3.5.4 version available here :
+\url{https://www.python.org/ftp/python/3.5.4/python-3.5.4-amd64.exe}. It does
+not require root privileges. Once installed, it is also required to install
+NumPy with pip.\\
 
-Once isntalled, it is also required to install Numpy with pip.
-
-If you are on a company network behind a proxy, configure it with the following command in a Windows prompt:
+If you are on a company network behind a proxy, configure it with the following
+command in a Windows prompt:
 
 \begin{verbatim}
 set HTTPS_PROXY=http://Domain\User:Passwd@proxy_address:port
 \end{verbatim}
 
-Then, in the same prompt, install Numpy with pip:
+Then, in the same prompt, install NumPy with pip:
 
 \begin{verbatim}
 python.exe -m pip install numpy
 \end{verbatim}
 
-By default OTB python bindings are compatible with python 2.7. You need to edit the \verb?otbenv.bat? file to modify the line with \verb?PYTHONPATH?, by changing \verb?lib/python? to \verb?lib/python3?.
+By default OTB Python bindings are compatible with python 2.7. You need to edit
+the \verb?otbenv.bat? file to modify the line with \verb?PYTHONPATH?, by
+changing \verb?lib/python? to \verb?lib/python3?.
 
 
 \subsection{Command line}
-Install a minimal command line environment for Windows. For instance, Git for Windows is very easy to install:
-\url{http://git-scm.com/download/win}.
+Install a minimal command line environment for Windows. For instance, Git for
+Windows is very easy to install: \url{http://git-scm.com/download/win}.
 
 \subsection{OTB and Monteverdi}
-To install OTB and Monteverdi, download the appropriate package for your architecture (32 or 64 bits). If you have a 32 bit machine:
+To install OTB and Monteverdi, download the appropriate package for your
+architecture (32 or 64 bits). If you have a 32 bit machine:
 
 \begin{verbatim}
 OTB-6.4.0-Win32.zip
 \end{verbatim}
 
-If you have a 64 bit machine:
+If you have a 64 bits machine:
 
 \begin{verbatim}
 OTB-6.4.0-Win64.zip
@@ -93,8 +102,8 @@ Once the installation is done, OTB applications can be used in several ways. Che
 
 \item Launch \texttt{monteverdi.bat} from the installation folder.
 
-\item Try to open a tif image in Monteverdi (see
-figure~\ref{fig:monteverdi}). A demonstration tif image is available here: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
+\item Try to open a TIFF image in Monteverdi (see
+figure~\ref{fig:monteverdi}). A demonstration TIFF image is available here: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
 
 \item The application browser is available from the ``View'' menu 
 $\rightarrow$ "OTB-Applications browser".
@@ -106,32 +115,32 @@ $\rightarrow$ "OTB-Applications browser".
 
 \end{enumerate}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \center
-  \includegraphics[width=1\textwidth]{Art/monteverdi-tif.png}
+  \includegraphics[width=0.5\textwidth]{Art/monteverdi-tif.png}
   \caption[]{Monteverdi}
   \label{fig:monteverdi}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \center
-  \includegraphics[scale=1]{Art/windows-mapla.png}
+  \includegraphics[scale=0.5]{Art/windows-mapla.png}
   \caption[]{OTB applications can be used from Monteverdi}
   \label{fig:windows-mapla}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \center
-  \includegraphics[scale=1]{Art/windows-otbgui.png}
+  \includegraphics[scale=0.5]{Art/windows-otbgui.png}
   \caption[]{OTB Graphical User Interface}
   \label{fig:windows-otbgui}
 \end{figure}
 
-To test python bindings:
+To test Python bindings:
 
 \begin{enumerate}
  \item Open a Windows prompt,
- \item Exéecute configuration script \verb?otbenv.bat? to set the environment up
+ \item Execute configuration script \verb?otbenv.bat? to set the environment up
  \item Run python interpreter
  \item Enter the following instruction \verb?import otbApplication?. This must return without any error
 \end{enumerate}
@@ -166,7 +175,7 @@ emerge, pacman\ldots)
 
 \subsection{Python}
 
-This dependency is required only if python module is part of your training. Python can be installed though the package manager by installing the following packages: \textbf{python3} et \textbf{python3-numpy}.
+This dependency is required only if python module is part of your training. Python can be installed though the package manager by installing the following packages: \textbf{python3} and \textbf{python3-numpy}.
 \begin{verbatim}
 sudo apt-get install python3 python3-numpy
 \end{verbatim}
@@ -216,8 +225,8 @@ cd OTB-6.4.0-Linux64
 Once the installation is done, OTB applications can be run in several ways. Check that you have a working installation with the following steps:
 \begin{enumerate}
 
-\item Try to open a tif image in Monteverdi (see
-figure~\ref{fig:monteverdi}). A demonstration tif image is available here: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
+\item Try to open a TIFF image in Monteverdi (see
+figure~\ref{fig:monteverdi}). A demonstration TIFF image is available here: \url{https://git.orfeo-toolbox.org/otb-data.git/blob/HEAD:/Examples/QB\_Toulouse\_Ortho\_PAN.tif}.
 
 \item The application browser is available from the ``View'' menu 
 $\rightarrow$ "OTB-Applications browser".
@@ -240,10 +249,10 @@ To test python bindings:
 \clearpage
 \section{Mac OS X}
 
-The software can also be installed on Mac OS X.
+The software can also be installed on Mac OS X. \\
 
 First install QGIS using the instructions for Mac OS X on the official site. To install OTB and  Monteverdi download 
-OTB-6.4.0-Darwin64.run from \url{https://www.orfeo-toolbox.org/download/}.
+OTB-6.4.0-Darwin64.run from \url{https://www.orfeo-toolbox.org/download/}. \\
 
 This is a self-extracting binary which extracts itself in the current directory. Testing the installation is done like in the Linux case.
 
