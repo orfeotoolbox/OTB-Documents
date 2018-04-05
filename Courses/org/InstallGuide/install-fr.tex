@@ -60,12 +60,16 @@ Puis, toujours dans l'invite de commande, installez Numpy avec pip :
 python.exe -m pip install numpy
 \end{verbatim}
 
-Par défault les bindings de l'OTB sont compatibles de python 2.7. Il faut donc éditer le fichier \verb?otbenv.bat? pour modifier la ligne \verb?PYTHONPATH?, en remplaçant \verb?lib/python? par \verb?lib/python3?.
+Par défaut le paquet OTB charge un environnement utilisant les bindings
+compatible de la 2.7 de Python. Pour utiliser les bindings avec Python 3, il
+faut donc éditer le fichier \verb?otbenv.bat? pour modifier la ligne
+\verb?PYTHONPATH?, en remplaçant \verb?lib/python? par \verb?lib/python3?.
 
 
 \subsection{Ligne de commande}
-Installer un environnement minimal de ligne de commande pour Windows. Par exemple
-Git for Windows est très facile à installer:
+Installer un environnement minimal de ligne de commande pour Windows. Par
+exemple
+\textit{Git for Windows} est très facile à installer:
 \url{http://git-scm.com/download/win}.
 
 \subsection{OTB et Monteverdi}
@@ -188,7 +192,10 @@ ligne de commande, le paquet à installer s'appelle simplement \textbf{python3} 
 sudo apt-get install python3 python3-numpy
 \end{verbatim}
 
-Par défault les bindings de l'OTB sont compatibles de python 2.7. Il faut donc éditer le fichier \verb?otb.profile? pour modifier la ligne \verb?PYTHONPATH?, en remplaçant \verb?lib/python? par \verb?lib/python3?.
+Par défaut le paquet OTB charge un environnement utilisant les bindings
+compatible de la 2.7 de Python. Pour utiliser les bindings avec Python 3, il
+faut donc éditer le fichier \verb?otb.profile? pour modifier la ligne
+\verb?PYTHONPATH?, en remplaçant \verb?lib/python? par \verb?lib/python3?.
 
 \subsection{Installer les dépendances}
 Avant d'installer le paquet autoportant OTB, certaines dépendances système
