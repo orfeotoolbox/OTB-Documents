@@ -250,6 +250,18 @@ OTB capitalizes a part of the CNES R\&D in IP, open source contributes to  trans
     \includegraphics[keepaspectratio,height=1.1\paperheight]{../../Courses/org/WorkshopGuide/Images/final_classification.png}
 \end{frame}
 
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/imag4tci.jpg}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+\includegraphics[keepaspectratio,height=1.1\paperheight]{images/image4_glob_each_lim20_8b_sub.jpg}
+\end{frame}
+
 
 \section{Key characteristics}
 
@@ -761,6 +773,35 @@ OrthoRectification.ExecuteAndWriteOutput()
     \end{block}
 \end{frame}
 
+\begin{frame}
+  \frametitle{6.4 (January 2018)}
+
+  \begin{itemize}
+  \item Enhancement of multiple files selection widget
+  \item Application and filter for local contrast enhancement (CLAHE)
+  \item Improvement of generic SAR sensor model
+  \item Python 3 support
+  \item Ater this release: moving to gitlab!
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gitlab: easier, more integrated}
+  \begin{columns}
+    \column{0.4\textwidth}
+    \begin{itemize}
+    \item Request for comments, bugs, feature requests $\Rightarrow$ gitlab issues
+    \item All code modifications goes through Merge Requests
+    \item Easier code review, links between issues and Merge Requests
+    \item Code contribution more straightforward
+    \item Provides hosting for Remote Modules
+    \end{itemize}
+    \column{0.6\textwidth}
+    \includegraphics[width=\textwidth]{images/gitlab_mr.png}
+    \end{columns}
+\end{frame}
+
+
 \section{Conclusion}
 \begin{frame}
 \frametitle{How many users?}
@@ -791,13 +832,12 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{columns}
 \column{0.65\textwidth}
 \begin{itemize}
-\item OTB has been useful for (some) ORFEO users!
+\item OTB has been useful to ORFEO users and has processed 619 Pléiades
+  images on RTU web site
 \item Several training courses (3/5-day courses) given in France, Belgium,
 Madagascar, UNESCO, Hawaii,Finland\ldots
-\item OTB has successfully processed 619 Pléiades
-  images on RTU web site
 \item OTB provides many useful RS functions in \textbf{one single tool}
-\item OTB is/was the only open-source supporting PHR images (thanks to OpenJPEG)
+\item OTB helped to improve the open-source codec for JP2 OpenJpeg
 \item OTB equals or beats state-of-the-art tools (open source and maybe \$\$) on some points:
   \begin{itemize}
   \item band calculator
@@ -806,7 +846,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
   \item bridges between RS and GIS \ldots
   \end{itemize}
 \item Beyond Orfeo, OTB is already used in several projects and software
-\item OSGeo incubation
+\item OSGeo graduation
 \end{itemize}
 \column{0.35\textwidth}
 \includegraphics[width=0.9\textwidth]{images/resultats_ird.png}\\
@@ -820,8 +860,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \begin{columns}
   \column{0.55\textwidth}
   \begin{itemize}
-    \item OTB applications are available through QGIS processing framework
-    \item OTB applications are available in Zoo Project (WPS service)
+    \item OTB applications are available in QGIS and in Zoo Project (WPS service)
     \item OTB is a component of \alert{Sentinel-2} and Venus ground segment (CNES and ESA)
     \item Terr'Image: Educational software for satellite image analysis
     \item Use to prototype \alert{THEIA} products from the Scientific Expertise Centres
@@ -829,6 +868,7 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
     \item Gnorasi Software (National Technical University of Athens)
     \item Geosud project(IRSTEA)
     \item TCM research program (ETS Quebec)
+    \item Processing chains at CEREMA and SERTIT
   \end{itemize}
   \column{0.6\textwidth}
   \begin{center}
@@ -865,9 +905,14 @@ Madagascar, UNESCO, Hawaii,Finland\ldots
 \begin{block}{Follow-up}
 \vspace{-0.2cm}
 \begin{description}
+<<<<<<< HEAD
 \item[Look at the code?] \href{https://gitlab.orfeo-toolbox.org/}{gitlab.orfeo-toolbox.org}
 \item[Find a bug?] \href{https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb/issues}{gitlab.orfeo-toolbox.org/orfeotoolbox/otb/issues}
 \item[Weather?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
+=======
+  \item[Code, bugs, contributions, feature requests \ldots] \href{https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb}{gitlab.orfeo-toolbox.org}
+  \item[Weather?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
+>>>>>>> master
 \end{description}
 \end{block}
 \end{frame}
