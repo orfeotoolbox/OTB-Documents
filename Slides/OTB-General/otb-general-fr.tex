@@ -242,6 +242,18 @@ L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ou
     \includegraphics[keepaspectratio,height=1.1\paperheight]{../../Courses/org/WorkshopGuide/Images/final_classification.png}
 \end{frame}
 
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+    \includegraphics[keepaspectratio,height=1.1\paperheight]{images/imag4tci.jpg}
+\end{frame}
+
+\vspace*{-6.5mm}
+\begin{frame}[plain]
+\hspace*{-11mm}
+\includegraphics[keepaspectratio,height=1.1\paperheight]{images/image4_glob_each_lim20_8b_sub.jpg}
+\end{frame}
+
 \section{Caractéristiques clés}
 
 \begin{frame}
@@ -752,6 +764,35 @@ OrthoRectification.ExecuteAndWriteOutput()
     \end{block}
 \end{frame}
 
+\begin{frame}
+  \frametitle{6.4 (Janvier 2018)}
+
+  \begin{itemize}
+  \item Améliorations du widget de sélection des fichiers multiples
+  \item Application et filtre pour l'amélioration du contraste local (CLAHE)
+  \item Amélioration du modèle générique de capteur SAR
+  \item Support de python 3
+  \item Après cette release: déménagement vers gitlab!
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gitlab: plus facile, plus intégré}
+  \begin{columns}
+    \column{0.4\textwidth}
+    \begin{itemize}
+    \item Request for comments, bugs, feature requests $\Rightarrow$ issues gitlab
+    \item Toute modification passe par une Merge Request
+    \item Revue de code facilitée, lien entre issues et Merge Request
+    \item Démarche facilitée pour les contributeurs
+    \item Hébergement possible pour les Remote Modules
+    \end{itemize}
+    \column{0.6\textwidth}
+    \includegraphics[width=\textwidth]{images/gitlab_mr.png}
+    \end{columns}
+\end{frame}
+
+
 \section{Conclusion et perspectives}
 \begin{frame}
 \frametitle{Combien d'utilisateurs ?}
@@ -783,10 +824,10 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{columns}
 \column{0.65\textwidth}
 \begin{itemize}
-\item l'OTB a été utile à (certains) des utilisateurs ORFEO!
-\item L'OTB a traité avec succès plus de 619 images Pléiades pour le site web RTU,
+\item l'OTB a été utile aux utilisateurs ORFEO et a traité plus de 619 images Pléiades pour le site web RTU,
+\item De nombreuses sessions de formation (3 à 5 jours) en France, Belgique, Madagascar, UNESCO, Hawaii, Finlande\ldots
 \item L'OTB fournit beaucoup de fonctions utiles pour la télédétection dans un \textbf{unique outil}
-\item L'OTB est (a été) l'unique logiciel open-source compatible avec les images Pléiades (grâce à OpenJPEG)
+\item L'OTB a permis un progrès important du codec JPEG2000 libre OpenJpeg
 \item L'OTB égale ou dépasse les outils de l'état de l'art (libre et commercial) pour certaines fonctions:
 \begin{itemize}
 \item La calculatrice de bandes,
@@ -794,7 +835,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \item La classification à l'échelle d'une scène complète avec un grand choix d'algorithmes,
 \item Les ponts entre la télédétection et le systèmes d'information géographique\ldots
 \end{itemize}
-\item Au delà d'ORFEO, l'OTB est déjà utilisée dans plusieurs projets et logiciels
+\item L'OTB est un logiciel officiel OSGeo
 \end{itemize}
 \column{0.35\textwidth}
 \includegraphics[width=0.9\textwidth]{images/resultats_ird.png}\\
@@ -808,17 +849,17 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{columns}
   \column{0.55\textwidth}
   \begin{itemize}
-    \item Les applications OTB applications sont disponibles dans le module de traitement de QGIS
-    \item Support dans Zoo-Project (service WPS)
-    \item L'OTB est utilisée dans certains composant des segments sols S2 et
+    \item Les applications OTB applications sont disponibles dans QGIS et dans Zoo-Project (service WPS)
+    \item Certains composant des segments sols S2 et
       Venus (CNES et ESA)
     \item Logiciel éducatif Terr'Image
-    \item Utiliser pour générer des produits à l'échelle nationale en France
-      dans THEIA
-    \item Projet EA S2 Agriculture
-    \item Le logiciel Gnorasi (National Technical University of Athens)
+    \item Produits l'échelle nationale en France
+      dans THEIA (Occupation du sol, masques de neige, et même produits 2A via MAJA!)
+    \item Projet ESA S2 for Agriculture
+    \item Logiciel Gnorasi (National Technical University of Athens)
     \item Projet GEOSUD (IRSTEA)
-    \item Le programme de recherche TCM (ETS Quebec)
+    \item Programme de recherche TCM (ETS Quebec)
+    \item Chaînes de traitement au CEREMA et au SERTIT
   \end{itemize}
   \column{0.6\textwidth}
 \begin{center}
@@ -855,9 +896,7 @@ OrthoRectification.ExecuteAndWriteOutput()
 \begin{block}{Follow-up}
 \vspace{-0.2cm}
 \begin{description}
-\item[Où se trouve le code?] \href{http://git.orfeo-toolbox.org}{git.orfeo-toolbox.org}
-\item[Vous avez trouvé un bug?] \href{http://bugs.orfeo-toolbox.org}{bugs.orfeo-toolbox.org}
-\item[Agile?] \href{http://scrum.orfeo-toolbox.org}{scrum.orfeo-toolbox.org}
+\item[Code, bugs, contributions, feature requests \ldots] \href{https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb}{gitlab.orfeo-toolbox.org}
 \item[Météo?] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
 \end{description}
 \end{block}
