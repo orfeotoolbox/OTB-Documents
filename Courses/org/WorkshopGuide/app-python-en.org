@@ -74,7 +74,7 @@ ExtractROI.STARTX=140
 
 *** NumPy bridge
     - Plug OTB into any image processing chain in Python
-    - Use etImageFromNumpyArray() and SetImageFromNumpyArray() methods 
+    - Use GetImageFromNumpyArray() and SetImageFromNumpyArray() methods 
    
 *** Useful links
     - [[https://www.orfeo-toolbox.org/CookBook/OTB-Applications.html][Introduction to OTB applications]]
