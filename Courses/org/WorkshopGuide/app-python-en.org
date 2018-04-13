@@ -199,10 +199,12 @@ ExtractROI.STARTX=140
         ~app-python/images/SENTINEL2A_*/~ Do all files have the same disk
         size? Why?
 
-        *Note:* On the command line, launch the ~gdalinfo~ command on different band 
-        files to check the pixel size and the number of pixels.
+     3. On the command line, launch the ~gdalinfo~ command on different band 
+        files to check the pixel size, the number of pixels and the minimum 
+        and maximum values. Do we have common minimum values between 
+        different bands? Why?
      
-        *Note 2:* Make sure that OTB binary files ($otb-path/bin) is included 
+        *Note:* Make sure that OTB binary files ($otb-path/bin) is included 
         in your PATH environment variable.
  
      4. Look at /MASKS subfolder : there is a CLM file that contains a cloud
@@ -448,8 +450,6 @@ ExtractROI.STARTX=140
            for each of the 3 water masks.You may launch the otb application in the commandline: 
                otbcli-XXXXX -in XXXX -out XXXX -param1 XXXX          
         4. What would you conclude about the results? 
-
-
 ** OTB Applications on Python API                                 :solutions:
 *** Introduction : Water monitoring in the Laguna de la Nina(Peru) event 
     1. Open in Monteverdi the composition_*.vrt file (RGB composition) of each 
@@ -571,7 +571,7 @@ ExtractROI.STARTX=140
     4. Look at the 20161218 final NDVI mask. What are the lines detected as water? 
          
 
-*** Comparison with a reference 
+*** Comparison with a reference: exercise5.py 
  
     1. Open the image ~ref/occurrence_90W_0N.tif~ in QGIS or Monteverdi. What values do you observe
        around the coordinates lon: -80.6767, lat: -5.91. Do you observe any zone with 90-100 occurrence?
