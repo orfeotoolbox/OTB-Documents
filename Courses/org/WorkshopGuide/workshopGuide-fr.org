@@ -129,5 +129,7 @@ Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 #+INCLUDE: "classification-fr.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
+* Utiliser les applications OTB en Python
+#+INCLUDE: "app-python-fr.org" :minlevel 2
 * Développer avec l'OTB
 #+INCLUDE: "dev_exercises/developers-fr.org" :minlevel 2
