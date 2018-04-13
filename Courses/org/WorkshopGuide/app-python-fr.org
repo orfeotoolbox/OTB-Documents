@@ -178,7 +178,7 @@ ExtractROI.STARTX=140
      résolution spatiale.
 
 |----------------+------------+------------+------------+-------------------------------|
-| Nom bande      | Id         | Longueur d'onde | Résolution | Utilisée dans l'exercice |
+| Nom des bandes | Id         | Longueur d'onde | Résolution | Utilisée dans l'exercice |
 |----------------+------------+------------+------------+-------------------------------|
 | Bleu           | B2         | 490 nm          | 10 m       | -                        |
 | Vert           | B3         | 560 nm          | 10 m       | -                        |
@@ -192,184 +192,193 @@ ExtractROI.STARTX=140
 | MIR 2          | B12        | 2190 nm         | 20 m       | -                        |  
 |----------------+------------+-----------------+------------+--------------------------|
 
-     For this exercise, only some bands will be used to obtain water extents maps: 
-     Red (B4) and NIR - Narrow4 (B8A). Also, the Cloud Mask will be used. 
+     Pour obtenir l'étendu en eau, les bandes suivantes seront utilisées: rouge
+     (B4), PIR-4 (B8A). Nous utiliserons également le masque de nuages. 
 
-     *Note:* To reduce the dataset size, we have deleted all the bands not used and 
-     replaced them with an empty file with the same name. 
+     *Note:* Pour réduire la taille des données, nous avons supprimé les bandes
+     non utilisées et elles sont remplacées par un fichier vide. 
     
-     Let's play: 
+     C'est parti: 
 
-     1. Since we are interested in ground reflectance images to calculate water 
-        surfaces, what band kind of file would you use : SRE or FRE? 
+     1. Nous allons utilisé les images en réflectance de surface pour extraire
+        les surfaces en eau, à votre avis quel produit plutôt utilisé: SRE ou FRE? 
 
-     2. Look at the disk size of B3 and B11 files of one the datasets in 
-        ~app-python/images/SENTINEL2A_*/~ Do all files have the same disk
-        size? Why?
+     2. Comparez la taille sur le disque des produits B3 et B11 dans le
+        répertoire ~app-python/images/SENTINEL2A_*/~. Est-ce que les fichiers
+        font la même taille? Pourquoi?
 
-        *Note:* On the command line, launch the ~gdalinfo~ command on different band 
-        files to check the pixel size and the number of pixels.
+        *Note:* En ligne de commande, utilisez la commande ~gdalinfo~ sur les
+        différents fichiers pour afficher la taille et le nombre de pixels. 
      
-        *Note 2:* Make sure that OTB binary files ($otb-path/bin) is included 
-        in your PATH environment variable.
+        *Note 2:* Assurez-vous que les fichiers binaires OTB ($otb-path/bin) est
+        est inclus dans vos variables d'environnement.
  
-     4. Look at /MASKS subfolder : there is a CLM file that contains a cloud
-        mask. Do you think that this information might be interesting to 
-        make better water detections? How? 
+     4. Dans le répertoire /MASKS : il y a un fichier CLM qui contient le masque
+        de nuages. Est-ce que ces informations sont pertinentes pour améliorer
+        la détection d'eau? Comment?
 
-     5. Open in Monteverdi the B8A and B4 and check the values in a water surface.
-        Which band has higher reflectance values on water surfaces? (Use the 20170407 date
-        to have wider water surfaces)
+     5. Ouvrez les bandes B8A et B4 dans Monteverdi et comparez les valeurs des
+        pixels sur les surfaces en eau.
+        Quelle bande a une réflectance plus forte sur les surfaces en eau?
+        (Utilisez pluto l'image à la date du 07/04/2017 avec une étendue d'eau
+        plus importante)
 
-**** Simple OTB application in Python : exercise1.py
+**** Une application OTB simple : exercise1.py
     
-     Take a look to the script: ~app-python/exercise1.py~. The aim of 
-     this script is to launch the Superimpose application from OTB to resample 
-     the B8A band (20m pixel size) to a new resolution. 
+     Ouvrez le script: ~app-python/exercise1.py~. Le but de ce script est
+     d'utiliser l'application Superimpose pour réechantillonner la bande B8A
+     (résolution 20m). 
   
-     At the beginning, there is an otbApplication import. In the otbApplication
-     module, two main classes can be manipulated:
+     Au début du script, il y a l'importation de la librarie
+     otbApplication. Dans le module otbApplication, 2 classes sont disponibles: 
 
-        - /Registry/, which provides access to the list of available applications, 
-          and can create applications.
-        - /Application/, the base class for all applications. This allows to 
-          interact with an application instance created by the Registry
+        - /Registry/, liste les applications disponibles et permet de charger
+          des applications. 
+        - /Application/, la classe de base pour toutes les applications. Elle
+          permet d'intéragir avec une instance d'application créee par la classe
+          /Registry/ 
 
-     1. In order to show the available applications, launch ~exercise1.py~ with 
-        the command  : 
+     1. Pour lister la liste des applications, lancez ~exercise1.py~ avec la commande: 
         #+BEGIN_EXAMPLE
         $ python exercise1.py
         #+END_EXAMPLE
-        At the output you will see the list
-        of available applications. Which line in the script allowed to show the 
-        list of applications? This method is present in the Registry or in an Application
-        module?
+        La sortie afficher la liste des applications disponibles. Quelle ligne
+        dans le script affiche la liste des applications? Cette méthode est
+        disponible dans les modules Registry ou Application?
 
-     On the second part of the script, we want to launch the Superimpose application
-     to do the resampling of the B8A image (20m pixel size) using the image
-     B4 (10m pixel size) as a reference.
+     Dans la deuxième partie du script, l'objectif est d'utilisé l'application
+     Superimpose pour réechantilloner la bande B8A (20m de résolution) en
+     utilisant la bande B4 (A0m de résolution) comme référence.
 
-     The script ~exercise1.py~ launches the Superimpose OTB application 
-     as presented in the following scheme:
+     Le script ~exercise1.py~ utilise l'application Superimpose comme présenté
+     dans le schéma ci-dessous:
 
      #+ATTR_LATEX: :float t :width 0.8\textwidth
      [[file:Images/app-python-1.png]]
       
-     *Note:* Superimpose may be configured to used different interpolations 
-     (linear, bi-cubic or nearest neighbor)
+     *Note:* L'application Superimpose peut être configurée avec plusieurs
+     interpolateurs (linéaire, bi-cubique ou plus proche voisin)
 
-     The necessary inputs and outputs of the [[https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html][Superimpose application]] are
-     described in the following table:
+     Les entrées et sorties nécessaires pour [[https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html][Superimpose application]] sont décrit
+     dans le tableau ci-dessous:
 
-|---------------+------------------------+----------------|
-| Parameter Key | Parameter Name         | Parameter Type |
-|---------------+------------------------+----------------|
-| inr           | Reference Input        | input image    | 
-| inm           | The image to reproject | input image    | 
-| out           | Output image           | output image   | 
+|---------------+------------------------+--------------------|
+| Clé paramètre | Nom du paramètre       | Type de paramètres |
+|---------------+------------------------+--------------------|
+| inr           | Image de référence     | input image        | 
+| inm           | Image à reprojeter     | input image        | 
+| out           | Image en sortie        | output image       | 
      
-     2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
-        You need to complete the path of ~app-python/images~ of your system.
-     3. Open ~exercise1.py~ and complete the "FILL THE GAP 2".
-        You need to initialize the Superimpose OTB application. See that the ~inr~
-        ,~inm~ and ~out~ parameters are already set. 
-     4. Launch ~exercise1.py~ the script with the command 
-        python exercise1.py. How does the output file ~B8A_10m.tif~ look like?       
+     2. Ouvrir le fichier ~exercise1.py~ et complète la ligne "FILL THE GAP 1". 
+        Vous devez compléter le chemin de fichier ~app-python/images~ associé à
+        votre système.
+     3. Ouvrir ~exercise1.py~ et compléter la ligne "FILL THE GAP 2".
+        Vous devez initialiser l'application Superimpose. Etudiez les paramètres ~inr~
+        ,~inm~ et ~out~ déjà paramètrés. 
+     4. Lancez le script ~exercise1.py~ avec la commande /python
+        exercise1.py/. Commentez le contenu de la sortie ~B8A_10m.tif~?       
          
          
-**** Chain OTB applications : exercise2.py
+**** Chainage des applications OTB : exercise2.py
 
-     In this part, the aim is to calculate an NDVI image and obtain a water mask by means
-     of thresholding the NDVI value. We will launch different OTB applications
-     in the same script to obtain the desired result.
+     Dans cette partie, le but est de calculer le NDVI de l'image et d'obtenir
+     un masque d'eau par seuillage. Nous utiliserons différentes applications
+     OTB avec le même script pour obtenir différents couches d'information.
 
-     The script ~exercise2.py~ chains OTB applications as presented in the following scheme:
+     Le script Python ~exercise2.py~ chaîne des applications OTB suivant le
+     schéma suivant: 
       #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-2.png]]
 
-     Use the Superimpose and Bandmath applications to calculate the NDVI and
-     the water map image 
-     using Red band (B4) and NIR band (B8A) from the S2 product:
-     1. Open ~exercise2.py~ and complete the "FILL THE GAP 1".
-        You need to complete the path of ~app-python/images~ of your system.
-     2. Open ~exercise2.py~ and complete the "FILL THE GAP" 2, 3 and 4.
-        You need to :
-            - configure the application1 "Superimpose" parameters : ~inr,imr,out~
-            - configure the application2 "BandMath" parameters:  ~il,out,exp~
-            - configure the application3 "BandMath" parameters:  ~il,out,exp~
-        *Note:* Take a look to lines 23-30 to understand the filepath of each band image.
-        Check also the online help of the applications if necessary.
+     Utilisez les applications Superimpose et BandMath pour calculer et le
+     masque d'eau en utilisant les bandes Rouge (B4) et Proche Infrarouge (B8A)
+     du produit Sentinel-2:
+     1. Ouvrez ~exercise2.py~ et compléter la ligne "FILL THE GAP 1".
+        Vous devez adapter le chemin ~app-python/images~ à votre système.
+     2. Ouvrez ~exercise2.py~ et compléter le champ "FILL THE GAP" 2, 3 and 4.
+        Vous devez :
+            - configurer *application1* (Superimpose) et les paramètres : ~inr,imr,out~
+            - configurer *application2* (BandMath) et les paramètres:  ~il,out,exp~
+            - configurer *application3* (BandMath et les paramètres:  ~il,out,exp~
+        *Note:* Etudiez les lignes 23-30 pour comprendre quel est le chemin de
+        chaque bande.
+        Vous pouvez aussi accèder à l'aide en ligne des applications si nécessaire.
 
-     3. Launch ~exercise2.py~ script with the command: 
+     3. Lancez le script ~exercise2.py~ avec la commande: 
         #+BEGIN_EXAMPLE
         $ python exercise2.py
         #+END_EXAMPLE
-        What are the resulting files? Check the results in Monteverdi.
+        Quel est la sortie du script? Ouvrez le résultat dans Monteverdi.
 
-**** Chain OTB applications in-memory: exercise3.py
-     This exercise is equivalent to exercise2.py, but avoiding to write on intermediate
-     files. The goal is to process the intermediary results using only RAM memory. 
+**** Chainage en mémoire des applications OTB: exercise3.py
+     Cet exercice est équivalent à /exercise2.py/, à la différence qu'on ne
+     souhaite pas écrire les fichiers intermédiaires sur disque. L'objectif est
+     de traiter toute la chaine de traitements en mémoire (RAM).  
 
-     As a second improvement, the NDVI calculation is left to 
-     the last step: NDVI and water mask are calculated at the same time.  
-     In OTB terms, we perform just one BandMath calculation (instead of two).
+     Une seconde amélioration est laissé pour la dernière étape du tutorial, qui
+     consiste à calculer le NDVI et le seuillage en une seule étape. 
+     En terme OTB, cela consiste à appliquer 1 BandMath (au lieu de 2).
      
-     The script ~exercise3.py~ chains OTB applications as presented in the following scheme:
+     Le script ~exercise3.py~ enchaine les applications OTB suivant le schéma suivant:
       #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-3.png]]
 
-     In-memory connection: the output of app1 might be declared as input of
-     app2 using an expression as: 
+     Connexion en mémoire: la sortie de /app1/ doit être déclaré comme entrée de
+     l'application /app2/ en utilisant la syntaxe suivante: 
         - app2.SetParameterInputImage("in",app1.GetParameterOutputImage("out"))
-          if the input of application2 is an Image(like in the Superimpose application)
+          si l'entrée de /application2/ est une image (comme pour l'application Superimpose)
         - app2.AddImageToParameterInputImageList("il",app1.GetParameterOutputImage("out"))
-          if the input of application2 is an ImageList(like the BandMath application)
+          si l'entrée de /application2/ est une liste d'image (comme pour l'application BandMath)
      
-     Let's optimize our water mask calculator:
-     1. Open ~exercise3.py~ and complete the "FILL THE GAP 1".
-        You need to complete the path of ~app-python/data~ of your system.
-     2. Open ~exercise3.py~ and complete the "FILL THE GAP 2" to declare the output 
-        of application1 as input of application2.
-     3. Open ~exercise3.py~ and complete the "FILL THE GAP 3" to set the BandMath expression
-        that sets value 1 if ndvi value<0 and 0 if ndvi value>1
-     4. Launch ~exercise3.py~ with the command: 
+     Optimisons le calcul du masque d'eau:
+     1. Ouvrir ~exercise3.py~ et compléter la ligne "FILL THE GAP 1".
+        Vous devez adapter le chemin ~app-python/data~ à votre système.
+     2. Ouvrir ~exercise3.py~ et compléter "FILL THE GAP 2" pour déclarer la
+        sortie de /application1/ comme entrée de /application2/.
+     3. Ouvrir ~exercise3.py~ et compléter "FILL THE GAP 3" pour adapter
+        l'expression en entrée de l'application BandMath pour obtenir que: "la
+        valeur 1 est donnée si ndvi<0 et la valeur 0 si ndvi>1"
+     4. Lancez ~exercise3.py~ avec la commande suivante: 
         #+BEGIN_EXAMPLE
         python exercise3.py
         #+END_EXAMPLE
-        As you see in the code, the ApplicationX.ExecuteAndWriteOutput()
-        has been changed to ApplicationX.Execute()
-        in ~exercise3.py~. How does it affect the execution sequence?
-     5. In Application1, the output parameter has been declared with a filename.
-        Has it been written as a file after the execution? Why?
-     6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
-        ), there is a line like : 
+        Vous pouvez remarquer que dans le script,
+        l'appelApplicationX.ExecuteAndWriteOutput() a été changé par
+        ApplicationX.Execute() dans ~exercise3.py~. Comment cela modifie la
+        séquence des exécutions?
+     5. Dans Application1, les paramètres de sortie ont été déclarés avec un nom
+        de fichier.
+        Est-ce que le fichier a été écrit sur le disque après l'exécution? Pourquoi?
+     6. Au moment de la génération du masque NDVI (avec 2 valeurs possibles:
+        eau(1) et land(0)), il y a la ligne suivante: 
          appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_ uint8)
-         What is the purpose of this line? What would have happened without it?
-        
+         Quel est le but de cette ligne? Qu'est-ce qui se passe si on supprime cette ligne?
 
+**** Détection et gestion des /nodata/: exercise4.py
 
-**** Water detection chain with NoData management: exercise4.py
-
-     There are some parts of the images that are covered by clouds. In this 
-     exercise, we will use the CLD band in the S2 product to set NODATA regions.
+     Il y a certaines parties de l'image couverte par des nuages. Dans cet
+     exercice, nous utiliserons la bande CLD du produit Sentinel-2 pour
+     spécifier la valeur du NODATA.
      
-     If a CLD pixel value is different of zero, that means that a cloud 
-     has been detected in the pixel. The aim of this exercise is to use an special 
-     value (255) in the final mask when clouds are present. 
+     Si un pixel du masque CLD est différent de zéro, cela signifie qu'un nuage
+     a été detecté par l'algorithme MAJA. Le but de cet exercice est de
+     spécifier une valeur spéciale (255) dans le masque final quand un nuage est
+     présent. 
      #+ATTR_LATEX: :float t :width 0.8\textwidth
      [[file:Images/app-python-4.png]]
 
-     The script ~exercise4.py~ chains OTB applications as presented in the following scheme:
+     Le script ~exercise4.py~ chaîne des applications OTB comme présenté dans le
+     schéma suivant:
      #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-5.png]]
 
-     At the end of the chain, an OTB application "ManageNoData" is used to set the NODATA value
-     as 255 in the GeoTiff metadata.
+     A la fin du script, l'application *ManageNoData* est utilisée pour
+     spécifier la valeur de NODATA à 255 dans les métadonnées du fichier GeoTiff.
      
-     Let's do it:
-     1. Open ~exercise4.py~ and complete the "FILL THE GAP 1".
-        You need to complete the path of ~app-python/data~ of your system.
-     2. Open ~exercise4.py~ and complete the "FILL THE GAP 2" to set the BandMath expression
+     On y va:
+     1. Ouvrir ~exercise4.py~ et compléter le champ "FILL THE GAP 1".
+        Vous devez adapter le chemin ~app-python/data~ à votre système.
+     2. Ouvrir ~exercise4.py~ and complete the "FILL THE GAP 2" to set the BandMath expression
         to set the 255 value where the clouds image is different to zero, and otherwise
         keep the NDVI mask image.
      3. Launch ~exercise4.py~ with the different dates as arguments:
