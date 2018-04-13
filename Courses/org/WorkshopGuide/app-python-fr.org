@@ -149,43 +149,48 @@ ExtractROI.STARTX=140
 
 **** Sentinel 2 - Niveau 2A
 
-     One of the goals of this exercise is to process this product as downloaded 
-     from the product provider ([[https://theia.cnes.fr][Theia server]]). Level 2A is an 
-     orthorectified product in ground reflectance, constructed from L1C 
-     products (orthorectified product in Top of Atmosphere).
+     L'un des objectifs de cet exercice est de traiter un produit Sentinel-2
+     téléchargé depuis la plateforme [[https://theia.cnes.fr][Theia]]. Le niveau de produit /2A/ correspond
+     à une image orthorectifiée en réflectance de surface (prise en compte des
+     effets atmosphériques). Ce produit est obtenu
+     par un traitement des produits de niveau /1C/ (orthorectifié en réflectance
+     au dessus de l'atmosphère) réalisé par la méthode MAJA.
 
-     Each Sentinel2-Level 2A product contains several *files*, which are classified as: 
-         - SRE: image in ground reflectance without the correction of slope effects
-         - FRE: image in ground reflectance with the correction of slope effects 
-         - MTD: Metadata
-         - QKL: quicklook file (low resolution image to show an RGB overview )
-         - ATB: atmospheric and biophysical parameters with 2 bands :
-                - 1st band: water vapor content (WVC) coded over 8 bits
-                - 2st band: aerosol optical thickness (AOT) coded over 8 bits
-         - CLM: cloud mask computed by MAJA software, made of 1 band coded over 8 useful bits.
-         - SAT: saturation mask coded over 8 bits
+     Chaque produit Sentinel-2 contient plusieurs fichiers: 
+         - SRE: image en réflectance de surface (SRE pour Surface REflectance)
+           ont été corrigées corrigées des effets atmosphériques, y compris les effets d'environnement
+         - FRE: (FRE pour Flat REflectance) ont, de plus, subi une correction
+           supplémentaire qui prend en compte les effets des pentes
+         - MTD: Métadonnées
+         - QKL: vignette (image RGB basse résolution)
+         - ATB:  variables atmosphériques (2 bandes):
+                - 1ère bande: vapeur d'eau, il faut diviser les valeurs par 20 pour obtenir des $g.cm^2$ 
+                - 2ème bande: épaisseur optique des aérosols, il faut diviser
+                  les valeurs par 200 pour obtenir l'épaisseur optique. 
+         - CLM: Masque de nuages (calculé par MAJA), image 1 bande codée sur 8 bits.
+         - SAT: masque de pixels saturés
          
-     In this exercise, water maps will be calculated from ground reflectance 
-     files SRE or FRE.
+     Dans cette exercice, le masque d'eau sera calculé à partir des images SRE
+     et FRE.
 
-     The SRE and FRE files consist of 13 files, one per spectral channel in
-     GeoTiff format (.tif). Each band image may have a different resolution (10m
-     or 20m).
+     Les produits SRE et FRE consistent en 13 fichiers, une par bande spectrale
+     au format GeoTiff (.tif). Les bandes peuvent être à 10m ou 20m de
+     résolution spatiale.
 
-|----------------+------------+------------+------------+-----------------------|
-| Band name      | S2 band id | Wavelength | Resolution | Used in this exercise |
-|----------------+------------+------------+------------+-----------------------|
-| Blue           | B2         | 490 nm     | 10 m       | -                     |
-| Green          | B3         | 560 nm     | 10 m       | -                     |
-| Red            | B4         | 665 nm     | 10 m       | Yes                   |
-| NIR - Narrow 1 | B5         | 705 nm     | 20 m       | -                     | 
-| NIR - Narrow 2 | B6         | 740 nm     | 20 m       | -                     | 
-| NIR - Narrow 3 | B7         | 783 nm     | 20 m       | -                     |   
-| NIR - Wide     | B8         | 842 nm     | 10 m       | -                     |
-| NIR - Narrow 4 | B8A        | 865 nm     | 20 m       | Yes                   |  
-| SWIR 1         | B11        | 1610 nm    | 20 m       | -                     |
-| SWIR 2         | B12        | 2190 nm    | 20 m       | -                     |  
-|----------------+------------+------------+------------+-----------------------|
+|----------------+------------+------------+------------+-------------------------------|
+| Nom bande      | Id         | Longueur d'onde | Résolution | Utilisée dans l'exercice |
+|----------------+------------+------------+------------+-------------------------------|
+| Bleu           | B2         | 490 nm          | 10 m       | -                        |
+| Vert           | B3         | 560 nm          | 10 m       | -                        |
+| Rouge          | B4         | 665 nm          | 10 m       | Oui                      |
+| PIR - 1        | B5         | 705 nm          | 20 m       | -                        | 
+| PIR - 2        | B6         | 740 nm          | 20 m       | -                        | 
+| PIR - 3        | B7         | 783 nm          | 20 m       | -                        |   
+| PIR - Large    | B8         | 842 nm          | 10 m       | -                        |
+| PIR - 4        | B8A        | 865 nm          | 20 m       | Oui                      |  
+| MIR 1          | B11        | 1610 nm         | 20 m       | -                        |
+| MIR 2          | B12        | 2190 nm         | 20 m       | -                        |  
+|----------------+------------+-----------------+------------+--------------------------|
 
      For this exercise, only some bands will be used to obtain water extents maps: 
      Red (B4) and NIR - Narrow4 (B8A). Also, the Cloud Mask will be used. 
