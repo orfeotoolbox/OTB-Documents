@@ -149,8 +149,11 @@ ExtractROI.STARTX=140
      products (orthorectified product in Top of Atmosphere).
 
      Each Sentinel2-Level 2A product contains several *files*, which are classified as: 
-         - SRE: image in ground reflectance without the correction of slope effects
-         - FRE: image in ground reflectance with the correction of slope effects 
+         - SRE: (SRE for Surface REflectance) corrected for atmospheric effects,
+           including adjacency effects
+         - FRE: (FRE for Flat REflectance) are also corrected for slope effect,
+           which consists in suppressing the apparent reflectances
+           variations. The corrected images look like if the land was flat.  
          - MTD: Metadata
          - QKL: quicklook file (low resolution image to show an RGB overview )
          - ATB: atmospheric and biophysical parameters with 2 bands :
