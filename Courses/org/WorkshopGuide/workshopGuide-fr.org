@@ -132,4 +132,4 @@ Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 * Utiliser les applications OTB en Python
 #+INCLUDE: "app-python-fr.org" :minlevel 2
 * Développer avec l'OTB
-#+INCLUDE: "dev_exercises/c++/developers-fr.org" :minlevel 2
+#+INCLUDE: "developers-c++-fr.org" :minlevel 2
