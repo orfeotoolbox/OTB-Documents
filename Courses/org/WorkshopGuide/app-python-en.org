@@ -80,6 +80,64 @@ ExtractROI.STARTX=140
     - [[https://www.orfeo-toolbox.org/CookBook/OTB-Applications.html][Introduction to OTB applications]]
     - [[https://www.orfeo-toolbox.org/CookBook/Applications.html][Application Reference Documentation]]
     - Application help: /otbcli\textunderscore{}XXX -help/
+*** Introduction : Water monitoring in the Laguna de la Nina(Peru) event
+    - A time series of 3 images (SENTINEL 2) show the water extent variation:
+
+     #+ATTR_LATEX: :float t :width 1\textwidth
+     [[file:Images/app-python-0.png]] 
+
+*** Sentinel 2 - Level 2A Format
+
+|----------------+------------+------------+------------+-----------------------|
+| Band name      | S2 band id | Wavelength | Resolution | Used in this exercise |
+|----------------+------------+------------+------------+-----------------------|
+| Blue           | B2         | 490 nm     | 10 m       | -                     |
+| Green          | B3         | 560 nm     | 10 m       | -                     |
+| Red            | B4         | 665 nm     | 10 m       | Yes                   |
+| NIR - Narrow 1 | B5         | 705 nm     | 20 m       | -                     | 
+| NIR - Narrow 2 | B6         | 740 nm     | 20 m       | -                     | 
+| NIR - Narrow 3 | B7         | 783 nm     | 20 m       | -                     |   
+| NIR - Wide     | B8         | 842 nm     | 10 m       | -                     |
+| NIR - Narrow 4 | B8A        | 865 nm     | 20 m       | Yes                   |  
+| SWIR 1         | B11        | 1610 nm    | 20 m       | -                     |
+| SWIR 2         | B12        | 2190 nm    | 20 m       | -                     |  
+|----------------+------------+------------+------------+-----------------------|
+
+*** Simple OTB application in Python : exercise1.py
+
+      #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-1.png]]    
+
+*** Chain OTB applications : exercise2.py
+
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-2.png]]
+
+
+*** Chain OTB applications in-memory: exercise3.py
+
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-3.png]]
+ 
+
+*** NoData management: exercise4.py
+
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-4.png]]
+     
+*** Water detection chain with NoData management: exercise4.py
+
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-5.png]]
+
+*** Using a reference: Global Surface Water 
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-6.png]]
+
+*** Comparison with a reference: exercise5.py
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-7.png]]
+
 ** OTB Applications on Python API                                      :guide:
 *** Description                                                        :desc:
 **** Summary
