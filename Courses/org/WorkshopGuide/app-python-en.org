@@ -640,14 +640,25 @@ ExtractROI.STARTX=140
        outputs of ApplicationX, then the ApplicationY will trigger the Execution of ApplicationX.
     5. In Application1, the output parameter has been declared with a filename.
        Has it been written as a file after the execution? Why?
-       Solution: When ~ApplicationX.Execute()~ is used in the code, the results of ApplicationX are only used in RAM memory
+       Solution: When ~ApplicationX.Execute()~ is used in the code, the 
+       results of ApplicationX are only used in RAM memory
        to resolve the dependence between the inputs/ouputs of different applications of the pipeline. Thus,
        the output file (~B8A_10m.tif~) is never written as file but it is used in the Application2 as input.
     6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
        ), there is a line like : 
         appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)
         What is the purpose of this line? What would happened without it?
-       Solution : Given that NDVI mas
+       Solution:
+       In order to reduce the size of the output image without degrading the image, we may
+       use a simpler type of variable to store the values. Instead of using a Float type (which
+       needs 2 or 4 bytes) we can use an Integer type(uint8= unsigned integer with 8 bits) 
+       which needs 1 byte per pixel. "uint8" type allows to use 256 different values,
+       which is alright for the 2 values needed (0=land,1=water).
+
+       We may go further using the Extended filenames mechanism on the output file definition:
+       ~appX.SetParameterOutputImagePixelType("out","water_mask.tif?&gdal:co:NBITS=1")~
+       This solution will use just 1 bit per pixel. For a better understading,
+       see module "Internals".
 
 *** Water detection chain with NoData management: exercise4.py
 
@@ -656,6 +667,7 @@ ExtractROI.STARTX=140
     2. Open ~exercise4.py~ and complete the "FILL THE GAP 2" to set the BandMath expression
        to set the 255 value where the clouds image is different to zero, and otherwise
        keep the NDVI mask image.
+       Solution : ~app3.SetParameterString("exp", "im2b1!=0?255:im1b1")~
     3. Launch ~exercise4.py~ with the different dates as arguments:
 
            ~python exercise4.py SENTINEL2A_20161218-153729-222_L2A_T17MNP_D_V1-4~
@@ -666,7 +678,9 @@ ExtractROI.STARTX=140
 
        and you will obtain three different masks. Open them with monteverdi to check
        the water extent variations.
-    4. Look at the 20161218 final NDVI mask. What are the lines detected as water? 
+    4. Look at the 20161218 final NDVI mask. What are the suspicious straight lines detected as water? 
+       Solution: The straight lines are roads, which have similar spectral responses to water responses
+       in the RED and NIR bands.
          
 
 *** Comparison with a reference: exercise5.py 
@@ -674,6 +688,8 @@ ExtractROI.STARTX=140
     1. Open the image ~ref/occurrence_90W_0N.tif~ in QGIS or Monteverdi. What values do you observe
        around the coordinates lon: -80.6767, lat: -5.91. Do you observe any zone with 90-100 occurrence?
        What does it means: permanent or rare waters?
+       Solution: The value = 90 means that water has been found in the 90% of the observations during the 32 years
+       period. It corresponds to permanent waters.
     2. Our zone of study is just an portion of the ~ref/occurrence_90W_0N.tif~. The ~exercise5.py~ script
        will launch Superimpose and Bandmath OTB applications to obtain the GSW layer cropped, resampled 
        and thresholded over a given value. To obtain the reference mask launch:
@@ -691,5 +707,18 @@ ExtractROI.STARTX=140
        Use this application to calculate the reference mask that yields the best likelihood (Kappa index)
        for each of the 3 water masks.You may launch the otb application in the commandline: 
            otbcli-XXXXX -in XXXX -out XXXX -param1 XXXX          
-    4. What would you conclude about the results?
+       Solution:
+       The ComputeConfusionMatrix application can be used to compare raster images as follows: 
+       ~otbcli_ComputeConfusionMatrix -in GSW_10.tif -ref raster -ref.raster.in water_mask_SENTINEL2A_2017 -ref.raster.nodata "255" -out conf_A_90.csv
+water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif  water_mask_SENTINEL2A_20171203-154308-349_L2A_T17MNP_D_V1-4.tif~
 
+       The best kappa results for each date are:
+       20161218  >> GSW_75 (kappa = 0.8175)
+       20170407  >> GSW_10 (kappa = 0.7867) 
+       20171203  >> GSW_20 (kappa = 0.5677)
+
+    4. What would you conclude about the results?
+       Solution: 
+       The first image (the dryest one) represents a water extent surface that is seen at least 75% of the times.
+       The second image have a water extent that has been seen only 10% of the times and the third one only the 20% of the times. 
+       We may conclude that the second and third water extents are rare events given the low probabilities of flood. 
