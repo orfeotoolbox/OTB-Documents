@@ -118,5 +118,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
 #+INCLUDE: "classification-fr.org" :minlevel 2
 * TP4: Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
-* TP5: Développer avec l'OTB
+* TP5: Utiliser les applications OTB en Python 
+#+INCLUDE: "app-python-fr.org" :minlevel 2
+* TP6: Développer avec l'OTB
 #+INCLUDE: "developers-c++-fr.org" :minlevel 2
