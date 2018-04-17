@@ -100,7 +100,7 @@ if __name__ == "__main__":
     # ---
 
     # The following line execute the application
-    print("Launching... BandMath : Land/Water mask)
+    print("Launching... BandMath : Land/Water mask")
     app3.Execute()
     print("End of BandMath \n")
 
