@@ -527,8 +527,8 @@ ExtractROI.STARTX=140
     1. Since we are interested in ground reflectance images to calculate water 
        surfaces, what band kind of file would you use between SRE and FRE? 
         
-       Solution : FRE images corrects the effects of the atmosphere, and hence,
-       the physical properties of the ground are better described on the FRE image.
+       Solution : FRE images corrects the effect of slopes(different illumination conditions)
+       , and hence, the physical properties of the ground are better described on the FRE image.
 
     2. Look at the disk size of B3 and B11 files of one the datasets in 
        ~app-python/images/SENTINEL2A_*/~ Do all files have the same disk
@@ -568,15 +568,26 @@ ExtractROI.STARTX=140
        of available applications. Which line in the script allowed to show the 
        list of applications? This method is present in the Registry or in an Application
        module?
+     
+       Solution: The line is ~print(str(otbApplication.Registry.GetAvailableApplications()))~
+       , that uses a method defined in the ~Registry~ module of the OTB Python library.
 
     2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
        You need to complete the path of ~app-python/data~ of your system.
     3. Open ~exercise1.py~ and complete the "FILL THE GAP 2".
        You need to initialize the Superimpose OTB application. See that the ~inr~
        ,~inm~ and ~out~ parameters are already set. 
+       
+       Solution: ~Superimpose = otbApplication.Registry.CreateApplication("Superimpose")~
+
     4. Launch ~exercise1.py~ the script with the command 
-       python exercise1.py. How does the output look like?       
-         
+       python exercise1.py. How does the output file ~B8A_10m.tif~ look like?       
+
+       Solution: The new generated Near Infrared image has a finer resolution(pixel size = 10m) 
+       compared to the original image(pixel size = 20m). These new finer pixel values 
+       have been interpolated. You may use Monteverdi to zoom closer and compare the generated 
+        ~B8A_10m.tif~ and the original B8A image. You shall appreciate the smoothed interpolated
+       values in the new image.
          
 *** Chain OTB applications : exercise2.py
 
@@ -587,8 +598,23 @@ ExtractROI.STARTX=140
            - configure the application1 "Superimpose" parameters : ~inr,imr,out~
            - configure the application2 "BandMath" parameters:  ~il,out,exp~
            - configure the application3 "BandMath" parameters:  ~il,out,exp~
+       Solution: 
+       - Gap 2 : ~application1.SetParameterString("inr",str( d["input_path"] + d["B4_image"]))~
+                 ~application1.SetParameterString("inm",str( d["input_path"] + d["B8A_image"]))~
+                 ~application1.SetParameterString("out", "B8A_10.tif")~
+       - Gap 3 : ~application2.SetParameterStringList("il",["B8A_10.tif", str(d["input_path"] + d["B4_image"])])~
+                 ~application2.SetParameterString("out", "ndvi.tif")~
+                 ~application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)")~
+       - Gap 4 : ~application3.SetParameterStringList("il",["ndvi.tif"])~
+                 ~application3.SetParameterString("out", "water_mask.tif")~
+                 ~application3.SetParameterString("exp", "im1b1<0?1:0")~
     4. Launch ~exercise2.py~ the script with the command: python exercise2.py. What
        are the resulting files?
+       Solution: *ndvi.tif* : intermediary Geotif file that contains the Normalized
+                 Vegetation Index of the scene.
+                 *water_mask.tif* : binary mask (also a Geotif file) that contains the value 1 for those pixels
+                 with a value of NDVI under a given threshold, that is considered as Water Pixels. The rest of the
+                 pixels are considered as Land (pixel value = 0).
 
 *** Chain OTB applications in-memory: exercise3.py
      
@@ -596,18 +622,32 @@ ExtractROI.STARTX=140
        You need to complete the path of ~app-python/data~ of your system.
     2. Open ~exercise3.py~ and complete the "FILL THE GAP 2" to declare the output 
        of application1 as input of application2.
+       Solution:
+       ~application2.AddImageToParameterInputImageList("il",application1.GetParameterOutputImage("out"))~
     3. Open ~exercise3.py~ and complete the "FILL THE GAP 3" to set the BandMath expression
        that sets value 1 if ndvi value<0 and 0 if ndvi value>1
+       Solution:
+       ~application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)<0?1:0")~
     4. Launch ~exercise3.py~ with the command: python exercise3.py. 
        As you see in the code, the ApplicationX.ExecuteAndWriteOutput()
        has been changed to ApplicationX.Execute()
        in ~exercise3.py~. How does it affect to the execution sequence?
+       Solution:
+       The lines with ~ApplicationX.Execute()~ will not launch inmediatly the ApplicationX. This line 
+       just describes that the ApplicationX will be launched in a pipeline sequence. 
+       When another ~ApplicationY.ExecuteAndWriteOutput()~ is further applied
+       in the same pipeline, where the inputs of ApplicationY are dependent of the
+       outputs of ApplicationX, then the ApplicationY will trigger the Execution of ApplicationX.
     5. In Application1, the output parameter has been declared with a filename.
        Has it been written as a file after the execution? Why?
+       Solution: When ~ApplicationX.Execute()~ is used in the code, the results of ApplicationX are only used in RAM memory
+       to resolve the dependence between the inputs/ouputs of different applications of the pipeline. Thus,
+       the output file (~B8A_10m.tif~) is never written as file but it is used in the Application2 as input.
     6. At the generation of the NDVI mask(with two possible values: water(1) and land(0) 
        ), there is a line like : 
         appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)
         What is the purpose of this line? What would happened without it?
+       Solution : Given that NDVI mas
 
 *** Water detection chain with NoData management: exercise4.py
 
