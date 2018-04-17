@@ -20,6 +20,7 @@
 \usetikzlibrary{arrows}
 \usepackage{pifont}
 \usepackage{listings,color}
+\usepackage{xmpmulti}
 
 \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
 \definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
@@ -70,9 +71,9 @@
 \begin{block}{L'Orfeo ToolBox est:}
 \begin{itemize}
 \item Une \textbf{bibliothèque de traitement d'images} pour la télédétection
-\item \textbf{Un logiciel libre} diffusé sous licence Apache v2.0 (depuis OTB 6.0, précédement CeCILL-v2)
+\item \textbf{Un logiciel libre} diffusé sous licence Apache v2.0 (depuis OTB 6.0, précédemment CeCILL-v2)
 \item \textbf{Financée et développée par le CNES} (principalement)
-\item Projet OSGeo depuis 2017
+\item Projet OSGeo depuis 2017!
 \item Écrite en \textbf{C++} sur la base d'\href{www.itk.org}{ITK} (imagerie médicale)
 \item Construite sur les épaules de géants (ITK, GDAL, OSSIM, OpenCV\ldots)
 \item Conçue pour traiter de \textbf{gros volumes de données} de manière transparente grâce au traitement par morceaux et à la parallélisation
@@ -111,75 +112,75 @@ L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ou
 
 \section{Fonctionnalités}
 
-\begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplètes)}
+%% \begin{frame}
+%% \frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplètes)}
 
-\begin{block}{Pré-traitements}
-\begin{itemize}
-\item Calibration radiométrique, ortho-rectification, reprojection (raster et vecteur), pan-sharpening, stéréo-rectification,
-\item Capteurs supportés: Sentinels, Pléiades, SPOT6, SPOT5, capteurs DigitalGlobe
-\item Modélisation géométrique fournie par OSSIM, support de MNT SRTM ou GeoTIFF
-\end{itemize}
-\end{block}
+%% \begin{block}{Pré-traitements}
+%% \begin{itemize}
+%% \item Calibration radiométrique, ortho-rectification, reprojection (raster et vecteur), pan-sharpening, stéréo-rectification,
+%% \item Capteurs supportés: Sentinels, Pléiades, SPOT6, SPOT5, capteurs DigitalGlobe
+%% \item Modélisation géométrique fournie par OSSIM, support de MNT SRTM ou GeoTIFF
+%% \end{itemize}
+%% \end{block}
 
-\begin{block}{Manipulation d'images et de vecteurs}
-\begin{itemize}
-\item Formats supportés par Gdal (raster et vecteur), conversion raster/vecteur
-\item Extraction de ROI, de bandes spectrales, concaténation ou séparation des bandes spectrales,
-\item calcul mathématiques entre bandes, color mapping, optimisation du contraste
-\item Filtrage linéaire, morphologie mathématique,
-\end{itemize}
-\end{block}
-\end{frame}
+%% \begin{block}{Manipulation d'images et de vecteurs}
+%% \begin{itemize}
+%% \item Formats supportés par Gdal (raster et vecteur), conversion raster/vecteur
+%% \item Extraction de ROI, de bandes spectrales, concaténation ou séparation des bandes spectrales,
+%% \item calcul mathématiques entre bandes, color mapping, optimisation du contraste
+%% \item Filtrage linéaire, morphologie mathématique,
+%% \end{itemize}
+%% \end{block}
+%% \end{frame}
 
-\begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+%% \begin{frame}
+%% \frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
 
-\begin{block}{Détection d'éléments saillants et calcul de primitives}
-\begin{itemize}
-\item Détection de contours, points d'intérêt SIFT et SURF, lignes, angles droits
-\item Indices radiométriques, indices de textures (Haralick, SFS, PanTex)
-\item Descripteurs statistiques locaux (moments de Flusser, HOG)
-\item Matching de points d'intérêts
-\end{itemize}
-\end{block}
+%% \begin{block}{Détection d'éléments saillants et calcul de primitives}
+%% \begin{itemize}
+%% \item Détection de contours, points d'intérêt SIFT et SURF, lignes, angles droits
+%% \item Indices radiométriques, indices de textures (Haralick, SFS, PanTex)
+%% \item Descripteurs statistiques locaux (moments de Flusser, HOG)
+%% \item Matching de points d'intérêts
+%% \end{itemize}
+%% \end{block}
 
-\begin{block}{Détection de changement}
-\begin{itemize}
-\item Algorithme classique avec métrique de comparaison d'images,
-\item Algorithme MAD (Multivariate Alteration Detector)
-\end{itemize}
-\end{block}
+%% \begin{block}{Détection de changement}
+%% \begin{itemize}
+%% \item Algorithme classique avec métrique de comparaison d'images,
+%% \item Algorithme MAD (Multivariate Alteration Detector)
+%% \end{itemize}
+%% \end{block}
 
-\begin{block}{Réduction de la dimension, traitement hyperspectraux}
-\begin{itemize}
-\item Réduction de la dimension: PCA, NAPCA, ICA, MAF \ldots
-\item Estimation de la dimension et extraction des pixels purs: algorithme VCA
-\end{itemize}
-\end{block}
+%% \begin{block}{Réduction de la dimension, traitement hyperspectraux}
+%% \begin{itemize}
+%% \item Réduction de la dimension: PCA, NAPCA, ICA, MAF \ldots
+%% \item Estimation de la dimension et extraction des pixels purs: algorithme VCA
+%% \end{itemize}
+%% \end{block}
 
-\end{frame}
+%% \end{frame}
 
-\begin{frame}
-\frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
-\begin{block}{Segmentation}
-\begin{itemize}
-\item Algorithmes de segmentation Connected Components, MeanShift, Ligne de partage des eaux
-\item Méthodologie pour une application large échelle,
-\item Représentation vectorielles et raster des résultats, avec capacités d'analyse objet
-\end{itemize}
-\end{block}
+%% \begin{frame}
+%% \frametitle{Les grandes familles de fonctionnalités dans l'OTB (forcément incomplète)}
+%% \begin{block}{Segmentation}
+%% \begin{itemize}
+%% \item Algorithmes de segmentation Connected Components, MeanShift, Ligne de partage des eaux
+%% \item Méthodologie pour une application large échelle,
+%% \item Représentation vectorielles et raster des résultats, avec capacités d'analyse objet
+%% \end{itemize}
+%% \end{block}
 
-\begin{block}{Classification}
-\begin{itemize}
-\item Supervision et classification d'images avec 9 algorithmes au choix (dont SVM et forêts aléatoires)
-\item Fusion et régularisation de cartes de classification
-\item Clustering de type K-Means ou carte de Kogonen
-\item Classification objets (segments issus d'une segmentation)
-\end{itemize}
-\end{block}
+%% \begin{block}{Classification}
+%% \begin{itemize}
+%% \item Supervision et classification d'images avec 9 algorithmes au choix (dont SVM et forêts aléatoires)
+%% \item Fusion et régularisation de cartes de classification
+%% \item Clustering de type K-Means ou carte de Kogonen
+%% \item Classification objets (segments issus d'une segmentation)
+%% \end{itemize}
+%% \end{block}
 
-\end{frame}
+%% \end{frame}
 
 \vspace*{-6.5mm}
 \begin{frame}[plain]
@@ -243,7 +244,7 @@ L'OTB capitalise une partie de la R\&D du CNES en extraction d'information, l'ou
 \begin{block}{Motivations}
 \begin{itemize}
 \item A chaque fois que c'est possible, l'Orfeo ToolBox s'appuie sur des
-  logiciels libres tiers
+  logiciels libres existants
 \item Cette position d'intégrateur permet d'accroître rapidement le nombre de fonctions tout en assurant leurs validité
 \item Elle permet également de créer de nouvelles fonctionnalités par hybridation
 \end{itemize}
@@ -318,24 +319,24 @@ analyse dynamique d'expressions mathématiques.
 \begin{columns}
   \column{0.55\textwidth}
   \begin{itemize}
-    \item Les applications OTB applications sont disponibles dans QGIS et dans Zoo-Project (service WPS)
+    \item Plugin QGIS, Zoo-Project...
     \item Certains composant des segments sols S2 et
       Venus (CNES et ESA)
     \item Logiciel éducatif Terr'Image
     \item Produits l'échelle nationale en France
-      dans THEIA (Occupation du sol, masques de neige, et même produits 2A via MAJA!)
+      dans THEIA (Occupation du sol, masques de neige, et même produits 2A...)
     \item Projet ESA S2 for Agriculture
     \item Logiciel Gnorasi (National Technical University of Athens)
     \item Projet GEOSUD (IRSTEA)
     \item Programme de recherche TCM (ETS Quebec)
-    \item Chaînes de traitement au CEREMA et au SERTIT
+    \item Chaînes de traitement: au CEREMA,au SERTIT...
   \end{itemize}
   \column{0.6\textwidth}
 \begin{center}
-  \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/Carte_17Classes.png}\\
-  \tiny{Produit occupation du sol THEIA (CESBIO)}
+  \includegraphics[width=0.6\textwidth,height=0.35\textheight]{images/oso-2017.jpeg}\\
+  \tiny{Occupation du sol(2017-CESBIO)}
   \includegraphics[width=0.6\textwidth]{images/gnorasi2.png}\\
-  \tiny{Le logiciel Gnorasi}
+  \tiny{Interface logiciel Gnorasi}
 \end{center}
 \end{columns}
 \end{frame}
@@ -502,26 +503,46 @@ OrthoRectification.ExecuteAndWriteOutput()
 \end{frame}
 
 \begin{frame}
-  \frametitle{OTB est officiellement un logiciel OSGeo (TODO)}
-  TODO
+  \frametitle{OTB est un logiciel OSGeo!}
+  \begin{block}{OSGeo incubation}
+    \begin{itemize}
+      \item Processus formel pour intégrer de nouveaux logiciels ``labellisés'' OSGeo
+      \item Incubation de l'OTB a débuté en 2011
+      \item Long voyage semé d'embûche...
+    \end{itemize}
+  \end{block}
+  \begin{center}
+  \includegraphics[width=0.35\textwidth]{images/osgeo-otb-website.png}
+  \end{center}
+  \begin{block}{L'âge de la maturité}
+    \begin{itemize}
+      \item Suivi les recommandations de l'OSGeo (gouvernance ouverte...)
+      \item Processus qui a aidé l'OTB a ``grandir''
+      \item Merci à l'OSGeo et à tous ses membres
+    \end{itemize}
+  \end{block}
+  
 \end{frame}
 
 \begin{frame}
   \frametitle{6.4 (Janvier 2018)}
-
   \begin{itemize}
   \item Améliorations du widget de sélection des fichiers multiples
   \item Application et filtre pour l'amélioration du contraste local (CLAHE)
   \item Amélioration du modèle générique de capteur SAR
-  \item Support de python 3
+  \item Support de Python 3
   \item Après cette release: déménagement vers gitlab!
-  \end{itemize}  
+  \end{itemize}
 \end{frame}
 
+%asuming you images are called "something-0.png" up to "something-11.png" 
 \begin{frame}
-  todo illustrations clahe
+  \frametitle{New in OTB 6.4: Contrast Enhancement - For fun and profit}
+  \transduration<0-1>{0}
+  \multiinclude[<+->][format=png, graphics={width=\textwidth}]{images/animation-clahe}
 \end{frame}
-
+    
+  
 \begin{frame}
   \frametitle{Gitlab: plus facile, plus intégré}
   \begin{columns}
@@ -551,11 +572,11 @@ OrthoRectification.ExecuteAndWriteOutput()
     \item $\approx$ 100 membres sur la liste développeurs
     \item $\approx$ 118 comptes sur le système de gestion des bugs
     \item $\approx$ 50 contributeurs (listé dans la documentation)
-    \item $\approx$ 3400 téléchargements for OTB 5.0
+    \item $\approx$ 2000 téléchargements par mois pour l'installeur OTB (Windows64)
   \end{itemize}
 \end{block}
 \begin{block}{Users Days 2015, 2016 et 2017}
-  15 à 20 participants à Toulouse pendant 3 jours
+  30 à 50 participants à Toulouse pendant 3 jours
 \end{block}
 \column{0.5\textwidth}
 \includegraphics[width=0.9\textwidth]{images/OTB4_download_sourceforge_country_crop.png}\\
@@ -604,6 +625,25 @@ TODO 5 slides
 \end{block}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Journée Utilisateur OTB 2018 - Montpellier - 19/10/2018}
+  \begin{description}
+  \item[Où?] \href{http://www.agropolis.fr/pratique/locaux.php}{Agropolis International}
+  \item[Quand?] 19 Octobre 2018 - Suite séminaire \href{http://theia2018.sciencesconf.org}{THEIA}
+  \item[Quoi?] Présentations, Retour d'expérience, Formations, tutos...
+  \item[Comment?] Gratuit, ouvert à tous et à toutes...
+  \item[Je m'inscris!] \href{https://tinyurl.com/y7yzjvad}{https://tinyurl.com/y7yzjvad}
+  \end{description}
+  \begin{center}
+    \alert{Venez nombreux!}
+  \end{center}
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{images/montpellier.jpg}
+  \end{center}
+
+  
+\end{frame}
+  
 \begin{frame}
 \frametitle{Merci pour votre attention. Des questions?}
 \begin{minipage}[t][6cm][t]{\textwidth}
