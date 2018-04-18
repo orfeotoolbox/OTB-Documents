@@ -64,7 +64,7 @@ if __name__ == "__main__":
     
     # Declare the input list : the first element is declared alone (im1 = Red-B4)
     application2.AddParameterStringList("il",str(d["input_path"] + d["B4_image"]))
-    application2.SetParameterString("out", "ndvi_mask.tif")
+    application2.SetParameterString("out", "water_mask.tif")
     application2.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_uint8)
   
 
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     # END OF GAP 
     # ---
     # The following line execute the application
-    print("Launching... BandMath : Water Mask by NDVI")
+    print("Launching... BandMath : Water Mask by using NDVI")
     application2.ExecuteAndWriteOutput()
     print("End of BandMath NDVI \n")
 
