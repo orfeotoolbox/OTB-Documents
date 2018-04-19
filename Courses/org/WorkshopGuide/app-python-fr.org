@@ -43,7 +43,7 @@ import otbApplication
 orth=otb.Registry.CreateApplication("OrthoRectification") 
 #+end_src
 
-*** Syntax 
+*** Syntaxe
     - Accesseurs
 #+begin_src python
 app.GetParametersKeys()
@@ -70,7 +70,7 @@ ExtractROI.STARTX=140
 
 *** Connexion en mémoire des applications
     - On utilise souvent 1 application dans une chaine plus large
-    - Les opérations de lecture/écriture sont souvent couteuse spécialement en télédétection
+    - Les opérations de lecture/écriture sont souvent coûteuses spécialement en télédétection
     - Idée: connecter la sortie de app1 à l'entrée de app2
     - Syntaxe disponible en C++ et Python
     - Lié aux méchanismes de traitements au fil de l'eau(/streaming/) de l'OTB
@@ -141,11 +141,11 @@ ExtractROI.STARTX=140
 |--------------|
 
      1. Ouvrez les images composite_*.vrt dans Monteverdi. Elles correspondent
-        au composition RGB pour chaque date. Qu'observe-t-on dans ces images?  
+        aux compositions RGB pour chaque date. Qu'observe-t-on dans ces images?  
         Comment évolue les surfaces en eau? 
 
      *Note*: L'image composite au format VRT a été crée avec l'utilitaire
-     ~gdalbuildvrt~ pour cet exercice. Elle ne sont pas inclus dans les produits Sentinel-2.
+     ~gdalbuildvrt~ pour cet exercice. Elles ne sont pas inclues dans les produits Sentinel-2.
 
 **** Sentinel 2 - Niveau 2A
 
@@ -201,7 +201,7 @@ ExtractROI.STARTX=140
      C'est parti: 
 
      1. Nous allons utilisé les images en réflectance de surface pour extraire
-        les surfaces en eau, à votre avis quel produit plutôt utilisé: SRE ou FRE? 
+        les surfaces en eau, à votre avis quel produit faut-il plutôt utilisé: SRE ou FRE? 
 
      2. Comparez la taille sur le disque des produits B3 et B11 dans le
         répertoire ~app-python/images/SENTINEL2A_*/~. Est-ce que les fichiers
@@ -243,7 +243,7 @@ ExtractROI.STARTX=140
         $ python exercise1.py
         #+END_EXAMPLE
         La sortie afficher la liste des applications disponibles. Quelle ligne
-        dans le script affiche la liste des applications? Cette méthode est
+        dans le script affiche la liste des applications? Cette méthode est-elle
         disponible dans les modules Registry ou Application?
 
      Dans la deuxième partie du script, l'objectif est d'utiliser l'application
@@ -308,22 +308,22 @@ ExtractROI.STARTX=140
         #+BEGIN_EXAMPLE
         $ python exercise2.py
         #+END_EXAMPLE
-        Quel est la sortie du script? Ouvrez le résultat dans Monteverdi.
+        Quelle est la sortie du script? Ouvrez le résultat dans Monteverdi.
 
 **** Chainage en mémoire des applications OTB: exercise3.py
      Cet exercice est équivalent à /exercise2.py/, à la différence qu'on ne
      souhaite pas écrire les fichiers intermédiaires sur disque. L'objectif est
      de traiter toute la chaine de traitements en mémoire (RAM).  
 
-     Une seconde amélioration est laissé pour la dernière étape du tutoriel, qui
+     Une seconde amélioration est laissée pour la dernière étape du tutoriel, qui
      consiste à calculer le NDVI et le seuillage en une seule étape. 
      En terme OTB, cela consiste à appliquer 1 BandMath (au lieu de 2).
      
-     Le script ~exercise3.py~ enchaine les applications OTB suivant le schéma suivant:
+     Le script ~exercise3.py~ enchaîne les applications OTB suivant le schéma suivant:
       #+ATTR_LATEX: :float t :width 1\textwidth
      [[file:Images/app-python-3.png]]
 
-     Connexion en mémoire: la sortie de /app1/ doit être déclaré comme entrée de
+     Connexion en mémoire: la sortie de /app1/ doit être déclarée comme entrée de
      l'application /app2/ en utilisant la syntaxe suivante: 
         - app2.SetParameterInputImage("in",app1.GetParameterOutputImage("out"))
           si l'entrée de /application2/ est une image (comme pour l'application Superimpose)
@@ -343,7 +343,7 @@ ExtractROI.STARTX=140
         python exercise3.py
         #+END_EXAMPLE
         Vous pouvez remarquer que dans le script,
-        l'appelApplicationX.ExecuteAndWriteOutput() a été changé par
+        l'appel ApplicationX.ExecuteAndWriteOutput() a été changé par
         ApplicationX.Execute() dans ~exercise3.py~. Comment cela modifie la
         séquence des exécutions?
      5. Dans Application1, les paramètres de sortie ont été déclarés avec un nom
@@ -382,7 +382,7 @@ ExtractROI.STARTX=140
         Vous devez adapter le chemin ~app-python/data~ à votre système.
      2. Ouvrir ~exercise4.py~ et compléter le champ "FILL THE GAP 2" pour
         modifier l'expression de l'application BandMath (valeur 255 quand le
-        masque de nuages est différent de zéro et sinon conservé la valeur du NDVI).
+        masque de nuages est différent de zéro et sinon conserver la valeur du NDVI).
      3. Lancez ~exercise4.py~ avec différentes dates d'images en entrée:
 
             ~python exercise4.py SENTINEL2A_20161218-153729-222_L2A_T17MNP_D_V1-4~
@@ -398,8 +398,8 @@ ExtractROI.STARTX=140
 
 **** Comparaison avec une référence: exercise5.py  
  
-     Les masques d'eau obtenus après Février 2017 correspond à un événement lié
-     à une inondation dans la région de /Laguna de la Nina/. Quel est la
+     Les masques d'eau obtenus après Février 2017 correspondent à un événement lié
+     à une inondation dans la région de /Laguna de la Nina/. Quelle est la
      fréquence de ce type d'évènement dans la région? Essayons de répondre à
      cette question dans l'exercice suivant. 
      
@@ -407,10 +407,10 @@ ExtractROI.STARTX=140
      été obtenue à partir d'images optiques (satellite LandSat) sur les 30
      dernières années. Nous allons utilisé cette carte pour extraire la
      fréquence d'observation de pixel d'eau sur une zone donnée. Ce produit
-     contient une carte d'occurence qui correspond pour chaque pixel, au ratio entre le nombre de
-     fois ou l'eau a été détecté et le nombre d'observations valides observées
+     contient une carte d'occurrence qui correspond pour chaque pixel, au ratio entre le nombre de
+     fois où l'eau a été détectée et le nombre d'observations valides observées
      les 30 dernières années. Ainsi, un pixel avec la valeur égale à 10 signifie
-     que l'eau a été observé dans 10% des observations valides.
+     que l'eau a été observée dans 10% des observations valides.
 
      #+ATTR_LATEX: :float t :width 0.7\textwidth
      [[file:Images/app-python-6.png]]
@@ -447,12 +447,12 @@ ExtractROI.STARTX=140
            la génération des overviews.
 
            Quelle valeur observe-t-on autour de la coordonnée, lon: -80.6767, lat: -5.91?
-           Est-ce que vous observez des zones avec 90% à 100% d'occurence?
-           Qu'est-ce que cela tu signifies? Est-ce que cela correspond à des
+           Est-ce que vous observez des zones avec 90% à 100% d'occurrence?
+           Qu'est-ce que cela signifie ? Est-ce que cela correspond à des
            eaux permanentes? 
 
         2. Notre zone d'étude correspond à une partie de l'image
-           ~ref/occurrence_90W_0N.tif~. Le script ~exercise5.py~ enchaine les
+           ~ref/occurrence_90W_0N.tif~. Le script ~exercise5.py~ enchaîne les
            applications Superimpose et BandMath pour obtenir une couche GSW
            rognée, réechantillonnée et seuillée. 
            
@@ -470,7 +470,7 @@ ExtractROI.STARTX=140
 
         3. Maintenant il est temps de comparer les masques d'eau obtenus à
            l'exercice 4 (aux 3 dates: 20161218,
-           20170407 and 20171203) avec chaque données de références. 
+           20170407 and 20171203) avec chaque donnée de référence. 
            
            Pour cela, ouvrez la liste des [[https://www.orfeo-toolbox.org/CookBook/Applications.html][applications OTB]], section
            /Learning/. Quelle application peut être utilisée pour comparer 2
