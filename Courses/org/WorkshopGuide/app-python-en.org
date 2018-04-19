@@ -210,7 +210,7 @@ ExtractROI.STARTX=140
          - SRE: (SRE for Surface REflectance) corrected for atmospheric effects,
            including adjacency effects
          - FRE: (FRE for Flat REflectance) are also corrected for slope effect,
-           which consists in suppressing the apparent reflectances
+           which consists in suppressing the apparent reflectance
            variations. The corrected images look like if the land was flat.  
          - MTD: Metadata
          - QKL: quicklook file (low resolution image to show an RGB overview )
@@ -265,7 +265,7 @@ ExtractROI.STARTX=140
         *Note:* Make sure that OTB binary files ($otb-path/bin) is included 
         in your PATH environment variable.
  
-     4. Look at /MASKS subfolder : there is a CLM file that contains a cloud
+     4. Look at /MASKS sub-folder : there is a CLM file that contains a cloud
         mask. Do you think that this information might be interesting to 
         make better water detections? How? 
 
@@ -317,7 +317,7 @@ ExtractROI.STARTX=140
 | Parameter Key | Parameter Name         | Parameter Type |
 |---------------+------------------------+----------------|
 | inr           | Reference Input        | input image    | 
-| inm           | The image to reproject | input image    | 
+| inm           | Image to re-project    | input image    | 
 | out           | Output image           | output image   | 
      
      2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
@@ -598,7 +598,7 @@ ExtractROI.STARTX=140
        #+BEGIN_EXAMPLE
        application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)<0?1:0")
        #+END_EXAMPLE
-    4. The lines with ~ApplicationX.Execute()~ will not launch inmediatly the ApplicationX. This line 
+    4. The lines with ~ApplicationX.Execute()~ will not launch immediately the ApplicationX. This line 
        just describes that the ApplicationX will be launched in a pipeline sequence. 
        When another ~ApplicationY.ExecuteAndWriteOutput()~ is further applied
        in the same pipeline, where the inputs of ApplicationY are dependent of the
@@ -620,7 +620,7 @@ ExtractROI.STARTX=140
        appX.SetParameterOutputImagePixelType("out", \
                "water_mask.tif?&gdal:co:NBITS=1")
        #+END_EXAMPLE
-       This solution will use just 1 bit per pixel. For a better understading,
+       This solution will use just 1 bit per pixel. For a better understanding,
        see module "Internals".
 
 *** Water detection chain with NoData management: exercise4.py
@@ -664,7 +664,7 @@ ExtractROI.STARTX=140
 
        20171203  >> GSW_20 (kappa = 0.5677)
 
-    4. The water surface contained in the 20161218 image (the dryest one) is seen at least 
+    4. The water surface contained in the 20161218 image (the driest one) is seen at least 
        75% of the times (during the 32 years of Landsat observations).
        The second image have a water extent that has been seen only 10% of the times 
        and the third one only the 20% of the times. 
