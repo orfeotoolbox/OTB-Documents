@@ -512,16 +512,16 @@ ExtractROI.STARTX=140
 *** Introduction : Water monitoring in the Laguna de la Nina(Peru) event 
     1. The color composition of each image of level 2 allows to see the regions as 
        seen by the naked eye and seen as we did not have any atmosphere. 
-       The images show how this region goes over three phases: 
+       The images show how this region evolves over three phases: 
         - empty lagoon on December 2016
         - max extension of the flooded lagoon in April 2017
-        - flooding lagoon decreasing its size. 
+        - flooded lagoon decreasing in December 2017. 
 
 
 *** Sentinel 2 - Level 2A Format
 
     1. FRE images have been corrected for the effect of slopes (which affects illumination)
-       , and hence, the physical properties of the ground are better described.
+       , and hence, the physical properties of the observed surfaces are better described. 
 
     2. B3 and B11 have different resolutions. Higher resolution (smaller pixel size) for the same area
        involves a higher number of pixels to be described in the file, and hence, a bigger file size. 
@@ -529,11 +529,11 @@ ExtractROI.STARTX=140
     3. Each band is independent from the others.
  
     4. An zone covered with clouds does not present any information about the ground.
-       It is better to avoid the cloud areas by tagging them as NODATA regions, in order to 
+       It is better to ignore the clouded areas by tagging them as NODATA regions, in order to 
        avoid false detections of water.
 
-    5. On water regions, B4(RED) has higher reflectance values than B8A(NIR). This condition
-       is used on the NDVI calculations to detect water pixels.
+    5. On water regions, B4(RED) has higher reflectance values than B8A(NIR). This relation between 
+       bands is used on the NDVI calculations to detect water pixels.
 
 
 *** Simple OTB application in Python : exercise1.py
@@ -546,8 +546,8 @@ ExtractROI.STARTX=140
     3. ~Superimpose = otbApplication.Registry.CreateApplication("Superimpose")~
 
     4. The new generated Near Infrared image has a finer resolution (pixel size = 10m) 
-       compared to the original image (pixel size = 20m). These new finer pixel values 
-       have been interpolated. You may use Monteverdi to zoom closer and compare the generated 
+       than the original image (pixel size = 20m). The new finer pixel values 
+       have been interpolated. You can use Monteverdi to zoom closer and compare the generated 
         ~B8A_10m.tif~ and the original B8A image. You shall appreciate the smoothed interpolated
        values in the new image.
          
@@ -556,29 +556,48 @@ ExtractROI.STARTX=140
     1. ---
 
     2. Gaps to fill:
-       - Gap 2 : ~application1.SetParameterString("inr",str( d["input_path"] + d["B4_image"]))~
-                 ~application1.SetParameterString("inm",str( d["input_path"] + d["B8A_image"]))~
-                 ~application1.SetParameterString("out", "B8A_10.tif")~
-       - Gap 3 : ~application2.SetParameterStringList("il",["B8A_10.tif",
-                 str(d["input_path"] + d["B4_image"])])~
-                 ~application2.SetParameterString("out", "ndvi.tif")~
-                 ~application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)")~
-       - Gap 4 : ~application3.SetParameterStringList("il",["ndvi.tif"])~
-                 ~application3.SetParameterString("out", "water_mask.tif")~
-                 ~application3.SetParameterString("exp", "im1b1<0?1:0")~
-    3. *ndvi.tif* : intermediary Geotif file that contains the Normalized
+       - Gap 2 : 
+         #+BEGIN_EXAMPLE
+         application1.SetParameterString("inr",str( d["input_path"]  \
+                                         + d["B4_image"]))
+         application1.SetParameterString("inm",str( d["input_path"]  \
+                                         + d["B8A_image"]))
+         application1.SetParameterString("out", "B8A_10.tif")
+         #+END_EXAMPLE
+       - Gap 3 : 
+         #+BEGIN_EXAMPLE
+         application2.SetParameterStringList("il",["B8A_10.tif", \
+                                  str(d["input_path"] + d["B4_image"])])  
+         application2.SetParameterString("out", "ndvi.tif")    
+         application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)")
+         #+END_EXAMPLE
+       - Gap 4 : 
+         #+BEGIN_EXAMPLE
+         application3.SetParameterStringList("il",["ndvi.tif"])
+         application3.SetParameterString("out", "water_mask.tif")
+         application3.SetParameterString("exp", "im1b1<0?1:0")
+         #+END_EXAMPLE
+    3. *ndvi.tif*: intermediary Geotif file that contains the Normalized
        Vegetation Index of the scene.
 
-       *water-mask.tif* : binary mask (Geotif file) that contains the value 1 for those pixels
+       *water-mask.tif*: binary mask (Geotif file) that contains the value 1 for those pixels
        with a value of NDVI under a given threshold, that is considered as Water Pixels. The rest of the
        pixels are considered as Land (pixel value = 0).
+       Note: In Monteverdi, check the High/low values of the Dynamic Range to be 0 and 1. 
+       Also, deactivate the display of  NODATA values.
 
 *** Chain OTB applications in-memory: exercise3.py
      
     1. ---
-    2. ~application2.AddImageToParameterInputImageList("il",
-       application1.GetParameterOutputImage("out"))~
-    3. ~application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)<0?1:0")~
+    2. The gap is filled as follows:
+       #+BEGIN_EXAMPLE
+       application2.AddImageToParameterInputImageList("il", \
+                   application1.GetParameterOutputImage("out"))
+       #+END_EXAMPLE
+    3. The gap is filled as follows:
+       #+BEGIN_EXAMPLE
+       application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)<0?1:0")
+       #+END_EXAMPLE
     4. The lines with ~ApplicationX.Execute()~ will not launch inmediatly the ApplicationX. This line 
        just describes that the ApplicationX will be launched in a pipeline sequence. 
        When another ~ApplicationY.ExecuteAndWriteOutput()~ is further applied
@@ -597,8 +616,10 @@ ExtractROI.STARTX=140
        which is alright for the 2 values needed (0=land,1=water).
 
        We may go further using the Extended filenames mechanism on the output file definition:
-       ~appX.SetParameterOutputImagePixelType("out",
-       "water_mask.tif?&gdal:co:NBITS=1")~
+       #+BEGIN_EXAMPLE
+       appX.SetParameterOutputImagePixelType("out", \
+               "water_mask.tif?&gdal:co:NBITS=1")
+       #+END_EXAMPLE
        This solution will use just 1 bit per pixel. For a better understading,
        see module "Internals".
 
@@ -606,26 +627,34 @@ ExtractROI.STARTX=140
 
     1. ---
 
-    2. ~app3.SetParameterString("exp", "im2b1!=0?255:im1b1")~
+    2. The gap is filled as follows:
+       #+BEGIN_EXAMPLE
+       app3.SetParameterString("exp", "im2b1!=0?255:im1b1")
+       #+END_EXAMPLE
 
     3. ---
 
-    4. The straight lines are roads, which have similar spectral responses to water responses
+    4. The straight lines are roads, which have similar spectral responses compared to water
        in the RED and NIR bands.
          
 
 *** Comparison with a reference: exercise5.py 
  
-    1. The value = 90 means that water has been found in the 90% of the observations during the 32 years
+    1. In the GSW product, the value = 90 means that water has been found 
+       in the 90% of the observations during the 32 years
        period. It corresponds to permanent waters.
 
     2. ---
 
     3. The ComputeConfusionMatrix application can be used to compare raster images as follows: 
 
-       ~otbcli_ComputeConfusionMatrix -in GSW_10.tif -ref raster
-       -ref.raster.in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif -ref.raster.nodata "255"
-       -out conf_A_90.csv~
+       #+BEGIN_EXAMPLE
+       $ otbcli_ComputeConfusionMatrix -in GSW_10.tif \
+         -ref raster \
+         -ref.raster.in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
+         -ref.raster.nodata "255" \
+         -out conf_A_90.csv
+       #+END_EXAMPLE
 
        The best kappa results for each date are:
 
