@@ -216,6 +216,9 @@ With ~phr_xs_osr_mipy.tif~:
    (TOA-TOC). Compare the red, green and blue (B0,B1,B2) bands of the
    TOA and TOC images. Which band is more impacted by atmospheric
    effects ?
+
+   *Note:* The application BandMathX can apply one operation to all the bands simultaneously.
+
 4. Apply operations 1, 2 and optionally 3 to the panchromatic image ~phr_pan_osr_mipy.tif~.
 
 _Tips :_
@@ -351,7 +354,7 @@ _Tips :_
      orthorectification:
 
         1. Without Digital Elevation Model (DEM)
-        2. With a DEM and a geoid (use the ~SRTM~ directory)
+        2. With a DEM (use the ~SRTM~ directory) and a geoid file (~Geoid/egm96.grd~)
         3. Compare the 2 images in Monteverdi. What do you notice?
         4. What is the projection system by default in the *Orthorectification* application?
         5. In which UTM zone is located the Pleiades image?

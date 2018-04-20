@@ -239,7 +239,7 @@ Open one of the files in QGIS. The attribute table can be accessed by
 
      Some optional parameters should also be set as follows:
      - Random forest classifier for the learning algorithm,
-     - The number of tree set to 50,
+     - The maximum number of tree set to 50,
      - The maximal tree depth to 20,
      - The minimum number of samples in each node to 70,
      - The number of clusters to 13 (equal to the number of classes)
@@ -256,7 +256,7 @@ Open one of the files in QGIS. The attribute table can be accessed by
      (you therefore set two different shp files in the
      application). What can be observed ?
      
-     Do the training again, and deactivate the ~cleanup~ option. Look
+     Do the training again, and deactivate the ~temporary files cleaning~ option. Look
      at the intermediate data that have been generated. What are they
      used for ?
 
