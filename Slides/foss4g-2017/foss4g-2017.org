@@ -266,7 +266,7 @@ Once upon a time OTB started the OSGeo incubation...
 
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
-   [[file:images/otb_provider_config.png]]
+   [[file:images/qgis_otb_provider_config.png]]
    #+LATEX:\end{center} 
 
    #+LATEX:\begin{center}
