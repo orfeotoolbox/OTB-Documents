@@ -263,6 +263,7 @@ Once upon a time OTB started the OSGeo incubation...
   - support for remote modules
   - otb processing provider knows to recreate descriptor file for apps (if not found)
   - first version is distributed a plugin
+  - plugin repository is https://gitlab.orfeo-toolbox.org/orfeotoolbox/qgis-otb-plugin
 
    #+LATEX:\begin{center}
    #+ATTR_LATEX: :float :width 0.8\textwidth
