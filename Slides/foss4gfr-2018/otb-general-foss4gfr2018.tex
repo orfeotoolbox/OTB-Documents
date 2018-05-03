@@ -590,8 +590,59 @@ OrthoRectification.ExecuteAndWriteOutput()
 \section{Make OTB better in QGIS!}
 
 \begin{frame}
-TODO (5 slides)
+\frametitle{Old version}
+\begin{itemize}
+\item Maintenance, Maintenance, Maintenance.
+\item Each version of otb needs to update list of descriptor files
+\item XML files which are hard to maintain.
+\item requires to update a blacklist and whitelist documents to list app that cannot be included and can be included
+\item needs manual update of these xml + followup on pull request
+\item works only with limited version of OTB (Not last release, mostly behind 3-4 releases)
+\item Nobody want to work on it from otb and qgis side. maintained by CS team
+\item Some applications were grouped, depending on their parameters : BinaryMorphologicalOperation (Closing, Dilate, Erode, Opening)
+\item Add new parameter in ParameterMultipleExternalInput processing, to use it in FusionOfClassifications
+\end{itemize}
+
 \end{frame}
+
+\begin{frame}
+\frametitle{New version}
+\begin{itemize}
+\item Easy maintenance for both OTB team and QGIS team
+\item Descriptors are generated, distributed and maintained by OTB
+\item Out of box support for qgis via binary packages
+\item Applications are not grouped.
+\item Development took a turn due to some *non-technical*/politic issues in qgis and otb
+\item Will be added back to QGIS processing core later (Thanks to QGIS team)
+\item Support for remote modules
+\item OTB processing provider knows to recreate descriptor file for apps (if not found)
+\item First version is distributed a plugin
+\item Plugin repository is \href{https://gitlab.orfeo-toolbox.org/orfeotoolbox/qgis-otb-plugin}{https://gitlab.orfeo-toolbox.org/orfeotoolbox/qgis-otb-plugin}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{QGIS Plugin}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/qgis_otb_provider_config.png}
+\end{center} 
+\end{frame}
+
+\begin{frame}
+\frametitle{QGIS Plugin}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/qgis_smoothing.png}
+\end{center} 
+\end{frame}
+
+\begin{frame}
+\frametitle{QGIS Plugin}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/qgis_train_classif.png}
+\end{center} 
+\end{frame}
+
+
 
 \section{Conclusion}
 
