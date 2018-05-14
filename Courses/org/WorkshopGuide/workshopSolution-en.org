@@ -1,6 +1,6 @@
 #+TITLE:  Guide for OTB training courses (Solutions) 
 #+AUTHOR: OTB Team
-#+DATE: 2017
+#+DATE: 2018
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,pdftex,openright]
@@ -126,3 +126,5 @@ parameter values in the GUI (Mapla or Monteverdi).
 #+INCLUDE: "classification-en.org" :minlevel 1
 * SAR processing on Sentinel-1 images
 #+INCLUDE: "sar-en.org" :minlevel 2
+* OTB Applications on Python API
+#+INCLUDE: "app-python-en.org" :minlevel 2

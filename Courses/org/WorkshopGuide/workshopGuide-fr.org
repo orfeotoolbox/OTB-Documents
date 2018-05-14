@@ -1,6 +1,6 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Guide des Travaux Pratiques
 #+AUTHOR: OTB team
-#+DATE: 2017
+#+DATE: 2018
 #+LANGUAGE: fr
 #+OPTIONS: H:5
 #+LaTeX_CLASS: article
@@ -129,5 +129,7 @@ Pour obtenir d'autres données et plus d'informations relatives à ces capteurs:
 #+INCLUDE: "classification-fr.org" :minlevel 1
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
+* Utiliser les applications OTB en Python
+#+INCLUDE: "app-python-fr.org" :minlevel 2
 * Développer avec l'OTB
-#+INCLUDE: "dev_exercises/developers-fr.org" :minlevel 2
+#+INCLUDE: "developers-c++-fr.org" :minlevel 2

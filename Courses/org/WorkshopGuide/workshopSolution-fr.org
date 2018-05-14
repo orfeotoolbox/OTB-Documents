@@ -1,6 +1,6 @@
 #+TITLE: Formation à l'Orfeo ToolBox: Solutions des Travaux Pratiques
 #+AUTHOR: OTB Team
-#+DATE: 2017
+#+DATE: 2018
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,pdftex,openright]
@@ -73,4 +73,4 @@ paramètres dans l'interface graphique si besoin.
 * Traitements SAR pour l'imagerie Sentinel 1
 #+INCLUDE: "sar-fr.org" :minlevel 2
 * Développer avec l'OTB
-#+INCLUDE: "dev_exercises/developers-fr.org" :minlevel 2
+#+INCLUDE: "developers-c++-fr.org" :minlevel 2

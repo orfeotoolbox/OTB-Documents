@@ -239,6 +239,51 @@ Once upon a time OTB started the OSGeo incubation...
      process in 2017
    - It took time\ldots
    - \ldots But it was perhaps the time needed by the project 
+* QGIS
+
+** Old version
+  - Maintenance, Maintenance, Maintenance..
+  - Each version of otb needs to update list of descriptor files
+  - XML files which are hard to maintain..
+  - requires to update a black_list and white_list documents to list app that cannot be included and can be included
+  - needs manual update of these xml + followup on pull request
+  - works only with limited version of OTB (Not last release, mostly behind 3-4 releases)
+  - Nobody want to work on it from otb and qgis side. maintained by CS team
+  - Déclinaisons de certaines applications selon un critère donné (souvent un groupe de paramètres).
+  - BinaryMorphologicalOperation (Closing, Dilate, Erode, Opening)
+  - Ajout d’un nouveau paramètre dans processing ParameterMultipleExternalInput pour une utilisation dans FusionOfClassifications
+
+** New version
+  - Easy maintenance for both OTB team and QGIS team
+  - descriptors are generated, distributed and maintained by OTB
+  - out of box support for qgis via binary packages
+  - applications are not grouped.
+  - development took a turn due to some *non-technical*/politic issues in qgis and otb
+  - Will be added back to QGIS processing core later (Thanks to QGIS team)
+  - support for remote modules
+  - otb processing provider knows to recreate descriptor file for apps (if not found)
+  - first version is distributed a plugin
+  - plugin repository is https://gitlab.orfeo-toolbox.org/orfeotoolbox/qgis-otb-plugin
+
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/qgis_otb_provider_config.png]]
+   #+LATEX:\end{center} 
+
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/qgis_smoothing.png]]
+   #+LATEX:\end{center} 
+
+   #+LATEX:\begin{center}
+   #+ATTR_LATEX: :float :width 0.8\textwidth
+   [[file:images/qgis_train_classif.png]]
+   #+LATEX:\end{center} 
+
+** Future work
+ - Testing to find bugs in plugin before merging to core
+ - include otb (descriptor) in unit testing
+
 * Conclusion
 ** Conclusion
    - OSGeo incubation starts in 2011 (first application)
