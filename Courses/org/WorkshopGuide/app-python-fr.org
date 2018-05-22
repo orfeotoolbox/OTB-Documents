@@ -486,12 +486,12 @@ ExtractROI.STARTX=140
 
 ** Utiliser les applications OTB en Python                           :solutions:
 *** Introduction : Suivi des surfaces en eau dans la région de /Laguna de la Nina/(Pérou) 
-    1. Ouvrir les images composition_*.vrt (composition RGB) dans Monteverdi
+    1. Ouvrir les images compostion_*.vrt (composition RGB) dans Monteverdi
        pour chaque date.  
         
        La composition colorée correspond aux bandes RGB dans le visible sans
        effets atmosphériques.
-       On observe 3 phases dans l'évolution de l'étendu en eau sur la zone:
+       On observe 3 phases dans l'évolution de l'étendue en eau sur la zone:
        - zone vide d'eau en Décembre 2016
        - Étendu maximale de la zone inondée en Avril 2017
        - Zone inondée diminue
@@ -511,31 +511,146 @@ ExtractROI.STARTX=140
        est de marquer ces zones comme des "NODATA" pour éviter les fausses
        détection sur l'eau.
 
-    5. Sur les régions en eau, la bande B4 (rouge) a une réfléctance plus forte
+    5. Sur les régions en eau, la bande B4 (rouge) a une réflectance plus forte
        que B8A (proche infra-rouge)
 
 *** Une application OTB simple: exercise1.py
     
     Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
     archive contenant les corrigés de tous les fichiers sources (Python).  
+
+    1. La commande ~print(str(otbApplication.Registry.GetAvailableApplications()))~ permet 
+       d'afficher la liste des applications en utilisant une méthode disponible dans le module
+       ~Registry~ de l'OTB
+
+    2. ---
+
+    3. ~Superimpose = otbApplication.Registry.CreateApplication("Superimpose")~
+
+    4. La nouvelle image a une résolution plus fine que l'imge initiale (largeur de pixel : 10 m au lieu de 20m).
+       Les nouvelles valeurs ont été interpolées.
+       En utilisant Monteverdi, on peut "zoomer" et observer le lissage effectué sur l'image résolue à 10m.
          
 *** Chainage des applications OTB: exercise2.py
 
-    Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
-    archive contenant les corrigés de tous les fichiers sources.
+     1. ---
 
-*** Chainage en mémoire des applications OTB: exercise3.py
-     
-    Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
-    archive contenant les corrigés de tous les fichiers sources.
+     2. Code à compléter
+       - Configurer l'application SuperImpose pour ré-échantillonner l'image B8 à la résolution de l'image B4 : 
+         #+BEGIN_EXAMPLE
+         application1.SetParameterString("inr",str( d["input_path"]  \
+                                         + d["B4_image"]))
+         application1.SetParameterString("inm",str( d["input_path"]  \
+                                         + d["B8A_image"]))
+         application1.SetParameterString("out", "B8A_10.tif")
+         #+END_EXAMPLE
+       - Configurer l'application BandMath pour calculer le NDVI : 
+         #+BEGIN_EXAMPLE
+         application2.SetParameterStringList("il",["B8A_10.tif", \
+                                  str(d["input_path"] + d["B4_image"])])  
+         application2.SetParameterString("out", "ndvi.tif")    
+         application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)")
+         #+END_EXAMPLE
+       - Configurer l'application BandMath pour calculer le masque d'eau : 
+         #+BEGIN_EXAMPLE
+         application3.SetParameterStringList("il",["ndvi.tif"])
+         application3.SetParameterString("out", "water_mask.tif")
+         application3.SetParameterString("exp", "im1b1<0?1:0")
+         #+END_EXAMPLE
+    3. *ndvi.tif*: image Geotif intermédiaire, contenant l'indice de végétation normalisé de la scène. 
+
+       *water-mask.tif*: masque binaire (image Geotif) contenant des "1" pour les pixels ayant une valeur 
+       NDVI sous un certain seuil, et considérés comme pixels d'eau.
+       Le reste est considéré comme terre émergée et a une valeur de 0.
+       Remarque : dans Monteverdi, il faut vérifier que les valeurs basses/hautes de la dynamique 
+       sont bien réglées à 0 et 1 pour permettre l'affichage des valeurs ; ensuite, il faut ré-activer 
+       l'affichage des valeurs NODATA.
+
+*** Chaînage en mémoire des applications OTB: exercise3.py
+
+    1. ---
+    2. Connecter l'entrée de l'application 2 sur la sortie de l'application 1
+       #+BEGIN_EXAMPLE
+       application2.AddImageToParameterInputImageList("il", \
+                   application1.GetParameterOutputImage("out"))
+       #+END_EXAMPLE
+    3. Calculer le NDVI et le masque d'eau en une commande BandMath
+       #+BEGIN_EXAMPLE
+       application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)<0?1:0")
+       #+END_EXAMPLE
+    4. Les lignes ~ApplicationX.Execute()~ ne lancent pas directement ApplicationX.
+       Ces lignes servent à la construction du pipeline des applications OTB.
+       Ce n'est que lorsque l'on appelle ~ApplicationY.ExecuteAndWriteOutput()~ que 
+       le pipeline est complètement résolu : comme les entrées de ApplicationY dépendent des 
+       sorties d'ApplicationX, alors l'exécution d'ApplicationX sera déclenchée.
+
+    5. Quand ~ApplicationX.Execute()~ est appelé, les résultats sont stockés en mémoire
+       pour permettre l'exécution des applications du pipeline dépendant des sorties de l'application.
+       Ainsi, le fichier de sortie (~B8A_10m.tif~) n'est jamais écrit sur le disque, mais son contenu
+       sert bien d'entrée à Application2.
+
+    6. Afin de réduire la taille du fichier de sortie sans dégrader l'image, on peut simplement utiliser
+       un type simple pour stocker les valeurs et prendre moins d'espace disque.
+       Au lieu d'utiliser un type flottant (2 ou 4 octets, selon qu'on utilise Float ou Double), on 
+       peut utiliser un type entier (ex : uint8 : entier non signé sur 8 bits) qui autorise 256 valeurs
+       différentes et n'occupera qu'un octet par pixel. Compte-tenu des deux valeurs à coder (0:terre, 1:eau)
+       l'image de sortie peut-être codée de la sorte.
+       
+       On peut même aller plus loin en utilisant le mécanisme des fichiers étendus, au moment où l'on 
+       nomme la sortie :
+       #+BEGIN_EXAMPLE
+       appX.SetParameterOutputImagePixelType("out", \
+               "water_mask.tif?&gdal:co:NBITS=1")
+       #+END_EXAMPLE
+       Cette solution n'utilise qu'un bit par pixel : voir le module "Internals" pour plus d'explications
+       sur le sujet.
 
 *** Détection de l'eau et gestion des /nodata/: exercise4.py
 
-    Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
-    archive contenant les corrigés de tous les fichiers sources. 
+    1. ---
+
+    2. Traiter le masque de nuage avec la valeur 255 s'il est présent et le NDVI sinon : 
+       #+BEGIN_EXAMPLE
+       app3.SetParameterString("exp", "im2b1!=0?255:im1b1")
+       #+END_EXAMPLE
+
+    3. ---
+
+    4. Ces lignes droites sont des routes, qui ont une réponse spectrale proche de l'eau, dans les bandes 
+       rouge et proche infra-rouge
+         
          
 *** Comparaison avec une référence: exercise5.py 
  
-    Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
-    archive contenant les corrigés de tous les fichiers sources.
+       1. Dans le produit GSW, une valeur de 90 indique que l'eau a été observée sur 90% des observations
+	  disponibles dans le jeu de données (32 ans)
+	  Cela correspond à des eaux permanentes.
 
+       2. ---
+
+       3. L'application de calcul de la matrice de confusion permet de comparer les images :
+
+       #+BEGIN_EXAMPLE
+       $ otbcli_ComputeConfusionMatrix -in GSW_10.tif \
+         -ref raster \
+         -ref.raster.in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
+         -ref.raster.nodata "255" \
+         -out conf_A_90.csv
+       #+END_EXAMPLE
+
+       The best kappa results for each date are:
+
+       20161218  >> GSW_75 (kappa = 0.8175)
+
+       20170407  >> GSW_10 (kappa = 0.7867) 
+
+       20171203  >> GSW_20 (kappa = 0.5677)
+
+       4. La surface en eau contenue dans l'image 20161218 (la plus sèche) est vue dans au moins
+	  75% des observations Landsat (32 années d'observations).
+	  La deuxième image a une surface en eau vue dans seulement 10% des cas, et la troisième dans
+	  seulement 20% des cas.
+	  On en conclut que les surfaces en eau observées sur ces images correspondent à des 
+	  événements très rares.
+
+       

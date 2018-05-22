@@ -74,3 +74,5 @@ paramètres dans l'interface graphique si besoin.
 #+INCLUDE: "sar-fr.org" :minlevel 2
 * Développer avec l'OTB
 #+INCLUDE: "developers-c++-fr.org" :minlevel 2
+* Utiliser OTB avec l'interface Python
+#+INCLUDE: "app-python-fr.org" :minlevel 2
