@@ -33,7 +33,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt} \includegraphics[height=20pt]{Images/cc-by-sa.png}}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt} \includegraphics[height=20pt]{Images/cc-by-sa.png}}
 
 * Avant-propos                                                           :fw:
 ** Données
@@ -74,5 +74,5 @@ paramètres dans l'interface graphique si besoin.
 #+INCLUDE: "sar-fr.org" :minlevel 2
 * Développer avec l'OTB
 #+INCLUDE: "developers-c++-fr.org" :minlevel 2
-* Utiliser OTB avec l'interface Python
 #+INCLUDE: "app-python-fr.org" :minlevel 2
+
