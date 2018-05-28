@@ -653,7 +653,7 @@ ExtractROI.STARTX=140
          -nodatalabel 255 \
          -ref raster \
          -ref.raster.in GSW_10.tif \
-         -out conf_A_90.csv
+         -out conf_20170407_10.csv
        #+END_EXAMPLE
 
        The best kappa results for each date are:
