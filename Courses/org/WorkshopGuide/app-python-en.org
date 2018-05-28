@@ -649,10 +649,10 @@ ExtractROI.STARTX=140
     3. The ComputeConfusionMatrix application can be used to compare raster images as follows: 
 
        #+BEGIN_EXAMPLE
-       $ otbcli_ComputeConfusionMatrix -in GSW_10.tif \
+       $ otbcli_ComputeConfusionMatrix -in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
+         -nodatalabel 255 \
          -ref raster \
-         -ref.raster.in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
-         -ref.raster.nodata "255" \
+         -ref.raster.in GSW_10.tif \
          -out conf_A_90.csv
        #+END_EXAMPLE
 
