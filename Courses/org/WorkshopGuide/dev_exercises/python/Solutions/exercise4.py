@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-from sys import argv
+from sys import exit,argv
 import otbApplication
 
 
@@ -24,6 +24,10 @@ if __name__ == "__main__":
         d["image_name"] = argv[1]
     else:
         d["image_name"] = "SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4" 
+
+    if not "dataset_folder" in d:
+        exit("Your data folder (\'d[\"dataset_folder\"]\') is not set.")
+        
     d["input_path"] = d["dataset_folder"] + "/" + d["image_name"] +"/"
     d["B3_image"] =  d["image_name"] + "_FRE_B3.tif"  
     d["B4_image"] =  d["image_name"] + "_FRE_B4.tif"  

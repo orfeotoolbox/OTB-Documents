@@ -323,9 +323,10 @@ ExtractROI.STARTX=140
      2. Open ~exercise1.py~ and complete the "FILL THE GAP 1". 
         You need to complete the path of ~app-python/images~ of your system.
      3. Open ~exercise1.py~ and complete the "FILL THE GAP 2".
-        You need to initialize the Superimpose OTB application. See that the ~inr~
-        ,~inm~ and ~out~ parameters are already set. 
-     4. Launch ~exercise1.py~ the script with the command 
+        You need to initialize the Superimpose OTB application.
+     4. Open ~exercise1.py~ and complete the "FILL THE GAP 3" to set ~inr~
+        ,~inm~ and ~out~ parameters of the Superimpose application. 
+     5. Launch ~exercise1.py~ the script with the command 
         python exercise1.py. How does the output file ~B8A_10m.tif~ look like?       
          
          
@@ -344,9 +345,8 @@ ExtractROI.STARTX=140
      using Red band (B4) and NIR band (B8A) from the S2 product:
      1. Open ~exercise2.py~ and complete the "FILL THE GAP 1".
         You need to complete the path of ~app-python/images~ of your system.
-     2. Open ~exercise2.py~ and complete the "FILL THE GAP" 2, 3 and 4.
+     2. Open ~exercise2.py~ and complete the "FILL THE GAP" 2 and 3.
         You need to :
-            - configure the application1 "Superimpose" parameters : ~inr,imr,out~
             - configure the application2 "BandMath" parameters:  ~il,out,exp~
             - configure the application3 "BandMath" parameters:  ~il,out,exp~
         *Note:* Take a look to lines 23-30 to understand the filepath of each band image.

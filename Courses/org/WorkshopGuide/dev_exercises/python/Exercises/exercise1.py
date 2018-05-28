@@ -50,11 +50,18 @@ if __name__ == "__main__":
     ###############
 
     # The following lines set the necessary application parameters:
-    Superimpose.SetParameterString("inr",str( d["input_path"] + d["B4_image"]))
 
-    Superimpose.SetParameterString("inm",str( d["input_path"] + d["B8A_image"]))
-
-    Superimpose.SetParameterString("out", "B8A_10m.tif")
+    # ---
+    # FILL THE GAP 3 : Complete the input and output parameters 
+    #        
+    # Example:   
+    # 
+    #Superimpose.SetParameterString("inr",str( d["input_path"] + d["????"]))
+    #Superimpose.SetParameterString("inm",str( d["input_path"] + d["????"]))
+    #Superimpose.SetParameterString("out", "????.tif")
+    #
+    # END OF GAP 
+    # ---
 
     # The following line execute the application
     Superimpose.ExecuteAndWriteOutput()

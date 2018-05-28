@@ -40,17 +40,9 @@ if __name__ == "__main__":
     # The following line creates an instance of the Superimpose application
     application1 = otbApplication.Registry.CreateApplication("Superimpose")
      
-    # ---
-    # FILL THE GAP 2 : Complete the input and output parameters 
-    #        
-    # Example:   
-    # 
-    #application1.SetParameterString("inr",str( d["input_path"] + d["????"]))
-    #application1.SetParameterString("inm",str( d["input_path"] + d["????"]))
-    #application1.SetParameterString("out", "????.tif")
-    #
-    # END OF GAP 
-    # ---
+    application1.SetParameterString("inr",str( d["input_path"] + d["B4_image"]))
+    application1.SetParameterString("inm",str( d["input_path"] + d["B8A_image"]))
+    application1.SetParameterString("out", "B8A_10m.tif")
 
     print("Launching... Resampling")
     # The following line execute the application
@@ -65,7 +57,7 @@ if __name__ == "__main__":
 
 
     # ---
-    # FILL THE GAP 3 : Complete the input and output parameters of the BandMath
+    # FILL THE GAP 2 : Complete the input and output parameters of the BandMath
     #        
     # Example:   
     #application2.SetParameterStringList("il",["????.tif", str(d["input_path"] + d["?????"])])
@@ -85,7 +77,7 @@ if __name__ == "__main__":
     application3 = otbApplication.Registry.CreateApplication("BandMath")
 
     # ---
-    # FILL THE GAP 4 : Complete the input and output parameters of the BandMath
+    # FILL THE GAP 3 : Complete the input and output parameters of the BandMath
     #        
     # Exemple:   
     #application3.SetParameterStringList("il",["????.tif"])

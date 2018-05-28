@@ -295,9 +295,8 @@ ExtractROI.STARTX=140
      du produit Sentinel-2:
      1. Ouvrez ~exercise2.py~ et compléter la ligne "FILL THE GAP 1".
         Vous devez adapter le chemin ~app-python/images~ à votre système.
-     2. Ouvrez ~exercise2.py~ et compléter le champ "FILL THE GAP" 2, 3 and 4.
+     2. Ouvrez ~exercise2.py~ et compléter le champ "FILL THE GAP" 2 and 3.
         Vous devez :
-            - configurer *application1* (Superimpose) et les paramètres : ~inr,imr,out~
             - configurer *application2* (BandMath) et les paramètres:  ~il,out,exp~
             - configurer *application3* (BandMath et les paramètres:  ~il,out,exp~
         *Note:* Etudiez les lignes 23-30 pour comprendre quel est le chemin de
@@ -631,11 +630,11 @@ ExtractROI.STARTX=140
        3. L'application de calcul de la matrice de confusion permet de comparer les images :
 
        #+BEGIN_EXAMPLE
-       $ otbcli_ComputeConfusionMatrix -in GSW_10.tif \
+       $ otbcli_ComputeConfusionMatrix -in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
+         -nodatalabel 255 \
          -ref raster \
-         -ref.raster.in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
-         -ref.raster.nodata "255" \
-         -out conf_A_90.csv
+         -ref.raster.in GSW_10.tif \
+         -out conf_20170407_10.csv
        #+END_EXAMPLE
 
        The best kappa results for each date are:
