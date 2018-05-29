@@ -57,8 +57,8 @@
      \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
      %\pause
      \draw[fill=red!30] (1,-10) rectangle +(4,4);
-     \node[fill=black!10, text width= 1.2cm] (DEM) at
-       (5,-11) {DEM};
+     \node[fill=black!10, text width= 1.2cm] (MNT) at
+       (5,-11) {MNT};
      %\pause
      \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
      %\pause
@@ -275,8 +275,8 @@ _Trucs et astuces :_
      \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
      %\pause
      \draw[fill=red!30] (1,-10) rectangle +(4,4);
-     \node[fill=black!10, text width= 1.2cm] (DEM) at
-       (5,-11) {DEM};
+     \node[fill=black!10, text width= 1.2cm] (MNT) at
+       (5,-11) {MNT};
      %\pause
      \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
      %\pause
@@ -344,8 +344,8 @@ _Trucs et astuces :_
 
      Utilisez l'application *Orthorectification* pour réaliser
         l'orthorectification du produit fusionné:
-        1. Sans DEM
-        2. Avec un DEM (utilisez le sous-répertoire ~SRTM~) et un fichier de geoid (utilisez le fichier 
+        1. Sans MNT
+        2. Avec un MNT (utilisez le sous-répertoire ~SRTM~) et un fichier de geoid (utilisez le fichier 
            Geoid\egm96.grd)
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
         4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
@@ -425,13 +425,13 @@ entre les 2 images multispectrales:
     #+END_EXAMPLE
 *** Ortho-rectification
 
-    1. Orthorectification sans DEM:
+    1. Orthorectification sans MNT:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \
        -io.out phr_orthopxs_osr_mipy.tif uint16
        #+END_EXAMPLE
-    2. Orthorectification avec DEM et geoid:
+    2. Orthorectification avec MNT et geoid:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \

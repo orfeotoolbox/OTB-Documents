@@ -146,8 +146,8 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 
      Utilisez l'application *Orthorectification* pour réaliser
      l'orthorectification des extraits des produits SLC Sentinel-1:
-        1. Sans DEM
-        2. Avec un DEM et un geoid (utilisez le sous-répertoire ~SRTM~)
+        1. Sans MNT (Modèle Numérique de Terrain)
+        2. Avec un MNT et un geoid (utilisez le sous-répertoire ~SRTM~)
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
         4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
 
@@ -271,14 +271,14 @@ Les extraits sont en géométrie capteur et sont inversées dans le sens EST/OUE
 **** Corrections géométriques
      On utilise une grille de déformation à 10 mètres de résolution pour
      accélérer le traitement.
-    1. Orthorectification sans DEM:
+    1. Orthorectification sans MNT:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in s1_hh_gamma0.tif \
        -opt.gridspacing 10 \
        -io.out s1_hh_gamma0_ortho.tif uint16
        #+END_EXAMPLE
-    2. Orthorectification avec DEM et geoid:
+    2. Orthorectification avec MNT et geoid:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in s1_hh_gamma0.tif \
