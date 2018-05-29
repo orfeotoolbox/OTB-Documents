@@ -344,7 +344,7 @@ _Trucs et astuces :_
 
      Utilisez l'application *Orthorectification* pour réaliser
         l'orthorectification du produit fusionné:
-        1. Sans MNT
+        1. Sans MNT (Modèle Numérique de Terrain)
         2. Avec un MNT (utilisez le sous-répertoire ~SRTM~) et un fichier de geoid (utilisez le fichier 
            Geoid\egm96.grd)
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
