@@ -239,10 +239,10 @@ Open one of the files in QGIS. The attribute table can be accessed by
 
      Some optional parameters should also be set as follows:
      - Random forest classifier for the learning algorithm,
-     - The maximum number of tree set to 50,
      - The maximal tree depth to 20,
      - The minimum number of samples in each node to 70,
-     - The number of clusters to 13 (equal to the number of classes)
+     - The number of clusters to 13 (equal to the number of classes),
+     - The maximum number of tree set to 50
 
      Look at the application logs, in particular the confusion matrix,
      the Kappa coefficients, and scores per class. What do you think

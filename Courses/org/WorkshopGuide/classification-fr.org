@@ -244,10 +244,10 @@ polygones qui définissent 13 classes sur l'ensemble de la scène:
      Régler certains paramètres optionnels comme suit:
      - Le classifieur "Random Forests" pour l'algorithme
        d'apprentissage,
-     - Le nombre maximal d'arbres à 50,
      - La profondeur maximale de l'arbre à 20,
      - Le nombre minimum d'échantillons pour chaque noeud à 70,
-     - Le nombre de clusters à 13 (équivalent au nombre de classes)
+     - Le nombre de clusters à 13 (équivalent au nombre de classes),
+     - Le nombre maximal d'arbres à 50
 
      Examiner les logs de l'application, en particulier la matrice de
      confusion, la valeur du coefficient Kappa et les scores par
