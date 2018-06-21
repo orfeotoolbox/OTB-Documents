@@ -42,6 +42,27 @@ The data package for the training can be downloaded at
 
 \section{Windows}
 
+\subsection{OTB and Monteverdi}
+To install OTB and Monteverdi, download the appropriate package for your
+architecture (32 or 64 bits). If you have a 32 bit machine:
+
+\begin{verbatim}
+OTB-6.6.0-Win32.zip
+\end{verbatim}
+
+If you have a 64 bits machine:
+
+\begin{verbatim}
+OTB-6.6.0-Win64.zip
+\end{verbatim}
+
+These files are available at:
+\url{https://www.orfeo-toolbox.org/download/}.
+Extract the zip archive in your personal folder, for instance in:\\
+\begin{centering}
+\texttt{C:{\textbackslash}Users{\textbackslash}John{\textbackslash}install{\textbackslash}}.
+\end{centering}
+
 \subsection{QGIS}
 Install QGIS: \url{http://www.qgis.org/en/site/forusers/download.html}.
 
@@ -70,31 +91,9 @@ By default OTB Python bindings are compatible with python 2.7. You need to edit
 the \verb?otbenv.bat? file to modify the line with \verb?PYTHONPATH?, by
 changing \verb?lib/python? to \verb?lib/python3?.
 
-
 \subsection{Command line}
 Install a minimal command line environment for Windows. For instance, Git for
 Windows is very easy to install: \url{http://git-scm.com/download/win}.
-
-\subsection{OTB and Monteverdi}
-To install OTB and Monteverdi, download the appropriate package for your
-architecture (32 or 64 bits). If you have a 32 bit machine:
-
-\begin{verbatim}
-OTB-6.4.0-Win32.zip
-\end{verbatim}
-
-If you have a 64 bits machine:
-
-\begin{verbatim}
-OTB-6.4.0-Win64.zip
-\end{verbatim}
-
-These files are available at:
-\url{https://www.orfeo-toolbox.org/download/}.
-Extract the zip archive in your personal folder, for instance in:\\
-\begin{centering}
-\texttt{C:{\textbackslash}Users{\textbackslash}John{\textbackslash}install{\textbackslash}}.
-\end{centering}
 
 \subsection{Test the installation}
 Once the installation is done, OTB applications can be used in several ways. Check that you have a working OTB with the following steps:
@@ -110,7 +109,7 @@ $\rightarrow$ "OTB-Applications browser".
 (see figure \ref{fig:windows-mapla}).
 
 \item Go to the \texttt{bin} folder in the OTB install directory and double-click on the \texttt{.bat} file corresponding to the application to be run, for instance:\\
-\texttt{John{\textbackslash}install{\textbackslash}OTB-6.4.0-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
+\texttt{John{\textbackslash}install{\textbackslash}OTB-6.6.0-win32{\textbackslash}bin{\textbackslash}otbgui\_Rescale.bat}
 (see figure \ref{fig:windows-otbgui}).
 
 \end{enumerate}
@@ -168,25 +167,10 @@ update the provider option in the QGIS processing properties.
 \end{comment}
 
 \clearpage
-\section{Linux (Ubuntu example)}
+\section{Linux}
 
 This section explains how to install the tools in a Linux environment like Ubuntu. This procedure can also be used on other Linux distributions by using the appropriate package manager (dnf, yum,
 emerge, pacman\ldots)
-
-\subsection{Python}
-
-This dependency is required only if python module is part of your training. Python can be installed though the package manager by installing the following packages: \textbf{python3} and \textbf{python3-numpy}.
-\begin{verbatim}
-sudo apt-get install python3 python3-numpy
-\end{verbatim}
-
-By default OTB python bindings are compatible with python 2.7. You need to edit the \verb?otb.profile? file to modify the line with \verb?PYTHONPATH?, by changing \verb?lib/python? to \verb?lib/python3?.
-
-\subsection{QGIS}
-QGIS can be installed via a command line like:
-\begin{verbatim}
-sudo apt-get install qgis
-\end{verbatim}
 
 \subsection{Dependencies installation}
 Before installing the self-extracting Linux binary for OTB, several system dependencies have to be installed. In a terminal, type the following:
@@ -200,7 +184,7 @@ You will need the libgl1 and libglu1 libraries, which have different implementat
 sudo apt-get install libgl1-mesa-glx libglu1-mesa
 \end{verbatim}
 
-\subsection{Install OTB and Monteverdi}
+\subsection{OTB and Monteverdi}
 Download the self-extracting binary for Linux (64 bits), available at:
 \begin{center}
 \url{https://www.orfeo-toolbox.org/download}
@@ -208,18 +192,35 @@ Download the self-extracting binary for Linux (64 bits), available at:
 
 The self-extracting binary will extract itself in the current directory. First, the archive has to be made executable, and then it can be run:
 \begin{verbatim}
-chmod +x OTB-6.4.0-Linux64.run
-./OTB-6.4.0-Linux64.run
+chmod +x OTB-6.6.0-Linux64.run
+./OTB-6.6.0-Linux64.run
 \end{verbatim}
 
 The executable binaries will be inside the 'bin' directory, and you can put this directory in your PATH variable if you want to. 
 
 There are also scripts which set all the environment variables to allow to run Monteverdi and Mapla:
 \begin{verbatim}
-cd OTB-6.4.0-Linux64
+cd OTB-6.6.0-Linux64
 ./monteverdi.sh
 ./mapla.sh
 \end{verbatim}
+
+
+\subsection{QGIS}
+QGIS can be installed via a command line like:
+\begin{verbatim}
+sudo apt-get install qgis
+\end{verbatim}
+
+\subsection{Python}
+
+This dependency is required only if python module is part of your training. Python can be installed though the package manager by installing the following packages: \textbf{python3} and \textbf{python3-numpy}.
+\begin{verbatim}
+sudo apt-get install python3 python3-numpy
+\end{verbatim}
+
+By default OTB python bindings are compatible with python 2.7. You need to edit the \verb?otb.profile? file to modify the line with \verb?PYTHONPATH?, by changing \verb?lib/python? to \verb?lib/python3?.
+
 
 \subsection{Test the installation}
 Once the installation is done, OTB applications can be run in several ways. Check that you have a working installation with the following steps:
@@ -235,7 +236,7 @@ $\rightarrow$ "OTB-Applications browser".
 \item Run an application using the terminal, for instance
 \texttt{otbgui\_Rescale}. (see figure \ref{fig:windows-otbgui}).
 
-To test python bindings:
+To test Python bindings:
 
 \end{enumerate}
 
@@ -252,18 +253,28 @@ To test python bindings:
 The software can also be installed on Mac OS X. \\
 
 First install QGIS using the instructions for Mac OS X on the official site. To install OTB and  Monteverdi download 
-OTB-6.4.0-Darwin64.run from \url{https://www.orfeo-toolbox.org/download/}. \\
+OTB-6.6.0-Darwin64.run from \url{https://www.orfeo-toolbox.org/download/}. \\
 
 This is a self-extracting binary which extracts itself in the current directory. Testing the installation is done like in the Linux case.
 
 \clearpage
 \section{Python install for OTB}
 
-Starting from OTB 5.8.0, OTB bindings for Python 2.7 are distributed with binary package. With OTB 6.4.0, additional bindings for Python 3.5 are also included. Please note that using a different Python version may not be compatible with OTB wrappings. If no compatible Python 2.x version is found a notification is generated during the installation process. If the installation completes without issue, information relating to your Python bindings will be provided.
+Starting from OTB 5.8.0, OTB bindings for Python 2.7 are distributed with binary
+package. With OTB 6.6.0, additional bindings for Python 3.5 are also
+included. Please note that using a different Python version may not be
+compatible with OTB wrappings. If no compatible Python 2.x version is found a
+notification is generated during the installation process. If the installation
+completes without issue, information relating to your Python bindings will be
+provided.
 
-You must have Python numpy bindings installed in your system. They can be installed locally without admin rights as follows: “pip install –user numpy”. This is to give users the option to select their own existing Python installation rather than the one distributed by the OTB package.
+You must have Python numpy bindings installed in your system. They can be
+installed locally without admin rights as follows: “pip install –user
+numpy”. This is to give users the option to select their own existing Python
+installation rather than the one distributed by the OTB package.
 
-By default, bindings for Python 2.7 will be enabled with the otbenv script. If you want to use bindings for Python 3.5, you can copy this script and modify:
+By default, bindings for Python 2.7 will be enabled with the otbenv script. If
+you want to use bindings for Python 3.5, you can copy this script and modify:
 \begin{verbatim}
 lib/python into lib/python3, for variable PYTHONPATH
 \end{verbatim}
@@ -273,8 +284,8 @@ Notes:
 
 \item You must use monteverdi and mapla through mapla.sh and monteverdi.sh helper scripts in extracted directory.
 \item The helper scripts for monteverdi and mapla set required environment variables
-\item You might be tempted to move “OTB-6.4.0-Linux64” into another location say /usr/local/ after extraction. But avoid this action!
-\item To have “OTB-6.4.0-Linux64” installed in /usr/local or /opt execute “OTB-6.4.0-Linux64.run” in that directory.
+\item You might be tempted to move “OTB-6.6.0-Linux64” into another location say /usr/local/ after extraction. But avoid this action!
+\item To have “OTB-6.6.0-Linux64” installed in /usr/local or /opt execute “OTB-6.6.0-Linux64.run” in that directory.
 \item Multiple installation of OTB can exists in same system without one conflicting the other!
 
 \end{enumerate}
