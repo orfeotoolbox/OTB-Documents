@@ -57,8 +57,8 @@
      \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
      %\pause
      \draw[fill=red!30] (1,-10) rectangle +(4,4);
-     \node[fill=black!10, text width= 1.2cm] (DEM) at
-       (5,-11) {DEM};
+     \node[fill=black!10, text width= 1.2cm] (MNT) at
+       (5,-11) {MNT};
      %\pause
      \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
      %\pause
@@ -213,6 +213,8 @@ Avec l'image ~phr_xs_osr_mipy.tif~:
    en ligne de commande (TOA-TOC). Comparez cette différence pour les bandes
    rouge, verte et bleue (B0,B1,B2). Quelle bande est le plus /impactée/ par la
    correction TOC?
+   *Note:* L'application "BandMathX" peut appliquer une operation sur plusieurs bandes
+   en même temps.
 4. Appliquez les opérations 1, 2 et 3 à l'image panchromatique ~phr_pan_osr_mipy.tif~.
 
 _Trucs et astuces :_
@@ -273,8 +275,8 @@ _Trucs et astuces :_
      \node[text width= 0.8cm] (SensorModel) at (15,5) {Sensor Model};
      %\pause
      \draw[fill=red!30] (1,-10) rectangle +(4,4);
-     \node[fill=black!10, text width= 1.2cm] (DEM) at
-       (5,-11) {DEM};
+     \node[fill=black!10, text width= 1.2cm] (MNT) at
+       (5,-11) {MNT};
      %\pause
      \draw[->,thick] (3,-5.5) --  ++(0,3) -- ++(12,0) -- ++(0,5);
      %\pause
@@ -342,8 +344,9 @@ _Trucs et astuces :_
 
      Utilisez l'application *Orthorectification* pour réaliser
         l'orthorectification du produit fusionné:
-        1. Sans DEM
-        2. Avec un DEM et un geoid (utilisez le sous-répertoire ~SRTM~)
+        1. Sans MNT (Modèle Numérique de Terrain)
+        2. Avec un MNT (utilisez le sous-répertoire ~SRTM~) et un fichier de geoid (utilisez le fichier 
+           Geoid\egm96.grd)
         3. Comparez les 2 images en sortie dans Monteverdi. Que constatez vous?
         4. Quel est le système de projection par défaut dans l'application *Orthorectification*?
         5. Dans quelle zone UTM se trouve l'extrait PHR Pléiades?
@@ -422,13 +425,13 @@ entre les 2 images multispectrales:
     #+END_EXAMPLE
 *** Ortho-rectification
 
-    1. Orthorectification sans DEM:
+    1. Orthorectification sans MNT:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \
        -io.out phr_orthopxs_osr_mipy.tif uint16
        #+END_EXAMPLE
-    2. Orthorectification avec DEM et geoid:
+    2. Orthorectification avec MNT et geoid:
        #+BEGIN_EXAMPLE
        $ otbcli_OrthoRectification \
        -io.in phr_pxs_osr_mipy.tif \

@@ -1,6 +1,6 @@
 #+TITLE:  Guide for OTB training courses (Solutions) 
 #+AUTHOR: OTB Team
-#+DATE: 2017
+#+DATE: 2018
 #+OPTIONS: H:4
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,10pt,twoside,pdftex,openright]
@@ -33,7 +33,7 @@
 #+LATEX:\fancyhead[RE]{\bfseries\leftmark}
 #+LATEX:\fancyfoot[LE,RO]{\vspace{0pt}\includegraphics[height=20pt]{../../../Artwork/logoVectoriel.png}}
 #+LATEX:\fancyfoot[LO,RE]{\vspace{0pt}\includegraphics[height=20pt]{Images/logo_cnes.png}}
-#+LATEX:\fancyfoot[C]{\vspace{2pt} \includegraphics[height=20pt]{Images/cc-by-sa.png}}}
+#+LATEX:\fancyfoot[C]{\vspace{2pt} \includegraphics[height=20pt]{Images/cc-by-sa.png}}
 
 * Foreword                                                               :fw:
   
@@ -126,3 +126,5 @@ parameter values in the GUI (Mapla or Monteverdi).
 #+INCLUDE: "classification-en.org" :minlevel 1
 * SAR processing on Sentinel-1 images
 #+INCLUDE: "sar-en.org" :minlevel 2
+* Develop with OTB
+#+INCLUDE: "app-python-en.org" :minlevel 2

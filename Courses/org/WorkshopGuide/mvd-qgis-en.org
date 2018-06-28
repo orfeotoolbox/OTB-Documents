@@ -126,7 +126,7 @@
 
 **** Display an image stack in Monteverdi
 
-     Open the 9 LS8 images in the ~Data/classification/Extract16bits/~
+     Open the 5 Sentinel-2 images in the ~Data/classification/images/~
      folder.
 
      Change the bands to display natural colors (red: Band 3, green: band 2, blue: band
@@ -142,20 +142,20 @@
 
 **** Display an image in QGIS
 
-     Open the first LS8 image in QGIS. Use the contextual menu of the layer to
+     Open the first Sentinel-2 image in QGIS. Use the contextual menu of the layer to
      change color dynamics to have the same rendering as in Monteverdi. In the
      same contextual menu, add this style to be able to apply it to other images.
 
      Move in resolution.
 
-     Open other LS8 images and apply the rendering style you've just created.
+     Open other Sentinel-2 images and apply the rendering style you've just created.
 
      What are the differences between Monteverdi and QGIS in terms of image
      visualization and rendering functions ?
 
 **** Display vector data in QGIS
 
-     Open ~training.shp~ in the ~Data/classification/training/~
+     Open ~training.shp~ in the ~Data/classification/references/training/~
      folder.
 
      Use the contextual menu to open the /Properties/ and /Style/ tabs. Use

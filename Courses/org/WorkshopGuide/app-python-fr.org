@@ -1,0 +1,655 @@
+** Utiliser les applications OTB en Python                           :slides:
+*** Objectifs et Données
+**** Objectifs
+     - Savoir configurer son environnement de travail pour utiliser les
+       applications OTB en Python
+     - Savoir configurer une application en Python (API)
+     - Savoir chainer en mémoire des traitements OTB depuis Python
+     - Savoir utiliser les passerelles entre OTB et NumPy.
+
+**** Données
+      Les données sont disponibles dans le répertoire ~Data/otb-python/~.
+
+*** Déroulement
+    Cette exercice consiste à mettre en oeuvre un script Python pour extraire
+    les surfaces en eaux dans des images optiques Sentinel-2 au Pérou dans la
+    région de /Laguna la nina/.
+
+    #+attr_LATEX: :float t :width \textwidth
+    [[file:Images/lluvias-peru.jpg]]
+
+
+    (Image Twitter de @hombredeltiempo)
+
+*** Rapide introduction aux applications OTB
+    - Orfeo ToolBox est une librairie de traitements d'images de télédétection
+    - Souvent nécessaire de combiner plusieurs algorithmes pour créer sa chaine
+      de traitement
+    - Besoin accès interfaces de plus haut niveau (paramètres, entrées/sorties, log...)
+    - 1 application OTB = 1 fonctionnalité (segmentation, ortho-rectification,
+      calcul raster...)
+    - 1 application = 1 classe C++(/otb::Application/)
+    - 1 application = 1 plugin
+    - Possible de développer et distribuer ses propres applications
+
+*** OTB applications en Python
+    - Librairie Python *otbApplication*
+    - 2 classes principales:
+      - Registry: liste les applications disponibles
+      - Application: API pour manipuler les paramètres d'une application
+    - Exemple:
+#+begin_src python
+import otbApplication 
+orth=otb.Registry.CreateApplication("OrthoRectification") 
+#+end_src
+
+*** Syntaxe
+    - Accesseurs
+#+begin_src python
+app.GetParametersKeys()
+#+end_src
+    - Mutateurs
+#+begin_src python
+app.SetParameterString("in", argv[1])
+#+end_src
+    - Comment on exécute une application?
+      - Execute() -> câble le "pipeline OTB" 
+      - ExecuteAndWriteOutput() -> câble le "pipeline OTB" et écrit les sorties
+
+*** Sucre syntaxique
+    - Au lieu de:
+#+begin_src python
+ExtractROI.SetParameterInt('startx', 140)
+#+end_src
+
+    - Utiliser plutôt: 
+#+begin_src python
+ExtractROI.STARTX=140
+#+end_src
+    - Lettres en capitales obligatoire pour le moment
+
+*** Connexion en mémoire des applications
+    - On utilise souvent 1 application dans une chaine plus large
+    - Les opérations de lecture/écriture sont souvent coûteuses spécialement en télédétection
+    - Idée: connecter la sortie de app1 à l'entrée de app2
+    - Syntaxe disponible en C++ et Python
+    - Lié aux méchanismes de traitements au fil de l'eau(/streaming/) de l'OTB
+
+*** Lien OTB/NumPy
+    - Facilite l'utilisation de l'OTB dans un script Python
+    - Méthodes à utiliser: GetImageFromNumpyArray() et SetImageFromNumpyArray() 
+   
+*** Liens utiles
+    - [[https://www.orfeo-toolbox.org/CookBook/OTB-Applications.html][Introduction to OTB applications]]
+    - [[https://www.orfeo-toolbox.org/CookBook/Applications.html][Application Reference Documentation]]
+    - Application help: /otbcli\textunderscore{}XXX -help/
+** Utiliser les applications OTB en Python                           :guide:
+*** Description                                                        :desc:
+**** Résumé
+     
+     L'exercice suivant est une introduction à l'utilisation des applications
+     OTB en Python.
+
+     Cet exercice consiste à développer une chaîne de traitements avec
+     l'objectif d'extraire des surfaces en eaux à partir d'images Sentinel-2.
+
+**** Pré-requis
+
+     - Logiciels installés (Monteverdi et Orfeo ToolBox)
+     - Python (2.7.X ou 3.5.X), avec NumPy et l'environnement OTB correctement
+       configuré (aide: sourcer le fichier otbenv.profile sous Linux ou lancer otbenv.bat
+       sous Windows). 
+       *Test*: Lancer la commande Python "import otbApplication" pour vérifier
+       son environnement 
+     - Données (~Data/app-python~) 
+     - Comprendre le mécanisme des OTB applications (voir exercice /stegano/) 
+
+**** Objectifs
+
+     - Configurer et lancer des applications OTB depuis Python
+     - Utiliser la connexion en mémoire entre les applications
+     - Utiliser des données satellites optiques Sentinel-2 (niveau 2A) en entrée
+     - Mettre en oeuvre une méthode simple d'extraction des surfaces en eau en
+       utilisant l'indice NDVI
+     - Évaluer les performances de détection à partir d'une carte de référence
+
+*** Étapes                                                            :steps:
+
+    Les données sont disponibles dans le dossier ~Data/app-python~, avec les
+    sous-répertoires suivants: 
+     - ~images~ contient 2 images Sentinel-2 (Niveau 2A) sur /Laguna de la Nina/ (Pérou)
+     - ~ref~ contient des données de référence (masque d'occurrence de l'eau) au
+       format raster.
+
+    Ce répertoire contient également les scripts Python suivant:
+    ~exercise1.py~ ... ~exercise5.py~
+
+**** Introduction : Suivi des surfaces en eau dans la région de /Laguna de la Nina/(Pérou) 
+
+     La zone d'intérêt utilisée dans l'exercice est Laguna de la Nina au Pérou
+     ((-5.8101 lat, -80.7155 lon). En 2017, la région a subie de fortes
+     inondations en raison du phénomène "El nino". L'objectif est de mettre en
+     évidence ces changements à partir de plusieurs images satellites.
+
+     Dans cette exercice nous utiliserons trois images Sentinel-2 (niveau 2A)
+     (répertoire ~app-python/images~) acquises aux dates suivantes: 
+
+|--------------|
+|  2016-12-18  |
+|  2017-04-07  |
+|  2017-12-03  |
+|--------------|
+
+     1. Ouvrez les images composite_*.vrt dans Monteverdi. Elles correspondent
+        aux compositions RGB pour chaque date. Qu'observe-t-on dans ces images?  
+        Comment évolue les surfaces en eau? 
+
+     *Note*: L'image composite au format VRT a été crée avec l'utilitaire
+     ~gdalbuildvrt~ pour cet exercice. Elles ne sont pas inclues dans les produits Sentinel-2.
+
+**** Sentinel 2 - Niveau 2A
+
+     L'un des objectifs de cet exercice est de traiter un produit Sentinel-2
+     téléchargé depuis la plateforme [[https://theia.cnes.fr][Theia]]. Le niveau de produit /2A/ correspond
+     à une image ortho-rectifiée en réflectance de surface (prise en compte des
+     effets atmosphériques). Ce produit est obtenu
+     par un traitement des produits de niveau /1C/ (ortho-rectifiés en réflectance
+     au dessus de l'atmosphère) réalisé par la méthode MAJA.
+
+     Chaque produit Sentinel-2 contient plusieurs fichiers: 
+         - SRE: image en réflectance de surface (SRE pour Surface REflectance)
+           ont été corrigées corrigées des effets atmosphériques, y compris les effets d'environnement
+         - FRE: (FRE pour Flat REflectance) ont, de plus, subi une correction
+           supplémentaire qui prend en compte les effets des pentes
+         - MTD: Métadonnées
+         - QKL: vignette (image RGB basse résolution)
+         - ATB:  variables atmosphériques (2 bandes):
+                - 1ère bande: vapeur d'eau, il faut diviser les valeurs par 20 pour obtenir des $g/cm^2$ 
+                - 2ème bande: épaisseur optique des aérosols, il faut diviser
+                  les valeurs par 200 pour obtenir l'épaisseur optique. 
+         - CLM: Masque de nuages (calculé par MAJA), image 1 bande codée sur 8 bits.
+         - SAT: masque de pixels saturés
+         
+     Dans cette exercice, le masque d'eau sera calculé à partir des images SRE
+     et FRE.
+
+     Les produits SRE et FRE consistent en 13 fichiers, une par bande spectrale
+     au format GeoTiff (.tif). Les bandes peuvent être à 10m ou 20m de
+     résolution spatiale.
+
+|----------------+------------+------------+------------+-------------------------------|
+| Nom des bandes | Id         | Longueur d'onde | Résolution | Utilisée dans l'exercice |
+|----------------+------------+------------+------------+-------------------------------|
+| Bleu           | B2         | 490 nm          | 10 m       | -                        |
+| Vert           | B3         | 560 nm          | 10 m       | -                        |
+| Rouge          | B4         | 665 nm          | 10 m       | Oui                      |
+| PIR - 1        | B5         | 705 nm          | 20 m       | -                        | 
+| PIR - 2        | B6         | 740 nm          | 20 m       | -                        | 
+| PIR - 3        | B7         | 783 nm          | 20 m       | -                        |   
+| PIR - Large    | B8         | 842 nm          | 10 m       | -                        |
+| PIR - 4        | B8A        | 865 nm          | 20 m       | Oui                      |  
+| MIR 1          | B11        | 1610 nm         | 20 m       | -                        |
+| MIR 2          | B12        | 2190 nm         | 20 m       | -                        |  
+|----------------+------------+-----------------+------------+--------------------------|
+
+     Pour obtenir l'étendu en eau, les bandes suivantes seront utilisées: rouge
+     (B4), PIR-4 (B8A). Nous utiliserons également le masque de nuages. 
+
+     *Note:* Pour réduire la taille des données, nous avons supprimé les bandes
+     non utilisées et elles sont remplacées par un fichier vide. 
+    
+     C'est parti: 
+
+     1. Nous allons utilisé les images en réflectance de surface pour extraire
+        les surfaces en eau, à votre avis quel produit faut-il plutôt utilisé: SRE ou FRE? 
+
+     2. Comparez la taille sur le disque des produits B3 et B11 dans le
+        répertoire ~app-python/images/SENTINEL2A_*/~. Est-ce que les fichiers
+        font la même taille? Pourquoi?
+
+        *Note:* En ligne de commande, utilisez la commande ~gdalinfo~ sur les
+        différents fichiers pour afficher la taille et le nombre de pixels. 
+     
+        *Note 2:* Assurez vous que les fichiers binaires OTB ($otb-path/bin) est
+        est inclus dans vos variables d'environnement.
+ 
+     4. Dans le répertoire /MASKS : il y a un fichier CLM qui contient le masque
+        de nuages. Est-ce que ces informations sont pertinentes pour améliorer
+        la détection d'eau? Comment?
+
+     5. Ouvrez les bandes B8A et B4 dans Monteverdi et comparez les valeurs des
+        pixels sur les surfaces en eau.
+        Quelle bande a une réflectance plus forte sur les surfaces en eau?
+        (Utilisez plutôt l'image à la date du 07/04/2017 avec une étendue d'eau
+        plus importante)
+
+**** Une application OTB simple: exercise1.py
+    
+     Ouvrez le script: ~app-python/exercise1.py~. Le but de ce script est
+     d'utiliser l'application Superimpose pour ré-echantillonner la bande B8A
+     (résolution 20m). 
+  
+     Au début du script, il y a l'importation de la librairie
+     otbApplication. Dans le module otbApplication, 2 classes sont disponibles: 
+
+        - /Registry/, liste les applications disponibles et permet de charger
+          des applications. 
+        - /Application/, la classe de base pour toutes les applications. Elle
+          permet d'interagir avec une instance d'application créée par la classe
+          /Registry/ 
+
+     1. Pour lister la liste des applications, lancez ~exercise1.py~ avec la commande: 
+        #+BEGIN_EXAMPLE
+        $ python exercise1.py
+        #+END_EXAMPLE
+        La sortie afficher la liste des applications disponibles. Quelle ligne
+        dans le script affiche la liste des applications? Cette méthode est-elle
+        disponible dans les modules Registry ou Application?
+
+     Dans la deuxième partie du script, l'objectif est d'utiliser l'application
+     Superimpose pour réechantilloner la bande B8A (20m de résolution) en
+     utilisant la bande B4 (A0m de résolution) comme référence.
+
+     Le script ~exercise1.py~ utilise l'application Superimpose comme présenté
+     dans le schéma ci-dessous:
+
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-1.png]]
+      
+     *Note:* L'application Superimpose peut être configurée avec plusieurs
+     interpolateurs (linéaire, bi-cubique ou plus proche voisin)
+
+     Les entrées et sorties nécessaires pour [[https://www.orfeo-toolbox.org/CookBook/Applications/app_Superimpose.html][Superimpose application]] sont décrit
+     dans le tableau ci-dessous:
+
+|---------------+------------------------+--------------------|
+| Clé paramètre | Nom du paramètre       | Type de paramètres |
+|---------------+------------------------+--------------------|
+| inr           | Image de référence     | input image        | 
+| inm           | Image à re-projeter    | input image        | 
+| out           | Image en sortie        | output image       | 
+     
+     2. Ouvrir le fichier ~exercise1.py~ et complète la ligne "FILL THE GAP 1". 
+        Vous devez compléter le chemin de fichier ~app-python/images~ associé à
+        votre système.
+     3. Ouvrir ~exercise1.py~ et compléter la ligne "FILL THE GAP 2".
+        Vous devez initialiser l'application Superimpose. Etudiez les paramètres ~inr~
+        ,~inm~ et ~out~ déjà configurés. 
+     4. Lancez le script ~exercise1.py~ avec la commande /python
+        exercise1.py/. Commentez le contenu de la sortie ~B8A_10m.tif~?       
+         
+         
+**** Chainage des applications OTB: exercise2.py
+
+     Dans cette partie, le but est de calculer le NDVI de l'image et d'obtenir
+     un masque d'eau par seuillage. Nous utiliserons différentes applications
+     OTB avec le même script pour obtenir différents couches d'information.
+
+     Le script Python ~exercise2.py~ chaîne des applications OTB suivant le
+     schéma suivant: 
+      #+ATTR_LATEX: :float t :width 1\textwidth
+     [[file:Images/app-python-2.png]]
+
+     Utilisez les applications Superimpose et BandMath pour calculer et le
+     masque d'eau en utilisant les bandes Rouge (B4) et Proche Infrarouge (B8A)
+     du produit Sentinel-2:
+     1. Ouvrez ~exercise2.py~ et compléter la ligne "FILL THE GAP 1".
+        Vous devez adapter le chemin ~app-python/images~ à votre système.
+     2. Ouvrez ~exercise2.py~ et compléter le champ "FILL THE GAP" 2 and 3.
+        Vous devez :
+            - configurer *application2* (BandMath) et les paramètres:  ~il,out,exp~
+            - configurer *application3* (BandMath et les paramètres:  ~il,out,exp~
+        *Note:* Etudiez les lignes 23-30 pour comprendre quel est le chemin de
+        chaque bande.
+        Vous pouvez aussi accéder à l'aide en ligne des applications si nécessaire.
+
+     3. Lancez le script ~exercise2.py~ avec la commande: 
+        #+BEGIN_EXAMPLE
+        $ python exercise2.py
+        #+END_EXAMPLE
+        Quelle est la sortie du script? Ouvrez le résultat dans Monteverdi.
+
+**** Chainage en mémoire des applications OTB: exercise3.py
+     Cet exercice est équivalent à /exercise2.py/, à la différence qu'on ne
+     souhaite pas écrire les fichiers intermédiaires sur disque. L'objectif est
+     de traiter toute la chaine de traitements en mémoire (RAM).  
+
+     Une seconde amélioration est laissée pour la dernière étape du tutoriel, qui
+     consiste à calculer le NDVI et le seuillage en une seule étape. 
+     En terme OTB, cela consiste à appliquer 1 BandMath (au lieu de 2).
+     
+     Le script ~exercise3.py~ enchaîne les applications OTB suivant le schéma suivant:
+      #+ATTR_LATEX: :float t :width 1\textwidth
+     [[file:Images/app-python-3.png]]
+
+     Connexion en mémoire: la sortie de /app1/ doit être déclarée comme entrée de
+     l'application /app2/ en utilisant la syntaxe suivante: 
+        - app2.SetParameterInputImage("in",app1.GetParameterOutputImage("out"))
+          si l'entrée de /application2/ est une image (comme pour l'application Superimpose)
+        - app2.AddImageToParameterInputImageList("il",app1.GetParameterOutputImage("out"))
+          si l'entrée de /application2/ est une liste d'image (comme pour l'application BandMath)
+     
+     Optimisons le calcul du masque d'eau:
+     1. Ouvrir ~exercise3.py~ et compléter la ligne "FILL THE GAP 1".
+        Vous devez adapter le chemin ~app-python/data~ à votre système.
+     2. Ouvrir ~exercise3.py~ et compléter "FILL THE GAP 2" pour déclarer la
+        sortie de /application1/ comme entrée de /application2/.
+     3. Ouvrir ~exercise3.py~ et compléter "FILL THE GAP 3" pour adapter
+        l'expression en entrée de l'application BandMath pour obtenir que: "la
+        valeur 1 est donnée si ndvi<0 et la valeur 0 si ndvi>1"
+     4. Lancez ~exercise3.py~ avec la commande suivante: 
+        #+BEGIN_EXAMPLE
+        python exercise3.py
+        #+END_EXAMPLE
+        Vous pouvez remarquer que dans le script,
+        l'appel ApplicationX.ExecuteAndWriteOutput() a été changé par
+        ApplicationX.Execute() dans ~exercise3.py~. Comment cela modifie la
+        séquence des exécutions?
+     5. Dans Application1, les paramètres de sortie ont été déclarés avec un nom
+        de fichier.
+        Est-ce que le fichier a été écrit sur le disque après l'exécution? Pourquoi?
+     6. Au moment de la génération du masque NDVI (avec 2 valeurs possibles:
+        eau(1) et land(0)), il y a la ligne suivante:
+ 
+        ~appX.SetParameterOutputImagePixelType("out", otbApplication.ImagePixelType_ uint8)~
+
+        Quel est le but de cette ligne? Qu'est-ce qui se passe si on supprime cette ligne?
+
+**** Détection de l'eau et gestion des /nodata/: exercise4.py
+
+     Il y a certaines parties de l'image couverte par des nuages. Dans cet
+     exercice, nous utiliserons la bande CLD du produit Sentinel-2 pour
+     spécifier la valeur du NODATA.
+     
+     Si un pixel du masque CLD est différent de zéro, cela signifie qu'un nuage
+     a été détecté par l'algorithme MAJA. Le but de cet exercice est de
+     spécifier une valeur spéciale (255) dans le masque final quand un nuage est
+     présent. 
+     #+ATTR_LATEX: :float t :width 0.8\textwidth
+     [[file:Images/app-python-4.png]]
+
+     Le script ~exercise4.py~ chaîne des applications OTB comme présenté dans le
+     schéma suivant:
+     #+ATTR_LATEX: :float t :width 1\textwidth
+     [[file:Images/app-python-5.png]]
+
+     A la fin du script, l'application *ManageNoData* est utilisée pour
+     spécifier la valeur de NODATA à 255 dans les métadonnées du fichier GeoTiff.
+     
+     On y va:
+     1. Ouvrir ~exercise4.py~ et compléter le champ "FILL THE GAP 1".
+        Vous devez adapter le chemin ~app-python/data~ à votre système.
+     2. Ouvrir ~exercise4.py~ et compléter le champ "FILL THE GAP 2" pour
+        modifier l'expression de l'application BandMath (valeur 255 quand le
+        masque de nuages est différent de zéro et sinon conserver la valeur du NDVI).
+     3. Lancez ~exercise4.py~ avec différentes dates d'images en entrée:
+
+            ~python exercise4.py SENTINEL2A_20161218-153729-222_L2A_T17MNP_D_V1-4~
+
+            ~python exercise4.py SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4~
+
+            ~python exercise4.py SENTINEL2A_20171203-154308-349_L2A_T17MNP_D_V1-4~
+
+        pour obtenir trois masques différents. Les ouvrir avec Monteverdi pour
+        visualiser la variation de l'étendu d'eau.
+     4. Observer le masque final qui correspond à la date 20161218. A quoi
+        correspondent les lignes qui sont détectées comme de l'eau? 
+
+**** Comparaison avec une référence: exercise5.py  
+ 
+     Les masques d'eau obtenus après Février 2017 correspondent à un événement lié
+     à une inondation dans la région de /Laguna de la Nina/. Quelle est la
+     fréquence de ce type d'évènement dans la région? Essayons de répondre à
+     cette question dans l'exercice suivant. 
+     
+     La carte Global Surface Water(GSW), fournit une carte d'étendu d'au et à
+     été obtenue à partir d'images optiques (satellite LandSat) sur les 30
+     dernières années. Nous allons utilisé cette carte pour extraire la
+     fréquence d'observation de pixel d'eau sur une zone donnée. Ce produit
+     contient une carte d'occurrence qui correspond pour chaque pixel, au ratio entre le nombre de
+     fois où l'eau a été détectée et le nombre d'observations valides observées
+     les 30 dernières années. Ainsi, un pixel avec la valeur égale à 10 signifie
+     que l'eau a été observée dans 10% des observations valides.
+
+     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/app-python-6.png]]
+
+     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/app-python-7.png]]
+     
+     Les données "Global Surface Water" (Pekel et al) sont disponibles sous la
+     forme de tuiles 10°x10° sur le site [[https://global-surface-water.appspot.com/download][Surface Water AppSpot]].
+ 
+     Ces données sont disponibles dans le répertoire suivant: ~app-python/ref~
+
+     Dans cet exercice, nous allons comparer 3 masques d'eau (20161218,
+     20170407 and 20171203) obtenus à l'exercice 4 avec le produit GSW. 
+
+     La méthodologie à suivre dans cet exercice est la suivante:
+         - Rogner et réechantilloner la carte d'occurence GSW (30m de
+           résolution) pour la superposer sur le masque d'eau (10m de résolution)
+         - Appliquer un seuillage sur l'image GSW réechantillonnée pour
+           différentes valeurs d'occurrences: 10%, 20%, 30%, 50%, 75%, 95% pour
+           obtenir plusieurs images de références.
+         - Comparer les masques d'eau obtenus dans l'exercice 4 avec chacune des
+           données de références extraites de GSW. La comparaison va nous aider
+           à comprendre l'évolution de l'étendu des surfaces en eau au cours du temps.
+
+     #+ATTR_LATEX: :float t :width 0.7\textwidth
+     [[file:Images/app-python-8.png]]
+
+    
+     Les étapes à suivre:
+        1. Ouvrir l'image ~ref/occurrence_90W_0N.tif~ dans QGIS ou dans Monteverdi.
+
+           *ATTENTION*: Sélectionner "Ignorer" dans la fenêtre pop-up relative à
+           la génération des overviews.
+
+           Quelle valeur observe-t-on autour de la coordonnée, lon: -80.6767, lat: -5.91?
+           Est-ce que vous observez des zones avec 90% à 100% d'occurrence?
+           Qu'est-ce que cela signifie ? Est-ce que cela correspond à des
+           eaux permanentes? 
+
+        2. Notre zone d'étude correspond à une partie de l'image
+           ~ref/occurrence_90W_0N.tif~. Le script ~exercise5.py~ enchaîne les
+           applications Superimpose et BandMath pour obtenir une couche GSW
+           rognée, réechantillonnée et seuillée. 
+           
+           Exécutez les commandes suivantes pour obtenir les masques de
+           référence:  
+
+           #+BEGIN_EXAMPLE
+               python exercise5.py 10
+               python exercise5.py 20	
+               python exercise5.py 30
+               python exercise5.py 50
+               python exercise5.py 75
+               python exercise5.py 90
+           #+END_EXAMPLE
+
+        3. Maintenant il est temps de comparer les masques d'eau obtenus à
+           l'exercice 4 (aux 3 dates: 20161218,
+           20170407 and 20171203) avec chaque donnée de référence. 
+           
+           Pour cela, ouvrez la liste des [[https://www.orfeo-toolbox.org/CookBook/Applications.html][applications OTB]], section
+           /Learning/. Quelle application peut être utilisée pour comparer 2
+           cartes raster? 
+           
+           Utilisez cette application pour calculer quelle image de
+           référence correspond le plus avec les masques obtenus(indice Kappa).
+           Pour les 3 masques d'eau obtenus, vous devez utiliser l'application
+           identifiée avec la commande suivante:
+               ~otbcli-XXXXX -in XXXX -out XXXX -param1 XXXX~          
+        4. Qu'en concluez-vous? 
+
+
+** Utiliser les applications OTB en Python                           :solutions:
+*** Introduction : Suivi des surfaces en eau dans la région de /Laguna de la Nina/(Pérou) 
+    1. Ouvrir les images compostion_*.vrt (composition RGB) dans Monteverdi
+       pour chaque date.  
+        
+       La composition colorée correspond aux bandes RGB dans le visible sans
+       effets atmosphériques.
+       On observe 3 phases dans l'évolution de l'étendue en eau sur la zone:
+       - zone vide d'eau en Décembre 2016
+       - Étendu maximale de la zone inondée en Avril 2017
+       - Zone inondée diminue
+
+*** Sentinel 2 - Niveau 2A
+
+    1. Le produit réflectance de surface (FRE) corrige les effets de pentes et
+       sera utilisé pour extraire les zones en eau.
+
+    2. Les bandes B3 et B11 sont à des résolutions différentes. Une meilleure
+       résolution (pixel plus petit) sur une même zone implique un nombre plus
+       important de pixels et donc un fichier plus gros sur le disque. 
+
+    3. Chaque bande est indépendante
+ 
+    4. Une image avec des nuages occultent l'information du sol. Une solution
+       est de marquer ces zones comme des "NODATA" pour éviter les fausses
+       détection sur l'eau.
+
+    5. Sur les régions en eau, la bande B4 (rouge) a une réflectance plus forte
+       que B8A (proche infra-rouge)
+
+*** Une application OTB simple: exercise1.py
+    
+    Les solutions de tous les exercices sont fournis aux élèves sous la forme d'une
+    archive contenant les corrigés de tous les fichiers sources (Python).  
+
+    1. La commande ~print(str(otbApplication.Registry.GetAvailableApplications()))~ permet 
+       d'afficher la liste des applications en utilisant une méthode disponible dans le module
+       ~Registry~ de l'OTB
+
+    2. ---
+
+    3. ~Superimpose = otbApplication.Registry.CreateApplication("Superimpose")~
+
+    4. La nouvelle image a une résolution plus fine que l'imge initiale (largeur de pixel : 10 m au lieu de 20m).
+       Les nouvelles valeurs ont été interpolées.
+       En utilisant Monteverdi, on peut "zoomer" et observer le lissage effectué sur l'image résolue à 10m.
+         
+*** Chainage des applications OTB: exercise2.py
+
+     1. ---
+
+     2. Code à compléter
+       - Configurer l'application SuperImpose pour ré-échantillonner l'image B8 à la résolution de l'image B4 : 
+         #+BEGIN_EXAMPLE
+         application1.SetParameterString("inr",str( d["input_path"]  \
+                                         + d["B4_image"]))
+         application1.SetParameterString("inm",str( d["input_path"]  \
+                                         + d["B8A_image"]))
+         application1.SetParameterString("out", "B8A_10.tif")
+         #+END_EXAMPLE
+       - Configurer l'application BandMath pour calculer le NDVI : 
+         #+BEGIN_EXAMPLE
+         application2.SetParameterStringList("il",["B8A_10.tif", \
+                                  str(d["input_path"] + d["B4_image"])])  
+         application2.SetParameterString("out", "ndvi.tif")    
+         application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)")
+         #+END_EXAMPLE
+       - Configurer l'application BandMath pour calculer le masque d'eau : 
+         #+BEGIN_EXAMPLE
+         application3.SetParameterStringList("il",["ndvi.tif"])
+         application3.SetParameterString("out", "water_mask.tif")
+         application3.SetParameterString("exp", "im1b1<0?1:0")
+         #+END_EXAMPLE
+    3. *ndvi.tif*: image Geotif intermédiaire, contenant l'indice de végétation normalisé de la scène. 
+
+       *water-mask.tif*: masque binaire (image Geotif) contenant des "1" pour les pixels ayant une valeur 
+       NDVI sous un certain seuil, et considérés comme pixels d'eau.
+       Le reste est considéré comme terre émergée et a une valeur de 0.
+       Remarque : dans Monteverdi, il faut vérifier que les valeurs basses/hautes de la dynamique 
+       sont bien réglées à 0 et 1 pour permettre l'affichage des valeurs ; ensuite, il faut ré-activer 
+       l'affichage des valeurs NODATA.
+
+*** Chaînage en mémoire des applications OTB: exercise3.py
+
+    1. ---
+    2. Connecter l'entrée de l'application 2 sur la sortie de l'application 1
+       #+BEGIN_EXAMPLE
+       application2.AddImageToParameterInputImageList("il", \
+                   application1.GetParameterOutputImage("out"))
+       #+END_EXAMPLE
+    3. Calculer le NDVI et le masque d'eau en une commande BandMath
+       #+BEGIN_EXAMPLE
+       application2.SetParameterString("exp", "(im1b1-im2b1)/(im1b1+im2b1)<0?1:0")
+       #+END_EXAMPLE
+    4. Les lignes ~ApplicationX.Execute()~ ne lancent pas directement ApplicationX.
+       Ces lignes servent à la construction du pipeline des applications OTB.
+       Ce n'est que lorsque l'on appelle ~ApplicationY.ExecuteAndWriteOutput()~ que 
+       le pipeline est complètement résolu : comme les entrées de ApplicationY dépendent des 
+       sorties d'ApplicationX, alors l'exécution d'ApplicationX sera déclenchée.
+
+    5. Quand ~ApplicationX.Execute()~ est appelé, les résultats sont stockés en mémoire
+       pour permettre l'exécution des applications du pipeline dépendant des sorties de l'application.
+       Ainsi, le fichier de sortie (~B8A_10m.tif~) n'est jamais écrit sur le disque, mais son contenu
+       sert bien d'entrée à Application2.
+
+    6. Afin de réduire la taille du fichier de sortie sans dégrader l'image, on peut simplement utiliser
+       un type simple pour stocker les valeurs et prendre moins d'espace disque.
+       Au lieu d'utiliser un type flottant (2 ou 4 octets, selon qu'on utilise Float ou Double), on 
+       peut utiliser un type entier (ex : uint8 : entier non signé sur 8 bits) qui autorise 256 valeurs
+       différentes et n'occupera qu'un octet par pixel. Compte-tenu des deux valeurs à coder (0:terre, 1:eau)
+       l'image de sortie peut-être codée de la sorte.
+       
+       On peut même aller plus loin en utilisant le mécanisme des fichiers étendus, au moment où l'on 
+       nomme la sortie :
+       #+BEGIN_EXAMPLE
+       appX.SetParameterOutputImagePixelType("out", \
+               "water_mask.tif?&gdal:co:NBITS=1")
+       #+END_EXAMPLE
+       Cette solution n'utilise qu'un bit par pixel : voir le module "Internals" pour plus d'explications
+       sur le sujet.
+
+*** Détection de l'eau et gestion des /nodata/: exercise4.py
+
+    1. ---
+
+    2. Traiter le masque de nuage avec la valeur 255 s'il est présent et le NDVI sinon : 
+       #+BEGIN_EXAMPLE
+       app3.SetParameterString("exp", "im2b1!=0?255:im1b1")
+       #+END_EXAMPLE
+
+    3. ---
+
+    4. Ces lignes droites sont des routes, qui ont une réponse spectrale proche de l'eau, dans les bandes 
+       rouge et proche infra-rouge
+         
+         
+*** Comparaison avec une référence: exercise5.py 
+ 
+       1. Dans le produit GSW, une valeur de 90 indique que l'eau a été observée sur 90% des observations
+	  disponibles dans le jeu de données (32 ans)
+	  Cela correspond à des eaux permanentes.
+
+       2. ---
+
+       3. L'application de calcul de la matrice de confusion permet de comparer les images :
+
+       #+BEGIN_EXAMPLE
+       $ otbcli_ComputeConfusionMatrix -in water_mask_SENTINEL2A_20170407-154054-255_L2A_T17MNP_D_V1-4.tif \
+         -nodatalabel 255 \
+         -ref raster \
+         -ref.raster.in GSW_10.tif \
+         -out conf_20170407_10.csv
+       #+END_EXAMPLE
+
+       The best kappa results for each date are:
+
+       20161218  >> GSW_75 (kappa = 0.8175)
+
+       20170407  >> GSW_10 (kappa = 0.7867) 
+
+       20171203  >> GSW_20 (kappa = 0.5677)
+
+       4. La surface en eau contenue dans l'image 20161218 (la plus sèche) est vue dans au moins
+	  75% des observations Landsat (32 années d'observations).
+	  La deuxième image a une surface en eau vue dans seulement 10% des cas, et la troisième dans
+	  seulement 20% des cas.
+	  On en conclut que les surfaces en eau observées sur ces images correspondent à des 
+	  événements très rares.
+
+       
