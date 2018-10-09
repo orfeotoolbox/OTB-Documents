@@ -219,7 +219,7 @@ This dependency is required only if python module is part of your training. Pyth
 sudo apt-get install python3 python3-numpy
 \end{verbatim}
 
-By default OTB python bindings are compatible with python 2.7. You need to edit the \verb?otb.profile? file to modify the line with \verb?PYTHONPATH?, by changing \verb?lib/python? to \verb?lib/python3?.
+By default OTB python bindings are compatible with python 2.7. You need to edit the \verb?otbenv.profile? file to modify the line with \verb?PYTHONPATH?, by changing \verb?lib/python? to \verb?lib/python3?.
 
 
 \subsection{Test the installation}
@@ -242,7 +242,7 @@ To test Python bindings:
 
 \begin{enumerate}
  \item Open a terminal
- \item Source the configuration script \verb?otb.profile? : \verb?$ source otb.profile?
+ \item Source the configuration script \verb?otbenv.profile? : \verb?$ source otbenv.profile?
  \item Run python interpreter (from same terminal)
  \item Enter the following instruction \verb?import otbApplication?. It must return without any error
 \end{enumerate}
@@ -293,7 +293,7 @@ Notes:
 \subsection{Test}
 In order to test the Python OTB dependencies, try:
 \begin{enumerate}
-\item Load the environment variables (Linux : sourcing the otb.profile; Windows: executing otbenv.bat) 
+\item Load the environment variables (Linux : sourcing the otbenv.profile; Windows: executing otbenv.bat) 
 \item Launch the python console (Linux: execute python ; Windows: python.exe)
 \item Execute in the python console : import numpy
 \item Execute in the python console : import otbApplication
