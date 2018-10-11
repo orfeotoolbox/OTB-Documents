@@ -4,11 +4,11 @@
 #+latex_header: \subtitle{Welcome}
 
 * Welcome
-** Welcome to OTB Users Days 2018!
+** Welcome to OTB Users Day 2018!
 *** Thank you all for being here!
     - Thank you for agreeing to spend some time discussing about OTB!
     - Excited to learn about how you use OTB and your feedback
-    - Hope that the meeting will be fruitful
+    - Hope that the day will be fruitful
 *** Getting started
     - 70 participants, 8 presentations, 3 workshops
     - and only 1 day :)
@@ -37,18 +37,19 @@
    [[file:images/otbusersday2018_program_qrcode.png]]
 
 ** Useful information
-*** Language (My taylor is rich)
+*** Language 
     - Slides should be in English
     - Workshops materials are in English 
     - If possible the presentation should be in English
+    - /My taylor is rich/
 *** Wireless internet connection
     Logins available at the reception desk
 *** Organization team
-    - Red badges
-    - 
+    - Searcf for red badges
+    - Please ask us if you've got any questions
 * Agenda
-** Morning: *Presentations*
-   - Talks Each topic should be presented in 10 min (and 5 minutes questions)
+** Morning: *Talks*
+   - 10 minutes talks (and 5 minutes questions)
    - Coffee break at 10:30 (with /chocolatines/!)
    - *Group photo at 10:30 in front of Agropolis building*
 ** 12:20 - 13:30 *Lunch break*
@@ -67,27 +68,22 @@
    - Group dispatching: 13:25 in the main hall
 *** Workshop requirements
    - Trainees must bring their own laptop (working in pairs is possible)
-   - Install pack provided
+   - Install pack sent by email (ask them if you need instructions)
    - USB stick available for latecomers
 ** Session 1: Install party and introduction to the ORFEO ToolBox
    - Where? *Badiane room*
-   - Organizers? 
-     :PROPERTIES:
-   :BEAMER_env: example
-   :END:
-   #+ATTR_LATEX: width=0.5\textwidth
-   [[file:images/avatar_poughonv.png]]
+   - Organizers? Victor and Yannick
 ** Session 2: Writing an Orfeo ToolBox processing chain in Python
    - Where? *Bambou room*
-   - Organizers? 
+   - Organizers? Manuel and David 
 ** Session 3: Deep learning with OTB
    - Where? *Argane room*
-   - Organizers?
-** Session 4: Q&A with doctor Julien Michel (15:00 - 17:00)
+   - Organizers? Rémi Cresson
+** Session 4: Q&A with doctors Julien and Mickael (15:00 - 17:00)
    - Questions about OTB? A bug? Want to brainstorm on 
-   - Ask Dr Julien Michel is
+   - Ask Dr Julien or Dr Savinaud
    - In the main hall
    - 15 minutes slot
-   - Book a slot at the registration desk
+   - Book a slot with Julien at the registration desk (planning)
 * Questions
 ** Any questions ?
