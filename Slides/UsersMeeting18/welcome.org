@@ -30,11 +30,11 @@
 * Useful information
 ** Program
    https://frama.link/p8-oJB_N
-   :PROPERTIES:
-   :BEAMER_env: example
-   :END:
-   #+ATTR_LATEX: width=0.5\textwidth
-   [[file:images/otbusersday2018_program_qrcode.png]]
+   # :PROPERTIES:
+   # :BEAMER_env: example
+   # :END:
+   # #+ATTR_LATEX: width=0.5\textwidth
+   # [[file:images/otbusersday2018_program_qrcode.png]]
 
 ** Useful information
 *** Language 
