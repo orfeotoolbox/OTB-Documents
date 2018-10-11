@@ -1,0 +1,44 @@
+#+TITLE:     OTB Users Day 2018
+#+AUTHOR:    OTB Team
+#+DATE:      19/10/2018
+#+DESCRIPTION: 
+#+KEYWORDS: otb
+#+LANGUAGE: fr
+#+OPTIONS:   H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:nil mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME:
+
+#+startup: oddeven
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [smaller]
+#+latex_header: \usepackage[T1]{fontenc}
+#+latex_header: \usepackage[english]{babel}
+#+latex_header: \useoutertheme{infolines}
+#+latex_header: \mode<beamer>{\usetheme{Pittsburgh}}
+#+latex_header: \setbeamertemplate{navigation symbols}{} 
+#+latex_header: \setbeamerfont{structure}{series=\bfseries}
+#+latex_header: \setbeamertemplate{items}[triangle]
+#+latex_header: \setbeamercolor{block title}{fg=blue!40!black}
+#+latex_header: \newcommand{\shorttitle}{OTB User Day 2018 - https://frama.link/p8-oJB\_N}
+#+latex_header: \newcommand{\shortauthor}{}
+#+latex_header: \setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}  \usebeamerfont{author in headfoot}\insertshortinstitute~~\shortauthor   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title   in head/foot}     \usebeamerfont{title in head/foot}\shorttitle   \end{beamercolorbox}   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{} \hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} \end{beamercolorbox}}\vskip0pt}
+#+latex_header: \institute{ \includegraphics[width=0.6cm]{images/logoIncrust.png}}
+#+latex_header: \usepackage{fourier}
+#+latex_header: \usepackage{amsfonts,bm,amsmath,amssymb,ifsym,marvosym,tabularx,array,ifsym}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usetikzlibrary{arrows,fit,backgrounds,positioning,shapes,shadows}
+#+latex_header: \newcommand{\vns}{Ven$\mu$s}
+#+latex_header: \newcommand\boxPlot[6] {  \pgfmathsetmacro\rectSize{0.3};  \draw[thick] (#2,#1) -- (#3,#1);  \draw[thick] (#2,#1-\rectSize/2) -- (#2,#1+\rectSize/2);  \draw[thick] (#5,#1) -- (#6,#1);  \draw[thick] (#6,#1-\rectSize/2) -- (#6,#1+\rectSize/2);  \draw[fill=white] (#3,#1-\rectSize) rectangle (#5,#1+\rectSize);  \draw (#4,#1-\rectSize) -- (#4,#1+\rectSize);}
+#+latex_header: \def\G{\ensuremath{{\cal G}}}
+#+latex_header: \newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+#+latex_header: \pgfdeclareimage[height=96mm,width=130mm]{background}{images/fondsClairSansLogo}
+#+latex_header: \setbeamertemplate{background}{\pgfuseimage{background}}
+#+BEAMER_FRAME_LEVEL: 2
+
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)

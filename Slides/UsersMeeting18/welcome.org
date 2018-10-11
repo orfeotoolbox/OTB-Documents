@@ -1,0 +1,93 @@
+#+STARTUP: beamer
+#+INCLUDE: "template-beamer.org"
+
+#+latex_header: \subtitle{Welcome}
+
+* Welcome
+** Welcome to OTB Users Days 2018!
+*** Thank you all for being here!
+    - Thank you for agreeing to spend some time discussing about OTB!
+    - Excited to learn about how you use OTB and your feedback
+    - Hope that the meeting will be fruitful
+*** Getting started
+    - 70 participants, 8 presentations, 3 workshops
+    - and only 1 day :)
+** Thanks to the sponsors!
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: .5
+    :END:
+    #+ATTR_LATEX: width=\textwidth
+    file:images/logo_Cnes.png
+
+***                                                                   :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: .5
+    :END:
+    #+ATTR_LATEX: width=\textwidth
+    [[file:images/irstea.png]]
+
+* Useful information
+** Program
+   https://frama.link/p8-oJB_N
+   :PROPERTIES:
+   :BEAMER_env: example
+   :END:
+   #+ATTR_LATEX: width=0.5\textwidth
+   [[file:images/otbusersday2018_program_qrcode.png]]
+
+** Useful information
+*** Language (My taylor is rich)
+    - Slides should be in English
+    - Workshops materials are in English 
+    - If possible the presentation should be in English
+*** Wireless internet connection
+    Logins available at the reception desk
+*** Organization team
+    - Red badges
+    - 
+* Agenda
+** Morning: *Presentations*
+   - Talks Each topic should be presented in 10 min (and 5 minutes questions)
+   - Coffee break at 10:30 (with /chocolatines/!)
+   - *Group photo at 10:30 in front of Agropolis building*
+** 12:20 - 13:30 *Lunch break*
+   - 10 minutes walk to the restaurant *Aboyeur*
+   :PROPERTIES:
+   :BEAMER_env: example
+   :END:
+   #+ATTR_LATEX: width=0.5\textwidth
+   [[file:images/map_restau.png]]
+** 12:20 - 13:30 *Workshops*
+*** Sessions   
+   - 4 sessions in parallel
+   - 3 workshops and 1 Q&A session
+   - Cover different topics (beginners, OTB in Python, Deep Learning) 
+   - You'll have access to all the materials
+   - Group dispatching: 13:25 in the main hall
+*** Workshop requirements
+   - Trainees must bring their own laptop (working in pairs is possible)
+   - Install pack provided
+   - USB stick available for latecomers
+** Session 1: Install party and introduction to the ORFEO ToolBox
+   - Where? *Badiane room*
+   - Organizers? 
+     :PROPERTIES:
+   :BEAMER_env: example
+   :END:
+   #+ATTR_LATEX: width=0.5\textwidth
+   [[file:images/avatar_poughonv.png]]
+** Session 2: Writing an Orfeo ToolBox processing chain in Python
+   - Where? *Bambou room*
+   - Organizers? 
+** Session 3: Deep learning with OTB
+   - Where? *Argane room*
+   - Organizers?
+** Session 4: Q&A with doctor Julien Michel (15:00 - 17:00)
+   - Questions about OTB? A bug? Want to brainstorm on 
+   - Ask Dr Julien Michel is
+   - In the main hall
+   - 15 minutes slot
+   - Book a slot at the registration desk
+* Questions
+** Any questions ?
