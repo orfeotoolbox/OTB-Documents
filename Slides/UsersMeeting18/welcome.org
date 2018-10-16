@@ -11,7 +11,7 @@
     - Hope that the day will be fruitful
 *** Getting started
     - 70 participants, 8 presentations, 3 workshops
-    - and only 1 day :)
+    - and only 1 day, busy program :)
 ** Thanks to the sponsors!
 ***                                                                   :BMCOL:
     :PROPERTIES:
@@ -27,6 +27,7 @@
     #+ATTR_LATEX: width=\textwidth
     [[file:images/irstea.png]]
 
+*** Thanks to the organization committee (special thanks to Isabelle and Céline)
 * Useful information
 ** Program
    https://frama.link/p8-oJB_N
@@ -40,19 +41,19 @@
 *** Language 
     - Slides should be in English
     - Workshops materials are in English 
-    - If possible the presentation should be in English
-    - /My taylor is rich/
+    - If possible the presentation should be in English (/"My taylor is rich"/)
 *** Wireless internet connection
     Logins available at the reception desk
 *** Organization team
-    - Searcf for red badges
+    - Look at for red badges (David, Julien, Manuel, Rémi and Victor)
     - Please ask us if you've got any questions
 * Agenda
 ** Morning: *Talks*
    - 10 minutes talks (and 5 minutes questions)
-   - Coffee break at 10:30 (with /chocolatines/!)
+   - Coffee break at 10:30 (with /"chocolatines" of course/!)
    - *Group photo at 10:30 in front of Agropolis building*
 ** 12:20 - 13:30 *Lunch break*
+   - Registration mandatory (done with your registration to the conference hopefully)
    - 10 minutes walk to the restaurant *Aboyeur*
    :PROPERTIES:
    :BEAMER_env: example
@@ -81,7 +82,7 @@
    - Organizers? Rémi Cresson
 ** Session 4: Q&A with doctors Julien and Mickael (15:00 - 17:00)
    - Questions about OTB? A bug? Want to brainstorm on 
-   - Ask Dr Julien or Dr Savinaud
+   - Ask Doctor Julien or Doctor Savinaud
    - In the main hall
    - 15 minutes slot
    - Book a slot with Julien at the registration desk (planning)
