@@ -68,6 +68,7 @@
 \mode<all>
 \input{../OTB-General/introduction-en.tex}
 
+\section{What's new in last OTB versions?}
 \mode<all>
 \input{../OTB-General/releases/6.4-en.tex}
 
@@ -86,6 +87,7 @@
 \mode<all>
 \input{../OTB-General/releases/6.6-en.tex}
 
+\section{OTB in QGIS}
 %\mode<all>
 %\input{../OTB-General/releases/otb-qgis-en.tex}
 \begin{frame}
@@ -142,7 +144,70 @@
 \end{center} 
 \end{frame}
 
+\section{New remote modules}
 
+\begin{frame}{About remote modules}
+\begin{block}{What they are}
+  \begin{itemize}
+    \item Pieces of OTB code (filters, applications ...)
+    \item That can be hosted one someone else git repository
+    \item With a different licence
+    \item While still being tested and packaged with OTB
+    \item \url{gitlab.orfeo-toolbox.org/remote_modules/remote-module-template}
+  \end{itemize}
+\end{block}
+
+\begin{block}{How people use them}
+  \begin{itemize}
+    \item A standard way to package new features to share with other
+    \item Small modules (1 filter, 1 app) or bigger
+    \item Processing chains in Python relying on one (or more) remote modules
+    \end{itemize}
+\end{block}  
+\end{frame}
+
+\subsection{Features as Remote Modules}
+
+\begin{frame}{OTBTF: How deep is the OTB?}
+  \begin{itemize}
+  \item Remote  module developed by Remi Cresson (IRSTEA)
+  \item Based on TensorFlow
+  \item Provides all the plumbing to perform Deep Learning based image processing on Remote Sensing images:
+    \begin{itemize}
+      \item Generate training data from the OTB training data sampling framework
+      \item Train your network (can also be done directly with TensorFlow)
+      \item Serve the model on full remote sensing images with streaming
+    \end{itemize}
+    \item \url{gitlab.irstea.fr/remi.cresson/otbtf}
+  \end{itemize}
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{images/classif_map.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{DiapOTB: SAR interferometry in OTB}
+
+  \begin{columns}
+    \column{0.5\textwidth}
+  \begin{itemize}
+    \item WiP to port a legacy processing chain for SAR interferometry called Diapason
+    \item As an Orfeo ToolBox remote module
+    \item Funded by CNES  
+    \item Coherence and interferogram time series from Sentinel1
+    \item Phase unwrapping
+    \item Support for S1 IW and other sensors
+    \item \url{gitlab.orfeo-toolbox.org/remote_modules/diapotb}
+  \end{itemize}
+  \column{0.5\textwidth}
+  \includegraphics[width=\textwidth]{images/diapotb.png}\\
+  \begin{tiny}
+    Simulation of SAR image from Digital Elevation Model (part of the Diapason method)
+    \end{tiny}
+  \end{columns}
+  
+\end{frame}
+
+\section{More to come!}
 \mode<all>
 \input{../OTB-General/releases/6.6.1-en.tex}
 
