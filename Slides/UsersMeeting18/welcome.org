@@ -28,6 +28,12 @@
     [[file:images/irstea.png]]
 
 *** Thanks to the organization committee (special thanks to Isabelle and Céline)
+** Organization Team
+   :PROPERTIES:
+   :BEAMER_env: example
+   :END:
+   #+ATTR_LATEX: width=0.5\textwidth
+   [[file:images/loc.png]]
 * Useful information
 ** Program
    https://frama.link/p8-oJB_N
