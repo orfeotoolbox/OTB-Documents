@@ -11,14 +11,14 @@
     - Hope that the day will be fruitful
 *** Getting started
     - 70 participants, 8 presentations, 3 workshops
-    - and only 1 day, busy program :)
+    - and only 1 day... :)
 ** Thanks to the sponsors!
 ***                                                                   :BMCOL:
     :PROPERTIES:
     :BEAMER_col: .5
     :END:
     #+ATTR_LATEX: width=\textwidth
-    file:images/logo_Cnes.png
+    [[file:images/logo_cnes.jpg]]
 
 ***                                                                   :BMCOL:
     :PROPERTIES:
@@ -28,7 +28,7 @@
     [[file:images/irstea.png]]
 
 *** Thanks to the organization committee (special thanks to Isabelle and Céline)
-** Organization Team
+** OTB team (workshop)
    :PROPERTIES:
    :BEAMER_env: example
    :END:
@@ -87,10 +87,10 @@
    - Where? *Argane room*
    - Organizers? Rémi Cresson
 ** Session 4: Q&A with doctors Julien and Mickael (15:00 - 17:00)
-   - Questions about OTB? A bug? Want to brainstorm on 
+   - Questions about OTB? A bug? Want to brainstorm on a new feature?
    - Ask Doctor Julien or Doctor Savinaud
    - In the main hall
    - 15 minutes slot
-   - Book a slot with Julien at the registration desk (planning)
+   - Book a slot at the registration desk (planning)
 * Questions
 ** Any questions ?
