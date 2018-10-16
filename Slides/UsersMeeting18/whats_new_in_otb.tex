@@ -86,13 +86,109 @@
 \mode<all>
 \input{../OTB-General/releases/6.6-en.tex}
 
-\mode<all>
-\input{../OTB-General/releases/7.0-en.tex}
+%\mode<all>
+%\input{../OTB-General/releases/otb-qgis-en.tex}
+\begin{frame}
+\frametitle{Access to OTB in QGIS: A powerful wedding}
+\begin{itemize}
+\item Facilitate access to OTB (QGIS widely use in the GIS community)
+\item Avoid to duplicate efforts (use QGIS GUI, GIS features...)
+\item Powerful features in QGIS processing (batch processing, Python scripting...)
+\item Collaboration with the QGIS community is very positive
+\item Support from QGIS developers
+\item OSGeo \textit{power}
+\item \href{https://www.youtube.com/watch?v=ufSQ2SgSIV4}{Demo}: \url{https://www.youtube.com/watch?v=ufSQ2SgSIV4}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{New OTB-QGIS plugin available!}
+  \begin{itemize}
+    %\item Easy maintenance for both OTB team and QGIS team
+  \item Keep It Simple
+  \item Ease the integration of new versions of OTB in QGIS
+    %\item Descriptors are generated, distributed and maintained by OTB
+  \item Support of OTB binary installers in QGIS (``out of the box'')
+  \item All OTB applications available in QGIS (same name, same documentation...)  
+    %\item Out of box support for qgis via binary packages
+    %\item Applications are not grouped.
+    %\item Development took a turn due to some *non-technical*/politic issues in
+    %qgis and otb
+  \item \alert{Beta version} available as a plugin
+  \item Hope the plugin will be soon added to QGIS source code
+    %\item Will be added back to QGIS processing core later (Thanks to QGIS team)
+    %\item Support for remote modules
+    %\item OTB processing provider knows to recreate descriptor file for apps (if not found)
+    %\item \alert{Version beta} disponible sous la forme d'un plugin
+    % First version is distributed a plugin
+  \item
+    Source code for new plugin: \url{https://gitlab.orfeo-toolbox.org/orfeotoolbox/qgis-otb-plugin}
+  \item Compatible with QGIS 3.2
+  \item Thanks to all the QGIS team!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{OTB configuration in QGIS}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/qgis_otb_provider_config.png}
+\end{center} 
+\end{frame}
+
+\begin{frame}
+\frametitle{GUI of the \textit{TrainImagesClassifier} application}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/qgis_train_classif.png}
+\end{center} 
+\end{frame}
+
 
 \mode<all>
 \input{../OTB-General/releases/6.6.1-en.tex}
 
 \mode<all>
-\input{../OTB-General/releases/otb-qgis-en.tex}
+\input{../OTB-General/releases/7.0-en.tex}
+
+\begin{frame}
+\frametitle{Support/Help/Contribute}
+\vspace{-0.2cm}
+\begin{block}{General resources}
+\vspace{-0.2cm}
+\begin{description}
+\item[Site web] \href{http://www.orfeo-toolbox.org}{orfeo-toolbox.org}
+\item[Wiki] \href{http://wiki.orfeo-toolbox.org}{wiki.orfeo-toolbox.org}
+\item[Blog] \href{http://blog.orfeo-toolbox.org}{blog.orfeo-toolbox.org}
+\end{description}
+\end{block}
+\vspace{-0.2cm}
+\begin{block}{Documentation and help}
+\vspace{-0.2cm}
+\begin{description}
+\item[Guides] Software Guide and CookBook (remote sensing recipes)
+\item[Doxygen] \href{http://www.orfeo-toolbox.org/doxygen}{doxygen}
+\item[Users mailing list] otb-users@googlegroups.com
+\item[Developers mailing list] otb-developers@googlegroups.com
+\end{description}
+\end{block}
+\vspace{-0.2cm}
+\begin{block}{Follow-up}
+\vspace{-0.2cm}
+\begin{description}
+\item[Look at the code?] \href{https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb}{gitlab.orfeo-toolbox.org}
+\item[Find a bug? Feature propositions?] \href{https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb/issues}{gitlab.orfeo-toolbox.org/orfeotoolbox/otb/issues}
+\item[Dashboard] \href{http://dash.orfeo-toolbox.org}{dash.orfeo-toolbox.org}
+\end{description}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Thank you! Any questions?}
+\begin{minipage}[t][6cm][t]{\textwidth}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{images/LOGOTB_blackbox.png}
+\end{center}
+\end{minipage}
+\end{frame}
+
 
 \end{document}
