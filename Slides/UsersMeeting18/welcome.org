@@ -6,8 +6,8 @@
 * Welcome
 ** Welcome to OTB Users Day 2018!
 *** Thank you all for being here!
-    - Thank you for agreeing to spend some time discussing about OTB!
-    - Excited to learn about how you use OTB and your feedback
+    - Thank you for agreeing to spend some time discussing about OTB
+    - Excited to learn about how you use OTB and your feedback!
     - Hope that the day will be fruitful
 *** Getting started
     - 70 participants, 8 presentations, 3 workshops
@@ -27,8 +27,8 @@
     #+ATTR_LATEX: width=\textwidth
     [[file:images/irstea.png]]
 
-*** Thanks to the organization committee (special thanks to Isabelle and Céline)
-** OTB team (workshop)
+*** Special thanks to Isabelle Biagotti and Céline Arnal
+** OTB team today
    :PROPERTIES:
    :BEAMER_env: example
    :END:
@@ -42,7 +42,7 @@
    # :END:
    # #+ATTR_LATEX: width=0.5\textwidth
    # [[file:images/otbusersday2018_program_qrcode.png]]
-
+*** Link to download slides will be added to the program
 ** Useful information
 *** Language 
     - Slides should be in English
@@ -56,6 +56,7 @@
 * Agenda
 ** Morning: *Talks*
    - 10 minutes talks (and 5 minutes questions)
+   - Session chair: Yannick (part 1), Julien (part 2) 
    - Coffee break at 10:30 (with /"chocolatines" of course/!)
    - *Group photo at 10:30 in front of Agropolis building*
 ** 12:20 - 13:30 *Lunch break*
@@ -94,3 +95,4 @@
    - Book a slot at the registration desk (planning)
 * Questions
 ** Any questions ?
+*** *Next presentation* /What's new in OTB?/
