@@ -36,7 +36,7 @@
    [[file:images/loc.png]]
 * Useful information
 ** Program
-   https://frama.link/p8-oJB_N
+   https://frama.link/otb-day-2018
    # :PROPERTIES:
    # :BEAMER_env: example
    # :END:
