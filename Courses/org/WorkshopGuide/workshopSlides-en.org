@@ -89,7 +89,7 @@ Know how to set up OTB processing and use OTB applications to perform:
                    ~www.orfeo-toolbox.org/CookBook/~
 
 
-     - QGIS User Guide :: ~docs.qgis.org/2.14/en/docs/user_manual~
+     - QGIS User Guide :: ~qgis.org/en/docs/index.html~
           
           
 *** Datasets
