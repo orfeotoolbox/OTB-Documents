@@ -201,6 +201,8 @@
     \begin{frame}
     \frametitle{OTB and Sentinel 1 cont.}
 
+    \begin{columns}
+      \column{0.6\textwidth}
     \begin{block}{DiapOTB remote module}
       \begin{itemize}
       \item SAR interferometry with OTB
@@ -209,9 +211,19 @@
       \item \small{\url{https://gitlab.orfeo-toolbox.org/remote_modules/diapotb}}
       \end{itemize}
     \end{block}
-    
+    \begin{block}{Example}
+      \begin{itemize}
+      \item Iran earthquake, 2107.11.12, 7.3 $M_{W}$
+      \item Sentinel 1A 2017.11.07 vs. 201711.19
+      \item IW mode, 3rd sub-swath
+      \item VV polar channel
+      \end{itemize}
+      \end{block}
+    \column{0.4\textwidth}
+    \includegraphics[width=0.9\textwidth]{diapotb_output.png}
+    \end{columns}
     \end{frame}
-
+    
       \begin{frame}
         \frametitle{OTB and Sentinel 2}
 
@@ -219,6 +231,7 @@
           \begin{itemize}
           \item Every Sentinel2 image went through OTB in the Image Processing Facility
           \item Maja L2A processor operated by Theia is written in OTB
+          \item Sen2Agri system is based on OTB (\url{www.esa-sen2agri.org})
           \item Most of OTB applications and algorithms will work out of the box with Sentinel2 imagery
           \end{itemize}
         \end{block}
@@ -254,8 +267,8 @@
         
         \begin{block}{Temporal Gap-Filling remote module}
           \begin{itemize}
-          \item \small{\url{http://tully.ups-tlse.fr/jordi/temporalgapfilling}}
-          \item Interpolate invalid pixels with various strategy
+          \item \small{\url{gitlab.orfeo-toolbox.org/jinglada/temporalgapfilling}}
+          \item Interpolate invalid pixels with various strategies
           \item Temporal resampling on a set of dates
           \end{itemize}
           
@@ -312,7 +325,7 @@
       \begin{block}{Help others}
         \begin{itemize}
         \item We need help to answer questions on forum!
-        \item \small{\url{https://forum.orfeo-toolbox.org/}}
+        \item \small{\url{https://forum.orfeo-toolbox.org}}
         \end{itemize}
       \end{block}
     
