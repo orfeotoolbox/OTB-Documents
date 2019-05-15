@@ -1,0 +1,53 @@
+\begin{frame}
+  \frametitle{6.6 (June 2018)}
+
+  \begin{itemize}
+  \item Data augmentation : generate synthetic samples to improve classifiers
+    performances (CESBIO)
+  \item New algorithms for dimensionality reduction : Autoencoders, PCA and Self
+    Organizing Map (CESBIO)
+  \item Multi writer (CS-SI)
+  \end{itemize}  
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{6.6 (June 2018)}
+  \begin{itemize}
+    \item Multi writer (CS-SI)
+  \begin{lstlisting}[language=c++,breaklines=true,breakatwhitespace=true,frame =
+      tb,framerule =
+      0.25pt,fontadjust,backgroundcolor={\color{listlightgray}},basicstyle =
+      {\ttfamily\tiny},keywordstyle =
+      {\ttfamily\color{red}\textbf},identifierstyle = {\ttfamily},commentstyle =
+      {\ttfamily\color{listcomment}\textit},stringstyle =
+      {\ttfamily},showstringspaces = false,showtabs = false,numbers =
+      none,numbersep = 2pt, numberstyle={\ttfamily\color{listnumbers}},tabsize =
+      2]
+  ReaderType1::Pointer reader1 = ReaderType1::New();
+  reader1->SetFileName( inputImageFileName1 );
+
+  ReaderType2::Pointer reader2 = ReaderType2::New();
+  reader2->SetFileName( inputImageFileName2 );
+
+  WriterType::Pointer writer = WriterType::New();
+  writer->AddInputImage( reader1->GetOutput(), outputImageFileName1);
+  writer->AddInputImage( reader2->GetOutput(), outputImageFileName2);
+  writer->SetNumberOfLinesStrippedStreaming( numberOfLinesPerStrip );
+
+  writer->Update();
+
+  \end{lstlisting}
+  \end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{6.6 (June 2018)}
+  \begin{itemize}
+  \item Improvement in Application engine : simplify complex type  in input or
+    output images (SAR images manipulation), stop button in the graphic interface...
+  \item Migration from Qt4 to Qt5
+  \item Better integration in QGIS (next slides)
+  \item Lots of bugfixes!
+  \end{itemize}  
+\end{frame}
