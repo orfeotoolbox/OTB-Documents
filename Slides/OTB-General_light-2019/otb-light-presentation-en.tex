@@ -1,0 +1,81 @@
+% Note : this is a lighter version of OTB general presentation
+% It's a short introduction (20mn) to OTB, typically for a short workshop/training session (1/2 day)
+%
+%----------------------------------------------------------------------------------------
+%	PACKAGES & THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[8pt]{beamer}
+
+\usepackage{etex}
+\mode<presentation> {
+\usetheme{Vilanova}
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{pifont}
+\usepackage{listings,color}
+
+\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+\definecolor{listnumbers}{gray}{0.65}
+\definecolor{listlightgray}{gray}{0.955}
+\definecolor{listwhite}{gray}{1.0}
+
+\AtBeginSection[]
+{
+\addtocounter{framenumber}{-1}
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents[currentsection]
+\end{frame}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\title{Orfeo ToolBox}
+\subtitle{Open source processing of remote sensing images (updated for 6.6.1)}
+\author{OTB Team}
+\date{}
+
+\pgfdeclareimage[height=96mm,width=128mm]{background}{../OTB-General/images/fondsClairSansLogo}
+\pgfdeclareimage[height=0.2cm]{cc}{../OTB-General/images/CC-licence.png}
+\setbeamertemplate{background}{\pgfuseimage{background}}
+\pgfdeclareimage[height=0.6cm]{logoIncrust}{../OTB-General/images/logoIncrust}
+\pgfdeclareimage[height=0.6cm]{OSGeo_logo}{../OTB-General/images/OSGeo_logo}
+\logo{
+\begin{tabular}{p{0.22\textwidth}p{0.58\textwidth}p{0.1\textwidth}p{0.1\textwidth}}
+\href{http://www.osgeo.org}{\pgfuseimage{OSGeo_logo}}
+& \vspace{-0.03\textwidth} \scriptsize{} % date and event here
+& \href{http://creativecommons.org/licenses/by-sa/3.0/}{\pgfuseimage{cc}} & \href{http://www.orfeo-toolbox.org}{\pgfuseimage{logoIncrust}}\\
+\end{tabular}
+}
+
+\titlegraphic{\vspace*{-5em}\includegraphics[width=.5\textwidth]{../OTB-General/images/LOGOTB_blackbox.png}}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\mode<all>
+\input{introduction-en.tex}
+
+\mode<all>
+\input{images.tex}
+
+\mode<all>
+\input{howto_use-en.tex}
+
+\mode<all>
+\input{user_community-en.tex}
+
+\end{document}

@@ -73,7 +73,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
      - Guide d'installation
      - Questionnaire d'évaluation
      - Solutions (distribuées à la fin)
-
+       
 *** Contenu du kit de formation
 
 **** Documentation des logiciels
@@ -85,7 +85,7 @@ Mise en œuvre de chaine de traitements d'images en utilisant les applications O
                    ~www.orfeo-toolbox.org/CookBook/~
      - QGIS User Guide :: Manuel d'utilisation de QGIS
 
-          ~docs.qgis.org/2.14/en/docs/user_manual~
+          ~qgis.org/fr/docs/index.html~
 
 
 *** Origine des données
