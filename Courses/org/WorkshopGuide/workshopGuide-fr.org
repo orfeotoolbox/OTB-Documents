@@ -78,7 +78,7 @@ incluant notamment:
                    ~www.orfeo-toolbox.org/CookBook/~
      - QGIS User Guide :: Manuel d'utilisation de QGIS
 
-          ~docs.qgis.org/2.14/en/docs/user_manual~
+          ~qgis.org/fr/docs/index.html~
 
 
 
@@ -87,9 +87,9 @@ incluant notamment:
 Afin de réaliser les exercices, les logiciels suivants sont
 nécessaires :
 
-- *Orfeo ToolBox* 6.2 ou plus récent avec les applications
-- *Monteverdi* 3.2 ou plus récent
-- *QGIS* 2.4 ou plus récent
+- *Orfeo ToolBox* 6.6 ou plus récent avec les applications
+- *Monteverdi* 6.6 ou plus récent
+- *QGIS* 3.2 ou plus récent
 
 Pour ce qui concerne l'installation de l'*Orfeo ToolBox* et
 de  *Monteverdi*, vous pouvez consulter le Cookbook ou le guide d'installation.

@@ -74,7 +74,7 @@ image processing chains using OTB applications, including:
                   ~www.orfeo-toolbox.org/CookBook/~
 
 
-    - QGIS User Guide :: ~docs.qgis.org/2.14/en/docs/user_manual~
+    - QGIS User Guide :: ~qgis.org/en/docs/index.html~
          
          
 ** Datasets
@@ -93,9 +93,9 @@ image processing chains using OTB applications, including:
 
 To complete exercises, you need to install the following tools:
 
-- *Orfeo ToolBox* $>=$ 6.2 with applications
-- *Monteverdi* $>=$ 3.2
-- *QGIS* $>=$ 2.8 
+- *Orfeo ToolBox* $>=$ 6.6 with applications
+- *Monteverdi* $>=$ 6.6
+- *QGIS* $>=$ 3.2 
 
 To install the *Orfeo ToolBox* and *Monteverdi*, follow the instructions in the
 ORFEO ToolBox cookbook.

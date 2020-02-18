@@ -64,9 +64,11 @@
     - Accès à toutes les applications OTB (certaines sont repackagées avec une
       interface simplifiée)
     - [[https://docs.qgis.org/2.6/en/docs/user_manual/processing/index.html][Voir QGIS processing documentation]]
+    - Nouveau plugin d'intégration de l'OTB partir de la version 3.2
+
 *** Quantum GIS
     #+ATTR_LATEX: :float t :width 0.7\textwidth
-    [[file:../../../Slides/OTB-General/images/otb_qgis.png]]
+    [[file:../../../Slides/OTB-General/images/otb_in_qgis3.2.png]]
 
 *** Principe
     - Découverte du jeu de données et des logiciels
